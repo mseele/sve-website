@@ -1,2 +1,2 @@
-# sve-website
+# Website SV Eutingen
 Website SVE
