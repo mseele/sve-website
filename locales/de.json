@@ -1,0 +1,19 @@
+{
+  "title": {
+    "short": "SVE",
+    "default": "SV Eutingen",
+    "long": "SV Eutingen 1947 e.V.",
+    "slogan": "Mehr als ein Verein"
+  },
+  "buttons": {
+    "news": "Aktuelles",
+    "join": "Mach mit"
+  },
+  "home": {
+    "introduction": "This is an introduction in English."
+  },
+  "team": {
+    "title": "About",
+    "introduction": "This page is made to give you more informations."
+  }
+}
