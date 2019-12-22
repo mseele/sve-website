@@ -10,15 +10,11 @@
 </template>
 
 <script>
-import AppBar from '~/components/AppBar'
-import AppNavigationDrawer from '~/components/AppNavigationDrawer'
-import AppFooter from '~/components/AppFooter'
-
 export default {
   components: {
-    'app-bar': AppBar,
-    'app-navigation-drawer': AppNavigationDrawer,
-    'app-footer': AppFooter
+    'app-bar': () => import('~/components/AppBar'),
+    'app-navigation-drawer': () => import('~/components/AppNavigationDrawer'),
+    'app-footer': () => import('~/components/AppFooter')
   },
   data() {
     return {
