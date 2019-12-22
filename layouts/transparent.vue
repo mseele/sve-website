@@ -12,9 +12,10 @@
 <script>
 export default {
   components: {
-    'app-bar': () => import('~/components/AppBar'),
-    'app-navigation-drawer': () => import('~/components/AppNavigationDrawer'),
-    'app-footer': () => import('~/components/AppFooter')
+    'app-bar': () => import('~/components/base/AppBar'),
+    'app-navigation-drawer': () =>
+      import('~/components/base/AppNavigationDrawer'),
+    'app-footer': () => import('~/components/base/AppFooter')
   },
   data() {
     return {
