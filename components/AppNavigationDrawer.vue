@@ -1,9 +1,37 @@
 <template>
   <v-navigation-drawer v-model="drawer" right temporary fixed>
+    <v-container class="ext" fluid>
+      <v-row justify="center">
+        <v-btn
+          class="mx-4"
+          href="https://www.facebook.com/sveutingen"
+          target="_blank"
+          small
+          text
+          icon
+        >
+          <v-avatar size="20">
+            <v-img :src="require('~/assets/facebook.svg')"></v-img>
+          </v-avatar>
+        </v-btn>
+        <v-btn
+          class="mx-4 black--text"
+          href="http://www.fussball.de/verein/sv-eutingen-wuerttemberg/-/id/00ES8GNAUG000068VV0AG08LVUPGND5I"
+          target="_blank"
+          small
+          text
+          icon
+        >
+          <v-avatar size="20">
+            <v-img :src="require('~/assets/fussball_de.svg')"></v-img>
+          </v-avatar>
+        </v-btn>
+      </v-row>
+    </v-container>
     <v-list class="py-0">
       <v-list-item-group>
         <template v-for="(item, index) in items">
-          <v-divider v-if="index > 0" :key="'div' + index" />
+          <v-divider :key="'div' + index" />
           <v-list-item :key="'itm' + index" :to="item.to" nuxt>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
@@ -12,6 +40,12 @@
     </v-list>
   </v-navigation-drawer>
 </template>
+
+<style scoped>
+.ext {
+  padding: 10px !important;
+}
+</style>
 
 <script>
 export default {
