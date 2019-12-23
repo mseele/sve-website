@@ -7,7 +7,9 @@
   },
   "buttons": {
     "news": "Aktuelles",
-    "join": "Mach mit"
+    "join": "Mach mit",
+    "accept": "Akzeptieren",
+    "deny": "Ablehnen"
   },
   "home": {
     "introduction": "This is an introduction in English."
