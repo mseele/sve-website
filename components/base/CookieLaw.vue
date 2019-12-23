@@ -13,10 +13,10 @@
           </slot>
         </v-col>
         <v-col class="shrink d-flex justify-end" cols="12" md="3">
-          <v-btn @click="accept" class="ma-2 secondary">{{
+          <v-btn class="ma-2 grey darken-4" @click="accept">{{
             $t('buttons.accept')
           }}</v-btn>
-          <v-btn @click="deny" class="ma-2" text>{{
+          <v-btn class="ma-2" text @click="deny">{{
             $t('buttons.deny')
           }}</v-btn>
         </v-col>
