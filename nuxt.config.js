@@ -48,7 +48,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['~assets/global.scss'],
   /*
    ** Plugins to load before mounting the App
    */
@@ -85,8 +85,8 @@ export default {
     customVariables: ['~/assets/variables.scss'],
     theme: {
       themes: {
-        dark: {
-          primary: colors.red.darken4,
+        light: {
+          primary: '#a22122',
           accent: colors.grey.darken3,
           secondary: colors.green.darken1,
           info: colors.blue.lighten1,

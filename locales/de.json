@@ -9,13 +9,12 @@
     "news": "Aktuelles",
     "join": "Mach mit",
     "accept": "Akzeptieren",
-    "deny": "Ablehnen"
+    "deny": "Ablehnen",
+    "more": "Mehr"
   },
-  "home": {
-    "introduction": "This is an introduction in English."
-  },
-  "team": {
-    "title": "About",
-    "introduction": "This page is made to give you more informations."
+  "join": {
+    "title": "MACH MIT",
+    "subtitle": "Du suchst Teamsport oder Fitness-Angebote? Du hast Lust auf Ehrenamt? Oder suchst eine starke Sponsoringpartnerschaft für Dein Unternehmen?",
+    "intro": "Bei uns bist Du richtig. Denn wir entfalten Talente, ermöglichen Mannschafts- und Gesundheitssport, stiften Gemeinschaft und leben Partnerschaften."
   }
 }

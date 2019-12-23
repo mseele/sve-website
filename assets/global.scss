@@ -1,0 +1,28 @@
+h1 {
+  font-size: 32px;
+  line-height: 48px;
+  border-left: 3px solid #a22122;
+  padding-left: 12px;
+}
+
+h2 {
+  font-size: 28px;
+  line-height: 42px;
+  border-left: 3px solid #a22122;
+  padding-left: 12px;
+}
+
+.section,
+.section_gray {
+  padding: 10px 0;
+}
+@media (min-width: 1024px) {
+  .section,
+  .section_gray {
+    padding: 20px 0;
+  }
+}
+
+.section_gray {
+  background-color: rgb(216, 216, 216);
+}
