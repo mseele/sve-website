@@ -88,7 +88,7 @@ export default {
         light: {
           primary: '#a22122',
           accent: colors.grey.darken3,
-          secondary: colors.green.darken1,
+          secondary: '#047404',
           info: colors.blue.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
