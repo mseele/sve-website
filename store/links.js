@@ -19,6 +19,14 @@ export const state = () => ({
       to: '/historie'
     },
     {
+      title: 'Kunstrasen',
+      to: '/kunstrasen'
+    },
+    {
+      title: 'Sponsoring',
+      to: '/sponsoring'
+    },
+    {
       title: 'Leitbild',
       to: '/leitbild'
     },
