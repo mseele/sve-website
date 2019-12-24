@@ -42,6 +42,11 @@ export default {
   components: {
     news: () => import('~/components/sections/News'),
     join: () => import('~/components/sections/Join')
+  },
+  head() {
+    return {
+      titleTemplate: '%s'
+    }
   }
 }
 </script>
