@@ -8,7 +8,7 @@
             <div class="headline py-4">#mehralseinverein</div>
             <v-row class="mx-0 mt-6">
               <v-btn
-                v-scroll-to="{ el: '#aktuelles', offset: -64 }"
+                v-scroll-to="{ el: '#aktuelles', offset: -appbarOffset() }"
                 rounded
                 depressed
                 outlined
@@ -17,7 +17,7 @@
                 >Aktuelles</v-btn
               >
               <v-btn
-                v-scroll-to="{ el: '#mach-mit', offset: -64 }"
+                v-scroll-to="{ el: '#mach-mit', offset: -appbarOffset() }"
                 rounded
                 depressed
                 >Mach mit</v-btn
@@ -42,6 +42,14 @@ export default {
   components: {
     news: () => import('~/components/sections/News'),
     join: () => import('~/components/sections/Join')
+  },
+  methods: {
+    appbarOffset() {
+      if (this.$vuetify.breakpoint.smAndDown) {
+        return 56
+      }
+      return 64
+    }
   },
   head() {
     return {
