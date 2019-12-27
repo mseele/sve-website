@@ -21,8 +21,8 @@ export default {
         content:
           'Auf der offiziellen Website des SV Eutingen 1947 e.V. findest Du alle Informationen über die Teamsport-, Fitness- und Veranstaltungsangebote des Vereins im Herzen von Baden-Württemberg.'
       },
-      { name: 'msapplication-TileColor', content: '#fdfbf9' },
-      { name: 'theme-color', content: '#fdfbf9' }
+      { name: 'msapplication-TileColor', content: '#a22122' },
+      { name: 'theme-color', content: '#a22122' }
     ],
     link: [
       {
