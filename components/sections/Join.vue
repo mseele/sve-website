@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-          <h2>{{ $t('join.title') }}</h2>
+          <h2>MACH MIT</h2>
         </v-col>
         <v-col cols="12" class="subtitle-1 font-weight-bold pb-0">
           {{ $t('join.subtitle') }}
