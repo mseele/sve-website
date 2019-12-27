@@ -33,7 +33,9 @@
               {{ item.text }}
             </v-card-text>
             <v-card-actions class="justify-center">
-              <v-btn rounded text color="primary">Mehr</v-btn>
+              <v-btn rounded text color="primary" :to="item.link" nuxt
+                >Mehr</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-col>
@@ -50,32 +52,38 @@ export default {
         {
           title: 'Fußball - unsere Leidenschaft',
           text:
-            'Auf unserer tollen Sportanlage u.a. mit neuwertigen Kunstrasenplätzen bieten wir für Frauen und Männer ein breites Fußballangebot in verschiedenen Ligen.'
+            'Auf unserer tollen Sportanlage u.a. mit neuwertigen Kunstrasenplätzen bieten wir für Frauen und Männer ein breites Fußballangebot in verschiedenen Ligen.',
+          link: '/teamsport#fussball'
         },
         {
           title: 'Teilhabe für Kinder und Jugendliche',
           text:
-            'Eine sinnstiftende Freizeitbeschäftigung für Kinder und Jugendliche ist Schwerpunkt unserer Vereinsarbeit. Wir bieten für alle Altersklassen sowie Mädchen und Jungs die Möglichkeit, Fußball zu spielen. Ebenfalls im Programm haben wir regelmäßige Schwimmkurse für Kinder.'
+            'Eine sinnstiftende Freizeitbeschäftigung für Kinder und Jugendliche ist Schwerpunkt unserer Vereinsarbeit. Wir bieten für alle Altersklassen sowie Mädchen und Jungs die Möglichkeit, Fußball zu spielen. Ebenfalls im Programm haben wir regelmäßige Schwimmkurse für Kinder.',
+          link: '/teamsport#jugend'
         },
         {
           title: "Fühl' Dich wohl durch Fitness",
           text:
-            'Unser breites Fitnessangebot bietet für jedes Alter den perfekten Ausgleich zum Alltag und schafft spürbar mehr Lebensqualität. Rückenfit, Yoga, Pilates, Power Hour... - bei uns findest Du einen passenden Kurs.'
+            'Unser breites Fitnessangebot bietet für jedes Alter den perfekten Ausgleich zum Alltag und schafft spürbar mehr Lebensqualität. Rückenfit, Yoga, Pilates, Power Hour... - bei uns findest Du einen passenden Kurs.',
+          link: '/fitness'
         },
         {
           title: 'Volleyball - genau Dein Ding',
           text:
-            'Unsere Hobbygruppe heißt Dich als Anfänger, ehemaliger Profi oder Wiedereinsteiger des Volleyballsports herzlich willkommen. Immer freitags um 20 Uhr steht die Freude am Sport im Vordergrund.'
+            'Unsere Hobbygruppe heißt Dich als Anfänger, ehemaliger Profi oder Wiedereinsteiger des Volleyballsports herzlich willkommen. Immer freitags um 20 Uhr steht die Freude am Sport im Vordergrund.',
+          link: '/teamsport#volleyball'
         },
         {
           title: 'Sponsoring - wir leben Partnerschaft',
           text:
-            'Geben und Nehmen - so lautet unser Grundsatz für gelungene Partnerschaften. Wir bieten Werbemöglichkeiten, um auf unserer belebten Sportanlage auf Unternehmen und Dienstleistungen aufmerksam zu machen. Für unsere Partner stehen wir auch parat, wenn sie die Hilfe unserer tatkräftigen Mitglieder bspw. für ein Firmenjubiläum benötigen.'
+            'Geben und Nehmen - so lautet unser Grundsatz für gelungene Partnerschaften. Wir bieten Werbemöglichkeiten, um auf unserer belebten Sportanlage auf Unternehmen und Dienstleistungen aufmerksam zu machen. Für unsere Partner stehen wir auch parat, wenn sie die Hilfe unserer tatkräftigen Mitglieder bspw. für ein Firmenjubiläum benötigen.',
+          link: '/sponsoring'
         },
         {
           title: 'Mach mit und werde Mitglied',
           text:
-            'Über 5,3 Millionen Menschen in Baden-Württemberg engagieren sich ehrenamtlich. Dafür bieten wir auch beim SVE viele Möglichkeiten. Ob Vereinsamt oder reine Mitgliedschaft - mit Deinem Einsatz unterstützt Du unsere Arbeit und stiftest gesellschaftlichen Nutzen.'
+            'Über 5,3 Millionen Menschen in Baden-Württemberg engagieren sich ehrenamtlich. Dafür bieten wir auch beim SVE viele Möglichkeiten. Ob Vereinsamt oder reine Mitgliedschaft - mit Deinem Einsatz unterstützt Du unsere Arbeit und stiftest gesellschaftlichen Nutzen.',
+          link: '/kontakt#mitglied'
         }
       ]
     }
