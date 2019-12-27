@@ -1,29 +1,36 @@
 <template>
-  <v-footer color="white" class="body-2" padless>
-    <v-row class="my-3" justify="center">
-      <v-col class="px-3 pt-0 hidden-sm-and-up" cols="12">
-        <v-row justify="center" no-gutters>
-          <template v-for="(item, index) in items">
-            <nuxt-link
-              :key="index"
-              :to="item.to"
-              :class="{ 'pl-3': index > 0 }"
-              class="lnk"
-              >{{ item.title }}</nuxt-link
-            >
-          </template>
-        </v-row>
-      </v-col>
-      <span :class="{ 'mb-2': this.$vuetify.breakpoint.xsOnly }"
-        ><strong>SV Eutingen</strong> &copy;
-        {{ new Date().getFullYear() }}
-      </span>
-      <template v-for="(item, index) in items">
-        <nuxt-link :key="index" :to="item.to" class="lnk pl-4 hidden-xs-only">{{
-          item.title
-        }}</nuxt-link>
-      </template>
-    </v-row>
+  <v-footer padless>
+    <v-card flat tile width="100%" class="text-center">
+      <v-card-text>
+        <template v-for="(link, index) in links">
+          <v-btn
+            :key="index"
+            class="mx-4"
+            :href="link.to"
+            target="_blank"
+            small
+            text
+            icon
+          >
+            <v-avatar size="20">
+              <v-img :src="link.img"></v-img>
+            </v-avatar>
+          </v-btn>
+        </template>
+      </v-card-text>
+      <v-row justify="center" class="px-2 pb-4 subtitle-2" no-gutters>
+        <template v-for="(item, index) in items">
+          <nuxt-link :key="index" :to="item.to" class="px-2 lnk">{{
+            item.title
+          }}</nuxt-link>
+        </template>
+      </v-row>
+      <v-divider></v-divider>
+      <v-card-text class="black--text">
+        &copy; {{ new Date().getFullYear() }} —
+        <strong>SV Eutingen 1947 e.V. </strong>
+      </v-card-text>
+    </v-card>
   </v-footer>
 </template>
 
@@ -39,6 +46,9 @@ export default {
   computed: {
     items() {
       return this.$store.state.links.footerItems
+    },
+    links() {
+      return this.$store.state.links.externalItems
     }
   }
 }
