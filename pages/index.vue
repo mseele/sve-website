@@ -4,8 +4,8 @@
       <v-container fill-height>
         <v-row align="center" class="pt-5 px-3">
           <v-sheet class="transparent white--text" max-width="500">
-            <h1 class="display-2">{{ $t('title.default') }}</h1>
-            <div class="headline py-4">{{ $t('title.slogan') }}</div>
+            <h1 class="display-2">SV Eutingen</h1>
+            <div class="headline py-4">#mehralseinverein</div>
             <v-row class="mx-0 mt-6">
               <v-btn
                 v-scroll-to="{ el: '#aktuelles', offset: -64 }"
@@ -14,13 +14,13 @@
                 outlined
                 dark
                 class="mr-2"
-                >{{ $t('buttons.news') }}</v-btn
+                >Aktuelles</v-btn
               >
               <v-btn
                 v-scroll-to="{ el: '#mach-mit', offset: -64 }"
                 rounded
                 depressed
-                >{{ $t('buttons.join') }}</v-btn
+                >Mach mit</v-btn
               >
             </v-row>
           </v-sheet>

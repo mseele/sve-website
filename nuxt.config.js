@@ -65,16 +65,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['nuxt-i18n', '@bazzite/nuxt-optimized-images'],
-  i18n: {
-    locales: ['de'],
-    defaultLocale: 'de',
-    vueI18n: {
-      messages: {
-        de: require('./locales/de.json')
-      }
-    }
-  },
+  modules: ['@bazzite/nuxt-optimized-images'],
   optimizedImages: {
     optimizeImages: true
   },

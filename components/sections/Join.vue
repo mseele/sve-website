@@ -5,10 +5,16 @@
         <v-col cols="12">
           <h2>MACH MIT</h2>
         </v-col>
-        <v-col cols="12" class="subtitle-1 font-weight-bold pb-0">
-          {{ $t('join.subtitle') }}
-        </v-col>
-        <v-col cols="12" class="subtitle-1 pt-0">{{ $t('join.intro') }}</v-col>
+        <v-col cols="12" class="subtitle-1 font-weight-bold pb-0"
+          >Du suchst Teamsport oder Fitness-Angebote? Du hast Lust auf Ehrenamt?
+          Oder suchst eine starke Sponsoringpartnerschaft für Dein
+          Unternehmen?</v-col
+        >
+        <v-col cols="12" class="subtitle-1 pt-0"
+          >Bei uns bist Du richtig. Denn wir entfalten Talente, ermöglichen
+          Mannschafts- und Gesundheitssport, stiften Gemeinschaft und leben
+          Partnerschaften.</v-col
+        >
       </v-row>
       <v-row justify="center">
         <v-col
@@ -27,9 +33,7 @@
               {{ item.text }}
             </v-card-text>
             <v-card-actions class="justify-center">
-              <v-btn rounded text color="primary">{{
-                $t('buttons.more')
-              }}</v-btn>
+              <v-btn rounded text color="primary">Mehr</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>

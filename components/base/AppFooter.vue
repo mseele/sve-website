@@ -15,7 +15,7 @@
         </v-row>
       </v-col>
       <span :class="{ 'mb-2': this.$vuetify.breakpoint.xsOnly }"
-        ><strong>{{ $t('title.default') }}</strong> &copy;
+        ><strong>SV Eutingen</strong> &copy;
         {{ new Date().getFullYear() }}
       </span>
       <template v-for="(item, index) in items">
