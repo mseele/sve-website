@@ -2,30 +2,21 @@
   <v-navigation-drawer v-model="drawer" right temporary fixed>
     <v-container class="ext" fluid>
       <v-row justify="center">
-        <v-btn
-          class="mx-4"
-          href="https://www.facebook.com/sveutingen"
-          target="_blank"
-          small
-          text
-          icon
-        >
-          <v-avatar size="20">
-            <v-img :src="require('~/assets/facebook.svg')"></v-img>
-          </v-avatar>
-        </v-btn>
-        <v-btn
-          class="mx-4 black--text"
-          href="http://www.fussball.de/verein/sv-eutingen-wuerttemberg/-/id/00ES8GNAUG000068VV0AG08LVUPGND5I"
-          target="_blank"
-          small
-          text
-          icon
-        >
-          <v-avatar size="20">
-            <v-img :src="require('~/assets/fussball_de.svg')"></v-img>
-          </v-avatar>
-        </v-btn>
+        <template v-for="(link, index) in links">
+          <v-btn
+            :key="index"
+            class="mx-4"
+            :href="link.to"
+            target="_blank"
+            small
+            text
+            icon
+          >
+            <v-avatar size="20">
+              <v-img :src="link.img"></v-img>
+            </v-avatar>
+          </v-btn>
+        </template>
       </v-row>
     </v-container>
     <v-list class="py-0">
@@ -65,6 +56,9 @@ export default {
         )
       }
       return this.$store.state.links.items
+    },
+    links() {
+      return this.$store.state.links.externalItems
     }
   },
   watch: {
