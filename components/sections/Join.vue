@@ -1,5 +1,5 @@
 <template>
-  <div class="section_gray">
+  <div class="section_alt">
     <v-container>
       <v-row>
         <v-col cols="12">
