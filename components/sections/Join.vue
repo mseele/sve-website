@@ -48,34 +48,34 @@ export default {
     return {
       items: [
         {
-          title: 'Lust auf Fussball?',
+          title: 'Fußball - unsere Leidenschaft',
           text:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,'
+            'Auf unserer tollen Sportanlage u.a. mit neuwertigen Kunstrasenplätzen bieten wir für Frauen und Männer ein breites Fußballangebot in verschiedenen Ligen.'
         },
         {
-          title: 'Tolles Hobby für Kinder',
+          title: 'Teilhabe für Kinder und Jugendliche',
           text:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,'
+            'Eine sinnstiftende Freizeitbeschäftigung für Kinder und Jugendliche ist Schwerpunkt unserer Vereinsarbeit. Wir bieten für alle Altersklassen sowie Mädchen und Jungs die Möglichkeit, Fußball zu spielen. Ebenfalls im Programm haben wir regelmäßige Schwimmkurse für Kinder.'
         },
         {
-          title: 'Halte dich Fit',
+          title: "Fühl' Dich wohl durch Fitness",
           text:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,'
+            'Unser breites Fitnessangebot bietet für jedes Alter den perfekten Ausgleich zum Alltag und schafft spürbar mehr Lebensqualität. Rückenfit, Yoga, Pilates, Power Hour... - bei uns findest Du einen passenden Kurs.'
         },
         {
-          title: 'Volleyball - genau dein Ding',
+          title: 'Volleyball - genau Dein Ding',
           text:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,'
+            'Unsere Hobbygruppe heißt Dich als Anfänger, ehemaliger Profi oder Wiedereinsteiger des Volleyballsports herzlich willkommen. Immer freitags um 20 Uhr steht die Freude am Sport im Vordergrund.'
         },
         {
-          title: 'Sponsoring - Geben und Nehmen',
+          title: 'Sponsoring - wir leben Partnerschaft',
           text:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,'
+            'Geben und Nehmen - so lautet unser Grundsatz für gelungene Partnerschaften. Wir bieten Werbemöglichkeiten, um auf unserer belebten Sportanlage auf Unternehmen und Dienstleistungen aufmerksam zu machen. Für unsere Partner stehen wir auch parat, wenn sie die Hilfe unserer tatkräftigen Mitglieder bspw. für ein Firmenjubiläum benötigen.'
         },
         {
-          title: 'Werde Mitglied',
+          title: 'Mach mit und werde Mitglied',
           text:
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,'
+            'Über 5,3 Millionen Menschen in Baden-Württemberg engagieren sich ehrenamtlich. Dafür bieten wir auch beim SVE viele Möglichkeiten. Ob Vereinsamt oder reine Mitgliedschaft - mit Deinem Einsatz unterstützt Du unsere Arbeit und stiftest gesellschaftlichen Nutzen.'
         }
       ]
     }
