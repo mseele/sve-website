@@ -1,11 +1,11 @@
 <template>
   <v-app-bar
+    v-scroll="onScroll"
     :class="[
       showElevation ? 'elevation-2' : 'elevation-0',
       isTransparent ? 'transparent' : ''
     ]"
     :dark="!isTransparent"
-    v-scroll="onScroll"
     app
   >
     <nuxt-link to="/">
@@ -33,7 +33,7 @@
       </v-btn>
     </template>
     <v-spacer />
-    <v-btn @click.stop="drawerClick()" icon>
+    <v-btn icon @click.stop="drawerClick()">
       <v-icon>mdi-menu</v-icon>
     </v-btn>
   </v-app-bar>
