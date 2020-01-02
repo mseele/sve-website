@@ -1,6 +1,10 @@
 <template>
   <section id="home" class="pa-0">
-    <v-img :src="require('~/assets/home.jpg?original')" height="100vh">
+    <v-img
+      :lazy-src="require('~/assets/home-min.jpg?original')"
+      :src="require('~/assets/home.jpg?original')"
+      height="100vh"
+    >
       <v-container fill-height>
         <v-row align="center" class="pt-5 px-3">
           <v-sheet class="transparent white--text" max-width="500">
