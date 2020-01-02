@@ -8,7 +8,8 @@
             <div class="headline py-4">#mehralseinverein</div>
             <v-row class="mx-0 mt-6">
               <v-btn
-                v-scroll-to="{ el: '#aktuelles', offset: -appbarOffset() }"
+                to="#aktuelles"
+                nuxt
                 rounded
                 depressed
                 outlined
@@ -16,12 +17,7 @@
                 class="mr-2"
                 >Aktuelles</v-btn
               >
-              <v-btn
-                v-scroll-to="{ el: '#mach-mit', offset: -appbarOffset() }"
-                rounded
-                depressed
-                >Mach mit</v-btn
-              >
+              <v-btn to="#mach-mit" nuxt rounded depressed>Mach mit</v-btn>
             </v-row>
           </v-sheet>
         </v-row>
@@ -42,14 +38,6 @@ export default {
   components: {
     news: () => import('~/components/sections/News'),
     join: () => import('~/components/sections/Join')
-  },
-  methods: {
-    appbarOffset() {
-      if (this.$vuetify.breakpoint.smAndDown) {
-        return 56
-      }
-      return 64
-    }
   },
   head() {
     return {

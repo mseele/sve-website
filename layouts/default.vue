@@ -25,6 +25,17 @@ export default {
     return {
       drawer: false
     }
+  },
+  mounted() {
+    // Manually parse hashes / decide on scrollBehavior for initial page load
+    if (this.$route.hash) {
+      this.$nextTick(() => {
+        const hash = this.$route.hash
+        if (document.querySelector(hash)) {
+          this.$vuetify.goTo(hash)
+        }
+      })
+    }
   }
 }
 </script>

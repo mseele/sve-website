@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="section">
+    <section id="fussball" class="section">
       <v-container>
         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
@@ -61,7 +61,7 @@
         </v-row>
       </v-container>
     </section>
-    <section id="jugend-maennlich" class="section_alt">
+    <section id="jugend" class="section_alt">
       <v-container>
         <v-row>
           <v-col cols="12">
