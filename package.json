@@ -12,8 +12,7 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
-    "nuxt": "^2.11.0",
-    "vue-scrollto": "^2.17.1"
+    "nuxt": "^2.11.0"
   },
   "devDependencies": {
     "@bazzite/nuxt-optimized-images": "^0.3.0",
