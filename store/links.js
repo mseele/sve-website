@@ -31,8 +31,8 @@ export const state = () => ({
       to: '/leitbild'
     },
     {
-      title: 'Auszeit',
-      to: '/restaurant'
+      title: 'Gaststätte',
+      to: '/gaststaette'
     }
   ],
   footerItems: [

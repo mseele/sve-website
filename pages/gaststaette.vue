@@ -10,7 +10,7 @@
 export default {
   head() {
     return {
-      title: 'Restaurant'
+      title: 'Gaststätte'
     }
   }
 }
