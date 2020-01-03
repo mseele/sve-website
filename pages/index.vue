@@ -1,7 +1,7 @@
 <template>
   <section id="home" class="pa-0">
     <v-img
-      :lazy-src="require('~/assets/home-min.jpg?original')"
+      :lazy-src="require('~/assets/home-min.jpg?original&inline')"
       :src="require('~/assets/home.jpg?original')"
       height="100vh"
     >
