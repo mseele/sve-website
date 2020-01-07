@@ -75,7 +75,8 @@
                     <v-carousel-item
                       v-for="(image, index) in images"
                       :key="index"
-                      :src="image"
+                      :lazy-src="image.lazy"
+                      :src="image.src"
                     >
                     </v-carousel-item>
                   </v-carousel>
@@ -152,9 +153,18 @@ export default {
   data() {
     return {
       images: [
-        require('~/assets/gaststaette-1.jpg'),
-        require('~/assets/gaststaette-2.jpg'),
-        require('~/assets/gaststaette-3.jpg')
+        {
+          src: require('~/assets/gaststaette-1.jpg'),
+          lazy: require('~/assets/gaststaette-1-min.jpg?inline')
+        },
+        {
+          src: require('~/assets/gaststaette-2.jpg'),
+          lazy: require('~/assets/gaststaette-2-min.jpg?inline')
+        },
+        {
+          src: require('~/assets/gaststaette-3.jpg'),
+          lazy: require('~/assets/gaststaette-3-min.jpg?inline')
+        }
       ]
     }
   },
