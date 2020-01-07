@@ -46,7 +46,11 @@
             die Gaststätte Platz für bis zu 150 Personen.</v-col
           ><v-col cols="12" class="subtitle-1 pt-0"
             >Weitere Informationen findest Du auf der
-            <a :href="fb.href" :target="fb.target">Facebook-Seite</a>
+            <a
+              href="https://fb.com/Auszeit-Eutingen-981850018516219"
+              target="_blank"
+              >Facebook-Seite</a
+            >
             der Auszeit Eutingen.</v-col
           >
         </v-row>
@@ -151,29 +155,8 @@ export default {
         require('~/assets/gaststaette-1.jpg'),
         require('~/assets/gaststaette-2.jpg'),
         require('~/assets/gaststaette-3.jpg')
-      ],
-      fb: {
-        icon: 'fab fa-facebook-f',
-        text: 'Facebook',
-        href: 'https://fb.com/Auszeit-Eutingen-981850018516219',
-        target: '_blank'
-      },
-      touches: [
-        {
-          icon: 'fas fa-phone-alt',
-          text: '07459 1204',
-          href: 'tel:+4974591204'
-        },
-        {
-          icon: 'fas fa-envelope',
-          text: 'ingo1508@gmx.de',
-          href: 'mailto:ingo1508@gmx.de'
-        }
       ]
     }
-  },
-  mounted() {
-    this.touches.push(this.fb)
   },
   head() {
     return {
