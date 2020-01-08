@@ -1,7 +1,13 @@
 import colors from 'vuetify/es5/util/colors'
+import axios from 'axios'
+
+const eventsAPI = 'https://jsonplaceholder.typicode.com/users'
 
 export default {
   mode: 'universal',
+  env: {
+    eventsAPI
+  },
   /*
    ** Headers of the page
    */
@@ -101,5 +107,20 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  /*
+   ** Generate configuration
+   */
+  generate: {
+    routes() {
+      return axios.get(eventsAPI).then((res) => {
+        return res.data.map((event) => {
+          return {
+            route: '/events/' + event.id,
+            payload: event
+          }
+        })
+      })
+    }
   }
 }
