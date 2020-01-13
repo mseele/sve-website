@@ -66,20 +66,7 @@
                   <h2>BILDER</h2>
                 </v-col>
                 <v-col cols="12">
-                  <v-carousel
-                    cycle
-                    hide-delimiter-background
-                    show-arrows-on-hover
-                    height="493"
-                  >
-                    <v-carousel-item
-                      v-for="(image, index) in images"
-                      :key="index"
-                      :lazy-src="image.lazy"
-                      :src="image.src"
-                    >
-                    </v-carousel-item>
-                  </v-carousel>
+                  <image-viewer height="493" :images="images"></image-viewer>
                 </v-col>
               </v-row>
             </v-container>
@@ -149,6 +136,9 @@
 
 <script>
 export default {
+  components: {
+    'image-viewer': () => import('~/components/common/ImageViewer')
+  },
   layout: 'transparent',
   data() {
     return {
