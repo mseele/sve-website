@@ -2,11 +2,11 @@
   <div>
     <section id="fussball" class="section">
       <v-container>
-        Fußball ist der beliebteste Breitensport in Deutschland.
-        Zu sehr günstigen Konditionen bieten wir in unseren verschiedenen
-        Abteilungen für Kinder, Jugendliche, Frauen und Männer das 
-        passende Angebot rund um das beliebte Leder. Gleichzeitig ist 
-        Fußball unser Integrationsmotor Nummer eins.
+        Fußball ist der beliebteste Breitensport in Deutschland. Zu sehr
+        günstigen Konditionen bieten wir in unseren verschiedenen Abteilungen
+        für Kinder, Jugendliche, Frauen und Männer das passende Angebot rund um
+        das beliebte Leder. Gleichzeitig ist Fußball unser Integrationsmotor
+        Nummer eins.
       </v-container>
     </section>
     <section id="herren" class="section_alt">
@@ -16,10 +16,10 @@
             <h2>HERRENFUSSBALL</h2>
           </v-col>
           <v-col cols="12" class="subtitle-1"
-            >In unserer Herrenfußballabteilung ermöglichen wir 
-            Teamsport auf verschiedenen Leistungsniveaus. 
-            Bei uns ist für jeden etwas dabei. Durch teambuildende 
-            Aktionen stärken wir Gemeinschaft und Wir-Gefühl.</v-col
+            >In unserer Herrenfußballabteilung ermöglichen wir Teamsport auf
+            verschiedenen Leistungsniveaus. Bei uns ist für jeden etwas dabei.
+            Durch teambuildende Aktionen stärken wir Gemeinschaft und
+            Wir-Gefühl.</v-col
           >
         </v-row>
         <v-row justify="center">
@@ -43,10 +43,10 @@
             <h2>DAMENFUSSBALL</h2>
           </v-col>
           <v-col cols="12" class="subtitle-1"
-            >In unserer Damenfußballabteilung ermöglichen wir 
-            Teamsport auf verschiedenen Leistungsniveaus. 
-            Bei uns ist für jede Frau etwas dabei. Durch teambuildende 
-            Aktionen stärken wir Gemeinschaft und Wir-Gefühl.</v-col
+            >In unserer Damenfußballabteilung ermöglichen wir Teamsport auf
+            verschiedenen Leistungsniveaus. Bei uns ist für jede Frau etwas
+            dabei. Durch teambuildende Aktionen stärken wir Gemeinschaft und
+            Wir-Gefühl.</v-col
           >
         </v-row>
         <v-row justify="center">
@@ -70,12 +70,11 @@
             <h2>JUGENDFUSSBALL (MÄNNLICH)</h2>
           </v-col>
           <v-col cols="12" class="subtitle-1"
-            >Jugendliche sind unsere Zukunft. 
-            Mit unseren Trainern und Betreuern bieten wir 
-            ein schönes Sportangebot, bei dem neben dem 
-            sportlichen Ehrgeiz die Freude an der Gemeinschaft 
-            im Mittelpunkt steht. Viele Aktionen bereichern
-            unsere Jugendabteilung und bieten Abwechslung.</v-col
+            >Jugendliche sind unsere Zukunft. Mit unseren Trainern und Betreuern
+            bieten wir ein schönes Sportangebot, bei dem neben dem sportlichen
+            Ehrgeiz die Freude an der Gemeinschaft im Mittelpunkt steht. Viele
+            Aktionen bereichern unsere Jugendabteilung und bieten
+            Abwechslung.</v-col
           >
         </v-row>
         <v-row justify="center">
@@ -99,12 +98,11 @@
             <h2>JUGENDFUSSBALL (WEIBLICH)</h2>
           </v-col>
           <v-col cols="12" class="subtitle-1"
-            >Jugendliche sind unsere Zukunft. 
-            Mit unseren Trainern und Betreuern bieten wir 
-            ein schönes Sportangebot, bei dem neben dem 
-            sportlichen Ehrgeiz die Freude an der Gemeinschaft 
-            im Mittelpunkt steht. Viele Aktionen bereichern
-            unsere Jugendabteilung und bieten Abwechslung.</v-col
+            >Jugendliche sind unsere Zukunft. Mit unseren Trainern und Betreuern
+            bieten wir ein schönes Sportangebot, bei dem neben dem sportlichen
+            Ehrgeiz die Freude an der Gemeinschaft im Mittelpunkt steht. Viele
+            Aktionen bereichern unsere Jugendabteilung und bieten
+            Abwechslung.</v-col
           >
         </v-row>
         <v-row justify="center">
@@ -128,12 +126,11 @@
             <h2>KINDERFUSSBALL</h2>
           </v-col>
           <v-col cols="12" class="subtitle-1"
-            >Kinder sind unsere Zukunft. 
-            Mit unseren Trainern und Betreuern bieten wir 
-            ein schönes Sportangebot, bei dem für die Kinder
-            Bewegung, Sport und die Freude an der Gemeinschaft 
-            im Mittelpunkt stehen. Viele Aktionen bereichern
-            unser Kinderangebot und bieten Abwechslung.</v-col
+            >Kinder sind unsere Zukunft. Mit unseren Trainern und Betreuern
+            bieten wir ein schönes Sportangebot, bei dem für die Kinder
+            Bewegung, Sport und die Freude an der Gemeinschaft im Mittelpunkt
+            stehen. Viele Aktionen bereichern unser Kinderangebot und bieten
+            Abwechslung.</v-col
           >
         </v-row>
         <v-row justify="center">
@@ -157,9 +154,8 @@
             <h2>VOLLEYBALL</h2>
           </v-col>
           <v-col cols="12" class="subtitle-1"
-            >Unsere Volleyballgruppe nimmt zwar nicht am 
-            regulären Wettbewerb teil, aber erlebt tolle
-            Stunden. Denn Volleybal macht in dieser
+            >Unsere Volleyballgruppe nimmt zwar nicht am regulären Wettbewerb
+            teil, aber erlebt tolle Stunden. Denn Volleybal macht in dieser
             Hobbygruppe richtig viel Spaß.</v-col
           >
         </v-row>
