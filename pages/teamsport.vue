@@ -2,11 +2,11 @@
   <div>
     <section id="fussball" class="section">
       <v-container>
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-        eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-        voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
-        clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-        amet.
+        Fußball ist der beliebteste Breitensport in Deutschland.
+        Zu sehr günstigen Konditionen bieten wir in unseren verschiedenen
+        Abteilungen für Kinder, Jugendliche, Frauen und Männer das 
+        passende Angebot rund um das beliebte Leder. Gleichzeitig ist 
+        Fußball unser Integrationsmotor Nummer eins.
       </v-container>
     </section>
     <section id="herren" class="section_alt">
