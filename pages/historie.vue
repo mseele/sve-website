@@ -8,9 +8,9 @@
         <v-col cols="12">
           Dank der großartigen Recherchearbeiten unserer Dorfhistoriker Willi
           Schaupp, Peter Mücke und Rainer Sattler verfügen wir über eine
-          detaillierte Auflistung der SVE-Historie.<br />
-          Für unseren Verein sind diese Informationen sehr wertvoll. Denn wer
-          Zukunft gestalten will, muss seine Wurzeln kennen.
+          detaillierte Auflistung der SVE-Historie. Für unseren Verein sind
+          diese Informationen sehr wertvoll. Denn wer Zukunft gestalten will,
+          muss seine Wurzeln kennen.
         </v-col>
         <v-col cols="12">
           <v-timeline>
