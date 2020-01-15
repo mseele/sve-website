@@ -46,7 +46,7 @@
             >In unserer Damenfußballabteilung ermöglichen wir 
             Teamsport auf verschiedenen Leistungsniveaus. 
             Bei uns ist für jede Frau etwas dabei. Durch teambuildende 
-            Aktionen stärken wir Gemeinschaft und Wir-Gefühl.</team-></v-col
+            Aktionen stärken wir Gemeinschaft und Wir-Gefühl.</v-col
           >
         </v-row>
         <v-row justify="center">
