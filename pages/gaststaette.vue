@@ -1,8 +1,8 @@
 <template>
   <section class="pa-0">
     <v-img
-      :lazy-src="require('~/assets/gaststaette-min.jpg?original&inline')"
-      :src="require('~/assets/gaststaette.jpg?original')"
+      :lazy-src="require('~/assets/gaststaette/main-min.jpg?original&inline')"
+      :src="require('~/assets/gaststaette/main.jpg?original')"
       height="100vh"
     >
       <v-container fill-height>
@@ -144,16 +144,16 @@ export default {
     return {
       images: [
         {
-          src: require('~/assets/gaststaette-1.jpg'),
-          lazy: require('~/assets/gaststaette-1-min.jpg?inline')
+          src: require('~/assets/gaststaette/1.jpg'),
+          lazy: require('~/assets/gaststaette/1-min.jpg?inline')
         },
         {
-          src: require('~/assets/gaststaette-2.jpg'),
-          lazy: require('~/assets/gaststaette-2-min.jpg?inline')
+          src: require('~/assets/gaststaette/2.jpg'),
+          lazy: require('~/assets/gaststaette/2-min.jpg?inline')
         },
         {
-          src: require('~/assets/gaststaette-3.jpg'),
-          lazy: require('~/assets/gaststaette-3-min.jpg?inline')
+          src: require('~/assets/gaststaette/3.jpg'),
+          lazy: require('~/assets/gaststaette/3-min.jpg?inline')
         }
       ]
     }
