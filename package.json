@@ -12,13 +12,13 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
-    "nuxt": "^2.11.0",
-    "vue-analytics": "^5.22.1"
+    "nuxt": "^2.11.0"
   },
   "devDependencies": {
     "@bazzite/nuxt-optimized-images": "^0.3.0",
     "@nuxtjs/eslint-config": "^2.0.0",
     "@nuxtjs/eslint-module": "^1.1.0",
+    "@nuxtjs/google-analytics": "^2.2.3",
     "@nuxtjs/vuetify": "^1.10.2",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
