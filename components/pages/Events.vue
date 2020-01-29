@@ -29,7 +29,7 @@
                 <v-card-text class="text--primary flexgrow flexcard">
                   <div class="align-start">
                     <div class="headline">{{ event.name }}</div>
-                    <span
+                    <div
                       v-if="!event.bookedUp"
                       class="green--text subtitle-2 font-weight-medium"
                     >
@@ -37,13 +37,10 @@
                         (event.maxSubscribers - event.subscribers)
                           | toSubscribers
                       }}
-                    </span>
-                    <span
-                      v-else
-                      class="red--text subtitle-2 font-weight-medium"
-                    >
+                    </div>
+                    <div v-else class="red--text subtitle-2 font-weight-medium">
                       Ausgebucht
-                    </span>
+                    </div>
                     <div class="pt-5 body-2">{{ event.shortDescription }}</div>
                   </div>
                 </v-card-text>
