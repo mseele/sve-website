@@ -19,7 +19,7 @@ export default {
       if (result) {
         return { event: result }
       }
-      error({ statusCode: 404, message: 'Event nicht vorhanden' })
+      error({ statusCode: 404, message: 'Fitnesskurs nicht vorhanden' })
     }
   },
   head() {
