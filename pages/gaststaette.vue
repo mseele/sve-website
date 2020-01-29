@@ -1,8 +1,8 @@
 <template>
   <section class="pa-0">
     <v-img
-      :lazy-src="require('~/assets/gaststaette-min.jpg?original&inline')"
-      :src="require('~/assets/gaststaette.jpg?original')"
+      :lazy-src="require('~/assets/gaststaette/main-min.jpg?original&inline')"
+      :src="require('~/assets/gaststaette/main.jpg?original')"
       height="100vh"
     >
       <v-container fill-height>
@@ -66,20 +66,7 @@
                   <h2>BILDER</h2>
                 </v-col>
                 <v-col cols="12">
-                  <v-carousel
-                    cycle
-                    hide-delimiter-background
-                    show-arrows-on-hover
-                    height="493"
-                  >
-                    <v-carousel-item
-                      v-for="(image, index) in images"
-                      :key="index"
-                      :lazy-src="image.lazy"
-                      :src="image.src"
-                    >
-                    </v-carousel-item>
-                  </v-carousel>
+                  <image-viewer height="493" :images="images"></image-viewer>
                 </v-col>
               </v-row>
             </v-container>
@@ -149,21 +136,24 @@
 
 <script>
 export default {
+  components: {
+    'image-viewer': () => import('~/components/common/ImageViewer')
+  },
   layout: 'transparent',
   data() {
     return {
       images: [
         {
-          src: require('~/assets/gaststaette-1.jpg'),
-          lazy: require('~/assets/gaststaette-1-min.jpg?inline')
+          src: require('~/assets/gaststaette/1.jpg'),
+          lazy: require('~/assets/gaststaette/1-min.jpg?inline')
         },
         {
-          src: require('~/assets/gaststaette-2.jpg'),
-          lazy: require('~/assets/gaststaette-2-min.jpg?inline')
+          src: require('~/assets/gaststaette/2.jpg'),
+          lazy: require('~/assets/gaststaette/2-min.jpg?inline')
         },
         {
-          src: require('~/assets/gaststaette-3.jpg'),
-          lazy: require('~/assets/gaststaette-3-min.jpg?inline')
+          src: require('~/assets/gaststaette/3.jpg'),
+          lazy: require('~/assets/gaststaette/3-min.jpg?inline')
         }
       ]
     }

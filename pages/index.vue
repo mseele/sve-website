@@ -1,8 +1,8 @@
 <template>
   <section id="home" class="pa-0">
     <v-img
-      :lazy-src="require('~/assets/home-min.jpg?original&inline')"
-      :src="require('~/assets/home.jpg?original')"
+      :lazy-src="require('~/assets/home/main-min.jpg?original&inline')"
+      :src="require('~/assets/home/main.jpg?original')"
       height="100vh"
     >
       <v-container fill-height>

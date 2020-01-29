@@ -52,8 +52,14 @@ export default {
     }
   },
   created() {
-    if (!this.isVisited() === true) {
+    const gdpr = this.isVisited()
+    if (!gdpr === true) {
       this.isOpen = true
+      this.$ga.disable()
+    } else if (gdpr === 'true') {
+      this.$ga.enable()
+    } else if (gdpr === 'false') {
+      this.$ga.disable()
     }
   },
   methods: {
@@ -67,11 +73,13 @@ export default {
       this.setVisited(true)
       this.isOpen = false
       this.$emit('accept')
+      this.$ga.enable()
     },
     deny() {
       this.setVisited(false)
       this.isOpen = false
       this.$emit('deny')
+      this.$ga.disable()
     }
   }
 }
