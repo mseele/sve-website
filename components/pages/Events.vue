@@ -1,0 +1,124 @@
+<template>
+  <div>
+    <section class="section">
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <h2>{{ title }}</h2>
+          </v-col>
+          <slot name="header"></slot>
+        </v-row>
+      </v-container>
+    </section>
+    <template v-if="events.length > 0">
+      <section class="section_alt">
+        <v-container>
+          <v-row justify="center">
+            <v-col
+              v-for="(event, index) in events"
+              :key="index"
+              cols="12"
+              sm="6"
+              xl="4"
+            >
+              <v-card outlined class="mx-auto flexcard" height="100%">
+                <v-img
+                  :src="require('~/assets/events/' + event.image)"
+                  aspect-ratio="2.75"
+                />
+                <v-card-text class="text--primary flexgrow flexcard">
+                  <div class="align-start">
+                    <div class="headline">{{ event.name }}</div>
+                    <span
+                      v-if="!event.bookedUp"
+                      class="green--text subtitle-2 font-weight-medium"
+                    >
+                      {{
+                        (event.maxSubscribers - event.subscribers)
+                          | toSubscribers
+                      }}
+                    </span>
+                    <span
+                      v-else
+                      class="red--text subtitle-2 font-weight-medium"
+                    >
+                      Ausgebucht
+                    </span>
+                    <div class="pt-5 body-2">{{ event.shortDescription }}</div>
+                  </div>
+                </v-card-text>
+                <v-card-actions class="justify-center">
+                  <v-btn
+                    rounded
+                    text
+                    color="primary"
+                    class="px-5"
+                    :append="true"
+                    :to="event.id"
+                  >
+                    Details
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+      </section>
+      <section class="section">
+        <v-col cols="12" class="subtitle-1 text-center pt-12 pb-2">
+          <slot name="subscribeInfo"></slot>
+        </v-col>
+        <!--
+            <emailSubscription class="pb-12"></emailSubscription> 
+            -->
+      </section>
+    </template>
+    <template v-else>
+      <section class="section_alt">
+        <v-container>
+          <v-row justify="center">
+            <v-col
+              class="headline font-weight-bold text-center pt-12"
+              cols="12"
+            >
+              <slot name="infoEmpty"></slot>
+            </v-col>
+            <v-col class="subtitle-1 text-center pt-1 pb-12" cols="12">
+              <slot name="subscribeInfoEmpty"></slot>
+            </v-col>
+            <!--
+            <emailSubscription class="pb-12"></emailSubscription> 
+            -->
+          </v-row>
+        </v-container>
+      </section>
+    </template>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    title: {
+      type: String,
+      default: undefined
+    },
+    events: {
+      type: Array,
+      default: () => []
+    },
+    infoEmpty: {
+      type: String,
+      default: undefined
+    },
+    subscribeInfo: {
+      type: String,
+      default: undefined
+    },
+    subscribeInfoEmpty: {
+      type: String,
+      default: undefined
+    }
+  }
+}
+</script>
