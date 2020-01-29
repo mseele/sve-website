@@ -1,11 +1,13 @@
 import colors from 'vuetify/es5/util/colors'
 import axios from 'axios'
 
-const eventsAPI = 'https://jsonplaceholder.typicode.com/users'
+const backendURL = 'https://sve-backend.appspot.com'
+const eventsAPI = backendURL + '/api/events'
 
 export default {
   mode: 'universal',
   env: {
+    backendURL,
     eventsAPI
   },
   /*
@@ -63,7 +65,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~plugins/filters.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -121,8 +123,14 @@ export default {
     routes() {
       return axios.get(eventsAPI).then((res) => {
         return res.data.map((event) => {
+          let category = 'events'
+          if (event.type === 'Fitness') {
+            category = 'fitness'
+          } else if (event.type === 'Events') {
+            category = 'events'
+          }
           return {
-            route: '/events/' + event.id,
+            route: '/' + category + '/' + event.id,
             payload: event
           }
         })
