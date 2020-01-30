@@ -29,14 +29,14 @@
                 <v-card-text class="text--primary flexgrow flexcard">
                   <div class="align-start">
                     <div class="headline">{{ event.name }}</div>
+                    <div v-if="!counterAvailable(event)">
+                      &nbsp;
+                    </div>
                     <div
-                      v-if="!event.bookedUp"
+                      v-else-if="!isBookedUp(event)"
                       class="green--text subtitle-2 font-weight-medium"
                     >
-                      {{
-                        (event.maxSubscribers - event.subscribers)
-                          | toSubscribers
-                      }}
+                      {{ availableSubscribers(event) | toSubscribers }}
                     </div>
                     <div v-else class="red--text subtitle-2 font-weight-medium">
                       Ausgebucht
@@ -94,6 +94,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   props: {
     title: {
@@ -115,6 +117,41 @@ export default {
     subscribeInfoEmpty: {
       type: String,
       default: undefined
+    }
+  },
+  data() {
+    return {
+      countersAvailable: false
+    }
+  },
+  computed: {
+    eventsCounter() {
+      return this.$store.state.events.counter
+    }
+  },
+  mounted() {
+    axios.get(process.env.eventsCounterAPI).then((res) => {
+      this.$store.commit('events/updateCounter', res.data)
+    })
+  },
+  methods: {
+    eventCounter(event) {
+      return this.eventsCounter.find((counter) => counter.id === event.id)
+    },
+    counterAvailable(event) {
+      const eventCounter = this.eventCounter(event)
+      return typeof eventCounter !== 'undefined'
+    },
+    isBookedUp(event) {
+      const eventCounter = this.eventCounter(event)
+      return (
+        eventCounter.subscribers >= eventCounter.maxSubscribers &&
+        eventCounter.waitingList >= eventCounter.maxWaitingList
+      )
+    },
+    availableSubscribers(event) {
+      const eventCounter = this.eventCounter(event)
+      return eventCounter.maxSubscribers - eventCounter.subscribers
     }
   }
 }

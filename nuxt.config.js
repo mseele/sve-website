@@ -3,12 +3,14 @@ import axios from 'axios'
 
 const backendURL = 'https://sve-backend.appspot.com'
 const eventsAPI = backendURL + '/api/events'
+const eventsCounterAPI = backendURL + '/api/events/counter'
 
 export default {
   mode: 'universal',
   env: {
     backendURL,
-    eventsAPI
+    eventsAPI,
+    eventsCounterAPI
   },
   /*
    ** Headers of the page
