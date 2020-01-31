@@ -22,6 +22,7 @@
         v-if="value.contactLink"
         rounded
         text
+        class="px-5"
         color="primary"
         :to="value.contactLink"
         nuxt
@@ -31,6 +32,7 @@
         v-if="value.teamID"
         rounded
         text
+        class="px-5"
         color="primary"
         :href="
           'http://www.fussball.de/mannschaft/sv-eutingen-ii-sv-eutingen-wuerttemberg/-/saison/9999/team-id/' +
