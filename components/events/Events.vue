@@ -21,12 +21,13 @@
               sm="6"
               xl="4"
             >
-              <v-card outlined class="mx-auto flexcard" height="100%">
+              <v-card outlined class="d-flex flex-column" height="100%">
                 <v-img
                   :src="require('~/assets/events/' + event.image)"
                   aspect-ratio="2.75"
+                  class="flex-grow-0"
                 />
-                <v-card-text class="text--primary flexgrow flexcard">
+                <v-card-text class="text--primary flex-grow-1">
                   <div class="align-start">
                     <div class="headline">{{ event.name }}</div>
                     <div v-if="!counterAvailable(event)">
