@@ -125,7 +125,7 @@ export default {
     }
   },
   mounted() {
-    axios.get(process.env.eventsCounterAPI).then((res) => {
+    axios.get(process.env.eventsAPI + '/counter').then((res) => {
       this.$store.commit('events/updateCounter', res.data)
     })
   },
