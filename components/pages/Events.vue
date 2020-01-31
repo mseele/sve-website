@@ -119,11 +119,6 @@ export default {
       default: undefined
     }
   },
-  data() {
-    return {
-      countersAvailable: false
-    }
-  },
   computed: {
     eventsCounter() {
       return this.$store.state.events.counter
