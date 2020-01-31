@@ -1,15 +1,24 @@
 <template>
-  <v-layout>
-    <v-flex class="text-center">
-      {{ event.name }}
-    </v-flex>
-  </v-layout>
+  <event
+    :event="event"
+    label-updates="Ich möchte über zukünftige Events per E-Mail informiert werden"
+  >
+    <template v-slot:bookingHeader>
+      Um sich verbindlich für das Event anzumelden, trage bitte hier Deine Daten
+      ein. Du wirst von uns anschließend per E-Mail über alles Weitere
+      informiert.
+    </template>
+  </event>
 </template>
 
 <script>
 import axios from 'axios'
 
 export default {
+  layout: 'transparent',
+  components: {
+    event: () => import('~/components/events/Event')
+  },
   async asyncData({ params, error, payload }) {
     if (payload) {
       return { event: payload }
