@@ -91,6 +91,33 @@
         </v-container>
       </section>
     </template>
+    <section
+      v-if="faqs.length > 0"
+      id="faqs"
+      :class="events.length > 0 ? 'section_alt' : 'section'"
+    >
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <h2>FAQS</h2>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <v-expansion-panels light>
+              <v-expansion-panel v-for="(item, i) in faqs" :key="i">
+                <v-expansion-panel-header>
+                  <div class="font-weight-bold">{{ item.question }}</div>
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                  {{ item.answer }}
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </v-col>
+        </v-row>
+      </v-container>
+    </section>
   </div>
 </template>
 
@@ -118,6 +145,10 @@ export default {
     subscribeInfoEmpty: {
       type: String,
       default: undefined
+    },
+    faqs: {
+      type: Array,
+      default: () => []
     }
   },
   computed: {
