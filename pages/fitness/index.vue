@@ -1,5 +1,10 @@
 <template>
-  <events title="FITNESS" :events="events" :faqs="faqs">
+  <events
+    title="FITNESS"
+    :events="events"
+    :faqs="faqs"
+    subscribe-success="Du erhälst automatisch eine E-Mail sobald neue Kursangebote online sind. Vielen Dank."
+  >
     <template v-slot:header>
       <v-col cols="12" class="subtitle-1 font-weight-bold pb-0">
         Du hast Freude an der Gemeinschaft und möchtest Deinem Körper etwas

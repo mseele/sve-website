@@ -1,5 +1,9 @@
 <template>
-  <events title="EVENTS" :events="events">
+  <events
+    title="EVENTS"
+    :events="events"
+    subscribe-success="Du erhälst automatisch eine E-Mail sobald neue Eventangebote online sind. Vielen Dank."
+  >
     <template v-slot:header>
       <v-col cols="12" class="subtitle-1 font-weight-bold pt-0">
         Herzlich Willkommen beim Fitnessangebot des SV Eutingen 1947 e.V.

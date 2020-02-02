@@ -66,9 +66,10 @@
         <v-col cols="12" class="subtitle-1 text-center pt-12 pb-2">
           <slot name="subscribeInfo"></slot>
         </v-col>
-        <!--
-            <emailSubscription class="pb-12"></emailSubscription> 
-            -->
+        <emailSubscription
+          :success-message="subscribeSuccess"
+          class="pb-12"
+        ></emailSubscription>
       </section>
     </template>
     <template v-else>
@@ -84,9 +85,10 @@
             <v-col class="subtitle-1 text-center pt-1 pb-12" cols="12">
               <slot name="subscribeInfoEmpty"></slot>
             </v-col>
-            <!--
-            <emailSubscription class="pb-12"></emailSubscription> 
-            -->
+            <emailSubscription
+              :success-message="subscribeSuccess"
+              class="pb-12"
+            ></emailSubscription>
           </v-row>
         </v-container>
       </section>
@@ -125,6 +127,9 @@
 import axios from 'axios'
 
 export default {
+  components: {
+    emailSubscription: () => import('~/components/base/EmailSubscription')
+  },
   props: {
     title: {
       type: String,
@@ -143,6 +148,10 @@ export default {
       default: undefined
     },
     subscribeInfoEmpty: {
+      type: String,
+      default: undefined
+    },
+    subscribeSuccess: {
       type: String,
       default: undefined
     },
