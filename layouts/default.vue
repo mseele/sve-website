@@ -8,6 +8,7 @@
     <app-footer />
     <client-only>
       <cookie-law />
+      <notification />
     </client-only>
   </v-app>
 </template>
@@ -19,7 +20,8 @@ export default {
     'app-navigation-drawer': () =>
       import('~/components/base/AppNavigationDrawer'),
     'app-footer': () => import('~/components/base/AppFooter'),
-    'cookie-law': () => import('~/components/base/CookieLaw.vue')
+    'cookie-law': () => import('~/components/base/CookieLaw.vue'),
+    notification: () => import('~/components/base/Notification.vue')
   },
   data() {
     return {
