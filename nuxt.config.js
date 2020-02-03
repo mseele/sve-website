@@ -3,11 +3,13 @@ import axios from 'axios'
 
 const backendURL = 'https://sve-backend.appspot.com'
 const eventsAPI = backendURL + '/api/events'
+const newsAPI = backendURL + '/api/news'
 
 export default {
   mode: 'universal',
   env: {
-    eventsAPI
+    eventsAPI,
+    newsAPI
   },
   /*
    ** Headers of the page

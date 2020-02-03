@@ -68,6 +68,7 @@
         </v-col>
         <emailSubscription
           :success-message="subscribeSuccess"
+          :news-type="newsType"
           class="pb-12"
         ></emailSubscription>
       </section>
@@ -87,6 +88,7 @@
             </v-col>
             <emailSubscription
               :success-message="subscribeSuccess"
+              :news-type="newsType"
               class="pb-12"
             ></emailSubscription>
           </v-row>
@@ -152,6 +154,10 @@ export default {
       default: undefined
     },
     subscribeSuccess: {
+      type: String,
+      default: undefined
+    },
+    newsType: {
       type: String,
       default: undefined
     },

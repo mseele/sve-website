@@ -4,6 +4,7 @@
     :events="events"
     :faqs="faqs"
     subscribe-success="Du erhälst automatisch eine E-Mail sobald neue Kursangebote online sind. Vielen Dank."
+    news-type="Fitness"
   >
     <template v-slot:header>
       <v-col cols="12" class="subtitle-1 font-weight-bold pb-0">

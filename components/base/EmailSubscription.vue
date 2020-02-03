@@ -40,9 +40,18 @@
 
 <script>
 import axios from 'axios'
-import { mapActions } from 'vuex'
 
 export default {
+  props: {
+    successMessage: {
+      type: String,
+      default: undefined
+    },
+    newsType: {
+      type: String,
+      default: undefined
+    }
+  },
   data() {
     return {
       email: '',
@@ -65,43 +74,33 @@ export default {
       const value = this.email.trim()
       if (this.validate(value)) {
         this.subscribeLoading = true
-        const comp = this
         const data = {
-          email: value
+          email: value,
+          type: this.newsType
         }
         axios
-          .post('/api/news/subscribe', data)
-          .then(function(response) {
-            comp.subscribeLoading = false
-            comp.email = ''
-            comp.showInfoSnackbar(this.successMessage)
+          .post(process.env.eventsAPI + '/subscribe', data)
+          .then((response) => {
+            this.subscribeLoading = false
+            this.email = ''
+            this.$store.commit('notification/showInfo', this.successMessage)
           })
-          .catch(function(error) {
+          .catch((error) => {
             // eslint-disable-next-line no-console
             console.log(error)
-            comp.subscribeLoading = false
-            comp.email = ''
-            comp.showErrorSnackbar(
+            this.subscribeLoading = false
+            this.email = ''
+            this.$store.commit(
+              'notification/showError',
               'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
             )
           })
       } else {
-        this.showErrorSnackbar(
+        this.$store.commit(
+          'notification/showError',
           'Bitte gib eine gültige E-Mail Addresse an. Vielen Dank.'
         )
       }
-    },
-    ...mapActions(['showInfoSnackbar', 'showErrorSnackbar'])
-  }
-}
-</script>
-
-<script>
-export default {
-  props: {
-    successMessage: {
-      type: String,
-      default: undefined
     }
   }
 }
