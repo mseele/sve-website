@@ -85,6 +85,15 @@
               </li>
             </ul>
           </v-col>
+          <v-col
+            v-if="event.externalOperator"
+            class="pb-0 pt-6"
+            cols="12"
+            sm="6"
+          >
+            <div class="font-weight-bold">Veranstalter</div>
+            <div>Förderverein SV Eutingen 1947 e.V.</div>
+          </v-col>
         </v-row>
       </v-container>
     </section>
