@@ -13,6 +13,11 @@
     <template v-if="events.length > 0">
       <section class="section_alt">
         <v-container>
+          <v-row>
+            <v-col cols="12">
+              <h2>{{ eventTitle }}</h2>
+            </v-col>
+          </v-row>
           <v-row justify="center">
             <v-col
               v-for="(event, index) in events"
@@ -63,27 +68,40 @@
         </v-container>
       </section>
       <section class="section">
-        <v-col cols="12" class="subtitle-1 text-center pt-12 pb-2">
-          <slot name="subscribeInfo"></slot>
-        </v-col>
-        <emailSubscription
-          :success-message="subscribeSuccess"
-          :news-type="newsType"
-          class="pb-12"
-        ></emailSubscription>
+        <v-container>
+          <v-row>
+            <v-col cols="12">
+              <h2>NEWSLETTER</h2>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" class="subtitle-1 text-center pb-2">
+              <slot name="subscribeInfo"></slot>
+            </v-col>
+          </v-row>
+          <v-row>
+            <emailSubscription
+              :success-message="subscribeSuccess"
+              :news-type="newsType"
+              class="pb-12"
+            ></emailSubscription>
+          </v-row>
+        </v-container>
       </section>
     </template>
     <template v-else>
       <section class="section_alt">
         <v-container>
+          <v-row>
+            <v-col cols="12">
+              <h2>{{ eventTitle }}</h2>
+            </v-col>
+          </v-row>
           <v-row justify="center">
-            <v-col
-              class="headline font-weight-bold text-center pt-12"
-              cols="12"
-            >
+            <v-col class="headline font-weight-bold text-center" cols="12">
               <slot name="infoEmpty"></slot>
             </v-col>
-            <v-col class="subtitle-1 text-center pt-1 pb-12" cols="12">
+            <v-col class="subtitle-1 text-center pt-1" cols="12">
               <slot name="subscribeInfoEmpty"></slot>
             </v-col>
             <emailSubscription
@@ -134,6 +152,10 @@ export default {
   },
   props: {
     title: {
+      type: String,
+      default: undefined
+    },
+    eventTitle: {
       type: String,
       default: undefined
     },

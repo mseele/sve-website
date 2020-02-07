@@ -1,6 +1,7 @@
 <template>
   <events
     title="EVENTS"
+    event-title="AKTUELLE EVENTS"
     :events="events"
     subscribe-success="Du erhälst automatisch eine E-Mail sobald neue Eventangebote online sind. Vielen Dank."
     news-type="Events"

@@ -1,6 +1,7 @@
 <template>
   <events
     title="FITNESS"
+    event-title="AKTUELLE KURSE"
     :events="events"
     :faqs="faqs"
     subscribe-success="Du erhälst automatisch eine E-Mail sobald neue Kursangebote online sind. Vielen Dank."
