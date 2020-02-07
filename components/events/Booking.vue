@@ -86,7 +86,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   props: {
@@ -131,11 +131,10 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        /*
         this.submitLoading = true
         const comp = this
         const data = {
-          id: this.eventId,
+          eventId: this.eventId,
           firstName: this.firstName,
           lastName: this.lastName,
           street: this.street,
@@ -151,19 +150,18 @@ export default {
           .then(function(response) {
             comp.submitLoading = false
             comp.$refs.form.reset()
-            comp.$emit('on-booking', response.data)
+            const type = response.data.success ? 'showInfo' : 'showError'
+            this.$store.commit('notification/' + type, response.data.message)
           })
           // eslint-disable-next-line handle-callback-err
           .catch(function(error) {
             comp.submitLoading = false
             comp.$refs.form.reset()
-            comp.$emit('on-booking', {
-              success: false,
-              message:
-                'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
-            })
+            this.$store.commit(
+              'notification/showError',
+              'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
+            )
           })
-        */
       }
     },
     notEmptyRule(value, name) {
