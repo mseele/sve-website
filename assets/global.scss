@@ -30,3 +30,9 @@ h2 {
 .section_alt {
   background-color: rgb(216, 216, 216);
 }
+
+// workaround for https://github.com/vuetifyjs/vuetify/issues/9130
+.v-card__text,
+.v-card__title {
+  word-break: normal;
+}
