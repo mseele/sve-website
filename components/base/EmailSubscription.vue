@@ -1,26 +1,50 @@
 <template>
-  <v-col class="mx-auto" cols="12" sm="8" md="6">
-    <v-text-field
-      v-model="email"
-      type="email"
-      solo
-      dark
-      flat
-      hide-details
-      label="E-Mail Adresse"
-    >
-      <template v-slot:append>
-        <v-btn
-          class="btn-subscribe"
-          color="primary"
-          :loading="subscribeLoading"
-          @click="subscribe"
+  <v-container>
+    <template v-if="displayOptions()">
+      <v-row justify="center" no-gutters>
+        <v-checkbox
+          v-model="newsTypes"
+          label="Allgemein"
+          value="General"
+        ></v-checkbox>
+        <v-checkbox
+          v-model="newsTypes"
+          label="Events"
+          value="Events"
+          class="px-4 px-sm-6 px-lg-10"
+        ></v-checkbox>
+        <v-checkbox
+          v-model="newsTypes"
+          label="Fitness"
+          value="Fitness"
+        ></v-checkbox>
+      </v-row>
+    </template>
+    <v-row justify="center">
+      <v-col cols="12" sm="8" lg="6">
+        <v-text-field
+          v-model="email"
+          type="email"
+          solo
+          dark
+          flat
+          hide-details
+          label="E-Mail Adresse"
         >
-          Infos erhalten
-        </v-btn>
-      </template>
-    </v-text-field>
-  </v-col>
+          <template v-slot:append>
+            <v-btn
+              class="btn-subscribe"
+              color="primary"
+              :loading="subscribeLoading"
+              @click="onClick()"
+            >
+              {{ isSubscription() ? 'Infos erhalten' : 'Abmelden' }}
+            </v-btn>
+          </template>
+        </v-text-field>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style>
@@ -50,10 +74,15 @@ export default {
     newsType: {
       type: String,
       default: undefined
+    },
+    type: {
+      type: String,
+      default: 'subscribe'
     }
   },
   data() {
     return {
+      newsTypes: [],
       email: '',
       emailRules: [
         (v) => !!v || 'Email wird benötigt',
@@ -66,20 +95,52 @@ export default {
       subscribeLoading: false
     }
   },
+  mounted() {
+    if (this.displayOptions()) {
+      if (this.isSubscription()) {
+        this.newsTypes.push('General', 'Events', 'Fitness')
+      }
+    } else {
+      this.newsTypes.push(this.newsType)
+    }
+  },
   methods: {
+    displayOptions() {
+      return typeof this.newsType === 'undefined'
+    },
+    isSubscription() {
+      return this.type === 'subscribe'
+    },
+    onClick() {
+      if (this.isSubscription()) {
+        this.subscribe()
+      } else {
+        this.unsubscribe()
+      }
+    },
     validate(value) {
       return value.length > 0 && /.+@.+/.test(value)
     },
-    subscribe() {
+    unsubscribe() {
       const value = this.email.trim()
-      if (this.validate(value)) {
+      if (this.newsTypes.length === 0) {
+        this.$store.commit(
+          'notification/showError',
+          'Bitte wähle mindestens eine Newletter Option aus. Vielen Dank.'
+        )
+      } else if (!this.validate(value)) {
+        this.$store.commit(
+          'notification/showError',
+          'Bitte gib eine gültige E-Mail Addresse an. Vielen Dank.'
+        )
+      } else {
         this.subscribeLoading = true
         const data = {
           email: value,
-          type: this.newsType
+          types: this.newsTypes
         }
         axios
-          .post(process.env.eventsAPI + '/subscribe', data)
+          .post(process.env.newsAPI + '/unsubscribe', data)
           .then((response) => {
             this.subscribeLoading = false
             this.email = ''
@@ -95,11 +156,43 @@ export default {
               'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
             )
           })
-      } else {
+      }
+    },
+    subscribe() {
+      const value = this.email.trim()
+      if (this.newsTypes.length === 0) {
+        this.$store.commit(
+          'notification/showError',
+          'Bitte wähle mindestens eine Newletter Option aus. Vielen Dank.'
+        )
+      } else if (!this.validate(value)) {
         this.$store.commit(
           'notification/showError',
           'Bitte gib eine gültige E-Mail Addresse an. Vielen Dank.'
         )
+      } else {
+        this.subscribeLoading = true
+        const data = {
+          email: value,
+          types: this.newsTypes
+        }
+        axios
+          .post(process.env.newsAPI + '/subscribe', data)
+          .then((response) => {
+            this.subscribeLoading = false
+            this.email = ''
+            this.$store.commit('notification/showInfo', this.successMessage)
+          })
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.log(error)
+            this.subscribeLoading = false
+            this.email = ''
+            this.$store.commit(
+              'notification/showError',
+              'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
+            )
+          })
       }
     }
   }
