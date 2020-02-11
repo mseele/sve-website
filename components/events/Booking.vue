@@ -72,8 +72,9 @@
           <v-row justify="center">
             <v-btn
               :disabled="!valid"
-              text
               rounded
+              depressed
+              color="primary"
               :loading="submitLoading"
               @click="submit"
               >{{ buttonText }}</v-btn
@@ -132,7 +133,6 @@ export default {
     submit() {
       if (this.$refs.form.validate()) {
         this.submitLoading = true
-        const comp = this
         const data = {
           eventId: this.eventId,
           firstName: this.firstName,
@@ -147,16 +147,16 @@ export default {
         }
         axios
           .post(process.env.eventsAPI + '/booking', data)
-          .then(function(response) {
-            comp.submitLoading = false
-            comp.$refs.form.reset()
+          .then((response) => {
+            this.submitLoading = false
+            this.$refs.form.reset()
             const type = response.data.success ? 'showInfo' : 'showError'
             this.$store.commit('notification/' + type, response.data.message)
           })
           // eslint-disable-next-line handle-callback-err
-          .catch(function(error) {
-            comp.submitLoading = false
-            comp.$refs.form.reset()
+          .catch((error) => {
+            this.submitLoading = false
+            this.$refs.form.reset()
             this.$store.commit(
               'notification/showError',
               'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
