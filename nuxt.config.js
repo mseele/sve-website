@@ -5,6 +5,20 @@ const backendURL = 'https://sve-backend.appspot.com'
 const eventsAPI = backendURL + '/api/events'
 const newsAPI = backendURL + '/api/news'
 
+function dynamicRoutes(convert) {
+  return axios.get(eventsAPI).then((res) => {
+    return res.data.map((event) => {
+      let category = 'events'
+      if (event.type === 'Fitness') {
+        category = 'fitness'
+      } else if (event.type === 'Events') {
+        category = 'events'
+      }
+      return convert(event, category)
+    })
+  })
+}
+
 export default {
   mode: 'universal',
   env: {
@@ -84,9 +98,18 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ['@bazzite/nuxt-optimized-images'],
+  modules: ['@bazzite/nuxt-optimized-images', '@nuxtjs/sitemap'],
   optimizedImages: {
     optimizeImages: true
+  },
+  sitemap: {
+    hostname: 'https://www.sv-eutingen.de',
+    gzip: true,
+    routes() {
+      return dynamicRoutes((event, category) => {
+        return '/' + category + '/' + event.id
+      })
+    }
   },
   /*
    ** vuetify module configuration
@@ -123,19 +146,11 @@ export default {
    */
   generate: {
     routes() {
-      return axios.get(eventsAPI).then((res) => {
-        return res.data.map((event) => {
-          let category = 'events'
-          if (event.type === 'Fitness') {
-            category = 'fitness'
-          } else if (event.type === 'Events') {
-            category = 'events'
-          }
-          return {
-            route: '/' + category + '/' + event.id,
-            payload: event
-          }
-        })
+      return dynamicRoutes((event, category) => {
+        return {
+          route: '/' + category + '/' + event.id,
+          payload: event
+        }
       })
     }
   }
