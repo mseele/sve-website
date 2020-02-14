@@ -88,7 +88,7 @@ export default {
           return 0
         })
         .reduce((acc, item) => {
-          const key = item.groupBy.charAt(0)
+          const key = item.groupBy.toUpperCase().charAt(0)
           if (!acc[key]) {
             acc[key] = []
           }
