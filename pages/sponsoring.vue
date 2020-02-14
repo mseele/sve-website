@@ -21,7 +21,7 @@
         <v-row
           v-for="(key, groupIndex) in Object.keys(sponsors)"
           :key="groupIndex"
-          :class="{ 'pt-6': groupIndex > 0 }"
+          :class="{ 'pt-6 pt-sm-8 pt-lg-10': groupIndex > 0 }"
         >
           <v-col cols="12">
             <h3>{{ key }}</h3>
