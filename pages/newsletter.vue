@@ -7,11 +7,11 @@
             <h2>NEWSLETTER ANMELDUNG</h2>
           </v-col>
           <v-col cols="12" class="subtitle-1">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet.
+            Halte Dich mit unseren Newslettern zu Teamsport, Events und/oder
+            Fitness immer auf dem neuesten Stand. Keine Sorge: Du wirst keine
+            wöchentlichen Spams von uns erhalten, sondern interessante,
+            gesammelte Informationen über unsere SVE-Angebot. Trage dafür bitte
+            hier Deine Mailadresse ein.
           </v-col>
         </v-row>
         <v-row justify="center">
@@ -29,11 +29,10 @@
             <h2>NEWSLETTER ABMELDUNG</h2>
           </v-col>
           <v-col cols="12" class="subtitle-1">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet.
+            Du möchtest Dich von unserem Newsletter abmelden? Schade. Trage
+            bitte hier die Mailadresse ein, mit der Du registriert bist und wir
+            nehmen Dich umgehend aus dem Verteiler. Danke für Dein Interesse in
+            der Vergangenheit!
           </v-col>
         </v-row>
         <v-row justify="center">
