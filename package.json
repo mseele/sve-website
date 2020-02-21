@@ -21,7 +21,7 @@
     "@nuxtjs/eslint-config": "^2.0.2",
     "@nuxtjs/eslint-module": "^1.1.0",
     "@nuxtjs/google-analytics": "^2.2.3",
-    "@nuxtjs/vuetify": "^1.10.3",
+    "@nuxtjs/vuetify": "^1.11.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
@@ -29,7 +29,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^8.0.0",
-    "imagemin-svgo": "^7.0.0",
+    "imagemin-svgo": "^7.1.0",
     "prettier": "^1.19.1"
   }
 }
