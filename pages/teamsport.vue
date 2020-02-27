@@ -31,7 +31,7 @@
             lg="4"
             xl="2"
           >
-            <teamInfo :value="item"></teamInfo>
+            <team-info :value="item"></team-info>
           </v-col>
         </v-row>
       </v-container>
@@ -58,7 +58,7 @@
             lg="4"
             xl="2"
           >
-            <teamInfo :value="item" :male="false"></teamInfo>
+            <team-info :value="item" :male="false"></team-info>
           </v-col>
         </v-row>
       </v-container>
@@ -86,7 +86,7 @@
             lg="4"
             xl="2"
           >
-            <teamInfo :value="item" :male="false"></teamInfo>
+            <team-info :value="item" :male="false"></team-info>
           </v-col>
         </v-row>
       </v-container>
@@ -114,7 +114,7 @@
             lg="4"
             xl="2"
           >
-            <teamInfo :value="item" :male="false"></teamInfo>
+            <team-info :value="item" :male="false"></team-info>
           </v-col>
         </v-row>
       </v-container>
@@ -142,7 +142,7 @@
             lg="4"
             xl="2"
           >
-            <teamInfo :value="item" :male="false"></teamInfo>
+            <team-info :value="item" :male="false"></team-info>
           </v-col>
         </v-row>
       </v-container>
@@ -168,7 +168,7 @@
             lg="4"
             xl="2"
           >
-            <teamInfo :value="item"></teamInfo>
+            <team-info :value="item"></team-info>
           </v-col>
         </v-row>
       </v-container>
@@ -177,9 +177,11 @@
 </template>
 
 <script>
+import teamInfo from '~/components/common/TeamInfo'
+
 export default {
   components: {
-    teamInfo: () => import('~/components/common/TeamInfo')
+    teamInfo
   },
   data() {
     return {

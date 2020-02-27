@@ -48,9 +48,11 @@
 </template>
 
 <script>
+import emailSubscription from '~/components/base/EmailSubscription'
+
 export default {
   components: {
-    emailSubscription: () => import('~/components/base/EmailSubscription')
+    emailSubscription
   },
   head() {
     return {

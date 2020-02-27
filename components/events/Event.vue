@@ -167,10 +167,11 @@
 
 <script>
 import axios from 'axios'
+import booking from '~/components/events/Booking'
 
 export default {
   components: {
-    booking: () => import('~/components/events/Booking')
+    booking
   },
   props: {
     event: {

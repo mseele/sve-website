@@ -14,14 +14,19 @@
 </template>
 
 <script>
+import appBar from '~/components/base/AppBar'
+import appNavigationDrawer from '~/components/base/AppNavigationDrawer'
+import appFooter from '~/components/base/AppFooter'
+import cookieLaw from '~/components/base/CookieLaw.vue'
+import notification from '~/components/base/Notification.vue'
+
 export default {
   components: {
-    'app-bar': () => import('~/components/base/AppBar'),
-    'app-navigation-drawer': () =>
-      import('~/components/base/AppNavigationDrawer'),
-    'app-footer': () => import('~/components/base/AppFooter'),
-    'cookie-law': () => import('~/components/base/CookieLaw.vue'),
-    notification: () => import('~/components/base/Notification.vue')
+    appBar,
+    appNavigationDrawer,
+    appFooter,
+    cookieLaw,
+    notification
   },
   data() {
     return {

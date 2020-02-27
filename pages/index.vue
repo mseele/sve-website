@@ -37,11 +37,14 @@
 </template>
 
 <script>
+import news from '~/components/sections/News'
+import join from '~/components/sections/Join'
+
 export default {
   layout: 'transparent',
   components: {
-    news: () => import('~/components/sections/News'),
-    join: () => import('~/components/sections/Join')
+    news,
+    join
   },
   head() {
     return {

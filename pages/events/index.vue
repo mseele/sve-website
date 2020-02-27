@@ -38,10 +38,11 @@
 
 <script>
 import axios from 'axios'
+import events from '~/components/events/Events'
 
 export default {
   components: {
-    events: () => import('~/components/events/Events')
+    events
   },
   async asyncData() {
     const res = await axios.get(process.env.eventsAPI)

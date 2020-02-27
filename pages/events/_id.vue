@@ -13,11 +13,12 @@
 
 <script>
 import axios from 'axios'
+import event from '~/components/events/Event'
 
 export default {
   layout: 'transparent',
   components: {
-    event: () => import('~/components/events/Event')
+    event
   },
   async asyncData({ params, error, payload }) {
     if (payload) {

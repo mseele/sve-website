@@ -49,9 +49,11 @@
 </style>
 
 <script>
+import imageViewer from '~/components/common/ImageViewer'
+
 export default {
   components: {
-    'image-viewer': () => import('~/components/common/ImageViewer')
+    imageViewer
   },
   computed: {
     items() {

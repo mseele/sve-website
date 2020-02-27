@@ -145,10 +145,11 @@
 
 <script>
 import axios from 'axios'
+import emailSubscription from '~/components/base/EmailSubscription'
 
 export default {
   components: {
-    emailSubscription: () => import('~/components/base/EmailSubscription')
+    emailSubscription
   },
   props: {
     title: {
