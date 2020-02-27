@@ -134,7 +134,13 @@
           </v-col>
           <v-col cols="12">
             <v-row justify="center" no-gutters>
-              <v-btn text rounded color="primary" to="/kontakt" nuxt>
+              <v-btn
+                text
+                rounded
+                color="primary"
+                :to="{ path: '/kontakt', query: { auswahl: 'kunstrasen' } }"
+                nuxt
+              >
                 Buchen Sie ganz unkompliziert über unsere Kontaktseite
               </v-btn>
             </v-row>
