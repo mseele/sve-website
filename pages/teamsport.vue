@@ -24,7 +24,7 @@
         </v-row>
         <v-row justify="center">
           <v-col
-            v-for="(item, index) in teams.herren"
+            v-for="(item, index) in teams().herren"
             :key="index"
             cols="12"
             sm="6"
@@ -51,7 +51,7 @@
         </v-row>
         <v-row justify="center">
           <v-col
-            v-for="(item, index) in teams.damen"
+            v-for="(item, index) in teams().damen"
             :key="index"
             cols="12"
             sm="6"
@@ -79,7 +79,7 @@
         </v-row>
         <v-row justify="center">
           <v-col
-            v-for="(item, index) in teams.jugend_herren"
+            v-for="(item, index) in teams().jugend_herren"
             :key="index"
             cols="12"
             sm="6"
@@ -107,7 +107,7 @@
         </v-row>
         <v-row justify="center">
           <v-col
-            v-for="(item, index) in teams.jugend_damen"
+            v-for="(item, index) in teams().jugend_damen"
             :key="index"
             cols="12"
             sm="6"
@@ -135,7 +135,7 @@
         </v-row>
         <v-row justify="center">
           <v-col
-            v-for="(item, index) in teams.kinder"
+            v-for="(item, index) in teams().kinder"
             :key="index"
             cols="12"
             sm="6"
@@ -161,7 +161,7 @@
         </v-row>
         <v-row justify="center">
           <v-col
-            v-for="(item, index) in teams.volleyball"
+            v-for="(item, index) in teams().volleyball"
             :key="index"
             cols="12"
             sm="6"
@@ -195,7 +195,7 @@ export default {
       ]
     }
   },
-  computed: {
+  methods: {
     teams() {
       return this.$store.state.teams
     }
