@@ -171,10 +171,9 @@
 
 <script>
 export default {
-  props: {
-    gcalWidth: {
-      type: Number,
-      default: 800
+  data() {
+    return {
+      gcalWidth: 800
     }
   },
   mounted() {
