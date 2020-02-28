@@ -58,7 +58,7 @@
             lg="4"
             xl="2"
           >
-            <team-info :value="item" :male="false"></team-info>
+            <team-info :value="item"></team-info>
           </v-col>
         </v-row>
       </v-container>
@@ -86,7 +86,7 @@
             lg="4"
             xl="2"
           >
-            <team-info :value="item" :male="false"></team-info>
+            <team-info :value="item"></team-info>
           </v-col>
         </v-row>
       </v-container>
@@ -114,7 +114,7 @@
             lg="4"
             xl="2"
           >
-            <team-info :value="item" :male="false"></team-info>
+            <team-info :value="item"></team-info>
           </v-col>
         </v-row>
       </v-container>
@@ -142,7 +142,7 @@
             lg="4"
             xl="2"
           >
-            <team-info :value="item" :male="false"></team-info>
+            <team-info :value="item"></team-info>
           </v-col>
         </v-row>
       </v-container>

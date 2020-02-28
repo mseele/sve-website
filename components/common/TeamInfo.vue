@@ -11,20 +11,22 @@
       </div>
     </v-card-text>
     <v-card-text class="pt-0">
-      <div v-if="male" class="caption">Ansprechpartner</div>
-      <div v-else class="caption">Ansprechpartnerin</div>
+      <div v-if="value.contact.female" class="caption">Ansprechpartnerin</div>
+      <div v-else class="caption">Ansprechpartner</div>
       <div class="subtitle-1 font-weight-medium pb-0 text--primary">
-        {{ value.contact }}
+        {{ value.contact.name }}
       </div>
     </v-card-text>
     <v-card-actions class="justify-center">
       <v-btn
-        v-if="value.contactLink"
         rounded
         text
         class="px-5"
         color="primary"
-        :to="value.contactLink"
+        :to="{
+          path: '/kontakt',
+          query: { auswahl: 'team', team: value.key }
+        }"
         nuxt
         >Kontakt</v-btn
       >
@@ -51,18 +53,8 @@ export default {
     value: {
       type: Object,
       default: () => {
-        return {
-          team: '',
-          league: '',
-          contact: '',
-          contactLink: null,
-          teamID: null
-        }
+        return {}
       }
-    },
-    male: {
-      type: Boolean,
-      value: true
     }
   }
 }
