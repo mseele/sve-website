@@ -10,9 +10,9 @@
             >Mit unserem “Projekt Kunstrasen” wurde eine top moderne
             Kunstrasenanlage (Groß- und Kleinspielfeld) inklusive Flutlicht
             errichtet. Diese Anlage bietet optimale Spielbedingungen auch in
-            Zeiten von Schnee, Regen oder Frost. Wir würden uns freuen, auch
-            Ihrem Verein / Ihrer Mannschaft diese Möglichkeit zur Verfügung
-            stellen zu können.
+            Zeiten von Schnee, Regen oder Frost.<br />
+            Wir würden uns freuen, auch Eurem Verein / Eurer Mannschaft diese
+            Möglichkeit zur Verfügung stellen zu können.
           </v-col>
         </v-row>
       </v-container>
@@ -29,7 +29,7 @@
             </div>
             <div>
               Die Platzgebühren sind unmittelbar vor Benutzung in bar zu
-              errichten. Sie erhalten eine Quittung.
+              errichten. Ihr erhaltet eine Quittung.
             </div>
           </v-col>
           <v-col cols="12" class="subtitle-1">
@@ -90,9 +90,9 @@
                   organisieren bzw. mitzubringen.
                 </li>
                 <li>
-                  Bitte informieren Sie den SV Eutingen so früh wie möglich,
-                  wenn Sie eine Buchungszeit absagen müssen, damit der Platz
-                  evtl. anderen Nutzern zur Verfügung gestellt werden kann.
+                  Bitte informiert den SV Eutingen so früh wie möglich, wenn Ihr
+                  eine Buchungszeit absagen müsst, damit der Platz evtl. anderen
+                  Nutzern zur Verfügung gestellt werden kann.
                 </li>
                 <li>
                   Verursachte Schäden sind dem SV Eutingen unverzüglich
@@ -117,10 +117,9 @@
             </span>
             <span>
               Der SV Eutingen hält sich Änderungen / Ausfall von Buchungszeiten
-              aufgrund von Witterungsverhältnissen vor. Bitte informieren Sie
-              sich bei entsprechender Witterung im Vorfeld über die
-              Verfügbarkeit des Platzes (Schiedsrichter und Mannschaften sind zu
-              informieren).
+              aufgrund von Witterungsverhältnissen vor. Bitte informiert Euch
+              bei entsprechender Witterung im Vorfeld über die Verfügbarkeit des
+              Platzes (Schiedsrichter und Mannschaften sind zu informieren).
             </span>
           </v-col>
         </v-row>
@@ -141,14 +140,15 @@
                 :to="{ path: '/kontakt', query: { auswahl: 'kunstrasen' } }"
                 nuxt
               >
-                Buchen Sie ganz unkompliziert über unsere Kontaktseite
+                Bucht ganz unkompliziert über unsere Kontaktseite
               </v-btn>
             </v-row>
           </v-col>
           <v-col cols="12">
-            Freie Buchungstermine für eine konkrete Anfrage entnehmen Sie dem
-            Belegungskalender. Im Falle einer erfolgreichen Buchung erhalten Sie
-            eine schriftliche Bestätigung inkl. der zu beachtenden Platzordnung.
+            Freie Buchungstermine für eine konkrete Anfrage entnehmt Ihr dem
+            Belegungskalender.<br />
+            Im Falle einer erfolgreichen Buchung erhaltet Ihr eine schriftliche
+            Bestätigung inkl. der zu beachtenden Platzordnung.
           </v-col>
         </v-row>
       </v-container>
