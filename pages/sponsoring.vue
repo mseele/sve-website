@@ -7,11 +7,19 @@
             <h2>SPONSORING</h2>
           </v-col>
           <v-col cols="12" class="subtitle-1">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet.
+            Unsere Sponsoren und Partner ermöglichen mit ihrer Bandenwerbung auf
+            unserer belebten Sportanlage das sportliche und kulturelle Angebot,
+            dass wir ehrenamtlich auf die Beine stellen. Deshalb fühlen wir uns
+            auch ihnen gegenüber verpflichtet, nehmen deren Dienstleistungen in
+            Anspruch und packen mit an, wenn bspw. eine Firmenfeier oder ein
+            Jubiläum ins Haus steht.<br />
+            Hast auch Du Interesse an einer solchen Partnerschaft? Dann wende
+            Dich bitte über das
+            <nuxt-link :to="{ path: '/kontakt', query: { auswahl: 'other' } }"
+              >Kontaktformular</nuxt-link
+            >
+            an unseren Vorsitzenden Sebastian Lazar, der für Gespräche gerne zur
+            Verfügung steht.
           </v-col>
         </v-row>
       </v-container>
