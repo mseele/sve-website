@@ -4,6 +4,7 @@ import axios from 'axios'
 const backendURL = 'https://sve-backend.appspot.com'
 const eventsAPI = backendURL + '/api/events'
 const newsAPI = backendURL + '/api/news'
+const contactAPI = backendURL + '/api/contact'
 
 function dynamicRoutes(convert) {
   return axios.get(eventsAPI).then((res) => {
@@ -23,7 +24,8 @@ export default {
   mode: 'universal',
   env: {
     eventsAPI,
-    newsAPI
+    newsAPI,
+    contactAPI
   },
   /*
    ** Headers of the page

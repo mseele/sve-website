@@ -4,7 +4,7 @@
       <v-col cols="12">
         <v-text-field
           v-model="name"
-          label="Name"
+          label="Vor- und Nachname"
           outlined
           required
           :rules="nameRules"
@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   props: {
     type: {
@@ -81,7 +83,7 @@ export default {
       phone: '',
       message: '',
       privacy: false,
-      nameRules: [(v) => !!v || 'Name wird benötigt'],
+      nameRules: [(v) => !!v || 'Vor- und Nachname wird benötigt'],
       messageRules: [(v) => !!v || 'Nachricht wird benötigt'],
       emailRules: [
         (v) => !!v || 'Email wird benötigt',
@@ -97,38 +99,35 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        /*
         this.submitLoading = true
-        const params = {
+        const data = {
+          type: this.type,
+          to: this.to,
           name: this.name.trim(),
           email: this.email.trim(),
           phone: this.phone ? this.phone.trim() : '',
-          message: this.message.trim().replace(/(?:\r\n|\r|\n)/g, '<br>')
+          message: this.message.trim()
         }
-        emailjs
-          .send(
-            'schminkwerk_smtp',
-            'schminkwerk_kontakt',
-            params,
-            'user_r8wSOoxW3oDgfcCvU8WUE'
-          )
+        axios
+          .post(process.env.contactAPI + '/message', data)
           .then((response) => {
             this.submitLoading = false
             this.$refs.form.reset()
-            this.snackbarColor = 'primary'
-            this.snackbarMessage = this.$t('contact.send_message.success')
-            this.snackbar = true
+            this.$store.commit(
+              'notification/showInfo',
+              'Danke für deine Nachricht. Wir melden uns umgehend bei Dir.'
+            )
           })
           .catch((error) => {
             // eslint-disable-next-line no-console
             console.log(error)
             this.submitLoading = false
             this.$refs.form.reset()
-            this.snackbarColor = 'error'
-            this.snackbarMessage = this.$t('contact.send_message.failure')
-            this.snackbar = true
+            this.$store.commit(
+              'notification/showError',
+              'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
+            )
           })
-        */
       }
     }
   }
