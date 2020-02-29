@@ -26,7 +26,7 @@ export const state = () => ({
       groupBy: 'Kreissparkasse'
     },
     {
-      name: 'Baisinger Bier Manufaktur Familie Teufel',
+      name: 'Baisinger Bier Manufaktur',
       url: 'https://www.baisinger.de/',
       groupBy: 'Baisinger'
     },
@@ -84,7 +84,7 @@ export const state = () => ({
       groupBy: 'Renk'
     },
     {
-      name: 'Zimmerei Chipsy Hartmut Schneidemesser',
+      name: 'Zimmerei Chipsy',
       groupBy: 'Chipsy'
     },
     {
@@ -93,17 +93,17 @@ export const state = () => ({
       groupBy: 'Euro-Expreß'
     },
     {
-      name: 'Feinkost Cengiz Irfan Cengiz',
+      name: 'Feinkost Cengiz',
       url: 'https://www.feinkost-cengiz.de/',
       groupBy: 'Cengiz'
     },
     {
-      name: 'Neckar-Sport-Horb Constanze Kittel',
+      name: 'Neckar-Sport-Horb',
       url: 'https://www.neckar-sport-horb.de/',
       groupBy: 'Neckar-Sport-Horb'
     },
     {
-      name: 'Gasthof zur Linde Adelisa Medjedovic',
+      name: 'Gasthof zur Linde',
       url: 'http://www.linde-eutingen.de/',
       groupBy: 'Linde'
     },
@@ -127,12 +127,12 @@ export const state = () => ({
       groupBy: 'D&S Fliesenleger'
     },
     {
-      name: 'as-Schwabe GmbH Kai Weingärtner',
+      name: 'as-Schwabe GmbH',
       url: 'https://www.as-schwabe.de/',
       groupBy: 'as-Schwabe'
     },
     {
-      name: 'Mini-Rock-Festival Tobias Abt',
+      name: 'Mini-Rock-Festival',
       url: 'https://mini-rock-festival.de/',
       groupBy: 'Mini-Rock-Festival'
     },
@@ -147,11 +147,11 @@ export const state = () => ({
       groupBy: 'Hochdorfer'
     },
     {
-      name: 'Getränke Creuzberger Annerose Creuzberger',
+      name: 'Getränke Creuzberger',
       groupBy: 'Creuzberger'
     },
     {
-      name: 'Haus am Talbach Jean-Marc Maier',
+      name: 'Haus am Talbach',
       url: 'https://unternehmensgruppe-maier.de/',
       groupBy: 'Maier'
     },
@@ -161,7 +161,7 @@ export const state = () => ({
       groupBy: 'Deuringer'
     },
     {
-      name: 'Zeltverleih Walz Alexander Walz',
+      name: 'Zeltverleih Walz',
       url: 'http://www.zeltverleihwalz.de/',
       groupBy: 'Walz'
     },
