@@ -45,6 +45,10 @@ export const state = () => ({
       to: '/datenschutz'
     },
     {
+      title: 'Mitglied werden',
+      to: '/mitgliedschaft'
+    },
+    {
       title: 'Kontakt',
       to: '/kontakt'
     },
