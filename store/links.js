@@ -27,6 +27,10 @@ export const state = () => ({
       to: '/sponsoring'
     },
     {
+      title: 'Leitbild',
+      to: '/leitbild'
+    },
+    {
       title: 'Gaststätte',
       to: '/gaststaette'
     }
