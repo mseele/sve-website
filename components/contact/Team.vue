@@ -18,19 +18,33 @@
         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
         voluptua. At
       </p>
-      <div v-if="contactName(team) != null" class="pt-4">
-        <h4>{{ contactName(team) }}</h4>
-        <touches :touches="contactTouches(team)"></touches>
-      </div>
       <div v-if="coachName(team) != null" class="pt-4">
         <h4>{{ coachName(team) }}</h4>
         <touches :touches="coachTouches(team)"></touches>
       </div>
+      <div v-if="contactName(team) != null" class="pt-4">
+        <h4>{{ contactName(team) }}</h4>
+        <touches :touches="contactTouches(team)"></touches>
+      </div>
     </v-col>
     <v-col v-if="team != null" cols="12" lg="6">
       <h3>Nachricht senden</h3>
-      <!-- todo: to need to be corrected -->
-      <send-message class="pt-6"></send-message>
+      <v-row v-if="toItems.length > 1" no-gutters class="pt-6">
+        <v-col cols="12">
+          <v-select
+            v-model="to"
+            label="Wenn möchtest du kontaktieren?"
+            :items="toItems"
+            item-text="text"
+            item-value="value"
+            outlined
+          ></v-select>
+        </v-col>
+      </v-row>
+      <send-message
+        :to="to"
+        :class="{ 'pt-6': toItems.length <= 1 }"
+      ></send-message>
     </v-col>
   </v-row>
 </template>
@@ -47,6 +61,8 @@ export default {
   data() {
     return {
       team: null,
+      toItems: [],
+      to: null,
       groups: [
         { key: 'herren', text: 'Herrenfussball' },
         { key: 'damen', text: 'Damenfussball' },
@@ -55,6 +71,32 @@ export default {
         { key: 'kinder', text: 'Kinderfussball' },
         { key: 'volleyball', text: 'Volleyball' }
       ]
+    }
+  },
+  watch: {
+    team(val) {
+      const items = []
+      if (val != null) {
+        const team = this.findTeam(val)
+        if (team != null) {
+          if (team.coach && team.coach.email) {
+            items.push({
+              value: team.coach.email,
+              text: this.fullyQualifiedCoachName(team.coach)
+            })
+          }
+          if (team.contact && team.contact.email) {
+            items.push({
+              value: team.contact.email,
+              text: team.contact.name
+            })
+          }
+        }
+      }
+      this.toItems = items
+      this.$nextTick(() => {
+        this.to = items.length > 0 ? items[0].value : 'info@sv-eutingen.de'
+      })
     }
   },
   mounted() {
@@ -76,8 +118,7 @@ export default {
     coachName(key) {
       const team = this.findTeam(key)
       if (team != null && team.coach != null) {
-        const prefix = team.coach.female ? 'Trainerin' : 'Trainer'
-        return prefix + ' ' + team.coach.name
+        return this.fullyQualifiedCoachName(team.coach)
       }
       return null
     },
@@ -145,6 +186,10 @@ export default {
         }
       }
       return null
+    },
+    fullyQualifiedCoachName(coach) {
+      const prefix = coach.female ? 'Trainerin' : 'Trainer'
+      return prefix + ' ' + coach.name
     }
   }
 }
