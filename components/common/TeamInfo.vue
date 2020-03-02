@@ -11,6 +11,15 @@
       </div>
     </v-card-text>
     <v-card-text class="pt-0">
+      <div v-if="value.coach && value.coach.female" class="caption">
+        Trainerin
+      </div>
+      <div v-else class="caption">Trainer</div>
+      <div class="subtitle-1 font-weight-medium pb-0 text--primary">
+        {{ value.coach ? value.coach.name : '-' }}
+      </div>
+    </v-card-text>
+    <v-card-text class="pt-0">
       <div v-if="value.contact.female" class="caption">Ansprechpartnerin</div>
       <div v-else class="caption">Ansprechpartner</div>
       <div class="subtitle-1 font-weight-medium pb-0 text--primary">
