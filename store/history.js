@@ -1,7 +1,7 @@
 export const state = () => ({
   nodes: [
     {
-      date: '27.-28. September 2019',
+      date: '27. - 28. September 2019',
       text:
         'Das neue Haus am Talbach (Pflegeheim) wird auf dem alten Trainingsplatz des SVE eingeweiht. Der Bau dieser in der Gemeinde bisher nicht verfügbaren sozialen Einrichtung startete im März 2018. Von nun an können Menschen ihren Lebensabend dort verbringen können. Der SVE übernimmt die Bewirtung.',
       images: [
@@ -12,7 +12,7 @@ export const state = () => ({
       ]
     },
     {
-      date: '2.-5. August 2019',
+      date: '2. - 5. August 2019',
       text:
         'Der SVE veranstaltet bei bestem Sommerwetter das traditionelle Gäupokalturnier und hat lockt hunderte Gäste an. Turniersieger wird der SV Neustetten mit einem 1:0-Sieg gegen den SV Vollmaringen. Den dritten Platz erreicht der TuS Ergenzingen, Gastgeber Eutingen wird Vierter.',
       images: [
@@ -45,7 +45,7 @@ export const state = () => ({
       ]
     },
     {
-      date: '12.-14. Oktober 2018',
+      date: '12. - 14. Oktober 2018',
       text:
         'Mit zahllosen Mitgliedern und Helfern investierte der Verein von Mai 2016 bis heute 15.000 Arbeitsstunden. Zäune abreißen, Bäume fällen, Sträucher pflanzen, Parkplätze pflastern, Dach aufstellen, Zwischenwände einziehen, Dämmung verbauen, Systemdecken montieren, Lüftungskanäle dämmen....nichts, was es nicht zu tun gab. Und nun? Nun stand der Verein vor dem Abschluss einer zehnjährigen Sache.<br />Ein ganzer Verein, das ganze Dorf, die ganze Gemeinde haben Mut bewiesen und etwas Großartiges auf die Beine gestellt. An einem tollen Festwochenende feiert der SVE aber auch die gesamte Gemeinde Eutingen die Einweihung der neuen Sportanlagen und des Vereinsheims. Am Freitagabend bedankten sich die zahlreichen Helfer, Firmen und Projektbeteiligten mit stehenden Ovationen bei den Vorstandsmitgliedern und Motoren des Projekts Thomas Akermann, Jörg Teufel, Franz Nesch, Dietmar Kurbjun und Wolfgang Nesch. Am Samstag und Sonntag wurde mit Kinder-, Jugend-, und Erwachsenenspielen ein breites Sportprogramm geboten. Au der Anlage fanden Führungen statt und die Gäste konnte es sich bei bestem Oktoberwetter und toller Verpflegung gut gehen lassen.',
       images: [
@@ -172,7 +172,7 @@ export const state = () => ({
     {
       date: '2011',
       text:
-        'Die Gemeinde erarbeitete ein Konzept, dass nicht nur den Bau eines Kunstrasenplatzes vorsah, sondern auch den Neubau des Vereinsheims und gleichzeitig eine neue Nutzung des alten SVE-Geländes in der Eutinger Markt.- bzw. Stauffenbergstraße enthielt. Einkaufsmarkt und Pflegeheim sollten dort entstehen. Ersteres war dafür nicht geeignet. Für ein Pflegeheim war die neu vorhandene Fläche des alten Trainingsplatzes rasch verkauft.'
+        'Die Gemeinde erarbeitete ein Konzept, dass nicht nur den Bau eines Kunstrasenplatzes vorsah, sondern auch den Neubau des Vereinsheims und gleichzeitig eine neue Nutzung des alten SVE-Geländes in der Eutinger Markt- bzw. Stauffenbergstraße enthielt. Einkaufsmarkt und Pflegeheim sollten dort entstehen. Ersteres war dafür nicht geeignet. Für ein Pflegeheim war die neu vorhandene Fläche des alten Trainingsplatzes rasch verkauft.'
     },
     {
       date: '7. Juni 2009',
