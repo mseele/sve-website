@@ -1,8 +1,8 @@
 <template>
   <common :touches="touches">
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-    eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-    voluptua. At
+    Bei allen anderen Themen und Anliegen in Zusammenhang mit unserem Verein
+    kannst Du diese Kanäle nutzen. Wir bearbeiten Dein Anliegen
+    schnellstmöglich.
   </common>
 </template>
 

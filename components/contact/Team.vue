@@ -14,9 +14,9 @@
     <v-col v-if="team != null" cols="12" lg="6">
       <h3>Kontakt aufnehmen</h3>
       <p class="pt-6">
-        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-        eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-        voluptua. At
+        Unsere Ansprechpartner stehen Dir für sämtliche Fragen rund um unseren
+        Spielbetrieb zur Verfügung. Du erreichst Sie über folgende Kanäle oder
+        kannst Ihnen ganz einfach eine Nachricht per Kontaktformular enden.
       </p>
       <div v-if="coachName(team) != null" class="pt-4">
         <h4>{{ coachName(team) }}</h4>

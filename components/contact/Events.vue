@@ -1,8 +1,8 @@
 <template>
   <common type="Events" to="events@sv-eutingen.de" :touches="touches">
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-    eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-    voluptua. At
+    Du hast Fragen rund um unser Eventangebot? Dann nutze diese Kanäle um direkt
+    mit den zuständigen Personen bei uns im Verein Kontakt aufzunehmen. Wir
+    bearbeiten Dein Anliegen schnellstmöglich.
   </common>
 </template>
 

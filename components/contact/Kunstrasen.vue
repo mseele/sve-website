@@ -4,9 +4,12 @@
     to="kunstrasen.sveutingen@gmail.com"
     :touches="touches"
   >
-    Du kannst über folgende Kanäle mit uns in Kontakt treten. Wir freuen uns auf
-    deine Anfrage bla bla bla<br />
-    Organisator der Kunstrasenbuchungen ist Max Schmollinger.
+    <div class="pb-4">
+      Über diese Kanäle kannst Du eine Buchungsanfrage für unseren
+      Kunstrasenplatz starten. Unser Ansprechpartner setzt sich dann direkt mit
+      Dir in Verbindung und klärt alle Details.
+    </div>
+    <h4>Ansprechpartner Max Schmollinger</h4>
   </common>
 </template>
 

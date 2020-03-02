@@ -1,8 +1,8 @@
 <template>
   <common to="ingo1508@gmx.de" :touches="touches">
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-    eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-    voluptua. At
+    Du hast Fragen oder Buchungswünsche rund um unsere Gaststätte Auszeit? Über
+    diese Kanäle kannst Du direkt mit unseren Pächtern in Kontakt treten. Wir
+    freuen uns, Dich in der "Auszeit" begrüßen zu dürfen.
   </common>
 </template>
 
