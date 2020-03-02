@@ -1,6 +1,101 @@
 export const state = () => ({
   nodes: [
     {
+      date: '27.-28. September 2019',
+      text:
+        'Das neue Haus am Talbach (Pflegeheim) wird auf dem alten Trainingsplatz des SVE eingeweiht. Der Bau dieser in der Gemeinde bisher nicht verfügbaren sozialen Einrichtung startete im März 2018. Von nun an können Menschen ihren Lebensabend dort verbringen können. Der SVE übernimmt die Bewirtung.',
+      images: [
+        {
+          src: require('~/assets/history/2019-09-1.jpg'),
+          lazy: require('~/assets/history/2019-09-1-min.jpg?inline')
+        }
+      ]
+    },
+    {
+      date: '2.-5. August 2019',
+      text:
+        'Der SVE veranstaltet bei bestem Sommerwetter das traditionelle Gäupokalturnier und hat lockt hunderte Gäste an. Turniersieger wird der SV Neustetten mit einem 1:0-Sieg gegen den SV Vollmaringen. Den dritten Platz erreicht der TuS Ergenzingen, Gastgeber Eutingen wird Vierter.',
+      images: [
+        {
+          src: require('~/assets/history/2019-08-1.jpg'),
+          lazy: require('~/assets/history/2019-08-1-min.jpg?inline')
+        }
+      ]
+    },
+    {
+      date: '28. April 2019',
+      text:
+        'Nach 15 Jahren herausragender Vorstandsarbeit werden die Vorstände Thomas Akermann, Jörg Teufel und Franz Nesch sowie viele engagierte Ausschussmitglieder bei der Jahreshauptversammlung aus ihren Ämtern verabschiedet. In ihrer Amtszeit wurden die größten Baumaßnahmen und viele sportlichen Höhepunkte erfolgreich gemeistert.<br />Mit Sebastian Lazar, Dietmar Kurbjun und Dominik Rakoczy übernimmt ein neuer Vorstand die Vereinsgeschicke. Ebenso beginnen viele junge Ausschussmitglieder ihr Engagement im Verein.',
+      images: [
+        {
+          src: require('~/assets/history/2019-04-1.jpg'),
+          lazy: require('~/assets/history/2019-04-1-min.jpg?inline')
+        }
+      ]
+    },
+    {
+      date: '27. Dezember 2018',
+      text:
+        'Mit einer legendären Abrissparty verabschiedet sich der SVE von seinem alten Vereinsheim, in dem über 50 Jahre Gemeinschaft gelebt und Sport gefeiert wurde.',
+      images: [
+        {
+          src: require('~/assets/history/2018-12-1.jpg'),
+          lazy: require('~/assets/history/2018-12-1-min.jpg?inline')
+        }
+      ]
+    },
+    {
+      date: '12.-14. Oktober 2018',
+      text:
+        'Mit zahllosen Mitgliedern und Helfern investierte der Verein von Mai 2016 bis heute 15.000 Arbeitsstunden. Zäune abreißen, Bäume fällen, Sträucher pflanzen, Parkplätze pflastern, Dach aufstellen, Zwischenwände einziehen, Dämmung verbauen, Systemdecken montieren, Lüftungskanäle dämmen....nichts, was es nicht zu tun gab. Und nun? Nun stand der Verein vor dem Abschluss einer zehnjährigen Sache.<br />Ein ganzer Verein, das ganze Dorf, die ganze Gemeinde haben Mut bewiesen und etwas Großartiges auf die Beine gestellt. An einem tollen Festwochenende feiert der SVE aber auch die gesamte Gemeinde Eutingen die Einweihung der neuen Sportanlagen und des Vereinsheims. Am Freitagabend bedankten sich die zahlreichen Helfer, Firmen und Projektbeteiligten mit stehenden Ovationen bei den Vorstandsmitgliedern und Motoren des Projekts Thomas Akermann, Jörg Teufel, Franz Nesch, Dietmar Kurbjun und Wolfgang Nesch. Am Samstag und Sonntag wurde mit Kinder-, Jugend-, und Erwachsenenspielen ein breites Sportprogramm geboten. Au der Anlage fanden Führungen statt und die Gäste konnte es sich bei bestem Oktoberwetter und toller Verpflegung gut gehen lassen.',
+      images: [
+        {
+          src: require('~/assets/history/2018-10-1.jpg'),
+          lazy: require('~/assets/history/2018-10-1-min.jpg?inline')
+        },
+        {
+          src: require('~/assets/history/2018-10-2.jpg'),
+          lazy: require('~/assets/history/2018-10-2-min.jpg?inline')
+        }
+      ]
+    },
+    {
+      date: '18. September 2018',
+      text:
+        'Kurz vor der Einweihung flutet ein Starkregen große Teile des neuen Sportgeländes. Glück im Unglück, da das Gebäude verschont blieb und die Mannschaft der Eutinger Feuerwehr schnell zur Stelle war und größere Schäden verhinderte.',
+      images: [
+        {
+          src: require('~/assets/history/2018-09-1.jpg'),
+          lazy: require('~/assets/history/2018-09-1-min.jpg?inline')
+        },
+        {
+          src: require('~/assets/history/2018-09-2.jpg'),
+          lazy: require('~/assets/history/2018-09-2-min.jpg?inline')
+        }
+      ]
+    },
+    {
+      date: 'März 2018',
+      text:
+        'Spatenstich für den Bau des neuen Pflegeheims auf dem alten Trainingsplatz des SVE.'
+    },
+    {
+      date: 'Juli 2017',
+      text:
+        'Die Arbeitsbelastung des SVE potenzierte sich ab jetzt mit dem Spatenstich für das neue Vereinsheim. In der Zwischenzeit stiegen die Damen des SVE in die Verbandsliga auf, die Herren von der Bezirksliga in die Kreisliga ab, ein Jahr später wieder in die Bezirksliga auf und 2017/18 wieder ab. Achterbahn der Gefühle auf dem Platz, viel zu tun neben dem Platz.'
+    },
+    {
+      date: 'November 2016',
+      text:
+        'Die Sportplätze des "Projekt Kunstrasen" sind fertig gestellt. Von nun an profitieren Kinder und Erwachsene von den neuen Plätzen: guter Sport auf Kunstrasen statt Schlamm und Matsch.',
+      images: [
+        {
+          src: require('~/assets/history/kunstrasen-2016-1.jpg'),
+          lazy: require('~/assets/history/kunstrasen-2016-1-min.jpg?inline')
+        }
+      ]
+    },
+    {
       date: '31. Juli 2016',
       text:
         'Die 1. Mannschaft gewinnt das Ortsteilpokalturnier der Gemeinde Eutingen auf heimischem Platz.',
@@ -47,6 +142,15 @@ export const state = () => ({
       ]
     },
     {
+      date: 'Mai 2015',
+      text: 'Auch der Gemeinderat stimmt den Baumaßnahmen zu.'
+    },
+    {
+      date: 'April 2014',
+      text:
+        'Der Sportverein Eutingen stimmt in einer außerordentlichen Mitgliedsversammlung dem Jahrhunderprojekt Kunstrasenbau, Neubau des Vereinsheims und Sanierung des Rasenplatzes mit einer Gesamtsumme von 2.553.000 € zu. Die Gemeinde finanzierte davon rund 1.345.000 €.'
+    },
+    {
       date: '29. Mai 2011',
       text:
         'Der SVE ist zurück in der Bezirksliga! Bereits am vorletzten Spieltag machen die Herren des SVE mit Trainer Mehmet Özkoyuncu die Meisterschaft und den damit verbundenen Aufstieg in die Bezirksliga perfekt. Das Spiel gegen die SF Salzstetten 2 wurde mit 6:0 gewonnen. Torschützen: 2 x Mehmet Özkoyuncu, 2 x Nico la Russa, Keven Schmollinger und Erdin Bas.',
@@ -66,6 +170,11 @@ export const state = () => ({
       ]
     },
     {
+      date: '2011',
+      text:
+        'Die Gemeinde erarbeitete ein Konzept, dass nicht nur den Bau eines Kunstrasenplatzes vorsah, sondern auch den Neubau des Vereinsheims und gleichzeitig eine neue Nutzung des alten SVE-Geländes in der Eutinger Markt.- bzw. Stauffenbergstraße enthielt. Einkaufsmarkt und Pflegeheim sollten dort entstehen. Ersteres war dafür nicht geeignet. Für ein Pflegeheim war die neu vorhandene Fläche des alten Trainingsplatzes rasch verkauft.'
+    },
+    {
       date: '7. Juni 2009',
       text:
         'Der SVE hat die Rückkehr in die Kreisliga A unter Trainer Bujar Shala geschafft.',
@@ -79,6 +188,11 @@ export const state = () => ({
           lazy: require('~/assets/history/2009-2-min.jpg?inline')
         }
       ]
+    },
+    {
+      date: 'September 2007',
+      text:
+        'Die SVE-Vorstandschaft bespricht erstmals mit der Gemeinde Eutingen über die Möglichkeiten eines Kunstrasenplatzes. Der Spielbetrieb mit vielen Mannschaften im Kinder-, Damen-, Herrenbereich hinterließ Spuren im 60 Jahre alten Vereinsheim und dem Trainingsplatz. Es folgten eine schwere Finanzkrise und heftige Spaßmaßnahmen. Kurzfristig wurde es nichts mit dem SVE-Wunsch Kunstrasen.'
     },
     {
       date: '20. Juni 1998',
