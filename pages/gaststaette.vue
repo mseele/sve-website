@@ -49,6 +49,7 @@
             <a
               href="https://fb.com/Auszeit-Eutingen-981850018516219"
               target="_blank"
+              rel="noreferrer"
               >Facebook-Seite</a
             >
             der Auszeit Eutingen.</v-col

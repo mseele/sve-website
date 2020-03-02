@@ -102,8 +102,8 @@
           <p><strong>E-Mail-Adresse</strong>: info@sv-eutingen.de</p>
           <p>
             <strong>Impressum</strong>:
-            <a href="https://sv-eutingen.de/impressum" target="_blank"
-              >https://sv-eutingen.de/impressum</a
+            <a href="https://www.sv-eutingen.de/impressum" target="_blank"
+              >https://www.sv-eutingen.de/impressum</a
             >
           </p>
         </v-col>
@@ -337,6 +337,7 @@
             <a
               href="https://ec.europa.eu/info/law/law-topic/data-protection/international-dimension-data-protection_de"
               target="_blank"
+              rel="noreferrer"
               >https://ec.europa.eu/info/law/law-topic/data-protection/international-dimension-data-protection_de</a
             >
             ).
@@ -448,11 +449,17 @@
             Cookies zu Zwecken des Onlinemarketings kann auch mittels einer
             Vielzahl von Diensten, vor allem im Fall des Trackings, über die
             Webseiten
-            <a href="https://optout.aboutads.info" target="_blank"
+            <a
+              href="https://optout.aboutads.info"
+              target="_blank"
+              rel="noreferrer"
               >https://optout.aboutads.info</a
             >
             und
-            <a href="https://www.youronlinechoices.com/" target="_blank"
+            <a
+              href="https://www.youronlinechoices.com/"
+              target="_blank"
+              rel="noreferrer"
               >https://www.youronlinechoices.com/</a
             >
             erklärt werden. Daneben können Sie weitere Widerspruchshinweise im
@@ -875,16 +882,28 @@
               empfehlen daher zusätzlich die folgenden Opt-Out-Möglichkeiten,
               die zusammenfassend auf jeweilige Gebiete gerichtet angeboten
               werden: a) Europa:
-              <a href="https://www.youronlinechoices.eu" target="_blank"
+              <a
+                href="https://www.youronlinechoices.eu"
+                target="_blank"
+                rel="noreferrer"
                 >https://www.youronlinechoices.eu</a
               >. b) Kanada:
-              <a href="https://www.youradchoices.ca/choices" target="_blank"
+              <a
+                href="https://www.youradchoices.ca/choices"
+                target="_blank"
+                rel="noreferrer"
                 >https://www.youradchoices.ca/choices</a
               >. c) USA:
-              <a href="https://www.aboutads.info/choices" target="_blank"
+              <a
+                href="https://www.aboutads.info/choices"
+                target="_blank"
+                rel="noreferrer"
                 >https://www.aboutads.info/choices</a
               >. d) Gebietsübergreifend:
-              <a href="https://optout.aboutads.info" target="_blank"
+              <a
+                href="https://optout.aboutads.info"
+                target="_blank"
+                rel="noreferrer"
                 >https://optout.aboutads.info</a
               >.
             </li>
@@ -899,25 +918,32 @@
               <a
                 href="https://marketingplatform.google.com/intl/de/about/analytics/"
                 target="_blank"
+                rel="noreferrer"
                 >https://marketingplatform.google.com/intl/de/about/analytics/</a
               >; Datenschutzerklärung:
-              <a href="https://policies.google.com/privacy" target="_blank"
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noreferrer"
                 >https://policies.google.com/privacy</a
               >; Privacy Shield (Gewährleistung Datenschutzniveau bei
               Verarbeitung von Daten in den USA):
               <a
                 href="https://www.privacyshield.gov/participant?id=a2zt000000001L5AAI&status=Active"
                 target="_blank"
+                rel="noreferrer"
                 >https://www.privacyshield.gov/participant?id=a2zt000000001L5AAI&status=Active</a
               >; Widerspruchsmöglichkeit (Opt-Out): Opt-Out-Plugin:
               <a
                 href="https://tools.google.com/dlpage/gaoptout?hl=de"
                 target="_blank"
+                rel="noreferrer"
                 >https://tools.google.com/dlpage/gaoptout?hl=de</a
               >, Einstellungen für die Darstellung von Werbeeinblendungen:
               <a
                 href="https://adssettings.google.com/authenticated"
                 target="_blank"
+                rel="noreferrer"
                 >https://adssettings.google.com/authenticated</a
               >.
             </li>
@@ -1002,22 +1028,30 @@
               Facebook Ireland Ltd., 4 Grand Canal Square, Grand Canal Harbour,
               Dublin 2, Irland, Mutterunternehmen: Facebook, 1 Hacker Way, Menlo
               Park, CA 94025, USA; Website:
-              <a href="https://www.facebook.com" target="_blank"
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noreferrer"
                 >https://www.facebook.com</a
               >; Datenschutzerklärung:
-              <a href="https://www.facebook.com/about/privacy" target="_blank"
+              <a
+                href="https://www.facebook.com/about/privacy"
+                target="_blank"
+                rel="noreferrer"
                 >https://www.facebook.com/about/privacy</a
               >; Privacy Shield (Gewährleistung Datenschutzniveau bei
               Verarbeitung von Daten in den USA):
               <a
                 href="https://www.privacyshield.gov/participant?id=a2zt0000000GnywAAC&status=Active"
                 target="_blank"
+                rel="noreferrer"
                 >https://www.privacyshield.gov/participant?id=a2zt0000000GnywAAC&status=Active</a
               >; Widerspruchsmöglichkeit (Opt-Out): Einstellungen für
               Werbeanzeigen:
               <a
                 href="https://www.facebook.com/settings?tab=ads"
                 target="_blank"
+                rel="noreferrer"
                 >https://www.facebook.com/settings?tab=ads</a
               >; Zusätzliche Hinweise zum Datenschutz: Vereinbarung über
               gemeinsame Verarbeitung personenbezogener Daten auf
@@ -1025,11 +1059,13 @@
               <a
                 href="https://www.facebook.com/legal/terms/page_controller_addendum"
                 target="_blank"
+                rel="noreferrer"
                 >https://www.facebook.com/legal/terms/page_controller_addendum</a
               >, Datenschutzhinweise für Facebook-Seiten:
               <a
                 href="https://www.facebook.com/legal/terms/information_about_page_insights_data"
                 target="_blank"
+                rel="noreferrer"
                 >https://www.facebook.com/legal/terms/information_about_page_insights_data</a
               >.
             </li>
@@ -1297,6 +1333,7 @@
               href="https://datenschutz-generator.de/?l=de"
               title="Rechtstext von Dr. Schwenke - für weitere Informationen bitte anklicken."
               target="_blank"
+              rel="noreferrer"
               >Erstellt mit kostenlosem Datenschutz-Generator.de von Dr. Thomas
               Schwenke</a
             >

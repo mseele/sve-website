@@ -48,6 +48,7 @@
                   :href="item.url"
                   class="sponsor"
                   target="_blank"
+                  rel="noopener"
                 >
                   {{ item.name }}
                 </a>

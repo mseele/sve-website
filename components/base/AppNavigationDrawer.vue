@@ -8,6 +8,7 @@
             class="mx-4"
             :href="link.to"
             target="_blank"
+            rel="noreferrer"
             small
             text
             icon

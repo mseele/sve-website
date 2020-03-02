@@ -50,6 +50,7 @@
             value.teamID
         "
         target="_blank"
+        rel="noreferrer"
         >Fussball.de</v-btn
       >
     </v-card-actions>

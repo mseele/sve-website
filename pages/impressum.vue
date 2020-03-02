@@ -49,7 +49,10 @@
             >:
           </p>
           <p>
-            <a href="https://facebook.com/sveutingen" target="_blank"
+            <a
+              href="https://facebook.com/sveutingen"
+              target="_blank"
+              rel="noreferrer"
               >https://facebook.com/sveutingen</a
             >
           </p>
@@ -73,6 +76,7 @@
               href="https://datenschutz-generator.de/?l=de"
               title="Rechtstext von Dr. Schwenke - für weitere Informationen bitte anklicken."
               target="_blank"
+              rel="noreferrer"
               >Erstellt mit kostenlosem Datenschutz-Generator.de von Dr. Thomas
               Schwenke</a
             >
