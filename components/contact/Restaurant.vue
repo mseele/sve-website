@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mdiPhone, mdiEmail } from '@mdi/js'
 import common from '~/components/contact/Common'
 
 export default {
@@ -17,12 +18,12 @@ export default {
     return {
       touches: [
         {
-          icon: 'mdi-phone',
+          icon: mdiPhone,
           text: '07459 1204',
           href: 'tel:+4974591204'
         },
         {
-          icon: 'mdi-email',
+          icon: mdiEmail,
           text: 'ingo1508@gmx.de',
           href: 'mailto:ingo1508@gmx.de'
         }

@@ -57,7 +57,7 @@
           </v-carousel-item>
         </v-carousel>
         <v-btn absolute top right icon dark @click="index = null">
-          <v-icon>mdi-close</v-icon>
+          <v-icon>{{ mdiClose }}</v-icon>
         </v-btn>
       </v-sheet>
     </v-dialog>
@@ -65,6 +65,8 @@
 </template>
 
 <script>
+import { mdiClose } from '@mdi/js'
+
 export default {
   props: {
     height: {
@@ -78,7 +80,8 @@ export default {
   },
   data() {
     return {
-      index: null
+      index: null,
+      mdiClose
     }
   },
   computed: {

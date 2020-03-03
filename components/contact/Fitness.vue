@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mdiEmail } from '@mdi/js'
 import common from '~/components/contact/Common'
 
 export default {
@@ -17,7 +18,7 @@ export default {
     return {
       touches: [
         {
-          icon: 'mdi-email',
+          icon: mdiEmail,
           text: 'fitness@sv-eutingen.de',
           href: 'mailto:fitness@sv-eutingen.de'
         }

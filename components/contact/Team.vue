@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { mdiPhone, mdiEmail, mdiWhatsapp } from '@mdi/js'
 import touches from '~/components/common/Touches'
 import sendMessage from '~/components/contact/SendMessage'
 
@@ -147,28 +148,28 @@ export default {
       const touches = []
       if (contact.phone) {
         touches.push({
-          icon: 'mdi-phone',
+          icon: mdiPhone,
           text: contact.phone.formatted,
           href: 'tel:' + contact.phone.raw
         })
       }
       if (contact.mobile) {
         touches.push({
-          icon: 'mdi-phone',
+          icon: mdiPhone,
           text: contact.mobile.formatted,
           href: 'tel:' + contact.mobile.raw
         })
       }
       if (contact.email) {
         touches.push({
-          icon: 'mdi-email',
+          icon: mdiEmail,
           text: contact.email,
           href: 'mailto:' + contact.email
         })
       }
       if (contact.mobile) {
         touches.push({
-          icon: 'mdi-whatsapp',
+          icon: mdiWhatsapp,
           text: 'WhatsApp',
           href:
             'https://wa.me/' +

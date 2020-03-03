@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { mdiPhone, mdiEmail, mdiWhatsapp } from '@mdi/js'
 import common from '~/components/contact/Common'
 
 export default {
@@ -24,17 +25,17 @@ export default {
     return {
       touches: [
         {
-          icon: 'mdi-phone',
+          icon: mdiPhone,
           text: '0176 31345456',
           href: 'tel:+4917631345456'
         },
         {
-          icon: 'mdi-email',
+          icon: mdiEmail,
           text: 'kunstrasen.sveutingen@gmail.com',
           href: 'mailto:kunstrasen.sveutingen@gmail.com'
         },
         {
-          icon: 'mdi-whatsapp',
+          icon: mdiWhatsapp,
           text: 'WhatsApp',
           href: 'https://wa.me/4917631345456'
         }

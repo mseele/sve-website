@@ -34,12 +34,14 @@
     </template>
     <v-spacer />
     <v-btn icon @click.stop="drawerClick()">
-      <v-icon>mdi-menu</v-icon>
+      <v-icon>{{ mdiMenu }}</v-icon>
     </v-btn>
   </v-app-bar>
 </template>
 
 <script>
+import { mdiMenu } from '@mdi/js'
+
 export default {
   props: {
     transparent: {
@@ -49,7 +51,8 @@ export default {
   },
   data() {
     return {
-      currentScroll: 0
+      currentScroll: 0,
+      mdiMenu
     }
   },
   computed: {
