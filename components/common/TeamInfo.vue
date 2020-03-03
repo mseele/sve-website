@@ -11,8 +11,8 @@
       </div>
     </v-card-text>
     <v-card-text class="pt-0">
-      <div v-if="value.coach && value.coach.female" class="caption">
-        Trainerin
+      <div v-if="value.coach && value.coach.title" class="caption">
+        {{ value.coach.title }}
       </div>
       <div v-else class="caption">Trainer</div>
       <div class="subtitle-1 font-weight-medium pb-0 text--primary">

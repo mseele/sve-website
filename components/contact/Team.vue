@@ -188,7 +188,7 @@ export default {
       return null
     },
     fullyQualifiedCoachName(coach) {
-      const prefix = coach.female ? 'Trainerin' : 'Trainer'
+      const prefix = coach.title ? coach.title : 'Trainer'
       return prefix + ' ' + coach.name
     }
   }

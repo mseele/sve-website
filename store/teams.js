@@ -27,6 +27,7 @@ const coachCJunioren = {
 }
 
 const coachDJunioren = {
+  title: 'Betreuer',
   name: 'Thorsten Weiss',
   email: 'Thorsten.Weiss1@gmx.de',
   mobile: {
