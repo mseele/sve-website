@@ -36,14 +36,14 @@
         </v-row>
       </v-container>
     </section>
-    <section id="damen" class="section">
+    <section id="frauen" class="section">
       <v-container>
         <v-row>
           <v-col cols="12">
-            <h2>DAMENFUSSBALL</h2>
+            <h2>FRAUENFUSSBALL</h2>
           </v-col>
           <v-col cols="12" class="subtitle-1"
-            >In unserer Damenfußballabteilung ermöglichen wir Teamsport auf
+            >In unserer Frauenfußballabteilung ermöglichen wir Teamsport auf
             verschiedenen Leistungsniveaus. Bei uns ist für jede Frau etwas
             dabei. Durch teambuildende Aktionen stärken wir Gemeinschaft und
             Wir-Gefühl.</v-col
@@ -51,7 +51,7 @@
         </v-row>
         <v-row justify="center">
           <v-col
-            v-for="(item, index) in teams().damen"
+            v-for="(item, index) in teams().frauen"
             :key="index"
             cols="12"
             sm="6"
@@ -107,7 +107,7 @@
         </v-row>
         <v-row justify="center">
           <v-col
-            v-for="(item, index) in teams().jugend_damen"
+            v-for="(item, index) in teams().jugend_frauen"
             :key="index"
             cols="12"
             sm="6"
@@ -187,7 +187,7 @@ export default {
     return {
       sections: [
         { title: 'Herrenfussball', to: '#herren' },
-        { title: 'Damenfussball', to: '#damen' },
+        { title: 'Frauenfussball', to: '#frauen' },
         { title: 'Jugendfussball (männlich)', to: '#jugend-maennlich' },
         { title: 'Jugendfussball (weiblich)', to: '#jugend-weiblich' },
         { title: 'Kinderfussball', to: '#kinder' },

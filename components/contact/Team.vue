@@ -65,9 +65,9 @@ export default {
       to: null,
       groups: [
         { key: 'herren', text: 'Herrenfussball' },
-        { key: 'damen', text: 'Damenfussball' },
+        { key: 'frauen', text: 'Frauenfussball' },
         { key: 'jugend_herren', text: 'Jugendfussball (männlich)' },
-        { key: 'jugend_damen', text: 'Jugendfussball (weiblich)' },
+        { key: 'jugend_frauen', text: 'Jugendfussball (weiblich)' },
         { key: 'kinder', text: 'Kinderfussball' },
         { key: 'volleyball', text: 'Volleyball' }
       ]

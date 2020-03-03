@@ -86,9 +86,9 @@ export const state = () => ({
       teamID: '01A1LJM17C000000VV0AG80NVSEJ47CH'
     }
   ],
-  damen: [
+  frauen: [
     {
-      key: 'damen-1',
+      key: 'frauen-1',
       team: '1. Mannschaft',
       league: 'Verbandsliga',
       coach: {
@@ -110,7 +110,7 @@ export const state = () => ({
       teamID: '011MIBTDHG000000VTVG0001VTR8C1K7'
     },
     {
-      key: 'damen-2',
+      key: 'frauen-2',
       team: '2. Mannschaft',
       league: 'Bezirksliga',
       coach: {
@@ -196,7 +196,7 @@ export const state = () => ({
       teamID: '027H9744D8000000VS5489B1VUA37ON8'
     }
   ],
-  jugend_damen: [
+  jugend_frauen: [
     {
       key: 'b-juniorinnen-1',
       team: 'B-Juniorinnen 1',
