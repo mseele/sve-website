@@ -8,11 +8,11 @@
               <h2>KONTAKT</h2>
             </v-col>
             <v-col cols="12" class="subtitle-1">
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet.
+              Über dieses Kontaktformular leiten wir Dich direkt an die richtige
+              Person in unserem Verein und geben unser Bestes, um Dein Anliegen
+              schnellstmöglich zu bearbeiten. Bitte wähle die passende Kategorie
+              zu deinem Anliegen über das Auswahlfeld aus. Wir freuen uns von
+              Dir zu hören.
             </v-col>
           </v-row>
           <v-row class="pb-6">
