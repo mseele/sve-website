@@ -162,6 +162,9 @@ export default {
             this.$refs.form.reset()
             const type = response.data.success ? 'showInfo' : 'showError'
             this.$store.commit('notification/' + type, response.data.message)
+            if (response.data.success) {
+              this.$store.commit('events/updateCounter', response.data.counter)
+            }
           })
           // eslint-disable-next-line handle-callback-err
           .catch((error) => {
