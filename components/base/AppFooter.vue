@@ -2,7 +2,7 @@
   <v-footer padless>
     <v-card flat tile width="100%" class="text-center">
       <v-card-text>
-        <template v-for="(link, index) in links">
+        <template v-for="(link, index) in links()">
           <v-btn
             :key="index"
             class="mx-4"
@@ -20,7 +20,7 @@
         </template>
       </v-card-text>
       <v-row justify="center" class="px-2 pb-4 subtitle-2" no-gutters>
-        <template v-for="(item, index) in items">
+        <template v-for="(item, index) in items()">
           <nuxt-link :key="index" :to="item.to" class="px-2 lnk">{{
             item.title
           }}</nuxt-link>
@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  computed: {
+  methods: {
     items() {
       return this.$store.state.links.footerItems
     },

@@ -2,7 +2,7 @@
   <v-navigation-drawer v-model="drawer" right temporary fixed>
     <v-container class="ext" fluid>
       <v-row justify="center">
-        <template v-for="(link, index) in links">
+        <template v-for="(link, index) in links()">
           <v-btn
             :key="index"
             class="mx-4"
@@ -57,9 +57,6 @@ export default {
         )
       }
       return this.$store.state.links.items
-    },
-    links() {
-      return this.$store.state.links.externalItems
     }
   },
   watch: {
@@ -68,6 +65,11 @@ export default {
     },
     drawer(val) {
       this.$emit('input', val)
+    }
+  },
+  methods: {
+    links() {
+      return this.$store.state.links.externalItems
     }
   }
 }

@@ -19,7 +19,7 @@
       />
     </nuxt-link>
     <v-spacer />
-    <template v-for="(item, index) in items">
+    <template v-for="(item, index) in items()">
       <v-btn
         :key="index"
         :to="item.to"
@@ -56,9 +56,6 @@ export default {
     }
   },
   computed: {
-    items() {
-      return this.$store.state.links.mainItems
-    },
     isTransparent() {
       return this.transparent && this.currentScroll < 25
     },
@@ -70,6 +67,9 @@ export default {
     this.currentScroll = window.pageYOffset
   },
   methods: {
+    items() {
+      return this.$store.state.links.mainItems
+    },
     drawerClick() {
       this.$emit('input', true)
     },

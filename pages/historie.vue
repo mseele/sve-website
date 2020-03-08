@@ -14,7 +14,7 @@
         </v-col>
         <v-col cols="12">
           <v-timeline>
-            <v-timeline-item v-for="(item, i) in items" :key="i" small>
+            <v-timeline-item v-for="(item, i) in items()" :key="i" small>
               <template v-if="item.images" v-slot:opposite>
                 <image-viewer height="300" :images="item.images"></image-viewer>
               </template>
@@ -55,7 +55,7 @@ export default {
   components: {
     imageViewer
   },
-  computed: {
+  methods: {
     items() {
       return this.$store.state.history.nodes
     }
