@@ -21,7 +21,7 @@
       </v-row>
     </template>
     <v-row justify="center">
-      <v-col cols="12" sm="8" lg="6">
+      <v-col class="subscribe" cols="12" sm="8" lg="6">
         <v-text-field
           v-model="email"
           type="email"
@@ -47,11 +47,13 @@
   </v-container>
 </template>
 
-<style scoped>
-.v-input__slot {
-  padding-right: 0 !important;
-  border-top-right-radius: 10px !important;
-  border-bottom-right-radius: 10px !important;
+<style lang="scss">
+.subscribe {
+  .v-input__slot {
+    padding-right: 0 !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+  }
 }
 
 .btn-subscribe {
