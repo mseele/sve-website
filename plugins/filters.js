@@ -22,7 +22,7 @@ Vue.filter('toDate', function(value) {
     minute: 'numeric',
     timeZone: 'UTC'
   })
-  return formatter.format(new Date(value + '+0000')) + ' Uhr'
+  return formatter.format(new Date(value + ':00.000Z')) + ' Uhr'
 })
 
 Vue.filter('toDuration', function(value) {
