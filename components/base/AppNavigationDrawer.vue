@@ -33,7 +33,7 @@
   </v-navigation-drawer>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .ext {
   padding: 10px !important;
 }

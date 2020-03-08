@@ -35,7 +35,7 @@
   </v-footer>
 </template>
 
-<style>
+<style lang="scss">
 .lnk {
   color: black !important;
   text-decoration: none !important;
