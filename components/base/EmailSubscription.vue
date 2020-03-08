@@ -47,7 +47,7 @@
   </v-container>
 </template>
 
-<style>
+<style scoped>
 .v-input__slot {
   padding-right: 0 !important;
   border-top-right-radius: 10px !important;
