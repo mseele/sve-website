@@ -8,6 +8,8 @@
             label="Vorname"
             outlined
             :rules="notEmptyRule(firstName, 'Vorname')"
+            name="fname"
+            autocomplete="given-name"
           />
         </v-col>
         <v-col cols="12" sm="6">
@@ -16,6 +18,8 @@
             label="Nachname"
             outlined
             :rules="notEmptyRule(lastName, 'Nachname')"
+            name="lname"
+            autocomplete="family-name"
           />
         </v-col>
         <v-col cols="12" sm="6">
@@ -24,6 +28,8 @@
             label="Straße &amp; Hausnummer"
             outlined
             :rules="notEmptyRule(street, 'Straße &amp; Hausnummer')"
+            name="address"
+            autocomplete="street-address"
           />
         </v-col>
         <v-col cols="12" sm="6">
@@ -32,6 +38,8 @@
             label="PLZ &amp; Wohnort"
             outlined
             :rules="notEmptyRule(city, 'PLZ &amp; Wohnort')"
+            name="zip city"
+            autocomplete="postal-code address-level2"
           />
         </v-col>
         <v-col cols="12" sm="6">
@@ -40,6 +48,8 @@
             label="Email"
             outlined
             :rules="emailRules"
+            name="email"
+            autocomplete="email"
           />
         </v-col>
         <v-col cols="12" sm="6">
