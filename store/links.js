@@ -31,7 +31,7 @@ export const state = () => ({
       to: '/leitbild'
     },
     {
-      title: 'Gaststätte',
+      title: 'Gaststätte Auszeit',
       to: '/gaststaette'
     }
   ],

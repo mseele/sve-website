@@ -67,7 +67,7 @@
                   <h2>BILDER</h2>
                 </v-col>
                 <v-col cols="12">
-                  <image-viewer height="493" :images="images"></image-viewer>
+                  <image-viewer height="525" :images="images"></image-viewer>
                 </v-col>
               </v-row>
             </v-container>
@@ -118,12 +118,27 @@
                     </v-card-title>
                     <v-card-text>
                       <div class="subtitle-1 font-weight-medium text--primary">
-                        Marktstr. 84<br />
-                        72184 Eutingen im Gäu<br />
-                        <a href="tel:+4974591204">07459 1204</a><br />
-                        <a href="mailto:ingo1508@gmx.de">ingo1508@gmx.de</a>
+                        <div class="pb-2">Micha Gruidl</div>
+                        <div>
+                          Marktstr. 84<br />
+                          72184 Eutingen im Gäu<br />
+                        </div>
                       </div>
                     </v-card-text>
+                    <v-card-actions class="justify-center">
+                      <v-btn
+                        rounded
+                        text
+                        class="px-5"
+                        color="primary"
+                        :to="{
+                          path: '/kontakt',
+                          query: { auswahl: 'restaurant' }
+                        }"
+                        nuxt
+                        >Kontakt</v-btn
+                      >
+                    </v-card-actions>
                   </v-card>
                 </v-col>
               </v-row>
