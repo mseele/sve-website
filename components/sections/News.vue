@@ -11,13 +11,19 @@
               {{ item.title }}
             </v-card-title>
             <!-- eslint-disable-next-line vue/no-v-html -->
-            <v-card-text v-html="item.text"></v-card-text>
+            <v-card-text class="txt" v-html="item.text"></v-card-text>
           </v-card>
         </v-col>
       </v-row>
     </v-container>
   </div>
 </template>
+
+<style lang="scss">
+.txt {
+  color: black !important;
+}
+</style>
 
 <script>
 const maxItems = 4
