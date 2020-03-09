@@ -1,0 +1,45 @@
+h1 {
+  font-size: 32px;
+  line-height: 48px;
+  border-left: 3px solid #a22122;
+  padding-left: 12px;
+}
+
+h2 {
+  font-size: 28px;
+  line-height: 42px;
+  border-left: 3px solid #a22122;
+  padding-left: 12px;
+}
+
+h3 {
+  font-size: 22px;
+  line-height: 36px;
+  border-left: 3px solid #a22122;
+  padding-left: 12px;
+}
+
+.section,
+.section_alt {
+  padding: 10px 0;
+}
+@media (min-width: 1024px) {
+  .section,
+  .section_alt {
+    padding: 20px 0;
+  }
+}
+
+.section {
+  background-color: rgb(250, 250, 250);
+}
+
+.section_alt {
+  background-color: rgb(216, 216, 216);
+}
+
+// workaround for https://github.com/vuetifyjs/vuetify/issues/9130
+.v-card__text,
+.v-card__title {
+  word-break: normal;
+}

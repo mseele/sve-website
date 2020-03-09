@@ -1,0 +1,23 @@
+diff --git a/node_modules/@nuxtjs/vuetify/dist/icons.js b/node_modules/@nuxtjs/vuetify/dist/icons.js
+index 79485f6..e79f37f 100644
+--- a/node_modules/@nuxtjs/vuetify/dist/icons.js
++++ b/node_modules/@nuxtjs/vuetify/dist/icons.js
+@@ -5,10 +5,12 @@ const presetsCDN = {
+     fa4: 'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css'
+ };
+ export default function setupIcons(preset) {
+-    this.options.head.link.push({
+-        rel: 'stylesheet',
+-        type: 'text/css',
+-        href: presetsCDN[preset]
+-    });
++    if (presetsCDN[preset]) {
++        this.options.head.link.push({
++            rel: 'stylesheet',
++            type: 'text/css',
++            href: presetsCDN[preset]
++        });
++    }
+ }
+ //# sourceMappingURL=icons.js.map
+\ No newline at end of file
