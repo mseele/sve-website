@@ -50,7 +50,9 @@ export default {
     events
   },
   async asyncData() {
-    const res = await axios.get(process.env.eventsAPI)
+    const res = await axios.get(
+      process.env.eventsAPI + '?beta=' + process.env.BETA
+    )
     return { events: res.data.filter((e) => e.type === 'Fitness') }
   },
   data() {

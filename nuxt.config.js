@@ -7,7 +7,7 @@ const newsAPI = backendURL + '/api/news'
 const contactAPI = backendURL + '/api/contact'
 
 function dynamicRoutes(convert) {
-  return axios.get(eventsAPI).then((res) => {
+  return axios.get(eventsAPI + '?beta=' + process.env.BETA).then((res) => {
     return res.data.map((event) => {
       let category = 'events'
       if (event.type === 'Fitness') {
@@ -89,6 +89,7 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
+    '@nuxtjs/dotenv',
     '@nuxtjs/vuetify',
     [
       '@nuxtjs/google-analytics',

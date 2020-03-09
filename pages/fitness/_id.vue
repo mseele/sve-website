@@ -24,7 +24,9 @@ export default {
     if (payload) {
       return { event: payload }
     } else {
-      const res = await axios.get(process.env.eventsAPI)
+      const res = await axios.get(
+        process.env.eventsAPI + '?beta=' + process.env.BETA
+      )
       const result = res.data.find((e) => e.id.toString() === params.id)
       if (result) {
         return { event: result }
