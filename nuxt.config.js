@@ -1,6 +1,11 @@
 import colors from 'vuetify/es5/util/colors'
 import axios from 'axios'
+import dotenv from 'dotenv'
 
+// load env variables
+dotenv.config()
+
+// define env variables
 const backendURL = 'https://sve-backend.appspot.com'
 const eventsAPI = backendURL + '/api/events'
 const newsAPI = backendURL + '/api/news'
