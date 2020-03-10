@@ -99,7 +99,8 @@ export default {
     [
       '@nuxtjs/google-analytics',
       {
-        id: 'UA-156250391-1'
+        id: 'UA-156250391-1',
+        disabled: process.env.BETA
       }
     ]
   ],

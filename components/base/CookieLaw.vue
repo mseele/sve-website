@@ -55,11 +55,17 @@ export default {
     const gdpr = this.isVisited()
     if (!gdpr === true) {
       this.isOpen = true
-      this.$ga.disable()
+      if (!process.env.BETA) {
+        this.$ga.disable()
+      }
     } else if (gdpr === 'true') {
-      this.$ga.enable()
+      if (!process.env.BETA) {
+        this.$ga.enable()
+      }
     } else if (gdpr === 'false') {
-      this.$ga.disable()
+      if (!process.env.BETA) {
+        this.$ga.disable()
+      }
     }
   },
   methods: {
