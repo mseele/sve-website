@@ -16,7 +16,7 @@
       <p class="pt-6">
         Unsere Ansprechpartner stehen Dir für sämtliche Fragen rund um unseren
         Spielbetrieb zur Verfügung. Du erreichst Sie über folgende Kanäle oder
-        kannst Ihnen ganz einfach eine Nachricht per Kontaktformular enden.
+        kannst Ihnen ganz einfach eine Nachricht per Kontaktformular senden.
       </p>
       <div v-if="coachName(team) != null" class="pt-4">
         <h4>{{ coachName(team) }}</h4>
