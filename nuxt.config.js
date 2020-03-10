@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 // define env variables
-const backendURL = 'https://sve-backend.appspot.com'
+const backendURL = process.env.BACKEND_URL
 const eventsAPI = backendURL + '/api/events'
 const newsAPI = backendURL + '/api/news'
 const contactAPI = backendURL + '/api/contact'
@@ -99,7 +99,8 @@ export default {
     [
       '@nuxtjs/google-analytics',
       {
-        id: 'UA-156250391-1'
+        id: 'UA-156250391-1',
+        disabled: process.env.BETA
       }
     ]
   ],
