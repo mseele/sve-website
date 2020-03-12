@@ -27,8 +27,8 @@ export const state = () => ({
       to: '/sponsoring'
     },
     {
-      title: 'Leitbild',
-      to: '/leitbild'
+      title: 'Vereinsportrait',
+      to: '/vereinsportrait'
     },
     {
       title: 'Gaststätte Auszeit',
