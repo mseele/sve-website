@@ -79,13 +79,17 @@ export default {
       this.setVisited(true)
       this.isOpen = false
       this.$emit('accept')
-      this.$ga.enable()
+      if (!process.env.BETA) {
+        this.$ga.enable()
+      }
     },
     deny() {
       this.setVisited(false)
       this.isOpen = false
       this.$emit('deny')
-      this.$ga.disable()
+      if (!process.env.BETA) {
+        this.$ga.disable()
+      }
     }
   }
 }
