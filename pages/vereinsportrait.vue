@@ -15,7 +15,7 @@
                 Jahren.
               </li>
               <li>
-                Abteilungen: Frauenfußball, Herrenfußball, Gymnastik, Volleyball
+                Abteilungen: Frauenfußball, Herrenfußball, Gymnastik, Volleyball,
                 Fitness, Ernährung, Volleyball, Events
               </li>
               <li>
@@ -43,7 +43,7 @@
       <v-container>
         <v-row>
           <v-col cols="12">
-            <h2>Unser Verein - Leitbild</h2>
+            <h2>Unser Leitbild</h2>
           </v-col>
           <v-col cols="12" class="title">
             SV Eutingen – #mehralseinverein.
