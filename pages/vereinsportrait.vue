@@ -15,8 +15,8 @@
                 Jahren.
               </li>
               <li>
-                Abteilungen: Frauenfußball, Herrenfußball, Gymnastik, Volleyball,
-                Fitness, Ernährung, Volleyball, Events
+                Abteilungen: Frauenfußball, Herrenfußball, Gymnastik,
+                Volleyball, Fitness, Ernährung, Volleyball, Events
               </li>
               <li>
                 Vorstandschaft: Sebastian Lazar, Dominik Rakoczy, Dietmar
