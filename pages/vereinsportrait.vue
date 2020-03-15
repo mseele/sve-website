@@ -78,8 +78,8 @@
           <v-col cols="12" class="subtitle-1">
             <ul>
               <li>
-                Für aktive Kinder, Jugendliche, Spielerinnen und Spieler, die
-                wir am Spielfeldrand anfeuern.
+                Für aktive Kinder, Jugendliche, Spielerinnen, Spieler, Trainer-
+                und Betreuerteams, die wir am Spielfeldrand anfeuern.
               </li>
               <li>
                 Für passive Mitglieder und Macher, die zentrale Ehrenämter
