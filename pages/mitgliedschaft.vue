@@ -41,8 +41,9 @@
                 href="/downloads/Mitgliedsantrag-SVE.pdf"
                 target="_blank"
               >
-                Download Mitgliedsantrag
-              </v-btn>
+                <v-icon left>{{ mdiCloudDownload }}</v-icon
+                >Download Mitgliedsantrag</v-btn
+              >
             </v-row>
           </v-col>
           <v-col cols="12" class="subtitle-1">
@@ -61,7 +62,14 @@
 </template>
 
 <script>
+import { mdiCloudDownload } from '@mdi/js'
+
 export default {
+  data() {
+    return {
+      mdiCloudDownload
+    }
+  },
   head() {
     return {
       title: 'Mitglied werden'

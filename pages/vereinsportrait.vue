@@ -36,6 +36,20 @@
               </li>
             </ul>
           </v-col>
+          <v-col cols="12">
+            <v-row justify="center" no-gutters>
+              <v-btn
+                text
+                rounded
+                color="primary"
+                href="/downloads/Vereinssatzung-SVE.pdf"
+                target="_blank"
+              >
+                <v-icon left>{{ mdiCloudDownload }}</v-icon
+                >Download Vereinssatzung</v-btn
+              >
+            </v-row>
+          </v-col>
         </v-row>
       </v-container>
     </section>
@@ -131,7 +145,14 @@
 </template>
 
 <script>
+import { mdiCloudDownload } from '@mdi/js'
+
 export default {
+  data() {
+    return {
+      mdiCloudDownload
+    }
+  },
   head() {
     return {
       title: 'Leitbild'
