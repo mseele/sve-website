@@ -1,6 +1,17 @@
 export const state = () => ({
   nodes: [
     {
+      date: '12. März 2019',
+      text:
+        'Die Corona-Krise erreicht auch den SVE. Mit dem Ziel, Personenkontakte auf das absolut notwendige zu reduzieren, stellt der WFV den Spielbetrieb vorerst komplett ein. Der SVE überträgt diese Entscheidung umgehend auf sein gesamtes Sport- und Veranstaltungsangebot. Die Sportanlagen werden geschlossen, die Plätze bleiben vorerst leer.',
+      images: [
+        {
+          src: require('~/assets/history/2020-03-1.jpg'),
+          lazy: require('~/assets/history/2020-03-1-min.jpg?inline')
+        }
+      ]
+    },
+    {
       date: '27. - 28. September 2019',
       text:
         'Das neue Haus am Talbach (Pflegeheim) wird auf dem alten Trainingsplatz des SVE eingeweiht. Der Bau dieser in der Gemeinde bisher nicht verfügbaren sozialen Einrichtung startete im März 2018. Von nun an können Menschen ihren Lebensabend dort verbringen können. Der SVE übernimmt die Bewirtung.',
