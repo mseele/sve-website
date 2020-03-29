@@ -203,7 +203,7 @@ export const state = () => ({
     {
       date: 'September 2007',
       text:
-        'Die SVE-Vorstandschaft bespricht erstmals mit der Gemeinde Eutingen über die Möglichkeiten eines Kunstrasenplatzes. Der Spielbetrieb mit vielen Mannschaften im Kinder-, Damen-, Herrenbereich hinterließ Spuren im 60 Jahre alten Vereinsheim und dem Trainingsplatz. Es folgten eine schwere Finanzkrise und heftige Spaßmaßnahmen. Kurzfristig wurde es nichts mit dem SVE-Wunsch Kunstrasen.'
+        'Die SVE-Vorstandschaft bespricht erstmals mit der Gemeinde Eutingen über die Möglichkeiten eines Kunstrasenplatzes. Der Spielbetrieb mit vielen Mannschaften im Kinder-, Damen-, Herrenbereich hinterließ Spuren im 60 Jahre alten Vereinsheim und dem Trainingsplatz. Es folgten eine schwere Finanzkrise und heftige Sparmaßnahmen. Kurzfristig wurde es nichts mit dem SVE-Wunsch Kunstrasen.'
     },
     {
       date: '20. Juni 1998',
