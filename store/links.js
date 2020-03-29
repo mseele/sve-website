@@ -19,7 +19,7 @@ export const state = () => ({
       to: '/historie'
     },
     {
-      title: 'Kunstrasen',
+      title: 'Kunstrasen Vermietung',
       to: '/kunstrasen'
     },
     {
