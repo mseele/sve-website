@@ -44,12 +44,12 @@ export default {
   layout: 'transparent',
   components: {
     news,
-    join
+    join,
   },
   head() {
     return {
-      titleTemplate: '%s'
+      titleTemplate: '%s',
     }
-  }
+  },
 }
 </script>

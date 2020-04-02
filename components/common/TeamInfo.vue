@@ -34,7 +34,7 @@
         color="primary"
         :to="{
           path: '/kontakt',
-          query: { auswahl: 'team', team: value.key }
+          query: { auswahl: 'team', team: value.key },
         }"
         nuxt
         >Kontakt</v-btn
@@ -47,7 +47,7 @@
         color="primary"
         :href="
           'http://www.fussball.de/mannschaft/sv-eutingen-ii-sv-eutingen-wuerttemberg/-/saison/9999/team-id/' +
-            value.teamID
+          value.teamID
         "
         target="_blank"
         rel="noreferrer"
@@ -64,8 +64,8 @@ export default {
       type: Object,
       default: () => {
         return {}
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>

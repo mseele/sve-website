@@ -19,7 +19,7 @@ import common from '~/components/contact/Common'
 
 export default {
   components: {
-    common
+    common,
   },
   data() {
     return {
@@ -27,20 +27,20 @@ export default {
         {
           icon: mdiPhone,
           text: '0176 31345456',
-          href: 'tel:+4917631345456'
+          href: 'tel:+4917631345456',
         },
         {
           icon: mdiEmail,
           text: 'kunstrasen.sveutingen@gmail.com',
-          href: 'mailto:kunstrasen.sveutingen@gmail.com'
+          href: 'mailto:kunstrasen.sveutingen@gmail.com',
         },
         {
           icon: mdiWhatsapp,
           text: 'WhatsApp',
-          href: 'https://wa.me/4917631345456'
-        }
-      ]
+          href: 'https://wa.me/4917631345456',
+        },
+      ],
     }
-  }
+  },
 }
 </script>

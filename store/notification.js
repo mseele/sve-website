@@ -1,7 +1,7 @@
 export const state = () => ({
   visible: false,
   message: '',
-  color: 'info'
+  color: 'info',
 })
 
 export const mutations = {
@@ -17,5 +17,5 @@ export const mutations = {
   },
   toggleVisibility(state, visible) {
     state.visible = visible
-  }
+  },
 }

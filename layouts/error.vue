@@ -18,8 +18,8 @@ export default {
   props: {
     error: {
       type: Object,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
@@ -30,13 +30,13 @@ export default {
       message:
         this.error.statusCode === 404
           ? 'Die gewünschte Seite wurde leider nicht gefunden.'
-          : 'Es ist ein unerwarteter Fehler aufgetreten'
+          : 'Es ist ein unerwarteter Fehler aufgetreten',
     }
   },
   head() {
     return {
-      title: 'Fehler'
+      title: 'Fehler',
     }
-  }
+  },
 }
 </script>

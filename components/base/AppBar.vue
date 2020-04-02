@@ -3,7 +3,7 @@
     v-scroll="onScroll"
     :class="[
       showElevation ? 'elevation-2' : 'elevation-0',
-      isTransparent ? 'transparent' : ''
+      isTransparent ? 'transparent' : '',
     ]"
     :dark="!isTransparent"
     app
@@ -46,13 +46,13 @@ export default {
   props: {
     transparent: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       currentScroll: 0,
-      mdiMenu
+      mdiMenu,
     }
   },
   computed: {
@@ -61,7 +61,7 @@ export default {
     },
     showElevation() {
       return !this.transparent || this.currentScroll > 1
-    }
+    },
   },
   beforeMount() {
     this.currentScroll = window.pageYOffset
@@ -75,7 +75,7 @@ export default {
     },
     onScroll(e) {
       this.currentScroll = window.pageYOffset
-    }
-  }
+    },
+  },
 }
 </script>

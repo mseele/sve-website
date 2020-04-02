@@ -32,7 +32,7 @@ export default {
   methods: {
     items() {
       return this.$store.state.news.nodes.slice(0, maxItems)
-    }
-  }
+    },
+  },
 }
 </script>

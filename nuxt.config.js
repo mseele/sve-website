@@ -30,7 +30,7 @@ export default {
   env: {
     eventsAPI,
     newsAPI,
-    contactAPI
+    contactAPI,
   },
   /*
    ** Headers of the page
@@ -43,38 +43,38 @@ export default {
       {
         name: 'viewport',
         content:
-          'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui'
+          'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui',
       },
       {
         hid: 'description',
         name: 'description',
         content:
-          'Auf der offiziellen Website des SV Eutingen 1947 e.V. findest Du alle Informationen über die Teamsport-, Fitness- und Veranstaltungsangebote des Vereins im Herzen von Baden-Württemberg.'
+          'Auf der offiziellen Website des SV Eutingen 1947 e.V. findest Du alle Informationen über die Teamsport-, Fitness- und Veranstaltungsangebote des Vereins im Herzen von Baden-Württemberg.',
       },
       { name: 'msapplication-TileColor', content: '#a22122' },
-      { name: 'theme-color', content: '#a22122' }
+      { name: 'theme-color', content: '#a22122' },
     ],
     link: [
       {
         rel: 'apple-touch-icon',
         sizes: '180x180',
-        href: '/apple-touch-icon.png'
+        href: '/apple-touch-icon.png',
       },
       {
         rel: 'icon',
         type: 'image/png',
         sizes: '32x32',
-        href: '/favicon-32x32.png'
+        href: '/favicon-32x32.png',
       },
       {
         rel: 'icon',
         type: 'image/png',
         sizes: '16x16',
-        href: '/favicon-16x16.png'
+        href: '/favicon-16x16.png',
       },
       { rel: 'manifest', href: '/site.webmanifest' },
-      { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#fdfbf9' }
-    ]
+      { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#fdfbf9' },
+    ],
   },
   /*
    ** Customize the progress-bar color
@@ -100,16 +100,16 @@ export default {
       '@nuxtjs/google-analytics',
       {
         id: 'UA-156250391-1',
-        disabled: process.env.BETA
-      }
-    ]
+        disabled: process.env.BETA,
+      },
+    ],
   ],
   /*
    ** Nuxt.js modules
    */
   modules: ['@bazzite/nuxt-optimized-images', '@nuxtjs/sitemap'],
   optimizedImages: {
-    optimizeImages: true
+    optimizeImages: true,
   },
   sitemap: {
     hostname: 'https://www.sv-eutingen.de',
@@ -118,7 +118,7 @@ export default {
       return dynamicRoutes((event, category) => {
         return '/' + category + '/' + event.id
       })
-    }
+    },
   },
   /*
    ** vuetify module configuration
@@ -127,7 +127,7 @@ export default {
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     defaultAssets: {
-      icons: 'mdiSvg'
+      icons: 'mdiSvg',
     },
     theme: {
       themes: {
@@ -138,10 +138,10 @@ export default {
           info: colors.blue.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        }
-      }
-    }
+          success: colors.green.accent3,
+        },
+      },
+    },
   },
   /*
    ** Build configuration
@@ -151,7 +151,7 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {},
   },
   /*
    ** Generate configuration
@@ -161,9 +161,9 @@ export default {
       return dynamicRoutes((event, category) => {
         return {
           route: '/' + category + '/' + event.id,
-          payload: event
+          payload: event,
         }
       })
-    }
-  }
+    },
+  },
 }

@@ -52,12 +52,12 @@ import emailSubscription from '~/components/base/EmailSubscription'
 
 export default {
   components: {
-    emailSubscription
+    emailSubscription,
   },
   head() {
     return {
-      title: 'Newsletter'
+      title: 'Newsletter',
     }
-  }
+  },
 }
 </script>

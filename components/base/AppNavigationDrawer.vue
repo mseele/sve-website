@@ -42,11 +42,11 @@
 <script>
 export default {
   props: {
-    value: Boolean
+    value: Boolean,
   },
   data() {
     return {
-      drawer: this.value
+      drawer: this.value,
     }
   },
   computed: {
@@ -57,7 +57,7 @@ export default {
         )
       }
       return this.$store.state.links.items
-    }
+    },
   },
   watch: {
     value(val) {
@@ -65,12 +65,12 @@ export default {
     },
     drawer(val) {
       this.$emit('input', val)
-    }
+    },
   },
   methods: {
     links() {
       return this.$store.state.links.externalItems
-    }
-  }
+    },
+  },
 }
 </script>

@@ -2,70 +2,70 @@ export const state = () => ({
   mainItems: [
     {
       title: 'Teamsport',
-      to: '/teamsport'
+      to: '/teamsport',
     },
     {
       title: 'Events',
-      to: '/events'
+      to: '/events',
     },
     {
       title: 'Fitness',
-      to: '/fitness'
-    }
+      to: '/fitness',
+    },
   ],
   items: [
     {
       title: 'Historie',
-      to: '/historie'
+      to: '/historie',
     },
     {
       title: 'Kunstrasen Vermietung',
-      to: '/kunstrasen'
+      to: '/kunstrasen',
     },
     {
       title: 'Sponsoring',
-      to: '/sponsoring'
+      to: '/sponsoring',
     },
     {
       title: 'Vereinsportrait',
-      to: '/vereinsportrait'
+      to: '/vereinsportrait',
     },
     {
       title: 'Gaststätte Auszeit',
-      to: '/gaststaette'
-    }
+      to: '/gaststaette',
+    },
   ],
   footerItems: [
     {
       title: 'Impressum',
-      to: '/impressum'
+      to: '/impressum',
     },
     {
       title: 'Datenschutz',
-      to: '/datenschutz'
+      to: '/datenschutz',
     },
     {
       title: 'Mitglied werden',
-      to: '/mitgliedschaft'
+      to: '/mitgliedschaft',
     },
     {
       title: 'Kontakt',
-      to: '/kontakt'
+      to: '/kontakt',
     },
     {
       title: 'Newsletter',
-      to: '/newsletter'
-    }
+      to: '/newsletter',
+    },
   ],
   externalItems: [
     {
       img: require('~/assets/facebook.svg'),
-      to: 'https://www.facebook.com/sveutingen'
+      to: 'https://www.facebook.com/sveutingen',
     },
     {
       img: require('~/assets/fussball_de.svg'),
       to:
-        'http://www.fussball.de/verein/sv-eutingen-wuerttemberg/-/id/00ES8GNAUG000068VV0AG08LVUPGND5I'
-    }
-  ]
+        'http://www.fussball.de/verein/sv-eutingen-wuerttemberg/-/id/00ES8GNAUG000068VV0AG08LVUPGND5I',
+    },
+  ],
 })

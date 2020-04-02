@@ -91,8 +91,8 @@
 export default {
   head() {
     return {
-      title: 'Impressum'
+      title: 'Impressum',
     }
-  }
+  },
 }
 </script>

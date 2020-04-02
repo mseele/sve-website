@@ -50,7 +50,7 @@ export default {
     },
     links() {
       return this.$store.state.links.externalItems
-    }
-  }
+    },
+  },
 }
 </script>

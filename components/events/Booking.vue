@@ -103,16 +103,16 @@ export default {
   props: {
     buttonText: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     eventId: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     labelUpdates: {
       type: String,
-      default: undefined
-    }
+      default: undefined,
+    },
   },
   data() {
     return {
@@ -133,10 +133,10 @@ export default {
           // eslint-disable-next-line no-useless-escape
           /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
             v
-          ) || 'Die Email Addresse muss gültig sein'
+          ) || 'Die Email Addresse muss gültig sein',
       ],
       checkboxRules: [(v) => !!v || 'Eine Zustimmung wird benötigt'],
-      submitLoading: false
+      submitLoading: false,
     }
   },
   methods: {
@@ -153,7 +153,7 @@ export default {
           phone: this.phone,
           member: this.member,
           updates: this.updates,
-          comments: this.comments
+          comments: this.comments,
         }
         axios
           .post(process.env.eventsAPI + '/booking', data)
@@ -179,7 +179,7 @@ export default {
     },
     notEmptyRule(value, name) {
       return [!!value || name + ' wird benötigt']
-    }
-  }
+    },
+  },
 }
 </script>

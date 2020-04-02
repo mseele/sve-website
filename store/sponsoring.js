@@ -3,177 +3,177 @@ export const state = () => ({
     {
       name: 'Kreidler GmbH Schleiftechnik',
       url: 'https://www.kreidler-gmbh.de/',
-      groupBy: 'Kreidler'
+      groupBy: 'Kreidler',
     },
     {
       name: 'Bäckerei Plaz',
       url: 'https://www.baeckerei-plaz.de/',
-      groupBy: 'Plaz'
+      groupBy: 'Plaz',
     },
     {
       name: 'Scherer Bauunternehmung ',
       url: 'http://www.bau-scherer.de/',
-      groupBy: 'Scherer'
+      groupBy: 'Scherer',
     },
     {
       name: 'Flaschnerei Otto Straub Marc und Jahn Straub GBR',
       url: 'http://www.ottostraub.de/',
-      groupBy: 'Straub'
+      groupBy: 'Straub',
     },
     {
       name: 'Kreissparkasse Freudenstadt',
       url: 'https://www.sparkasse.de/',
-      groupBy: 'Kreissparkasse'
+      groupBy: 'Kreissparkasse',
     },
     {
       name: 'Baisinger Bier Manufaktur',
       url: 'https://www.baisinger.de/',
-      groupBy: 'Baisinger'
+      groupBy: 'Baisinger',
     },
     {
       name: 'Volksbank eG Horb-Freudenstadt',
       url: 'https://www.vobahf.de/',
-      groupBy: 'Volksbank'
+      groupBy: 'Volksbank',
     },
     {
       name: 'Kuon GmbH & Co.KG',
       url: 'https://www.kuon-gmbh.de/',
-      groupBy: 'Kuon'
+      groupBy: 'Kuon',
     },
     {
       name: 'Engel-Apotheke Brandauer',
       url: 'https://www.engelapotheke-eutingen.de/',
-      groupBy: 'Engel'
+      groupBy: 'Engel',
     },
     {
       name: 'Sanitär Walz',
       url: 'http://www.sanitaer-walz.com/',
-      groupBy: 'Walz'
+      groupBy: 'Walz',
     },
     {
       name: 'Axel Odermatt Metzgerei u. Partyservice',
-      groupBy: 'Odermatt'
+      groupBy: 'Odermatt',
     },
     {
       name: 'Bruckner Baustoffhandel GmbH Hagebaucentrum',
       url: 'https://www.bruckner-baustoffe.de/',
-      groupBy: 'Bruckner'
+      groupBy: 'Bruckner',
     },
     {
       name: 'Seele GmbH Baugeschäft',
       url: 'https://www.seele-bau.de/',
-      groupBy: 'Seele'
+      groupBy: 'Seele',
     },
     {
       name: 'Phase 8 Bau- u. Projektmanagement',
-      groupBy: 'Phase'
+      groupBy: 'Phase',
     },
     {
       name: 'Sedelmaier GmbH Malergeschäft-Gerüstverleih',
       url: 'https://www.maler-sedelmaier.de/',
-      groupBy: 'Sedelmaier'
+      groupBy: 'Sedelmaier',
     },
     {
       name: 'AHG Autohandelsgesellschaft GmbH',
       url: 'http://www.ahg-mobile.de/',
-      groupBy: 'AHG'
+      groupBy: 'AHG',
     },
     {
       name: 'Sport Renk Fahräder und Zubehör',
       url: 'https://sport-renk.de/',
-      groupBy: 'Renk'
+      groupBy: 'Renk',
     },
     {
       name: 'Zimmerei Chipsy',
-      groupBy: 'Chipsy'
+      groupBy: 'Chipsy',
     },
     {
       name: 'Euro-Expreß Logistik',
       url: 'https://www.euro-express.de/',
-      groupBy: 'Euro-Expreß'
+      groupBy: 'Euro-Expreß',
     },
     {
       name: 'Feinkost Cengiz',
       url: 'https://www.feinkost-cengiz.de/',
-      groupBy: 'Cengiz'
+      groupBy: 'Cengiz',
     },
     {
       name: 'Neckar-Sport-Horb',
       url: 'https://www.neckar-sport-horb.de/',
-      groupBy: 'Neckar-Sport-Horb'
+      groupBy: 'Neckar-Sport-Horb',
     },
     {
       name: 'Gasthof zur Linde',
       url: 'http://www.linde-eutingen.de/',
-      groupBy: 'Linde'
+      groupBy: 'Linde',
     },
     {
       name: 'Spedition Klaus Meier GmbH',
       url: 'http://www.spedition-meier.de/',
-      groupBy: 'Meier'
+      groupBy: 'Meier',
     },
     {
       name: 'Martini Möbelforum GmbH & CO.KG',
       url: 'https://www.martini-kuechen.de/',
-      groupBy: 'Martini'
+      groupBy: 'Martini',
     },
     {
       name: 'Ünal Trockenbau u. Gipsergeschäft',
-      groupBy: 'Ünal'
+      groupBy: 'Ünal',
     },
     {
       name: 'D&S Fliesenleger Dressner Spitzer GBR',
       url: 'http://www.dsfliesenleger.de/',
-      groupBy: 'D&S Fliesenleger'
+      groupBy: 'D&S Fliesenleger',
     },
     {
       name: 'as-Schwabe GmbH',
       url: 'https://www.as-schwabe.de/',
-      groupBy: 'as-Schwabe'
+      groupBy: 'as-Schwabe',
     },
     {
       name: 'Mini-Rock-Festival',
       url: 'https://mini-rock-festival.de/',
-      groupBy: 'Mini-Rock-Festival'
+      groupBy: 'Mini-Rock-Festival',
     },
     {
       name: 'Steuerberatungsgesellschaft MBH Hertkorn/Heberle',
       url: 'https://hertkorn-heberle.de/',
-      groupBy: 'MBH Hertkorn/Heberle'
+      groupBy: 'MBH Hertkorn/Heberle',
     },
     {
       name: 'Hochdorfer Kronenbrauerei Otto Haizmann KG',
       url: 'https://hochdorfer.de/',
-      groupBy: 'Hochdorfer'
+      groupBy: 'Hochdorfer',
     },
     {
       name: 'Getränke Creuzberger',
-      groupBy: 'Creuzberger'
+      groupBy: 'Creuzberger',
     },
     {
       name: 'Haus am Talbach',
       url: 'https://unternehmensgruppe-maier.de/',
-      groupBy: 'Maier'
+      groupBy: 'Maier',
     },
     {
       name: 'Fensterbau Deuringer GmbH',
       url: 'https://www.deuringer-fenster.de/',
-      groupBy: 'Deuringer'
+      groupBy: 'Deuringer',
     },
     {
       name: 'Zeltverleih Walz',
       url: 'http://www.zeltverleihwalz.de/',
-      groupBy: 'Walz'
+      groupBy: 'Walz',
     },
     {
       name: 'Planungsbüro HLS ATM Herbert Marks GmbH',
       url: 'https://atm-gmbh.de/',
-      groupBy: 'ATM Herbert Marks'
+      groupBy: 'ATM Herbert Marks',
     },
     {
       name: 'Praxis für Ernährungstherapie Sven Bach',
       url: 'https://www.sven-bach.de/',
-      groupBy: 'Sven Bach'
-    }
-  ]
+      groupBy: 'Sven Bach',
+    },
+  ],
 })

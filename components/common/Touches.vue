@@ -32,8 +32,8 @@ export default {
   props: {
     touches: {
       type: Array,
-      default: () => []
-    }
-  }
+      default: () => [],
+    },
+  },
 }
 </script>

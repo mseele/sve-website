@@ -21,21 +21,21 @@ import sendMessage from '~/components/contact/SendMessage'
 export default {
   components: {
     touches,
-    sendMessage
+    sendMessage,
   },
   props: {
     type: {
       type: String,
-      default: 'General'
+      default: 'General',
     },
     to: {
       type: String,
-      default: 'info@sv-eutingen.de'
+      default: 'info@sv-eutingen.de',
     },
     touches: {
       type: Array,
-      default: () => []
-    }
-  }
+      default: () => [],
+    },
+  },
 }
 </script>

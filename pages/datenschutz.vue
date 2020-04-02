@@ -1348,8 +1348,8 @@
 export default {
   head() {
     return {
-      title: 'Datenschutz'
+      title: 'Datenschutz',
     }
-  }
+  },
 }
 </script>

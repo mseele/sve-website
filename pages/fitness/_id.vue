@@ -18,7 +18,7 @@ import event from '~/components/events/Event'
 export default {
   layout: 'transparent',
   components: {
-    event
+    event,
   },
   async asyncData({ params, error, payload }) {
     if (payload) {
@@ -36,8 +36,8 @@ export default {
   },
   head() {
     return {
-      title: this.event.name + ' - Fitness'
+      title: this.event.name + ' - Fitness',
     }
-  }
+  },
 }
 </script>
