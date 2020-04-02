@@ -1,18 +1,18 @@
 import Vue from 'vue'
 
-Vue.filter('toCurrency', function(value) {
+Vue.filter('toCurrency', function (value) {
   if (typeof value !== 'number') {
     return value
   }
   const formatter = new Intl.NumberFormat('de-DE', {
     style: 'currency',
     currency: 'EUR',
-    minimumFractionDigits: 0
+    minimumFractionDigits: 0,
   })
   return formatter.format(value)
 })
 
-Vue.filter('toDate', function(value) {
+Vue.filter('toDate', function (value) {
   const formatter = new Intl.DateTimeFormat('de-DE', {
     weekday: 'short',
     day: '2-digit',
@@ -20,12 +20,12 @@ Vue.filter('toDate', function(value) {
     year: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
-    timeZone: 'UTC'
+    timeZone: 'UTC',
   })
   return formatter.format(new Date(value + ':00.000Z')) + ' Uhr'
 })
 
-Vue.filter('toDuration', function(value) {
+Vue.filter('toDuration', function (value) {
   let hours = 0
   let minutes = 0
   while (value > 0) {
@@ -52,7 +52,7 @@ Vue.filter('toDuration', function(value) {
   return string
 })
 
-Vue.filter('toSubscribers', function(value) {
+Vue.filter('toSubscribers', function (value) {
   if (value > 1) {
     return 'Noch ' + value + ' freie Plätze'
   } else if (value === 1) {

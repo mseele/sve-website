@@ -43,12 +43,12 @@ export default {
   props: {
     storageName: {
       type: String,
-      default: 'gdpr:accepted'
-    }
+      default: 'gdpr:accepted',
+    },
   },
   data() {
     return {
-      isOpen: false
+      isOpen: false,
     }
   },
   created() {
@@ -90,7 +90,7 @@ export default {
       if (!process.env.BETA) {
         this.$ga.disable()
       }
-    }
-  }
+    },
+  },
 }
 </script>

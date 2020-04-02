@@ -53,17 +53,17 @@ import imageViewer from '~/components/common/ImageViewer'
 
 export default {
   components: {
-    imageViewer
+    imageViewer,
   },
   methods: {
     items() {
       return this.$store.state.history.nodes
-    }
+    },
   },
   head() {
     return {
-      title: 'Historie'
+      title: 'Historie',
     }
-  }
+  },
 }
 </script>

@@ -133,7 +133,7 @@
                         color="primary"
                         :to="{
                           path: '/kontakt',
-                          query: { auswahl: 'restaurant' }
+                          query: { auswahl: 'restaurant' },
                         }"
                         nuxt
                         >Kontakt</v-btn
@@ -155,7 +155,7 @@ import imageViewer from '~/components/common/ImageViewer'
 
 export default {
   components: {
-    imageViewer
+    imageViewer,
   },
   layout: 'transparent',
   data() {
@@ -163,23 +163,23 @@ export default {
       images: [
         {
           src: require('~/assets/gaststaette/1.jpg'),
-          lazy: require('~/assets/gaststaette/1-min.jpg?inline')
+          lazy: require('~/assets/gaststaette/1-min.jpg?inline'),
         },
         {
           src: require('~/assets/gaststaette/2.jpg'),
-          lazy: require('~/assets/gaststaette/2-min.jpg?inline')
+          lazy: require('~/assets/gaststaette/2-min.jpg?inline'),
         },
         {
           src: require('~/assets/gaststaette/3.jpg'),
-          lazy: require('~/assets/gaststaette/3-min.jpg?inline')
-        }
-      ]
+          lazy: require('~/assets/gaststaette/3-min.jpg?inline'),
+        },
+      ],
     }
   },
   head() {
     return {
-      title: 'Gaststätte'
+      title: 'Gaststätte',
     }
-  }
+  },
 }
 </script>

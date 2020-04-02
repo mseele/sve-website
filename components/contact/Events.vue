@@ -12,7 +12,7 @@ import common from '~/components/contact/Common'
 
 export default {
   components: {
-    common
+    common,
   },
   data() {
     return {
@@ -20,11 +20,11 @@ export default {
         {
           icon: mdiEmail,
           text: 'events@sv-eutingen.de',
-          href: 'mailto:events@sv-eutingen.de'
-        }
+          href: 'mailto:events@sv-eutingen.de',
+        },
       ],
-      mdiEmail
+      mdiEmail,
     }
-  }
+  },
 }
 </script>

@@ -78,7 +78,7 @@
 export default {
   data() {
     return {
-      sponsors: this.groupSponsors()
+      sponsors: this.groupSponsors(),
     }
   },
   methods: {
@@ -104,12 +104,12 @@ export default {
           acc[key].push(item)
           return acc
         }, {})
-    }
+    },
   },
   head() {
     return {
-      title: 'Sponsoring'
+      title: 'Sponsoring',
     }
-  }
+  },
 }
 </script>

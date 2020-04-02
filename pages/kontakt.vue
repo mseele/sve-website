@@ -55,7 +55,7 @@ export default {
     fitness,
     events,
     restaurant,
-    other
+    other,
   },
   data() {
     return {
@@ -64,16 +64,16 @@ export default {
         { value: 'kunstrasen', text: 'den Kunstrasen buchen' },
         {
           value: 'fitness',
-          text: 'Kontakt zum Thema Fitnessangebote aufnehmen'
+          text: 'Kontakt zum Thema Fitnessangebote aufnehmen',
         },
         { value: 'events', text: 'Kontakt zum Thema Events aufnehmen' },
         {
           value: 'restaurant',
-          text: 'Kontakt zur Gaststätte "Auszeit" aufnehmen'
+          text: 'Kontakt zur Gaststätte "Auszeit" aufnehmen',
         },
-        { value: 'other', text: 'ein anderes Thema besprechen' }
+        { value: 'other', text: 'ein anderes Thema besprechen' },
       ],
-      item: null
+      item: null,
     }
   },
   mounted() {
@@ -84,8 +84,8 @@ export default {
   },
   head() {
     return {
-      title: 'Kontakt'
+      title: 'Kontakt',
     }
-  }
+  },
 }
 </script>

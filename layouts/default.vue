@@ -26,11 +26,11 @@ export default {
     appNavigationDrawer,
     appFooter,
     cookieLaw,
-    notification
+    notification,
   },
   data() {
     return {
-      drawer: false
+      drawer: false,
     }
   },
   mounted() {
@@ -43,6 +43,6 @@ export default {
         }
       })
     }
-  }
+  },
 }
 </script>

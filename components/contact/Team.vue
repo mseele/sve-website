@@ -57,7 +57,7 @@ import sendMessage from '~/components/contact/SendMessage'
 export default {
   components: {
     touches,
-    sendMessage
+    sendMessage,
   },
   data() {
     return {
@@ -70,8 +70,8 @@ export default {
         { key: 'jugend_herren', text: 'Jugendfussball (männlich)' },
         { key: 'jugend_frauen', text: 'Jugendfussball (weiblich)' },
         { key: 'kinder', text: 'Kinderfussball' },
-        { key: 'volleyball', text: 'Volleyball' }
-      ]
+        { key: 'volleyball', text: 'Volleyball' },
+      ],
     }
   },
   watch: {
@@ -83,13 +83,13 @@ export default {
           if (team.coach && team.coach.email) {
             items.push({
               value: team.coach.email,
-              text: this.fullyQualifiedCoachName(team.coach)
+              text: this.fullyQualifiedCoachName(team.coach),
             })
           }
           if (team.contact && team.contact.email) {
             items.push({
               value: team.contact.email,
-              text: team.contact.name
+              text: team.contact.name,
             })
           }
         }
@@ -98,7 +98,7 @@ export default {
       this.$nextTick(() => {
         this.to = items.length > 0 ? items[0].value : 'info@sv-eutingen.de'
       })
-    }
+    },
   },
   mounted() {
     const selection = this.$route.query.team
@@ -150,21 +150,21 @@ export default {
         touches.push({
           icon: mdiPhone,
           text: contact.phone.formatted,
-          href: 'tel:' + contact.phone.raw
+          href: 'tel:' + contact.phone.raw,
         })
       }
       if (contact.mobile) {
         touches.push({
           icon: mdiPhone,
           text: contact.mobile.formatted,
-          href: 'tel:' + contact.mobile.raw
+          href: 'tel:' + contact.mobile.raw,
         })
       }
       if (contact.email) {
         touches.push({
           icon: mdiEmail,
           text: contact.email,
-          href: 'mailto:' + contact.email
+          href: 'mailto:' + contact.email,
         })
       }
       if (contact.mobile) {
@@ -173,7 +173,7 @@ export default {
           text: 'WhatsApp',
           href:
             'https://wa.me/' +
-            contact.mobile.raw.substring(contact.mobile.raw.length - 1)
+            contact.mobile.raw.substring(contact.mobile.raw.length - 1),
         })
       }
       return touches
@@ -191,7 +191,7 @@ export default {
     fullyQualifiedCoachName(coach) {
       const prefix = coach.title ? coach.title : 'Trainer'
       return prefix + ' ' + coach.name
-    }
-  }
+    },
+  },
 }
 </script>

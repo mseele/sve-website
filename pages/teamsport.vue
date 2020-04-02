@@ -181,7 +181,7 @@ import teamInfo from '~/components/common/TeamInfo'
 
 export default {
   components: {
-    teamInfo
+    teamInfo,
   },
   data() {
     return {
@@ -191,19 +191,19 @@ export default {
         { title: 'Jugendfussball (männlich)', to: '#jugend-maennlich' },
         { title: 'Jugendfussball (weiblich)', to: '#jugend-weiblich' },
         { title: 'Kinderfussball', to: '#kinder' },
-        { title: 'Volleyball', to: '#volleyball' }
-      ]
+        { title: 'Volleyball', to: '#volleyball' },
+      ],
     }
   },
   methods: {
     teams() {
       return this.$store.state.teams
-    }
+    },
   },
   head() {
     return {
-      title: 'Teamsport'
+      title: 'Teamsport',
     }
-  }
+  },
 }
 </script>

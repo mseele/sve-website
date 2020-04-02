@@ -149,50 +149,50 @@ import emailSubscription from '~/components/base/EmailSubscription'
 
 export default {
   components: {
-    emailSubscription
+    emailSubscription,
   },
   props: {
     title: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     eventTitle: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     events: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     infoEmpty: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     subscribeInfo: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     subscribeInfoEmpty: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     subscribeSuccess: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     newsType: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     faqs: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   computed: {
     eventsCounter() {
       return this.$store.state.events.counter
-    }
+    },
   },
   mounted() {
     axios.get(process.env.eventsAPI + '/counter').then((res) => {
@@ -217,7 +217,7 @@ export default {
     availableSubscribers(event) {
       const eventCounter = this.eventCounter(event)
       return eventCounter.maxSubscribers - eventCounter.subscribers
-    }
-  }
+    },
+  },
 }
 </script>

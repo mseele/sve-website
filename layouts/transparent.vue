@@ -26,11 +26,11 @@ export default {
     appNavigationDrawer,
     appFooter,
     cookieLaw,
-    notification
+    notification,
   },
   data() {
     return {
-      drawer: false
+      drawer: false,
     }
   },
   mounted() {
@@ -40,11 +40,11 @@ export default {
         const hash = this.$route.hash
         if (document.querySelector(hash)) {
           this.$vuetify.goTo(hash, {
-            offset: this.$vuetify.breakpoint.smAndDown ? 56 : 64
+            offset: this.$vuetify.breakpoint.smAndDown ? 56 : 64,
           })
         }
       })
     }
-  }
+  },
 }
 </script>

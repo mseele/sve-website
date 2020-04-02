@@ -71,30 +71,30 @@ export default {
   props: {
     height: {
       type: String,
-      default: '400'
+      default: '400',
     },
     images: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {
       index: null,
-      mdiClose
+      mdiClose,
     }
   },
   computed: {
     dialog: {
       get() {
         return this.index != null
-      }
-    }
+      },
+    },
   },
   methods: {
     viewerImage(image) {
       return image.big ? image.big : image.src
-    }
-  }
+    },
+  },
 }
 </script>

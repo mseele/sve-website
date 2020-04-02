@@ -15,7 +15,7 @@ import common from '~/components/contact/Common'
 
 export default {
   components: {
-    common
+    common,
   },
   data() {
     return {
@@ -23,15 +23,15 @@ export default {
         {
           icon: mdiPhone,
           text: '07459 1204',
-          href: 'tel:+4974591204'
+          href: 'tel:+4974591204',
         },
         {
           icon: mdiEmail,
           text: 'ingo1508@gmx.de',
-          href: 'mailto:ingo1508@gmx.de'
-        }
-      ]
+          href: 'mailto:ingo1508@gmx.de',
+        },
+      ],
     }
-  }
+  },
 }
 </script>

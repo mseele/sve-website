@@ -67,13 +67,13 @@ import { mdiCloudDownload } from '@mdi/js'
 export default {
   data() {
     return {
-      mdiCloudDownload
+      mdiCloudDownload,
     }
   },
   head() {
     return {
-      title: 'Mitglied werden'
+      title: 'Mitglied werden',
     }
-  }
+  },
 }
 </script>

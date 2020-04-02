@@ -67,12 +67,12 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'General'
+      default: 'General',
     },
     to: {
       type: String,
-      default: 'info@sv-eutingen.de'
-    }
+      default: 'info@sv-eutingen.de',
+    },
   },
   data() {
     return {
@@ -91,9 +91,9 @@ export default {
           // eslint-disable-next-line no-useless-escape
           /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
             v
-          ) || 'Die Email Addresse muss gültig sein'
+          ) || 'Die Email Addresse muss gültig sein',
       ],
-      privacyRules: [(v) => !!v || 'Eine Zustimmung wird benötigt']
+      privacyRules: [(v) => !!v || 'Eine Zustimmung wird benötigt'],
     }
   },
   methods: {
@@ -106,7 +106,7 @@ export default {
           name: this.name.trim(),
           email: this.email.trim(),
           phone: this.phone ? this.phone.trim() : '',
-          message: this.message.trim()
+          message: this.message.trim(),
         }
         axios
           .post(process.env.contactAPI + '/message', data)
@@ -129,7 +129,7 @@ export default {
             )
           })
       }
-    }
-  }
+    },
+  },
 }
 </script>

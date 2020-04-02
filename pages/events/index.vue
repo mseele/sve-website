@@ -42,7 +42,7 @@ import events from '~/components/events/Events'
 
 export default {
   components: {
-    events
+    events,
   },
   async asyncData() {
     const res = await axios.get(
@@ -52,8 +52,8 @@ export default {
   },
   head() {
     return {
-      title: 'Events'
+      title: 'Events',
     }
-  }
+  },
 }
 </script>

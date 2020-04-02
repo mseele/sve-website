@@ -71,16 +71,16 @@ export default {
   props: {
     successMessage: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     newsType: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     type: {
       type: String,
-      default: 'subscribe'
-    }
+      default: 'subscribe',
+    },
   },
   data() {
     return {
@@ -92,9 +92,9 @@ export default {
           // eslint-disable-next-line no-useless-escape
           /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
             v
-          ) || 'Die Email Addresse muss gültig sein'
+          ) || 'Die Email Addresse muss gültig sein',
       ],
-      subscribeLoading: false
+      subscribeLoading: false,
     }
   },
   mounted() {
@@ -139,7 +139,7 @@ export default {
         this.subscribeLoading = true
         const data = {
           email: value,
-          types: this.newsTypes
+          types: this.newsTypes,
         }
         axios
           .post(process.env.newsAPI + '/unsubscribe', data)
@@ -176,7 +176,7 @@ export default {
         this.subscribeLoading = true
         const data = {
           email: value,
-          types: this.newsTypes
+          types: this.newsTypes,
         }
         axios
           .post(process.env.newsAPI + '/subscribe', data)
@@ -196,7 +196,7 @@ export default {
             )
           })
       }
-    }
-  }
+    },
+  },
 }
 </script>

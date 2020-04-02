@@ -13,7 +13,7 @@ import { mdiClose } from '@mdi/js'
 export default {
   data() {
     return {
-      mdiClose
+      mdiClose,
     }
   },
   computed: {
@@ -29,8 +29,8 @@ export default {
       },
       set(value) {
         this.$store.commit('notification/toggleVisibility', value)
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>

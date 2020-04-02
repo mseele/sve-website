@@ -171,27 +171,27 @@ import booking from '~/components/events/Booking'
 
 export default {
   components: {
-    booking
+    booking,
   },
   props: {
     event: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     labelUpdates: {
       type: String,
-      default: undefined
-    }
+      default: undefined,
+    },
   },
   data() {
     return {
-      countersAvailable: false
+      countersAvailable: false,
     }
   },
   computed: {
     eventsCounter() {
       return this.$store.state.events.counter
-    }
+    },
   },
   mounted() {
     axios.get(process.env.eventsAPI + '/counter').then((res) => {
@@ -223,7 +223,7 @@ export default {
         return 'Kurslänge:'
       }
       return 'Eventlänge: ca.'
-    }
-  }
+    },
+  },
 }
 </script>
