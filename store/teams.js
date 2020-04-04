@@ -62,7 +62,6 @@ export const state = () => ({
       league: 'Kreisliga A2',
       coach: {
         name: 'Erdal Kabakci',
-        email: 'ErdalKabakci.62@web.de',
         mobile: {
           formatted: '0178 5195578',
           raw: '+491785195578',
