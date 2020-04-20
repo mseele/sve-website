@@ -93,12 +93,13 @@
             <ul>
               <li>
                 Für aktive Kinder, Jugendliche, Spielerinnen, Spieler, Trainer-
-                und Betreuerteams, die wir am Spielfeldrand anfeuern.
+                und Betreuerteams, die wir am Spielfeldrand anfeuern, mit denen
+                wir Siege feiern und Niederlagen verdauen.
               </li>
               <li>
-                Für passive Mitglieder und Macher, die zentrale Ehrenämter
-                ausüben, unsere Infrastruktur in Schuss halten und einen Stein
-                für das große Vereinsmosaik einbringen.
+                Für passive Mitglieder und Macher, die Ehrenämter ausüben,
+                unsere Infrastruktur in Schuss halten und mit persönlichem
+                Einsatz unser Anliegen wahr werden lassen.
               </li>
               <li>
                 Für unsere Pächter, Partner und Dienstleister, mit denen wir
@@ -107,8 +108,8 @@
             </ul>
           </v-col>
           <v-col cols="12" class="title">
-            Teamgeist, Fairness, Leistungsbereitschaft – Grundsätze unseres
-            Sportangebots.
+            Teamgeist, Fairness, Leistungsbereitschaft und Gesundheitsförderung
+            - Grundsätze unseres Sportangebots.
           </v-col>
           <v-col cols="12" class="subtitle-1">
             Unseren Mitgliedern und Kunden bieten wir aktive sportliche
@@ -117,26 +118,25 @@
             Gemeinschaftsgefühl und Erfolge in Teams sowie Wettkampf. Durch
             Niederlagen lernen wir den fairen Umgang damit.<br />
             <br />
-            Unser Sportangebot ist breit. Es reicht von offenen
-            Individualangeboten, über Teamsport im Hobby-, Amateur- und
+            Unser Sportangebot richtet sich an alle. Die Formate reichen von
+            offenen Individualangeboten bis zu Teamsport im Hobby-, Amateur- und
             Leistungsbereich.<br />
             Fußball ist unser Schwerpunkt – für Kinder, Jugendliche, Frauen und
-            Herren.<br />
-            Sportliche Ziele, die wir mit gesundem und fairem Einsatz sowie
-            Ehrgeiz erreichen können, wollen wir auch erreichen.<br />
-            Statt phasenweiser Liga- und Tabellenplatzsituation steht für uns im
-            Vordergrund, das Beste aus den Teams herauszuholen.<br />
+            Männer.<br />
+            Sportliche Ziele, die wir mit fairem Einsatz und Ehrgeiz erreichen
+            können, wollen wir auch erreichen.<br />
+            Statt kurzfristiger Liga- und Tabellenplatzsituationen steht für uns
+            im Vordergrund, das Beste aus den Teams herauszuholen und
+            kontinuierlich besser zu werden.<br />
             <br />
             Durch Teamgeist, Fairness und gesunde Leistungsbereitschaft binden
-            wir Kinder, Jugendliche, Spielerinnen und Spieler nachhaltig an
-            unseren Verein. Dies sichert die Zukunft.<br />
-            Für unsere Sportangebote und Treffpunkte stellen wir eine sehr gute
-            Infrastruktur zur Verfügung. Diese pflegen wir und gehen mit
-            Ressourcen nachhaltig um.
+            wir Kinder, Jugendliche, Spielerinnen und Spieler nachhaltig an den
+            Verein. Dies sichert die Zukunft.<br />
+            Für unsere Angebote stellen wir eine sehr gute Infrastruktur zur
+            Verfügung. Diese pflegen wir und gehen mit Ressourcen schonend um.
           </v-col>
           <v-col cols="12" class="title">
-            Der SV Eutingen ist ein ehrenamtlicher Verein – und
-            #mehralseinverein.
+            #mehralseinverein
           </v-col>
         </v-row>
       </v-container>

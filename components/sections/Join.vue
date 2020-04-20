@@ -83,7 +83,7 @@ export default {
           title: 'Mach mit und werde Mitglied',
           text:
             'Über 5,3 Millionen Menschen in Baden-Württemberg engagieren sich ehrenamtlich. Dafür bieten wir auch beim SVE viele Möglichkeiten. Ob Vereinsamt oder reine Mitgliedschaft - mit Deinem Einsatz unterstützt Du unsere Arbeit und stiftest gesellschaftlichen Nutzen.',
-          link: '/kontakt#mitglied',
+          link: '/mitgliedschaft',
         },
       ],
     }
