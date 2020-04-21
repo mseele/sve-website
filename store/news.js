@@ -3,7 +3,7 @@ export const state = () => ({
     {
       title: '14. April 2020',
       text:
-        '+++ Mitgliederbrief Nr. 1/2020 +++<br/><br/>Liebe Mitglieder, liebe Sportlerinnen und Sportler,<br/><br/>liebe Freunde des SV Eutingen und des Sports,<br/>in gewöhnlichen Zeiten ist der April ein ereignisreicher Monat für unseren Verein: die Fußballsaison geht in die entscheidende Phase, Fitnesskurse laufen, freitags wird Volleyball gespielt, die Jahreshauptversammlung bringt wichtige Informationen und Neuerung mit sich. Aktuell erleben wir aber keine gewöhnlichen Zeiten. Diese Tage, Wochen, Monate sind außergewöhnlich. Sie sind historisch.<br/><br/><a href="/downloads/Mitgliederbrief-1-2020.pdf" target="_blank">...Weiterlesen</a>',
+        '+++ Mitgliederbrief Nr. 1/2020 +++<br/><br/>Liebe Mitglieder, liebe Sportlerinnen und Sportler,<br/>liebe Freunde des SV Eutingen und des Sports,<br/><br/>in gewöhnlichen Zeiten ist der April ein ereignisreicher Monat für unseren Verein: die Fußballsaison geht in die entscheidende Phase, Fitnesskurse laufen, freitags wird Volleyball gespielt, die Jahreshauptversammlung bringt wichtige Informationen und Neuerung mit sich. Aktuell erleben wir aber keine gewöhnlichen Zeiten. Diese Tage, Wochen, Monate sind außergewöhnlich. Sie sind historisch.<br/><br/><a href="/downloads/Mitgliederbrief-1-2020.pdf" target="_blank">...Weiterlesen</a>',
     },
     {
       title: '13. März 2020',
