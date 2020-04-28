@@ -66,7 +66,10 @@
                 {{ toSubscribers(availableSubscribers()) }}
               </li>
               <li v-else>Ausgebucht</li>
-              <li v-if="event.dates.length == 1">
+              <li v-if="event.customDate">
+                {{ event.customDate }}
+              </li>
+              <li v-else-if="event.dates.length == 1">
                 {{ toDate(event.dates[0]) }}
               </li>
               <li v-else>{{ event.dates.length }} Termine</li>
