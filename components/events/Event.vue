@@ -63,25 +63,25 @@
                 &nbsp;
               </li>
               <li v-else-if="!isBookedUp()">
-                {{ availableSubscribers() | toSubscribers }}
+                {{ toSubscribers(availableSubscribers()) }}
               </li>
               <li v-else>Ausgebucht</li>
               <li v-if="event.dates.length == 1">
-                {{ event.dates[0] | toDate }}
+                {{ toDate(event.dates[0]) }}
               </li>
               <li v-else>{{ event.dates.length }} Termine</li>
               <li>
                 {{ durationPrefix() + ' ' }}
-                {{ event.durationInMinutes | toDuration }}
+                {{ toDuration(event.durationInMinutes) }}
               </li>
             </ul>
           </v-col>
           <v-col class="py-0" cols="12" sm="6">
             <ul>
               <li>Wo: {{ event.location }}</li>
-              <li>{{ event.costMember | toCurrency }} für Mitglieder</li>
+              <li>{{ toCurrency(event.costMember) }} für Mitglieder</li>
               <li>
-                {{ event.costNonMember | toCurrency }} für Nicht-Mitglieder
+                {{ toCurrency(event.costNonMember) }} für Nicht-Mitglieder
               </li>
             </ul>
           </v-col>
@@ -111,7 +111,7 @@
             sm="6"
           >
             <ul>
-              <li>{{ date | toDate }}</li>
+              <li>{{ toDate(date) }}</li>
             </ul>
           </v-col>
         </v-row>

@@ -42,7 +42,7 @@
                       v-else-if="!isBookedUp(event)"
                       class="green--text subtitle-2 font-weight-medium"
                     >
-                      {{ availableSubscribers(event) | toSubscribers }}
+                      {{ toSubscribers(availableSubscribers(event)) }}
                     </div>
                     <div v-else class="red--text subtitle-2 font-weight-medium">
                       Ausgebucht
