@@ -79,8 +79,13 @@
           <v-col class="py-0" cols="12" sm="6">
             <ul>
               <li>Wo: {{ event.location }}</li>
-              <li>{{ toCurrency(event.costMember) }} für Mitglieder</li>
-              <li>
+              <li v-if="event.costMember === event.costNonMember">
+                {{ toCurrency(event.costMember) }} pro Teilnehmer
+              </li>
+              <li v-if="event.costMember !== event.costNonMember">
+                {{ toCurrency(event.costMember) }} für Mitglieder
+              </li>
+              <li v-if="event.costMember !== event.costNonMember">
                 {{ toCurrency(event.costNonMember) }} für Nicht-Mitglieder
               </li>
             </ul>
