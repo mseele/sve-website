@@ -13,7 +13,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@nuxtjs/sitemap": "^2.2.0",
+    "@nuxtjs/sitemap": "^2.2.1",
     "axios": "^0.19.2",
     "nuxt": "^2.12.2"
   },
@@ -22,12 +22,12 @@
     "@mdi/js": "^5.1.45",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config": "^2.0.2",
-    "@nuxtjs/eslint-module": "^1.1.0",
+    "@nuxtjs/eslint-module": "^1.2.0",
     "@nuxtjs/google-analytics": "^2.2.3",
-    "@nuxtjs/vuetify": "^1.11.0",
+    "@nuxtjs/vuetify": "^1.11.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.1",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-nuxt": "^0.5.2",
     "eslint-plugin-prettier": "^3.1.3",
     "imagemin-mozjpeg": "^8.0.0",
