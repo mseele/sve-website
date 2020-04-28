@@ -209,6 +209,9 @@ export default {
     },
     isBookedUp(event) {
       const eventCounter = this.eventCounter(event)
+      if (eventCounter.maxSubscribers === -1) {
+        return false
+      }
       return (
         eventCounter.subscribers >= eventCounter.maxSubscribers &&
         eventCounter.waitingList >= eventCounter.maxWaitingList
@@ -216,6 +219,9 @@ export default {
     },
     availableSubscribers(event) {
       const eventCounter = this.eventCounter(event)
+      if (eventCounter.maxSubscribers === -1) {
+        return -1
+      }
       return eventCounter.maxSubscribers - eventCounter.subscribers
     },
   },

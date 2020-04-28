@@ -119,7 +119,7 @@
     </section>
     <section v-if="counterAvailable()" id="anmeldung" class="section">
       <v-container>
-        <v-row v-if="availableSubscribers() > 0">
+        <v-row v-if="canBook()">
           <v-col cols="12">
             <h2>ANMELDUNG</h2>
           </v-col>
@@ -209,6 +209,9 @@ export default {
     },
     isBookedUp() {
       const eventCounter = this.eventCounter()
+      if (eventCounter.maxSubscribers === -1) {
+        return false
+      }
       return (
         eventCounter.subscribers >= eventCounter.maxSubscribers &&
         eventCounter.waitingList >= eventCounter.maxWaitingList
@@ -216,6 +219,9 @@ export default {
     },
     availableSubscribers() {
       const eventCounter = this.eventCounter()
+      if (eventCounter.maxSubscribers === -1) {
+        return -1
+      }
       return eventCounter.maxSubscribers - eventCounter.subscribers
     },
     durationPrefix() {
@@ -223,6 +229,10 @@ export default {
         return 'Kurslänge:'
       }
       return 'Eventlänge: ca.'
+    },
+    canBook() {
+      const availableSubscribers = this.availableSubscribers()
+      return availableSubscribers === -1 || availableSubscribers > 0
     },
   },
 }
