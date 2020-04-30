@@ -63,25 +63,33 @@
                 &nbsp;
               </li>
               <li v-else-if="!isBookedUp()">
-                {{ availableSubscribers() | toSubscribers }}
+                {{ toSubscribers(availableSubscribers()) }}
               </li>
               <li v-else>Ausgebucht</li>
-              <li v-if="event.dates.length == 1">
-                {{ event.dates[0] | toDate }}
+              <li v-if="event.customDate">
+                {{ event.customDate }}
+              </li>
+              <li v-else-if="event.dates.length == 1">
+                {{ toDate(event.dates[0]) }}
               </li>
               <li v-else>{{ event.dates.length }} Termine</li>
               <li>
                 {{ durationPrefix() + ' ' }}
-                {{ event.durationInMinutes | toDuration }}
+                {{ toDuration(event.durationInMinutes) }}
               </li>
             </ul>
           </v-col>
           <v-col class="py-0" cols="12" sm="6">
             <ul>
               <li>Wo: {{ event.location }}</li>
-              <li>{{ event.costMember | toCurrency }} für Mitglieder</li>
-              <li>
-                {{ event.costNonMember | toCurrency }} für Nicht-Mitglieder
+              <li v-if="event.costMember === event.costNonMember">
+                {{ toCurrency(event.costMember) }} pro Teilnehmer
+              </li>
+              <li v-if="event.costMember !== event.costNonMember">
+                {{ toCurrency(event.costMember) }} für Mitglieder
+              </li>
+              <li v-if="event.costMember !== event.costNonMember">
+                {{ toCurrency(event.costNonMember) }} für Nicht-Mitglieder
               </li>
             </ul>
           </v-col>
@@ -111,7 +119,7 @@
             sm="6"
           >
             <ul>
-              <li>{{ date | toDate }}</li>
+              <li>{{ toDate(date) }}</li>
             </ul>
           </v-col>
         </v-row>
@@ -119,7 +127,7 @@
     </section>
     <section v-if="counterAvailable()" id="anmeldung" class="section">
       <v-container>
-        <v-row v-if="availableSubscribers() > 0">
+        <v-row v-if="canBook()">
           <v-col cols="12">
             <h2>ANMELDUNG</h2>
           </v-col>
@@ -209,6 +217,9 @@ export default {
     },
     isBookedUp() {
       const eventCounter = this.eventCounter()
+      if (eventCounter.maxSubscribers === -1) {
+        return false
+      }
       return (
         eventCounter.subscribers >= eventCounter.maxSubscribers &&
         eventCounter.waitingList >= eventCounter.maxWaitingList
@@ -216,6 +227,9 @@ export default {
     },
     availableSubscribers() {
       const eventCounter = this.eventCounter()
+      if (eventCounter.maxSubscribers === -1) {
+        return -1
+      }
       return eventCounter.maxSubscribers - eventCounter.subscribers
     },
     durationPrefix() {
@@ -223,6 +237,10 @@ export default {
         return 'Kurslänge:'
       }
       return 'Eventlänge: ca.'
+    },
+    canBook() {
+      const availableSubscribers = this.availableSubscribers()
+      return availableSubscribers === -1 || availableSubscribers > 0
     },
   },
 }

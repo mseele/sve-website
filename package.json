@@ -1,6 +1,6 @@
 {
   "name": "sve-website",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "Website SV Eutingen",
   "author": "mseele",
   "private": true,
@@ -9,11 +9,10 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
-    "postinstall": "patch-package"
+    "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
-    "@nuxtjs/sitemap": "^2.2.0",
+    "@nuxtjs/sitemap": "^2.2.1",
     "axios": "^0.19.2",
     "nuxt": "^2.12.2"
   },
@@ -22,18 +21,17 @@
     "@mdi/js": "^5.1.45",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config": "^2.0.2",
-    "@nuxtjs/eslint-module": "^1.1.0",
+    "@nuxtjs/eslint-module": "^1.2.0",
     "@nuxtjs/google-analytics": "^2.2.3",
-    "@nuxtjs/vuetify": "^1.11.0",
+    "@nuxtjs/vuetify": "^1.11.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.1",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-nuxt": "^0.5.2",
     "eslint-plugin-prettier": "^3.1.3",
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-pngquant": "^8.0.0",
     "imagemin-svgo": "^7.1.0",
-    "patch-package": "^6.2.2",
     "prettier": "^2.0.5"
   }
 }

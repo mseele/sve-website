@@ -42,7 +42,7 @@
                       v-else-if="!isBookedUp(event)"
                       class="green--text subtitle-2 font-weight-medium"
                     >
-                      {{ availableSubscribers(event) | toSubscribers }}
+                      {{ toSubscribers(availableSubscribers(event)) }}
                     </div>
                     <div v-else class="red--text subtitle-2 font-weight-medium">
                       Ausgebucht
@@ -209,6 +209,9 @@ export default {
     },
     isBookedUp(event) {
       const eventCounter = this.eventCounter(event)
+      if (eventCounter.maxSubscribers === -1) {
+        return false
+      }
       return (
         eventCounter.subscribers >= eventCounter.maxSubscribers &&
         eventCounter.waitingList >= eventCounter.maxWaitingList
@@ -216,6 +219,9 @@ export default {
     },
     availableSubscribers(event) {
       const eventCounter = this.eventCounter(event)
+      if (eventCounter.maxSubscribers === -1) {
+        return -1
+      }
       return eventCounter.maxSubscribers - eventCounter.subscribers
     },
   },
