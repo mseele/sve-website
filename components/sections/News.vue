@@ -23,6 +23,11 @@
 .txt {
   color: black !important;
 }
+
+.video {
+  margin: 0 auto;
+  width: 400px;
+}
 </style>
 
 <script>
