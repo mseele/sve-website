@@ -1,6 +1,11 @@
 export const state = () => ({
   nodes: [
     {
+      title: '13. Mai 2020',
+      text:
+        '+++ Corona-Hinweis: Öffnung der Sportanlage für Erwachsene +++<br/><br/><video controls poster="/downloads/Corona-Video.jpg" style="margin-left: auto; margin-right: auto; display: block; max-width: 100%; max-height: 300px;"><source src="https://drive.google.com/uc?export=download&id=1P812RFBtZqLXQsBhEyJgVlBbXmXlHBbY" type="video/webm" /><source src="https://drive.google.com/uc?export=download&id=1Z0VtfYxRQDgtaGFm8zhGudRYnUlpxUYP" type="video/mp4" />Dein Browser unterstützt Videos leider nicht, lade das Video <a href="https://drive.google.com/uc?export=download&id=1Z0VtfYxRQDgtaGFm8zhGudRYnUlpxUYP">hier</a> herunter.</video></br><div>Liebe Sportlerinnen und Sportler, liebe Mitglieder und Interessierte,<br/><br/>seit Mitte März ruht unsere Sportanlage. Am 12. Mai hat der WFV vorgeschlagen, die jetzige Saison 19/20 mit diesen drei Elementen zu beenden:<ol><li>Es finden in dieser Saison keine Spiele mehr statt.</li><li>Der Quotient aus Spielen und Punkten regelt, wer Meister wird und aufsteigt.</li><li>Niemand steigt ab.</li></ol><br/>Als SVE tragen wir diesen Vorschlag mit.<br/><br/><a href="/downloads/Corona-Öffnung-der-Sportanlage.pdf" target="_blank">...Weiterlesen</a></div>',
+    },
+    {
       title: '14. April 2020',
       text:
         '+++ Mitgliederbrief Nr. 1/2020 +++<br/><br/>Liebe Mitglieder, liebe Sportlerinnen und Sportler,<br/>liebe Freunde des SV Eutingen und des Sports,<br/><br/>in gewöhnlichen Zeiten ist der April ein ereignisreicher Monat für unseren Verein: die Fußballsaison geht in die entscheidende Phase, Fitnesskurse laufen, freitags wird Volleyball gespielt, die Jahreshauptversammlung bringt wichtige Informationen und Neuerung mit sich. Aktuell erleben wir aber keine gewöhnlichen Zeiten. Diese Tage, Wochen, Monate sind außergewöhnlich. Sie sind historisch.<br/><br/><a href="/downloads/Mitgliederbrief-1-2020.pdf" target="_blank">...Weiterlesen</a>',
