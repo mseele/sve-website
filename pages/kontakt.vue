@@ -29,11 +29,14 @@
             </v-col>
           </v-row>
           <team v-if="item === 'team'"></team>
-          <kunstrasen v-if="item === 'kunstrasen'"></kunstrasen>
-          <fitness v-if="item === 'fitness'"></fitness>
-          <events v-if="item === 'events'"></events>
-          <restaurant v-if="item === 'restaurant'"></restaurant>
-          <other v-if="item === 'other'"></other>
+          <kunstrasen v-else-if="item === 'kunstrasen'"></kunstrasen>
+          <fitness-events
+            v-else-if="item === 'fitness-events'"
+          ></fitness-events>
+          <events v-else-if="item === 'events'"></events>
+          <restaurant v-else-if="item === 'restaurant'"></restaurant>
+          <sponsoring v-else-if="item === 'sponsoring'"></sponsoring>
+          <other v-else-if="item === 'other'"></other>
         </v-container>
       </v-col>
     </v-row>
@@ -43,18 +46,18 @@
 <script>
 import team from '~/components/contact/Team'
 import kunstrasen from '~/components/contact/Kunstrasen'
-import fitness from '~/components/contact/Fitness'
-import events from '~/components/contact/Events'
+import fitnessEvents from '~/components/contact/FitnessEvents'
 import restaurant from '~/components/contact/Restaurant'
+import sponsoring from '~/components/contact/Sponsoring'
 import other from '~/components/contact/Other'
 
 export default {
   components: {
     team,
     kunstrasen,
-    fitness,
-    events,
+    fitnessEvents,
     restaurant,
+    sponsoring,
     other,
   },
   data() {
@@ -63,14 +66,14 @@ export default {
         { value: 'team', text: 'Kontakt zu einer Mannschaft herstellen' },
         { value: 'kunstrasen', text: 'den Kunstrasen buchen' },
         {
-          value: 'fitness',
-          text: 'Kontakt zum Thema Fitnessangebote aufnehmen',
+          value: 'fitness-events',
+          text: 'Kontakt zum Thema Fitness/Eventangebote aufnehmen',
         },
-        { value: 'events', text: 'Kontakt zum Thema Events aufnehmen' },
         {
           value: 'restaurant',
           text: 'Kontakt zur Gaststätte "Auszeit" aufnehmen',
         },
+        { value: 'sponsoring', text: 'Kontakt zum Thema Sponsoring aufnehmen' },
         { value: 'other', text: 'ein anderes Thema besprechen' },
       ],
       item: null,
