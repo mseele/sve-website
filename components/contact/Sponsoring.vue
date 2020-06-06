@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mdiEmail } from '@mdi/js'
+import { mdiPhone, mdiEmail, mdiWhatsapp } from '@mdi/js'
 import touches from '~/components/common/Touches'
 import sendMessage from '~/components/contact/SendMessage'
 
@@ -69,12 +69,27 @@ export default {
       item: 'sponsoring',
       sponsoring: [
         {
+          icon: mdiPhone,
+          text: '0176 30774678',
+          href: 'tel:+4917630774678',
+        },
+        {
           icon: mdiEmail,
           text: emailSponsoring,
           href: 'mailto:' + emailSponsoring,
         },
+        {
+          icon: mdiWhatsapp,
+          text: 'WhatsApp',
+          href: 'https://wa.me/4917630774678',
+        },
       ],
       bandeFranz: [
+        {
+          icon: mdiPhone,
+          text: '07459 8720',
+          href: 'tel:+4974598720',
+        },
         {
           icon: mdiEmail,
           text: emailBande,
@@ -82,6 +97,11 @@ export default {
         },
       ],
       bandeThomas: [
+        {
+          icon: mdiPhone,
+          text: '07459 1003',
+          href: 'tel:+4974591003',
+        },
         {
           icon: mdiEmail,
           text: 'tsakermann@kabelbw.de',
