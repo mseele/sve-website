@@ -10,7 +10,7 @@
           <v-sheet class="transparent black--text" max-width="500">
             <h1 class="display-2 white--text">Sponsoring</h1>
             <div class="headline white--text py-4">
-              WERDE UNSER PARTNER
+              PROFITIERE MIT UNS
             </div>
             <v-row class="mx-0 mt-4">
               <v-btn
