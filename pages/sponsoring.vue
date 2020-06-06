@@ -124,7 +124,12 @@
             <h2>UNSERE PARTNER</h2>
           </v-col>
           <v-col cols="12" class="subtitle-1">
-            Ganz kurzer Text - ca. 1 Satz oder 2. Ungefähr eine Zeile...
+            Mit diesen langjährigen Partnern leben wir Zusammenarbeit. Durch
+            ihre materielle und finanzielle Unterstützung ermöglichen sie unser
+            ehrenamtliches Angebot und machen auf ihre Produkte und
+            Dienstleistungen aufmerksam. Partnerschaft bedeutet für uns, dass
+            beide Seiten profitieren. Klickt auf die Namen und gelangt direkt
+            auf die Homepage unserer Partner.
           </v-col>
         </v-row>
         <v-row
