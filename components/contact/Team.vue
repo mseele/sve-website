@@ -171,9 +171,7 @@ export default {
         touches.push({
           icon: mdiWhatsapp,
           text: 'WhatsApp',
-          href:
-            'https://wa.me/' +
-            contact.mobile.raw.substring(contact.mobile.raw.length - 1),
+          href: 'https://wa.me/' + contact.mobile.raw.substring(1),
         })
       }
       return touches
