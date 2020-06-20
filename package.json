@@ -5,10 +5,8 @@
   "author": "mseele",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
+    "dev": "nuxt dev",
+    "build": "nuxt build && nuxt export",
     "release": "standard-version",
     "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
   },
