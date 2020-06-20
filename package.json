@@ -15,7 +15,7 @@
   "dependencies": {
     "@nuxtjs/sitemap": "^2.3.2",
     "axios": "^0.19.2",
-    "nuxt": "^2.12.2"
+    "nuxt": "^2.13.0"
   },
   "devDependencies": {
     "@bazzite/nuxt-optimized-images": "^0.4.0",
