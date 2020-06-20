@@ -26,7 +26,7 @@ function dynamicRoutes(convert) {
 }
 
 export default {
-  mode: 'universal',
+  mode: 'spa',
   target: 'static',
   env: {
     eventsAPI,
