@@ -61,10 +61,10 @@ export const state = () => ({
       team: '1. Mannschaft',
       league: 'Kreisliga A2',
       coach: {
-        name: 'Erdal Kabakci',
+        name: 'Sergej Golubkow',
         mobile: {
-          formatted: '0178 5195578',
-          raw: '+491785195578',
+          formatted: '01511 4136230',
+          raw: '+4915114136230',
         },
       },
       contact: abteilungsleiterHerren,
