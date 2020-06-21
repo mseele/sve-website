@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.1](https://github.com/mseele/sve-website/compare/v1.6.0...v1.6.1) (2020-06-21)
+
+
+### Bug Fixes
+
+* remove mobile number, change email and contact ([03ea351](https://github.com/mseele/sve-website/commit/03ea3513718e40b138b08469d2615cadd0b1c379))
+
 ## [1.6.0](https://github.com/mseele/sve-website/compare/v1.5.0...v1.6.0) (2020-06-20)
 
 
