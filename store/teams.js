@@ -1,6 +1,6 @@
 const abteilungsleiterHerren = {
   name: 'Abteilungsleiter Daniel Neuss',
-  email: 'abteilungsleiter@sv-eutingen.de',
+  email: 'herrenabteilung@sv-eutingen.de',
   mobile: {
     formatted: '0172 7770447',
     raw: '+491727770447',
@@ -62,10 +62,6 @@ export const state = () => ({
       league: 'Kreisliga A2',
       coach: {
         name: 'Sergej Golubkow',
-        mobile: {
-          formatted: '01511 4136230',
-          raw: '+4915114136230',
-        },
       },
       contact: abteilungsleiterHerren,
       teamID: '011MID6OM0000000VTVG0001VTR8C1K7',
@@ -75,11 +71,10 @@ export const state = () => ({
       team: '2. Mannschaft',
       league: 'Kreisliga B1',
       coach: {
-        name: 'Sven Beu',
-        email: 'sven.beu@gmail.com',
+        name: 'Philipp Dettling',
         mobile: {
-          formatted: '01575 2658870',
-          raw: '+4915752658870',
+          formatted: '01512 1930003',
+          raw: '+4915121930003',
         },
       },
       contact: abteilungsleiterHerren,

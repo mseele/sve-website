@@ -27,6 +27,7 @@ function dynamicRoutes(convert) {
 
 export default {
   mode: 'universal',
+  target: 'static',
   env: {
     eventsAPI,
     newsAPI,
