@@ -1,6 +1,6 @@
 {
   "name": "sve-website",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "Website SV Eutingen",
   "author": "mseele",
   "private": true,
@@ -13,12 +13,12 @@
   "dependencies": {
     "@nuxtjs/sitemap": "^2.3.2",
     "axios": "^0.19.2",
-    "nuxt": "^2.13.0"
+    "nuxt": "^2.13.1"
   },
   "devDependencies": {
     "@bazzite/nuxt-optimized-images": "^0.4.0",
-    "@commitlint/cli": "^8.3.5",
-    "@commitlint/config-conventional": "^8.3.4",
+    "@commitlint/cli": "^9.0.1",
+    "@commitlint/config-conventional": "^9.0.1",
     "@mdi/js": "^5.3.45",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config": "^3.0.0",
@@ -26,7 +26,7 @@
     "@nuxtjs/google-analytics": "^2.3.0",
     "@nuxtjs/vuetify": "^1.11.2",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.2.0",
+    "eslint": "^7.3.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-nuxt": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.4",

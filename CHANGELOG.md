@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/mseele/sve-website/compare/v1.6.1...v1.7.0) (2020-06-26)
+
+
+### Features
+
+* implement pre-booking feature ([4980a5f](https://github.com/mseele/sve-website/commit/4980a5f230d5a32544de38ddd380b97d48f31f4e))
+
 ### [1.6.1](https://github.com/mseele/sve-website/compare/v1.6.0...v1.6.1) (2020-06-21)
 
 
