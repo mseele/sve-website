@@ -35,6 +35,6 @@
     "imagemin-pngquant": "^9.0.0",
     "imagemin-svgo": "^8.0.0",
     "prettier": "^2.0.5",
-    "standard-version": "^8.0.0"
+    "standard-version": "^8.0.1"
   }
 }
