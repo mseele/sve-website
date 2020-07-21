@@ -34,6 +34,12 @@
                 Mail:
                 <a href="mailto:info@sv-eutingen.de<">info@sv-eutingen.de</a>
               </li>
+              <li>
+                Informationen zur Aufsichtspflicht:
+                <a href="/downloads/Aufsichtspflicht-SVE.pdf" target="_blank">
+                  PDF
+                </a>
+              </li>
             </ul>
           </v-col>
           <v-col cols="12">
