@@ -1,9 +1,11 @@
 <template>
   <v-snackbar v-model="model" :color="color" multi-line>
     {{ message }}
-    <v-btn dark text @click="model = false">
-      <v-icon>{{ mdiClose }}</v-icon>
-    </v-btn>
+    <template v-slot:action="{ attrs }">
+      <v-btn dark text v-bind="attrs" @click="model = false">
+        <v-icon>{{ mdiClose }}</v-icon>
+      </v-btn>
+    </template>
   </v-snackbar>
 </template>
 
