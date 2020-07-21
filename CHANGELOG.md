@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/mseele/sve-website/compare/v1.7.4...v1.8.0) (2020-07-21)
+
+
+### Features
+
+* **content:** add new "Aufsichtspflicht" pdf ([b3ac45e](https://github.com/mseele/sve-website/commit/b3ac45e43147b79eebc0084532d78e15768ac08a)), closes [#110](https://github.com/mseele/sve-website/issues/110)
+
+
+### Bug Fixes
+
+* **notification:** improve snackbar by using action slot ([3a7cb64](https://github.com/mseele/sve-website/commit/3a7cb642b1ada7aff98d3129f2cb8af6340107b5))
+* **typo:** remove wrong character in mailto ([8465d26](https://github.com/mseele/sve-website/commit/8465d26e477e4e3be615b063d34818d3d11fba81))
+
 ### [1.7.4](https://github.com/mseele/sve-website/compare/v1.7.3...v1.7.4) (2020-07-14)
 
 ### [1.7.3](https://github.com/mseele/sve-website/compare/v1.7.2...v1.7.3) (2020-07-12)
