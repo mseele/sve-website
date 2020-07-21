@@ -32,7 +32,7 @@
               </li>
               <li>
                 Mail:
-                <a href="mailto:info@sv-eutingen.de<">info@sv-eutingen.de</a>
+                <a href="mailto:info@sv-eutingen.de">info@sv-eutingen.de</a>
               </li>
               <li>
                 Informationen zur Aufsichtspflicht:
