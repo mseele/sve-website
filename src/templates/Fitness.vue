@@ -20,7 +20,7 @@ import event from '@/components/events/Event'
 export default {
   metaInfo() {
     return {
-      title: this.$page.event.name + ' - Events',
+      title: this.$page.event.name + ' - Fitness',
     }
   },
   components: {
