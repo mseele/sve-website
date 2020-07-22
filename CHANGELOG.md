@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/mseele/sve-website/compare/v2.0.1...v2.1.0) (2020-07-22)
+
+
+### Features
+
+* **page:** add 404 error page ([18456c8](https://github.com/mseele/sve-website/commit/18456c8ee466da3fa6be01909bfd99a09977346f))
+
+
+### Bug Fixes
+
+* **events:** correct events path ([5814d6b](https://github.com/mseele/sve-website/commit/5814d6b3175fc4c306d107066555acba5148a8a8))
+* **page:** fix fitness page name ([f51617b](https://github.com/mseele/sve-website/commit/f51617b4274646cf9465ee8ab72f2544558b85dd))
+
 ### [2.0.1](https://github.com/mseele/sve-website/compare/v2.0.0...v2.0.1) (2020-07-22)
 
 
