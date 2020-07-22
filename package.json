@@ -5,36 +5,38 @@
   "author": "mseele",
   "private": true,
   "scripts": {
-    "dev": "nuxt dev",
-    "build": "nuxt build && nuxt export",
-    "release": "standard-version",
-    "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
+    "develop": "gridsome develop",
+    "explore": "gridsome explore",
+    "build": "gridsome build",
+    "release": "standard-version"
   },
   "dependencies": {
-    "@nuxtjs/sitemap": "^2.4.0",
+    "@gridsome/plugin-google-analytics": "^0.1.1",
+    "@gridsome/plugin-sitemap": "^0.4.0",
     "axios": "^0.19.2",
-    "nuxt": "^2.13.3"
+    "gridsome": "^0.7.19",
+    "typeface-roboto": "0.0.75",
+    "vuetify": "^2.3.4",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
-    "@bazzite/nuxt-optimized-images": "^0.4.0",
-    "@commitlint/cli": "^9.0.1",
-    "@commitlint/config-conventional": "^9.0.1",
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^9.1.1",
     "@mdi/js": "^5.3.45",
-    "@nuxtjs/dotenv": "^1.4.1",
-    "@nuxtjs/eslint-config": "^3.0.0",
-    "@nuxtjs/eslint-module": "^2.0.0",
-    "@nuxtjs/google-analytics": "^2.3.0",
-    "@nuxtjs/vuetify": "^1.11.2",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.3.1",
+    "cache-loader": "^4.1.0",
+    "deepmerge": "^4.2.2",
+    "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-nuxt": "^1.0.0",
+    "eslint-plugin-gridsome": "^1.5.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "fibers": "^5.0.0",
+    "gm": "^1.23.1",
     "husky": "^4.2.5",
-    "imagemin-mozjpeg": "^9.0.0",
-    "imagemin-pngquant": "^9.0.0",
-    "imagemin-svgo": "^8.0.0",
     "prettier": "^2.0.5",
-    "standard-version": "^8.0.0"
+    "sass": "^1.26.10",
+    "sass-loader": "^7.3.1",
+    "standard-version": "^8.0.2",
+    "vuetify-loader": "^1.6.0"
   }
 }
