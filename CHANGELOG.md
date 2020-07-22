@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/mseele/sve-website/compare/v1.8.1...v2.0.0) (2020-07-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* **framework:** replace the complete js framework
+
+fix https://github.com/mseele/sve-website/issues/47
+
+### Features
+
+* **framework:** switch from nuxt to gridsome ([c0f883b](https://github.com/mseele/sve-website/commit/c0f883b51a423b04bf5d1628874d0b576f5c9aa2))
+
 ### [1.8.1](https://github.com/mseele/sve-website/compare/v1.8.0...v1.8.1) (2020-07-21)
 
 ## [1.8.0](https://github.com/mseele/sve-website/compare/v1.7.4...v1.8.0) (2020-07-21)

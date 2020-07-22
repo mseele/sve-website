@@ -62,10 +62,7 @@ typings/
 # next.js build output
 .next
 
-# nuxt.js build output
-.nuxt
-
-# Nuxt generate
+# Gridsome generate
 dist
 
 # vuepress build output
@@ -85,3 +82,5 @@ sw.*
 
 # Vim swap files
 *.swp
+
+src/.temp
