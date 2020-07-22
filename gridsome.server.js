@@ -30,7 +30,7 @@ module.exports = function (api) {
         } else if (event.type === 'Events') {
           createPage({
             path: '/event/' + event.id,
-            component: './src/templates/Events.vue',
+            component: './src/templates/Event.vue',
             queryVariables: {
               id: event.id,
             },

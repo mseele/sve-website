@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/mseele/sve-website/compare/v2.0.0...v2.0.1) (2020-07-22)
+
+
+### Bug Fixes
+
+* **events:** correct template page name ([5cb9be2](https://github.com/mseele/sve-website/commit/5cb9be2b9f420d351d3f6a17c508d82277994952))
+
 ## [2.0.0](https://github.com/mseele/sve-website/compare/v1.8.1...v2.0.0) (2020-07-22)
 
 
