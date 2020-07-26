@@ -34,6 +34,7 @@ query($id: ID!) {
   event(id: $id) {
     id
     name
+    type
     image
     description
     light
