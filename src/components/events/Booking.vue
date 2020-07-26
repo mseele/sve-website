@@ -98,6 +98,7 @@
 
 <script>
 import axios from 'axios'
+import { validateEmail } from '@/util/validators'
 
 export default {
   props: {
@@ -129,11 +130,7 @@ export default {
       checkbox: false,
       emailRules: [
         (v) => !!v || 'Email wird benötigt',
-        (v) =>
-          // eslint-disable-next-line no-useless-escape
-          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-            v
-          ) || 'Die Email Addresse muss gültig sein',
+        (v) => validateEmail(v) || 'Die Email Addresse muss gültig sein',
       ],
       checkboxRules: [(v) => !!v || 'Eine Zustimmung wird benötigt'],
       submitLoading: false,
