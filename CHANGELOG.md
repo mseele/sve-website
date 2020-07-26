@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.1](https://github.com/mseele/sve-website/compare/v2.1.0...v2.1.1) (2020-07-26)
+
+
+### Bug Fixes
+
+* **events:** add location ([8a19840](https://github.com/mseele/sve-website/commit/8a19840696ec41490e879cb5ac7f863a3a577523))
+
 ## [2.1.0](https://github.com/mseele/sve-website/compare/v2.0.1...v2.1.0) (2020-07-22)
 
 
