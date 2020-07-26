@@ -66,6 +66,7 @@
 
 <script>
 import axios from 'axios'
+import { validateEmail } from '@/util/validators'
 
 export default {
   props: {
@@ -86,14 +87,6 @@ export default {
     return {
       newsTypes: [],
       email: '',
-      emailRules: [
-        (v) => !!v || 'Email wird benötigt',
-        (v) =>
-          // eslint-disable-next-line no-useless-escape
-          /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-            v
-          ) || 'Die Email Addresse muss gültig sein',
-      ],
       subscribeLoading: false,
     }
   },
@@ -120,9 +113,6 @@ export default {
         this.unsubscribe()
       }
     },
-    validate(value) {
-      return value.length > 0 && /.+@.+/.test(value)
-    },
     unsubscribe() {
       const value = this.email.trim()
       if (this.newsTypes.length === 0) {
@@ -130,7 +120,7 @@ export default {
           'notification_showError',
           'Bitte wähle mindestens eine Newletter Option aus. Vielen Dank.'
         )
-      } else if (!this.validate(value)) {
+      } else if (!validateEmail(value)) {
         this.$store.commit(
           'notification_showError',
           'Bitte gib eine gültige E-Mail Addresse an. Vielen Dank.'
@@ -167,7 +157,7 @@ export default {
           'notification_showError',
           'Bitte wähle mindestens eine Newletter Option aus. Vielen Dank.'
         )
-      } else if (!this.validate(value)) {
+      } else if (!validateEmail(value)) {
         this.$store.commit(
           'notification_showError',
           'Bitte gib eine gültige E-Mail Addresse an. Vielen Dank.'

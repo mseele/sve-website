@@ -1,5 +1,5 @@
 <template>
-  <Layout :transparent="true">
+  <Layout :transparent="true" :light="true">
     <section id="home" class="pa-0">
       <v-img src="@/assets/home/main.jpg?vuetify-preload" height="100vh">
         <v-container fill-height>

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.3](https://github.com/mseele/sve-website/compare/v2.1.2...v2.1.3) (2020-07-26)
+
+
+### Bug Fixes
+
+* **email:** replace duplicate email validation with one ([fb2803f](https://github.com/mseele/sve-website/commit/fb2803f2cb9d7da81c500f4057e302a772d818c5)), closes [#85](https://github.com/mseele/sve-website/issues/85)
+* **links:** change header links to light on home site ([08ee4f4](https://github.com/mseele/sve-website/commit/08ee4f4eac8ab2413443cde6199f4b72f2948000))
+
 ### [2.1.2](https://github.com/mseele/sve-website/compare/v2.1.1...v2.1.2) (2020-07-26)
 
 
