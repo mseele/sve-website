@@ -38,6 +38,7 @@ query($id: ID!) {
     description
     light
     dates
+    location
     customDate
     durationInMinutes
     costMember
