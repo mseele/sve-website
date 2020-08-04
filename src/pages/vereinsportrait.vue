@@ -19,8 +19,24 @@
                 Volleyball, Fitness, Ernährung, Volleyball, Events
               </li>
               <li>
-                Vorstandschaft: Sebastian Lazar, Dominik Rakoczy, Dietmar
-                Kurbjun (seit 2019)
+                Vorstandschaft:
+                <ul>
+                  <li>
+                    Sebastian Lazar (<a href="mailto:vorstand@sv-eutingen.de"
+                      >vorstand@sv-eutingen.de</a
+                    >
+                    / <a href="tel:+4917630774678">0176-30774678</a>) / Dominik
+                    Rakoczy / Dietmar Kurbjun
+                  </li>
+                  <li>
+                    Kassier Wolfgang Nesch (<a
+                      href="mailto:vorstand@sv-eutingen.de"
+                      >vorstand@sv-eutingen.de</a
+                    >
+                    /
+                    <a href="tel:+491625323142">0162-5323142</a>)
+                  </li>
+                </ul>
               </li>
               <li>
                 Adresse: SV Eutingen 1947 e.V. / Marktstr. 84 / 72184 Eutingen
