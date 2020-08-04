@@ -33,6 +33,10 @@
     {
       "title": "Gaststätte Auszeit",
       "to": "/gaststaette"
+    },
+    {
+      "title": "Vereinskalender",
+      "to": "/vereinskalender"
     }
   ],
   "footerItems": [
