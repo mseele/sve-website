@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/mseele/sve-website/compare/v2.1.3...v2.2.0) (2020-08-04)
+
+
+### Features
+
+* **content:** add donations section ([2a4e26c](https://github.com/mseele/sve-website/commit/2a4e26c2f259408347f069fd3c5e77d340e2a3f7)), closes [#126](https://github.com/mseele/sve-website/issues/126)
+* **content:** improve board infos ([bae25d0](https://github.com/mseele/sve-website/commit/bae25d0a2d8f0be49bbfa0dbc18981b40e0f0f57)), closes [#127](https://github.com/mseele/sve-website/issues/127)
+
 ### [2.1.3](https://github.com/mseele/sve-website/compare/v2.1.2...v2.1.3) (2020-07-26)
 
 
