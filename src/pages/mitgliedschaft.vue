@@ -58,6 +58,26 @@
         </v-row>
       </v-container>
     </section>
+    <section class="section">
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <h2>SPENDEN</h2>
+          </v-col>
+          <v-col cols="12" class="subtitle-1">
+            Mit Deiner Spende kannst Du direkt Gutes tun und förderst damit
+            unser sportliches und kulturelles Angebot. Dabei hilft uns jeder
+            Betrag!
+          </v-col>
+          <v-col cols="12" class="subtitle-1">
+            <b>Kontoverbindung</b><br />
+            Sportverein Eutingen<br />
+            Volksbank Horb-Freudenstadt eG<br />
+            IBAN: DE28 642 910 10 00 344 69 001<br />
+          </v-col>
+        </v-row>
+      </v-container>
+    </section>
   </Layout>
 </template>
 
