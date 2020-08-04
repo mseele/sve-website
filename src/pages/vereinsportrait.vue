@@ -27,6 +27,10 @@
                 im Gäu
               </li>
               <li>
+                Kontoverbindung: Sportverein Eutingen / Volksbank
+                Horb-Freudenstadt eG / IBAN: DE28 642 910 10 00 344 69 001
+              </li>
+              <li>
                 Homepage:
                 <a href="https://www.sv-eutingen.de">www.sv-eutingen.de</a>
               </li>
