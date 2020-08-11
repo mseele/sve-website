@@ -1,16 +1,17 @@
 const moment = require('moment')
+const numeral = require('numeral')
+require('numeral/locales/de')
+
 moment.locale('de')
+
+numeral.locale('de')
+numeral.localeData('de').delimiters.thousands = '.'
 
 function toCurrency(value) {
   if (typeof value !== 'number') {
     return value
   }
-  const formatter = new Intl.NumberFormat('de-DE', {
-    style: 'currency',
-    currency: 'EUR',
-    minimumFractionDigits: 0,
-  })
-  return formatter.format(value)
+  return numeral(value).format('0,0[.]00 $')
 }
 
 function toDate(value) {
