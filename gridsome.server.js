@@ -19,7 +19,24 @@ module.exports = function (api) {
     const { data } = await axios.get(eventsAPI + '?beta=' + process.env.BETA)
     const events = actions.addCollection('Event')
     for (const event of data) {
-      events.addNode(event)
+      // convert values
+      const node = JSON.parse(JSON.stringify(event))
+      if (node.costMember) {
+        node.costMember = format.toCurrency(node.costMember)
+      }
+      if (node.costNonMember) {
+        node.costNonMember = format.toCurrency(node.costMember)
+      }
+      if (node.durationInMinutes) {
+        node.duration = format.toDuration(node.durationInMinutes)
+        delete node.durationInMinutes
+      }
+      if (node.dates) {
+        node.dates = node.dates.map((date) => format.toDate(date))
+      }
+      // add event
+      events.addNode(node)
+      // create page
       api.createManagedPages(({ createPage }) => {
         if (event.type === 'Fitness') {
           createPage({
@@ -71,16 +88,13 @@ module.exports = function (api) {
         description: String
         image: String
         light: Boolean
-        dates(
-          format: String
-          locale: String
-        ): [Date]
+        dates: [String]
         customDate: String
-        durationInMinutes: Int
+        duration: String
         maxSubscribers: Int
         subscribers: Int
-        costMember: Int
-        costNonMember: Int
+        costMember: String
+        costNonMember: String
         waitingList: Int
         maxWaitingList: Int
         location: String

@@ -1,6 +1,41 @@
 const moment = require('moment')
 moment.locale('de')
 
+function toCurrency(value) {
+  if (typeof value !== 'number') {
+    return value
+  }
+  const formatter = new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: 0,
+  })
+  return formatter.format(value)
+}
+
+function toDate(value) {
+  return moment(value).format('dd, DD.MM.YYYY H:mm') + ' Uhr'
+}
+
+function toDuration(value) {
+  const duration = moment.duration(value, 'minutes')
+  let hours = duration.hours()
+  let minutes = duration.minutes()
+  let string = ''
+  if (hours > 1) {
+    string += hours + ' Stunden'
+  } else if (hours > 0) {
+    string += hours + ' Stunde'
+  }
+  if (string && minutes > 0) {
+    string += ' und '
+  }
+  if (minutes > 0) {
+    string += minutes + ' Minuten'
+  }
+  return string
+}
+
 function toDatespan(appointment) {
   const pattern = 'dd, D.MM.YYYY'
   if (appointment.startDate && appointment.endDate) {
@@ -41,6 +76,9 @@ function toTimespan(appointment) {
 }
 
 module.exports = {
+  toCurrency: toCurrency,
+  toDate: toDate,
+  toDuration: toDuration,
   toDatespan: toDatespan,
   toTimespan: toTimespan,
 }
