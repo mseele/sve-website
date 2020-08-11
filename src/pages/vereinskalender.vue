@@ -86,6 +86,7 @@ query {
         time
         title
         description
+        link
       }
     }
   }

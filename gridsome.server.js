@@ -70,6 +70,7 @@ module.exports = function (api) {
         time: format.toTimespan(appointment),
         title: appointment.title,
         description: appointment.description,
+        link: appointment.link,
       })
     }
   })

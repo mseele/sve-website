@@ -37,6 +37,7 @@ function load(addSchemaTypes) {
         time: String
         title: String
         description: String
+        link: String
       }
     `)
 }
