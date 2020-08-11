@@ -15,7 +15,7 @@ function toCurrency(value) {
 }
 
 function toDate(value) {
-  return moment(value).format('dd, DD. MMM YYYY H:mm') + ' Uhr'
+  return moment(value).format('dd., DD. MMM YYYY H:mm') + ' Uhr'
 }
 
 function toDuration(value) {
@@ -38,7 +38,7 @@ function toDuration(value) {
 }
 
 function toDatespan(appointment) {
-  const pattern = 'dd, D. MMM YYYY'
+  const pattern = 'dd., D. MMM YYYY'
   if (appointment.startDate && appointment.endDate) {
     const start = moment(appointment.startDate)
     const end = moment(appointment.endDate)
