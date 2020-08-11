@@ -14,7 +14,7 @@ function toCurrency(value) {
 }
 
 function toDate(value) {
-  return moment(value).format('dd, DD.MM.YYYY H:mm') + ' Uhr'
+  return moment(value).format('dd, DD. MMM YYYY H:mm') + ' Uhr'
 }
 
 function toDuration(value) {
