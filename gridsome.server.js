@@ -26,7 +26,7 @@ module.exports = function (api) {
         node.costMember = format.toCurrency(node.costMember)
       }
       if (node.costNonMember) {
-        node.costNonMember = format.toCurrency(node.costMember)
+        node.costNonMember = format.toCurrency(node.costNonMember)
       }
       if (node.durationInMinutes) {
         node.duration = format.toDuration(node.durationInMinutes)
