@@ -32,6 +32,36 @@
         </v-row>
       </v-container>
     </section>
+    <section class="section_alt">
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <h2>TIPPS &amp; TRICKS</h2>
+          </v-col>
+          <v-col cols="12">
+            Über
+            <a
+              href="https://calendar.google.com/calendar/embed?src=info%40sv-eutingen.de&ctz=Europe%2FBerlin"
+              target="_blank"
+              rel="noreferrer"
+              >diesen Link</a
+            >
+            können die Termine als Google Kalender geöffnet und auch zu deinem
+            persönlichen Kalender hinzugefügt werden.<br />
+            <div class="pt-4 subtitle-2">
+              Hier findest du den passenden
+              <a
+                href="https://support.google.com/calendar/answer/37100"
+                target="_blank"
+                rel="noreferrer"
+                >Hilfeartikel</a
+              >
+              für mehr Informationen.
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+    </section>
   </Layout>
 </template>
 
