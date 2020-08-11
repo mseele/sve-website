@@ -38,7 +38,7 @@ function toDuration(value) {
 }
 
 function toDatespan(appointment) {
-  const pattern = 'dd, D.MM.YYYY'
+  const pattern = 'dd, D. MMM YYYY'
   if (appointment.startDate && appointment.endDate) {
     const start = moment(appointment.startDate)
     const end = moment(appointment.endDate)
