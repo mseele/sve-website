@@ -15,17 +15,56 @@
             Termin mehr.
           </v-col>
           <v-col cols="12">
-            <v-row justify="center">
-              <v-col
-                v-for="(edge, index) in $page.appointments.edges"
-                :key="index"
-                cols="12"
-                sm="6"
-                lg="4"
-                xl="2"
-              >
-                <appointment :value="edge.node"></appointment>
-              </v-col>
+            <v-row v-if="$page.appointments.edges.length > 0" justify="center">
+              <v-timeline>
+                <v-timeline-item
+                  v-for="(edge, index) in $page.appointments.edges"
+                  :key="index"
+                  small
+                  right
+                >
+                  <template v-slot:opposite>
+                    <div class="title">{{ edge.node.date }}</div>
+                    <div class="subtitle-2 grey--text text--darken-3">
+                      {{ edge.node.time }}
+                    </div>
+                  </template>
+
+                  <div class="py-4">
+                    <a
+                      v-if="edge.node.link"
+                      :href="edge.node.link"
+                      target="_blank"
+                      rel="noreferrer"
+                      class="black--text text-decoration-none"
+                    >
+                      <div class="title mb-4">
+                        {{ edge.node.title }}
+                      </div>
+                      <div
+                        v-if="edge.node.description"
+                        class="grey--text text--darken-3"
+                      >
+                        {{ edge.node.description }}
+                      </div>
+                    </a>
+                    <template v-else>
+                      <div class="title mb-4">
+                        {{ edge.node.title }}
+                      </div>
+                      <div
+                        v-if="edge.node.description"
+                        class="grey--text text--darken-3"
+                      >
+                        {{ edge.node.description }}
+                      </div>
+                    </template>
+                  </div>
+                </v-timeline-item>
+              </v-timeline>
+            </v-row>
+            <v-row v-else justify="center" class="headline py-10">
+              In nächster Zeit stehen keine Termine an
             </v-row>
           </v-col>
         </v-row>
@@ -65,13 +104,9 @@
 </template>
 
 <script>
-import Appointment from '@/components/common/Appointment'
 export default {
   metaInfo: {
-    title: 'Vereinskalender',
-  },
-  components: {
-    Appointment,
+    title: 'Termine',
   },
 }
 </script>
