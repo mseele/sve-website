@@ -6,7 +6,7 @@
           <v-col cols="12">
             <h2>TERMINE</h2>
           </v-col>
-          <v-col cols="12">
+          <v-col cols="12" class="subtitle-1">
             Hier findest Du unsere wichtigsten Vereinstermine mit
             unterschiedlichen Veranstaltungen und Events. Details erfährst Du
             durch einen Klick auf den Termin.<br />
@@ -76,7 +76,7 @@
           <v-col cols="12">
             <h2>TIPPS &amp; TRICKS</h2>
           </v-col>
-          <v-col cols="12">
+          <v-col cols="12" class="subtitle-1">
             Über
             <a
               href="https://calendar.google.com/calendar/embed?src=info%40sv-eutingen.de&ctz=Europe%2FBerlin"
