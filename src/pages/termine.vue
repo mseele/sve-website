@@ -4,16 +4,15 @@
       <v-container>
         <v-row>
           <v-col cols="12">
-            <h2>VEREINSKALENDER</h2>
+            <h2>TERMINE</h2>
           </v-col>
           <v-col cols="12">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-            et dolore magna aliquyam erat, sed diam voluptua. At
+            Hier findest Du unsere wichtigsten Vereinstermine mit
+            unterschiedlichen Veranstaltungen und Events. Details erfährst Du
+            durch einen Klick auf den Termin.<br />
+            Den digitalen Kalender kannst Du auch als Google-Kalender in Deinen
+            persönlichen Kalender integrieren, dann entgeht Dir sicher kein
+            Termin mehr.
           </v-col>
           <v-col cols="12">
             <v-row justify="center">
@@ -46,8 +45,8 @@
               rel="noreferrer"
               >diesen Link</a
             >
-            können die Termine als Google Kalender geöffnet und auch zu deinem
-            persönlichen Kalender hinzugefügt werden.<br />
+            können die Termine als Google Kalender geöffnet und auch in deinen
+            persönlichen Kalender integriert werden.<br />
             <div class="pt-4 subtitle-2">
               Hier findest du den passenden
               <a

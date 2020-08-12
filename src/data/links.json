@@ -35,8 +35,8 @@
       "to": "/gaststaette"
     },
     {
-      "title": "Vereinskalender",
-      "to": "/vereinskalender"
+      "title": "Termine",
+      "to": "/termine"
     }
   ],
   "footerItems": [
