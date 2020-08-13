@@ -41,7 +41,7 @@ query($id: ID!) {
     dates
     location
     customDate
-    durationInMinutes
+    duration
     costMember
     costNonMember
     externalOperator

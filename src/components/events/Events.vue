@@ -29,7 +29,9 @@
               <v-card outlined class="d-flex flex-column" height="100%">
                 <v-img
                   :src="
-                    require('@/assets/events/' + event.node.image + '?vuetify-preload')
+                    require('@/assets/events/' +
+                      event.node.image +
+                      '?vuetify-preload')
                   "
                   aspect-ratio="2.75"
                   class="flex-grow-0"

@@ -71,12 +71,12 @@
                 {{ event.customDate }}
               </li>
               <li v-else-if="event.dates.length == 1">
-                {{ toDate(event.dates[0]) }}
+                {{ event.dates[0] }}
               </li>
               <li v-else>{{ event.dates.length }} Termine</li>
               <li>
                 {{ durationPrefix() + ' ' }}
-                {{ toDuration(event.durationInMinutes) }}
+                {{ event.duration }}
               </li>
             </ul>
           </v-col>
@@ -84,14 +84,12 @@
             <ul>
               <li>Wo: {{ event.location }}</li>
               <li v-if="event.costMember === event.costNonMember">
-                {{ toCurrency(event.costMember) }} pro Teilnehmer
+                {{ event.costMember }} pro Teilnehmer
               </li>
-              <li v-if="event.costMember !== event.costNonMember">
-                {{ toCurrency(event.costMember) }} für Mitglieder
-              </li>
-              <li v-if="event.costMember !== event.costNonMember">
-                {{ toCurrency(event.costNonMember) }} für Nicht-Mitglieder
-              </li>
+              <template v-else>
+                <li>{{ event.costMember }} für Mitglieder</li>
+                <li>{{ event.costNonMember }} für Nicht-Mitglieder</li>
+              </template>
             </ul>
           </v-col>
           <v-col
@@ -120,7 +118,7 @@
             sm="6"
           >
             <ul>
-              <li>{{ toDate(date) }}</li>
+              <li>{{ date }}</li>
             </ul>
           </v-col>
         </v-row>
@@ -177,12 +175,7 @@
 <script>
 import axios from 'axios'
 import booking from '@/components/events/Booking'
-import {
-  toDate,
-  toSubscribers,
-  toDuration,
-  toCurrency,
-} from '@/util/converters'
+import { toSubscribers } from '@/util/converters'
 
 export default {
   components: {
@@ -200,10 +193,7 @@ export default {
   },
   data() {
     return {
-      toDate,
       toSubscribers,
-      toDuration,
-      toCurrency,
       countersAvailable: false,
     }
   },

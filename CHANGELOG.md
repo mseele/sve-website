@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/mseele/sve-website/compare/v2.2.0...v2.3.0) (2020-08-13)
+
+
+### Features
+
+* **appointments:** add more link ([0c082f2](https://github.com/mseele/sve-website/commit/0c082f2cb474e45a963d7053c47fe330bc9210da)), closes [#34](https://github.com/mseele/sve-website/issues/34)
+* **appointments:** add new info section ([f40302e](https://github.com/mseele/sve-website/commit/f40302efd5a16fb34cd5af1b87cde820a6e874e4)), closes [#34](https://github.com/mseele/sve-website/issues/34)
+* **appointments:** improve naming and description ([1172371](https://github.com/mseele/sve-website/commit/11723710997bdd8f472ecc9568c4ffdceec6605e)), closes [#34](https://github.com/mseele/sve-website/issues/34)
+* **appointments:** replace cards with timeline ([83b65bb](https://github.com/mseele/sve-website/commit/83b65bb8c202443c44069bcfb6a3400681676279)), closes [#34](https://github.com/mseele/sve-website/issues/34)
+* **format:** display month as value instead of numeric ([70ba04d](https://github.com/mseele/sve-website/commit/70ba04dafcbda96ed2c712a6073bb71835ced8c7))
+* **page:** add new appointments page ([919a11e](https://github.com/mseele/sve-website/commit/919a11e9bd96d6e4d02f1a4342dec3652e71d8f4)), closes [#34](https://github.com/mseele/sve-website/issues/34)
+
+
+### Bug Fixes
+
+* **appointments:** improve zero appointments message ([30115ba](https://github.com/mseele/sve-website/commit/30115ba928c9bc559751c2243a4c5f895d003f0b))
+* **format:** add dot after weekday ([ef30f6f](https://github.com/mseele/sve-website/commit/ef30f6fc1e522ea82ec3e1a676a3839fab8ce50f))
+* **format:** correct datespan when start & end date are equal ([4c2512c](https://github.com/mseele/sve-website/commit/4c2512c6b3ed567f3b91d2b75e86a09f1b4c02e1))
+* **format:** correct toDate format ([12b8a51](https://github.com/mseele/sve-website/commit/12b8a51d118659bed792512451ebafb7983d491a))
+* **format:** fix typo ([779529a](https://github.com/mseele/sve-website/commit/779529a7a32b9b9fe0f0657424f38b8104bf0ebd))
+* **format:** use numeral to fix currency locale issues ([521b717](https://github.com/mseele/sve-website/commit/521b717df7b33aed4c1ad5990af690b056c665b5))
+
 ## [2.2.0](https://github.com/mseele/sve-website/compare/v2.1.3...v2.2.0) (2020-08-04)
 
 
