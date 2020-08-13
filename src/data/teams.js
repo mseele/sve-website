@@ -109,10 +109,12 @@ export default {
       team: '2. Mannschaft',
       league: 'Bezirksliga',
       coach: {
-        name: 'Ivica Braun Butrovic',
+        name: 'Chrissi Gaiser',
+        female: true,
+        email: 'chrissi.heitmann@gmail.com',
         mobile: {
-          formatted: '01520 1626427',
-          raw: '+4915201626427',
+          formatted: '0157 51505470',
+          raw: '+4915751505470',
         },
       },
       contact: {
