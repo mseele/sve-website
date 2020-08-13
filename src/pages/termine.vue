@@ -64,7 +64,7 @@
               </v-timeline>
             </v-row>
             <v-row v-else justify="center" class="headline py-10">
-              In nächster Zeit stehen keine Termine an
+              In der nächsten Zeit steht kein größerer Termin an.
             </v-row>
           </v-col>
         </v-row>
