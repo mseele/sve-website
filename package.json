@@ -1,6 +1,6 @@
 {
   "name": "sve-website",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "Website SV Eutingen",
   "author": "mseele",
   "private": true,
@@ -13,7 +13,7 @@
   "dependencies": {
     "@gridsome/plugin-google-analytics": "^0.1.1",
     "@gridsome/plugin-sitemap": "^0.4.0",
-    "axios": "^0.19.2",
+    "axios": "^0.20.0",
     "gridsome": "^0.7.20",
     "typeface-roboto": "0.0.75",
     "vuetify": "^2.3.9",
@@ -35,7 +35,7 @@
     "husky": "^4.2.5",
     "moment": "^2.27.0",
     "numeral": "^2.0.6",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.0",
     "sass": "^1.26.10",
     "sass-loader": "^7.3.1",
     "standard-version": "^9.0.0",
