@@ -1,5 +1,6 @@
 const abteilungsleiterHerren = {
-  name: 'Abteilungsleiter Daniel Neuss',
+  title: 'Abteilungsleiter',
+  name: 'Daniel Neuss',
   email: 'herrenabteilung@sv-eutingen.de',
   mobile: {
     formatted: '0172 7770447',
@@ -8,8 +9,8 @@ const abteilungsleiterHerren = {
 }
 
 const jugendleiter = {
-  name: 'Jugendleiterin Diana Akermann',
-  female: true,
+  title: 'Jugendleiterin',
+  name: 'Diana Akermann',
   email: 'akermann.diana@googlemail.com',
   mobile: {
     formatted: '0163 7938508',
@@ -94,8 +95,8 @@ export default {
         },
       },
       contact: {
-        name: 'Abteilungsleiterin Samantha Becker',
-        female: true,
+        title: 'Abteilungsleiterin',
+        name: 'Samantha Becker',
         email: 'Samantha.becker.sb@gmail.com',
         mobile: {
           formatted: '0172 1951443',
@@ -109,8 +110,8 @@ export default {
       team: '2. Mannschaft',
       league: 'Bezirksliga',
       coach: {
+        title: 'Trainerin',
         name: 'Chrissi Gaiser',
-        female: true,
         email: 'chrissi.heitmann@gmail.com',
         mobile: {
           formatted: '0157 51505470',
@@ -118,8 +119,8 @@ export default {
         },
       },
       contact: {
-        name: 'Abteilungsleiterin Christina Saile',
-        female: true,
+        title: 'Abteilungsleiterin',
+        name: 'Christina Saile',
         email: 'Saile.christina@web.de',
         mobile: {
           formatted: '01578 8571421',

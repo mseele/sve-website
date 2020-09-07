@@ -91,7 +91,7 @@ export default {
           if (team.contact && team.contact.email) {
             items.push({
               value: team.contact.email,
-              text: team.contact.name,
+              text: this.fullyQualifiedContactName(team.contact),
             })
           }
         }
@@ -135,7 +135,7 @@ export default {
     contactName(key) {
       const team = this.findTeam(key)
       if (team != null && team.contact != null) {
-        return team.contact.name
+        return this.fullyQualifiedContactName(team.contact)
       }
       return null
     },
@@ -191,6 +191,9 @@ export default {
     fullyQualifiedCoachName(coach) {
       const prefix = coach.title ? coach.title : 'Trainer'
       return prefix + ' ' + coach.name
+    },
+    fullyQualifiedContactName(contact) {
+      return contact.title + ' ' + contact.name
     },
   },
 }
