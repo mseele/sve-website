@@ -38,7 +38,7 @@
                 text
                 rounded
                 color="primary"
-                href="/downloads/Mitgliedsantrag-SVE.pdf"
+                href="/downloads/2020/Mitgliedsantrag-SVE.pdf"
                 target="_blank"
               >
                 <v-icon left>{{ mdiCloudDownload }}</v-icon

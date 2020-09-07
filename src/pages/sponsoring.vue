@@ -92,7 +92,7 @@
                   text
                   rounded
                   color="primary"
-                  href="/downloads/Vertrag-Bandenwerbung.pdf"
+                  href="/downloads/2020/Vertrag-Bandenwerbung.pdf"
                   target="_blank"
                 >
                   <v-icon left>{{ mdiCloudDownload }}</v-icon
@@ -106,7 +106,7 @@
                   text
                   rounded
                   color="primary"
-                  href="/downloads/Preise-Bandenwerbung.pdf"
+                  href="/downloads/2020/Preise-Bandenwerbung.pdf"
                   target="_blank"
                 >
                   <v-icon left>{{ mdiCloudDownload }}</v-icon

@@ -56,7 +56,10 @@
               </li>
               <li>
                 Informationen zur Aufsichtspflicht:
-                <a href="/downloads/Aufsichtspflicht-SVE.pdf" target="_blank">
+                <a
+                  href="/downloads/2020/Aufsichtspflicht-SVE.pdf"
+                  target="_blank"
+                >
                   PDF
                 </a>
               </li>
@@ -68,7 +71,7 @@
                 text
                 rounded
                 color="primary"
-                href="/downloads/Vereinssatzung-SVE.pdf"
+                href="/downloads/2020/Vereinssatzung-SVE.pdf"
                 target="_blank"
               >
                 <v-icon left>{{ mdiCloudDownload }}</v-icon
