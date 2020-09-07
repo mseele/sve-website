@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/mseele/sve-website/compare/v2.3.3...v2.4.0) (2020-09-07)
+
+
+### Features
+
+* **news:** add "heimspiel" video ([9d642fe](https://github.com/mseele/sve-website/commit/9d642fecc3aaddba46f5e5f965f69a1d05bdbdf0)), closes [#148](https://github.com/mseele/sve-website/issues/148)
+* **teams:** be more specific about contact title ([4d49779](https://github.com/mseele/sve-website/commit/4d49779b619fe497644554f8c3904fae2493e66f))
+
 ### [2.3.3](https://github.com/mseele/sve-website/compare/v2.3.2...v2.3.3) (2020-08-26)
 
 ### [2.3.2](https://github.com/mseele/sve-website/compare/v2.3.1...v2.3.2) (2020-08-13)
