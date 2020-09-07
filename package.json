@@ -16,7 +16,7 @@
     "axios": "^0.20.0",
     "gridsome": "^0.7.20",
     "typeface-roboto": "0.0.75",
-    "vuetify": "^2.3.9",
+    "vuetify": "^2.3.10",
     "vuex": "^3.5.1"
   },
   "devDependencies": {
