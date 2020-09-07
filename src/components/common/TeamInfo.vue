@@ -20,8 +20,9 @@
       </div>
     </v-card-text>
     <v-card-text class="pt-0">
-      <div v-if="value.contact.female" class="caption">Ansprechpartnerin</div>
-      <div v-else class="caption">Ansprechpartner</div>
+      <div class="caption">
+        {{ value.contact.title }}
+      </div>
       <div class="subtitle-1 font-weight-medium pb-0 text--primary">
         {{ value.contact.name }}
       </div>
@@ -70,9 +71,9 @@ export default {
 </script>
 
 <static-query>
-  query {
-    metadata {
-      pathPrefix
-    }
+query {
+  metadata {
+    pathPrefix
   }
+}
 </static-query>
