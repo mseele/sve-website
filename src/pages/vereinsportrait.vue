@@ -161,8 +161,39 @@
             Für unsere Angebote stellen wir eine sehr gute Infrastruktur zur
             Verfügung. Diese pflegen wir und gehen mit Ressourcen schonend um.
           </v-col>
-          <v-col cols="12" class="title">
-            #mehralseinverein
+          <v-col cols="12" class="title">#mehralseinverein </v-col>
+        </v-row>
+      </v-container>
+    </section>
+    <section id="heimspiel" class="section">
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <h2>Video Heimspiel</h2>
+          </v-col>
+          <v-col cols="12" class="subtitle-1">
+            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
+            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua.
+          </v-col>
+          <v-col cols="12">
+            <v-row justify="center" no-gutters>
+              <v-btn
+                text
+                rounded
+                color="primary"
+                href="https://vimeo.com/359776983"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <v-icon left>{{ mdiVideo }}</v-icon
+                >Zum Video</v-btn
+              >
+            </v-row>
           </v-col>
         </v-row>
       </v-container>
@@ -171,7 +202,7 @@
 </template>
 
 <script>
-import { mdiCloudDownload } from '@mdi/js'
+import { mdiCloudDownload, mdiVideo } from '@mdi/js'
 
 export default {
   metaInfo: {
@@ -180,6 +211,7 @@ export default {
   data() {
     return {
       mdiCloudDownload,
+      mdiVideo,
     }
   },
 }
