@@ -1,14 +1,15 @@
 <template>
   <Layout :transparent="true">
     <section class="pa-0">
-      <v-img src="@/assets/sponsoring/main-s.jpg?vuetify-preload" height="100vh">
+      <v-img
+        src="@/assets/sponsoring/main-s.jpg?vuetify-preload"
+        height="100vh"
+      >
         <v-container fill-height>
           <v-row align="center" class="pt-5 px-3">
             <v-sheet class="transparent black--text" max-width="500">
               <h1 class="display-2 white--text">Sponsoring</h1>
-              <div class="headline white--text py-4">
-                PROFITIERE MIT UNS
-              </div>
+              <div class="headline white--text py-4">PROFITIERE MIT UNS</div>
               <v-row class="mx-0 mt-4">
                 <v-btn
                   to="#bande"
