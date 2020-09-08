@@ -194,7 +194,7 @@ export default {
     },
     {
       key: 'd-junioren-1',
-      team: 'D-Junioren 1 SGM SV Vollmaringen',
+      team: 'D-Junioren 1 SGM SV Eutingen',
       league: 'Leistungsstaffel',
       coach: {
         name: 'Nika Ziebart',
@@ -209,7 +209,7 @@ export default {
     },
     {
       key: 'd-junioren-2',
-      team: 'D-Junioren 2 SGM SV Vollmaringen',
+      team: 'D-Junioren 2 SGM SV Eutingen',
       league: '9er Kreisstaffel',
       coach: {
         name: 'Heinfried Weiss',
