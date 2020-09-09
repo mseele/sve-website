@@ -172,16 +172,19 @@
       <v-container>
         <v-row>
           <v-col cols="12">
-            <h2>Video Heimspiel</h2>
+            <h2>Heimspiel</h2>
           </v-col>
           <v-col cols="12" class="subtitle-1">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua. At vero eos et accusam et justo duo dolores
-            et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
-            Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
-            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
-            et dolore magna aliquyam erat, sed diam voluptua.
+            Wie wichtig sind kleine Vereine gegenüber großen? Warum sollte man
+            gerade auch kleine Vereinsstrukturen erhalten und fördern?<br />
+            Die an.kox GmbH hat gemeinsam mit unseren SVE-Frauen auf wichtige
+            Zukunftsthemen aufmerksam gemacht und diese in einem Film
+            aufgegriffen. Diese neun Minuten zeigen sehr schön, was unser
+            Anliegen ist: Teilhabe durch Sport und Begegnung.<br />
+            Ein großer Dank geht an unsere Partner der an.kox GmbH und Oliver
+            Lozano von den el Pistolero Studios, die den Film produziert
+            haben.<br />
+            Viel Freude beim Anschauen!
           </v-col>
           <v-col cols="12">
             <v-row justify="center" no-gutters>
