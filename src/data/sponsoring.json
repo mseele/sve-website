@@ -173,5 +173,74 @@
     "name": "Praxis für Ernährungstherapie Sven Bach",
     "url": "https://www.sven-bach.de/",
     "groupBy": "Sven Bach"
+  },
+  {
+    "name": "REUKO Klima-Service GmbH & Co. KG",
+    "url": "https://www.reuko.de/",
+    "groupBy": "REUKO"
+  },
+  {
+    "name": "Lutz Bedachungen",
+    "url": "http://www.lutz-bedachungen.de/",
+    "groupBy": "Lutz"
+  },
+  {
+    "name": "Schlagerbar Eutingen",
+    "url": "https://www.schlagerbar-eutingen.de/",
+    "groupBy": "Schlagerbar"
+  },
+  {
+    "name": "HK Service GmbH",
+    "url": "https://www.speiseoel.net/",
+    "groupBy": "HK"
+  },
+  {
+    "name": "Salon Krespach Inh. Ines Dey",
+    "groupBy": "Krespach"
+  },
+  {
+    "name": "S & S Zimmerei GbR",
+    "url": "https://www.sus-zimmerei.de/",
+    "groupBy": "Schweizer&Speiser"
+  },
+  {
+    "name": "Ernst Pfeffer GmbH Metalltechnik",
+    "url": "https://www.pfeffer-metalltechnik.de/",
+    "groupBy": "Pfeffer Metalltechnik"
+  },
+  {
+    "name": "Boden-Teufel GmbH & CO KG",
+    "url": "https://www.boden-teufel.de/",
+    "groupBy": "Teufel"
+  },
+  {
+    "name": "Graf & Kübler GmbH & CO.KG",
+    "url": "https://www.holzwerk-kuebler.de/",
+    "groupBy": "Graf & Kübler"
+  },
+  {
+    "name": "Willi Pfeffer DER SCHREINER GmbH & Co.KG",
+    "url": "https://www.willi-pfeffer.de/",
+    "groupBy": "Pfeffer Schreiner"
+  },
+  {
+    "name": "Wellner Garten- & Landschaftsbau",
+    "url": "http://www.wellner-garten.de/",
+    "groupBy": "Wellner"
+  },
+  {
+    "name": "AVIA Sevicestation & Tankstelle",
+    "url": "https://avia-horb.de/tankstelle-eutingen/",
+    "groupBy": "AVIA"
+  },
+  {
+    "name": "Kieferle Stuckateur-Meisterbetrieb",
+    "url": "https://www.stuckateur-kieferle.de/",
+    "groupBy": "Kieferle"
+  },
+  {
+    "name": "Elektrotechnik Leitenberger GmbH & Co.KG",
+    "url": "https://www.elektrotechnikleitenberger.de/",
+    "groupBy": "Leitenberger"
   }
 ]

@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/mseele/sve-website/compare/v2.4.0...v2.5.0) (2020-09-09)
+
+
+### Features
+
+* **auszeit:** add menu ([bc8913f](https://github.com/mseele/sve-website/commit/bc8913f37696b0eef3e3c98ba6fe42233f21611f))
+* **video:** add video section with hyperlink ([f124a4e](https://github.com/mseele/sve-website/commit/f124a4e3efb70d56c4baf2f3a9bccb970e441e73))
+
+
+### Bug Fixes
+
+* **sponsoring:** add new partners ([7c7f87b](https://github.com/mseele/sve-website/commit/7c7f87bccdf25325eae58ad33f7e0ea4e7162a3b)), closes [#152](https://github.com/mseele/sve-website/issues/152)
+* **teams:** correct team names ([3183382](https://github.com/mseele/sve-website/commit/3183382a1c56e6d94d8437f7f65d5aab971c4b92))
+* **video:** add correct text ([541e540](https://github.com/mseele/sve-website/commit/541e540f94f0c3471fa111d6f99d18b07aac251f)), closes [#148](https://github.com/mseele/sve-website/issues/148)
+
 ## [2.4.0](https://github.com/mseele/sve-website/compare/v2.3.3...v2.4.0) (2020-09-07)
 
 

@@ -1,7 +1,10 @@
 <template>
   <Layout :transparent="true">
     <section class="pa-0">
-      <v-img src="@/assets/gaststaette/main-g.jpg?vuetify-preload" height="100vh">
+      <v-img
+        src="@/assets/gaststaette/main-g.jpg?vuetify-preload"
+        height="100vh"
+      >
         <v-container fill-height>
           <v-row align="center" class="pt-5 px-3">
             <v-sheet class="transparent white--text" max-width="500">
@@ -27,21 +30,22 @@
             <v-col cols="12">
               <h2>INFOS</h2>
             </v-col>
-            <v-col cols="12" class="subtitle-1 font-weight-bold"
-              >In unserer Vereinsgaststätte Auszeit Eutingen findest Du die
-              perfekte Einkehrmöglichkeit.</v-col
-            >
-            <v-col cols="12" class="subtitle-1 pt-0"
-              >Ob Samstags zur Bundesliga, unter der Woche mit Freunden, auf ein
+            <v-col cols="12" class="subtitle-1 font-weight-bold">
+              In unserer Vereinsgaststätte Auszeit Eutingen findest Du die
+              perfekte Einkehrmöglichkeit.
+            </v-col>
+            <v-col cols="12" class="subtitle-1 pt-0">
+              Ob Samstags zur Bundesliga, unter der Woche mit Freunden, auf ein
               Eis an heißen Sommertagen auf der Terrasse oder für ein deftiges
               Essen:<br />
               Schau' bei unseren bewährten Pächtern Andrea und Micha vorbei und
-              erlebe gesellige Stunden.</v-col
-            >
+              erlebe gesellige Stunden.
+            </v-col>
             <v-col cols="12" class="subtitle-1 pt-0">
               Auch für eine Firmenfeier, Geburtstage und sonstige Anlässe bietet
-              die Gaststätte Platz für bis zu 150 Personen.</v-col
-            ><v-col cols="12" class="subtitle-1 pt-0"
+              die Gaststätte Platz für bis zu 150 Personen.
+            </v-col>
+            <v-col cols="12" class="subtitle-1 pt-0"
               >Weitere Informationen findest Du auf der
               <a
                 href="https://fb.com/Auszeit-Eutingen-981850018516219"
@@ -51,6 +55,34 @@
               >
               der Auszeit Eutingen.</v-col
             >
+            <v-col cols="12" sm="6">
+              <v-row justify="center" no-gutters>
+                <v-btn
+                  text
+                  rounded
+                  color="primary"
+                  href="/downloads/2020/Speisekarte-Auszeit.pdf"
+                  target="_blank"
+                >
+                  <v-icon left>{{ mdiFoodVariant }}</v-icon
+                  >Speisekarte</v-btn
+                >
+              </v-row>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-row justify="center" no-gutters>
+                <v-btn
+                  text
+                  rounded
+                  color="primary"
+                  href="/downloads/2020/Eiskarte-Auszeit.pdf"
+                  target="_blank"
+                >
+                  <v-icon left>{{ mdiIceCream }}</v-icon
+                  >Eiskarte</v-btn
+                >
+              </v-row>
+            </v-col>
           </v-row>
         </v-container>
       </section>
@@ -110,9 +142,7 @@
                   </v-col>
                   <v-col cols="12">
                     <v-card outlined>
-                      <v-card-title>
-                        Auszeit Eutingen
-                      </v-card-title>
+                      <v-card-title> Auszeit Eutingen </v-card-title>
                       <v-card-text>
                         <div
                           class="subtitle-1 font-weight-medium text--primary"
@@ -151,6 +181,8 @@
 
 <script>
 import imageViewer from '@/components/common/ImageViewer'
+import { mdiFoodVariant } from '@mdi/js'
+import { mdiIceCream } from '@mdi/js'
 
 export default {
   metaInfo: {
@@ -176,6 +208,8 @@ export default {
           lazy: 'gaststaette/3-min.jpg',
         },
       ],
+      mdiFoodVariant,
+      mdiIceCream,
     }
   },
 }

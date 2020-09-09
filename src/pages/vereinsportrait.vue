@@ -56,7 +56,10 @@
               </li>
               <li>
                 Informationen zur Aufsichtspflicht:
-                <a href="/downloads/Aufsichtspflicht-SVE.pdf" target="_blank">
+                <a
+                  href="/downloads/2020/Aufsichtspflicht-SVE.pdf"
+                  target="_blank"
+                >
                   PDF
                 </a>
               </li>
@@ -68,7 +71,7 @@
                 text
                 rounded
                 color="primary"
-                href="/downloads/Vereinssatzung-SVE.pdf"
+                href="/downloads/2020/Vereinssatzung-SVE.pdf"
                 target="_blank"
               >
                 <v-icon left>{{ mdiCloudDownload }}</v-icon
@@ -161,8 +164,42 @@
             Für unsere Angebote stellen wir eine sehr gute Infrastruktur zur
             Verfügung. Diese pflegen wir und gehen mit Ressourcen schonend um.
           </v-col>
-          <v-col cols="12" class="title">
-            #mehralseinverein
+          <v-col cols="12" class="title">#mehralseinverein </v-col>
+        </v-row>
+      </v-container>
+    </section>
+    <section id="heimspiel" class="section">
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <h2>Heimspiel</h2>
+          </v-col>
+          <v-col cols="12" class="subtitle-1">
+            Wie wichtig sind kleine Vereine gegenüber großen? Warum sollte man
+            gerade auch kleine Vereinsstrukturen erhalten und fördern?<br />
+            Die an.kox GmbH hat gemeinsam mit unseren SVE-Frauen auf wichtige
+            Zukunftsthemen aufmerksam gemacht und diese in einem Film
+            aufgegriffen. Diese neun Minuten zeigen sehr schön, was unser
+            Anliegen ist: Teilhabe durch Sport und Begegnung.<br />
+            Ein großer Dank geht an unsere Partner der an.kox GmbH und Oliver
+            Lozano von den el Pistolero Studios, die den Film produziert
+            haben.<br />
+            Viel Freude beim Anschauen!
+          </v-col>
+          <v-col cols="12">
+            <v-row justify="center" no-gutters>
+              <v-btn
+                text
+                rounded
+                color="primary"
+                href="https://vimeo.com/359776983"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <v-icon left>{{ mdiVideo }}</v-icon
+                >Zum Video</v-btn
+              >
+            </v-row>
           </v-col>
         </v-row>
       </v-container>
@@ -171,7 +208,7 @@
 </template>
 
 <script>
-import { mdiCloudDownload } from '@mdi/js'
+import { mdiCloudDownload, mdiVideo } from '@mdi/js'
 
 export default {
   metaInfo: {
@@ -180,6 +217,7 @@ export default {
   data() {
     return {
       mdiCloudDownload,
+      mdiVideo,
     }
   },
 }
