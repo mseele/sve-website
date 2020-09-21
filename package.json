@@ -11,7 +11,7 @@
     "release": "standard-version"
   },
   "dependencies": {
-    "@gridsome/plugin-google-analytics": "^0.1.1",
+    "@gridsome/plugin-google-analytics": "^0.1.2",
     "@gridsome/plugin-sitemap": "^0.4.0",
     "axios": "^0.20.0",
     "gridsome": "^0.7.20",
