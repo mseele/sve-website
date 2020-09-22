@@ -11,10 +11,10 @@
     "release": "standard-version"
   },
   "dependencies": {
-    "@gridsome/plugin-google-analytics": "^0.1.1",
+    "@gridsome/plugin-google-analytics": "^0.1.2",
     "@gridsome/plugin-sitemap": "^0.4.0",
     "axios": "^0.20.0",
-    "gridsome": "^0.7.20",
+    "gridsome": "^0.7.21",
     "tailwindcss": "^1.8.10",
     "typeface-roboto": "0.0.75",
     "vuetify": "^2.3.10",
@@ -23,8 +23,7 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
-    "@fullhuman/postcss-purgecss": "^2.3.0",
-    "@mdi/js": "^5.5.55",
+    "@mdi/js": "^5.6.55",
     "babel-eslint": "^10.1.0",
     "cache-loader": "^4.1.0",
     "deepmerge": "^4.2.2",
@@ -35,10 +34,11 @@
     "fibers": "^5.0.0",
     "gm": "^1.23.1",
     "husky": "^4.3.0",
-    "moment": "^2.28.0",
+    "moment": "^2.29.0",
     "numeral": "^2.0.6",
     "prettier": "^2.1.2",
-    "sass": "^1.26.10",
+    "purgecss": "^3.0.0",
+    "sass": "^1.26.11",
     "sass-loader": "^7.3.1",
     "standard-version": "^9.0.0",
     "vuetify-loader": "^1.6.0"
