@@ -5,6 +5,8 @@ import Vuex from 'vuex'
 import DefaultLayout from '@/layouts/Default.vue'
 import '@/assets/styles.scss'
 import scrollBehavior from '@/util/scroll-behavior'
+
+require('@/assets/tailwind.css')
 require('typeface-roboto')
 
 export default function (Vue, { appOptions, head, router }) {
