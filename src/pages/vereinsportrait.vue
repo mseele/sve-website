@@ -15,8 +15,8 @@
                 Jahren.
               </li>
               <li>
-                Abteilungen: Frauenfußball, Herrenfußball, Gymnastik,
-                Volleyball, Fitness, Ernährung, Volleyball, Events
+                Abteilungen: Frauenfußball, Herrenfußball, Kinder- und
+                Jugendfußball, Gymnastik, Volleyball, Fitness, Ernährung, Events
               </li>
               <li>
                 Vorstandschaft:
