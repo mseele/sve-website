@@ -1,5 +1,5 @@
 <template>
-  <footer class="tw-text-gray-700 tw-body-font">
+  <footer class="tw-text-gray-700">
     <div
       class="tw-container tw-py-4 tw-px-5 tw-mx-auto tw-flex tw-flex-wrap tw-justify-center tw-space-x-3"
     >
