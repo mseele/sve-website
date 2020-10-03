@@ -44,6 +44,8 @@
               <div
                 class="tw-h-full tw-flex tw-flex-col tw-border-solid tw-border-0 tw-border-t-2 tw-border-red-800 tw-space-y-2 xl:tw-space-y-4 tw-px-2 xl:tw-px-4 tw-py-2 xl:tw-py-4 tw-bg-white tw-shadow-xl tw-overflow-y-scroll"
               >
+                <external-links class="tw-px-4 md:tw-px-6 tw-mx-auto" />
+                <!--
                 <header
                   class="tw-px-4 md:tw-px-6 tw-mx-auto tw-flex tw-flex-wrap tw-justify-center tw-space-x-3"
                 >
@@ -61,6 +63,7 @@
                     />
                   </a>
                 </header>
+                -->
                 <div
                   class="tw-border-solid tw-border-0 tw-border-t tw-border-gray-300"
                 ></div>
@@ -85,8 +88,10 @@
 
 <script>
 import links from '@/data/links.json'
+import ExternalLinks from '@/components/controls/ExternalLinks'
 
 export default {
+  components: { ExternalLinks },
   props: {
     value: Boolean,
   },
