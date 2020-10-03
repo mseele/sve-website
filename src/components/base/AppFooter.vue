@@ -1,7 +1,26 @@
 <template>
-  <footer class="tw-text-gray-700">
+  <footer
+    class="tw-space-y-4 xl:tw-space-y-5 tw-border-solid tw-border-0 tw-border-t tw-border-gray-300"
+  >
+    <div class="tw-container tw-mx-auto tw-px-5 tw-pt-4">
+      <div class="tw-flex tw-flex-wrap tw-justify-center">
+        <div
+          v-for="(item, index) in links.footerItems"
+          :key="index"
+          class="tw-p-2"
+        >
+          <g-link
+            :key="index"
+            :to="item.to"
+            class="tw-text-gray-800 hover:tw-text-black tw-text-sm xl:tw-text-base tw-font-medium tw-no-underline"
+          >
+            {{ item.title }}
+          </g-link>
+        </div>
+      </div>
+    </div>
     <div
-      class="tw-container tw-py-4 tw-px-5 tw-mx-auto tw-flex tw-flex-wrap tw-justify-center tw-space-x-3"
+      class="tw-container tw-mx-auto tw-px-5 tw-flex tw-flex-wrap tw-justify-center tw-space-x-3"
     >
       <a
         v-for="(link, index) in links.externalItems"
@@ -14,39 +33,17 @@
         <g-image class="tw-w-5 tw-h-5" :src="require('@/assets/' + link.img)" />
       </a>
     </div>
-    <div class="tw-border-solid tw-border-0 tw-border-t tw-border-gray-300">
-      <div class="tw-container tw-mx-auto tw-py-4 tw-px-5">
-        <div class="tw-flex tw-flex-wrap tw-justify-center">
-          <div
-            v-for="(item, index) in links.footerItems"
-            :key="index"
-            class="tw-p-2"
-          >
-            <g-link
-              :key="index"
-              :to="item.to"
-              class="tw-text-gray-800 hover:tw-text-black tw-text-sm tw-font-medium tw-no-underline"
-            >
-              {{ item.title }}
-            </g-link>
-          </div>
-        </div>
+
+    <div class="tw-container tw-mx-auto tw-px-5 tw-pb-4 tw-flex tw-flex-col">
+      <div class="tw-text-gray-900 tw-text-sm tw-text-center">
+        © {{ new Date().getFullYear() }} —
+        <span class="tw-font-bold">SV Eutingen 1947 e.V.</span>
       </div>
-    </div>
-    <div class="tw-bg-gray-300">
-      <div
-        class="tw-container tw-mx-auto tw-py-4 tw-px-5 tw-flex tw-flex-wrap tw-flex-col sm:tw-flex-row"
+      <span
+        class="tw-text-red-800 tw-font-bold tw-text-sm tw-text-center tw-pt-1"
       >
-        <div class="tw-text-gray-900 tw-text-sm tw-text-center sm:tw-text-left">
-          © {{ new Date().getFullYear() }} —
-          <span class="tw-font-bold">SV Eutingen 1947 e.V.</span>
-        </div>
-        <span
-          class="tw-text-red-800 tw-font-bold sm:tw-ml-auto sm:tw-mt-0 tw-mt-2 sm:tw-w-auto tw-w-full sm:tw-text-left tw-text-center tw-text-sm"
-        >
-          #mehralseinverein
-        </span>
-      </div>
+        #mehralseinverein
+      </span>
     </div>
   </footer>
 </template>
