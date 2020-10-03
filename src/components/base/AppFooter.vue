@@ -9,12 +9,12 @@
         :href="link.to"
         target="_blank"
         rel="noreferrer"
-        class="hover:tw-bg-sec-dark tw-p-2 tw-rounded-full tw-inline-flex tw-items-center"
+        class="hover:tw-bg-gray-400 tw-p-2 tw-rounded-full tw-inline-flex tw-items-center"
       >
         <g-image class="tw-w-5 tw-h-5" :src="require('@/assets/' + link.img)" />
       </a>
     </div>
-    <div class="tw-border-solid tw-border-0 tw-border-t tw-border-sec-medium">
+    <div class="tw-border-solid tw-border-0 tw-border-t tw-border-gray-300">
       <div class="tw-container tw-mx-auto tw-py-4 tw-px-5">
         <div class="tw-flex tw-flex-wrap tw-justify-center">
           <div
@@ -25,7 +25,7 @@
             <g-link
               :key="index"
               :to="item.to"
-              class="tw-text-black tw-text-sm tw-font-medium tw-no-underline"
+              class="tw-text-gray-800 hover:tw-text-black tw-text-sm tw-font-medium tw-no-underline"
             >
               {{ item.title }}
             </g-link>
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="tw-bg-sec-medium">
+    <div class="tw-bg-gray-300">
       <div
         class="tw-container tw-mx-auto tw-py-4 tw-px-5 tw-flex tw-flex-wrap tw-flex-col sm:tw-flex-row"
       >
@@ -42,7 +42,7 @@
           <span class="tw-font-bold">SV Eutingen 1947 e.V.</span>
         </div>
         <span
-          class="tw-text-primary tw-font-bold sm:tw-ml-auto sm:tw-mt-0 tw-mt-2 sm:tw-w-auto tw-w-full sm:tw-text-left tw-text-center tw-text-sm"
+          class="tw-text-red-800 tw-font-bold sm:tw-ml-auto sm:tw-mt-0 tw-mt-2 sm:tw-w-auto tw-w-full sm:tw-text-left tw-text-center tw-text-sm"
         >
           #mehralseinverein
         </span>
