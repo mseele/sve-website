@@ -202,10 +202,14 @@ export default {
     },
   },
   created() {
-    window.addEventListener('scroll', this.onScroll)
+    if (process.isClient) {
+      window.addEventListener('scroll', this.onScroll)
+    }
   },
   destroyed() {
-    window.removeEventListener('scroll', this.onScroll)
+    if (process.isClient) {
+      window.removeEventListener('scroll', this.onScroll)
+    }
   },
   beforeMount() {
     this.currentScroll = window.pageYOffset
