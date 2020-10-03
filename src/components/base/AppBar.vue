@@ -1,13 +1,13 @@
 <template>
   <header
-    class="tw-fixed tw-inset-x-0 tw-z-10"
+    class="tw-z-10 tw-fixed tw-inset-x-0"
     :class="[
       !isTransparent ? 'tw-bg-gray-900' : '',
       showElevation ? 'tw-shadow-md' : '',
     ]"
   >
     <div class="tw-mx-auto tw-p-3 tw-flex tw-justify-between tw-items-center">
-      <g-link to="/" class="tw-h-10 focus:tw-outline-none">
+      <g-link to="/" class="tw-h-6 md:tw-h-8 focus:tw-outline-none">
         <svg
           class="tw-h-full"
           viewBox="0 0 539.78 634.31"
@@ -134,7 +134,7 @@
           v-for="(item, index) in items()"
           :key="index"
           :to="$static.metadata.pathPrefix + item.to"
-          class="tw-font-medium tw-tracking-wider tw-uppercase tw-no-underline tw-cursor-pointer focus:tw-outline-none"
+          class="tw-text-sm tw-font-medium tw-tracking-wider tw-uppercase tw-no-underline tw-cursor-pointer focus:tw-outline-none"
           :class="[
             !isTransparent || light
               ? 'tw-text-white hover:tw-text-gray-300'

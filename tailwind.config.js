@@ -22,6 +22,9 @@ module.exports = {
           900: '#212121',
         },
       },
+      spacing: {
+        14: '3.5rem',
+      },
     },
   },
   variants: {},
