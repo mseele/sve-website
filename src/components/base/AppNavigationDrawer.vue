@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer v-model="drawer" right temporary fixed>
-    <v-container class="ext" fluid>
+    <v-container class="ext tw-z-20" fluid>
       <v-row justify="center">
         <template v-for="(link, index) in links.externalItems">
           <v-btn
