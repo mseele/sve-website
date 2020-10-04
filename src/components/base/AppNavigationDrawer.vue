@@ -45,25 +45,6 @@
                 class="tw-h-full tw-flex tw-flex-col tw-border-solid tw-border-0 tw-border-t-2 tw-border-red-800 tw-space-y-2 xl:tw-space-y-4 tw-px-2 xl:tw-px-4 tw-py-2 xl:tw-py-4 tw-bg-white tw-shadow-xl tw-overflow-y-scroll"
               >
                 <external-links class="tw-px-4 md:tw-px-6 tw-mx-auto" />
-                <!--
-                <header
-                  class="tw-px-4 md:tw-px-6 tw-mx-auto tw-flex tw-flex-wrap tw-justify-center tw-space-x-3"
-                >
-                  <a
-                    v-for="(link, index) in links.externalItems"
-                    :key="index"
-                    :href="link.to"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="hover:tw-bg-gray-400 tw-p-2 tw-rounded-full tw-inline-flex tw-items-center"
-                  >
-                    <g-image
-                      class="tw-w-5 tw-h-5"
-                      :src="require('@/assets/' + link.img)"
-                    />
-                  </a>
-                </header>
-                -->
                 <div
                   class="tw-border-solid tw-border-0 tw-border-t tw-border-gray-300"
                 ></div>
