@@ -1,13 +1,13 @@
 <template>
   <div
     v-if="isOpen"
-    class="tw-fixed tw-bottom-0 tw-inset-x-0 tw-z-10 tw-bg-red-100 tw-border-solid tw-border-0 tw-border-t-4 tw-border-red-800 tw-text-gray-800 tw-px-4 tw-py-3 xl:tw-px-8 xl:tw-py-6 tw-shadow"
+    class="tw-fixed tw-bottom-0 tw-inset-x-0 tw-z-10 tw-bg-red-800 tw-text-gray-200 tw-px-4 tw-py-3 xl:tw-px-8 xl:tw-py-6 tw-shadow"
     role="alert"
   >
     <div class="tw-flex tw-flex-col sm:tw-flex-row xl:tw-justify-between">
       <div class="tw-flex tw-items-center">
         <svg
-          class="tw-fill-current tw-w-32 sm:tw-w-24 md:tw-w-20 lg:tw-w-14 xl:tw-w-10 tw-text-red-800 tw-mr-4"
+          class="tw-fill-current tw-w-32 sm:tw-w-24 md:tw-w-20 lg:tw-w-14 xl:tw-w-10 tw-text-gray-200 tw-mr-4"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
         >
@@ -18,7 +18,7 @@
         <div class="tw-text-sm xl:tw-text-lg">
           Wir verwenden Cookies, damit du diese Website optimal nutzen kannst.
           Nähere Informationen dazu findest du in unserer
-          <g-link class="tw-text-red-800" to="/datenschutz"
+          <g-link class="tw-text-gray-200" to="/datenschutz"
             >Datenschutzerklärung</g-link
           >. Stimme der Cookie-Nutzung zu um die beste Benutzererfahrung zu
           erhalten.
@@ -28,13 +28,13 @@
         class="tw-flex tw-items-center tw-pt-3 sm:tw-pt-0 sm:tw-pl-3 tw-space-x-2"
       >
         <button
-          class="tw-flex-grow tw-bg-red-800 hover:tw-bg-red-900 tw-text-white tw-font-bold tw-text-sm xl:tw-text-base tw-uppercase tw-py-2 tw-px-4 tw-rounded focus:shadow-outline"
+          class="tw-flex-grow tw-bg-gray-900 hover:tw-bg-black tw-text-white hover:tw-text-gray-300 tw-shadow-sm tw-font-bold tw-text-sm xl:tw-text-base tw-uppercase tw-py-2 tw-px-4 tw-rounded focus:shadow-outline"
           @click="accept"
         >
           Akzeptieren
         </button>
         <button
-          class="tw-flex-grow tw-text-gray-800 hover:tw-text-gray-900 tw-uppercase tw-font-bold tw-text-sm xl:tw-text-base tw-py-2 tw-px-4 focus:shadow-outline"
+          class="tw-flex-grow tw-text-white hover:tw-text-gray-400 tw-uppercase tw-font-bold tw-text-sm xl:tw-text-base tw-py-2 tw-px-4 focus:shadow-outline"
           @click="deny"
         >
           Ablehnen
