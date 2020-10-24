@@ -13,7 +13,7 @@
   "dependencies": {
     "@gridsome/plugin-google-analytics": "^0.1.2",
     "@gridsome/plugin-sitemap": "^0.4.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "gridsome": "^0.7.21",
     "tailwindcss": "^1.9.5",
     "typeface-roboto": "1.1.13",
