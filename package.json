@@ -23,7 +23,7 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
-    "@mdi/js": "^5.7.55",
+    "@mdi/js": "^5.8.55",
     "babel-eslint": "^10.1.0",
     "cache-loader": "^4.1.0",
     "deepmerge": "^4.2.2",
