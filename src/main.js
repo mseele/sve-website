@@ -20,18 +20,18 @@ export default function (Vue, { appOptions, head, router }) {
     state: {
       notification_visible: false,
       notification_message: '',
-      notification_color: 'info',
+      notification_type: 'info',
       events_counter: [],
     },
     mutations: {
       notification_showInfo(state, message) {
         state.notification_message = message
-        state.notification_color = 'info'
+        state.notification_type = 'info'
         state.notification_visible = true
       },
       notification_showError(state, message) {
         state.notification_message = message
-        state.notification_color = 'error'
+        state.notification_type = 'error'
         state.notification_visible = true
       },
       notification_toggleVisibility(state, visible) {
