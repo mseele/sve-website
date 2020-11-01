@@ -172,7 +172,6 @@
 </template>
 
 <script>
-import { mdiMenu } from '@mdi/js'
 import links from '@/data/links.json'
 
 export default {
@@ -189,7 +188,6 @@ export default {
   data() {
     return {
       currentScroll: 0,
-      mdiMenu,
       links,
     }
   },
