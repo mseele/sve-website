@@ -65,6 +65,6 @@ export default function (Vue, { appOptions, head, router }) {
   appOptions.vuetify = vuetify
 
   // customize scrollBehavior
-  router.options.scrollBehavior = (...args) => scrollBehavior(vuetify, ...args)
+  router.options.scrollBehavior = (...args) => scrollBehavior(...args)
   Vue.component('Layout', DefaultLayout)
 }
