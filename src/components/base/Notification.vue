@@ -8,9 +8,9 @@
     leave-to-class="tw-translate-y-full"
   >
     <div v-if="visible" class="tw-fixed tw-bottom-0 tw-w-full tw-z-10">
-      <div class="tw-p-2 lg:tw-p-4 tw-text-center">
+      <div class="tw-p-2 lg:tw-p-4 md:tw-px-10 tw-text-center">
         <div
-          class="tw-p-2 tw-justify-center tw-items-center tw-leading-none tw-rounded-full tw-inline-flex"
+          class="tw-p-2 tw-justify-center tw-items-center tw-leading-none tw-rounded-full tw-inline-flex lg:tw-max-w-3xl xl:tw-max-w-5xl"
           :class="{
             'tw-bg-blue-600 tw-text-blue-100': type == 'info',
             'tw-bg-red-600 tw-text-red-100': type == 'error',
@@ -88,11 +88,17 @@ export default {
       }
     },
   },
+  mounted() {
+    this.$store.commit(
+      'notification_showError',
+      'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
+    )
+  },
   methods: {
     setTimeout() {
       window.clearTimeout(this.activeTimeout)
       this.activeTimeout = window.setTimeout(() => {
-        this.visible = false
+        // this.visible = false
       }, 5000)
     },
     close() {
