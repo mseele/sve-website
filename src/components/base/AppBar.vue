@@ -134,7 +134,7 @@
           v-for="(item, index) in items()"
           :key="index"
           :to="$static.metadata.pathPrefix + item.to"
-          class="tw-text-sm tw-font-medium tw-tracking-wider tw-uppercase tw-no-underline tw-cursor-pointer focus:tw-outline-none"
+          class="tw-text-sm tw-font-medium tw-tracking-widest tw-uppercase tw-no-underline tw-cursor-pointer focus:tw-outline-none"
           :class="[
             !isTransparent || light
               ? 'tw-text-white hover:tw-text-gray-300'
