@@ -88,17 +88,11 @@ export default {
       }
     },
   },
-  mounted() {
-    this.$store.commit(
-      'notification_showError',
-      'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
-    )
-  },
   methods: {
     setTimeout() {
       window.clearTimeout(this.activeTimeout)
       this.activeTimeout = window.setTimeout(() => {
-        // this.visible = false
+        this.visible = false
       }, 5000)
     },
     close() {
