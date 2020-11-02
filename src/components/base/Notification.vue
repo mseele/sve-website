@@ -19,7 +19,7 @@
           @click="close()"
         >
           <svg
-            class="tw-fill-current tw-opacity-50 tw-w-8 tw-h-8 sm:tw-w-6 sm:tw-h-6 xl:tw-w-8 xl:tw-h-8"
+            class="tw-flex-none tw-fill-current tw-opacity-50 tw-w-5 tw-h-5 sm:tw-w-6 sm:tw-h-6 xl:tw-w-8 xl:tw-h-8"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
@@ -37,12 +37,12 @@
             />
           </svg>
           <span
-            class="tw-font-semibold tw-text-sm sm:tw-text-base xl:tw-text-lg tw-mx-2 tw-text-left tw-flex-auto"
+            class="tw-font-medium tw-text-sm sm:tw-text-base xl:tw-text-lg tw-mx-2 tw-text-left tw-flex-auto"
           >
             {{ message }}
           </span>
           <svg
-            class="tw-fill-current tw-opacity-75 tw-cursor-pointer tw-h-6 tw-w-6 sm:tw-h-5 sm:tw-w-5 md:tw-h-4 md:tw-w-4"
+            class="tw-flex-none tw-fill-current tw-opacity-75 hover:tw-opacity-50 tw-cursor-pointer tw-h-4 tw-w-4 sm:tw-h-5 sm:tw-w-5 xl:tw-h-6 xl:tw-w-6"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
