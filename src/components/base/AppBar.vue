@@ -139,6 +139,11 @@
             !isTransparent || light
               ? 'tw-text-white hover:tw-text-gray-300'
               : 'tw-text-gray-900 hover:tw-text-gray-800',
+            isTransparent
+              ? light
+                ? 'tw-text-shadow-dark'
+                : 'tw-text-shadow-light'
+              : '',
           ]"
         >
           {{ item.title }}
