@@ -14,7 +14,7 @@
     "@gridsome/plugin-google-analytics": "^0.1.2",
     "@gridsome/plugin-sitemap": "^0.4.0",
     "axios": "^0.21.0",
-    "gridsome": "^0.7.21",
+    "gridsome": "^0.7.22",
     "tailwindcss": "^1.9.6",
     "typeface-roboto": "1.1.13",
     "vue-scrollto": "^2.20.0",
