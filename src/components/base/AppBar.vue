@@ -128,13 +128,13 @@
           </switch>
         </svg>
       </g-link>
-      <nav class="tw-hidden sm:tw-flex tw-items-center tw-space-x-8">
+      <nav class="tw-hidden sm:tw-flex tw-items-center tw-space-x-5">
         <!-- TODO: remove dynamic class with text colors and no-underline when vuetify is gone -->
         <g-link
           v-for="(item, index) in items()"
           :key="index"
           :to="$static.metadata.pathPrefix + item.to"
-          class="tw-text-sm tw-font-medium tw-tracking-widest tw-uppercase tw-no-underline tw-cursor-pointer focus:tw-outline-none"
+          class="tw-text-sm tw-font-medium tw-tracking-widest tw-uppercase tw-no-underline tw-cursor-pointer focus:tw-outline-none tw-py-1 tw-px-3 tw-rounded-full"
           :class="[
             !isTransparent || light
               ? 'tw-text-white hover:tw-text-gray-300'
@@ -144,7 +144,9 @@
                 ? 'tw-text-shadow-dark'
                 : 'tw-text-shadow-light'
               : '',
+            !isTransparent ? 'hover:tw-bg-gray-800 hover:tw-bg-opacity-75' : '',
           ]"
+          exact-active-class="tw-text-gray-300 tw-bg-gray-800 tw-bg-opacity-75 tw-shadow-inner"
         >
           {{ item.title }}
         </g-link>
