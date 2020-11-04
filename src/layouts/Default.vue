@@ -1,10 +1,10 @@
 <template>
   <v-app>
     <app-bar v-model="drawer" :transparent="transparent" :light="light" />
-    <v-main :class="{ 'pt-0': transparent }">
+    <app-navigation-drawer v-model="drawer" />
+    <v-main :class="[transparent ? 'tw-pt-0' : 'tw-pt-12 md:tw-pt-14']">
       <slot />
     </v-main>
-    <app-navigation-drawer v-model="drawer" />
     <app-footer />
     <ClientOnly>
       <cookie-law />

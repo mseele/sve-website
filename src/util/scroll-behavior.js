@@ -1,25 +1,23 @@
-export default async function (vuetify, to, _, savedPosition) {
-  let scrollTo = 0
+import VueScrollTo from 'vue-scrollto'
 
-  if (to.hash) {
-    scrollTo = to.hash
-  } else if (savedPosition) {
-    scrollTo = savedPosition.y
+export default function (to, from, savedPosition) {
+  var options = {
+    offset: -48, // default height
+  }
+  // use header height
+  var header = document.getElementsByTagName('header')
+  if (header.length == 1) {
+    options.offset = -header[0].offsetHeight
   }
 
-  // TODO: https://github.com/vuejs/vue-router/pull/3199
-  // scroll-behavior is not called on
-  // load handled in views/Page.vue
-  return new Promise((resolve, reject) => {
-    // Options 1
-    const options = {}
-
-    if (!scrollTo) {
-      options.duration = 0
-    }
-
-    window.requestAnimationFrame(async () => {
-      vuetify.framework.goTo(scrollTo, options).catch(reject).finally(resolve)
+  if (to.hash) {
+    window.requestAnimationFrame(() => {
+      VueScrollTo.scrollTo(to.hash, options)
     })
-  })
+    return false
+  } else if (savedPosition) {
+    return { x: 0, y: savedPosition.y }
+  } else {
+    return { x: 0, y: 0 }
+  }
 }

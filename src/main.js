@@ -5,6 +5,8 @@ import Vuex from 'vuex'
 import DefaultLayout from '@/layouts/Default.vue'
 import '@/assets/styles.scss'
 import scrollBehavior from '@/util/scroll-behavior'
+
+require('@/assets/tailwind.css')
 require('typeface-roboto')
 
 export default function (Vue, { appOptions, head, router }) {
@@ -18,18 +20,18 @@ export default function (Vue, { appOptions, head, router }) {
     state: {
       notification_visible: false,
       notification_message: '',
-      notification_color: 'info',
+      notification_type: 'info',
       events_counter: [],
     },
     mutations: {
       notification_showInfo(state, message) {
         state.notification_message = message
-        state.notification_color = 'info'
+        state.notification_type = 'info'
         state.notification_visible = true
       },
       notification_showError(state, message) {
         state.notification_message = message
-        state.notification_color = 'error'
+        state.notification_type = 'error'
         state.notification_visible = true
       },
       notification_toggleVisibility(state, visible) {
@@ -63,6 +65,6 @@ export default function (Vue, { appOptions, head, router }) {
   appOptions.vuetify = vuetify
 
   // customize scrollBehavior
-  router.options.scrollBehavior = (...args) => scrollBehavior(vuetify, ...args)
+  router.options.scrollBehavior = (...args) => scrollBehavior(...args)
   Vue.component('Layout', DefaultLayout)
 }

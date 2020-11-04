@@ -71,9 +71,7 @@
             </div>
           </v-col>
           <v-col cols="12" class="subtitle-1">
-            <div class="font-weight-bold">
-              Anstoßzeiten:
-            </div>
+            <div class="font-weight-bold">Anstoßzeiten:</div>
             <div>
               <ul>
                 <li>10:00 Uhr</li>
@@ -85,9 +83,7 @@
             </div>
           </v-col>
           <v-col cols="12" class="subtitle-1">
-            <div class="font-weight-bold">
-              Hinweise:
-            </div>
+            <div class="font-weight-bold">Hinweise:</div>
             <div>
               <ul>
                 <li>
@@ -134,9 +130,7 @@
             </div>
           </v-col>
           <v-col cols="12" class="subtitle-1">
-            <div class="font-weight-bold">
-              Achtung
-            </div>
+            <div class="font-weight-bold">Achtung</div>
             <span>
               Der SV Eutingen 1947 e.V. hält sich Änderungen oder die
               kurzfristige Absage von Buchungszeiten aufgrund von
@@ -155,6 +149,13 @@
           <v-col cols="12">
             <h2>BUCHUNG</h2>
           </v-col>
+          <v-col cols="12">
+            Aufgrund der pandemiebedingten Schließung der Sportstätten können
+            wir zum jetzigen Zeitpunkt keine Vermietung vornehmen. Bitte schaut
+            auf dieser Seite wieder vorbei, sobald Fußballspiele und die Nutzung
+            von Sportstätten rechtlich wieder erlaubt sind.
+          </v-col>
+          <!--
           <v-col cols="12">
             <v-row justify="center" no-gutters>
               <v-btn
@@ -176,9 +177,11 @@
             Im Falle einer erfolgreichen Buchung erhaltet Ihr eine schriftliche
             Bestätigung inkl. der zu beachtenden Platzordnung.
           </v-col>
+          -->
         </v-row>
       </v-container>
     </section>
+    <!--
     <section id="belegung" class="section_alt">
       <v-container ref="resizeContainer">
         <v-row>
@@ -198,6 +201,7 @@
         </v-row>
       </v-container>
     </section>
+    -->
   </Layout>
 </template>
 

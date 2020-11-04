@@ -1,42 +1,50 @@
 <template>
-  <div v-if="isOpen" class="cookie">
-    <v-alert class="cookie-alert" prominent type="info" color="primary">
-      <v-row align="center">
-        <v-col class="grow">
-          <slot name="message">
-            Wir verwenden Cookies, damit du diese Website optimal nutzen kannst.
-            Nähere Informationen dazu findest du in unserer
-            <g-link class="cookie__link" to="/datenschutz"
-              >Datenschutzerklärung</g-link
-            >. Stimme der Cookie-Nutzung zu um die beste Benutzererfahrung zu
-            erhalten.
-          </slot>
-        </v-col>
-        <v-col class="shrink d-flex justify-end" cols="12" md="3">
-          <v-btn class="ma-2 grey darken-4" @click="accept">Akzeptieren</v-btn>
-          <v-btn class="ma-2" text @click="deny">Ablehnen</v-btn>
-        </v-col>
-      </v-row>
-    </v-alert>
+  <div
+    v-if="isOpen"
+    class="tw-fixed tw-bottom-0 tw-inset-x-0 tw-z-10 tw-bg-red-800 tw-text-gray-200 tw-px-4 tw-py-3 xl:tw-px-8 xl:tw-py-6 tw-shadow"
+    role="alert"
+  >
+    <div class="tw-flex tw-flex-col sm:tw-flex-row xl:tw-justify-between">
+      <div class="tw-flex tw-items-center">
+        <svg
+          class="tw-flex-none tw-fill-current tw-w-6 md:tw-w-8 xl:tw-w-10 tw-text-red-100 tw-mr-4"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"
+          />
+        </svg>
+        <div class="tw-text-sm xl:tw-text-lg">
+          Wir verwenden Cookies, damit du diese Website optimal nutzen kannst.
+          Nähere Informationen dazu findest du in unserer
+          <g-link
+            class="tw-text-red-100 hover:tw-text-red-200"
+            to="/datenschutz"
+            >Datenschutzerklärung</g-link
+          >. Stimme der Cookie-Nutzung zu um die beste Benutzererfahrung zu
+          erhalten.
+        </div>
+      </div>
+      <div
+        class="tw-flex tw-items-center tw-pt-3 sm:tw-pt-0 sm:tw-pl-3 tw-space-x-2"
+      >
+        <button
+          class="tw-flex-grow tw-bg-gray-900 hover:tw-bg-black tw-text-red-100 hover:tw-text-gray-300 tw-shadow-sm tw-font-bold tw-text-sm xl:tw-text-base tw-uppercase tw-tracking-widest tw-font tw-py-2 tw-px-4 tw-rounded-full focus:tw-outline-none focus:tw-shadow-outline"
+          @click="accept"
+        >
+          Akzeptieren
+        </button>
+        <button
+          class="tw-flex-grow tw-text-red-100 hover:tw-text-red-200 tw-uppercase tw-tracking-widest tw-font-bold tw-text-sm xl:tw-text-base tw-py-2 tw-px-4 focus:tw-outline-none"
+          @click="deny"
+        >
+          Ablehnen
+        </button>
+      </div>
+    </div>
   </div>
 </template>
-
-<style lang="sass" scoped>
-.cookie
-  z-index: 1
-  position: fixed
-  bottom: 0
-  &__link
-    color: #ffffff
-    text-decoration: underline
-    transition: all .25s
-    &:hover
-      text-decoration: none
-
-.cookie-alert
-  margin: 0px
-  border-radius: 0px
-</style>
 
 <script>
 export default {

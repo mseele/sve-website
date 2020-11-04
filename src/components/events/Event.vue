@@ -10,8 +10,22 @@
             class="transparent"
             :class="event.light ? 'white--text' : 'black--text'"
           >
-            <h1 class="display-2 d-none d-sm-flex">{{ event.name }}</h1>
-            <h1 class="display-1 d-sm-none">{{ event.name }}</h1>
+            <h1
+              class="display-2 d-none d-sm-flex"
+              :class="
+                event.light ? 'tw-text-shadow-dark' : 'tw-text-shadow-light'
+              "
+            >
+              {{ event.name }}
+            </h1>
+            <h1
+              class="display-1 d-sm-none"
+              :class="
+                event.light ? 'tw-text-shadow-dark' : 'tw-text-shadow-light'
+              "
+            >
+              {{ event.name }}
+            </h1>
             <v-row class="mx-0 mt-6">
               <v-btn
                 to="#beschreibung"
@@ -60,9 +74,7 @@
           </v-col>
           <v-col class="py-0" cols="12" sm="6">
             <ul>
-              <li v-if="!counterAvailable()">
-                &nbsp;
-              </li>
+              <li v-if="!counterAvailable()">&nbsp;</li>
               <li v-else-if="!isBookedUp()">
                 {{ toSubscribers(availableSubscribers()) }}
               </li>

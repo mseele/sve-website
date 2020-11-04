@@ -1,3 +1,7 @@
+const tailwind = require('tailwindcss')
+
+const postcssPlugins = [tailwind()]
+
 module.exports = {
   siteName: 'SV Eutingen 1947 e.V.',
   siteDescription:
@@ -17,4 +21,11 @@ module.exports = {
       },
     },
   ],
+  css: {
+    loaderOptions: {
+      postcss: {
+        plugins: postcssPlugins,
+      },
+    },
+  },
 }
