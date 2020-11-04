@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.6.0](https://github.com/mseele/sve-website/compare/v2.5.0...v2.6.0) (2020-11-04)
+
+
+### Features
+
+* **contrast:** improve text contrast on background images by using text-shadow ([36111b4](https://github.com/mseele/sve-website/commit/36111b45f8dd87a2ed8da22ea065e97bd5efffb4))
+* **ui:** integrate tailwindcss ([3338ded](https://github.com/mseele/sve-website/commit/3338dedb6c67e935afa344b503d4b99627daee3c)), closes [#160](https://github.com/mseele/sve-website/issues/160)
+
+
+### Bug Fixes
+
+* **app bar:** enculapse window access into isClient clause ([3b12396](https://github.com/mseele/sve-website/commit/3b12396793ed09fdd882591f39b2da213d085c42))
+* **app bar:** remove unused mdi import ([b5f2547](https://github.com/mseele/sve-website/commit/b5f25479823b097b5804a3d625397807199ac632))
+* **cookie alert:** improve shadow ([41cf1e9](https://github.com/mseele/sve-website/commit/41cf1e9e45cb0113760065f4d0805b4b2235e760))
+* **cookie alert:** improve spacing on xl breakpoint ([2bf4ae7](https://github.com/mseele/sve-website/commit/2bf4ae79b66bd3cf81d5e47fa5fd7aadaeeb70b3))
+* **cookie alert:** revert to previous used color scheme ([82eef74](https://github.com/mseele/sve-website/commit/82eef7461ca4c112753452a3193b1af21b4596d9))
+* **footer:** remove bigger font sizing on xl breakpoint ([8a7e676](https://github.com/mseele/sve-website/commit/8a7e676eba3bedaa9b3da784efe0ff42b16a7ece))
+* **footer:** remove wrong tailwind class ([226d5a5](https://github.com/mseele/sve-website/commit/226d5a57f8d571fda22315630c2356f7cb120f26))
+* **navigation drawer:** remove unused code ([724a83c](https://github.com/mseele/sve-website/commit/724a83c6214c59f790224d1e45d78e42b4a21ae9))
+* **notifcation:** remove development code ([652685f](https://github.com/mseele/sve-website/commit/652685f64e269eb462e0db8fe2aacc2f6f85b2c5))
+* **notification:** improve max width and x margin ([c2e6a1e](https://github.com/mseele/sve-website/commit/c2e6a1e3a06e80e7767bc19a458e1e4aa08a304d))
+* **tailwind:** correct styles for cookie banner and notification ([a02220e](https://github.com/mseele/sve-website/commit/a02220eed563e6eea71d7aa169f5c1777e00de23))
+* **tailwind:** remove PurgeCSS in favor of Tailwind's built-in Purge ([c5c2294](https://github.com/mseele/sve-website/commit/c5c229442e9b188379a2376f4f57310ee6daeada))
+* **verein:** remove duplicate and add kids section ([9b119d1](https://github.com/mseele/sve-website/commit/9b119d13ff88ad6789eaee4c0d9a61af2d492294))
+
 ## [2.5.0](https://github.com/mseele/sve-website/compare/v2.4.0...v2.5.0) (2020-09-09)
 
 
