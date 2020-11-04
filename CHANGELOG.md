@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.1](https://github.com/mseele/sve-website/compare/v2.6.0...v2.6.1) (2020-11-04)
+
+
+### Bug Fixes
+
+* **app bar:** add active classes to display selected link ([f651502](https://github.com/mseele/sve-website/commit/f6515029e1b2e0dbce0899804e3d95fcfbc1b004))
+
 ## [2.6.0](https://github.com/mseele/sve-website/compare/v2.5.0...v2.6.0) (2020-11-04)
 
 
