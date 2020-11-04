@@ -1,15 +1,11 @@
 <template>
-  <common
-    type="Kunstrasen"
-    to="kunstrasen.sveutingen@gmail.com"
-    :touches="touches"
-  >
+  <common type="Kunstrasen" to="kunstrasen@sv-eutingen.de" :touches="touches">
     <div class="pb-4">
       Über diese Kanäle kannst Du eine Buchungsanfrage für unseren
       Kunstrasenplatz starten. Unser Ansprechpartner setzt sich dann direkt mit
       Dir in Verbindung und klärt alle Details.
     </div>
-    <h4>Ansprechpartner Max Schmollinger</h4>
+    <h4>Ansprechpartner Johannes Seeger</h4>
   </common>
 </template>
 
@@ -26,18 +22,18 @@ export default {
       touches: [
         {
           icon: mdiPhone,
-          text: '0176 31345456',
-          href: 'tel:+4917631345456',
+          text: '0157 85834875',
+          href: 'tel:+4915785834875',
         },
         {
           icon: mdiEmail,
-          text: 'kunstrasen.sveutingen@gmail.com',
-          href: 'mailto:kunstrasen.sveutingen@gmail.com',
+          text: 'kunstrasen@sv-eutingen.de',
+          href: 'mailto:kunstrasen@sv-eutingen.de',
         },
         {
           icon: mdiWhatsapp,
           text: 'WhatsApp',
-          href: 'https://wa.me/4917631345456',
+          href: 'https://wa.me/4915785834875',
         },
       ],
     }
