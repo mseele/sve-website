@@ -165,12 +165,30 @@ export default {
           })
           // eslint-disable-next-line handle-callback-err
           .catch((error) => {
+            let value
+            if (error.response) {
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              value +=
+                error.response.data +
+                '-' +
+                error.response.status +
+                '-' +
+                error.response.headers
+            } else if (error.request) {
+              // The request was made but no response was received
+              // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+              // http.ClientRequest in node.js
+              value += error.request
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              value += error.message
+            }
+            value += '-' + error.config
+
             this.submitLoading = false
             this.$refs.form.reset()
-            this.$store.commit(
-              'notification_showError',
-              'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
-            )
+            this.$store.commit('notification_showError', value)
           })
       }
     },
