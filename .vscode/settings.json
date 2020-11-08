@@ -12,5 +12,6 @@
   "gitlens.currentLine.enabled": false,
   "gitlens.hovers.currentLine.over": "line",
   "gitlens.codeLens.enabled": false,
-  "gitlens.views.repositories.location": "scm"
+  "gitlens.views.repositories.location": "scm",
+  "headwind.customTailwindPrefix": "tw-"
 }
