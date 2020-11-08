@@ -1,12 +1,12 @@
 <template>
   <header
-    class="tw-z-10 tw-fixed tw-inset-x-0"
+    class="tw-fixed tw-inset-x-0 tw-z-10"
     :class="[
       !isTransparent ? 'tw-bg-gray-900' : '',
       showElevation ? 'tw-shadow-md' : '',
     ]"
   >
-    <div class="tw-mx-auto tw-p-3 tw-flex tw-justify-between tw-items-center">
+    <div class="tw-flex tw-items-center tw-justify-between tw-p-3 tw-mx-auto">
       <g-link to="/" class="tw-h-6 md:tw-h-8 focus:tw-outline-none">
         <svg
           class="tw-h-full"
@@ -128,13 +128,13 @@
           </switch>
         </svg>
       </g-link>
-      <nav class="tw-hidden sm:tw-flex tw-items-center tw-space-x-5">
+      <nav class="tw-items-center tw-hidden tw-space-x-5 sm:tw-flex">
         <!-- TODO: remove dynamic class with text colors and no-underline when vuetify is gone -->
         <g-link
           v-for="(item, index) in items()"
           :key="index"
           :to="$static.metadata.pathPrefix + item.to"
-          class="tw-text-sm tw-font-medium tw-tracking-widest tw-uppercase tw-no-underline tw-cursor-pointer focus:tw-outline-none tw-py-1 tw-px-3 tw-rounded-full"
+          class="tw-px-3 tw-py-1 tw-text-sm tw-font-medium tw-tracking-widest tw-no-underline tw-uppercase tw-rounded-full tw-cursor-pointer focus:tw-outline-none"
           :class="[
             !isTransparent || light
               ? 'tw-text-white hover:tw-text-gray-300'

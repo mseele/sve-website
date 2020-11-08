@@ -23,7 +23,7 @@
                   small
                   right
                 >
-                  <template v-slot:opposite>
+                  <template #opposite>
                     <div class="title">{{ edge.node.date }}</div>
                     <div class="subtitle-2 grey--text text--darken-3">
                       {{ edge.node.time }}

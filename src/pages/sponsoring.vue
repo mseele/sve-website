@@ -169,18 +169,6 @@
   </Layout>
 </template>
 
-<style lang="scss">
-.sponsor {
-  color: black !important;
-  text-decoration-line: none !important;
-
-  &:hover,
-  &:focus {
-    text-decoration: underline !important;
-  }
-}
-</style>
-
 <script>
 import { mdiCloudDownload } from '@mdi/js'
 import sponsoring from '@/data/sponsoring.json'
@@ -222,3 +210,15 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.sponsor {
+  color: black !important;
+  text-decoration-line: none !important;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline !important;
+  }
+}
+</style>

@@ -39,9 +39,7 @@
                 <v-card-text class="text--primary flex-grow-1">
                   <div class="align-start">
                     <div class="headline">{{ event.node.name }}</div>
-                    <div v-if="!counterAvailable(event.node)">
-                      &nbsp;
-                    </div>
+                    <div v-if="!counterAvailable(event.node)">&nbsp;</div>
                     <div
                       v-else-if="!isBookedUp(event.node)"
                       class="green--text subtitle-2 font-weight-medium"

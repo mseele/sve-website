@@ -1,16 +1,16 @@
 <template>
   <transition
-    enter-active-class="tw-transform tw-transition tw-ease-in-out tw-duration-300"
+    enter-active-class="tw-transition tw-duration-300 tw-ease-in-out tw-transform"
     enter-class="tw-translate-y-full"
     enter-to-class="tw-translate-y-0"
-    leave-active-class="tw-transform tw-transition tw-ease-in-out tw-duration-300"
+    leave-active-class="tw-transition tw-duration-300 tw-ease-in-out tw-transform"
     leave-class="tw-translate-y-0"
     leave-to-class="tw-translate-y-full"
   >
-    <div v-if="visible" class="tw-fixed tw-bottom-0 tw-w-full tw-z-10">
-      <div class="tw-p-2 lg:tw-p-4 md:tw-px-10 tw-text-center">
+    <div v-if="visible" class="tw-fixed tw-bottom-0 tw-z-10 tw-w-full">
+      <div class="tw-p-2 tw-text-center lg:tw-p-4 md:tw-px-10">
         <div
-          class="tw-p-2 tw-justify-center tw-items-center tw-leading-none tw-rounded-full tw-inline-flex tw-shadow lg:tw-max-w-3xl xl:tw-max-w-5xl"
+          class="tw-inline-flex tw-items-center tw-justify-center tw-p-2 tw-leading-none tw-rounded-full tw-shadow lg:tw-max-w-3xl xl:tw-max-w-5xl"
           :class="{
             'tw-bg-blue-600 tw-text-blue-100': type == 'info',
             'tw-bg-red-600 tw-text-red-100': type == 'error',
@@ -19,7 +19,7 @@
           @click="close()"
         >
           <svg
-            class="tw-flex-none tw-fill-current tw-opacity-50 tw-w-5 tw-h-5 sm:tw-w-6 sm:tw-h-6 xl:tw-w-8 xl:tw-h-8"
+            class="tw-flex-none tw-w-5 tw-h-5 tw-opacity-50 tw-fill-current sm:tw-w-6 sm:tw-h-6 xl:tw-w-8 xl:tw-h-8"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
@@ -37,12 +37,12 @@
             />
           </svg>
           <span
-            class="tw-font-medium tw-text-sm sm:tw-text-base xl:tw-text-lg tw-mx-2 tw-text-left tw-flex-auto"
+            class="tw-flex-auto tw-mx-2 tw-text-sm tw-font-medium tw-text-left sm:tw-text-base xl:tw-text-lg"
           >
             {{ message }}
           </span>
           <svg
-            class="tw-flex-none tw-fill-current tw-opacity-75 hover:tw-opacity-50 tw-cursor-pointer tw-h-4 tw-w-4 sm:tw-h-5 sm:tw-w-5 xl:tw-h-6 xl:tw-w-6"
+            class="tw-flex-none tw-w-4 tw-h-4 tw-opacity-75 tw-cursor-pointer tw-fill-current hover:tw-opacity-50 sm:tw-h-5 sm:tw-w-5 xl:tw-h-6 xl:tw-w-6"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >

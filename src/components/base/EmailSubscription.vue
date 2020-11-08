@@ -31,7 +31,7 @@
           hide-details
           label="E-Mail Adresse"
         >
-          <template v-slot:append>
+          <template #append>
             <v-btn
               class="btn-subscribe"
               color="primary"
@@ -46,23 +46,6 @@
     </v-row>
   </v-container>
 </template>
-
-<style lang="scss">
-.subscribe {
-  .v-input__slot {
-    padding-right: 0 !important;
-    border-top-right-radius: 10px !important;
-    border-bottom-right-radius: 10px !important;
-  }
-}
-
-.btn-subscribe {
-  border-radius: 0 4px 4px 0;
-  box-shadow: none !important;
-  height: 48px !important;
-  padding-top: 2px;
-}
-</style>
 
 <script>
 import axios from 'axios'
@@ -190,6 +173,23 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.subscribe {
+  .v-input__slot {
+    padding-right: 0 !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+  }
+}
+
+.btn-subscribe {
+  border-radius: 0 4px 4px 0;
+  box-shadow: none !important;
+  height: 48px !important;
+  padding-top: 2px;
+}
+</style>
 
 <static-query>
 query {

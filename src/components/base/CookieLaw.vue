@@ -1,13 +1,13 @@
 <template>
   <div
     v-if="isOpen"
-    class="tw-fixed tw-bottom-0 tw-inset-x-0 tw-z-10 tw-bg-red-800 tw-text-gray-200 tw-px-4 tw-py-3 xl:tw-px-8 xl:tw-py-6 tw-shadow"
+    class="tw-fixed tw-inset-x-0 tw-bottom-0 tw-z-10 tw-px-4 tw-py-3 tw-text-gray-200 tw-bg-red-800 tw-shadow xl:tw-px-8 xl:tw-py-6"
     role="alert"
   >
     <div class="tw-flex tw-flex-col sm:tw-flex-row xl:tw-justify-between">
       <div class="tw-flex tw-items-center">
         <svg
-          class="tw-flex-none tw-fill-current tw-w-6 md:tw-w-8 xl:tw-w-10 tw-text-red-100 tw-mr-4"
+          class="tw-flex-none tw-w-6 tw-mr-4 tw-text-red-100 tw-fill-current md:tw-w-8 xl:tw-w-10"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
         >
@@ -27,16 +27,16 @@
         </div>
       </div>
       <div
-        class="tw-flex tw-items-center tw-pt-3 sm:tw-pt-0 sm:tw-pl-3 tw-space-x-2"
+        class="tw-flex tw-items-center tw-pt-3 tw-space-x-2 sm:tw-pt-0 sm:tw-pl-3"
       >
         <button
-          class="tw-flex-grow tw-bg-gray-900 hover:tw-bg-black tw-text-red-100 hover:tw-text-gray-300 tw-shadow-sm tw-font-bold tw-text-sm xl:tw-text-base tw-uppercase tw-tracking-widest tw-font tw-py-2 tw-px-4 tw-rounded-full focus:tw-outline-none focus:tw-shadow-outline"
+          class="tw-flex-grow tw-px-4 tw-py-2 tw-text-sm tw-font-bold tw-tracking-widest tw-text-red-100 tw-uppercase tw-bg-gray-900 tw-rounded-full tw-shadow-sm hover:tw-bg-black hover:tw-text-gray-300 xl:tw-text-base tw-font focus:tw-outline-none focus:tw-shadow-outline"
           @click="accept"
         >
           Akzeptieren
         </button>
         <button
-          class="tw-flex-grow tw-text-red-100 hover:tw-text-red-200 tw-uppercase tw-tracking-widest tw-font-bold tw-text-sm xl:tw-text-base tw-py-2 tw-px-4 focus:tw-outline-none"
+          class="tw-flex-grow tw-px-4 tw-py-2 tw-text-sm tw-font-bold tw-tracking-widest tw-text-red-100 tw-uppercase hover:tw-text-red-200 xl:tw-text-base focus:tw-outline-none"
           @click="deny"
         >
           Ablehnen

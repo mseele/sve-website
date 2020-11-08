@@ -19,17 +19,6 @@
   </div>
 </template>
 
-<style lang="scss">
-.txt {
-  color: black !important;
-}
-
-.video {
-  margin: 0 auto;
-  width: 400px;
-}
-</style>
-
 <script>
 import news from '@/data/news.json'
 
@@ -48,3 +37,14 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.txt {
+  color: black !important;
+}
+
+.video {
+  margin: 0 auto;
+  width: 400px;
+}
+</style>

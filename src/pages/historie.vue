@@ -16,13 +16,13 @@
           <v-col cols="12">
             <v-timeline>
               <v-timeline-item v-for="(item, i) in history" :key="i" small>
-                <template v-if="item.images" v-slot:opposite>
+                <template v-if="item.images" #opposite>
                   <image-viewer
                     height="300"
                     :images="item.images"
                   ></image-viewer>
                 </template>
-                <template v-slot:default>
+                <template #default>
                   <v-container class="px-0">
                     <v-row
                       align="center"
@@ -47,12 +47,6 @@
   </Layout>
 </template>
 
-<style lang="scss" scoped>
-.with_img {
-  min-height: 300px;
-}
-</style>
-
 <script>
 import imageViewer from '@/components/common/ImageViewer'
 import history from '@/data/history.json'
@@ -71,3 +65,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.with_img {
+  min-height: 300px;
+}
+</style>

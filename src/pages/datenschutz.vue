@@ -613,9 +613,7 @@
             </ul></v-col
           >
           <v-col cols="12">
-            <h2 id="m225">
-              Bereitstellung des Onlineangebotes und Webhosting
-            </h2>
+            <h2 id="m225">Bereitstellung des Onlineangebotes und Webhosting</h2>
           </v-col>
           <v-col cols="12">
             <p>

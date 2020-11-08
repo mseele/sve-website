@@ -96,9 +96,9 @@ export default {
 </script>
 
 <static-query>
-  query {
-    metadata {
-      pathPrefix
-    }
+query {
+  metadata {
+    pathPrefix
   }
+}
 </static-query>
