@@ -2,6 +2,7 @@
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": true,
   "eslint.validate": ["vue", "html", "javascript"],
+  "eslint.format.enable": true,
   "telemetry.enableTelemetry": false,
   "explorer.confirmDragAndDrop": false,
   "git.enableSmartCommit": true,
