@@ -36,7 +36,7 @@
           Akzeptieren
         </button>
         <button
-          class="tw-flex-grow tw-px-4 tw-py-2 tw-text-sm tw-font-bold tw-tracking-widest tw-text-red-100 tw-uppercase hover:tw-text-red-200 xl:tw-text-base focus:tw-outline-none"
+          class="tw-flex-grow tw-px-4 tw-py-2 tw-text-sm tw-font-bold tw-tracking-widest tw-text-red-100 tw-uppercase hover:tw-text-red-200 xl:tw-text-base focus:tw-outline-none focus:tw-shadow-outline"
           @click="deny"
         >
           Ablehnen
