@@ -9,7 +9,7 @@
         </header-title>
         <div
           v-if="subtitle"
-          class="tw-pt-3 tw-text-2xl tw-whitespace-no-wrap xl:tw-text-3xl"
+          class="tw-pt-3 tw-text-2xl xl:tw-text-3xl"
           :class="[
             dark
               ? 'tw-text-gray-900 tw-text-shadow-light'
@@ -18,19 +18,19 @@
         >
           {{ subtitle }}
         </div>
-        <div class="tw-flex tw-pt-8 tw-space-x-4">
+        <div class="tw-flex tw-flex-wrap tw-pt-8">
           <btn
             outlined
             :dark="dark"
             :href="primaryButton.to"
-            class="tw-text-sm xl:tw-text-base"
+            class="tw-mb-4 tw-mr-4 tw-text-sm xl:tw-text-base"
           >
             {{ primaryButton.text }}
           </btn>
           <btn
             :dark="dark"
             :href="secondaryButton.to"
-            class="tw-text-sm xl:tw-text-base"
+            class="tw-mb-4 tw-text-sm xl:tw-text-base"
           >
             {{ secondaryButton.text }}
           </btn>
