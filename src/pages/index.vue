@@ -1,44 +1,32 @@
 <template>
   <Layout :transparent="true" :light="true">
-    <section id="home" class="pa-0">
-      <v-img src="@/assets/home/main.jpg?vuetify-preload" height="100vh">
-        <v-container fill-height>
-          <v-row align="center" class="pt-5 px-3">
-            <v-sheet class="transparent white--text" max-width="500">
-              <h1 class="display-2">SV Eutingen</h1>
-              <div class="headline py-4">#mehralseinverein</div>
-              <v-row class="mx-0 mt-6">
-                <v-btn
-                  to="#aktuelles"
-                  rounded
-                  depressed
-                  outlined
-                  dark
-                  class="mr-2"
-                  >Aktuelles</v-btn
-                >
-                <v-btn to="#mach-mit" rounded depressed>Mach mit</v-btn>
-              </v-row>
-            </v-sheet>
-          </v-row>
-        </v-container>
-      </v-img>
-      <section id="aktuelles">
-        <news></news>
-      </section>
-      <section id="mach-mit">
-        <join></join>
-      </section>
+    <hero-section
+      id="home"
+      v-slot="{ imageClass }"
+      title="SV Eutingen"
+      subtitle="#mehralseinverein"
+      :primary-button="{ text: 'Aktuelles', to: '#aktuelles' }"
+      :secondary-button="{ text: 'Mach mit', to: '#mach-mit' }"
+    >
+      <g-image src="@/assets/home/main.jpg" :class="imageClass" />
+    </hero-section>
+    <section id="aktuelles">
+      <news></news>
+    </section>
+    <section id="mach-mit">
+      <join></join>
     </section>
   </Layout>
 </template>
 
 <script>
+import heroSection from '@/components/base/HeroSection'
 import news from '@/components/sections/News'
 import join from '@/components/sections/Join'
 
 export default {
   components: {
+    heroSection,
     news,
     join,
   },
