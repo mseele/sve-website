@@ -147,7 +147,7 @@
 </template>
 
 <script>
-import heroSection from '@/components/base/HeroSection'
+import heroSection from '@/components/common/HeroSection'
 import { mdiCloudDownload } from '@mdi/js'
 import sponsoring from '@/data/sponsoring.json'
 

@@ -163,7 +163,7 @@
 </template>
 
 <script>
-import heroSection from '@/components/base/HeroSection'
+import heroSection from '@/components/common/HeroSection'
 import imageViewer from '@/components/common/ImageViewer'
 import { mdiFoodVariant } from '@mdi/js'
 import { mdiIceCream } from '@mdi/js'

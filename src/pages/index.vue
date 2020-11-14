@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import heroSection from '@/components/base/HeroSection'
+import heroSection from '@/components/common/HeroSection'
 import pageSection from '@/components/common/PageSection'
 import news from '@/data/news.json'
 import join from '@/components/sections/Join'
