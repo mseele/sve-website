@@ -13,8 +13,8 @@
     <page-section id="aktuelles" title="Aktuelles">
       <div class="tw-space-y-4">
         <div
-          v-for="(item, index) in newsItems()"
-          :key="index"
+          v-for="edge in $page.news.edges"
+          :key="edge.node.id"
           class="tw-p-4 tw-bg-white tw-border-2 tw-border-gray-400 tw-border-solid tw-rounded"
         >
           <div class="tw-flex tw-flex-row tw-items-center tw-pb-4">
@@ -31,11 +31,11 @@
               />
             </svg>
             <div class="tw-pl-2 tw-text-xl tw-font-semibold">
-              {{ item.title }}
+              {{ edge.node.title }}
             </div>
           </div>
-          <!-- eslint-disable-next-line vue/no-v-html -->
-          <div class="tw-leading-relaxed tw-text-gray-700" v-html="item.text" />
+          <!-- eslint-disable-next-line prettier/prettier | eslint-disable-next-line vue/no-v-html -->
+          <div class="tw-leading-relaxed tw-text-gray-700" v-html="edge.node.text"/>
         </div>
       </div>
     </page-section>
@@ -102,28 +102,26 @@
 <script>
 import heroSection from '@/components/common/HeroSection'
 import pageSection from '@/components/common/PageSection'
-import news from '@/data/news.json'
 
 export default {
   components: {
     heroSection,
     pageSection,
   },
-  data() {
-    return {
-      news,
-    }
-  },
-  methods: {
-    newsItems() {
-      return this.news.slice(0, 4)
-    },
-  },
 }
 </script>
 
 <page-query>
 query {
+  news: allNews(order: ASC) {
+    edges {
+      node {
+        id
+        title
+        text
+      }
+    }
+  }
   joins: allJoin(order: ASC) {
     edges {
       node {

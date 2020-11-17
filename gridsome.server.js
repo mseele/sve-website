@@ -76,6 +76,14 @@ module.exports = function (api) {
   })
 
   api.loadSource(async (actions) => {
+    const data = require('./src/data/news.json')
+    const news = actions.addCollection('News')
+    for (const item of data.slice(0, 4)) {
+      news.addNode(item)
+    }
+  })
+
+  api.loadSource(async (actions) => {
     const data = require('./src/data/join.json')
     const joins = actions.addCollection('Join')
     for (const item of data) {
