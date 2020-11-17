@@ -75,6 +75,19 @@ module.exports = function (api) {
     }
   })
 
+  api.loadSource(async (actions) => {
+    const data = require('./src/data/join.json')
+    const joins = actions.addCollection('Join')
+    for (const item of data) {
+      joins.addNode({
+        title: item.title,
+        text: item.text,
+        link: item.link,
+        image: require.resolve('./src/assets/home/' + item.image),
+      })
+    }
+  })
+
   api.loadSource(({ addSchemaTypes }) => {
     schema.load(addSchemaTypes)
   })
