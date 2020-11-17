@@ -129,7 +129,7 @@ query {
         title
         text
         link
-        image
+        image(width: 620)
       }
     }
   }
