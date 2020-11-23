@@ -21,7 +21,7 @@
     "numeral": "^2.0.6",
     "postcss": "^7",
     "sass": "^1.29.0",
-    "sass-loader": "^10.1.0",
+    "sass-loader": "^7.1.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "typeface-roboto": "1.1.13",
     "vue-scrollto": "^2.20.0",
