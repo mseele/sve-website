@@ -30,13 +30,13 @@
         class="tw-flex tw-items-center tw-pt-3 tw-space-x-2 sm:tw-pt-0 sm:tw-pl-3"
       >
         <button
-          class="tw-flex-grow tw-px-4 tw-py-2 tw-text-sm tw-font-bold tw-tracking-widest tw-text-red-100 tw-uppercase tw-bg-gray-900 tw-rounded-full tw-shadow-sm hover:tw-bg-black hover:tw-text-gray-300 xl:tw-text-base tw-font focus:tw-outline-none focus:tw-shadow-outline"
+          class="tw-flex-grow tw-px-4 tw-py-2 tw-text-sm tw-font-bold tw-tracking-widest tw-text-red-100 tw-uppercase tw-bg-gray-900 tw-rounded-full tw-shadow-sm hover:tw-bg-black hover:tw-text-gray-300 xl:tw-text-base tw-font focus:tw-outline-none focus:tw-ring"
           @click="accept"
         >
           Akzeptieren
         </button>
         <button
-          class="tw-flex-grow tw-px-4 tw-py-2 tw-text-sm tw-font-bold tw-tracking-widest tw-text-red-100 tw-uppercase hover:tw-text-red-200 xl:tw-text-base focus:tw-outline-none focus:tw-shadow-outline"
+          class="tw-flex-grow tw-px-4 tw-py-2 tw-text-sm tw-font-bold tw-tracking-widest tw-text-red-100 tw-uppercase hover:tw-text-red-200 xl:tw-text-base focus:tw-outline-none focus:tw-ring"
           @click="deny"
         >
           Ablehnen

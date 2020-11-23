@@ -15,7 +15,7 @@
         <div
           v-for="edge in $page.news.edges"
           :key="edge.node.id"
-          class="tw-p-4 tw-bg-white tw-border-2 tw-border-gray-400 tw-border-solid tw-rounded"
+          class="tw-p-4 tw-bg-white tw-border-2 tw-border-gray-300 tw-border-solid tw-rounded"
         >
           <div class="tw-flex tw-flex-row tw-items-center tw-pb-4">
             <svg
@@ -35,16 +35,16 @@
             </div>
           </div>
           <!-- eslint-disable-next-line prettier/prettier | eslint-disable-next-line vue/no-v-html -->
-          <div class="tw-leading-relaxed tw-text-gray-700" v-html="edge.node.text"/>
+          <div class="tw-text-gray-700 " v-html="edge.node.text"/>
         </div>
       </div>
     </page-section>
     <page-section id="mach-mit" dark title="Mach mit">
-      <div class="tw-font-medium tw-leading-relaxed">
+      <div class="tw-font-medium">
         Du suchst Teamsport oder Fitness-Angebote? Du hast Lust auf Ehrenamt?
         Oder suchst eine starke Sponsoringpartnerschaft für Dein Unternehmen?
       </div>
-      <div class="tw-pt-2 tw-pb-4 tw-leading-relaxed">
+      <div class="tw-pt-2 tw-pb-4">
         Bei uns bist Du richtig. Denn wir entfalten Talente, ermöglichen
         Mannschafts- und Gesundheitssport, stiften Gemeinschaft und leben
         Partnerschaften.
@@ -56,7 +56,7 @@
           class="tw-w-full tw-p-2 lg:tw-w-1/2"
         >
           <div
-            class="tw-flex tw-flex-col tw-h-full tw-overflow-hidden tw-bg-white tw-border-2 tw-border-gray-400 tw-border-solid tw-rounded"
+            class="tw-flex tw-flex-col tw-h-full tw-overflow-hidden tw-bg-white tw-border-2 tw-border-gray-300 tw-border-solid tw-rounded"
           >
             <div class="tw-relative tw-pb-3/5 sm:tw-pb-1/2 md:tw-pb-2/5">
               <g-image
@@ -68,13 +68,13 @@
               <div class="tw-mb-3 tw-text-lg tw-font-medium tw-text-gray-900">
                 {{ edge.node.title }}
               </div>
-              <p class="tw-flex-grow tw-leading-relaxed tw-text-gray-700">
+              <p class="tw-flex-grow tw-text-gray-700">
                 {{ edge.node.text }}
               </p>
               <div class="tw-text-center">
                 <a
                   :href="edge.node.link"
-                  class="tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-font-medium tw-text-red-800 tw-no-underline tw-rounded-full hover:tw-bg-red-100 hover:tw-bg-opacity-75 active:tw-text-red-900 md:tw-mb-2 lg:tw-mb-0 focus:tw-outline-none focus:tw-shadow-outline"
+                  class="tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-font-medium tw-text-red-800 tw-no-underline tw-rounded-full hover:tw-bg-red-100 hover:tw-bg-opacity-75 active:tw-text-red-900 md:tw-mb-2 lg:tw-mb-0 focus:tw-outline-none focus:tw-ring"
                 >
                   Mehr Infos
                   <svg

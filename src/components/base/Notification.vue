@@ -10,7 +10,7 @@
     <div v-if="visible" class="tw-fixed tw-bottom-0 tw-z-10 tw-w-full">
       <div class="tw-p-2 tw-text-center lg:tw-p-4 md:tw-px-10">
         <div
-          class="tw-inline-flex tw-items-center tw-justify-center tw-p-2 tw-leading-none tw-rounded-full tw-shadow lg:tw-max-w-3xl xl:tw-max-w-5xl"
+          class="tw-inline-flex tw-items-center tw-justify-center tw-p-2 tw-rounded-full tw-shadow lg:tw-max-w-3xl xl:tw-max-w-5xl"
           :class="{
             'tw-bg-blue-600 tw-text-blue-100': type == 'info',
             'tw-bg-red-600 tw-text-red-100': type == 'error',

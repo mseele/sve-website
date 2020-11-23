@@ -1,6 +1,6 @@
 <template>
   <a
-    class="tw-px-4 tw-py-2 tw-font-medium tw-tracking-widest tw-no-underline tw-uppercase tw-whitespace-no-wrap tw-border tw-border-solid tw-rounded-full focus:tw-outline-none focus:tw-shadow-outline"
+    class="tw-px-4 tw-py-2 tw-font-medium tw-tracking-widest tw-no-underline tw-uppercase tw-whitespace-nowrap tw-border tw-border-solid tw-rounded-full focus:tw-outline-none focus:tw-ring"
     :class="[
       outlined
         ? 'tw-bg-opacity-25 hover:tw-bg-opacity-25 ' +

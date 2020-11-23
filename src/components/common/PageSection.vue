@@ -1,5 +1,5 @@
 <template>
-  <div :class="[dark ? 'tw-bg-gray-300' : 'tw-bg-gray-100']">
+  <div :class="[dark ? 'tw-bg-gray-200' : 'tw-bg-gray-100']">
     <div
       class="tw-container tw-p-4 tw-py-10 tw-mx-auto sm:tw-px-10 md:tw-px-20"
     >

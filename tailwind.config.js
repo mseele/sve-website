@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   // needed until vuetify has been removed
   prefix: 'tw-',
@@ -7,21 +9,23 @@ module.exports = {
   },
   // needed until vuetify has been removed
   purge: ['./src/**/*.html', './src/**/*.vue', './src/**/*.jsx'],
+  darkMode: false, // or 'media' or 'class'
   theme: {
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      black: colors.black,
+      white: colors.white,
+      gray: colors.warmGray,
+      red: colors.red,
+      yellow: colors.amber,
+      green: colors.emerald,
+      blue: colors.blue,
+      indigo: colors.indigo,
+      purple: colors.violet,
+      pink: colors.pink,
+    },
     extend: {
-      colors: {
-        gray: {
-          100: '#FAFAFA',
-          200: '#F5F5F5',
-          300: '#EEEEEE',
-          400: '#E0E0E0',
-          500: '#BDBDBD',
-          600: '#757575',
-          700: '#616161',
-          800: '#424242',
-          900: '#212121',
-        },
-      },
       spacing: {
         '1/2': '50%',
         '1/3': '33.333333%',
@@ -58,8 +62,4 @@ module.exports = {
     textColor: ['responsive', 'hover', 'focus', 'active'],
   },
   plugins: [],
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
 }
