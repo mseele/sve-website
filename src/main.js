@@ -12,7 +12,7 @@ require('typeface-roboto')
 export default function (Vue, { appOptions, head, router }) {
   head.meta.push({
     name: 'theme-color',
-    content: '#a22122',
+    content: '#000000',
   })
 
   Vue.use(Vuex)

@@ -44,21 +44,25 @@
               class="tw-relative tw-w-screen tw-max-w-xs lg:tw-max-w-sm xl:tw-max-w-md"
             >
               <div
-                class="tw-flex tw-flex-col tw-h-full tw-p-2 tw-space-y-2 tw-overflow-y-scroll tw-bg-white tw-shadow-xl xl:tw-space-y-4 xl:tw-p-4"
+                class="tw-flex tw-flex-col tw-h-full tw-overflow-y-scroll tw-bg-white tw-shadow-xl"
               >
-                <external-links class="tw-px-4 tw-mx-auto md:tw-px-6" />
                 <div
-                  class="tw-border-0 tw-border-t tw-border-gray-300 tw-border-solid"
-                ></div>
-                <div>
-                  <g-link
-                    v-for="(item, index) in items"
-                    :key="'itm' + index"
-                    :to="$static.metadata.pathPrefix + item.to"
-                    class="tw-block tw-p-2 tw-my-1 tw-text-sm tw-font-medium tw-text-gray-800 tw-no-underline tw-rounded-md xl:tw-p-3 hover:tw-text-black xl:tw-text-base"
-                    exact-active-class="tw-text-black tw-bg-gray-300"
-                    >{{ item.title }}</g-link
-                  >
+                  class="tw-p-2 tw-space-y-2 tw-border-0 tw-border-t-2 tw-border-red-800 tw-border-solid xl:tw-space-y-4 xl:tw-p-4"
+                >
+                  <external-links class="tw-px-4 tw-mx-auto md:tw-px-6" />
+                  <div
+                    class="tw-border-0 tw-border-t tw-border-gray-300 tw-border-solid"
+                  ></div>
+                  <div>
+                    <g-link
+                      v-for="(item, index) in items"
+                      :key="'itm' + index"
+                      :to="$static.metadata.pathPrefix + item.to"
+                      class="tw-block tw-p-2 tw-my-1 tw-text-sm tw-font-medium tw-text-gray-800 tw-no-underline tw-rounded-md xl:tw-p-3 hover:tw-text-black xl:tw-text-base"
+                      exact-active-class="tw-text-black tw-bg-gray-200"
+                      >{{ item.title }}</g-link
+                    >
+                  </div>
                 </div>
               </div>
             </div>
