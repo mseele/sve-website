@@ -7,7 +7,10 @@
     ]"
   >
     <div class="tw-flex tw-items-center tw-justify-between tw-p-3 tw-mx-auto">
-      <g-link to="/" class="tw-h-6 md:tw-h-8 focus:tw-outline-none">
+      <g-link
+        to="/"
+        class="tw-h-6 tw-rounded md:tw-h-8 focus-visible:tw-outline-none focus-visible:tw-ring focus-visible:tw-ring-gray-600 focus-visible:tw-ring-opacity-50"
+      >
         <svg
           class="tw-h-full"
           viewBox="0 0 539.78 634.31"
@@ -134,7 +137,7 @@
           v-for="(item, index) in items()"
           :key="index"
           :to="$static.metadata.pathPrefix + item.to"
-          class="tw-px-3 tw-py-1 tw-text-sm tw-font-medium tw-tracking-widest tw-no-underline tw-uppercase tw-rounded-full tw-cursor-pointer focus:tw-outline-none"
+          class="tw-px-3 tw-py-1 tw-text-sm tw-font-medium tw-tracking-widest tw-no-underline tw-uppercase tw-rounded-full tw-cursor-pointer focus-visible:tw-outline-none focus-visible:tw-ring focus-visible:tw-ring-gray-600 focus-visible:tw-ring-opacity-50"
           :class="[
             !isTransparent || light
               ? 'tw-text-white hover:tw-text-gray-300'
@@ -152,7 +155,7 @@
         </g-link>
       </nav>
       <button
-        class="tw-w-6 tw-h-6 focus:tw-outline-none"
+        class="tw-w-6 tw-h-6 tw-rounded focus:tw-outline-none focus-visible:tw-outline-none focus-visible:tw-ring focus-visible:tw-ring-gray-600 focus-visible:tw-ring-opacity-50"
         :class="[
           !isTransparent || light
             ? 'tw-text-white hover:tw-text-gray-300'

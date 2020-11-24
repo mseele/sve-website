@@ -74,7 +74,7 @@
               <div class="tw-text-center">
                 <a
                   :href="edge.node.link"
-                  class="tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-font-medium tw-text-red-800 tw-no-underline tw-rounded-full hover:tw-bg-red-100 hover:tw-bg-opacity-50 active:tw-text-red-900 md:tw-mb-2 lg:tw-mb-0 focus:tw-outline-none focus:tw-ring focus:tw-ring-red-300 focus:tw-ring-opacity-50"
+                  class="tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-font-medium tw-text-red-800 tw-no-underline tw-rounded-full hover:tw-bg-red-100 hover:tw-bg-opacity-50 active:tw-text-red-900 md:tw-mb-2 lg:tw-mb-0 focus:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-gray-400 focus-visible:tw-ring-opacity-50"
                 >
                   Mehr Infos
                   <svg

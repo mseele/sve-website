@@ -1,6 +1,8 @@
 const tailwind = require('tailwindcss')
+const postcssFocusVisible = require('postcss-focus-visible')
+const autoprefixer = require('autoprefixer')
 
-const postcssPlugins = [tailwind()]
+const postcssPlugins = [tailwind(), postcssFocusVisible(), autoprefixer()]
 
 module.exports = {
   siteName: 'SV Eutingen 1947 e.V.',

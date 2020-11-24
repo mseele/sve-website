@@ -58,8 +58,16 @@ module.exports = {
     },
   },
   variants: {
-    backgroundColor: ['responsive', 'hover', 'focus', 'active'],
-    textColor: ['responsive', 'hover', 'focus', 'active'],
+    extend: {
+      backgroundColor: ['active'],
+      textColor: ['active'],
+      borderColor: ['focus-visible'],
+      outline: ['focus-visible'],
+      ringWidth: ['focus-visible'],
+      ringColor: ['focus-visible'],
+      ringOpacity: ['focus-visible'],
+      ringOffsetWidth: ['focus-visible'],
+    },
   },
   plugins: [],
 }

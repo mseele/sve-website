@@ -12,7 +12,7 @@
           <g-link
             :key="index"
             :to="item.to"
-            class="tw-text-sm tw-font-medium tw-text-gray-800 tw-no-underline hover:tw-text-black xl:tw-text-base"
+            class="tw-text-sm tw-font-medium tw-text-gray-800 tw-no-underline tw-rounded hover:tw-text-black xl:tw-text-base focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-gray-400 focus-visible:tw-ring-opacity-50 focus-visible:tw-ring-offset-2"
           >
             {{ item.title }}
           </g-link>
