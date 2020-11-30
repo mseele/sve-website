@@ -22,12 +22,8 @@ module.exports = function (api) {
     for (const event of data) {
       // convert values
       const node = JSON.parse(JSON.stringify(event))
-      if (node.costMember) {
-        node.costMember = format.toCurrency(node.costMember)
-      }
-      if (node.costNonMember) {
-        node.costNonMember = format.toCurrency(node.costNonMember)
-      }
+      node.costMember = format.toCurrency(node.costMember)
+      node.costNonMember = format.toCurrency(node.costNonMember)
       if (node.durationInMinutes) {
         node.duration = format.toDuration(node.durationInMinutes)
         delete node.durationInMinutes
