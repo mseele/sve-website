@@ -70,11 +70,11 @@ export default {
       return this.$store.state.notification_type
     },
     message() {
-      return 'Das ist ein langer langer test' //this.$store.state.notification_message
+      return this.$store.state.notification_message
     },
     visible: {
       get() {
-        return true //this.$store.state.notification_visible
+        return this.$store.state.notification_visible
       },
       set(value) {
         this.$store.commit('notification_toggleVisibility', value)
