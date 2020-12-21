@@ -4,12 +4,13 @@
       class="tw-container tw-p-4 tw-py-10 tw-mx-auto sm:tw-px-10 md:tw-px-20"
     >
       <header-title
+        v-if="title"
         dark
-        class="tw-text-3xl tw-font-semibold tw-tracking-widest tw-uppercase"
+        class="tw-pb-6 tw-text-3xl tw-font-semibold tw-tracking-widest tw-uppercase"
       >
         {{ title }}
       </header-title>
-      <div class="tw-pt-6">
+      <div>
         <slot></slot>
       </div>
     </div>
@@ -27,7 +28,6 @@ export default {
     title: {
       type: String,
       default: null,
-      required: true,
     },
     dark: {
       type: Boolean,
