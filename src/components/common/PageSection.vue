@@ -6,6 +6,7 @@
       <header-title
         v-if="title"
         dark
+        truncate
         class="tw-pb-6 tw-text-3xl tw-font-semibold tw-tracking-widest tw-uppercase"
       >
         {{ title }}
