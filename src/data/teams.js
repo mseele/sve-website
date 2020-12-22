@@ -338,6 +338,7 @@ export default {
       team: 'Erwachsenen-Hobbygruppe',
       league: '-',
       contact: {
+        title: 'Ansprechpartner',
         name: 'Rainer Busch',
         email: 'R-Busch@horb.de',
         phone: {
