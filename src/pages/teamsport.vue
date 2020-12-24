@@ -19,7 +19,7 @@
           v-for="(section, index) of sections"
           :key="index"
           :href="section.to"
-          class="tw-flex tw-items-center tw-p-3 tw-font-medium tw-text-red-800 tw-no-underline tw-bg-white tw-rounded tw-w-fill hover:tw-bg-gray-200 focus-visible:tw-outline-none focus-visible:tw-ring focus-visible:tw-ring-gray-600 focus-visible:tw-ring-opacity-50"
+          class="tw-flex tw-items-center tw-p-3 tw-font-medium tw-text-red-800 tw-no-underline tw-bg-white tw-rounded tw-w-fill hover:tw-bg-gray-200 tw-on-focus-dark"
         >
           <div
             class="tw-relative tw-inline-flex tw-items-center tw-justify-center tw-flex-shrink-0 tw-w-5 tw-h-5 tw-text-white tw-bg-red-800 tw-rounded-full"

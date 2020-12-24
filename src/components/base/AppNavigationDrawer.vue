@@ -55,7 +55,7 @@
                     v-for="(item, index) in items"
                     :key="'itm' + index"
                     :to="$static.metadata.pathPrefix + item.to"
-                    class="tw-block tw-p-2 tw-my-1 tw-text-sm tw-font-medium tw-text-gray-800 tw-no-underline tw-rounded-md xl:tw-p-3 hover:tw-text-black xl:tw-text-base focus:tw-outline-none focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-gray-400 focus-visible:tw-ring-opacity-50"
+                    class="tw-block tw-p-2 tw-my-1 tw-text-sm tw-font-medium tw-text-gray-800 tw-no-underline tw-rounded-md xl:tw-p-3 hover:tw-text-black xl:tw-text-base focus:tw-outline-none tw-on-focus"
                     exact-active-class="tw-text-black tw-bg-gray-200"
                     >{{ item.title }}</g-link
                   >

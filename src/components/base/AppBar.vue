@@ -9,7 +9,7 @@
     <div class="tw-flex tw-items-center tw-justify-between tw-p-3 tw-mx-auto">
       <g-link
         to="/"
-        class="tw-h-6 tw-rounded md:tw-h-8 focus-visible:tw-outline-none focus-visible:tw-ring focus-visible:tw-ring-gray-600 focus-visible:tw-ring-opacity-50"
+        class="tw-h-6 tw-rounded md:tw-h-8 tw-on-focus-dark"
       >
         <svg
           class="tw-h-full"
@@ -137,7 +137,7 @@
           v-for="(item, index) in items()"
           :key="index"
           :to="$static.metadata.pathPrefix + item.to"
-          class="tw-px-3 tw-py-1 tw-text-sm tw-font-medium tw-tracking-widest tw-no-underline tw-uppercase tw-rounded-full tw-cursor-pointer focus-visible:tw-outline-none focus-visible:tw-ring focus-visible:tw-ring-gray-600 focus-visible:tw-ring-opacity-50"
+          class="tw-px-3 tw-py-1 tw-text-sm tw-font-medium tw-tracking-widest tw-no-underline tw-uppercase tw-rounded-full tw-cursor-pointer tw-on-focus-dark"
           :class="[
             !isTransparent || light
               ? 'tw-text-white hover:tw-text-gray-300'
@@ -155,7 +155,7 @@
         </g-link>
       </nav>
       <button
-        class="tw-w-6 tw-h-6 tw-rounded focus:tw-outline-none focus-visible:tw-outline-none focus-visible:tw-ring focus-visible:tw-ring-gray-600 focus-visible:tw-ring-opacity-50"
+        class="tw-w-6 tw-h-6 tw-rounded focus:tw-outline-none tw-on-focus-dark"
         :class="[
           !isTransparent || light
             ? 'tw-text-white hover:tw-text-gray-300'

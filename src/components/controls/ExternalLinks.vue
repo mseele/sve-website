@@ -6,7 +6,7 @@
       :href="link.to"
       target="_blank"
       rel="noreferrer"
-      class="tw-inline-flex tw-items-center tw-p-2 tw-rounded-full hover:tw-bg-gray-400 focus-visible:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-gray-400 focus-visible:tw-ring-opacity-50"
+      class="tw-inline-flex tw-items-center tw-p-2 tw-rounded-full hover:tw-bg-gray-400 tw-on-focus"
     >
       <g-image class="tw-w-5 tw-h-5" :src="require('@/assets/' + link.img)" />
     </a>

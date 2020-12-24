@@ -10,4 +10,12 @@
     .tw-text-shadow-light {
         text-shadow: 0 0 20px hsla(0, 0%, 100%, .7)
     }
+
+    .tw-on-focus {
+        @apply focus:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-gray-400 focus-visible:tw-ring-opacity-50
+    }
+
+    .tw-on-focus-dark {
+        @apply focus:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-gray-600 focus-visible:tw-ring-opacity-50
+    }
 }
