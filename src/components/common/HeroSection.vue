@@ -9,7 +9,11 @@
           :dark="dark"
           :wrap="wrap"
           :truncate="truncate"
-          class="tw-text-5xl xl:tw-text-6xl"
+          :class="[
+            dense
+              ? 'tw-text-4xl xs:tw-text-5xl xl:tw-text-6xl'
+              : 'tw-text-5xl xl:tw-text-6xl',
+          ]"
         >
           {{ title }}
         </header-title>
@@ -74,6 +78,11 @@ export default {
       required: false,
     },
     wrap: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    dense: {
       type: Boolean,
       default: false,
       required: false,
