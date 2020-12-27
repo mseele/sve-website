@@ -4,7 +4,13 @@
     <slot :imageClass="'tw-w-full tw-h-full tw-object-cover'"></slot>
     <div class="tw-absolute tw-inset-0 tw-flex tw-items-center tw-p-4">
       <div class="tw-container tw-mx-auto sm:tw-px-10 md:tw-px-20">
-        <header-title shadow :dark="dark" class="tw-text-5xl xl:tw-text-6xl">
+        <header-title
+          shadow
+          :dark="dark"
+          :wrap="wrap"
+          :truncate="truncate"
+          class="tw-text-5xl xl:tw-text-6xl"
+        >
           {{ title }}
         </header-title>
         <div
@@ -58,6 +64,16 @@ export default {
       required: false,
     },
     dark: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    truncate: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    wrap: {
       type: Boolean,
       default: false,
       required: false,
