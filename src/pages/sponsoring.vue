@@ -31,7 +31,7 @@
             Interesse an einer Partnerschaft? Dann wende Dich bitte über das
             <g-link
               :to="{
-                path: '/kontakt',
+                path: '/kontakt/',
                 query: { auswahl: 'sponsoring', thema: 'sponsoring' },
               }"
               >Kontaktformular</g-link
@@ -57,7 +57,7 @@
             Bei Interesse stehen Dir über das
             <g-link
               :to="{
-                path: '/kontakt',
+                path: '/kontakt/',
                 query: { auswahl: 'sponsoring', thema: 'bande' },
               }"
               >Kontaktformular</g-link

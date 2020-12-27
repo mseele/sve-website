@@ -54,7 +54,7 @@
                   <g-link
                     v-for="(item, index) in items"
                     :key="'itm' + index"
-                    :to="$static.metadata.pathPrefix + item.to"
+                    :to="item.to"
                     class="tw-block tw-p-2 tw-my-1 tw-text-sm tw-font-medium tw-text-gray-800 tw-no-underline tw-rounded-md xl:tw-p-3 hover:tw-text-black xl:tw-text-base focus:tw-outline-none tw-on-focus"
                     exact-active-class="tw-text-black tw-bg-gray-200"
                     >{{ item.title }}</g-link
@@ -99,11 +99,3 @@ export default {
   },
 }
 </script>
-
-<static-query>
-query {
-  metadata {
-    pathPrefix
-  }
-}
-</static-query>

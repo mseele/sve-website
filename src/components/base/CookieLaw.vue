@@ -20,7 +20,7 @@
           Nähere Informationen dazu findest du in unserer
           <g-link
             class="tw-text-red-100 hover:tw-text-red-200"
-            to="/datenschutz"
+            to="/datenschutz/"
             >Datenschutzerklärung</g-link
           >. Stimme der Cookie-Nutzung zu um die beste Benutzererfahrung zu
           erhalten.

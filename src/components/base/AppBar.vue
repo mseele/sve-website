@@ -7,10 +7,7 @@
     ]"
   >
     <div class="tw-flex tw-items-center tw-justify-between tw-p-3 tw-mx-auto">
-      <g-link
-        to="/"
-        class="tw-h-6 tw-rounded md:tw-h-8 tw-on-focus-dark"
-      >
+      <g-link to="/" class="tw-h-6 tw-rounded md:tw-h-8 tw-on-focus-dark">
         <svg
           class="tw-h-full"
           viewBox="0 0 539.78 634.31"
@@ -136,7 +133,7 @@
         <g-link
           v-for="(item, index) in items()"
           :key="index"
-          :to="$static.metadata.pathPrefix + item.to"
+          :to="item.to"
           class="tw-px-3 tw-py-1 tw-text-sm tw-font-medium tw-tracking-widest tw-no-underline tw-uppercase tw-rounded-full tw-cursor-pointer tw-on-focus-dark"
           :class="[
             !isTransparent || light
@@ -235,11 +232,3 @@ export default {
   },
 }
 </script>
-
-<static-query>
-query {
-  metadata {
-    pathPrefix
-  }
-}
-</static-query>

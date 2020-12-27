@@ -63,7 +63,7 @@
           <div class="tw-pt-4 tw-text-center">
             <g-link
               :to="{
-                path: $static.metadata.pathPrefix + '/kontakt',
+                path: '/kontakt/',
                 query: { auswahl: 'team', team: value.key },
               }"
               class="tw-inline-flex tw-items-center tw-justify-center tw-col-start-1 tw-col-end-2 tw-px-3 tw-py-1 tw-font-medium tw-text-red-800 tw-no-underline tw-rounded-full hover:tw-bg-red-100 hover:tw-bg-opacity-50 active:tw-text-red-900 md:tw-mb-2 lg:tw-mb-0 tw-on-focus"
@@ -112,11 +112,3 @@ export default {
   },
 }
 </script>
-
-<static-query>
-query {
-  metadata {
-    pathPrefix
-  }
-}
-</static-query>
