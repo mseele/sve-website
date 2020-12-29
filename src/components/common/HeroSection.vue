@@ -52,7 +52,7 @@
 
 <script>
 import headerTitle from '@/components/controls/HeaderTitle'
-import btn from '@/components/controls/Button'
+import btn from '@/components/controls/HeroButton'
 
 export default {
   components: { headerTitle, btn },
