@@ -1,160 +1,101 @@
 <template>
   <div>
-    <section class="section">
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <h2>{{ title }}</h2>
-          </v-col>
-          <slot name="header"></slot>
-        </v-row>
-      </v-container>
-    </section>
-    <template v-if="events.length > 0">
-      <section class="section_alt">
-        <v-container>
-          <v-row>
-            <v-col cols="12">
-              <h2>{{ eventTitle }}</h2>
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col
-              v-for="(event, index) in events"
-              :key="index"
-              cols="12"
-              sm="6"
-              xl="4"
+    <page-section :title="title">
+      <slot name="header"></slot>
+    </page-section>
+    <page-section :title="eventTitle" dark>
+      <div v-if="events.length > 0">
+        <div class="tw-flex tw-flex-wrap tw-justify-center tw--m-2">
+          <div
+            v-for="(event, index) in events"
+            :key="index"
+            class="tw-w-full tw-p-2 lg:tw-w-1/2 2xl:tw-w-1/3"
+          >
+            <div
+              class="tw-flex tw-flex-col tw-h-full tw-overflow-hidden tw-bg-white tw-border-2 tw-border-gray-300 tw-border-solid tw-rounded"
             >
-              <v-card outlined class="d-flex flex-column" height="100%">
-                <v-img
-                  :src="
-                    require('@/assets/events/' +
-                      event.node.image +
-                      '?vuetify-preload')
-                  "
-                  aspect-ratio="2.75"
-                  class="flex-grow-0"
+              <div class="tw-relative tw-pb-3/5 sm:tw-pb-1/2 md:tw-pb-2/5">
+                <g-image
+                  :src="event.node.image"
+                  class="tw-absolute tw-object-cover tw-w-full tw-h-full"
                 />
-                <v-card-text class="text--primary flex-grow-1">
-                  <div class="align-start">
-                    <div class="headline">{{ event.node.name }}</div>
-                    <div v-if="!counterAvailable(event.node)">&nbsp;</div>
-                    <div
-                      v-else-if="!isBookedUp(event.node)"
-                      class="green--text subtitle-2 font-weight-medium"
-                    >
-                      {{ toSubscribers(availableSubscribers(event.node)) }}
-                    </div>
-                    <div v-else class="red--text subtitle-2 font-weight-medium">
-                      Ausgebucht
-                    </div>
-                    <div class="pt-5 body-2">
-                      {{ event.node.shortDescription }}
-                    </div>
-                  </div>
-                </v-card-text>
-                <v-card-actions class="justify-center">
-                  <v-btn
-                    rounded
-                    text
-                    color="primary"
-                    class="px-5"
-                    :append="true"
-                    :to="$static.metadata.pathPrefix + event.node.id"
+              </div>
+              <div class="tw-flex tw-flex-col tw-flex-grow tw-p-4">
+                <div class="tw-text-lg tw-font-medium tw-text-gray-900">
+                  {{ event.node.name }}
+                </div>
+                <div
+                  v-if="!counterAvailable(event.node)"
+                  class="tw-text-sm tw-font-medium tw-text-gray-400"
+                >
+                  Verfügbarkeit wird geprüft
+                </div>
+                <div
+                  v-else-if="!isBookedUp(event.node)"
+                  class="tw-text-sm tw-font-medium tw-text-green-600"
+                >
+                  {{ toSubscribers(availableSubscribers(event.node)) }}
+                </div>
+                <div v-else class="tw-text-sm tw-font-medium tw-text-red-600">
+                  Ausgebucht
+                </div>
+                <div class="tw-flex-grow tw-mt-3 tw-text-gray-700">
+                  {{ event.node.shortDescription }}
+                </div>
+                <div class="tw-text-center">
+                  <g-link
+                    :to="toPrefix + event.node.id + '/'"
+                    class="tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-font-medium tw-text-red-800 tw-no-underline tw-rounded-full hover:tw-bg-red-100 hover:tw-bg-opacity-50 active:tw-text-red-900 md:tw-mb-2 lg:tw-mb-0 tw-on-focus"
                   >
                     Details
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </section>
-      <section class="section">
-        <v-container>
-          <v-row>
-            <v-col cols="12">
-              <h2>NEWSLETTER</h2>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" class="subtitle-1 text-center pb-2">
-              <slot name="subscribeInfo"></slot>
-            </v-col>
-          </v-row>
-          <v-row>
-            <emailSubscription
-              :success-message="subscribeSuccess"
-              :news-type="newsType"
-              class="pb-12"
-            ></emailSubscription>
-          </v-row>
-        </v-container>
-      </section>
-    </template>
-    <template v-else>
-      <section class="section_alt">
-        <v-container>
-          <v-row>
-            <v-col cols="12">
-              <h2>{{ eventTitle }}</h2>
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col class="headline font-weight-bold text-center" cols="12">
-              <slot name="infoEmpty"></slot>
-            </v-col>
-            <v-col class="subtitle-1 text-center pt-1" cols="12">
-              <slot name="subscribeInfoEmpty"></slot>
-            </v-col>
-            <emailSubscription
-              :success-message="subscribeSuccess"
-              :news-type="newsType"
-              class="pb-12"
-            ></emailSubscription>
-          </v-row>
-        </v-container>
-      </section>
-    </template>
-    <section
-      v-if="faqs.length > 0"
-      id="faqs"
-      :class="events.length > 0 ? 'section_alt' : 'section'"
-    >
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <h2>FAQS</h2>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12">
-            <v-expansion-panels light>
-              <v-expansion-panel v-for="(item, i) in faqs" :key="i">
-                <v-expansion-panel-header>
-                  <div class="font-weight-bold">{{ item.question }}</div>
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  {{ item.answer }}
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
+                    <svg
+                      class="tw-w-4 tw-h-4 tw-ml-2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="3"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M5 12h14"></path>
+                      <path d="M12 5l7 7-7 7"></path>
+                    </svg>
+                  </g-link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else class="tw-text-xl tw-font-medium">
+        <slot name="infoEmpty"></slot>
+      </div>
+      <email-subscription
+        :success-message="subscribeSuccess"
+        :news-type="newsType"
+        class="tw-pt-8"
+      >
+        <slot name="subscribeInfo"></slot>
+      </email-subscription>
+    </page-section>
+    <page-section v-if="faqs.length > 0" id="faqs" title="Faqs">
+      <faqs :faqs="faqs" />
+    </page-section>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import emailSubscription from '@/components/base/EmailSubscription'
+import pageSection from '@/components/common/PageSection'
+import faqs from '@/components/common/Faqs'
+import emailSubscription from './EmailSubscription'
 import { toSubscribers } from '@/util/converters'
 
 export default {
   components: {
+    pageSection,
     emailSubscription,
+    faqs,
   },
   props: {
     title: {
@@ -169,15 +110,11 @@ export default {
       type: Array,
       default: () => [],
     },
+    toPrefix: {
+      type: String,
+      default: undefined,
+    },
     infoEmpty: {
-      type: String,
-      default: undefined,
-    },
-    subscribeInfo: {
-      type: String,
-      default: undefined,
-    },
-    subscribeInfoEmpty: {
       type: String,
       default: undefined,
     },
@@ -242,7 +179,6 @@ export default {
 query {
   metadata {
     eventsAPI
-    pathPrefix
   }
 }
 </static-query>

@@ -4,40 +4,33 @@
       title="FITNESS"
       event-title="AKTUELLE KURSE"
       :events="$page.events.edges"
+      to-prefix="/fitness/"
       :faqs="faqs"
       subscribe-success="Du erhälst automatisch eine E-Mail sobald neue Kursangebote online sind. Vielen Dank."
       news-type="Fitness"
     >
       <template #header>
-        <v-col cols="12" class="subtitle-1 font-weight-bold pb-0">
+        <div class="tw-pb-4 tw-font-medium tw-leading-relaxed">
           Du hast Freude an der Gemeinschaft und möchtest Deinem Körper etwas
-          Gutes tun?
-        </v-col>
-        <v-col cols="12" class="subtitle-1 pt-0">
-          Herzlich Willkommen beim Fitnessangebot des SV Eutingen 1947 e.V.
-        </v-col>
-        <v-col cols="12" class="subtitle-1 pt-0">
+          Gutes tun? Herzlich Willkommen beim Fitnessangebot des SV Eutingen
+          1947 e.V.
+        </div>
+        <div class="tw-leading-relaxed tw-text-gray-800">
           Wir bieten wohnortnahe, qualitativ hochwertige und preiswerte
           Fitnesskurse sowie Angebote des Gesundheitssports an. Unsere
           Kursleiterinnen und Kursleiter verfügen über entsprechende
           Qualifizierungen und machen die Kurse zu einem Ort der Begegnung.
           Schließlich bereitet Sport innerhalb einer Gruppe und Gemeinschaft
-          noch mehr Freude. Unsere Kurse stehen selbstverständlich auch
-          Nichtmitgliedern des SV Eutingen zur Verfügung.
-        </v-col>
-        <v-col cols="12" class="subtitle-1 pt-0">
+          noch mehr Freude. Unsere Kurse stehen selbstverständlich auch Nichtmitgliedern des SV
+          Eutingen zur Verfügung.<br />
           Wir freuen uns auf Dich!
-        </v-col>
-      </template>
-      <template #subscribeInfo>
-        Erhalte automatisch eine E-Mail sobald neue Kursangebote online sind:
+        </div>
       </template>
       <template #infoEmpty>
         Wir befinden uns aktuell in der Kurspause und planen die nächste Runde.
       </template>
-      <template #subscribeInfoEmpty>
-        Schaue bald wieder vorbei oder erhalte automatisch eine E-Mail sobald
-        neue Kursangebote online sind:
+      <template #subscribeInfo>
+        Erhalte automatisch eine E-Mail sobald neue Kursangebote online sind.
       </template>
     </events>
     <pre-booking :hash="preBookingHash" />

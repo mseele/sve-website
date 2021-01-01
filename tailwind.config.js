@@ -19,7 +19,7 @@ module.exports = {
       gray: colors.warmGray,
       red: colors.red,
       yellow: colors.amber,
-      green: colors.emerald,
+      green: colors.green,
       blue: colors.blue,
       indigo: colors.indigo,
       purple: colors.violet,
@@ -30,6 +30,7 @@ module.exports = {
         xs: '375px',
       },
       spacing: {
+        '0/5': '0.1rem',
         '1/2': '50%',
         '1/3': '33.333333%',
         '2/3': '66.666667%',
@@ -70,7 +71,9 @@ module.exports = {
       ringColor: ['focus-visible'],
       ringOpacity: ['focus-visible'],
       ringOffsetWidth: ['focus-visible'],
+      opacity: ['disabled'],
+      cursor: ['disabled'],
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 }

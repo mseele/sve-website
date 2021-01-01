@@ -1,106 +1,116 @@
 <template>
-  <v-form ref="form" v-model="valid">
-    <v-container class="pa-0">
-      <v-row>
-        <v-col cols="12" sm="6">
-          <v-text-field
-            v-model="firstName"
-            label="Vorname"
-            outlined
-            :rules="notEmptyRule(firstName, 'Vorname')"
-            name="fname"
-            autocomplete="given-name"
-          />
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-text-field
-            v-model="lastName"
-            label="Nachname"
-            outlined
-            :rules="notEmptyRule(lastName, 'Nachname')"
-            name="lname"
-            autocomplete="family-name"
-          />
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-text-field
-            v-model="street"
-            label="Straße &amp; Hausnummer"
-            outlined
-            :rules="notEmptyRule(street, 'Straße &amp; Hausnummer')"
-            name="address"
-            autocomplete="street-address"
-          />
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-text-field
-            v-model="city"
-            label="PLZ &amp; Wohnort"
-            outlined
-            :rules="notEmptyRule(city, 'PLZ &amp; Wohnort')"
-            name="zip city"
-            autocomplete="postal-code address-level2"
-          />
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-text-field
-            v-model="email"
-            label="Email"
-            outlined
-            :rules="emailRules"
-            name="email"
-            autocomplete="email"
-          />
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-text-field v-model="phone" label="Telefon (optional)" outlined />
-        </v-col>
-        <v-col cols="12">
-          <v-textarea
-            v-model="comments"
-            label="Kommentar (optional)"
-            outlined
-          />
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-checkbox
+  <ValidationObserver ref="form" v-slot="{ invalid, handleSubmit }">
+    <form class="tw-w-full" @submit.prevent="handleSubmit(submit)">
+      <div class="tw-flex tw-flex-wrap">
+        <labeled-input
+          v-model="firstName"
+          class="tw-w-full tw-pb-2 md:tw-w-1/2 md:tw-pr-2"
+          label="Vorname"
+          rules="required"
+          name="fname"
+          autocomplete="given-name"
+        />
+        <labeled-input
+          v-model="lastName"
+          class="tw-w-full tw-pb-2 md:tw-w-1/2 md:tw-pl-2"
+          label="Nachname"
+          rules="required"
+          name="lname"
+          autocomplete="family-name"
+        />
+        <labeled-input
+          v-model="street"
+          class="tw-w-full tw-pb-2 md:tw-w-1/2 md:tw-pr-2"
+          label="Straße &amp; Hausnummer"
+          rules="required"
+          name="address"
+          autocomplete="street-address"
+        />
+        <labeled-input
+          v-model="city"
+          class="tw-w-full tw-pb-2 md:tw-w-1/2 md:tw-pl-2"
+          label="PLZ &amp; Wohnort"
+          rules="required"
+          name="zip city"
+          autocomplete="postal-code address-level2"
+        />
+        <labeled-input
+          v-model="email"
+          class="tw-w-full tw-pb-2 md:tw-w-1/2 md:tw-pr-2"
+          label="Email"
+          rules="required|email"
+          type="email"
+          name="email"
+          autocomplete="email"
+        />
+        <labeled-input
+          v-model="phone"
+          class="tw-w-full tw-pb-2 md:tw-w-1/2 md:tw-pl-2"
+          label="Telefon (optional)"
+          name="phone"
+          autocomplete="phone"
+        />
+        <labeled-input
+          v-model="comments"
+          class="tw-w-full tw-pb-2"
+          label="Kommentar (optional)"
+          type="textarea"
+        />
+        <div class="tw-inline-flex tw-w-full tw-pb-4 md:tw-w-1/2 md:tw-pr-2">
+          <input
             v-model="member"
-            label="Ich bin Mitglied beim SV Eutingen"
+            class="tw-mt-0/5 tw-checkbox-input"
+            type="checkbox"
           />
-        </v-col>
-        <v-col cols="12" sm="6">
-          <v-checkbox v-model="updates" :label="labelUpdates" />
-        </v-col>
-        <v-col cols="12">
-          <v-checkbox
-            v-model="checkbox"
-            label="Ich stimme der Verarbeitung meiner personenbezogenen Daten zu"
-            :rules="checkboxRules"
+          <span
+            class="tw-pl-2 tw-text-sm tw-font-medium tw-cursor-pointer tw-select-none"
+            @click="member = !member"
+          >
+            Ich bin Mitglied beim SV Eutingen
+          </span>
+        </div>
+        <div class="tw-inline-flex tw-w-full tw-pb-4 md:tw-w-1/2 md:tw-pl-2">
+          <input
+            v-model="updates"
+            class="tw-mt-0/5 tw-checkbox-input"
+            type="checkbox"
           />
-        </v-col>
-        <v-col cols="12">
-          <v-row justify="center">
-            <v-btn
-              :disabled="!valid"
-              rounded
-              depressed
-              color="primary"
-              :loading="submitLoading"
-              @click="submit"
-              >{{ buttonText }}</v-btn
-            >
-          </v-row>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-form>
+          <span
+            class="tw-pl-2 tw-text-sm tw-font-medium tw-cursor-pointer tw-select-none"
+            @click="updates = !updates"
+          >
+            {{ labelUpdates }}
+          </span>
+        </div>
+        <privacy-checkbox v-model="privacy" class="tw-w-full tw-pb-2" />
+      </div>
+      <div class="tw-flex tw-justify-center">
+        <btn
+          class="tw-w-full md:tw-w-80"
+          :disabled="invalid"
+          :loading="submitLoading"
+          type="submit"
+          >{{ buttonText }}</btn
+        >
+      </div>
+    </form>
+  </ValidationObserver>
 </template>
 
 <script>
 import axios from 'axios'
-import { validateEmail } from '@/util/validators'
+import { ValidationObserver } from 'vee-validate'
+import labeledInput from '@/components/controls/LabeledInput'
+import privacyCheckbox from '@/components/controls/PrivacyCheckbox'
+import btn from '@/components/controls/PrimaryButton'
 
 export default {
+  components: {
+    ValidationObserver,
+    labeledInput,
+    privacyCheckbox,
+    btn,
+  },
   props: {
     buttonText: {
       type: String,
@@ -117,65 +127,67 @@ export default {
   },
   data() {
     return {
-      valid: false,
       firstName: '',
       lastName: '',
       street: '',
       city: '',
       email: '',
       phone: '',
+      comments: '',
       member: false,
       updates: false,
-      comments: '',
-      checkbox: false,
-      emailRules: [
-        (v) => !!v || 'Email wird benötigt',
-        (v) => validateEmail(v) || 'Die Email Addresse muss gültig sein',
-      ],
-      checkboxRules: [(v) => !!v || 'Eine Zustimmung wird benötigt'],
+      privacy: false,
       submitLoading: false,
     }
   },
   methods: {
     submit() {
-      if (this.$refs.form.validate()) {
-        this.submitLoading = true
-        const data = {
-          eventId: this.eventId,
-          firstName: this.firstName,
-          lastName: this.lastName,
-          street: this.street,
-          city: this.city,
-          email: this.email,
-          phone: this.phone,
-          member: this.member,
-          updates: this.updates,
-          comments: this.comments,
-        }
-        axios
-          .post(this.$static.metadata.eventsAPI + '/booking', data)
-          .then((response) => {
-            this.submitLoading = false
-            this.$refs.form.reset()
-            const type = response.data.success ? 'showInfo' : 'showError'
-            this.$store.commit('notification_' + type, response.data.message)
-            if (response.data.success) {
-              this.$store.commit('events_updateCounter', response.data.counter)
-            }
-          })
-          // eslint-disable-next-line handle-callback-err
-          .catch((error) => {
-            this.submitLoading = false
-            this.$refs.form.reset()
-            this.$store.commit(
-              'notification_showError',
-              'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
-            )
-          })
+      this.submitLoading = true
+      const data = {
+        eventId: this.eventId,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        street: this.street,
+        city: this.city,
+        email: this.email,
+        phone: this.phone,
+        member: this.member,
+        updates: this.updates,
+        comments: this.comments,
       }
+      axios
+        .post(this.$static.metadata.eventsAPI + '/booking', data)
+        .then((response) => {
+          this.submitLoading = false
+          this.reset()
+          const type = response.data.success ? 'showInfo' : 'showError'
+          this.$store.commit('notification_' + type, response.data.message)
+          if (response.data.success) {
+            this.$store.commit('events_updateCounter', response.data.counter)
+          }
+        })
+        // eslint-disable-next-line handle-callback-err
+        .catch((error) => {
+          this.submitLoading = false
+          this.reset()
+          this.$store.commit(
+            'notification_showError',
+            'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
+          )
+        })
     },
-    notEmptyRule(value, name) {
-      return [!!value || name + ' wird benötigt']
+    reset() {
+      this.firstName = ''
+      this.lastName = ''
+      this.street = ''
+      this.city = ''
+      this.email = ''
+      this.phone = ''
+      this.comments = ''
+      this.member = false
+      this.updates = false
+      this.privacy = false
+      this.$refs.form.reset()
     },
   },
 }

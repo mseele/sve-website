@@ -18,4 +18,12 @@
     .tw-on-focus-dark {
         @apply focus:tw-outline-none focus-visible:tw-ring-2 focus-visible:tw-ring-gray-600 focus-visible:tw-ring-opacity-50
     }
+
+    .tw-text-input {
+        @apply tw-block tw-w-full tw-border tw-border-gray-400 focus:tw-border-gray-400 tw-border-solid tw-rounded focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-red-400 focus:tw-ring-opacity-50
+    }
+
+    .tw-checkbox-input {
+        @apply tw-cursor-pointer tw-text-red-800 tw-border tw-border-gray-400 focus:tw-border-gray-400 tw-border-solid tw-rounded focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-red-400 focus:tw-ring-opacity-50
+    }
 }

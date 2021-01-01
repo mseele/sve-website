@@ -1,197 +1,170 @@
 <template>
-  <section class="pa-0">
-    <v-img
-      :src="require('@/assets/events/' + event.image + '?vuetify-preload')"
-      height="100vh"
+  <div>
+    <hero-section
+      v-slot="{ imageClass }"
+      :title="event.name"
+      :dark="!event.light"
+      wrap
+      dense
+      :primary-button="{ text: 'Mehr Infos', to: '#beschreibung' }"
+      :secondary-button="{ text: 'Anmeldung', to: '#anmeldung' }"
     >
-      <v-container fill-height>
-        <v-row align="center" class="pt-5 px-3">
-          <v-sheet
-            class="transparent"
-            :class="event.light ? 'white--text' : 'black--text'"
+      <g-image :src="event.image" :class="imageClass" />
+    </hero-section>
+    <page-section id="beschreibung" title="Beschreibung">
+      <div v-html="event.description" />
+    </page-section>
+    <page-section id="details" title="Details" dark>
+      <div class="tw-flex tw-flex-wrap tw-space-y-3 md:tw-space-y-0">
+        <ul class="tw-w-full tw-pl-0 tw-space-y-3 tw-list-none md:tw-w-1/2">
+          <ili v-if="!counterAvailable()">Verfügbarkeit wird geprüft</ili>
+          <ili v-else-if="!isBookedUp()">
+            {{ toSubscribers(availableSubscribers()) }}
+          </ili>
+          <ili v-else>Ausgebucht</ili>
+          <ili v-if="event.customDate">
+            {{ event.customDate }}
+          </ili>
+          <ili v-else-if="event.dates.length == 1">
+            {{ event.dates[0] }}
+          </ili>
+          <ili v-else>{{ event.dates.length }} Termine</ili>
+          <ili>
+            {{ durationPrefix() + ' ' }}
+            {{ event.duration }}
+          </ili>
+        </ul>
+        <ul class="tw-w-full tw-pl-0 tw-space-y-3 tw-list-none md:tw-w-1/2">
+          <ili v-if="event.costMember === event.costNonMember">
+            {{ event.costMember }} pro Teilnehmer
+          </ili>
+          <template v-else>
+            <ili>{{ event.costMember }} für Mitglieder</ili>
+            <ili>{{ event.costNonMember }} für Nicht-Mitglieder</ili>
+          </template>
+          <ili>Wo: {{ event.location }}</ili>
+        </ul>
+      </div>
+      <div v-if="event.externalOperator" class="tw-pt-6">
+        <div class="tw-text-sm tw-font-bold tw-tracking-wider tw-uppercase">
+          Veranstalter
+        </div>
+        <div>Förderverein SV Eutingen 1947 e.V.</div>
+      </div>
+    </page-section>
+    <page-section v-if="event.dates.length > 1" id="termine" title="Termine">
+      <ul class="tw-flex tw-flex-wrap tw-pl-0 tw--mt-2 tw-list-none">
+        <li
+          v-for="(date, index) of event.dates"
+          :key="index"
+          class="tw-flex tw-items-center tw-w-full tw-mt-2 md:tw-w-1/2"
+        >
+          <svg
+            class="tw-w-5 tw-h-5 tw-mr-3 tw-text-gray-400 tw-fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
           >
-            <h1
-              class="display-2 d-none d-sm-flex"
-              :class="
-                event.light ? 'tw-text-shadow-dark' : 'tw-text-shadow-light'
-              "
-            >
-              {{ event.name }}
-            </h1>
-            <h1
-              class="display-1 d-sm-none"
-              :class="
-                event.light ? 'tw-text-shadow-dark' : 'tw-text-shadow-light'
-              "
-            >
-              {{ event.name }}
-            </h1>
-            <v-row class="mx-0 mt-6">
-              <v-btn
-                to="#beschreibung"
-                rounded
-                depressed
-                outlined
-                :dark="event.light"
-                class="mr-2"
-                >Mehr Infos</v-btn
-              >
-              <v-btn
-                to="#anmeldung"
-                rounded
-                depressed
-                :dark="!event.light"
-                :disabled="!counterAvailable()"
-                >Anmeldung</v-btn
-              >
-            </v-row>
-          </v-sheet>
-        </v-row>
-      </v-container>
-    </v-img>
-    <section
-      id="beschreibung"
-      :class="event.dates.length > 1 ? 'section_alt' : 'section'"
+            <path
+              fill-rule="evenodd"
+              d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          {{ date }}
+        </li>
+      </ul>
+    </page-section>
+    <page-section
+      id="anmeldung"
+      :title="bookingTitle"
+      :dark="event.dates.length > 1"
     >
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <h2>BESCHREIBUNG</h2>
-          </v-col>
-          <!-- eslint-disable-next-line vue/no-v-html -->
-          <v-col cols="12" v-html="event.description"></v-col>
-        </v-row>
-      </v-container>
-    </section>
-    <section
-      id="details"
-      :class="event.dates.length > 1 ? 'section' : 'section_alt'"
-    >
-      <v-container>
-        <v-row class="pb-4">
-          <v-col class="pb-6" cols="12">
-            <h2>DETAILS</h2>
-          </v-col>
-          <v-col class="py-0" cols="12" sm="6">
-            <ul>
-              <li v-if="!counterAvailable()">&nbsp;</li>
-              <li v-else-if="!isBookedUp()">
-                {{ toSubscribers(availableSubscribers()) }}
-              </li>
-              <li v-else>Ausgebucht</li>
-              <li v-if="event.customDate">
-                {{ event.customDate }}
-              </li>
-              <li v-else-if="event.dates.length == 1">
-                {{ event.dates[0] }}
-              </li>
-              <li v-else>{{ event.dates.length }} Termine</li>
-              <li>
-                {{ durationPrefix() + ' ' }}
-                {{ event.duration }}
-              </li>
-            </ul>
-          </v-col>
-          <v-col class="py-0" cols="12" sm="6">
-            <ul>
-              <li>Wo: {{ event.location }}</li>
-              <li v-if="event.costMember === event.costNonMember">
-                {{ event.costMember }} pro Teilnehmer
-              </li>
-              <template v-else>
-                <li>{{ event.costMember }} für Mitglieder</li>
-                <li>{{ event.costNonMember }} für Nicht-Mitglieder</li>
-              </template>
-            </ul>
-          </v-col>
-          <v-col
-            v-if="event.externalOperator"
-            class="pb-0 pt-6"
-            cols="12"
-            sm="6"
-          >
-            <div class="font-weight-bold">Veranstalter</div>
-            <div>Förderverein SV Eutingen 1947 e.V.</div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-    <section v-if="event.dates.length > 1" id="termine" class="section_alt">
-      <v-container>
-        <v-row class="pb-4">
-          <v-col class="pb-6" cols="12">
-            <h2>TERMINE</h2>
-          </v-col>
-          <v-col
-            v-for="(date, index) of event.dates"
-            :key="index"
-            class="py-0"
-            cols="12"
-            sm="6"
-          >
-            <ul>
-              <li>{{ date }}</li>
-            </ul>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-    <section v-if="counterAvailable()" id="anmeldung" class="section">
-      <v-container>
-        <v-row v-if="canBook()">
-          <v-col cols="12">
-            <h2>ANMELDUNG</h2>
-          </v-col>
-          <v-col cols="12" class="subtitle-1">
+      <template v-if="this.counterAvailable()">
+        <template v-if="canBook()">
+          <div class="tw-pb-4">
             <slot name="bookingHeader"></slot>
-          </v-col>
-          <v-col cols="12">
-            <booking
-              button-text="Kostenpflichtig buchen"
-              :event-id="event.id"
-              :label-updates="labelUpdates"
-              @on-booking="onBooking($event)"
-            ></booking>
-          </v-col>
-        </v-row>
-        <v-row v-else-if="!isBookedUp()">
-          <v-col cols="12">
-            <h2>WARTELISTE</h2>
-          </v-col>
-          <v-col cols="12">
+          </div>
+          <booking
+            button-text="Kostenpflichtig buchen"
+            :event-id="event.id"
+            :label-updates="labelUpdates"
+            @on-booking="onBooking($event)"
+          ></booking>
+        </template>
+        <template v-else-if="!isBookedUp()">
+          <div class="tw-pb-4">
             Leider sind schon alle Plätze belegt. Gerne kannst Du Dich auf die
             Warteliste setzen lassen. Wir benachrichtigen Dich, wenn Plätze frei
             werden.
-            <booking
-              button-text="Auf die Warteliste setzen"
-              :event-id="event.id"
-              :label-updates="labelUpdates"
-              @on-booking="onBooking($event)"
-            ></booking>
-          </v-col>
-        </v-row>
-        <v-row v-else>
-          <v-col cols="12">
-            <h2>AUSGEBUCHT</h2>
-          </v-col>
-          <v-col cols="12">
+          </div>
+          <booking
+            button-text="Auf die Warteliste setzen"
+            :event-id="event.id"
+            :label-updates="labelUpdates"
+            @on-booking="onBooking($event)"
+          ></booking>
+        </template>
+        <template v-else>
+          <div>
             Leider sind schon alle Plätze belegt und die Warteliste ist voll.
             Wir planen aber schon die nächste Runde. Schaue bald wieder vorbei.
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-  </section>
+          </div>
+          <email-subscription
+            :success-message="subscribeSuccess"
+            :news-type="newsType"
+            class="tw-pt-8 lg:tw-pt-4"
+          >
+            <slot name="subscribeInfo"></slot>
+          </email-subscription>
+        </template>
+      </template>
+      <div v-else class="tw-flex tw-items-center">
+        <svg
+          class="tw-w-5 tw-h-5 tw-mr-3 tw-text-red-800 tw-animate-spin"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="tw-opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="tw-opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        <div>
+          Wir prüfen gerade die Verfügbarkeit. Die Anmeldemöglichkeiten werden
+          in einem Moment angezeigt.
+        </div>
+      </div>
+    </page-section>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
+import heroSection from '@/components/common/HeroSection'
+import pageSection from '@/components/common/PageSection'
+import ili from '@/components/controls/InfoListItem'
 import booking from '@/components/events/Booking'
+import emailSubscription from './EmailSubscription'
 import { toSubscribers } from '@/util/converters'
 
 export default {
   components: {
+    heroSection,
+    pageSection,
+    ili,
     booking,
+    emailSubscription,
   },
   props: {
     event: {
@@ -199,6 +172,14 @@ export default {
       default: () => ({}),
     },
     labelUpdates: {
+      type: String,
+      default: undefined,
+    },
+    subscribeSuccess: {
+      type: String,
+      default: undefined,
+    },
+    newsType: {
       type: String,
       default: undefined,
     },
@@ -213,6 +194,17 @@ export default {
     eventsCounter() {
       return this.$store.state.events_counter
     },
+    bookingTitle() {
+      if (this.counterAvailable()) {
+        if (this.canBook()) {
+          return 'Anmeldung'
+        } else if (!this.isBookedUp()) {
+          return 'Warteliste'
+        }
+        return 'Ausgebucht'
+      }
+      return 'Anmeldung'
+    },
   },
   mounted() {
     axios.get(this.$static.metadata.eventsAPI + '/counter').then((res) => {
@@ -225,8 +217,7 @@ export default {
       return this.eventsCounter.find((counter) => counter.id === e.id)
     },
     counterAvailable() {
-      const eventCounter = this.eventCounter()
-      return typeof eventCounter !== 'undefined'
+      return typeof this.eventCounter() !== 'undefined'
     },
     isBookedUp() {
       const eventCounter = this.eventCounter()

@@ -31,6 +31,7 @@ module.exports = function (api) {
       if (node.dates) {
         node.dates = node.dates.map((date) => format.toDate(date))
       }
+      node.image = require.resolve('./src/assets/events/' + node.image)
       // add event
       events.addNode(node)
       // create page
