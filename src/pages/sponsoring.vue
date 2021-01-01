@@ -104,7 +104,7 @@
       </div>
     </page-section>
     <page-section id="partner" title="Unsere Partner">
-      <div class="tw--mb-4">
+      <div class="tw--mb-2">
         Mit diesen langjährigen Partnern leben wir Zusammenarbeit. Durch ihre
         materielle und finanzielle Unterstützung ermöglichen sie unser
         ehrenamtliches Angebot und machen auf ihre Produkte und Dienstleistungen
