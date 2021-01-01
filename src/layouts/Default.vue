@@ -2,7 +2,10 @@
   <v-app>
     <app-bar v-model="drawer" :transparent="transparent" :light="light" />
     <app-navigation-drawer v-model="drawer" />
-    <v-main :class="[transparent ? 'tw-pt-0' : 'tw-pt-12 md:tw-pt-14']">
+    <v-main
+      class="tw-bg-gray-100"
+      :class="[transparent ? 'tw-pt-0' : 'tw-pt-12 md:tw-pt-14']"
+    >
       <slot />
     </v-main>
     <app-footer />
