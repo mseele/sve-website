@@ -1,11 +1,13 @@
 <template>
-  <ValidationProvider v-slot="{ errors }" :name="label" :rules="rules">
-    <label
-      class="tw-block tw-mb-2 tw-text-xs tw-font-semibold tw-tracking-wide tw-text-black tw-uppercase"
-      :for="'form-' + name"
-    >
+  <ValidationProvider
+    v-slot="{ errors }"
+    :name="label"
+    :rules="rules"
+    tag="div"
+  >
+    <input-label :name="'form-' + name">
       {{ label }}
-    </label>
+    </input-label>
     <textarea
       v-if="type === 'textarea'"
       :id="'form-' + name"
@@ -42,6 +44,7 @@
 </template>
 
 <script>
+import inputLabel from './InputLabel'
 import { ValidationProvider, extend } from 'vee-validate'
 import { required, email } from 'vee-validate/dist/rules'
 
@@ -57,6 +60,7 @@ extend('required', {
 
 export default {
   components: {
+    inputLabel,
     ValidationProvider,
   },
   props: {

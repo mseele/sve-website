@@ -1,65 +1,54 @@
 <template>
-  <v-row>
-    <v-col cols="12" class="pb-6">
-      <v-select
-        v-model="team"
-        label="Um welche Mannschaft geht es?"
-        :items="teams()"
-        item-text="text"
-        item-value="value"
-        outlined
-        hide-details
-      ></v-select>
-    </v-col>
-    <v-col v-if="team != null" cols="12" lg="6">
-      <h3>Kontakt aufnehmen</h3>
-      <p class="pt-6">
+  <div>
+    <div class="tw-w-full">
+      <input-label name="team">Um welche Mannschaft geht es?</input-label>
+      <select id="team" v-model="team" class="tw-w-full tw-text-input">
+        <option disabled selected value>...</option>
+        <option
+          v-for="(item, index) in teams()"
+          :key="index"
+          :value="item.value"
+        >
+          {{ item.text }}
+        </option>
+      </select>
+    </div>
+    <contact
+      v-if="team"
+      :to-items="toItems"
+      to-label="Wenn möchtest du kontaktieren?"
+    >
+      <template #description>
         Unsere Ansprechpartner stehen Dir für sämtliche Fragen rund um unseren
         Spielbetrieb zur Verfügung. Du erreichst Sie über folgende Kanäle oder
         kannst Ihnen ganz einfach eine Nachricht per Kontaktformular senden.
-      </p>
-      <div v-if="coachName(team) != null" class="pt-4">
-        <h4>{{ coachName(team) }}</h4>
-        <touches :touches="coachTouches(team)"></touches>
-      </div>
-      <div v-if="contactName(team) != null" class="pt-4">
-        <h4>{{ contactName(team) }}</h4>
-        <touches :touches="contactTouches(team)"></touches>
-      </div>
-    </v-col>
-    <v-col v-if="team != null" cols="12" lg="6">
-      <h3>Nachricht senden</h3>
-      <v-row v-if="toItems.length > 1" no-gutters class="pt-6">
-        <v-col cols="12">
-          <v-select
-            v-model="to"
-            label="Wenn möchtest du kontaktieren?"
-            :items="toItems"
-            item-text="text"
-            item-value="value"
-            outlined
-          ></v-select>
-        </v-col>
-      </v-row>
-      <send-message
-        :to="to"
-        :class="{ 'pt-6': toItems.length <= 1 }"
-      ></send-message>
-    </v-col>
-  </v-row>
+      </template>
+      <template #touches>
+        <touches
+          v-if="coachTouches(team).length > 0"
+          class="tw-pt-4"
+          :title="coachName(team)"
+          :touches="coachTouches(team)"
+        />
+        <touches
+          v-if="contactTouches(team).length > 0"
+          class="tw-pt-4"
+          :title="contactName(team)"
+          :touches="contactTouches(team)"
+        />
+      </template>
+    </contact>
+  </div>
 </template>
 
 <script>
-import { mdiPhone, mdiEmail, mdiWhatsapp } from '@mdi/js'
-import touches from '@/components/common/Touches'
-import sendMessage from '@/components/contact/SendMessage'
+import inputLabel from '@/components/controls/InputLabel'
+import contact from './contact'
+import touches from './touches'
 import data from '@/data/teams.js'
 
 export default {
-  components: {
-    touches,
-    sendMessage,
-  },
+  components: { inputLabel, contact, touches },
   data() {
     return {
       data,
@@ -96,8 +85,8 @@ export default {
           }
         }
       }
-      this.toItems = items
       this.$nextTick(() => {
+        this.toItems = items
         this.to = items.length > 0 ? items[0].value : 'info@sv-eutingen.de'
       })
     },
@@ -150,28 +139,28 @@ export default {
       const touches = []
       if (contact.phone) {
         touches.push({
-          icon: mdiPhone,
+          type: 'phone',
           text: contact.phone.formatted,
           href: 'tel:' + contact.phone.raw,
         })
       }
       if (contact.mobile) {
         touches.push({
-          icon: mdiPhone,
+          type: 'phone',
           text: contact.mobile.formatted,
           href: 'tel:' + contact.mobile.raw,
         })
       }
       if (contact.email) {
         touches.push({
-          icon: mdiEmail,
+          type: 'email',
           text: contact.email,
           href: 'mailto:' + contact.email,
         })
       }
       if (contact.mobile) {
         touches.push({
-          icon: mdiWhatsapp,
+          type: 'whatsapp',
           text: 'WhatsApp',
           href: 'https://wa.me/' + contact.mobile.raw.substring(1),
         })

@@ -1,70 +1,83 @@
 <template>
-  <v-form ref="form" v-model="valid">
-    <v-row no-gutters>
-      <v-col cols="12">
-        <v-text-field
-          v-model="name"
-          label="Vor- und Nachname"
-          outlined
-          required
-          :rules="nameRules"
-        ></v-text-field>
-      </v-col>
-      <v-col class="pt-2" cols="12">
-        <v-text-field
-          v-model="email"
-          label="Email"
-          outlined
-          required
-          :rules="emailRules"
-        ></v-text-field>
-      </v-col>
-      <v-col class="pt-2" cols="12">
-        <v-text-field
-          v-model="phone"
-          label="Telefon (optional)"
-          outlined
-        ></v-text-field>
-      </v-col>
-      <v-col class="pt-2" cols="12">
-        <v-textarea
-          v-model="message"
-          label="Nachricht"
-          outlined
-          required
-          :rules="messageRules"
-        ></v-textarea>
-      </v-col>
-      <v-col class="pt-2" cols="12">
-        <v-checkbox
-          v-model="privacy"
-          class="mt-0 ml-3"
-          label="Ich stimme der Verarbeitung meiner personenbezogenen Daten zu"
-          required
-          :rules="privacyRules"
-        />
-      </v-col>
-      <v-col class="pt-5" cols="12">
-        <v-btn
-          :disabled="!valid"
-          rounded
-          depressed
-          color="primary"
-          :loading="submitLoading"
-          @click="submit"
+  <ValidationObserver ref="form" v-slot="{ invalid, handleSubmit }" tag="div">
+    <form class="tw-w-full" @submit.prevent="handleSubmit(submit)">
+      <div v-if="toItems && toItems.length > 1" class="tw-w-full tw-pb-2">
+        <input-label name="to">{{ toLabel }}</input-label>
+        <select
+          id="to"
+          v-model="toSelection"
+          class="tw-w-full tw-mb-4 tw-text-input"
         >
-          Nachricht senden
-        </v-btn>
-      </v-col>
-    </v-row>
-  </v-form>
+          <option
+            v-for="(item, index) in toItems"
+            :key="index"
+            :value="item.value"
+          >
+            {{ item.text }}
+          </option>
+        </select>
+      </div>
+      <labeled-input
+        v-model="name"
+        class="tw-w-full tw-pb-2"
+        label="Vor- und Nachname"
+        rules="required"
+        name="fname"
+        autocomplete="given-name"
+      />
+      <labeled-input
+        v-model="email"
+        class="tw-w-full tw-pb-2"
+        label="Email"
+        rules="required|email"
+        type="email"
+        name="email"
+        autocomplete="email"
+      />
+      <labeled-input
+        v-model="phone"
+        class="tw-w-full tw-pb-2"
+        label="Telefon (optional)"
+        name="phone"
+        autocomplete="phone"
+      />
+      <labeled-input
+        v-model="message"
+        class="tw-w-full tw-pb-2"
+        label="Nachricht"
+        rules="required"
+        type="textarea"
+        name="message"
+      />
+      <privacy-checkbox v-model="privacy" class="tw-w-full tw-pb-2" />
+      <btn
+        class="tw-w-full"
+        :disabled="invalid"
+        :loading="submitLoading"
+        type="submit"
+      >
+        Nachricht senden
+      </btn>
+    </form>
+  </ValidationObserver>
 </template>
 
 <script>
 import axios from 'axios'
-import { validateEmail } from '@/util/validators'
+import { ValidationObserver } from 'vee-validate'
+import inputLabel from '@/components/controls/InputLabel'
+import labeledInput from '@/components/controls/LabeledInput'
+import privacyCheckbox from '@/components/controls/PrivacyCheckbox'
+import btn from '@/components/controls/PrimaryButton'
 
 export default {
+  components: {
+    ValidationObserver,
+    inputLabel,
+    labeledInput,
+    privacyCheckbox,
+    btn,
+  },
   props: {
     type: {
       type: String,
@@ -74,58 +87,87 @@ export default {
       type: String,
       default: 'info@sv-eutingen.de',
     },
+    toLabel: {
+      type: String,
+      default: '',
+    },
+    toItems: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
-      valid: false,
       submitLoading: false,
+      toSelection: null,
       name: '',
       email: '',
       phone: '',
       message: '',
       privacy: false,
-      nameRules: [(v) => !!v || 'Vor- und Nachname wird benötigt'],
-      messageRules: [(v) => !!v || 'Nachricht wird benötigt'],
-      emailRules: [
-        (v) => !!v || 'Email wird benötigt',
-        (v) => validateEmail(v) || 'Die Email Addresse muss gültig sein',
-      ],
-      privacyRules: [(v) => !!v || 'Eine Zustimmung wird benötigt'],
     }
   },
+  watch: {
+    toItems(val) {
+      this.updateToSelection()
+    },
+    to(val) {
+      this.updateToSelection()
+    },
+  },
+  mounted() {
+    this.updateToSelection()
+  },
   methods: {
+    selectToItem(index) {
+      this.toSelection = this.toItems[index].value
+    },
+    updateToSelection() {
+      this.$nextTick(() => {
+        this.toSelection =
+          this.toItems && this.toItems.length > 0
+            ? this.toItems[0].value
+            : this.to
+      })
+    },
     submit() {
-      if (this.$refs.form.validate()) {
-        this.submitLoading = true
-        const data = {
-          type: this.type,
-          to: this.to,
-          name: this.name.trim(),
-          email: this.email.trim(),
-          phone: this.phone ? this.phone.trim() : '',
-          message: this.message.trim(),
-        }
-        axios
-          .post(this.$static.metadata.contactAPI + '/message', data)
-          .then((response) => {
-            this.submitLoading = false
-            this.$refs.form.reset()
-            this.$store.commit(
-              'notification_showInfo',
-              'Danke für deine Nachricht. Wir melden uns umgehend bei Dir.'
-            )
-          })
-          .catch((error) => {
-            // eslint-disable-next-line no-console
-            console.log(error)
-            this.submitLoading = false
-            this.$refs.form.reset()
-            this.$store.commit(
-              'notification_showError',
-              'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
-            )
-          })
+      this.submitLoading = true
+      const data = {
+        type: this.type,
+        to: this.toSelection,
+        name: this.name.trim(),
+        email: this.email.trim(),
+        phone: this.phone ? this.phone.trim() : '',
+        message: this.message.trim(),
       }
+      axios
+        .post(this.$static.metadata.contactAPI + '/message', data)
+        .then((response) => {
+          this.submitLoading = false
+          this.reset()
+          this.$store.commit(
+            'notification_showInfo',
+            'Danke für deine Nachricht. Wir melden uns umgehend bei Dir.'
+          )
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log(error)
+          this.submitLoading = false
+          this.reset()
+          this.$store.commit(
+            'notification_showError',
+            'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
+          )
+        })
+    },
+    reset() {
+      this.name = ''
+      this.email = ''
+      this.phone = ''
+      this.message = ''
+      this.privacy = false
+      this.$refs.form.reset()
     },
   },
 }

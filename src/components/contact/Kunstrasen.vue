@@ -1,37 +1,41 @@
 <template>
-  <common type="Kunstrasen" to="kunstrasen@sv-eutingen.de" :touches="touches">
-    <div class="pb-4">
+  <contact to="kunstrasen@sv-eutingen.de">
+    <template #description>
       Über diese Kanäle kannst Du eine Buchungsanfrage für unseren
       Kunstrasenplatz starten. Unser Ansprechpartner setzt sich dann direkt mit
       Dir in Verbindung und klärt alle Details.
-    </div>
-    <h4>Ansprechpartner Johannes Seeger</h4>
-  </common>
+    </template>
+    <template #touches>
+      <touches
+        class="tw-pt-4"
+        title="Ansprechpartner Johannes Seeger"
+        :touches="touches"
+      />
+    </template>
+  </contact>
 </template>
 
 <script>
-import { mdiPhone, mdiEmail, mdiWhatsapp } from '@mdi/js'
-import common from '@/components/contact/Common'
+import contact from './contact'
+import touches from './touches'
 
 export default {
-  components: {
-    common,
-  },
+  components: { contact, touches },
   data() {
     return {
       touches: [
         {
-          icon: mdiPhone,
+          type: 'phone',
           text: '0157 85834875',
           href: 'tel:+4915785834875',
         },
         {
-          icon: mdiEmail,
+          type: 'email',
           text: 'kunstrasen@sv-eutingen.de',
           href: 'mailto:kunstrasen@sv-eutingen.de',
         },
         {
-          icon: mdiWhatsapp,
+          type: 'whatsapp',
           text: 'WhatsApp',
           href: 'https://wa.me/4915785834875',
         },

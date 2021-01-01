@@ -11,7 +11,7 @@ const abteilungsleiterHerren = {
 const jugendleiter = {
   title: 'Jugendleiterin',
   name: 'Diana Akermann',
-  email: 'akermann.diana@googlemail.com',
+  email: 'akermann.diana@gmail.com',
   mobile: {
     formatted: '0163 7938508',
     raw: '+491637938508',
@@ -245,7 +245,7 @@ export default {
       league: 'Bezirksstaffel',
       coach: {
         name: 'Francesco Caboli',
-        email: 'Franco030878@googlemail.com',
+        email: 'Franco030878@gmail.com',
         mobile: {
           formatted: '0162 5869821',
           raw: '+491625869821',
