@@ -75,6 +75,7 @@ module.exports = {
       cursor: ['disabled'],
       transform: ['group-hover'],
       scale: ['group-hover'],
+      visibility: ['group-hover'],
     },
   },
   plugins: [require('@tailwindcss/forms')],

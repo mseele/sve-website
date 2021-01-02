@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="isOpen"
-    class="tw-fixed tw-inset-x-0 tw-bottom-0 tw-z-10 tw-px-4 tw-py-3 tw-text-gray-200 tw-bg-red-800 tw-shadow xl:tw-px-8 xl:tw-py-6"
+    class="tw-fixed tw-inset-x-0 tw-bottom-0 tw-z-20 tw-px-4 tw-py-3 tw-text-gray-200 tw-bg-red-800 tw-shadow xl:tw-px-8 xl:tw-py-6"
     role="alert"
   >
     <div class="tw-flex tw-flex-col sm:tw-flex-row xl:tw-justify-between">

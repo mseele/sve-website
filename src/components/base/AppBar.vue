@@ -1,6 +1,6 @@
 <template>
   <header
-    class="tw-fixed tw-inset-x-0 tw-z-10"
+    class="tw-fixed tw-inset-x-0 tw-z-20"
     :class="[
       !isTransparent ? 'tw-bg-gray-900' : '',
       showElevation ? 'tw-shadow-md' : '',

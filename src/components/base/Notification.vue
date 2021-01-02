@@ -7,7 +7,7 @@
     leave-class="tw-translate-y-0"
     leave-to-class="tw-translate-y-full"
   >
-    <div v-if="visible" class="tw-fixed tw-bottom-0 tw-z-10 tw-w-full">
+    <div v-if="visible" class="tw-fixed tw-bottom-0 tw-z-20 tw-w-full">
       <div class="tw-p-2 tw-text-center lg:tw-p-4 md:tw-px-10">
         <div
           class="tw-inline-flex tw-items-center tw-justify-center tw-p-2 tw-rounded-full tw-shadow lg:tw-max-w-3xl 2xl:tw-max-w-6xl"

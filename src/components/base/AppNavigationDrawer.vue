@@ -10,7 +10,7 @@
     >
       <div
         v-if="drawer"
-        class="tw-fixed tw-inset-0 tw-z-20 tw-overflow-hidden"
+        class="tw-fixed tw-inset-0 tw-z-30 tw-overflow-hidden"
         @click="drawer = false"
       >
         <div class="tw-absolute tw-inset-0 tw-overflow-hidden">
@@ -31,7 +31,7 @@
     >
       <div
         v-if="drawer"
-        class="tw-fixed tw-inset-0 tw-z-20 tw-overflow-hidden"
+        class="tw-fixed tw-inset-0 tw-z-30 tw-overflow-hidden"
         :class="{ 'tw-ml-14': drawer }"
         @click="drawer = false"
       >

@@ -8,6 +8,8 @@ import scrollBehavior from '@/util/scroll-behavior'
 
 require('@/assets/tailwind.css')
 require('typeface-roboto')
+require('@glidejs/glide/dist/css/glide.core.min.css')
+require('@glidejs/glide/dist/css/glide.theme.min.css')
 
 export default function (Vue, { appOptions, head, router }) {
   head.meta.push({
