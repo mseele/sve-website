@@ -11,17 +11,22 @@
             :key="index"
             class="tw-w-full tw-p-2 lg:tw-w-1/2 2xl:tw-w-1/3"
           >
-            <div
-              class="tw-flex tw-flex-col tw-h-full tw-overflow-hidden tw-bg-white tw-border-2 tw-border-gray-300 tw-border-solid tw-rounded"
+            <g-link
+              :to="toPrefix + event.node.id + '/'"
+              class="tw-flex tw-flex-col tw-h-full tw-overflow-hidden tw-no-underline tw-bg-white tw-border-2 tw-border-gray-300 tw-border-solid tw-rounded hover:tw-shadow-sm tw-group focus:tw-outline-none focus-visible:tw-ring-2 focus:tw-ring-red-600 focus:tw-ring-opacity-50"
             >
-              <div class="tw-relative tw-pb-3/5 sm:tw-pb-1/2 md:tw-pb-2/5">
+              <div
+                class="tw-relative tw-overflow-hidden tw-pb-3/5 sm:tw-pb-1/2 md:tw-pb-2/5"
+              >
                 <g-image
                   :src="event.node.image"
-                  class="tw-absolute tw-object-cover tw-w-full tw-h-full"
+                  class="tw-absolute tw-object-cover tw-w-full tw-h-full tw-transition tw-duration-500 tw-ease-in-out group-hover:tw-transform-gpu group-hover:tw-scale-110"
                 />
               </div>
               <div class="tw-flex tw-flex-col tw-flex-grow tw-p-4">
-                <div class="tw-text-lg tw-font-medium tw-text-gray-900">
+                <div
+                  class="tw-text-lg tw-font-medium tw-text-gray-800 group-hover:tw-text-black"
+                >
                   {{ event.node.name }}
                 </div>
                 <div
@@ -39,31 +44,13 @@
                 <div v-else class="tw-text-sm tw-font-medium tw-text-red-600">
                   Ausgebucht
                 </div>
-                <div class="tw-flex-grow tw-mt-3 tw-text-gray-700">
+                <div
+                  class="tw-flex-grow tw-mt-3 tw-text-gray-700 group-hover:tw-text-gray-900"
+                >
                   {{ event.node.shortDescription }}
                 </div>
-                <div class="tw-text-center">
-                  <g-link
-                    :to="toPrefix + event.node.id + '/'"
-                    class="tw-inline-flex tw-items-center tw-px-3 tw-py-1 tw-font-medium tw-text-red-800 tw-no-underline tw-rounded-full hover:tw-bg-red-100 hover:tw-bg-opacity-50 active:tw-text-red-900 md:tw-mb-2 lg:tw-mb-0 tw-on-focus"
-                  >
-                    Details
-                    <svg
-                      class="tw-w-4 tw-h-4 tw-ml-2"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="3"
-                      fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M5 12h14"></path>
-                      <path d="M12 5l7 7-7 7"></path>
-                    </svg>
-                  </g-link>
-                </div>
               </div>
-            </div>
+            </g-link>
           </div>
         </div>
       </div>

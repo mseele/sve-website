@@ -73,6 +73,8 @@ module.exports = {
       ringOffsetWidth: ['focus-visible'],
       opacity: ['disabled'],
       cursor: ['disabled'],
+      transform: ['group-hover'],
+      scale: ['group-hover'],
     },
   },
   plugins: [require('@tailwindcss/forms')],
