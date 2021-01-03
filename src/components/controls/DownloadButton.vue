@@ -8,6 +8,7 @@
     ]"
     :href="href"
     :target="target"
+    rel="noreferrer"
   >
     <slot :imageClass="'tw-w-8 tw-h-8'" />
     <span class="tw-flex tw-flex-col tw-items-start tw-ml-4 tw-leading-none">
