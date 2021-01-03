@@ -198,15 +198,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-.sponsor {
-  color: black !important;
-  text-decoration-line: none !important;
-
-  &:hover,
-  &:focus {
-    text-decoration: underline !important;
-  }
-}
-</style>
