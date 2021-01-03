@@ -50,7 +50,7 @@
       >
       Franz Nesch und Thomas Akermann gerne zur Verfügung.
       <div
-        class="tw-flex tw-flex-col tw-pt-6 md:tw-flex-row md:tw-justify-center"
+        class="tw-flex tw-flex-col tw-pt-6 sm:tw-flex-row sm:tw-justify-center"
       >
         <btn
           v-slot="{ imageClass }"
@@ -58,6 +58,7 @@
           first-row="VERTRAG"
           second-row="Bandenwerbung"
           dark
+          class="tw-w-full sm:tw-w-2/5 xl:tw-w-1/4 2xl:tw-w-1/5"
         >
           <svg
             :class="imageClass"
@@ -78,7 +79,7 @@
           first-row="PREISE"
           second-row="Bandenwerbung"
           dark
-          class="tw-mt-4 md:tw-ml-4 lg:tw-ml-8 2xl:tw-ml-20 md:tw-mt-0"
+          class="tw-w-full tw-mt-4 sm:tw-w-2/5 xl:tw-w-1/4 2xl:tw-w-1/5 sm:tw-ml-4 sm:tw-mt-0 lg:tw-ml-8 2xl:tw-ml-20"
         >
           <svg
             :class="imageClass"
