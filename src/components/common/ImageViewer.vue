@@ -122,19 +122,27 @@ export default {
       fullscreen: false,
       fullscreenIndex: 0,
       swipe: false,
+      glide: undefined,
     }
   },
   mounted() {
     if (this.images.length > 1) {
-      const glide = new Glide(this.$refs.carousel, {
+      this.glide = new Glide(this.$refs.carousel, {
         type: 'carousel',
         gap: 0,
         autoplay: 3000,
       })
-      glide.mount({
+
+      this.glide.mount({
         Controls,
         Autoplay,
       })
+    }
+  },
+  unmounted() {
+    if (this.glide) {
+      this.glide.destroy()
+      this.glide = undefined
     }
   },
   methods: {
