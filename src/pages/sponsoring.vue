@@ -57,6 +57,7 @@
           href="/downloads/2020/Vertrag-Bandenwerbung.pdf"
           first-row="VERTRAG"
           second-row="Bandenwerbung"
+          dark
         >
           <svg
             :class="imageClass"
@@ -76,6 +77,7 @@
           href="/downloads/2020/Preise-Bandenwerbung.pdf"
           first-row="PREISE"
           second-row="Bandenwerbung"
+          dark
           class="tw-mt-4 md:tw-ml-4 lg:tw-ml-8 2xl:tw-ml-20 md:tw-mt-0"
         >
           <svg

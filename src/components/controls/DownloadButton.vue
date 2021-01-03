@@ -1,10 +1,10 @@
 <template>
   <a
-    class="tw-inline-flex tw-items-center tw-px-5 tw-py-3 tw-text-black tw-no-underline tw-rounded-lg"
+    class="tw-inline-flex tw-items-center tw-px-5 tw-py-3 tw-text-black tw-no-underline tw-rounded-lg tw-on-focus-dark"
     :class="[
       dark
-        ? 'tw-bg-white hover:tw-bg-gray-100 tw-on-focus-dark'
-        : 'tw-bg-white hover:tw-bg-gray-200 tw-on-focus',
+        ? 'tw-bg-white hover:tw-bg-gray-100'
+        : 'tw-bg-white hover:tw-bg-gray-200',
     ]"
     :href="href"
     :target="target"
