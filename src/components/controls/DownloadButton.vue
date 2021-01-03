@@ -1,6 +1,11 @@
 <template>
   <a
-    class="tw-inline-flex tw-items-center tw-px-5 tw-py-3 tw-text-black tw-no-underline tw-bg-white tw-rounded-lg hover:tw-bg-gray-100 tw-on-focus-dark"
+    class="tw-inline-flex tw-items-center tw-px-5 tw-py-3 tw-text-black tw-no-underline tw-rounded-lg"
+    :class="[
+      dark
+        ? 'tw-bg-white hover:tw-bg-gray-100 tw-on-focus-dark'
+        : 'tw-bg-white hover:tw-bg-gray-200 tw-on-focus',
+    ]"
     :href="href"
     :target="target"
   >
@@ -22,6 +27,10 @@ export default {
     target: {
       type: String,
       default: '_blank',
+    },
+    dark: {
+      type: Boolean,
+      default: false,
     },
     firstRow: {
       type: String,
