@@ -52,13 +52,14 @@
       <div
         class="tw-flex tw-flex-col tw-pt-6 md:tw-flex-row md:tw-justify-center"
       >
-        <a
-          class="tw-inline-flex tw-items-center tw-px-5 tw-py-3 tw-text-black tw-no-underline tw-bg-white tw-rounded-lg hover:tw-bg-gray-100 tw-on-focus-dark"
+        <btn
+          v-slot="{ imageClass }"
           href="/downloads/2020/Vertrag-Bandenwerbung.pdf"
-          target="_blank"
+          first-row="VERTRAG"
+          second-row="Bandenwerbung"
         >
           <svg
-            class="tw-w-8 tw-h-8"
+            :class="imageClass"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -69,20 +70,16 @@
               clip-rule="evenodd"
             />
           </svg>
-          <span
-            class="tw-flex tw-flex-col tw-items-start tw-ml-4 tw-leading-none"
-          >
-            <span class="tw-mb-1 tw-text-xs tw-text-gray-600">VERTRAG</span>
-            <span class="tw-font-medium tw-title-font">Bandenwerbung</span>
-          </span>
-        </a>
-        <a
-          class="tw-inline-flex tw-items-center tw-px-5 tw-py-3 tw-mt-4 tw-text-black tw-no-underline tw-bg-white tw-rounded-lg md:tw-ml-4 lg:tw-ml-8 2xl:tw-ml-20 md:tw-mt-0 hover:tw-bg-gray-100 tw-on-focus-dark"
+        </btn>
+        <btn
+          v-slot="{ imageClass }"
           href="/downloads/2020/Preise-Bandenwerbung.pdf"
-          target="_blank"
+          first-row="PREISE"
+          second-row="Bandenwerbung"
+          class="tw-mt-4 md:tw-ml-4 lg:tw-ml-8 2xl:tw-ml-20 md:tw-mt-0"
         >
           <svg
-            class="tw-w-8 tw-h-8"
+            :class="imageClass"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -93,14 +90,7 @@
               clip-rule="evenodd"
             />
           </svg>
-
-          <span
-            class="tw-flex tw-flex-col tw-items-start tw-ml-4 tw-leading-none"
-          >
-            <span class="tw-mb-1 tw-text-xs tw-text-gray-600">PREISE</span>
-            <span class="tw-font-medium tw-title-font">Bandenwerbung</span>
-          </span>
-        </a>
+        </btn>
       </div>
     </page-section>
     <page-section id="partner" title="Unsere Partner">
@@ -159,13 +149,14 @@
 import heroSection from '@/components/common/HeroSection'
 import pageSection from '@/components/common/PageSection'
 import headerTitle from '@/components/controls/HeaderTitle'
+import btn from '@/components/controls/DownloadButton'
 import sponsoring from '@/data/sponsoring.json'
 
 export default {
   metaInfo: {
     title: 'Sponsoring',
   },
-  components: { heroSection, pageSection, headerTitle },
+  components: { heroSection, pageSection, headerTitle, btn },
   data() {
     return {
       sponsors: this.groupSponsors(sponsoring),
