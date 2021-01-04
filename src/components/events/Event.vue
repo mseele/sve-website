@@ -15,8 +15,8 @@
       <div v-html="event.description" />
     </page-section>
     <page-section id="details" title="Details" dark>
-      <div class="tw-flex tw-flex-wrap tw-space-y-3 md:tw-space-y-0">
-        <ul class="tw-w-full tw-space-y-3 md:tw-w-1/2">
+      <div class="flex flex-wrap space-y-3 md:space-y-0">
+        <ul class="w-full space-y-3 md:w-1/2">
           <ili v-if="!counterAvailable()">Verfügbarkeit wird geprüft</ili>
           <ili v-else-if="!isBookedUp()">
             {{ toSubscribers(availableSubscribers()) }}
@@ -34,7 +34,7 @@
             {{ event.duration }}
           </ili>
         </ul>
-        <ul class="tw-w-full tw-space-y-3 md:tw-w-1/2">
+        <ul class="w-full space-y-3 md:w-1/2">
           <ili v-if="event.costMember === event.costNonMember">
             {{ event.costMember }} pro Teilnehmer
           </ili>
@@ -45,22 +45,22 @@
           <ili>Wo: {{ event.location }}</ili>
         </ul>
       </div>
-      <div v-if="event.externalOperator" class="tw-pt-6">
-        <div class="tw-text-sm tw-font-bold tw-tracking-wider tw-uppercase">
+      <div v-if="event.externalOperator" class="pt-6">
+        <div class="text-sm font-bold tracking-wider uppercase">
           Veranstalter
         </div>
         <div>Förderverein SV Eutingen 1947 e.V.</div>
       </div>
     </page-section>
     <page-section v-if="event.dates.length > 1" id="termine" title="Termine">
-      <ul class="tw-flex tw-flex-wrap tw--mt-2">
+      <ul class="flex flex-wrap -mt-2">
         <li
           v-for="(date, index) of event.dates"
           :key="index"
-          class="tw-flex tw-items-center tw-w-full tw-mt-2 md:tw-w-1/2"
+          class="flex items-center w-full mt-2 md:w-1/2"
         >
           <svg
-            class="tw-w-5 tw-h-5 tw-mr-3 tw-text-gray-400 tw-fill-current"
+            class="w-5 h-5 mr-3 text-gray-400 fill-current"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -82,7 +82,7 @@
     >
       <template v-if="this.counterAvailable()">
         <template v-if="canBook()">
-          <div class="tw-pb-4">
+          <div class="pb-4">
             <slot name="bookingHeader"></slot>
           </div>
           <booking
@@ -93,7 +93,7 @@
           ></booking>
         </template>
         <template v-else-if="!isBookedUp()">
-          <div class="tw-pb-4">
+          <div class="pb-4">
             Leider sind schon alle Plätze belegt. Gerne kannst Du Dich auf die
             Warteliste setzen lassen. Wir benachrichtigen Dich, wenn Plätze frei
             werden.
@@ -113,21 +113,21 @@
           <email-subscription
             :success-message="subscribeSuccess"
             :news-type="newsType"
-            class="tw-pt-8 lg:tw-pt-4"
+            class="pt-8 lg:pt-4"
           >
             <slot name="subscribeInfo"></slot>
           </email-subscription>
         </template>
       </template>
-      <div v-else class="tw-flex tw-items-center">
+      <div v-else class="flex items-center">
         <svg
-          class="tw-w-5 tw-h-5 tw-mr-3 tw-text-red-800 tw-animate-spin"
+          class="w-5 h-5 mr-3 text-red-800 animate-spin"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
         >
           <circle
-            class="tw-opacity-25"
+            class="opacity-25"
             cx="12"
             cy="12"
             r="10"
@@ -135,7 +135,7 @@
             stroke-width="4"
           ></circle>
           <path
-            class="tw-opacity-75"
+            class="opacity-75"
             fill="currentColor"
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
           ></path>

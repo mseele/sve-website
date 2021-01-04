@@ -12,9 +12,9 @@
       v-if="type === 'textarea'"
       :id="'form-' + name"
       v-model="input"
-      class="tw-text-input"
+      class="text-input"
       :class="{
-        'tw-border-red-600 focus:tw-ring-red-600 focus:tw-ring-opacity-50':
+        'border-red-600 focus:ring-red-600 focus:ring-opacity-50':
           errors.length > 0,
       }"
       type="text"
@@ -27,9 +27,9 @@
       v-else
       :id="'form-' + name"
       v-model="input"
-      class="tw-text-input"
+      class="text-input"
       :class="{
-        'tw-border-red-600 focus:tw-ring-red-600 focus:tw-ring-opacity-50':
+        'border-red-600 focus:ring-red-600 focus:ring-opacity-50':
           errors.length > 0,
       }"
       :type="type"
@@ -37,7 +37,7 @@
       :name="name"
       :autocomplete="autocomplete"
     />
-    <div class="tw-mt-1 tw-text-xs tw-italic tw-text-red-600">
+    <div class="mt-1 text-xs italic text-red-600">
       {{ errors.length > 0 ? errors[0] : '&nbsp;' }}
     </div>
   </ValidationProvider>

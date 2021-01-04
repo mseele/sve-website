@@ -1,34 +1,32 @@
 <template>
   <Layout>
     <page-section id="fussball" title="Teamsport">
-      <div class="tw-pb-1">
+      <div class="pb-1">
         Fußball ist der beliebteste Breitensport in Deutschland. Zu sehr
         günstigen Konditionen bieten wir in unseren verschiedenen Abteilungen
         für Kinder, Jugendliche, Frauen und Männer das passende Angebot rund um
         das beliebte Leder. Gleichzeitig ist Fußball unser Integrationsmotor
         Nummer eins.
       </div>
-      <div class="tw-pb-4">
+      <div class="pb-4">
         Neben dem breiten Fussballangebot gibt es beim SV Eutingen auch die
         Möglichkeit Volleyball zu spielen.
       </div>
-      <div
-        class="tw-grid tw-w-full tw-grid-cols-1 tw-gap-4 lg:tw-grid-cols-3 md:tw-grid-cols-2"
-      >
+      <div class="grid w-full grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-2">
         <a
           v-for="(section, index) of sections"
           :key="index"
           :href="section.to"
-          class="tw-flex tw-items-center tw-p-3 tw-font-medium tw-text-red-800 tw-bg-white tw-rounded tw-w-fill hover:tw-bg-gray-200 tw-on-focus-dark"
+          class="flex items-center p-3 font-medium text-red-800 bg-white rounded w-fill hover:bg-gray-200 on-focus-dark"
         >
           <div
-            class="tw-relative tw-inline-flex tw-items-center tw-justify-center tw-flex-shrink-0 tw-w-5 tw-h-5 tw-text-white tw-bg-red-800 tw-rounded-full"
+            class="relative inline-flex items-center justify-center flex-shrink-0 w-5 h-5 text-white bg-red-800 rounded-full"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
-              class="tw-w-4 tw-h-4"
+              class="w-4 h-4"
             >
               <path
                 fillRule="evenodd"
@@ -37,7 +35,7 @@
               />
             </svg>
           </div>
-          <div class="tw-ml-2 tw-truncate">
+          <div class="ml-2 truncate">
             {{ section.title }}
           </div>
         </a>

@@ -7,7 +7,7 @@
     </template>
     <template #touches>
       <touches
-        class="tw-pt-4"
+        class="pt-4"
         title="Ansprechpartner Johannes Seeger"
         :touches="touches"
       />

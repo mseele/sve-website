@@ -11,24 +11,24 @@
       <g-image src="@/assets/gaststaette/main.jpg" :class="imageClass" />
     </hero-section>
     <page-section id="infos" title="Infos">
-      <div class="tw-pb-2 tw-font-medium">
+      <div class="pb-2 font-medium">
         In unserer Vereinsgaststätte Auszeit Eutingen findest Du die perfekte
         Einkehrmöglichkeit.
       </div>
-      <div class="tw-pb-2">
+      <div class="pb-2">
         Ob Samstags zur Bundesliga, unter der Woche mit Freunden, auf ein Eis an
         heißen Sommertagen auf der Terrasse oder für ein deftiges Essen:<br />
         Schau' bei unseren bewährten Pächtern Andrea und Micha vorbei und erlebe
         gesellige Stunden.
       </div>
-      <div class="tw-pb-2">
+      <div class="pb-2">
         Auch für eine Firmenfeier, Geburtstage und sonstige Anlässe bietet die
         Gaststätte Platz für bis zu 150 Personen.
       </div>
-      <div class="tw-pb-2">
+      <div class="pb-2">
         Weitere Informationen findest Du auf der
         <a
-          class="tw-rounded tw-on-focus-dark"
+          class="rounded on-focus-dark"
           href="https://fb.com/Auszeit-Eutingen-981850018516219"
           target="_blank"
           rel="noreferrer"
@@ -36,15 +36,13 @@
         >
         der Auszeit Eutingen.
       </div>
-      <div
-        class="tw-flex tw-flex-col tw-pt-6 sm:tw-flex-row sm:tw-justify-center"
-      >
+      <div class="flex flex-col pt-6 sm:flex-row sm:justify-center">
         <btn
           v-slot="{ imageClass }"
           href="/downloads/2020/Speisekarte-Auszeit.pdf"
           first-row="UNSERE"
           second-row="Speisekarte"
-          class="tw-w-full sm:tw-w-1/3 xl:tw-w-1/4 2xl:tw-w-1/5"
+          class="w-full sm:w-1/3 xl:w-1/4 2xl:w-1/5"
         >
           <svg
             :class="imageClass"
@@ -62,7 +60,7 @@
           href="/downloads/2020/Eiskarte-Auszeit.pdf"
           first-row="UNSERE"
           second-row="Eiskarte"
-          class="tw-w-full tw-mt-4 sm:tw-w-1/3 xl:tw-w-1/4 2xl:tw-w-1/5 sm:tw-ml-4 sm:tw-mt-0 lg:tw-ml-8 2xl:tw-ml-20"
+          class="w-full mt-4 sm:w-1/3 xl:w-1/4 2xl:w-1/5 sm:ml-4 sm:mt-0 lg:ml-8 2xl:ml-20"
         >
           <svg
             :class="imageClass"
@@ -78,76 +76,68 @@
       </div>
     </page-section>
     <page-section title="Bilder" dark>
-      <div class="tw-flex tw-flex-col lg:tw-flex-row">
+      <div class="flex flex-col lg:flex-row">
         <image-viewer
-          class="tw-w-full lg:tw-mr-3 lg:tw-w-2/3"
+          class="w-full lg:mr-3 lg:w-2/3"
           height="480"
           :images="images"
         />
-        <div
-          class="tw-flex tw-flex-col tw-w-full tw-mt-6 lg:tw-ml-3 lg:tw--mt-15 lg:tw-w-1/3"
-        >
-          <div id="oeffnungszeiten" class="tw-pb-6">
-            <header-title
-              dark
-              class="tw-pb-6 tw-text-3xl tw-font-semibold tw-uppercase"
-            >
+        <div class="flex flex-col w-full mt-6 lg:ml-3 lg:-mt-15 lg:w-1/3">
+          <div id="oeffnungszeiten" class="pb-6">
+            <header-title dark class="pb-6 text-3xl font-semibold uppercase">
               Öffnungszeiten
             </header-title>
             <div
-              class="tw-flex tw-flex-col tw-p-4 tw-bg-white tw-border-2 tw-border-gray-300 tw-rounded"
+              class="flex flex-col p-4 bg-white border-2 border-gray-300 rounded"
             >
               <div
-                class="tw-text-xs tw-font-medium tw-tracking-wide tw-text-gray-500 tw-uppercase"
+                class="text-xs font-medium tracking-wide text-gray-500 uppercase"
               >
                 Dienstag bis Freitag
               </div>
-              <div class="tw-font-medium">16 - 1 Uhr</div>
+              <div class="font-medium">16 - 1 Uhr</div>
               <div
-                class="tw-pt-4 tw-text-xs tw-font-medium tw-tracking-wide tw-text-gray-500 tw-uppercase"
+                class="pt-4 text-xs font-medium tracking-wide text-gray-500 uppercase"
               >
                 Samstag
               </div>
-              <div class="tw-font-medium">14 - 1 Uhr</div>
+              <div class="font-medium">14 - 1 Uhr</div>
               <div
-                class="tw-pt-4 tw-text-xs tw-font-medium tw-tracking-wide tw-text-gray-500 tw-uppercase"
+                class="pt-4 text-xs font-medium tracking-wide text-gray-500 uppercase"
               >
                 Sonntag
               </div>
-              <div class="tw-font-medium">14 - 22 Uhr</div>
+              <div class="font-medium">14 - 22 Uhr</div>
             </div>
           </div>
           <div>
-            <header-title
-              dark
-              class="tw-pb-6 tw-text-3xl tw-font-semibold tw-uppercase"
-            >
+            <header-title dark class="pb-6 text-3xl font-semibold uppercase">
               Kontakt
             </header-title>
             <div
-              class="tw-flex tw-flex-col tw-p-4 tw-bg-white tw-border-2 tw-border-gray-300 tw-rounded"
+              class="flex flex-col p-4 bg-white border-2 border-gray-300 rounded"
             >
               <div
-                class="tw-text-lg tw-font-medium tw-tracking-wide tw-text-gray-500 tw-uppercase"
+                class="text-lg font-medium tracking-wide text-gray-500 uppercase"
               >
                 Auszeit Eutingen
               </div>
-              <div class="tw-pt-4 tw-font-medium">Micha Gruidl</div>
-              <div class="tw-pt-2 tw-font-medium">
+              <div class="pt-4 font-medium">Micha Gruidl</div>
+              <div class="pt-2 font-medium">
                 Marktstr. 84<br />
                 72184 Eutingen im Gäu
               </div>
-              <div class="tw-pt-4 tw-text-center">
+              <div class="pt-4 text-center">
                 <g-link
                   :to="{
                     path: '/kontakt/',
                     query: { auswahl: 'restaurant' },
                   }"
-                  class="tw-inline-flex tw-items-center tw-justify-center tw-col-start-1 tw-col-end-2 tw-px-3 tw-py-1 tw-font-medium tw-text-red-800 tw-rounded-full hover:tw-bg-red-100 hover:tw-bg-opacity-50 active:tw-text-red-900 md:tw-mb-2 lg:tw-mb-0 tw-on-focus"
+                  class="inline-flex items-center justify-center col-start-1 col-end-2 px-3 py-1 font-medium text-red-800 rounded-full hover:bg-red-100 hover:bg-opacity-50 active:text-red-900 md:mb-2 lg:mb-0 on-focus"
                 >
                   Kontakt
                   <svg
-                    class="tw-w-4 tw-h-4 tw-ml-2"
+                    class="w-4 h-4 ml-2"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     stroke-width="3"

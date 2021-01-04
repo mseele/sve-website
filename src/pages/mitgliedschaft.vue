@@ -13,26 +13,24 @@
         uns als Verein, dieses wichtige gesellschaftliche Angebot
         aufrechtzuerhalten und Stück für Stück besser zu werden.
       </div>
-      <div class="tw-flex tw-flex-wrap tw-pt-6">
-        <div class="tw-w-full md:tw-w-1/2 md:tw-pr-2">
-          <header-title dark class="tw-text-xl tw-font-medium">
+      <div class="flex flex-wrap pt-6">
+        <div class="w-full md:w-1/2 md:pr-2">
+          <header-title dark class="text-xl font-medium">
             Mitgliedschaft
           </header-title>
-          <div class="tw-pt-4">
+          <div class="pt-4">
             Du möchtest Mitglied werden?
             <a
-              class="tw-font-medium tw-default-link tw-on-focus-dark"
+              class="font-medium default-link on-focus-dark"
               href="/downloads/2020/Mitgliedsantrag-SVE.pdf"
               target="_blank"
               >Download Mitgliedsantrag</a
             >, fülle ihn aus und sende ihn postialisch an die folgende Adresse.
           </div>
-          <div
-            class="tw-pt-4 tw-text-sm tw-font-bold tw-tracking-wider tw-uppercase"
-          >
+          <div class="pt-4 text-sm font-bold tracking-wider uppercase">
             Adresse
           </div>
-          <div class="tw-pt-2">
+          <div class="pt-2">
             <div>
               SV Eutingen 1947 e.V.<br />
               Marktstr. 84<br />
@@ -40,21 +38,19 @@
             </div>
           </div>
         </div>
-        <div class="tw-w-full tw-pt-6 md:tw-w-1/2 md:tw-pl-2 md:tw-pt-0">
-          <header-title dark class="tw-text-xl tw-font-medium">
+        <div class="w-full pt-6 md:w-1/2 md:pl-2 md:pt-0">
+          <header-title dark class="text-xl font-medium">
             Spenden
           </header-title>
-          <div class="tw-pt-4">
+          <div class="pt-4">
             Mit Deiner Spende kannst Du direkt Gutes tun und förderst damit
             unser sportliches und kulturelles Angebot. Dabei hilft uns jeder
             Betrag!
           </div>
-          <div
-            class="tw-pt-4 tw-text-sm tw-font-bold tw-tracking-wider tw-uppercase"
-          >
+          <div class="pt-4 text-sm font-bold tracking-wider uppercase">
             Kontoverbindung
           </div>
-          <div class="tw-pt-2">
+          <div class="pt-2">
             Sportverein Eutingen<br />
             Volksbank Horb-Freudenstadt eG<br />
             IBAN: DE28 642 910 10 00 344 69 001<br />

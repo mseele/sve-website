@@ -1,6 +1,6 @@
 <template>
   <label
-    class="tw-block tw-mb-2 tw-text-xs tw-font-semibold tw-tracking-wide tw-text-black tw-uppercase"
+    class="block mb-2 text-xs font-semibold tracking-wide text-black uppercase"
     :for="name"
   >
     <slot></slot>

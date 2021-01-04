@@ -1,25 +1,25 @@
 <template>
   <transition
-    enter-active-class="tw-transition tw-duration-300 tw-ease-in-out tw-transform"
-    enter-class="tw-translate-y-full"
-    enter-to-class="tw-translate-y-0"
-    leave-active-class="tw-transition tw-duration-300 tw-ease-in-out tw-transform"
-    leave-class="tw-translate-y-0"
-    leave-to-class="tw-translate-y-full"
+    enter-active-class="transition duration-300 ease-in-out transform"
+    enter-class="translate-y-full"
+    enter-to-class="translate-y-0"
+    leave-active-class="transition duration-300 ease-in-out transform"
+    leave-class="translate-y-0"
+    leave-to-class="translate-y-full"
   >
-    <div v-if="visible" class="tw-fixed tw-bottom-0 tw-z-20 tw-w-full">
-      <div class="tw-p-2 tw-text-center lg:tw-p-4 md:tw-px-10">
+    <div v-if="visible" class="fixed bottom-0 z-20 w-full">
+      <div class="p-2 text-center lg:p-4 md:px-10">
         <div
-          class="tw-inline-flex tw-items-center tw-justify-center tw-p-2 tw-rounded-full tw-shadow lg:tw-max-w-3xl 2xl:tw-max-w-6xl"
+          class="inline-flex items-center justify-center p-2 rounded-full shadow lg:max-w-3xl 2xl:max-w-6xl"
           :class="{
-            'tw-bg-blue-600 tw-text-blue-100': type == 'info',
-            'tw-bg-red-600 tw-text-red-100': type == 'error',
+            'bg-blue-600 text-blue-100': type == 'info',
+            'bg-red-600 text-red-100': type == 'error',
           }"
           role="alert"
           @click="close()"
         >
           <svg
-            class="tw-flex-none tw-w-5 tw-h-5 tw-opacity-50 tw-fill-current sm:tw-w-6 sm:tw-h-6 2xl:tw-w-10 2xl:tw-h-10"
+            class="flex-none w-5 h-5 opacity-50 fill-current sm:w-6 sm:h-6 2xl:w-10 2xl:h-10"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
@@ -37,12 +37,12 @@
             />
           </svg>
           <span
-            class="tw-flex-auto tw-mx-2 tw-text-sm tw-font-medium tw-text-left sm:tw-text-base 2xl:tw-text-2xl"
+            class="flex-auto mx-2 text-sm font-medium text-left sm:text-base 2xl:text-2xl"
           >
             {{ message }}
           </span>
           <svg
-            class="tw-flex-none tw-w-4 tw-h-4 tw-opacity-75 tw-cursor-pointer tw-fill-current hover:tw-opacity-50 sm:tw-h-5 sm:tw-w-5 2xl:tw-h-8 2xl:tw-w-8"
+            class="flex-none w-4 h-4 opacity-75 cursor-pointer fill-current hover:opacity-50 sm:h-5 sm:w-5 2xl:h-8 2xl:w-8"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >

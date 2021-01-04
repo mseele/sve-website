@@ -1,17 +1,17 @@
 <template>
   <ValidationProvider v-slot="{ errors, validate }" rules="privacy" tag="div">
-    <div class="tw-inline-flex">
+    <div class="inline-flex">
       <input
         v-model="privacy"
-        class="tw-mt-0/5 tw-checkbox-input"
+        class="mt-0/5 checkbox-input"
         :class="{
-          'tw-border-red-600 focus:tw-ring-red-600 focus:tw-ring-opacity-50':
+          'border-red-600 focus:ring-red-600 focus:ring-opacity-50':
             errors.length > 0,
         }"
         type="checkbox"
       />
       <div
-        class="tw-pl-2 tw-text-sm tw-font-medium tw-cursor-pointer tw-select-none"
+        class="pl-2 text-sm font-medium cursor-pointer select-none"
         @click="toggle(validate)"
       >
         <slot>
@@ -19,7 +19,7 @@
         </slot>
       </div>
     </div>
-    <div class="tw-text-xs tw-italic tw-text-red-600">
+    <div class="text-xs italic text-red-600">
       {{ errors.length > 0 ? errors[0] : '&nbsp;' }}
     </div>
   </ValidationProvider>

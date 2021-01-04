@@ -6,19 +6,19 @@
       Kontakt aufzunehmen. Wir bearbeiten Dein Anliegen schnellstmöglich.
     </template>
     <template #touches>
-      <header-title dark class="tw-pt-4 tw-text-xl tw-font-medium">
+      <header-title dark class="pt-4 text-xl font-medium">
         Sponsoring
       </header-title>
       <touches
-        class="tw-pt-4"
+        class="pt-4"
         title="Vorsitzender Sebastian Lazar"
         :touches="sponsoring"
       />
-      <header-title dark class="tw-pt-4 tw-text-xl tw-font-medium">
+      <header-title dark class="pt-4 text-xl font-medium">
         Bandenwerbung
       </header-title>
-      <touches class="tw-pt-4" title="Franz Nesch" :touches="bandeFranz" />
-      <touches class="tw-pt-4" title="Thomas Akermann" :touches="bandeThomas" />
+      <touches class="pt-4" title="Franz Nesch" :touches="bandeFranz" />
+      <touches class="pt-4" title="Thomas Akermann" :touches="bandeThomas" />
     </template>
   </contact>
 </template>

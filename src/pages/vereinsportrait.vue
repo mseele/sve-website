@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <page-section title="Der SVE - #mehralseinverein">
-      <ul class="tw-pl-6 tw-list-disc">
+      <ul class="pl-6 list-disc">
         <li>SV Eutingen 1947 e.V.</li>
         <li>unterstützt durch Förderverein des SV Eutingen 1947 e.V.</li>
         <li>
@@ -13,30 +13,26 @@
         </li>
         <li>
           Vorstandschaft:
-          <ul class="tw-pl-6 tw-list-disc">
+          <ul class="pl-6 list-disc">
             <li>
               Sebastian Lazar (<a
-                class="tw-default-link tw-on-focus-dark"
+                class="default-link on-focus-dark"
                 href="mailto:vorstand@sv-eutingen.de"
                 >vorstand@sv-eutingen.de</a
               >
               /
-              <a
-                class="tw-default-link tw-on-focus-dark"
-                href="tel:+4917630774678"
+              <a class="default-link on-focus-dark" href="tel:+4917630774678"
                 >0176-30774678</a
               >) / Dominik Rakoczy / Dietmar Kurbjun
             </li>
             <li>
               Kassier Wolfgang Nesch (<a
-                class="tw-default-link tw-on-focus-dark"
+                class="default-link on-focus-dark"
                 href="mailto:vorstand@sv-eutingen.de"
                 >vorstand@sv-eutingen.de</a
               >
               /
-              <a
-                class="tw-default-link tw-on-focus-dark"
-                href="tel:+491625323142"
+              <a class="default-link on-focus-dark" href="tel:+491625323142"
                 >0162-5323142</a
               >)
             </li>
@@ -52,7 +48,7 @@
         <li>
           Homepage:
           <a
-            class="tw-default-link tw-on-focus-dark"
+            class="default-link on-focus-dark"
             href="https://www.sv-eutingen.de"
             >www.sv-eutingen.de</a
           >
@@ -60,7 +56,7 @@
         <li>
           Mail:
           <a
-            class="tw-default-link tw-on-focus-dark"
+            class="default-link on-focus-dark"
             href="mailto:info@sv-eutingen.de"
             >info@sv-eutingen.de</a
           >
@@ -68,7 +64,7 @@
         <li>
           Informationen zur Aufsichtspflicht:
           <a
-            class="tw-default-link tw-on-focus-dark"
+            class="default-link on-focus-dark"
             href="/downloads/2020/Aufsichtspflicht-SVE.pdf"
             target="_blank"
           >
@@ -76,9 +72,7 @@
           </a>
         </li>
       </ul>
-      <div
-        class="tw-flex tw-flex-col tw-pt-6 md:tw-flex-row md:tw-justify-center"
-      >
+      <div class="flex flex-col pt-6 md:flex-row md:justify-center">
         <btn
           v-slot="{ imageClass }"
           href="/downloads/2020/Vereinssatzung-SVE.pdf"
@@ -101,13 +95,13 @@
       </div>
     </page-section>
     <page-section title="Unser Leitbild" dark>
-      <div class="tw-pb-4 tw-text-xl tw-font-medium">
+      <div class="pb-4 text-xl font-medium">
         SV Eutingen – #mehralseinverein.
       </div>
-      <div class="tw-pb-4 tw-text-xl tw-font-medium">
+      <div class="pb-4 text-xl font-medium">
         Wir stiften gesellschaftliche Teilhabe durch Sport und Begegnung.
       </div>
-      <div class="tw-pb-4 tw-leading-relaxed">
+      <div class="pb-4 leading-relaxed">
         Unser sportliches und kulturelles Angebot ermöglicht gesellschaftliche
         Teilhabe. Bei uns begegnen sich Menschen, schließen Freundschaften,
         erfahren Teilhabe und erleben eine schöne Zeit.<br />
@@ -125,11 +119,11 @@
         Bei uns wird nicht nach Herkunft, Geschlecht oder Alter gefragt, sondern
         nach der gemeinsamen Motivation, etwas auf die Beine zu stellen.<br />
       </div>
-      <div class="tw-pb-4 tw-text-xl tw-font-medium">
+      <div class="pb-4 text-xl font-medium">
         Wertschätzung wird bei uns spürbar.
       </div>
-      <div class="tw-pb-4 tw-leading-relaxed">
-        <ul class="tw-pl-6 tw-space-y-2 tw-list-disc">
+      <div class="pb-4 leading-relaxed">
+        <ul class="pl-6 space-y-2 list-disc">
           <li>
             Für aktive Kinder, Jugendliche, Spielerinnen, Spieler, Trainer- und
             Betreuerteams, die wir am Spielfeldrand anfeuern, mit denen wir
@@ -146,11 +140,11 @@
           </li>
         </ul>
       </div>
-      <div class="tw-pb-4 tw-text-xl tw-font-medium">
+      <div class="pb-4 text-xl font-medium">
         Teamgeist, Fairness, Leistungsbereitschaft und Gesundheitsförderung -
         Grundsätze unseres Sportangebots.
       </div>
-      <div class="tw-pb-4 tw-leading-relaxed">
+      <div class="pb-4 leading-relaxed">
         Unseren Mitgliedern und Kunden bieten wir aktive sportliche
         Betätigung.<br />
         Dadurch stärken sie ihre mentale und körperliche Gesundheit, erleben
@@ -174,7 +168,7 @@
         Für unsere Angebote stellen wir eine sehr gute Infrastruktur zur
         Verfügung. Diese pflegen wir und gehen mit Ressourcen schonend um.
       </div>
-      <div class="tw-text-xl tw-font-medium">#mehralseinverein</div>
+      <div class="text-xl font-medium">#mehralseinverein</div>
     </page-section>
     <page-section id="heimspiel" title="Heimspiel">
       Wie wichtig sind kleine Vereine gegenüber großen? Warum sollte man gerade
@@ -186,15 +180,13 @@
       Ein großer Dank geht an unsere Partner der an.kox GmbH und Oliver Lozano
       von den el Pistolero Studios, die den Film produziert haben.<br />
       Viel Freude beim Anschauen!
-      <div
-        class="tw-flex tw-flex-col tw-pt-6 sm:tw-flex-row sm:tw-justify-center"
-      >
+      <div class="flex flex-col pt-6 sm:flex-row sm:justify-center">
         <btn
           v-slot="{ imageClass }"
           href="https://vimeo.com/359776983"
           first-row="LINK ZUM"
           second-row="Video"
-          class="tw-w-full sm:tw-w-2/5 md:tw-w-1/3 xl:tw-w-1/4 2xl:tw-w-1/5"
+          class="w-full sm:w-2/5 md:w-1/3 xl:w-1/4 2xl:w-1/5"
         >
           <svg
             :class="imageClass"

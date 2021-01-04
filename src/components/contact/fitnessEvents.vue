@@ -6,8 +6,8 @@
       Kontakt aufzunehmen. Wir bearbeiten Dein Anliegen schnellstmöglich.
     </template>
     <template #touches>
-      <touches class="tw-pt-4" title="Fitnessangebot" :touches="fitness" />
-      <touches class="tw-pt-4" title="Eventangebot" :touches="events" />
+      <touches class="pt-4" title="Fitnessangebot" :touches="fitness" />
+      <touches class="pt-4" title="Eventangebot" :touches="events" />
     </template>
   </contact>
 </template>

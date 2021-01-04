@@ -1,15 +1,15 @@
 <template>
-  <div class="tw-flex tw-flex-row">
-    <div class="tw-w-1 tw-h-auto tw-bg-red-800 tw-rounded"></div>
+  <div class="flex flex-row">
+    <div class="w-1 h-auto bg-red-800 rounded"></div>
     <div
-      class="tw-pl-2"
+      class="pl-2"
       :class="[
-        dark ? 'tw-text-gray-900' : 'tw-text-white',
-        shadow ? (dark ? 'tw-text-shadow-light' : 'tw-text-shadow-dark') : '',
-        uppercase ? 'tw-uppercase tw-tracking-widest' : '',
-        truncate && !wrap ? 'tw-truncate' : '',
-        wrap ? '' : 'tw-whitespace-nowrap',
-        truncate && wrap ? 'tw-overflow-ellipsis tw-overflow-hidden' : '',
+        dark ? 'text-gray-900' : 'text-white',
+        shadow ? (dark ? 'text-shadow-light' : 'text-shadow-dark') : '',
+        uppercase ? 'uppercase tracking-widest' : '',
+        truncate && !wrap ? 'truncate' : '',
+        wrap ? '' : 'whitespace-nowrap',
+        truncate && wrap ? 'overflow-ellipsis overflow-hidden' : '',
       ]"
     >
       <slot></slot>

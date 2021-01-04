@@ -1,15 +1,15 @@
 <template>
   <header
-    class="tw-fixed tw-inset-x-0 tw-z-20"
+    class="fixed inset-x-0 z-20"
     :class="[
-      !isTransparent ? 'tw-bg-gray-900' : '',
-      showElevation ? 'tw-shadow-md' : '',
+      !isTransparent ? 'bg-gray-900' : '',
+      showElevation ? 'shadow-md' : '',
     ]"
   >
-    <div class="tw-flex tw-items-center tw-justify-between tw-p-3 tw-mx-auto">
-      <g-link to="/" class="tw-h-6 tw-rounded md:tw-h-8 tw-on-focus-dark">
+    <div class="flex items-center justify-between p-3 mx-auto">
+      <g-link to="/" class="h-6 rounded md:h-8 on-focus-dark">
         <svg
-          class="tw-h-full"
+          class="h-full"
           viewBox="0 0 539.78 634.31"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -128,39 +128,39 @@
           </switch>
         </svg>
       </g-link>
-      <nav class="tw-items-center tw-hidden tw-space-x-5 sm:tw-flex">
+      <nav class="items-center hidden space-x-5 sm:flex">
         <g-link
           v-for="(item, index) in items()"
           :key="index"
           :to="item.to"
-          class="tw-px-3 tw-py-1 tw-text-sm tw-font-semibold tw-tracking-widest tw-uppercase tw-rounded-full tw-cursor-pointer tw-on-focus-dark"
+          class="px-3 py-1 text-sm font-semibold tracking-widest uppercase rounded-full cursor-pointer on-focus-dark"
           :class="[
             !isTransparent || light
-              ? 'tw-text-white hover:tw-text-gray-300'
-              : 'tw-text-gray-900 hover:tw-text-gray-800',
+              ? 'text-white hover:text-gray-300'
+              : 'text-gray-900 hover:text-gray-800',
             isTransparent
               ? light
-                ? 'tw-text-shadow-dark'
-                : 'tw-text-shadow-light'
+                ? 'text-shadow-dark'
+                : 'text-shadow-light'
               : '',
-            !isTransparent ? 'hover:tw-bg-gray-800 hover:tw-bg-opacity-75' : '',
+            !isTransparent ? 'hover:bg-gray-800 hover:bg-opacity-75' : '',
           ]"
-          exact-active-class="tw-text-gray-300 tw-bg-gray-800 tw-bg-opacity-75 tw-shadow-inner"
+          exact-active-class="text-gray-300 bg-gray-800 bg-opacity-75 shadow-inner"
         >
           {{ item.title }}
         </g-link>
       </nav>
       <button
-        class="tw-w-6 tw-h-6 tw-rounded focus:tw-outline-none tw-on-focus-dark"
+        class="w-6 h-6 rounded focus:outline-none on-focus-dark"
         :class="[
           !isTransparent || light
-            ? 'tw-text-white hover:tw-text-gray-300'
-            : 'tw-text-gray-900 hover:tw-text-gray-800',
+            ? 'text-white hover:text-gray-300'
+            : 'text-gray-900 hover:text-gray-800',
         ]"
         @click.stop="drawerClick()"
       >
         <svg
-          class="tw-w-full tw-h-full"
+          class="w-full h-full"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           stroke="currentColor"

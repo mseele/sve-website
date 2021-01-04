@@ -12,10 +12,10 @@
     </page-section>
     <page-section id="details" title="Details" dark>
       <div>
-        <div class="tw-pb-1 tw-font-medium">
+        <div class="pb-1 font-medium">
           Tarife für Sportvereine außerhalb der Gemeinde Eutingen im Gäu:
         </div>
-        <ul class="tw-pl-6 tw-list-disc">
+        <ul class="pl-6 list-disc">
           <li>
             Wintertarif ohne Flutlicht: von Oktober bis März für Spiel und
             Trainingseinheit (90 Minuten) zwischen 10 und 16 Uhr: 110 Euro pro
@@ -32,11 +32,11 @@
           </li>
         </ul>
       </div>
-      <div class="tw-pt-4">
-        <div class="tw-pb-1 tw-font-medium">
+      <div class="pt-4">
+        <div class="pb-1 font-medium">
           Tarife für Sportvereine innerhalb der Gemeinde Eutingen im Gäu:
         </div>
-        <ul class="tw-pl-6 tw-list-disc">
+        <ul class="pl-6 list-disc">
           <li>
             bei Inanspruchnahme der Umkleidekabinen, Sanitärräume und
             Flutlichtanlage pro Spiel oder Trainingseinheit (90 Minuten): 30
@@ -49,15 +49,15 @@
           </li>
         </ul>
       </div>
-      <div class="tw-pt-4">
+      <div class="pt-4">
         Die Platzgebühren sind unmittelbar vor der Nutzung in bar zu entrichten
         und enthalten die gesetzliche Mehrwertsteuer. Eine Quittung wird
         ausgestellt.
       </div>
-      <div class="tw-pt-4">
-        <div class="tw-pb-1 tw-font-medium">Anstoßzeiten:</div>
+      <div class="pt-4">
+        <div class="pb-1 font-medium">Anstoßzeiten:</div>
         <div>
-          <ul class="tw-pl-6 tw-list-disc">
+          <ul class="pl-6 list-disc">
             <li>10:00 Uhr</li>
             <li>12:00 Uhr</li>
             <li>14:00 Uhr</li>
@@ -66,8 +66,8 @@
           </ul>
         </div>
       </div>
-      <div class="tw-pt-4">
-        <div class="tw-pb-1 tw-font-medium">Hinweise:</div>
+      <div class="pt-4">
+        <div class="pb-1 font-medium">Hinweise:</div>
         <div>
           <ul>
             <li>
@@ -109,8 +109,8 @@
           </ul>
         </div>
       </div>
-      <div class="tw-pt-4">
-        <div class="tw-pb-1 tw-font-medium">Achtung</div>
+      <div class="pt-4">
+        <div class="pb-1 font-medium">Achtung</div>
         <span>
           Der SV Eutingen 1947 e.V. hält sich Änderungen oder die kurzfristige
           Absage von Buchungszeiten aufgrund von Witterungsverhältnissen vor.

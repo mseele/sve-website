@@ -1,24 +1,20 @@
 <template>
-  <div
-    class="tw-space-y-3 tw-divide-x-0 tw-divide-y tw-divide-gray-300 tw-divide-solid"
-  >
+  <div class="space-y-3 divide-x-0 divide-y divide-gray-300 divide-solid">
     <div v-for="(item, index) in faqs" :key="index">
       <div
-        class="tw-flex tw-items-center tw-justify-between tw-cursor-pointer"
-        :class="{ 'tw-pt-3': index > 0 }"
+        class="flex items-center justify-between cursor-pointer"
+        :class="{ 'pt-3': index > 0 }"
         @click="toggle(index)"
       >
-        <div class="tw-font-medium">{{ item.question }}</div>
-        <div
-          class="tw-flex tw-items-center tw-pl-2 tw-text-gray-400 tw-stroke-2"
-        >
+        <div class="font-medium">{{ item.question }}</div>
+        <div class="flex items-center pl-2 text-gray-400 stroke-2">
           <svg
             v-if="openItems.indexOf(index) != -1"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            class="tw-w-6 tw-h-6"
+            class="w-6 h-6"
           >
             <path
               strokeLinecap="round"
@@ -33,7 +29,7 @@
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            class="tw-w-6 tw-h-6"
+            class="w-6 h-6"
           >
             <path
               strokeLinecap="round"
@@ -44,7 +40,7 @@
           </svg>
         </div>
       </div>
-      <div v-if="openItems.indexOf(index) != -1" class="tw-pt-1">
+      <div v-if="openItems.indexOf(index) != -1" class="pt-1">
         {{ item.answer }}
       </div>
     </div>

@@ -1,14 +1,12 @@
 <template>
   <Layout>
     <page-section title="Newsletter">
-      <div class="tw-flex tw-flex-col lg:tw-items-center lg:tw-flex-row">
-        <div
-          class="tw-w-full tw-pb-6 tw-place-self-start lg:tw-w-1/2 lg:tw-pb-0 lg:tw-pr-2"
-        >
-          <div class="tw-font-medium lg:tw-text-xl lg:tw-block">
+      <div class="flex flex-col lg:items-center lg:flex-row">
+        <div class="w-full pb-6 place-self-start lg:w-1/2 lg:pb-0 lg:pr-2">
+          <div class="font-medium lg:text-xl lg:block">
             Bleib auf dem Laufenden.
           </div>
-          <div class="tw-pt-2">
+          <div class="pt-2">
             Halte Dich mit unseren Newslettern zu Teamsport, Events und/oder
             Fitness immer auf dem neuesten Stand.<br />
             Keine Sorge: Du wirst keine wöchentlichen Spams von uns erhalten,
@@ -16,45 +14,41 @@
             SVE-Angebot.
           </div>
         </div>
-        <div class="tw-w-full lg:tw-w-1/2 lg:tw-pl-2">
-          <div class="tw-flex tw-flex-col">
+        <div class="w-full lg:w-1/2 lg:pl-2">
+          <div class="flex flex-col">
             <div
-              class="tw-flex tw-mx-auto tw-overflow-hidden tw-border-2 tw-border-red-800 tw-rounded"
+              class="flex mx-auto overflow-hidden border-2 border-red-800 rounded"
             >
               <button
-                class="tw-px-4 tw-py-1 focus:tw-outline-none"
-                :class="{ 'tw-text-white tw-bg-red-800': subscribe }"
+                class="px-4 py-1 focus:outline-none"
+                :class="{ 'text-white bg-red-800': subscribe }"
                 @click="subscribe = true"
               >
                 Anmelden
               </button>
               <button
-                class="tw-px-4 tw-py-1 focus:tw-outline-none"
-                :class="{ 'tw-text-white tw-bg-red-800': !subscribe }"
+                class="px-4 py-1 focus:outline-none"
+                :class="{ 'text-white bg-red-800': !subscribe }"
                 @click="subscribe = false"
               >
                 Abmelden
               </button>
             </div>
-            <div class="tw-flex tw-py-6 tw-mx-auto">
-              <div class="tw-space-y-4">
+            <div class="flex py-6 mx-auto">
+              <div class="space-y-4">
                 <toogle v-model="common">
-                  <span class="tw-font-medium">Allgemein</span>
-                  <span class="tw-text-sm">
-                    (Info's rund um den SV Eutingen)</span
-                  >
+                  <span class="font-medium">Allgemein</span>
+                  <span class="text-sm"> (Info's rund um den SV Eutingen)</span>
                 </toogle>
                 <toogle v-model="fitness">
-                  <span class="tw-font-medium">Fitness</span>
-                  <span class="tw-text-sm">
+                  <span class="font-medium">Fitness</span>
+                  <span class="text-sm">
                     (Alles über unser Fitnessangebot)</span
                   >
                 </toogle>
                 <toogle v-model="events">
-                  <span class="tw-font-medium">Events</span>
-                  <span class="tw-text-sm">
-                    (Neuigkeiten über unsere Events)</span
-                  >
+                  <span class="font-medium">Events</span>
+                  <span class="text-sm"> (Neuigkeiten über unsere Events)</span>
                 </toogle>
               </div>
             </div>

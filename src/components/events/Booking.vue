@@ -1,10 +1,10 @@
 <template>
   <ValidationObserver ref="form" v-slot="{ invalid, handleSubmit }">
-    <form class="tw-w-full" @submit.prevent="handleSubmit(submit)">
-      <div class="tw-flex tw-flex-wrap">
+    <form class="w-full" @submit.prevent="handleSubmit(submit)">
+      <div class="flex flex-wrap">
         <labeled-input
           v-model="firstName"
-          class="tw-w-full tw-pb-2 md:tw-w-1/2 md:tw-pr-2"
+          class="w-full pb-2 md:w-1/2 md:pr-2"
           label="Vorname"
           rules="required"
           name="fname"
@@ -12,7 +12,7 @@
         />
         <labeled-input
           v-model="lastName"
-          class="tw-w-full tw-pb-2 md:tw-w-1/2 md:tw-pl-2"
+          class="w-full pb-2 md:w-1/2 md:pl-2"
           label="Nachname"
           rules="required"
           name="lname"
@@ -20,7 +20,7 @@
         />
         <labeled-input
           v-model="street"
-          class="tw-w-full tw-pb-2 md:tw-w-1/2 md:tw-pr-2"
+          class="w-full pb-2 md:w-1/2 md:pr-2"
           label="Straße &amp; Hausnummer"
           rules="required"
           name="address"
@@ -28,7 +28,7 @@
         />
         <labeled-input
           v-model="city"
-          class="tw-w-full tw-pb-2 md:tw-w-1/2 md:tw-pl-2"
+          class="w-full pb-2 md:w-1/2 md:pl-2"
           label="PLZ &amp; Wohnort"
           rules="required"
           name="zip city"
@@ -36,7 +36,7 @@
         />
         <labeled-input
           v-model="email"
-          class="tw-w-full tw-pb-2 md:tw-w-1/2 md:tw-pr-2"
+          class="w-full pb-2 md:w-1/2 md:pr-2"
           label="Email"
           rules="required|email"
           type="email"
@@ -45,48 +45,48 @@
         />
         <labeled-input
           v-model="phone"
-          class="tw-w-full tw-pb-2 md:tw-w-1/2 md:tw-pl-2"
+          class="w-full pb-2 md:w-1/2 md:pl-2"
           label="Telefon (optional)"
           name="phone"
           autocomplete="phone"
         />
         <labeled-input
           v-model="comments"
-          class="tw-w-full tw-pb-2"
+          class="w-full pb-2"
           label="Kommentar (optional)"
           type="textarea"
         />
-        <div class="tw-inline-flex tw-w-full tw-pb-4 md:tw-w-1/2 md:tw-pr-2">
+        <div class="inline-flex w-full pb-4 md:w-1/2 md:pr-2">
           <input
             v-model="member"
-            class="tw-mt-0/5 tw-checkbox-input"
+            class="mt-0/5 checkbox-input"
             type="checkbox"
           />
           <span
-            class="tw-pl-2 tw-text-sm tw-font-medium tw-cursor-pointer tw-select-none"
+            class="pl-2 text-sm font-medium cursor-pointer select-none"
             @click="member = !member"
           >
             Ich bin Mitglied beim SV Eutingen
           </span>
         </div>
-        <div class="tw-inline-flex tw-w-full tw-pb-4 md:tw-w-1/2 md:tw-pl-2">
+        <div class="inline-flex w-full pb-4 md:w-1/2 md:pl-2">
           <input
             v-model="updates"
-            class="tw-mt-0/5 tw-checkbox-input"
+            class="mt-0/5 checkbox-input"
             type="checkbox"
           />
           <span
-            class="tw-pl-2 tw-text-sm tw-font-medium tw-cursor-pointer tw-select-none"
+            class="pl-2 text-sm font-medium cursor-pointer select-none"
             @click="updates = !updates"
           >
             {{ labelUpdates }}
           </span>
         </div>
-        <privacy-checkbox v-model="privacy" class="tw-w-full tw-pb-2" />
+        <privacy-checkbox v-model="privacy" class="w-full pb-2" />
       </div>
-      <div class="tw-flex tw-justify-center">
+      <div class="flex justify-center">
         <btn
-          class="tw-w-full md:tw-w-80"
+          class="w-full md:w-80"
           :disabled="invalid"
           :loading="submitLoading"
           type="submit"

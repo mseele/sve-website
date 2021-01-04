@@ -1,15 +1,15 @@
 <template>
   <div
     v-if="visible"
-    class="tw-fixed tw-inset-0 tw-z-40 tw-w-full tw-h-full tw-overflow-hidden tw-bg-black"
+    class="fixed inset-0 z-40 w-full h-full overflow-hidden bg-black"
   >
     <img
       v-if="images.length == 1"
       :src="require('@/assets/' + images[0].src)"
-      class="tw-object-contain tw-w-screen tw-h-screen"
+      class="object-contain w-screen h-screen"
     />
-    <div v-else ref="carousel" class="tw-h-full glide">
-      <div class="tw-h-full glide__track" data-glide-el="track">
+    <div v-else ref="carousel" class="h-full glide">
+      <div class="h-full glide__track" data-glide-el="track">
         <ul class="glide__slides">
           <li
             v-for="(image, index) in images"
@@ -18,7 +18,7 @@
           >
             <img
               :src="require('@/assets/' + images[index].src)"
-              class="tw-object-contain tw-w-screen tw-h-screen"
+              class="object-contain w-screen h-screen"
             />
           </li>
         </ul>
@@ -33,14 +33,14 @@
       </div>
       <div class="glide__arrows" data-glide-el="controls">
         <div
-          class="tw-absolute tw-left-0 tw-z-10 tw-inline-flex tw-w-8 tw-h-8 tw-ml-5 tw--mt-4 tw-bg-black tw-rounded-full tw-opacity-20 focus:tw-outline-none tw-top-1/2"
+          class="absolute left-0 z-10 inline-flex w-8 h-8 ml-5 -mt-4 bg-black rounded-full opacity-20 focus:outline-none top-1/2"
         />
         <button
-          class="tw-absolute tw-left-0 tw-z-10 tw-inline-flex tw-ml-5 tw--mt-4 tw-text-white tw-rounded-full hover:tw-text-gray-300 focus:tw-outline-none tw-top-1/2"
+          class="absolute left-0 z-10 inline-flex ml-5 -mt-4 text-white rounded-full hover:text-gray-300 focus:outline-none top-1/2"
           data-glide-dir="<"
         >
           <svg
-            class="tw-w-8 tw-h-8"
+            class="w-8 h-8"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -55,14 +55,14 @@
           </svg>
         </button>
         <div
-          class="tw-absolute tw-right-0 tw-z-10 tw-inline-flex tw-w-8 tw-h-8 tw-mr-5 tw--mt-4 tw-bg-black tw-rounded-full tw-opacity-20 focus:tw-outline-none tw-top-1/2"
+          class="absolute right-0 z-10 inline-flex w-8 h-8 mr-5 -mt-4 bg-black rounded-full opacity-20 focus:outline-none top-1/2"
         />
         <button
-          class="tw-absolute tw-right-0 tw-z-10 tw-inline-flex tw-mr-5 tw--mt-4 tw-text-white tw-rounded-full hover:tw-text-gray-300 focus:tw-outline-none tw-top-1/2"
+          class="absolute right-0 z-10 inline-flex mr-5 -mt-4 text-white rounded-full hover:text-gray-300 focus:outline-none top-1/2"
           data-glide-dir=">"
         >
           <svg
-            class="tw-w-8 tw-h-8"
+            class="w-8 h-8"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -78,13 +78,13 @@
         </button>
       </div>
     </div>
-    <div class="tw-absolute tw-z-50 tw-top-5 tw-right-5">
+    <div class="absolute z-50 top-5 right-5">
       <button
-        class="tw-text-white tw-rounded hover:tw-text-gray-300 focus:tw-outline-none"
+        class="text-white rounded hover:text-gray-300 focus:outline-none"
         @click="visible = false"
       >
         <svg
-          class="tw-w-6 tw-h-6"
+          class="w-6 h-6"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"

@@ -1,28 +1,28 @@
 <template>
-  <div class="tw-flex tw-flex-col">
+  <div class="flex flex-col">
     <ValidationProvider
       v-slot="{ errors }"
       rules="required|email"
-      class="tw-flex tw-flex-col lg:tw-flex-row lg:tw-items-center"
+      class="flex flex-col lg:flex-row lg:items-center"
       tag="div"
     >
       <input
         v-model="email"
         type="email"
-        class="tw-text-input"
+        class="text-input"
         placeholder="E-Mail Adresse"
       />
       <btn
-        class="tw-mt-2 lg:tw-mt-0 lg:tw-ml-2"
+        class="mt-2 lg:mt-0 lg:ml-2"
         :loading="loading"
         @click="onClick(errors)"
       >
         {{ isSubscription() ? 'Infos erhalten' : 'Abmelden' }}
       </btn>
     </ValidationProvider>
-    <div class="tw-pt-2 tw-text-sm tw-text-gray-800">
+    <div class="pt-2 text-sm text-gray-800">
       Wir nehmen Datenschutz sehr ernst. Informiere dich in unserer
-      <a class="tw-text-black tw-rounded tw-on-focus-dark" href="/datenschutz"
+      <a class="text-black rounded on-focus-dark" href="/datenschutz"
         >Datenschutzerklärung</a
       >.
     </div>

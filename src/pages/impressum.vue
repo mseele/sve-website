@@ -1,36 +1,32 @@
 <template>
   <Layout>
-    <page-section class="tw-break-words" title="Impressum">
-      <div class="tw-pb-4 tw-text-2xl tw-font-medium">Diensteanbieter</div>
-      <div class="tw-pb-8 tw-space-y-2">
+    <page-section class="break-words" title="Impressum">
+      <div class="pb-4 text-2xl font-medium">Diensteanbieter</div>
+      <div class="pb-8 space-y-2">
         <div>SV Eutingen 1947 e.V.</div>
         <div>Marktstraße 84</div>
         <div>72184 Eutingen im Gäu</div>
       </div>
-      <div class="tw-pb-4 tw-text-2xl tw-font-medium">Kontaktmöglichkeiten</div>
-      <div class="tw-pb-8 tw-space-y-2">
+      <div class="pb-4 text-2xl font-medium">Kontaktmöglichkeiten</div>
+      <div class="pb-8 space-y-2">
         <div><strong>E-Mail-Adresse</strong>: info@sv-eutingen.de</div>
         <div><strong>Telefon</strong>: +49 (0)7459 12 04</div>
         <div><strong>Fax</strong>: -</div>
       </div>
-      <div class="tw-pb-4 tw-text-2xl tw-font-medium">
-        Vertretungsberechtigte
-      </div>
-      <div class="tw-pb-8">
+      <div class="pb-4 text-2xl font-medium">Vertretungsberechtigte</div>
+      <div class="pb-8">
         <strong>Vertretungsberechtigt</strong>: Sebastian Lazar (1. Vorstand)
       </div>
-      <div class="tw-pb-4 tw-text-2xl tw-font-medium">
-        Register und Registernummer
-      </div>
-      <div class="tw-pb-8 tw-space-y-2">
+      <div class="pb-4 text-2xl font-medium">Register und Registernummer</div>
+      <div class="pb-8 space-y-2">
         <div>Vereinsregister</div>
         <div><strong>Geführt bei</strong>: Vereinsregister Stuttgart</div>
         <div><strong>Nummer</strong>: VR 440031</div>
       </div>
-      <div class="tw-pb-4 tw-text-2xl tw-font-medium">
+      <div class="pb-4 text-2xl font-medium">
         Social Media und andere Onlinepräsenzen
       </div>
-      <div class="tw-pb-8 tw-space-y-2">
+      <div class="pb-8 space-y-2">
         <div>
           <strong
             >Dieses Impressum gilt auch für die folgenden Social-Media-Präsenzen
@@ -39,7 +35,7 @@
         </div>
         <div>
           <a
-            class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
+            class="default-link on-focus focus-visible:ring-offset-2"
             href="https://facebook.com/sveutingen"
             target="_blank"
             rel="noreferrer"
@@ -48,7 +44,7 @@
         </div>
         <div>
           <a
-            class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
+            class="default-link on-focus focus-visible:ring-offset-2"
             href="https://www.youtube.com/channel/UC6QXvcCp9CpHl4az3idhkYQ"
             target="_blank"
             rel="noreferrer"
@@ -57,10 +53,10 @@
           </a>
         </div>
       </div>
-      <div class="tw-pb-4 tw-text-2xl tw-font-medium">
+      <div class="pb-4 text-2xl font-medium">
         Haftungs- und Urheberrechtshinweise
       </div>
-      <div class="tw-pb-8">
+      <div class="pb-8">
         <strong>Links auf fremde Webseiten</strong>: Inhalte fremder Webseiten,
         auf die wir direkt oder indirekt verweisen, liegen außerhalb unseres
         Verantwortungsbereiches und machen wir uns nicht zu Eigen. Für alle
@@ -69,7 +65,7 @@
         der Anbieter der verlinkten Webseiten.
       </div>
       <a
-        class="tw-text-gray-600 tw-underline tw-on-focus focus-visible:tw-ring-offset-2"
+        class="text-gray-600 underline on-focus focus-visible:ring-offset-2"
         href="https://datenschutz-generator.de/?l=de"
         title="Rechtstext von Dr. Schwenke - für weitere Informationen bitte anklicken."
         target="_blank"

@@ -23,7 +23,7 @@
       Equipment Werbung machen. Hast auch Du Interesse an einer Partnerschaft?
       Dann wende Dich bitte über das
       <g-link
-        class="tw-rounded tw-on-focus-dark"
+        class="rounded on-focus-dark"
         :to="{
           path: '/kontakt/',
           query: { auswahl: 'sponsoring', thema: 'sponsoring' },
@@ -41,7 +41,7 @@
       <br />
       Bei Interesse stehen Dir über das
       <g-link
-        class="tw-rounded tw-on-focus-dark"
+        class="rounded on-focus-dark"
         :to="{
           path: '/kontakt/',
           query: { auswahl: 'sponsoring', thema: 'bande' },
@@ -49,16 +49,14 @@
         >Kontaktformular</g-link
       >
       Franz Nesch und Thomas Akermann gerne zur Verfügung.
-      <div
-        class="tw-flex tw-flex-col tw-pt-6 sm:tw-flex-row sm:tw-justify-center"
-      >
+      <div class="flex flex-col pt-6 sm:flex-row sm:justify-center">
         <btn
           v-slot="{ imageClass }"
           href="/downloads/2020/Vertrag-Bandenwerbung.pdf"
           first-row="VERTRAG"
           second-row="Bandenwerbung"
           dark
-          class="tw-w-full sm:tw-w-2/5 xl:tw-w-1/4 2xl:tw-w-1/5"
+          class="w-full sm:w-2/5 xl:w-1/4 2xl:w-1/5"
         >
           <svg
             :class="imageClass"
@@ -79,7 +77,7 @@
           first-row="PREISE"
           second-row="Bandenwerbung"
           dark
-          class="tw-w-full tw-mt-4 sm:tw-w-2/5 xl:tw-w-1/4 2xl:tw-w-1/5 sm:tw-ml-4 sm:tw-mt-0 lg:tw-ml-8 2xl:tw-ml-20"
+          class="w-full mt-4 sm:w-2/5 xl:w-1/4 2xl:w-1/5 sm:ml-4 sm:mt-0 lg:ml-8 2xl:ml-20"
         >
           <svg
             :class="imageClass"
@@ -97,7 +95,7 @@
       </div>
     </page-section>
     <page-section id="partner" title="Unsere Partner">
-      <div class="tw--mb-2">
+      <div class="-mb-2">
         Mit diesen langjährigen Partnern leben wir Zusammenarbeit. Durch ihre
         materielle und finanzielle Unterstützung ermöglichen sie unser
         ehrenamtliches Angebot und machen auf ihre Produkte und Dienstleistungen
@@ -108,27 +106,27 @@
       <div
         v-for="(key, groupIndex) in Object.keys(sponsors)"
         :key="groupIndex"
-        class="tw-pt-8"
+        class="pt-8"
       >
-        <header-title dark class="tw-text-xl tw-font-medium">
+        <header-title dark class="text-xl font-medium">
           {{ key }}
         </header-title>
-        <div class="tw-flex tw-flex-wrap lg:tw--ml-4">
+        <div class="flex flex-wrap lg:-ml-4">
           <div
             v-for="(item, index) of sponsors[key]"
             :key="index"
-            class="tw-w-full tw-pt-4 lg:tw-pl-4 lg:tw-w-1/2"
+            class="w-full pt-4 lg:pl-4 lg:w-1/2"
           >
             <component
               :is="item.url ? 'a' : 'div'"
               :href="item.url"
               target="_blank"
               rel="noopener"
-              class="tw-flex tw-items-center tw-h-full tw-p-4 tw-text-black tw-bg-white tw-rounded tw-on-focus-dark"
-              :class="{ 'hover:tw-bg-gray-200': item.url }"
+              class="flex items-center h-full p-4 text-black bg-white rounded on-focus-dark"
+              :class="{ 'hover:bg-gray-200': item.url }"
             >
               <svg
-                class="tw-flex-shrink-0 tw-w-6 tw-h-6 tw-mr-4 tw-text-red-800"
+                class="flex-shrink-0 w-6 h-6 mr-4 text-red-800"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -139,7 +137,7 @@
                   clip-rule="evenodd"
                 />
               </svg>
-              <span class="tw-font-medium tw-title-font">{{ item.name }}</span>
+              <span class="font-medium title-font">{{ item.name }}</span>
             </component>
           </div>
         </div>

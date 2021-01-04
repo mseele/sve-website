@@ -1,20 +1,16 @@
 <template>
   <Layout>
     <page-section title="Kontakt">
-      <div class="tw-pb-4">
+      <div class="pb-4">
         Über dieses Kontaktformular leiten wir Dich direkt an die richtige
         Person in unserem Verein und geben unser Bestes, um Dein Anliegen
         schnellstmöglich zu bearbeiten. Bitte wähle die passende Kategorie zu
         deinem Anliegen über das Auswahlfeld aus. Wir freuen uns von Dir zu
         hören.
       </div>
-      <div class="tw-w-full">
+      <div class="w-full">
         <input-label name="category">Ich möchte</input-label>
-        <select
-          id="category"
-          v-model="category"
-          class="tw-w-full tw-text-input"
-        >
+        <select id="category" v-model="category" class="w-full text-input">
           <option disabled selected value>...</option>
           <option
             v-for="(item, index) in categories"
@@ -25,7 +21,7 @@
           </option>
         </select>
       </div>
-      <div v-if="category" class="tw-pt-4">
+      <div v-if="category" class="pt-4">
         <component :is="category" />
       </div>
     </page-section>

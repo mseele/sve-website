@@ -1,18 +1,15 @@
 <template>
-  <div
-    class="tw-flex tw-items-center tw-cursor-pointer"
-    @click="toggle = !toggle"
-  >
+  <div class="flex items-center cursor-pointer" @click="toggle = !toggle">
     <div
-      class="tw-flex tw-items-center tw-w-8 tw-h-5 tw-p-1 tw-duration-300 tw-ease-in-out tw-bg-gray-300 tw-rounded-full"
-      :class="{ 'tw-bg-red-800': toggle }"
+      class="flex items-center w-8 h-5 p-1 duration-300 ease-in-out bg-gray-300 rounded-full"
+      :class="{ 'bg-red-800': toggle }"
     >
       <div
-        class="tw-w-4 tw-h-4 tw-duration-300 tw-ease-in-out tw-transform tw-bg-white tw-rounded-full tw-shadow-md"
-        :class="{ 'tw-translate-x-2': toggle }"
+        class="w-4 h-4 duration-300 ease-in-out transform bg-white rounded-full shadow-md"
+        :class="{ 'translate-x-2': toggle }"
       ></div>
     </div>
-    <div class="tw-pl-2"><slot></slot></div>
+    <div class="pl-2"><slot></slot></div>
   </div>
 </template>
 

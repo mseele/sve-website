@@ -1,18 +1,18 @@
 <template>
   <page-section :title="titlePrefix + ' Buchung'">
-    <div class="tw-flex tw-items-center tw-justify-center tw-h-full">
+    <div class="flex items-center justify-center h-full">
       <div
         v-if="success == null && error == null"
-        class="tw-flex tw-flex-col tw-items-center tw-my-10 2xl:tw-my-20"
+        class="flex flex-col items-center my-10 2xl:my-20"
       >
         <svg
-          class="tw-self-center tw-w-10 tw-h-10 tw-text-red-800 2xl:tw-w-16 2xl:tw-h-16 tw-justify-self-center tw-animate-spin"
+          class="self-center w-10 h-10 text-red-800 2xl:w-16 2xl:h-16 justify-self-center animate-spin"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
         >
           <circle
-            class="tw-opacity-25"
+            class="opacity-25"
             cx="12"
             cy="12"
             r="10"
@@ -20,19 +20,19 @@
             stroke-width="4"
           ></circle>
           <path
-            class="tw-opacity-75"
+            class="opacity-75"
             fill="currentColor"
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
           ></path>
         </svg>
-        <div class="tw-pt-4 tw-text-gray-600 2xl:tw-pt-8 2xl:tw-text-2xl">
+        <div class="pt-4 text-gray-600 2xl:pt-8 2xl:text-2xl">
           Die Buchung wird durchgeführt, bitte warten.
         </div>
       </div>
-      <div v-else class="tw-flex tw-flex-col tw-items-center tw-w-full">
+      <div v-else class="flex flex-col items-center w-full">
         <svg
           v-if="success != null"
-          class="tw-w-36 tw-h-36 2xl:tw-w-48 2xl:tw-h-48"
+          class="w-36 h-36 2xl:w-48 2xl:h-48"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 864 716.5"
         >
@@ -75,7 +75,7 @@
         </svg>
         <svg
           v-if="error != null"
-          class="tw-w-36 tw-h-36 2xl:tw-w-48 2xl:tw-h-48"
+          class="w-36 h-36 2xl:w-48 2xl:h-48"
           xmlns="http://www.w3.org/2000/svg"
           data-name="Layer 1"
           viewBox="0 0 864 716.6"
@@ -122,12 +122,12 @@
           </g>
         </svg>
         <div
-          class="tw-pb-6 tw-text-lg tw-text-center tw-text-gray-700 xl:tw-text-xl xl:tw-pb-8 2xl:tw-pb-10 2xl:tw-text-3xl"
+          class="pb-6 text-lg text-center text-gray-700 xl:text-xl xl:pb-8 2xl:pb-10 2xl:text-3xl"
         >
           {{ success != null ? success : error }}
         </div>
         <btn
-          class="tw-w-full sm:tw-mx-auto sm:tw-w-1/2 lg:tw-w-1/3 xl:tw-w-1/4 2xl:tw-w-1/5"
+          class="w-full sm:mx-auto sm:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5"
           @click="goBack()"
         >
           Zurück

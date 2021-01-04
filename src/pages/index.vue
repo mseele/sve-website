@@ -11,15 +11,15 @@
       <g-image src="@/assets/home/main.jpg" :class="imageClass" />
     </hero-section>
     <page-section id="aktuelles" title="Aktuelles">
-      <div class="tw-space-y-4">
+      <div class="space-y-4">
         <div
           v-for="edge in $page.news.edges"
           :key="edge.node.id"
-          class="tw-p-4 tw-bg-white tw-border-2 tw-border-gray-300 tw-rounded"
+          class="p-4 bg-white border-2 border-gray-300 rounded"
         >
-          <div class="tw-flex tw-flex-row tw-items-center tw-pb-4">
+          <div class="flex flex-row items-center pb-4">
             <svg
-              class="tw-flex-none tw-w-5 tw-h-5 tw-text-red-800 tw-fill-current"
+              class="flex-none w-5 h-5 text-red-800 fill-current"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -30,52 +30,48 @@
                 clip-rule="evenodd"
               />
             </svg>
-            <div class="tw-pl-2 tw-text-xl tw-font-semibold">
+            <div class="pl-2 text-xl font-semibold">
               {{ edge.node.title }}
             </div>
           </div>
           <!-- eslint-disable-next-line prettier/prettier | eslint-disable-next-line vue/no-v-html -->
-          <div class="tw-text-gray-700 " v-html="edge.node.text"/>
+          <div class="text-gray-700 " v-html="edge.node.text"/>
         </div>
       </div>
     </page-section>
     <page-section id="mach-mit" dark title="Mach mit">
-      <div class="tw-font-medium">
+      <div class="font-medium">
         Du suchst Teamsport oder Fitness-Angebote? Du hast Lust auf Ehrenamt?
         Oder suchst eine starke Sponsoringpartnerschaft für Dein Unternehmen?
       </div>
-      <div class="tw-pt-2 tw-pb-4">
+      <div class="pt-2 pb-4">
         Bei uns bist Du richtig. Denn wir entfalten Talente, ermöglichen
         Mannschafts- und Gesundheitssport, stiften Gemeinschaft und leben
         Partnerschaften.
       </div>
-      <div class="tw-flex tw-flex-wrap tw--m-2">
+      <div class="flex flex-wrap -m-2">
         <div
           v-for="edge in $page.joins.edges"
           :key="edge.node.id"
-          class="tw-w-full tw-p-2 lg:tw-w-1/2"
+          class="w-full p-2 lg:w-1/2"
         >
           <g-link
             :to="edge.node.link"
-            class="tw-flex tw-flex-col tw-h-full tw-overflow-hidden tw-bg-white tw-border-2 tw-border-gray-300 tw-rounded hover:tw-shadow-sm tw-group focus:tw-outline-none focus-visible:tw-ring-2 focus:tw-ring-red-600 focus:tw-ring-opacity-50"
+            class="flex flex-col h-full overflow-hidden bg-white border-2 border-gray-300 rounded hover:shadow-sm group focus:outline-none focus-visible:ring-2 focus:ring-red-600 focus:ring-opacity-50"
           >
-            <div
-              class="tw-relative tw-overflow-hidden tw-pb-3/5 sm:tw-pb-1/2 md:tw-pb-2/5"
-            >
+            <div class="relative overflow-hidden pb-3/5 sm:pb-1/2 md:pb-2/5">
               <g-image
                 :src="edge.node.image"
-                class="tw-absolute tw-object-cover tw-w-full tw-h-full tw-transition tw-duration-500 tw-ease-in-out group-hover:tw-transform-gpu group-hover:tw-scale-110"
+                class="absolute object-cover w-full h-full transition duration-500 ease-in-out group-hover:transform-gpu group-hover:scale-110"
               />
             </div>
-            <div class="tw-flex tw-flex-col tw-flex-grow tw-p-4">
+            <div class="flex flex-col flex-grow p-4">
               <div
-                class="tw-mb-3 tw-text-lg tw-font-medium tw-text-gray-800 group-hover:tw-text-black"
+                class="mb-3 text-lg font-medium text-gray-800 group-hover:text-black"
               >
                 {{ edge.node.title }}
               </div>
-              <p
-                class="tw-flex-grow tw-text-gray-700 group-hover:tw-text-gray-900"
-              >
+              <p class="flex-grow text-gray-700 group-hover:text-gray-900">
                 {{ edge.node.text }}
               </p>
             </div>

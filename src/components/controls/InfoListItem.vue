@@ -1,13 +1,13 @@
 <template>
-  <li class="tw-flex">
+  <li class="flex">
     <div
-      class="tw-relative tw-inline-flex tw-items-center tw-justify-center tw-flex-shrink-0 tw-w-4 tw-h-4 tw-mt-1 tw-mr-3 tw-text-white tw-bg-gray-400 tw-rounded-full"
+      class="relative inline-flex items-center justify-center flex-shrink-0 w-4 h-4 mt-1 mr-3 text-white bg-gray-400 rounded-full"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
-        class="tw-w-3 tw-h-3"
+        class="w-3 h-3"
       >
         <path
           fillRule="evenodd"

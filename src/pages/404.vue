@@ -2,13 +2,13 @@
   <Layout>
     <page-section title="404">
       <div
-        class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-flex-grow tw-m-6 tw-text-center"
+        class="flex flex-col items-center justify-center flex-grow m-6 text-center"
       >
-        <div class="tw-text-3xl tw-text-red-800 sm:tw-text-4xl 2l:tw-text-6xl">
+        <div class="text-3xl text-red-800 sm:text-4xl 2l:text-6xl">
           Ups, falsch abgebogen
         </div>
         <svg
-          class="tw-w-36 tw-h-36 2xl:tw-w-48 2xl:tw-h-48"
+          class="w-36 h-36 2xl:w-48 2xl:h-48"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 864 716.5"
         >
@@ -53,12 +53,12 @@
           </g>
         </svg>
         <div
-          class="tw-pb-6 tw-text-lg tw-text-gray-500 lg:tw-text-xl 2xl:tw-pb-12 2xl:tw-text-2xl"
+          class="pb-6 text-lg text-gray-500 lg:text-xl 2xl:pb-12 2xl:text-2xl"
         >
           Die gewünschte Seite wurde leider nicht gefunden.
         </div>
         <btn
-          class="tw-w-full sm:tw-mx-auto sm:tw-w-1/2"
+          class="w-full sm:mx-auto sm:w-1/2"
           @click="$router.push({ path: '/' })"
           >Zurück zur Startseite</btn
         >

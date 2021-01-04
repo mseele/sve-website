@@ -1,13 +1,9 @@
 <template>
   <ValidationObserver ref="form" v-slot="{ invalid, handleSubmit }" tag="div">
-    <form class="tw-w-full" @submit.prevent="handleSubmit(submit)">
-      <div v-if="toItems && toItems.length > 1" class="tw-w-full tw-pb-2">
+    <form class="w-full" @submit.prevent="handleSubmit(submit)">
+      <div v-if="toItems && toItems.length > 1" class="w-full pb-2">
         <input-label name="to">{{ toLabel }}</input-label>
-        <select
-          id="to"
-          v-model="toSelection"
-          class="tw-w-full tw-mb-4 tw-text-input"
-        >
+        <select id="to" v-model="toSelection" class="w-full mb-4 text-input">
           <option
             v-for="(item, index) in toItems"
             :key="index"
@@ -19,7 +15,7 @@
       </div>
       <labeled-input
         v-model="name"
-        class="tw-w-full tw-pb-2"
+        class="w-full pb-2"
         label="Vor- und Nachname"
         rules="required"
         name="fname"
@@ -27,7 +23,7 @@
       />
       <labeled-input
         v-model="email"
-        class="tw-w-full tw-pb-2"
+        class="w-full pb-2"
         label="Email"
         rules="required|email"
         type="email"
@@ -36,22 +32,22 @@
       />
       <labeled-input
         v-model="phone"
-        class="tw-w-full tw-pb-2"
+        class="w-full pb-2"
         label="Telefon (optional)"
         name="phone"
         autocomplete="phone"
       />
       <labeled-input
         v-model="message"
-        class="tw-w-full tw-pb-2"
+        class="w-full pb-2"
         label="Nachricht"
         rules="required"
         type="textarea"
         name="message"
       />
-      <privacy-checkbox v-model="privacy" class="tw-w-full tw-pb-2" />
+      <privacy-checkbox v-model="privacy" class="w-full pb-2" />
       <btn
-        class="tw-w-full"
+        class="w-full"
         :disabled="invalid"
         :loading="submitLoading"
         type="submit"

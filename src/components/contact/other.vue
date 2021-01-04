@@ -6,7 +6,7 @@
       schnellstmöglich.
     </template>
     <template #touches>
-      <touches class="tw-pt-4" :touches="touches" />
+      <touches class="pt-4" :touches="touches" />
     </template>
   </contact>
 </template>

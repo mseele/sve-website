@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <page-section title="Termine">
-      <div class="tw-pb-6">
+      <div class="pb-6">
         Hier findest Du unsere wichtigsten Vereinstermine mit unterschiedlichen
         Veranstaltungen und Events. Details erfährst Du durch einen Klick auf
         den Termin.<br />
@@ -11,38 +11,36 @@
       </div>
       <div
         v-if="$page.appointments.edges.length > 0"
-        class="tw-w-full tw-h-full tw-mx-auto"
+        class="w-full h-full mx-auto"
       >
-        <div class="tw-relative tw-h-full tw-overflow-hidden tw-wrap">
+        <div class="relative h-full overflow-hidden wrap">
           <div
-            class="tw-absolute tw-h-full tw-border tw-border-gray-700 tw-border-opacity-25 tw-left-1/2"
+            class="absolute h-full border border-gray-700 border-opacity-25 left-1/2"
           />
           <div
             v-for="(edge, index) in $page.appointments.edges"
             :key="index"
-            class="tw-flex tw-justify-between tw-w-full"
-            :class="{ 'tw-mt-8': index > 0 }"
+            class="flex justify-between w-full"
+            :class="{ 'mt-8': index > 0 }"
           >
-            <div class="tw-order-1 tw-w-5/12">
+            <div class="order-1 w-5/12">
               <div
-                class="tw-pb-1 tw-font-medium tw-text-right tw-text-gray-900 md:tw-text-lg lg:tw-text-xl 2xl:tw-text-2xl"
+                class="pb-1 font-medium text-right text-gray-900 md:text-lg lg:text-xl 2xl:text-2xl"
               >
                 {{ edge.node.date }}
               </div>
               <div
-                class="tw-text-sm tw-font-medium tw-text-right tw-text-gray-500 lg:tw-text-base 2xl:tw-text-lg"
+                class="text-sm font-medium text-right text-gray-500 lg:text-base 2xl:text-lg"
               >
                 {{ edge.node.time }}
               </div>
             </div>
             <div
-              class="tw-z-10 tw-flex tw-items-center tw-self-center tw-flex-none tw-order-1 tw-w-6 tw-h-6 tw-bg-red-800 tw-border-white tw-rounded-full tw-shadow tw-border-3"
+              class="z-10 flex items-center self-center flex-none order-1 w-6 h-6 bg-red-800 border-white rounded-full shadow border-3"
             >
-              <div
-                class="tw-mx-auto tw-text-lg tw-font-semibold tw-text-white"
-              ></div>
+              <div class="mx-auto text-lg font-semibold text-white"></div>
             </div>
-            <div class="tw-order-1 tw-w-5/12">
+            <div class="order-1 w-5/12">
               <component
                 :is="edge.node.link ? 'a' : 'div'"
                 :href="edge.node.link"
@@ -50,13 +48,13 @@
                 rel="noreferrer"
               >
                 <div
-                  class="tw-pb-1 tw-font-medium tw-text-gray-900 md:tw-text-lg lg:tw-text-xl 2xl:tw-text-2xl"
+                  class="pb-1 font-medium text-gray-900 md:text-lg lg:text-xl 2xl:text-2xl"
                 >
                   {{ edge.node.title }}
                 </div>
                 <div
                   v-if="edge.node.description"
-                  class="tw-text-sm tw-text-gray-700 md:tw-text-base lg:tw-text-lg 2xl:tw-text-xl"
+                  class="text-sm text-gray-700 md:text-base lg:text-lg 2xl:text-xl"
                 >
                   {{ edge.node.description }}
                 </div>
@@ -65,9 +63,9 @@
           </div>
         </div>
       </div>
-      <div v-else class="tw-flex tw-flex-col tw-items-center">
+      <div v-else class="flex flex-col items-center">
         <svg
-          class="tw-w-36 tw-h-36 2xl:tw-w-48 2xl:tw-h-48"
+          class="w-36 h-36 2xl:w-48 2xl:h-48"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 864 716.5"
         >
@@ -122,7 +120,7 @@
             />
           </g>
         </svg>
-        <div class="tw-text-xl tw-text-center tw-text-gray-500 tw-text-medium">
+        <div class="text-xl text-center text-gray-500 text-medium">
           In der nächsten Zeit steht kein größerer Termin an.
         </div>
       </div>
@@ -131,7 +129,7 @@
       <div>
         Über
         <a
-          class="tw-default-link tw-on-focus-dark"
+          class="default-link on-focus-dark"
           href="https://calendar.google.com/calendar/embed?src=info%40sv-eutingen.de&ctz=Europe%2FBerlin"
           target="_blank"
           rel="noreferrer"
@@ -140,10 +138,10 @@
         können die Termine als Google Kalender geöffnet und auch in deinen
         persönlichen Kalender integriert werden.
       </div>
-      <div class="tw-pt-2 tw-text-sm tw-font-medium">
+      <div class="pt-2 text-sm font-medium">
         Hier findest du den passenden
         <a
-          class="tw-default-link tw-on-focus-dark"
+          class="default-link on-focus-dark"
           href="https://support.google.com/calendar/answer/37100"
           target="_blank"
           rel="noreferrer"

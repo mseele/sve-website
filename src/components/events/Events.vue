@@ -11,47 +11,47 @@
       </page-section>
       <page-section :title="eventTitle" dark>
         <div v-if="events.length > 0">
-          <div class="tw-flex tw-flex-wrap tw-justify-center tw--m-2">
+          <div class="flex flex-wrap justify-center -m-2">
             <div
               v-for="(event, index) in events"
               :key="index"
-              class="tw-w-full tw-p-2 lg:tw-w-1/2 2xl:tw-w-1/3"
+              class="w-full p-2 lg:w-1/2 2xl:w-1/3"
             >
               <g-link
                 :to="toPrefix + event.node.id + '/'"
-                class="tw-flex tw-flex-col tw-h-full tw-overflow-hidden tw-bg-white tw-border-2 tw-border-gray-300 tw-rounded hover:tw-shadow-sm tw-group focus:tw-outline-none focus-visible:tw-ring-2 focus:tw-ring-red-600 focus:tw-ring-opacity-50"
+                class="flex flex-col h-full overflow-hidden bg-white border-2 border-gray-300 rounded hover:shadow-sm group focus:outline-none focus-visible:ring-2 focus:ring-red-600 focus:ring-opacity-50"
               >
                 <div
-                  class="tw-relative tw-overflow-hidden tw-pb-3/5 sm:tw-pb-1/2 md:tw-pb-2/5"
+                  class="relative overflow-hidden pb-3/5 sm:pb-1/2 md:pb-2/5"
                 >
                   <g-image
                     :src="event.node.image"
-                    class="tw-absolute tw-object-cover tw-w-full tw-h-full tw-transition tw-duration-500 tw-ease-in-out group-hover:tw-transform-gpu group-hover:tw-scale-110"
+                    class="absolute object-cover w-full h-full transition duration-500 ease-in-out group-hover:transform-gpu group-hover:scale-110"
                   />
                 </div>
-                <div class="tw-flex tw-flex-col tw-flex-grow tw-p-4">
+                <div class="flex flex-col flex-grow p-4">
                   <div
-                    class="tw-text-lg tw-font-medium tw-text-gray-800 group-hover:tw-text-black"
+                    class="text-lg font-medium text-gray-800 group-hover:text-black"
                   >
                     {{ event.node.name }}
                   </div>
                   <div
                     v-if="!counterAvailable(event.node)"
-                    class="tw-text-sm tw-font-medium tw-text-gray-400"
+                    class="text-sm font-medium text-gray-400"
                   >
                     Verfügbarkeit wird geprüft
                   </div>
                   <div
                     v-else-if="!isBookedUp(event.node)"
-                    class="tw-text-sm tw-font-medium tw-text-green-600"
+                    class="text-sm font-medium text-green-600"
                   >
                     {{ toSubscribers(availableSubscribers(event.node)) }}
                   </div>
-                  <div v-else class="tw-text-sm tw-font-medium tw-text-red-600">
+                  <div v-else class="text-sm font-medium text-red-600">
                     Ausgebucht
                   </div>
                   <div
-                    class="tw-flex-grow tw-mt-3 tw-text-gray-700 group-hover:tw-text-gray-900"
+                    class="flex-grow mt-3 text-gray-700 group-hover:text-gray-900"
                   >
                     {{ event.node.shortDescription }}
                   </div>
@@ -60,13 +60,13 @@
             </div>
           </div>
         </div>
-        <div v-else class="tw-text-xl tw-font-medium">
+        <div v-else class="text-xl font-medium">
           <slot name="infoEmpty"></slot>
         </div>
         <email-subscription
           :success-message="subscribeSuccess"
           :news-type="newsType"
-          class="tw-pt-8"
+          class="pt-8"
         >
           <slot name="subscribeInfo"></slot>
         </email-subscription>

@@ -2,10 +2,6 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  // needed until vuetify has been removed
-  prefix: 'tw-',
-  important: true,
-  // needed until vuetify has been removed
   purge: ['./src/**/*.html', './src/**/*.vue', './src/**/*.jsx'],
   darkMode: false, // or 'media' or 'class'
   theme: {

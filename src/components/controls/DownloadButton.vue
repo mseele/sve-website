@@ -1,19 +1,17 @@
 <template>
   <a
-    class="tw-inline-flex tw-items-center tw-px-5 tw-py-3 tw-text-black tw-rounded-lg tw-on-focus-dark"
+    class="inline-flex items-center px-5 py-3 text-black rounded-lg on-focus-dark"
     :class="[
-      dark
-        ? 'tw-bg-white hover:tw-bg-gray-100'
-        : 'tw-bg-white hover:tw-bg-gray-200',
+      dark ? 'bg-white hover:bg-gray-100' : 'bg-white hover:bg-gray-200',
     ]"
     :href="href"
     :target="target"
     rel="noreferrer"
   >
-    <slot :imageClass="'tw-w-8 tw-h-8'" />
-    <span class="tw-flex tw-flex-col tw-items-start tw-ml-4 tw-leading-none">
-      <span class="tw-mb-1 tw-text-xs tw-text-gray-600">{{ firstRow }}</span>
-      <span class="tw-font-medium tw-title-font">{{ secondRow }}</span>
+    <slot :imageClass="'w-8 h-8'" />
+    <span class="flex flex-col items-start ml-4 leading-none">
+      <span class="mb-1 text-xs text-gray-600">{{ firstRow }}</span>
+      <span class="font-medium title-font">{{ secondRow }}</span>
     </span>
   </a>
 </template>

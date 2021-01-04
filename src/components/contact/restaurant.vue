@@ -6,11 +6,7 @@
       Wir freuen uns, Dich in der "Auszeit" begrüßen zu dürfen.
     </template>
     <template #touches>
-      <touches
-        class="tw-pt-4"
-        title="Gastwirt Micha Gruidl"
-        :touches="touches"
-      />
+      <touches class="pt-4" title="Gastwirt Micha Gruidl" :touches="touches" />
     </template>
   </contact>
 </template>

@@ -1,12 +1,10 @@
 <template>
-  <div
-    class="tw-flex tw-flex-col tw-max-w-full tw-min-h-screen tw-font-sans tw-antialiased"
-  >
+  <div class="flex flex-col max-w-full min-h-screen font-sans antialiased">
     <app-bar v-model="drawer" :transparent="transparent" :light="light" />
     <app-navigation-drawer v-model="drawer" />
     <div
-      class="tw-relative tw-flex tw-flex-col tw-flex-grow tw-max-w-full tw-bg-gray-100"
-      :class="[transparent ? 'tw-pt-0' : 'tw-pt-12 md:tw-pt-14']"
+      class="relative flex flex-col flex-grow max-w-full bg-gray-100"
+      :class="[transparent ? 'pt-0' : 'pt-12 md:pt-14']"
     >
       <slot />
     </div>

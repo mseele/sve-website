@@ -1,13 +1,13 @@
 <template>
   <div
-    class="tw-container tw-flex tw-flex-col tw-flex-grow tw-p-4 tw-py-10 tw-mx-auto sm:tw-px-10 md:tw-px-20"
-    :class="[dark ? 'tw-bg-gray-200' : 'tw-bg-gray-100']"
+    class="container flex flex-col flex-grow p-4 py-10 mx-auto sm:px-10 md:px-20"
+    :class="[dark ? 'bg-gray-200' : 'bg-gray-100']"
   >
     <header-title
       v-if="title"
       dark
       truncate
-      class="tw-pb-6 tw-text-3xl tw-font-semibold tw-tracking-widest tw-uppercase"
+      class="pb-6 text-3xl font-semibold tracking-widest uppercase"
     >
       {{ title }}
     </header-title>

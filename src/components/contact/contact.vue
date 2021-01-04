@@ -1,21 +1,21 @@
 <template>
-  <div class="tw-flex tw-flex-wrap tw-pt-6">
-    <div class="tw-w-full md:tw-w-1/2 md:tw-pr-2">
-      <header-title dark class="tw-text-xl tw-font-medium">
+  <div class="flex flex-wrap pt-6">
+    <div class="w-full md:w-1/2 md:pr-2">
+      <header-title dark class="text-xl font-medium">
         Kontakt aufnehmen
       </header-title>
-      <div class="tw-pt-4">
+      <div class="pt-4">
         <slot name="description"></slot>
       </div>
       <slot name="touches"></slot>
     </div>
-    <div class="tw-w-full tw-pt-6 md:tw-w-1/2 md:tw-pl-2 md:tw-pt-0">
-      <header-title dark class="tw-text-xl tw-font-medium">
+    <div class="w-full pt-6 md:w-1/2 md:pl-2 md:pt-0">
+      <header-title dark class="text-xl font-medium">
         Nachricht senden
       </header-title>
       <send-message
         ref="sendMessage"
-        class="tw-pt-4"
+        class="pt-4"
         :to="to"
         :to-items="toItems"
         :to-label="toLabel"

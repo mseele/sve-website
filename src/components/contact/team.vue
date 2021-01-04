@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="tw-w-full">
+    <div class="w-full">
       <input-label name="team">Um welche Mannschaft geht es?</input-label>
-      <select id="team" v-model="team" class="tw-w-full tw-text-input">
+      <select id="team" v-model="team" class="w-full text-input">
         <option disabled selected value>...</option>
         <option
           v-for="(item, index) in teams()"
@@ -26,13 +26,13 @@
       <template #touches>
         <touches
           v-if="coachTouches(team).length > 0"
-          class="tw-pt-4"
+          class="pt-4"
           :title="coachName(team)"
           :touches="coachTouches(team)"
         />
         <touches
           v-if="contactTouches(team).length > 0"
-          class="tw-pt-4"
+          class="pt-4"
           :title="contactName(team)"
           :touches="contactTouches(team)"
         />

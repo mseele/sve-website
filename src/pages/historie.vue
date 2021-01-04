@@ -1,29 +1,29 @@
 <template>
   <Layout>
     <page-section title="Historie">
-      <div class="tw-pb-6">
+      <div class="pb-6">
         Dank der großartigen Recherchearbeiten unserer Dorfhistoriker Willi
         Schaupp, Peter Mücke und Rainer Sattler verfügen wir über eine
         detaillierte Auflistung der SVE-Historie. Für unseren Verein sind diese
         Informationen sehr wertvoll. Denn wer Zukunft gestalten will, muss seine
         Wurzeln kennen.
       </div>
-      <div class="tw-w-full tw-h-full tw-mx-auto">
-        <div class="tw-relative tw-h-full tw-overflow-hidden tw-wrap">
+      <div class="w-full h-full mx-auto">
+        <div class="relative h-full overflow-hidden wrap">
           <div
-            class="tw-absolute tw-h-full tw-border tw-border-gray-700 tw-border-opacity-25 tw-left-3 lg:tw-left-1/2"
+            class="absolute h-full border border-gray-700 border-opacity-25 left-3 lg:left-1/2"
           />
 
           <div
             v-for="(item, index) in history"
             :key="index"
-            class="tw-flex tw-items-center tw-justify-between tw-w-full"
+            class="flex items-center justify-between w-full"
             :class="{
-              'lg:tw-flex-row-reverse': index % 2 != 0,
-              'tw-mt-8': index > 0,
+              'lg:flex-row-reverse': index % 2 != 0,
+              'mt-8': index > 0,
             }"
           >
-            <div class="tw-order-1 tw-hidden tw-w-5/12 lg:tw-block">
+            <div class="order-1 hidden w-5/12 lg:block">
               <image-viewer
                 v-if="item.images"
                 height="300"
@@ -31,24 +31,22 @@
               ></image-viewer>
             </div>
             <div
-              class="tw-z-10 tw-flex tw-items-center tw-flex-none tw-order-1 tw-w-6 tw-h-6 tw-bg-red-800 tw-border-white tw-rounded-full tw-shadow tw-border-3"
+              class="z-10 flex items-center flex-none order-1 w-6 h-6 bg-red-800 border-white rounded-full shadow border-3"
             >
-              <div
-                class="tw-mx-auto tw-text-lg tw-font-semibold tw-text-white"
-              ></div>
+              <div class="mx-auto text-lg font-semibold text-white"></div>
             </div>
-            <div class="tw-order-1 tw-w-full tw-ml-6 lg:tw-m-0 lg:tw-w-5/12">
+            <div class="order-1 w-full ml-6 lg:m-0 lg:w-5/12">
               <div
-                class="tw-flex tw-items-center tw-mb-3 tw-text-lg tw-font-medium tw-text-gray-800 md:tw-text-xl"
+                class="flex items-center mb-3 text-lg font-medium text-gray-800 md:text-xl"
               >
                 <div>{{ item.date }}</div>
                 <button
                   v-if="item.images"
-                  class="tw-block tw-h-6 tw-ml-2 tw-text-gray-500 lg:tw-hidden"
+                  class="block h-6 ml-2 text-gray-500 lg:hidden"
                   @click="showFullscreen(item.images)"
                 >
                   <svg
-                    class="tw-w-6 tw-h-6"
+                    class="w-6 h-6"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -62,7 +60,7 @@
                 </button>
               </div>
               <div
-                class="tw-text-sm tw-leading-relaxed tw-text-gray-800 md:tw-leading-normal md:tw-text-base"
+                class="text-sm leading-relaxed text-gray-800 md:leading-normal md:text-base"
                 v-html="item.text"
               />
             </div>

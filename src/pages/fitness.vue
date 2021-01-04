@@ -11,12 +11,12 @@
       pre-booking-prefix="Fitness"
     >
       <template #header>
-        <div class="tw-pb-4 tw-font-medium tw-leading-relaxed">
+        <div class="pb-4 font-medium leading-relaxed">
           Du hast Freude an der Gemeinschaft und möchtest Deinem Körper etwas
           Gutes tun? Herzlich Willkommen beim Fitnessangebot des SV Eutingen
           1947 e.V.
         </div>
-        <div class="tw-leading-relaxed tw-text-gray-800">
+        <div class="leading-relaxed text-gray-800">
           Wir bieten wohnortnahe, qualitativ hochwertige und preiswerte
           Fitnesskurse sowie Angebote des Gesundheitssports an. Unsere
           Kursleiterinnen und Kursleiter verfügen über entsprechende

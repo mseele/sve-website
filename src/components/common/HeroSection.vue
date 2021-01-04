@@ -1,46 +1,44 @@
 <template>
-  <div class="tw-relative tw-w-screen tw-h-screen">
+  <div class="relative w-screen h-screen">
     <!-- workaround for https://github.com/gridsome/gridsome/issues/292 -->
-    <slot :imageClass="'tw-w-full tw-h-full tw-object-cover'"></slot>
-    <div class="tw-absolute tw-inset-0 tw-flex tw-items-center tw-p-4">
-      <div class="tw-container tw-mx-auto sm:tw-px-10 md:tw-px-20">
+    <slot :imageClass="'w-full h-full object-cover'"></slot>
+    <div class="absolute inset-0 flex items-center p-4">
+      <div class="container mx-auto sm:px-10 md:px-20">
         <header-title
           shadow
           :dark="dark"
           :wrap="wrap"
           :truncate="truncate"
           :class="[
-            dense
-              ? 'tw-text-4xl xs:tw-text-5xl xl:tw-text-6xl'
-              : 'tw-text-5xl xl:tw-text-6xl',
+            dense ? 'text-4xl xs:text-5xl xl:text-6xl' : 'text-5xl xl:text-6xl',
           ]"
         >
           {{ title }}
         </header-title>
         <div
           v-if="subtitle"
-          class="tw-pt-3 tw-text-2xl xl:tw-text-3xl"
+          class="pt-3 text-2xl xl:text-3xl"
           :class="[
             dark
-              ? 'tw-text-gray-900 tw-text-shadow-light'
-              : 'tw-text-white tw-text-shadow-dark',
+              ? 'text-gray-900 text-shadow-light'
+              : 'text-white text-shadow-dark',
           ]"
         >
           {{ subtitle }}
         </div>
-        <div class="tw-flex tw-flex-wrap tw-pt-8">
+        <div class="flex flex-wrap pt-8">
           <btn
             outlined
             :dark="dark"
             :href="primaryButton.to"
-            class="tw-mb-4 tw-mr-4 tw-text-sm xl:tw-text-base"
+            class="mb-4 mr-4 text-sm xl:text-base"
           >
             {{ primaryButton.text }}
           </btn>
           <btn
             :dark="dark"
             :href="secondaryButton.to"
-            class="tw-mb-4 tw-text-sm xl:tw-text-base"
+            class="mb-4 text-sm xl:text-base"
           >
             {{ secondaryButton.text }}
           </btn>
