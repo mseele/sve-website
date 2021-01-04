@@ -7,6 +7,7 @@
       to-prefix="/events/"
       subscribe-success="Du erhälst automatisch eine E-Mail sobald neue Eventangebote online sind. Vielen Dank."
       news-type="Events"
+      pre-booking-prefix="Event"
     >
       <template #header>
         <div class="tw-pb-4 tw-font-medium tw-leading-relaxed">
@@ -33,34 +34,18 @@
         Erhalte automatisch eine E-Mail sobald neue Events online sind.
       </template>
     </events>
-    <pre-booking :hash="preBookingHash" />
   </Layout>
 </template>
 
 <script>
 import axios from 'axios'
 import events from '@/components/events/Events'
-import preBooking from '@/components/events/PreBooking'
 
 export default {
   metaInfo: {
     title: 'Events',
   },
-  components: {
-    events,
-    preBooking,
-  },
-  data() {
-    return {
-      preBookingHash: null,
-    }
-  },
-  mounted() {
-    const value = this.$route.query.pb
-    if (value) {
-      this.preBookingHash = value
-    }
-  },
+  components: { events },
 }
 </script>
 

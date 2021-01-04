@@ -8,6 +8,7 @@
       :faqs="faqs"
       subscribe-success="Du erhälst automatisch eine E-Mail sobald neue Kursangebote online sind. Vielen Dank."
       news-type="Fitness"
+      pre-booking-prefix="Fitness"
     >
       <template #header>
         <div class="tw-pb-4 tw-font-medium tw-leading-relaxed">
@@ -21,8 +22,8 @@
           Kursleiterinnen und Kursleiter verfügen über entsprechende
           Qualifizierungen und machen die Kurse zu einem Ort der Begegnung.
           Schließlich bereitet Sport innerhalb einer Gruppe und Gemeinschaft
-          noch mehr Freude. Unsere Kurse stehen selbstverständlich auch Nichtmitgliedern des SV
-          Eutingen zur Verfügung.<br />
+          noch mehr Freude. Unsere Kurse stehen selbstverständlich auch
+          Nichtmitgliedern des SV Eutingen zur Verfügung.<br />
           Wir freuen uns auf Dich!
         </div>
       </template>
@@ -33,26 +34,20 @@
         Erhalte automatisch eine E-Mail sobald neue Kursangebote online sind.
       </template>
     </events>
-    <pre-booking :hash="preBookingHash" />
   </Layout>
 </template>
 
 <script>
 import axios from 'axios'
 import events from '@/components/events/Events'
-import preBooking from '@/components/events/PreBooking'
 
 export default {
   metaInfo: {
     title: 'Fitness',
   },
-  components: {
-    events,
-    preBooking,
-  },
+  components: { events },
   data() {
     return {
-      preBookingHash: null,
       faqs: [
         {
           question: 'Was muss ich zum Kurs mitbringen?',
@@ -71,12 +66,6 @@ export default {
             'Je nach Krankenkasse und Kurs variiert dies. Informiere dich am besten über deine Krankenkasse, welche Zuschüsse es für dich geben kann. Wir stellen Dir nach Beendigung des Kurses eine Teilnahmebestätigung aus.',
         },
       ],
-    }
-  },
-  mounted() {
-    const value = this.$route.query.pb
-    if (value) {
-      this.preBookingHash = value
     }
   },
 }
