@@ -22,7 +22,7 @@
     </ValidationProvider>
     <div class="pt-2 text-sm text-gray-800">
       Wir nehmen Datenschutz sehr ernst. Informiere dich in unserer
-      <a class="text-black rounded on-focus-dark" href="/datenschutz"
+      <a class="text-black underline rounded on-focus-dark" href="/datenschutz"
         >Datenschutzerklärung</a
       >.
     </div>
