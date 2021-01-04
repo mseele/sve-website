@@ -59,6 +59,9 @@ module.exports = {
         '11/12': '91.666667%',
         15: '3.75rem',
       },
+      borderWidth: {
+        3: '3px',
+      },
     },
   },
   variants: {
