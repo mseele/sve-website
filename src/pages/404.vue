@@ -1,7 +1,9 @@
 <template>
   <Layout>
-    <div class="tw-flex tw-items-center tw-justify-center tw-h-full">
-      <div class="tw-flex tw-flex-col tw-items-center tw-m-6 tw-text-center">
+    <page-section title="404">
+      <div
+        class="tw-flex tw-flex-col tw-items-center tw-justify-center tw-flex-grow tw-m-6 tw-text-center"
+      >
         <div class="tw-text-3xl tw-text-red-800 sm:tw-text-4xl 2l:tw-text-6xl">
           Ups, falsch abgebogen
         </div>
@@ -61,17 +63,18 @@
           >Zurück zur Startseite</btn
         >
       </div>
-    </div>
+    </page-section>
   </Layout>
 </template>
 
 <script>
+import pageSection from '@/components/common/PageSection'
 import btn from '@/components/controls/PrimaryButton'
 
 export default {
   metaInfo: {
     title: 'Fehler',
   },
-  components: { btn },
+  components: { pageSection, btn },
 }
 </script>
