@@ -1,4 +1,3 @@
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 const axios = require('axios')
 const format = require('./server/format.js')
 const schema = require('./server/schema.js')
@@ -95,13 +94,5 @@ module.exports = function (api) {
 
   api.loadSource(({ addSchemaTypes }) => {
     schema.load(addSchemaTypes)
-  })
-
-  api.chainWebpack((config, { isServer }) => {
-    config.plugin('vuetify-loader').use(
-      new VuetifyLoaderPlugin({
-        progressiveImages: true,
-      })
-    )
   })
 }

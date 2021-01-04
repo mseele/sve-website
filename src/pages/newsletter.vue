@@ -19,7 +19,7 @@
         <div class="tw-w-full lg:tw-w-1/2 lg:tw-pl-2">
           <div class="tw-flex tw-flex-col">
             <div
-              class="tw-flex tw-mx-auto tw-overflow-hidden tw-border-2 tw-border-red-800 tw-border-solid tw-rounded"
+              class="tw-flex tw-mx-auto tw-overflow-hidden tw-border-2 tw-border-red-800 tw-rounded"
             >
               <button
                 class="tw-px-4 tw-py-1 focus:tw-outline-none"

@@ -124,7 +124,7 @@
               :href="item.url"
               target="_blank"
               rel="noopener"
-              class="tw-flex tw-items-center tw-h-full tw-p-4 tw-text-black tw-no-underline tw-bg-white tw-rounded tw-on-focus-dark"
+              class="tw-flex tw-items-center tw-h-full tw-p-4 tw-text-black tw-bg-white tw-rounded tw-on-focus-dark"
               :class="{ 'hover:tw-bg-gray-200': item.url }"
             >
               <svg

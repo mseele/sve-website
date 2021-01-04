@@ -15,7 +15,7 @@
         <div
           v-for="edge in $page.news.edges"
           :key="edge.node.id"
-          class="tw-p-4 tw-bg-white tw-border-2 tw-border-gray-300 tw-border-solid tw-rounded"
+          class="tw-p-4 tw-bg-white tw-border-2 tw-border-gray-300 tw-rounded"
         >
           <div class="tw-flex tw-flex-row tw-items-center tw-pb-4">
             <svg
@@ -57,7 +57,7 @@
         >
           <g-link
             :to="edge.node.link"
-            class="tw-flex tw-flex-col tw-h-full tw-overflow-hidden tw-no-underline tw-bg-white tw-border-2 tw-border-gray-300 tw-border-solid tw-rounded hover:tw-shadow-sm tw-group focus:tw-outline-none focus-visible:tw-ring-2 focus:tw-ring-red-600 focus:tw-ring-opacity-50"
+            class="tw-flex tw-flex-col tw-h-full tw-overflow-hidden tw-bg-white tw-border-2 tw-border-gray-300 tw-rounded hover:tw-shadow-sm tw-group focus:tw-outline-none focus-visible:tw-ring-2 focus:tw-ring-red-600 focus:tw-ring-opacity-50"
           >
             <div
               class="tw-relative tw-overflow-hidden tw-pb-3/5 sm:tw-pb-1/2 md:tw-pb-2/5"

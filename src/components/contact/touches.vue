@@ -10,7 +10,7 @@
       <div v-for="(touch, index) in touches" :key="index">
         <a
           :href="touch.href"
-          class="tw-inline-block tw-overflow-hidden tw-font-medium tw-text-gray-600 tw-no-underline tw-rounded hover:tw-text-gray-800 tw-on-focus-dark"
+          class="tw-inline-block tw-overflow-hidden tw-font-medium tw-text-gray-600 tw-rounded hover:tw-text-gray-800 tw-on-focus-dark"
         >
           <div class="tw-flex tw-items-center">
             <svg

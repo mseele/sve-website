@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <page-section title="Datenschutzerklärung">
+    <page-section class="tw-break-words" title="Datenschutzerklärung">
       <div id="m14" class="tw-pb-4 tw-text-2xl tw-font-medium">Einleitung</div>
       <div class="tw-pb-8 tw-space-y-2">
         <div>
@@ -19,68 +19,132 @@
       </div>
       <div class="tw-pb-4 tw-text-2xl tw-font-medium">Inhaltsübersicht</div>
       <div class="tw-pb-8">
-        <ul class="index">
-          <li><a class="index-link" href="#m14">Einleitung</a></li>
-          <li><a class="index-link" href="#m3">Verantwortlicher</a></li>
+        <ul class="tw-pl-6 tw-list-disc index">
           <li>
-            <a class="index-link" href="#mOverview"
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m14"
+              >Einleitung</a
+            >
+          </li>
+          <li>
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m3"
+              >Verantwortlicher</a
+            >
+          </li>
+          <li>
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#mOverview"
               >Übersicht der Verarbeitungen</a
             >
           </li>
           <li>
-            <a class="index-link" href="#m13">Maßgebliche Rechtsgrundlagen</a>
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m13"
+              >Maßgebliche Rechtsgrundlagen</a
+            >
           </li>
           <li>
-            <a class="index-link" href="#m27">Sicherheitsmaßnahmen</a>
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m27"
+              >Sicherheitsmaßnahmen</a
+            >
           </li>
           <li>
-            <a class="index-link" href="#m25"
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m25"
               >Übermittlung und Offenbarung von personenbezogenen Daten</a
             >
           </li>
           <li>
-            <a class="index-link" href="#m24"
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m24"
               >Datenverarbeitung in Drittländern</a
             >
           </li>
           <li>
-            <a class="index-link" href="#m134">Einsatz von Cookies</a>
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m134"
+              >Einsatz von Cookies</a
+            >
           </li>
           <li>
-            <a class="index-link" href="#m354"
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m354"
               >Wahrnehmung von Aufgaben nach Satzung oder Geschäftsordnung</a
             >
           </li>
-          <li><a class="index-link" href="#m182">Kontaktaufnahme</a></li>
           <li>
-            <a class="index-link" href="#m225"
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m182"
+              >Kontaktaufnahme</a
+            >
+          </li>
+          <li>
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m225"
               >Bereitstellung des Onlineangebotes und Webhosting</a
             >
           </li>
           <li>
-            <a class="index-link" href="#m17"
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m17"
               >Newsletter und Breitenkommunikation</a
             >
           </li>
-          <li><a class="index-link" href="#m264">Onlinemarketing</a></li>
           <li>
-            <a class="index-link" href="#m136"
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m264"
+              >Onlinemarketing</a
+            >
+          </li>
+          <li>
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m136"
               >Präsenzen in sozialen Netzwerken</a
             >
           </li>
-          <li><a class="index-link" href="#m12">Löschung von Daten</a></li>
           <li>
-            <a class="index-link" href="#m15"
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m12"
+              >Löschung von Daten</a
+            >
+          </li>
+          <li>
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m15"
               >Änderung und Aktualisierung der Datenschutzerklärung</a
             >
           </li>
           <li>
-            <a class="index-link" href="#m10"
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m10"
               >Rechte der betroffenen Personen</a
             >
           </li>
           <li>
-            <a class="index-link" href="#m42">Begriffsdefinitionen</a>
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2 index-link"
+              href="#m42"
+              >Begriffsdefinitionen</a
+            >
           </li>
         </ul>
       </div>
@@ -99,7 +163,10 @@
         <div><strong>E-Mail-Adresse</strong>: info@sv-eutingen.de</div>
         <div>
           <strong>Impressum</strong>:
-          <a href="https://www.sv-eutingen.de/impressum" target="_blank"
+          <a
+            class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
+            href="https://www.sv-eutingen.de/impressum"
+            target="_blank"
             >https://www.sv-eutingen.de/impressum</a
           >
         </div>
@@ -116,7 +183,7 @@
         Arten der verarbeiteten Daten
       </div>
       <div class="tw-pb-4">
-        <ul>
+        <ul class="tw-pl-6 tw-list-disc">
           <li>Bestandsdaten (z.B. Namen, Adressen).</li>
           <li>Inhaltsdaten (z.B. Texteingaben, Fotografien, Videos).</li>
           <li>Kontaktdaten (z.B. E-Mail, Telefonnummern).</li>
@@ -139,7 +206,7 @@
         Kategorien betroffener Personen
       </div>
       <div class="tw-pb-4">
-        <ul>
+        <ul class="tw-pl-6 tw-list-disc">
           <li>Geschäfts- und Vertragspartner.</li>
           <li>Interessenten.</li>
           <li>Kommunikationspartner.</li>
@@ -151,7 +218,7 @@
         Zwecke der Verarbeitung
       </div>
       <div class="tw-pb-4">
-        <ul>
+        <ul class="tw-pl-6 tw-list-disc">
           <li>Besuchsaktionsauswertung.</li>
           <li>Content Delivery Network (CDN).</li>
           <li>Direktmarketing (z.B. per E-Mail oder postalisch).</li>
@@ -189,7 +256,7 @@
           maßgeblich sein, teilen wir Ihnen diese in der Datenschutzerklärung
           mit.
         </div>
-        <ul>
+        <ul class="tw-pl-6 tw-list-disc">
           <li>
             <strong>Einwilligung (Art. 6 Abs. 1 S. 1 lit. a DSGVO)</strong>
             - Die betroffene Person hat ihre Einwilligung in die Verarbeitung
@@ -320,6 +387,7 @@
           verbindlicher interner Datenschutzvorschriften, verarbeiten (Art. 44
           bis 49 DSGVO, Informationsseite der EU-Kommission:
           <a
+            class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
             href="https://ec.europa.eu/info/law/law-topic/data-protection/international-dimension-data-protection_de"
             target="_blank"
             rel="noreferrer"
@@ -351,7 +419,7 @@
             unterschieden:</strong
           >
         </div>
-        <ul>
+        <ul class="tw-pl-6 tw-list-disc">
           <li>
             <strong
               >Temporäre Cookies (auch: Session- oder Sitzungs-Cookies):</strong
@@ -431,6 +499,7 @@
           Vielzahl von Diensten, vor allem im Fall des Trackings, über die
           Webseiten
           <a
+            class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
             href="https://optout.aboutads.info"
             target="_blank"
             rel="noreferrer"
@@ -438,6 +507,7 @@
           >
           und
           <a
+            class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
             href="https://www.youronlinechoices.com/"
             target="_blank"
             rel="noreferrer"
@@ -459,7 +529,7 @@
           der Grundlage unseres Interesses und des Interesses der Nutzer an der
           erwarteten Funktionsfähigkeit unseres Onlineangebotes.
         </div>
-        <ul class="m-elements">
+        <ul class="tw-pl-6 tw-list-disc m-elements">
           <li>
             <strong>Verarbeitete Datenarten:</strong> Nutzungsdaten (z.B.
             besuchte Webseiten, Interesse an Inhalten, Zugriffszeiten),
@@ -508,7 +578,7 @@
           Aufbewahrung der Daten wird regelmäßig überprüft; im Übrigen gelten
           die gesetzlichen Aufbewahrungspflichten.
         </div>
-        <ul class="m-elements">
+        <ul class="tw-pl-6 tw-list-disc m-elements">
           <li>
             <strong>Verarbeitete Datenarten:</strong> Bestandsdaten (z.B. Namen,
             Adressen), Zahlungsdaten (z.B. Bankverbindungen, Rechnungen,
@@ -549,7 +619,7 @@
           Anfragen und im Übrigen auf Grundlage der berechtigten Interessen an
           der Beantwortung der Anfragen.
         </div>
-        <ul class="m-elements">
+        <ul class="tw-pl-6 tw-list-disc m-elements">
           <li>
             <strong>Verarbeitete Datenarten:</strong> Bestandsdaten (z.B. Namen,
             Adressen), Kontaktdaten (z.B. E-Mail, Telefonnummern), Inhaltsdaten
@@ -614,7 +684,7 @@
           verteilter und über das Internet verbundener Server schneller und
           sicherer ausgeliefert werden können.
         </div>
-        <ul class="m-elements">
+        <ul class="tw-pl-6 tw-list-disc m-elements">
           <li>
             <strong>Verarbeitete Datenarten:</strong> Inhaltsdaten (z.B.
             Texteingaben, Fotografien, Videos), Nutzungsdaten (z.B. besuchte
@@ -705,7 +775,7 @@
           <strong>Inhalte</strong>: Informationen zu uns, unseren Leistungen,
           Aktionen und Angeboten.
         </div>
-        <ul class="m-elements">
+        <ul class="tw-pl-6 tw-list-disc m-elements">
           <li>
             <strong>Verarbeitete Datenarten:</strong> Bestandsdaten (z.B. Namen,
             Adressen), Kontaktdaten (z.B. E-Mail, Telefonnummern),
@@ -807,7 +877,7 @@
           möchten wir Sie auch auf die Informationen zur Verwendung von Cookies
           in dieser Datenschutzerklärung hinweisen.
         </div>
-        <ul class="m-elements">
+        <ul class="tw-pl-6 tw-list-disc m-elements">
           <li>
             <strong>Verarbeitete Datenarten:</strong> Nutzungsdaten (z.B.
             besuchte Webseiten, Interesse an Inhalten, Zugriffszeiten),
@@ -846,24 +916,28 @@
             zusätzlich die folgenden Opt-Out-Möglichkeiten, die zusammenfassend
             auf jeweilige Gebiete gerichtet angeboten werden: a) Europa:
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://www.youronlinechoices.eu"
               target="_blank"
               rel="noreferrer"
               >https://www.youronlinechoices.eu</a
             >. b) Kanada:
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://www.youradchoices.ca/choices"
               target="_blank"
               rel="noreferrer"
               >https://www.youradchoices.ca/choices</a
             >. c) USA:
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://www.aboutads.info/choices"
               target="_blank"
               rel="noreferrer"
               >https://www.aboutads.info/choices</a
             >. d) Gebietsübergreifend:
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://optout.aboutads.info"
               target="_blank"
               rel="noreferrer"
@@ -872,19 +946,21 @@
           </li>
         </ul>
         <div><strong>Eingesetzte Dienste und Diensteanbieter:</strong></div>
-        <ul class="m-elements">
+        <ul class="tw-pl-6 tw-list-disc m-elements">
           <li>
             <strong>Google Analytics:</strong> Onlinemarketing und Webanalyse;
             Dienstanbieter: Google Ireland Limited, Gordon House, Barrow Street,
             Dublin 4, Irland, Mutterunternehmen: Google LLC, 1600 Amphitheatre
             Parkway, Mountain View, CA 94043, USA; Website:
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://marketingplatform.google.com/intl/de/about/analytics/"
               target="_blank"
               rel="noreferrer"
               >https://marketingplatform.google.com/intl/de/about/analytics/</a
             >; Datenschutzerklärung:
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://policies.google.com/privacy"
               target="_blank"
               rel="noreferrer"
@@ -892,18 +968,21 @@
             >; Privacy Shield (Gewährleistung Datenschutzniveau bei Verarbeitung
             von Daten in den USA):
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://www.privacyshield.gov/participant?id=a2zt000000001L5AAI&status=Active"
               target="_blank"
               rel="noreferrer"
               >https://www.privacyshield.gov/participant?id=a2zt000000001L5AAI&status=Active</a
             >; Widerspruchsmöglichkeit (Opt-Out): Opt-Out-Plugin:
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://tools.google.com/dlpage/gaoptout?hl=de"
               target="_blank"
               rel="noreferrer"
               >https://tools.google.com/dlpage/gaoptout?hl=de</a
             >, Einstellungen für die Darstellung von Werbeeinblendungen:
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://adssettings.google.com/authenticated"
               target="_blank"
               rel="noreferrer"
@@ -960,7 +1039,7 @@
           entsprechende Maßnahmen ergreifen und Auskünfte geben. Sollten Sie
           dennoch Hilfe benötigen, dann können Sie sich an uns wenden.
         </div>
-        <ul class="m-elements">
+        <ul class="tw-pl-6 tw-list-disc m-elements">
           <li>
             <strong>Verarbeitete Datenarten:</strong> Bestandsdaten (z.B. Namen,
             Adressen), Kontaktdaten (z.B. E-Mail, Telefonnummern), Inhaltsdaten
@@ -984,16 +1063,21 @@
           </li>
         </ul>
         <div><strong>Eingesetzte Dienste und Diensteanbieter:</strong></div>
-        <ul class="m-elements">
+        <ul class="tw-pl-6 tw-list-disc m-elements">
           <li>
             <strong>Facebook:</strong> Soziales Netzwerk; Dienstanbieter:
             Facebook Ireland Ltd., 4 Grand Canal Square, Grand Canal Harbour,
             Dublin 2, Irland, Mutterunternehmen: Facebook, 1 Hacker Way, Menlo
             Park, CA 94025, USA; Website:
-            <a href="https://www.facebook.com" target="_blank" rel="noreferrer"
+            <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noreferrer"
               >https://www.facebook.com</a
             >; Datenschutzerklärung:
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://www.facebook.com/about/privacy"
               target="_blank"
               rel="noreferrer"
@@ -1001,6 +1085,7 @@
             >; Privacy Shield (Gewährleistung Datenschutzniveau bei Verarbeitung
             von Daten in den USA):
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://www.privacyshield.gov/participant?id=a2zt0000000GnywAAC&status=Active"
               target="_blank"
               rel="noreferrer"
@@ -1008,6 +1093,7 @@
             >; Widerspruchsmöglichkeit (Opt-Out): Einstellungen für
             Werbeanzeigen:
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://www.facebook.com/settings?tab=ads"
               target="_blank"
               rel="noreferrer"
@@ -1015,12 +1101,14 @@
             >; Zusätzliche Hinweise zum Datenschutz: Vereinbarung über
             gemeinsame Verarbeitung personenbezogener Daten auf Facebook-Seiten:
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://www.facebook.com/legal/terms/page_controller_addendum"
               target="_blank"
               rel="noreferrer"
               >https://www.facebook.com/legal/terms/page_controller_addendum</a
             >, Datenschutzhinweise für Facebook-Seiten:
             <a
+              class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
               href="https://www.facebook.com/legal/terms/information_about_page_insights_data"
               target="_blank"
               rel="noreferrer"
@@ -1084,7 +1172,7 @@
           Ihnen stehen als Betroffene nach der DSGVO verschiedene Rechte zu, die
           sich insbesondere aus Art. 15 bis 18 und 21 DSGVO ergeben:
         </div>
-        <ul>
+        <ul class="tw-pl-6 tw-list-disc">
           <li>
             <strong
               >Widerspruchsrecht: Sie haben das Recht, aus Gründen, die sich aus
@@ -1157,7 +1245,7 @@
           Erläuterungen sollen dagegen vor allem dem Verständnis dienen. Die
           Begriffe sind alphabetisch sortiert.
         </div>
-        <ul class="glossary">
+        <ul class="tw-pl-6 tw-list-disc glossary">
           <li>
             <strong>Besuchsaktionsauswertung:</strong>
             "Besuchsaktionsauswertung" (englisch "Conversion Tracking")
@@ -1284,6 +1372,7 @@
       </div>
       <div>
         <a
+          class="tw-text-gray-600 tw-underline tw-on-focus focus-visible:tw-ring-offset-2"
           href="https://datenschutz-generator.de/?l=de"
           title="Rechtstext von Dr. Schwenke - für weitere Informationen bitte anklicken."
           target="_blank"

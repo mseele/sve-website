@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <page-section title="Impressum">
+    <page-section class="tw-break-words" title="Impressum">
       <div class="tw-pb-4 tw-text-2xl tw-font-medium">Diensteanbieter</div>
       <div class="tw-pb-8 tw-space-y-2">
         <div>SV Eutingen 1947 e.V.</div>
@@ -39,6 +39,7 @@
         </div>
         <div>
           <a
+            class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
             href="https://facebook.com/sveutingen"
             target="_blank"
             rel="noreferrer"
@@ -47,6 +48,7 @@
         </div>
         <div>
           <a
+            class="tw-default-link tw-on-focus focus-visible:tw-ring-offset-2"
             href="https://www.youtube.com/channel/UC6QXvcCp9CpHl4az3idhkYQ"
             target="_blank"
             rel="noreferrer"
@@ -67,6 +69,7 @@
         der Anbieter der verlinkten Webseiten.
       </div>
       <a
+        class="tw-text-gray-600 tw-underline tw-on-focus focus-visible:tw-ring-offset-2"
         href="https://datenschutz-generator.de/?l=de"
         title="Rechtstext von Dr. Schwenke - für weitere Informationen bitte anklicken."
         target="_blank"

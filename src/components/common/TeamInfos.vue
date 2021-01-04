@@ -10,11 +10,11 @@
         class="tw-w-full tw-p-2 sm:tw-w-1/2 xl:tw-w-1/3 2xl:tw-w-1/4"
       >
         <div
-          class="tw-flex tw-flex-col tw-justify-between tw-h-full tw-p-4 tw-bg-white tw-border-2 tw-border-gray-300 tw-border-solid tw-rounded"
+          class="tw-flex tw-flex-col tw-justify-between tw-h-full tw-p-4 tw-bg-white tw-border-2 tw-border-gray-300 tw-rounded"
         >
           <div>
             <div
-              class="tw-flex tw-items-center tw-justify-between tw-pb-2 tw-border-0 tw-border-b tw-border-gray-300 tw-border-solid"
+              class="tw-flex tw-items-center tw-justify-between tw-pb-2 tw-border-b tw-border-gray-300"
             >
               <div class="tw-text-xl tw-font-medium">{{ value.team }}</div>
               <a
@@ -66,7 +66,7 @@
                 path: '/kontakt/',
                 query: { auswahl: 'team', team: value.key },
               }"
-              class="tw-inline-flex tw-items-center tw-justify-center tw-col-start-1 tw-col-end-2 tw-px-3 tw-py-1 tw-font-medium tw-text-red-800 tw-no-underline tw-rounded-full hover:tw-bg-red-100 hover:tw-bg-opacity-50 active:tw-text-red-900 md:tw-mb-2 lg:tw-mb-0 tw-on-focus"
+              class="tw-inline-flex tw-items-center tw-justify-center tw-col-start-1 tw-col-end-2 tw-px-3 tw-py-1 tw-font-medium tw-text-red-800 tw-rounded-full hover:tw-bg-red-100 hover:tw-bg-opacity-50 active:tw-text-red-900 md:tw-mb-2 lg:tw-mb-0 tw-on-focus"
             >
               Kontakt
               <svg

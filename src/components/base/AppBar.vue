@@ -129,12 +129,11 @@
         </svg>
       </g-link>
       <nav class="tw-items-center tw-hidden tw-space-x-5 sm:tw-flex">
-        <!-- TODO: remove dynamic class with text colors and no-underline when vuetify is gone -->
         <g-link
           v-for="(item, index) in items()"
           :key="index"
           :to="item.to"
-          class="tw-px-3 tw-py-1 tw-text-sm tw-font-medium tw-tracking-widest tw-no-underline tw-uppercase tw-rounded-full tw-cursor-pointer tw-on-focus-dark"
+          class="tw-px-3 tw-py-1 tw-text-sm tw-font-semibold tw-tracking-widest tw-uppercase tw-rounded-full tw-cursor-pointer tw-on-focus-dark"
           :class="[
             !isTransparent || light
               ? 'tw-text-white hover:tw-text-gray-300'

@@ -21,7 +21,7 @@
           <div class="tw-pt-4">
             Du möchtest Mitglied werden?
             <a
-              class="tw-font-medium tw-underline tw-rounded tw-on-focus-dark"
+              class="tw-font-medium tw-default-link tw-on-focus-dark"
               href="/downloads/2020/Mitgliedsantrag-SVE.pdf"
               target="_blank"
               >Download Mitgliedsantrag</a

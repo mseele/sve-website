@@ -19,7 +19,7 @@
           data-glide-el="track"
           :style="'height:' + height + 'px'"
         >
-          <ul class="tw-pl-0 glide__slides" :style="'height:' + height + 'px'">
+          <ul class="glide__slides" :style="'height:' + height + 'px'">
             <li
               v-for="(image, index) in images"
               :key="index"

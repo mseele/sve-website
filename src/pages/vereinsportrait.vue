@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <page-section title="Der SVE - #mehralseinverein">
-      <ul>
+      <ul class="tw-pl-6 tw-list-disc">
         <li>SV Eutingen 1947 e.V.</li>
         <li>unterstützt durch Förderverein des SV Eutingen 1947 e.V.</li>
         <li>
@@ -13,26 +13,30 @@
         </li>
         <li>
           Vorstandschaft:
-          <ul>
+          <ul class="tw-pl-6 tw-list-disc">
             <li>
               Sebastian Lazar (<a
-                class="tw-rounded tw-on-focus-dark"
+                class="tw-default-link tw-on-focus-dark"
                 href="mailto:vorstand@sv-eutingen.de"
                 >vorstand@sv-eutingen.de</a
               >
               /
-              <a class="tw-rounded tw-on-focus-dark" href="tel:+4917630774678"
+              <a
+                class="tw-default-link tw-on-focus-dark"
+                href="tel:+4917630774678"
                 >0176-30774678</a
               >) / Dominik Rakoczy / Dietmar Kurbjun
             </li>
             <li>
               Kassier Wolfgang Nesch (<a
-                class="tw-rounded tw-on-focus-dark"
+                class="tw-default-link tw-on-focus-dark"
                 href="mailto:vorstand@sv-eutingen.de"
                 >vorstand@sv-eutingen.de</a
               >
               /
-              <a class="tw-rounded tw-on-focus-dark" href="tel:+491625323142"
+              <a
+                class="tw-default-link tw-on-focus-dark"
+                href="tel:+491625323142"
                 >0162-5323142</a
               >)
             </li>
@@ -48,7 +52,7 @@
         <li>
           Homepage:
           <a
-            class="tw-rounded tw-on-focus-dark"
+            class="tw-default-link tw-on-focus-dark"
             href="https://www.sv-eutingen.de"
             >www.sv-eutingen.de</a
           >
@@ -56,7 +60,7 @@
         <li>
           Mail:
           <a
-            class="tw-rounded tw-on-focus-dark"
+            class="tw-default-link tw-on-focus-dark"
             href="mailto:info@sv-eutingen.de"
             >info@sv-eutingen.de</a
           >
@@ -64,7 +68,7 @@
         <li>
           Informationen zur Aufsichtspflicht:
           <a
-            class="tw-rounded tw-on-focus-dark"
+            class="tw-default-link tw-on-focus-dark"
             href="/downloads/2020/Aufsichtspflicht-SVE.pdf"
             target="_blank"
           >
@@ -125,7 +129,7 @@
         Wertschätzung wird bei uns spürbar.
       </div>
       <div class="tw-pb-4 tw-leading-relaxed">
-        <ul class="tw-space-y-2">
+        <ul class="tw-pl-6 tw-space-y-2 tw-list-disc">
           <li>
             Für aktive Kinder, Jugendliche, Spielerinnen, Spieler, Trainer- und
             Betreuerteams, die wir am Spielfeldrand anfeuern, mit denen wir

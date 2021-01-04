@@ -1,7 +1,5 @@
 <template>
-  <footer
-    class="tw-space-y-4 tw-border-0 tw-border-t tw-border-gray-300 tw-border-solid xl:tw-space-y-5"
-  >
+  <footer class="tw-space-y-4 tw-border-t tw-border-gray-300 xl:tw-space-y-5">
     <div class="tw-container tw-px-5 tw-pt-4 tw-mx-auto">
       <div class="tw-flex tw-flex-wrap tw-justify-center">
         <div
@@ -12,7 +10,7 @@
           <g-link
             :key="index"
             :to="item.to"
-            class="tw-text-sm tw-font-medium tw-text-gray-800 tw-no-underline tw-rounded hover:tw-text-black xl:tw-text-base tw-on-focus focus-visible:tw-ring-offset-2"
+            class="tw-text-sm tw-font-medium tw-text-gray-800 tw-rounded hover:tw-text-black xl:tw-text-base tw-on-focus focus-visible:tw-ring-offset-2"
           >
             {{ item.title }}
           </g-link>

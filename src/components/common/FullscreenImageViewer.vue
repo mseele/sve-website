@@ -10,7 +10,7 @@
     />
     <div v-else ref="carousel" class="tw-h-full glide">
       <div class="tw-h-full glide__track" data-glide-el="track">
-        <ul class="tw-pl-0 glide__slides">
+        <ul class="glide__slides">
           <li
             v-for="(image, index) in images"
             :key="index"

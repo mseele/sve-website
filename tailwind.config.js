@@ -1,12 +1,10 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors')
 
 module.exports = {
   // needed until vuetify has been removed
   prefix: 'tw-',
   important: true,
-  corePlugins: {
-    preflight: false,
-  },
   // needed until vuetify has been removed
   purge: ['./src/**/*.html', './src/**/*.vue', './src/**/*.jsx'],
   darkMode: false, // or 'media' or 'class'
@@ -30,7 +28,7 @@ module.exports = {
         xs: '375px',
       },
       fontFamily: {
-        sans: ['Roboto', 'sans-serif'],
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
       spacing: {
         '0/5': '0.1rem',

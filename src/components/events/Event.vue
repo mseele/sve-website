@@ -16,7 +16,7 @@
     </page-section>
     <page-section id="details" title="Details" dark>
       <div class="tw-flex tw-flex-wrap tw-space-y-3 md:tw-space-y-0">
-        <ul class="tw-w-full tw-pl-0 tw-space-y-3 tw-list-none md:tw-w-1/2">
+        <ul class="tw-w-full tw-space-y-3 md:tw-w-1/2">
           <ili v-if="!counterAvailable()">Verfügbarkeit wird geprüft</ili>
           <ili v-else-if="!isBookedUp()">
             {{ toSubscribers(availableSubscribers()) }}
@@ -34,7 +34,7 @@
             {{ event.duration }}
           </ili>
         </ul>
-        <ul class="tw-w-full tw-pl-0 tw-space-y-3 tw-list-none md:tw-w-1/2">
+        <ul class="tw-w-full tw-space-y-3 md:tw-w-1/2">
           <ili v-if="event.costMember === event.costNonMember">
             {{ event.costMember }} pro Teilnehmer
           </ili>
@@ -53,7 +53,7 @@
       </div>
     </page-section>
     <page-section v-if="event.dates.length > 1" id="termine" title="Termine">
-      <ul class="tw-flex tw-flex-wrap tw-pl-0 tw--mt-2 tw-list-none">
+      <ul class="tw-flex tw-flex-wrap tw--mt-2">
         <li
           v-for="(date, index) of event.dates"
           :key="index"

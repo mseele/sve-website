@@ -11,7 +11,7 @@
       <div class="tw-w-full tw-h-full tw-mx-auto">
         <div class="tw-relative tw-h-full tw-overflow-hidden tw-wrap">
           <div
-            class="tw-absolute tw-h-full tw-border tw-border-gray-700 tw-border-opacity-25 tw-border-solid tw-left-3 lg:tw-left-1/2"
+            class="tw-absolute tw-h-full tw-border tw-border-gray-700 tw-border-opacity-25 tw-left-3 lg:tw-left-1/2"
           />
 
           <div
@@ -31,7 +31,7 @@
               ></image-viewer>
             </div>
             <div
-              class="tw-z-10 tw-flex tw-items-center tw-flex-none tw-order-1 tw-w-6 tw-h-6 tw-bg-red-800 tw-border-white tw-border-solid tw-rounded-full tw-shadow tw-border-3"
+              class="tw-z-10 tw-flex tw-items-center tw-flex-none tw-order-1 tw-w-6 tw-h-6 tw-bg-red-800 tw-border-white tw-rounded-full tw-shadow tw-border-3"
             >
               <div
                 class="tw-mx-auto tw-text-lg tw-font-semibold tw-text-white"

@@ -15,7 +15,7 @@
         <div class="tw-pb-1 tw-font-medium">
           Tarife für Sportvereine außerhalb der Gemeinde Eutingen im Gäu:
         </div>
-        <ul>
+        <ul class="tw-pl-6 tw-list-disc">
           <li>
             Wintertarif ohne Flutlicht: von Oktober bis März für Spiel und
             Trainingseinheit (90 Minuten) zwischen 10 und 16 Uhr: 110 Euro pro
@@ -36,7 +36,7 @@
         <div class="tw-pb-1 tw-font-medium">
           Tarife für Sportvereine innerhalb der Gemeinde Eutingen im Gäu:
         </div>
-        <ul>
+        <ul class="tw-pl-6 tw-list-disc">
           <li>
             bei Inanspruchnahme der Umkleidekabinen, Sanitärräume und
             Flutlichtanlage pro Spiel oder Trainingseinheit (90 Minuten): 30
@@ -57,7 +57,7 @@
       <div class="tw-pt-4">
         <div class="tw-pb-1 tw-font-medium">Anstoßzeiten:</div>
         <div>
-          <ul>
+          <ul class="tw-pl-6 tw-list-disc">
             <li>10:00 Uhr</li>
             <li>12:00 Uhr</li>
             <li>14:00 Uhr</li>

@@ -95,7 +95,7 @@
               Öffnungszeiten
             </header-title>
             <div
-              class="tw-flex tw-flex-col tw-p-4 tw-bg-white tw-border-2 tw-border-gray-300 tw-border-solid tw-rounded"
+              class="tw-flex tw-flex-col tw-p-4 tw-bg-white tw-border-2 tw-border-gray-300 tw-rounded"
             >
               <div
                 class="tw-text-xs tw-font-medium tw-tracking-wide tw-text-gray-500 tw-uppercase"
@@ -125,7 +125,7 @@
               Kontakt
             </header-title>
             <div
-              class="tw-flex tw-flex-col tw-p-4 tw-bg-white tw-border-2 tw-border-gray-300 tw-border-solid tw-rounded"
+              class="tw-flex tw-flex-col tw-p-4 tw-bg-white tw-border-2 tw-border-gray-300 tw-rounded"
             >
               <div
                 class="tw-text-lg tw-font-medium tw-tracking-wide tw-text-gray-500 tw-uppercase"
@@ -143,7 +143,7 @@
                     path: '/kontakt/',
                     query: { auswahl: 'restaurant' },
                   }"
-                  class="tw-inline-flex tw-items-center tw-justify-center tw-col-start-1 tw-col-end-2 tw-px-3 tw-py-1 tw-font-medium tw-text-red-800 tw-no-underline tw-rounded-full hover:tw-bg-red-100 hover:tw-bg-opacity-50 active:tw-text-red-900 md:tw-mb-2 lg:tw-mb-0 tw-on-focus"
+                  class="tw-inline-flex tw-items-center tw-justify-center tw-col-start-1 tw-col-end-2 tw-px-3 tw-py-1 tw-font-medium tw-text-red-800 tw-rounded-full hover:tw-bg-red-100 hover:tw-bg-opacity-50 active:tw-text-red-900 md:tw-mb-2 lg:tw-mb-0 tw-on-focus"
                 >
                   Kontakt
                   <svg
