@@ -208,18 +208,10 @@
 import pageSection from '@/components/common/PageSection'
 import btn from '@/components/controls/DownloadButton'
 
-import { mdiCloudDownload, mdiVideo } from '@mdi/js'
-
 export default {
   metaInfo: {
     title: 'Leitbild',
   },
   components: { pageSection, btn },
-  data() {
-    return {
-      mdiCloudDownload,
-      mdiVideo,
-    }
-  },
 }
 </script>
