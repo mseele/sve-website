@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-flex-col tw-max-w-full tw-min-h-screen tw-font-sans">
+  <v-app class="tw-flex tw-flex-col tw-max-w-full tw-min-h-screen tw-font-sans">
     <app-bar v-model="drawer" :transparent="transparent" :light="light" />
     <app-navigation-drawer v-model="drawer" />
     <div
@@ -13,7 +13,7 @@
       <cookie-law />
       <notification />
     </ClientOnly>
-  </div>
+  </v-app>
 </template>
 
 <script>
