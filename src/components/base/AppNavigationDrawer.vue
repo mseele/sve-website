@@ -51,7 +51,7 @@
                     v-for="(item, index) in items"
                     :key="'itm' + index"
                     :to="item.to"
-                    class="block p-2 my-1 text-sm font-semibold tracking-wide text-gray-800 rounded-md xl:p-3 hover:text-black xl:text-base focus:outline-none on-focus"
+                    class="block p-2 my-1 text-sm font-medium tracking-wide text-gray-800 rounded-md xl:p-3 hover:text-black xl:text-base focus:outline-none on-focus"
                     exact-active-class="text-black bg-gray-200"
                     >{{ item.title }}</g-link
                   >
