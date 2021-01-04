@@ -29,6 +29,9 @@ module.exports = {
       screens: {
         xs: '375px',
       },
+      fontFamily: {
+        sans: ['Roboto', 'sans-serif'],
+      },
       spacing: {
         '0/5': '0.1rem',
         '1/2': '50%',

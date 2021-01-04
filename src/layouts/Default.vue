@@ -1,19 +1,19 @@
 <template>
-  <v-app>
+  <div class="tw-flex tw-flex-col tw-max-w-full tw-min-h-screen tw-font-sans">
     <app-bar v-model="drawer" :transparent="transparent" :light="light" />
     <app-navigation-drawer v-model="drawer" />
-    <v-main
-      class="tw-bg-gray-100"
+    <div
+      class="tw-relative tw-flex tw-flex-col tw-flex-grow tw-max-w-full tw-bg-gray-100"
       :class="[transparent ? 'tw-pt-0' : 'tw-pt-12 md:tw-pt-14']"
     >
       <slot />
-    </v-main>
+    </div>
     <app-footer />
     <ClientOnly>
       <cookie-law />
       <notification />
     </ClientOnly>
-  </v-app>
+  </div>
 </template>
 
 <script>
