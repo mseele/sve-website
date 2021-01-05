@@ -11,7 +11,7 @@ const abteilungsleiterHerren = {
 const jugendleiter = {
   title: 'Jugendleiterin',
   name: 'Diana Akermann',
-  email: 'akermann.diana@googlemail.com',
+  email: 'akermann.diana@gmail.com',
   mobile: {
     formatted: '0163 7938508',
     raw: '+491637938508',
@@ -52,6 +52,20 @@ export default {
       },
       contact: abteilungsleiterHerren,
       teamID: '01A1LJM17C000000VV0AG80NVSEJ47CH',
+    },
+    {
+      key: 'ah',
+      team: 'AH',
+      league: 'Hobby',
+      contact: {
+        title: 'Ansprechpartner',
+        name: 'Dietmar Kurbjun',
+        email: 'diddi.kurbjun@gmail.com',
+        phone: {
+          formatted: '0172 7490132',
+          raw: '+491727490132',
+        },
+      },
     },
   ],
   frauen: [
@@ -245,7 +259,7 @@ export default {
       league: 'Bezirksstaffel',
       coach: {
         name: 'Francesco Caboli',
-        email: 'Franco030878@googlemail.com',
+        email: 'Franco030878@gmail.com',
         mobile: {
           formatted: '0162 5869821',
           raw: '+491625869821',

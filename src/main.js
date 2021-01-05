@@ -1,18 +1,16 @@
-import Vuetify from 'vuetify/lib'
-import 'vuetify/dist/vuetify.min.css'
-import colors from 'vuetify/es5/util/colors'
 import Vuex from 'vuex'
-import DefaultLayout from '@/layouts/Default.vue'
-import '@/assets/styles.scss'
-import scrollBehavior from '@/util/scroll-behavior'
+import defaultLayout from '@/layouts/default.vue'
+import scrollBehavior from '@/util/scrollBehavior'
 
 require('@/assets/tailwind.css')
-require('typeface-roboto')
+require('inter-ui/inter-hinted.css')
+require('@glidejs/glide/dist/css/glide.core.min.css')
+require('@glidejs/glide/dist/css/glide.theme.min.css')
 
 export default function (Vue, { appOptions, head, router }) {
   head.meta.push({
     name: 'theme-color',
-    content: '#a22122',
+    content: '#991B1B',
   })
 
   Vue.use(Vuex)
@@ -43,28 +41,7 @@ export default function (Vue, { appOptions, head, router }) {
     },
   })
 
-  Vue.use(Vuetify)
-  const vuetify = new Vuetify({
-    icons: {
-      iconfont: 'mdiSvg',
-    },
-    theme: {
-      themes: {
-        light: {
-          primary: '#a22122',
-          accent: colors.grey.darken3,
-          secondary: '#047404',
-          info: colors.blue.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-        },
-      },
-    },
-  })
-  appOptions.vuetify = vuetify
-
   // customize scrollBehavior
   router.options.scrollBehavior = (...args) => scrollBehavior(...args)
-  Vue.component('Layout', DefaultLayout)
+  Vue.component('Layout', defaultLayout)
 }

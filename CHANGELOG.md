@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/mseele/sve-website/compare/v2.6.1...v3.0.0) (2021-01-05)
+
+
+### Features
+
+* **button:** add dark mode support ([a60b120](https://github.com/mseele/sve-website/commit/a60b1204cff38c39f7bbb5548664aa77bd602c04))
+* **components:** add new hero section ([af2eb74](https://github.com/mseele/sve-website/commit/af2eb74bbaa6142efc2b97a4a53be29e275ab567))
+* **controls:** add button and title components ([84d9363](https://github.com/mseele/sve-website/commit/84d936361f5f37ceea3d946364322b2df086f07f))
+* **download button:** add rel noreferrer ([d546c8d](https://github.com/mseele/sve-website/commit/d546c8dd57527ee2f6293c09cbbce479f4d93e79))
+* **download button:** support dark mode ([f558887](https://github.com/mseele/sve-website/commit/f5588877a9f2f9193834c8762b59f908af432d32))
+* **header-title:** add wrap feature ([4eda841](https://github.com/mseele/sve-website/commit/4eda84157fb9f5b6f4fb0c0987be49bc6f845752))
+* **hero-section:** add smaller screen feature ([41afdc2](https://github.com/mseele/sve-website/commit/41afdc20dec40b912e20a0f630a65b2591839c3b))
+* **hero-section:** add wrap and truncate feature ([f6869be](https://github.com/mseele/sve-website/commit/f6869be57a445583f66608cd4066f006d464a291))
+* **history:** add new history nodes ([adf30a7](https://github.com/mseele/sve-website/commit/adf30a74ea8b348e0f6a32242567d440a7952c97)), closes [#203](https://github.com/mseele/sve-website/issues/203)
+* **links:** add youtube channel ([dab386a](https://github.com/mseele/sve-website/commit/dab386ab7e72c2c83dd41c86540959c6bb92e8e8)), closes [#118](https://github.com/mseele/sve-website/issues/118)
+* **netlify:** add netlify config via file ([ce373fe](https://github.com/mseele/sve-website/commit/ce373fe804e19e64f73b5eaa383700b9f0d8c30e))
+* **news:** add jugendtunier 2021 ([4a9761a](https://github.com/mseele/sve-website/commit/4a9761a1e08efa937a0954b070d12be54b1aca2a))
+* **news:** add member letter 2-2020 ([828daac](https://github.com/mseele/sve-website/commit/828daac68a7a6560fa03f81ecaf7d0c3024d3741))
+* **news:** remove outdated christmas news ([04eb360](https://github.com/mseele/sve-website/commit/04eb3600db4532252fc0233230321259575ece08))
+* **pageSection:** make title optional ([62a3d94](https://github.com/mseele/sve-website/commit/62a3d94ac1c3d9b8bbc2f17c2a835bf3bdf4c1ea))
+* **teamsport:** add AH team ([491a7b4](https://github.com/mseele/sve-website/commit/491a7b4670a9db53e1bb5b877efce9d36fec5b4b)), closes [#202](https://github.com/mseele/sve-website/issues/202)
+* remove vuetify and fully migrate to tailwindcss ([cb67511](https://github.com/mseele/sve-website/commit/cb6751101a7430c24afda117ec1b4dc7a1db70f7))
+* **pre booking:** display a separate page for pre booking ([6ba8159](https://github.com/mseele/sve-website/commit/6ba8159505297c08adc22e82131b5bd5e0153e6e))
+* **section:** add new page section ([500a523](https://github.com/mseele/sve-website/commit/500a523abc049036974fdf3513379e25539cf91f))
+
+
+### Bug Fixes
+
+* **cookie law:** add shadow outline style ([902372f](https://github.com/mseele/sve-website/commit/902372f567da048cda2ef76e169c49673f561d50))
+* **email subscription:** add missing underline style ([48eca9b](https://github.com/mseele/sve-website/commit/48eca9b693f65bcbe2e58aaae58ec692c020de3c))
+* **events:** don't check cost variables ([d96c690](https://github.com/mseele/sve-website/commit/d96c690e8b3499149b496a40f2dcfab0a1525039))
+* **header-title:** make truncate configurable ([be438ee](https://github.com/mseele/sve-website/commit/be438ee7423de1bc569fb76c7aebb3bd4d0fea1e))
+* **hero section:** improve responsibility on tiny screen ([f331510](https://github.com/mseele/sve-website/commit/f33151091ee1a9736ac6aca57f9b415b9b534d5b))
+* **kontakt:** rename to lower case components ([1299458](https://github.com/mseele/sve-website/commit/1299458368d22a373406f9e5fe6171884667a539))
+* **layout:** don't use reserved footer name ([c4b86bf](https://github.com/mseele/sve-website/commit/c4b86bf749c04d1139f7bc5e2dc0fae7d33d432c))
+* **mitgliedschaft:** correct on focus link ([27d1827](https://github.com/mseele/sve-website/commit/27d1827cdb6a0da1dc4f6d3d4e21c1e17800a0a6))
+* **notification:** remove debug code ([4a6daa5](https://github.com/mseele/sve-website/commit/4a6daa59bc96d99fa1081f65c670a76282aada45))
+* **page section:** fix bg issue ([3537c3a](https://github.com/mseele/sve-website/commit/3537c3a0cf49d4276fccebe383a7ee83d0f2b041))
+* **teams:** add missing volleyball contact title ([ed5eac8](https://github.com/mseele/sve-website/commit/ed5eac8dae9f92650d8dd2ca6d1220deb01719d1))
+* **teamsport:** fix typo ([d27f58d](https://github.com/mseele/sve-website/commit/d27f58d779df70610049f7cf789a1f568b28f354))
+* remove unused mdi package ([322d665](https://github.com/mseele/sve-website/commit/322d665d8fab48e7f8060cdecda963bc74372262))
+
 ### [2.6.1](https://github.com/mseele/sve-website/compare/v2.6.0...v2.6.1) (2020-11-04)
 
 
