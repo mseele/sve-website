@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/mseele/sve-website/compare/v3.0.0...v3.1.0) (2021-01-05)
+
+
+### Features
+
+* **news:** add chrismas news ([901cf8e](https://github.com/mseele/sve-website/commit/901cf8e5fe185cdd4a7bd88448ff4f1e8cdd6898))
+* **news:** add member letter 2-2020 ([badb2e6](https://github.com/mseele/sve-website/commit/badb2e6c896af6ae39ac2f0f43e901ccdc11a0c5))
+* **news:** remove outdated christmas news ([2ee6a0f](https://github.com/mseele/sve-website/commit/2ee6a0f1566fd4815c107c43e217730af6cfee3c))
+
+
+### Bug Fixes
+
+* **events:** center "no events" message ([324a1a0](https://github.com/mseele/sve-website/commit/324a1a0a4c56cf5727cc007938a974f11a8479ad))
+* set beta to true ([348cd66](https://github.com/mseele/sve-website/commit/348cd6643648c12f7b2368d51b47788615093530))
+* **events:** don't check cost variables ([0b0312d](https://github.com/mseele/sve-website/commit/0b0312db3a942cb32a6d74a093b581af6919eaa7))
+* **teams:** add missing volleyball contact title ([3ffd9fd](https://github.com/mseele/sve-website/commit/3ffd9fdb6e1f51cbe87566fe7f04ed573e87b744))
+* **teams:** correct team names ([dfb9bd8](https://github.com/mseele/sve-website/commit/dfb9bd8f9881fef2aaada971809313c2cba95e98))
+* **verein:** remove duplicate and add kids section ([7fa00cd](https://github.com/mseele/sve-website/commit/7fa00cd4caf21284e4c2b011b30fc4772898e6f8))
+
 ## [3.0.0](https://github.com/mseele/sve-website/compare/v2.6.1...v3.0.0) (2021-01-05)
 
 

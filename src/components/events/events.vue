@@ -60,7 +60,7 @@
             </div>
           </div>
         </div>
-        <div v-else class="text-xl font-medium">
+        <div v-else class="self-center text-xl font-medium">
           <slot name="infoEmpty"></slot>
         </div>
         <email-subscription
