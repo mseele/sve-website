@@ -1,16 +1,14 @@
 <template>
   <div>
     <hero-section
-      v-slot="{ imageClass }"
       :title="event.name"
       :dark="!event.light"
-      wrap
-      dense
+      :image="event.image"
       :primary-button="{ text: 'Mehr Infos', to: '#beschreibung' }"
       :secondary-button="{ text: 'Anmeldung', to: '#anmeldung' }"
-    >
-      <g-image :src="event.image" :class="imageClass" />
-    </hero-section>
+      wrap
+      dense
+    />
     <page-section id="beschreibung" title="Beschreibung">
       <div v-html="event.description" />
     </page-section>

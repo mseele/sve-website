@@ -2,14 +2,12 @@
   <Layout :transparent="true" :light="true">
     <hero-section
       id="home"
-      v-slot="{ imageClass }"
       title="SV Eutingen"
       subtitle="#mehralseinverein"
+      :image="$page.heroImages.src"
       :primary-button="{ text: 'Aktuelles', to: '#aktuelles' }"
       :secondary-button="{ text: 'Mach mit', to: '#mach-mit' }"
-    >
-      <g-image src="@/assets/home/main.jpg" :class="imageClass" />
-    </hero-section>
+    />
     <page-section id="aktuelles" title="Aktuelles">
       <div class="space-y-4">
         <div
@@ -96,6 +94,9 @@ export default {
 
 <page-query>
 query {
+  heroImages(id: "home") {
+    src
+  }
   news: allNews(order: ASC) {
     edges {
       node {

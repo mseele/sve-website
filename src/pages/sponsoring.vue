@@ -1,14 +1,12 @@
 <template>
   <Layout :transparent="true">
     <hero-section
-      v-slot="{ imageClass }"
       title="Sponsoring"
       subtitle="PROFITIERE MIT UNS"
+      :image="$page.heroImages.src"
       :primary-button="{ text: 'Bandenwerbung', to: '#bande' }"
       :secondary-button="{ text: 'Unsere Partner', to: '#partner' }"
-    >
-      <g-image src="@/assets/sponsoring/main.jpg" :class="imageClass" />
-    </hero-section>
+    />
     <page-section title="Sponsoring">
       Unsere Sponsoren und Partner ermöglichen durch ihre finanzielle und
       materielle Unterstützung das sportliche und kulturelle Angebot des SV
@@ -190,3 +188,11 @@ export default {
   },
 }
 </script>
+
+<page-query>
+query {
+  heroImages(id: "sponsoring") {
+    src
+  }
+}
+</page-query>

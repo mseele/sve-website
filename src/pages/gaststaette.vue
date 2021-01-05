@@ -1,15 +1,13 @@
 <template>
   <Layout :transparent="true">
     <hero-section
-      v-slot="{ imageClass }"
       dark
       title="Auszeit"
       subtitle="UNSERE VEREINSGASTSTÄTTE"
+      :image="$page.heroImages.src"
       :primary-button="{ text: 'Infos', to: '#infos' }"
       :secondary-button="{ text: 'Öffnungszeiten', to: '#oeffnungszeiten' }"
-    >
-      <g-image src="@/assets/gaststaette/main.jpg" :class="imageClass" />
-    </hero-section>
+    />
     <page-section id="infos" title="Infos">
       <div class="pb-2 font-medium">
         In unserer Vereinsgaststätte Auszeit Eutingen findest Du die perfekte
@@ -176,6 +174,9 @@ export default {
 
 <page-query>
 query {
+  heroImages(id: "gaststaette") {
+    src
+  }
   gaststaette(id: "0") {
     images
   }

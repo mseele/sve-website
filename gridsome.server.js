@@ -112,6 +112,22 @@ module.exports = function (api) {
   })
 
   api.loadSource(async (actions) => {
+    const heroImages = actions.addCollection('heroImages')
+    heroImages.addNode({
+      id: 'home',
+      src: require.resolve('./src/assets/home/main.jpg'),
+    })
+    heroImages.addNode({
+      id: 'gaststaette',
+      src: require.resolve('./src/assets/gaststaette/main.jpg'),
+    })
+    heroImages.addNode({
+      id: 'sponsoring',
+      src: require.resolve('./src/assets/sponsoring/main.jpg'),
+    })
+  })
+
+  api.loadSource(async (actions) => {
     const gaststaette = actions.addCollection('gaststaette')
     gaststaette.addNode({
       id: '0',

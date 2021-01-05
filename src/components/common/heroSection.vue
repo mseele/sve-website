@@ -1,7 +1,6 @@
 <template>
   <div class="relative w-screen h-screen">
-    <!-- workaround for https://github.com/gridsome/gridsome/issues/292 -->
-    <slot :imageClass="'w-full h-full object-cover'"></slot>
+    <g-image :src="image" class="object-cover w-full h-full" />
     <div class="absolute inset-0 flex items-center p-4">
       <div class="container mx-auto sm:px-10 md:px-20">
         <header-title
@@ -64,6 +63,11 @@ export default {
       type: String,
       default: null,
       required: false,
+    },
+    image: {
+      type: Object,
+      default: () => null,
+      required: true,
     },
     dark: {
       type: Boolean,
