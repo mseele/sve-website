@@ -80,7 +80,7 @@
     </team-infos>
     <team-infos id="volleyball" title="Volleyball" :teams="teams.volleyball">
       Unsere Volleyballgruppe nimmt zwar nicht am regulären Wettbewerb teil,
-      aber erlebt tolle Stunden. Denn Volleybal macht in dieser Hobbygruppe
+      aber erlebt tolle Stunden. Denn Volleyball macht in dieser Hobbygruppe
       richtig viel Spaß.
     </team-infos>
   </Layout>
