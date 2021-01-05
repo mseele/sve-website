@@ -1,17 +1,21 @@
 <template>
   <div
-    class="container flex flex-col flex-grow p-4 py-10 mx-auto sm:px-10 md:px-20"
+    class="flex flex-col flex-grow"
     :class="[dark ? 'bg-gray-200' : 'bg-gray-100']"
   >
-    <header-title
-      v-if="title"
-      dark
-      truncate
-      class="pb-6 text-3xl font-semibold tracking-widest uppercase"
+    <div
+      class="container flex flex-col flex-grow p-4 py-10 mx-auto sm:px-10 md:px-20"
     >
-      {{ title }}
-    </header-title>
-    <slot></slot>
+      <header-title
+        v-if="title"
+        dark
+        truncate
+        class="pb-6 text-3xl font-semibold tracking-widest uppercase"
+      >
+        {{ title }}
+      </header-title>
+      <slot></slot>
+    </div>
   </div>
 </template>
 
