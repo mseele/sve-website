@@ -80,7 +80,7 @@
         <image-viewer
           class="w-full lg:mr-3 lg:w-2/3"
           height="480"
-          :images="images"
+          :images="$page.gaststaette.images"
         />
         <div class="flex flex-col w-full mt-6 lg:ml-3 lg:-mt-15 lg:w-1/3">
           <div id="oeffnungszeiten" class="pb-6">
@@ -171,23 +171,13 @@ export default {
   },
   components: { heroSection, pageSection, headerTitle, btn, imageViewer },
   layout: 'transparent',
-  data() {
-    return {
-      images: [
-        {
-          src: 'gaststaette/1.jpg',
-          lazy: 'gaststaette/1-min.jpg',
-        },
-        {
-          src: 'gaststaette/2.jpg',
-          lazy: 'gaststaette/2-min.jpg',
-        },
-        {
-          src: 'gaststaette/3.jpg',
-          lazy: 'gaststaette/3-min.jpg',
-        },
-      ],
-    }
-  },
 }
 </script>
+
+<page-query>
+query {
+  gaststaette(id: "0") {
+    images
+  }
+}
+</page-query>

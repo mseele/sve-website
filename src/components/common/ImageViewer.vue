@@ -1,9 +1,9 @@
 <template>
   <div>
     <div :style="'height:' + height + 'px'">
-      <img
+      <g-image
         v-if="images.length == 1"
-        :src="require('@/assets/' + images[0].src)"
+        :src="images[0]"
         class="object-cover w-full cursor-pointer"
         :style="'height:' + height + 'px'"
         @click="showFullscreen(0)"
@@ -25,8 +25,8 @@
               :key="index"
               class="glide__slide"
             >
-              <img
-                :src="require('@/assets/' + images[index].src)"
+              <g-image
+                :src="images[index]"
                 class="object-cover w-full cursor-pointer"
                 :style="'height:' + height + 'px'"
                 @click="showFullscreen($event, index)"

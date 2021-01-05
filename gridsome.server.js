@@ -92,6 +92,37 @@ module.exports = function (api) {
     }
   })
 
+  api.loadSource(async (actions) => {
+    const gaststaette = actions.addCollection('gaststaette')
+    gaststaette.addNode({
+      id: '0',
+      images: [
+        require.resolve('./src/assets/gaststaette/1.jpg'),
+        require.resolve('./src/assets/gaststaette/2.jpg'),
+        require.resolve('./src/assets/gaststaette/3.jpg'),
+      ],
+    })
+  })
+
+  api.loadSource(async (actions) => {
+    const data = require('./src/data/history.json')
+    const history = actions.addCollection('History')
+    data.forEach((item, index) => {
+      const node = {
+        sortIndex: index,
+        date: item.date,
+        text: item.text,
+      }
+      if (item.images && item.images.length > 0) {
+        node.images = []
+        for (const image of item.images) {
+          node.images.push(require.resolve('./src/assets/history/' + image))
+        }
+      }
+      history.addNode(node)
+    })
+  })
+
   api.loadSource(({ addSchemaTypes }) => {
     schema.load(addSchemaTypes)
   })

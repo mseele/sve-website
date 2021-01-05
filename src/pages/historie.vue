@@ -15,7 +15,7 @@
           />
 
           <div
-            v-for="(item, index) in history"
+            v-for="(edge, index) in $page.history.edges"
             :key="index"
             class="flex items-center justify-between w-full"
             :class="{
@@ -25,9 +25,9 @@
           >
             <div class="order-1 hidden w-5/12 lg:block">
               <image-viewer
-                v-if="item.images"
+                v-if="edge.node.images"
                 height="300"
-                :images="item.images"
+                :images="edge.node.images"
               ></image-viewer>
             </div>
             <div
@@ -39,11 +39,11 @@
               <div
                 class="flex items-center mb-3 text-lg font-medium text-gray-800 md:text-xl"
               >
-                <div>{{ item.date }}</div>
+                <div>{{ edge.node.date }}</div>
                 <button
-                  v-if="item.images"
+                  v-if="edge.node.images"
                   class="block h-6 ml-2 text-gray-500 lg:hidden"
-                  @click="showFullscreen(item.images)"
+                  @click="showFullscreen(edge.node.images)"
                 >
                   <svg
                     class="w-6 h-6"
@@ -61,7 +61,7 @@
               </div>
               <div
                 class="text-sm leading-relaxed text-gray-800 md:leading-normal md:text-base"
-                v-html="item.text"
+                v-html="edge.node.text"
               />
             </div>
           </div>
@@ -80,7 +80,6 @@
 import pageSection from '@/components/common/PageSection'
 import imageViewer from '@/components/common/ImageViewer'
 import fullscreenImageViewer from '@/components/common/FullscreenImageViewer'
-import history from '@/data/history.json'
 
 export default {
   metaInfo: {
@@ -89,7 +88,6 @@ export default {
   components: { pageSection, imageViewer, fullscreenImageViewer },
   data() {
     return {
-      history,
       fullscreen: false,
       fullscreenImages: [],
     }
@@ -102,3 +100,17 @@ export default {
   },
 }
 </script>
+
+<page-query>
+query {
+  history: allHistory(sortBy: "sortIndex", order: ASC) {
+    edges {
+      node {
+        date
+        text
+        images
+      }
+    }
+  }
+}
+</page-query>

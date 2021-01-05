@@ -3,9 +3,9 @@
     v-if="visible"
     class="fixed inset-0 z-40 w-full h-full overflow-hidden bg-black"
   >
-    <img
+    <g-image
       v-if="images.length == 1"
-      :src="require('@/assets/' + images[0].src)"
+      :src="images[0]"
       class="object-contain w-screen h-screen"
     />
     <div v-else ref="carousel" class="h-full glide">
@@ -16,8 +16,8 @@
             :key="index"
             class="glide__slide"
           >
-            <img
-              :src="require('@/assets/' + images[index].src)"
+            <g-image
+              :src="images[index]"
               class="object-contain w-screen h-screen"
             />
           </li>
