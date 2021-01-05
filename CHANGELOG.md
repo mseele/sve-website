@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.1](https://github.com/mseele/sve-website/compare/v3.1.0...v3.1.1) (2021-01-05)
+
+
+### Bug Fixes
+
+* **newsletter:** correct button background ([f483b97](https://github.com/mseele/sve-website/commit/f483b97b42a0ff00fc29766c6fe39ed0ad2f5163))
+
 ## [3.1.0](https://github.com/mseele/sve-website/compare/v3.0.0...v3.1.0) (2021-01-05)
 
 
