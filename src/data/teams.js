@@ -53,6 +53,20 @@ export default {
       contact: abteilungsleiterHerren,
       teamID: '01A1LJM17C000000VV0AG80NVSEJ47CH',
     },
+    {
+      key: 'ah',
+      team: 'AH',
+      league: 'Hobby',
+      contact: {
+        title: 'Ansprechpartner',
+        name: 'Dietmar Kurbjun',
+        email: 'diddi.kurbjun@gmail.com',
+        phone: {
+          formatted: '0172 7490132',
+          raw: '+491727490132',
+        },
+      },
+    },
   ],
   frauen: [
     {
