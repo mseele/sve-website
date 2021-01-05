@@ -205,8 +205,8 @@
 </template>
 
 <script>
-import pageSection from '@/components/common/PageSection'
-import btn from '@/components/controls/DownloadButton'
+import pageSection from '@/components/common/pageSection'
+import btn from '@/components/controls/downloadButton'
 
 export default {
   metaInfo: {

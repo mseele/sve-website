@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import inputLabel from '@/components/controls/InputLabel'
+import inputLabel from '@/components/controls/inputLabel'
 import contact from './contact'
 import touches from './touches'
 import data from '@/data/teams.js'

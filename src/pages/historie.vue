@@ -77,9 +77,9 @@
 </template>
 
 <script>
-import pageSection from '@/components/common/PageSection'
-import imageViewer from '@/components/common/ImageViewer'
-import fullscreenImageViewer from '@/components/common/FullscreenImageViewer'
+import pageSection from '@/components/common/pageSection'
+import imageViewer from '@/components/common/imageViewer'
+import fullscreenImageViewer from '@/components/common/fullscreenImageViewer'
 
 export default {
   metaInfo: {

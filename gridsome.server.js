@@ -38,7 +38,7 @@ module.exports = function (api) {
         if (event.type === 'Fitness') {
           createPage({
             path: '/fitness/' + event.id,
-            component: './src/templates/Fitness.vue',
+            component: './src/templates/fitness.vue',
             queryVariables: {
               id: event.id,
             },
@@ -46,7 +46,7 @@ module.exports = function (api) {
         } else if (event.type === 'Events') {
           createPage({
             path: '/events/' + event.id,
-            component: './src/templates/Event.vue',
+            component: './src/templates/event.vue',
             queryVariables: {
               id: event.id,
             },

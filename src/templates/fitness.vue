@@ -20,7 +20,7 @@
 
 <script>
 import axios from 'axios'
-import event from '@/components/events/Event'
+import event from '@/components/events/event'
 
 export default {
   metaInfo() {

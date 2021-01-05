@@ -62,8 +62,8 @@
 </template>
 
 <script>
-import pageSection from '@/components/common/PageSection'
-import headerTitle from '@/components/controls/HeaderTitle'
+import pageSection from '@/components/common/pageSection'
+import headerTitle from '@/components/controls/headerTitle'
 
 export default {
   metaInfo: {

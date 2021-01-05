@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import headerTitle from '@/components/controls/HeaderTitle'
+import headerTitle from '@/components/controls/headerTitle'
 import sendMessage from './sendMessage'
 
 export default {

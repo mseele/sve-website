@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import headerTitle from '@/components/controls/HeaderTitle'
+import headerTitle from '@/components/controls/headerTitle'
 import contact from './contact'
 import touches from './touches'
 

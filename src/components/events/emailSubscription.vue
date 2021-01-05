@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import emailSubscription from '@/components/common/EmailSubscription'
+import emailSubscription from '@/components/common/emailSubscription'
 
 export default {
   components: {

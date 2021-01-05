@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
-import DefaultLayout from '@/layouts/Default.vue'
-import scrollBehavior from '@/util/scroll-behavior'
+import defaultLayout from '@/layouts/default.vue'
+import scrollBehavior from '@/util/scrollBehavior'
 
 require('@/assets/tailwind.css')
 require('inter-ui')
@@ -43,5 +43,5 @@ export default function (Vue, { appOptions, head, router }) {
 
   // customize scrollBehavior
   router.options.scrollBehavior = (...args) => scrollBehavior(...args)
-  Vue.component('Layout', DefaultLayout)
+  Vue.component('Layout', defaultLayout)
 }

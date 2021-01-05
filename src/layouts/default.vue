@@ -1,14 +1,14 @@
 <template>
   <div class="flex flex-col max-w-full min-h-screen font-sans antialiased">
     <app-bar v-model="drawer" :transparent="transparent" :light="light" />
-    <app-navigation-drawer v-model="drawer" />
+    <navigation-drawer v-model="drawer" />
     <div
       class="relative flex flex-col flex-grow max-w-full bg-gray-100"
       :class="[transparent ? 'pt-0' : 'pt-12 md:pt-14']"
     >
       <slot />
     </div>
-    <app-footer />
+    <footer />
     <ClientOnly>
       <cookie-law />
       <notification />
@@ -17,17 +17,17 @@
 </template>
 
 <script>
-import appBar from '@/components/base/AppBar'
-import appNavigationDrawer from '@/components/base/AppNavigationDrawer'
-import appFooter from '@/components/base/AppFooter'
-import cookieLaw from '@/components/base/CookieLaw.vue'
-import notification from '@/components/base/Notification.vue'
+import appBar from '@/components/base/appBar'
+import navigationDrawer from '@/components/base/navigationDrawer'
+import footer from '@/components/base/footer'
+import cookieLaw from '@/components/base/cookieLaw.vue'
+import notification from '@/components/base/notification.vue'
 
 export default {
   components: {
     appBar,
-    appNavigationDrawer,
-    appFooter,
+    navigationDrawer,
+    footer,
     cookieLaw,
     notification,
   },

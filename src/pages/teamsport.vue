@@ -88,8 +88,8 @@
 
 <script>
 import teams from '@/data/teams.js'
-import pageSection from '@/components/common/PageSection'
-import teamInfos from '@/components/common/TeamInfos'
+import pageSection from '@/components/common/pageSection'
+import teamInfos from '@/components/common/teamInfos'
 
 export default {
   metaInfo: {

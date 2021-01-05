@@ -61,10 +61,10 @@
 <script>
 import axios from 'axios'
 import { ValidationObserver } from 'vee-validate'
-import inputLabel from '@/components/controls/InputLabel'
-import labeledInput from '@/components/controls/LabeledInput'
-import privacyCheckbox from '@/components/controls/PrivacyCheckbox'
-import btn from '@/components/controls/PrimaryButton'
+import inputLabel from '@/components/controls/inputLabel'
+import labeledInput from '@/components/controls/labeledInput'
+import privacyCheckbox from '@/components/controls/privacyCheckbox'
+import btn from '@/components/controls/primaryButton'
 
 export default {
   components: {

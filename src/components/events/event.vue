@@ -151,11 +151,11 @@
 
 <script>
 import axios from 'axios'
-import heroSection from '@/components/common/HeroSection'
-import pageSection from '@/components/common/PageSection'
-import ili from '@/components/controls/InfoListItem'
-import booking from '@/components/events/Booking'
-import emailSubscription from './EmailSubscription'
+import heroSection from '@/components/common/heroSection'
+import pageSection from '@/components/common/pageSection'
+import ili from '@/components/controls/infoListItem'
+import booking from '@/components/events/booking'
+import emailSubscription from '@/components/events/emailSubscription'
 import { toSubscribers } from '@/util/converters'
 
 export default {

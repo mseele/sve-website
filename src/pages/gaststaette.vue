@@ -159,11 +159,11 @@
 </template>
 
 <script>
-import heroSection from '@/components/common/HeroSection'
-import pageSection from '@/components/common/PageSection'
-import headerTitle from '@/components/controls/HeaderTitle'
-import btn from '@/components/controls/DownloadButton'
-import imageViewer from '@/components/common/ImageViewer'
+import heroSection from '@/components/common/heroSection'
+import pageSection from '@/components/common/pageSection'
+import headerTitle from '@/components/controls/headerTitle'
+import btn from '@/components/controls/downloadButton'
+import imageViewer from '@/components/common/imageViewer'
 
 export default {
   metaInfo: {

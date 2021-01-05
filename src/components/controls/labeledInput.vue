@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import inputLabel from './InputLabel'
+import inputLabel from './inputLabel'
 import { ValidationProvider, extend } from 'vee-validate'
 import { required, email } from 'vee-validate/dist/rules'
 

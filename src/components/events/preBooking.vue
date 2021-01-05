@@ -138,8 +138,8 @@
 </template>
 
 <script>
-import pageSection from '@/components/common/PageSection'
-import btn from '@/components/controls/PrimaryButton'
+import pageSection from '@/components/common/pageSection'
+import btn from '@/components/controls/primaryButton'
 import axios from 'axios'
 
 export default {

@@ -1368,7 +1368,7 @@
 </template>
 
 <script>
-import pageSection from '@/components/common/PageSection'
+import pageSection from '@/components/common/pageSection'
 
 export default {
   metaInfo: {

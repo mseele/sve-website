@@ -33,7 +33,7 @@
 import axios from 'axios'
 import { ValidationProvider, extend } from 'vee-validate'
 import { required, email } from 'vee-validate/dist/rules'
-import btn from '@/components/controls/PrimaryButton'
+import btn from '@/components/controls/primaryButton'
 
 extend('required', {
   ...required,

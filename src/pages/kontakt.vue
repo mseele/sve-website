@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import pageSection from '@/components/common/PageSection'
-import inputLabel from '@/components/controls/InputLabel'
+import pageSection from '@/components/common/pageSection'
+import inputLabel from '@/components/controls/inputLabel'
 import team from '@/components/contact/team'
 import kunstrasen from '@/components/contact/kunstrasen'
 import fitnessEvents from '@/components/contact/fitnessEvents'

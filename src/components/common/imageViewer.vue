@@ -103,7 +103,7 @@ import Glide, {
   Controls,
   Autoplay,
 } from '@glidejs/glide/dist/glide.modular.esm'
-import FullscreenImageViewer from './FullscreenImageViewer'
+import FullscreenImageViewer from '@/components/common/fullscreenImageViewer'
 
 export default {
   components: { FullscreenImageViewer },

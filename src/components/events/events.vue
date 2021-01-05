@@ -80,10 +80,10 @@
 
 <script>
 import axios from 'axios'
-import pageSection from '@/components/common/PageSection'
-import faqs from '@/components/common/Faqs'
-import emailSubscription from './EmailSubscription'
-import preBooking from '@/components/events/PreBooking'
+import pageSection from '@/components/common/pageSection'
+import faqs from '@/components/common/faqs'
+import emailSubscription from '@/components/events/emailSubscription'
+import preBooking from '@/components/events/preBooking'
 import { toSubscribers } from '@/util/converters'
 
 export default {

@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import headerTitle from '@/components/controls/HeaderTitle'
-import btn from '@/components/controls/HeroButton'
+import headerTitle from '@/components/controls/headerTitle'
+import btn from '@/components/controls/heroButton'
 
 export default {
   components: { headerTitle, btn },

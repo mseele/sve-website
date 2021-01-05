@@ -83,8 +83,8 @@
 </template>
 
 <script>
-import heroSection from '@/components/common/HeroSection'
-import pageSection from '@/components/common/PageSection'
+import heroSection from '@/components/common/heroSection'
+import pageSection from '@/components/common/pageSection'
 
 export default {
   components: {

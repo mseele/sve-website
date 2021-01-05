@@ -67,10 +67,10 @@
 
 <script>
 import links from '@/data/links.json'
-import ExternalLinks from '@/components/controls/ExternalLinks'
+import externalLinks from '@/components/controls/externalLinks'
 
 export default {
-  components: { ExternalLinks },
+  components: { externalLinks },
   props: {
     value: Boolean,
   },

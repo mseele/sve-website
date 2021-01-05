@@ -65,9 +65,9 @@
 </template>
 
 <script>
-import pageSection from '@/components/common/PageSection'
-import toogle from '@/components/controls/Toggle'
-import emailSubscription from '@/components/common/EmailSubscription'
+import pageSection from '@/components/common/pageSection'
+import toogle from '@/components/controls/toggle'
+import emailSubscription from '@/components/common/emailSubscription'
 
 export default {
   metaInfo: {
