@@ -3,7 +3,7 @@ import defaultLayout from '@/layouts/default.vue'
 import scrollBehavior from '@/util/scrollBehavior'
 
 require('@/assets/tailwind.css')
-require('inter-ui')
+require('inter-ui/inter-hinted.css')
 require('@glidejs/glide/dist/css/glide.core.min.css')
 require('@glidejs/glide/dist/css/glide.theme.min.css')
 
