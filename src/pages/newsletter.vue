@@ -17,18 +17,24 @@
         <div class="w-full lg:w-1/2 lg:pl-2">
           <div class="flex flex-col">
             <div
-              class="flex mx-auto overflow-hidden border-2 border-red-800 rounded"
+              class="flex mx-auto overflow-hidden bg-red-800 border-2 border-red-800 rounded"
             >
               <button
                 class="px-4 py-1 focus:outline-none"
-                :class="{ 'text-white bg-red-800': subscribe }"
+                :class="{
+                  'text-white': subscribe,
+                  'bg-white': !subscribe,
+                }"
                 @click="subscribe = true"
               >
                 Anmelden
               </button>
               <button
                 class="px-4 py-1 focus:outline-none"
-                :class="{ 'text-white bg-red-800': !subscribe }"
+                :class="{
+                  'text-white': !subscribe,
+                  'bg-white': subscribe,
+                }"
                 @click="subscribe = false"
               >
                 Abmelden
