@@ -8,7 +8,7 @@
     >
       <slot />
     </div>
-    <footer />
+    <app-footer />
     <ClientOnly>
       <cookie-law />
       <notification />
@@ -19,7 +19,7 @@
 <script>
 import appBar from '@/components/base/appBar'
 import navigationDrawer from '@/components/base/navigationDrawer'
-import footer from '@/components/base/footer'
+import appFooter from '@/components/base/footer'
 import cookieLaw from '@/components/base/cookieLaw.vue'
 import notification from '@/components/base/notification.vue'
 
@@ -27,7 +27,7 @@ export default {
   components: {
     appBar,
     navigationDrawer,
-    footer,
+    appFooter,
     cookieLaw,
     notification,
   },
