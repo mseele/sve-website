@@ -1,10 +1,14 @@
 <template>
   <div class="space-y-3 divide-x-0 divide-y divide-gray-300 divide-solid">
-    <div v-for="(item, index) in faqs" :key="index">
+    <div
+      v-for="(item, index) in faqs"
+      :key="index"
+      class="cursor-pointer"
+      @click="toggle(index)"
+    >
       <div
-        class="flex items-center justify-between cursor-pointer"
+        class="flex items-center justify-between"
         :class="{ 'pt-3': index > 0 }"
-        @click="toggle(index)"
       >
         <div class="font-medium">{{ item.question }}</div>
         <div class="flex items-center pl-2 text-gray-400 stroke-2">

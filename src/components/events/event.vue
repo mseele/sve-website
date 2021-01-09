@@ -78,7 +78,7 @@
       :title="bookingTitle"
       :dark="event.dates.length > 1"
     >
-      <template v-if="this.counterAvailable()">
+      <template v-if="counterAvailable()">
         <template v-if="canBook()">
           <div class="pb-4">
             <slot name="bookingHeader"></slot>
