@@ -103,6 +103,9 @@ import { ValidationObserver } from 'vee-validate'
 import labeledInput from '@/components/controls/labeledInput'
 import privacyCheckbox from '@/components/controls/privacyCheckbox'
 import btn from '@/components/controls/primaryButton'
+import { useStore } from '@/composables/store'
+
+const { updateEventsCounter, showInfo, showError } = useStore()
 
 export default {
   components: {
@@ -160,18 +163,18 @@ export default {
         .then((response) => {
           this.submitLoading = false
           this.reset()
-          const type = response.data.success ? 'showInfo' : 'showError'
-          this.$store.commit('notification_' + type, response.data.message)
           if (response.data.success) {
-            this.$store.commit('events_updateCounter', response.data.counter)
+            showInfo(response.data.message)
+            updateEventsCounter(response.data.counter)
+          } else {
+            showError(response.data.message)
           }
         })
         // eslint-disable-next-line handle-callback-err
         .catch((error) => {
           this.submitLoading = false
           this.reset()
-          this.$store.commit(
-            'notification_showError',
+          showError(
             'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
           )
         })

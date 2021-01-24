@@ -85,6 +85,9 @@ import faqs from '@/components/common/faqs'
 import emailSubscription from '@/components/events/emailSubscription'
 import preBooking from '@/components/events/preBooking'
 import { toSubscribers } from '@/util/converters'
+import { useStore } from '@/composables/store'
+
+const { updateEventsCounter, eventsCounter } = useStore()
 
 export default {
   components: { pageSection, emailSubscription, faqs, preBooking },
@@ -134,7 +137,7 @@ export default {
   },
   computed: {
     eventsCounter() {
-      return this.$store.state.events_counter
+      return eventsCounter.value
     },
   },
   mounted() {
@@ -143,7 +146,7 @@ export default {
       this.preBookingHash = preBookingValue
     }
     axios.get(this.$static.metadata.eventsAPI + '/counter').then((res) => {
-      this.$store.commit('events_updateCounter', res.data)
+      updateEventsCounter(res.data)
     })
   },
   methods: {

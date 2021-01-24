@@ -34,6 +34,9 @@ import axios from 'axios'
 import { ValidationProvider, extend } from 'vee-validate'
 import { required, email } from 'vee-validate/dist/rules'
 import btn from '@/components/controls/primaryButton'
+import { useStore } from '@/composables/store'
+
+const { showInfo, showError } = useStore()
 
 extend('required', {
   ...required,
@@ -73,12 +76,11 @@ export default {
     },
     onClick(errors) {
       if (this.newsTypes.length === 0) {
-        this.$store.commit(
-          'notification_showError',
+        showError(
           'Bitte wähle mindestens eine Newletter Option aus. Vielen Dank.'
         )
       } else if (errors.length > 0) {
-        this.$store.commit('notification_showError', errors[0])
+        showError(errors[0])
       } else {
         const value = this.email.trim()
         if (this.isSubscription()) {
@@ -99,15 +101,14 @@ export default {
         .then((response) => {
           this.loading = false
           this.email = ''
-          this.$store.commit('notification_showInfo', this.successMessage)
+          showInfo(this.successMessage)
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
           console.log(error)
           this.loading = false
           this.email = ''
-          this.$store.commit(
-            'notification_showError',
+          showError(
             'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
           )
         })
@@ -123,15 +124,14 @@ export default {
         .then((response) => {
           this.loading = false
           this.email = ''
-          this.$store.commit('notification_showInfo', this.successMessage)
+          showInfo(this.successMessage)
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
           console.log(error)
           this.loading = false
           this.email = ''
-          this.$store.commit(
-            'notification_showError',
+          showError(
             'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
           )
         })

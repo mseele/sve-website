@@ -65,6 +65,9 @@ import inputLabel from '@/components/controls/inputLabel'
 import labeledInput from '@/components/controls/labeledInput'
 import privacyCheckbox from '@/components/controls/privacyCheckbox'
 import btn from '@/components/controls/primaryButton'
+import { useStore } from '@/composables/store'
+
+const { showInfo, showError } = useStore()
 
 export default {
   components: {
@@ -141,8 +144,7 @@ export default {
         .then((response) => {
           this.submitLoading = false
           this.reset()
-          this.$store.commit(
-            'notification_showInfo',
+          showInfo(
             'Danke für deine Nachricht. Wir melden uns umgehend bei Dir.'
           )
         })
@@ -151,8 +153,7 @@ export default {
           console.log(error)
           this.submitLoading = false
           this.reset()
-          this.$store.commit(
-            'notification_showError',
+          showError(
             'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
           )
         })

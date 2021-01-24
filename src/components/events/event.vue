@@ -155,6 +155,9 @@ import ili from '@/components/controls/infoListItem'
 import booking from '@/components/events/booking'
 import emailSubscription from '@/components/events/emailSubscription'
 import { toSubscribers } from '@/util/converters'
+import { useStore } from '@/composables/store'
+
+const { updateEventsCounter, eventsCounter } = useStore()
 
 export default {
   components: {
@@ -190,7 +193,7 @@ export default {
   },
   computed: {
     eventsCounter() {
-      return this.$store.state.events_counter
+      return eventsCounter.value
     },
     bookingTitle() {
       if (this.counterAvailable()) {
@@ -206,7 +209,7 @@ export default {
   },
   mounted() {
     axios.get(this.$static.metadata.eventsAPI + '/counter').then((res) => {
-      this.$store.commit('events_updateCounter', res.data)
+      updateEventsCounter(res.data)
     })
   },
   methods: {

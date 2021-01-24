@@ -59,6 +59,10 @@
 </template>
 
 <script>
+import { useStore } from '@/composables/store'
+
+const { hideNotification, notificationMessage, notificationType } = useStore()
+
 export default {
   data() {
     return {
@@ -67,18 +71,13 @@ export default {
   },
   computed: {
     type() {
-      return this.$store.state.notification_type
+      return notificationType.value
     },
     message() {
-      return this.$store.state.notification_message
+      return notificationMessage.value
     },
-    visible: {
-      get() {
-        return this.$store.state.notification_visible
-      },
-      set(value) {
-        this.$store.commit('notification_toggleVisibility', value)
-      },
+    visible() {
+      return notificationMessage.value !== undefined
     },
   },
   watch: {
@@ -92,12 +91,12 @@ export default {
     setTimeout() {
       window.clearTimeout(this.activeTimeout)
       this.activeTimeout = window.setTimeout(() => {
-        this.visible = false
+        hideNotification()
       }, 5000)
     },
     close() {
       window.clearTimeout(this.activeTimeout)
-      this.visible = false
+      hideNotification()
     },
   },
 }
