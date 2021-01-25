@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.4](https://github.com/mseele/sve-website/compare/v3.1.3...v3.1.4) (2021-01-25)
+
+
+### Bug Fixes
+
+* **tailwind:** add json files to purge list ([87512cd](https://github.com/mseele/sve-website/commit/87512cdc944022e1909ca00af08a81ec1961d84d))
+
 ### [3.1.3](https://github.com/mseele/sve-website/compare/v3.1.2...v3.1.3) (2021-01-25)
 
 ### [3.1.2](https://github.com/mseele/sve-website/compare/v3.1.1...v3.1.2) (2021-01-09)
