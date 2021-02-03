@@ -8,7 +8,9 @@
     "develop": "gridsome develop",
     "explore": "gridsome explore",
     "build": "gridsome build",
-    "release": "standard-version"
+    "release": "standard-version",
+    "ncu": "ncu -p yarn -x autoprefixer,postcss,webpack",
+    "ncuu": "ncu -u -p yarn -x autoprefixer,postcss,webpack"
   },
   "dependencies": {
     "@glidejs/glide": "^3.4.1",
