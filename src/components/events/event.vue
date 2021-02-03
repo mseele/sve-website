@@ -10,6 +10,7 @@
       dense
     />
     <page-section id="beschreibung" title="Beschreibung">
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <div v-html="event.description" />
     </page-section>
     <page-section id="details" title="Details" dark>
