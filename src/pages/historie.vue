@@ -43,6 +43,7 @@
                 <div>{{ edge.node.date }}</div>
                 <button
                   v-if="edge.node.images"
+                  aria-label="show fullscreen"
                   class="block h-6 ml-2 text-gray-500 lg:hidden"
                   @click="showFullscreen(edge.node.images)"
                 >

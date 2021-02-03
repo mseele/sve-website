@@ -151,6 +151,7 @@
         </g-link>
       </nav>
       <button
+        aria-label="open menu"
         class="w-6 h-6 rounded focus:outline-none on-focus-dark"
         :class="[
           !isTransparent || light

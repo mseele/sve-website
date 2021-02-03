@@ -38,6 +38,7 @@
           <button
             v-for="(image, index) in images"
             :key="index"
+            :aria-label="'bullet' + (index + 1)"
             class="glide__bullet"
             :data-glide-dir="'=' + index"
           ></button>
@@ -47,6 +48,7 @@
             class="absolute z-10 inline-flex w-8 h-8 -mt-4 bg-black rounded-full left-5 opacity-20 focus:outline-none top-1/2"
           />
           <button
+            aria-label="previous"
             class="absolute z-10 inline-flex -mt-4 text-white rounded-full left-5 hover:text-gray-300 focus:outline-none top-1/2"
             data-glide-dir="<"
           >
@@ -69,6 +71,7 @@
             class="absolute z-10 inline-flex w-8 h-8 -mt-4 bg-black rounded-full right-5 opacity-20 focus:outline-none top-1/2"
           />
           <button
+            aria-label="next"
             class="absolute z-10 inline-flex -mt-4 text-white rounded-full right-5 hover:text-gray-300 focus:outline-none top-1/2"
             data-glide-dir=">"
           >

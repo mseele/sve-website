@@ -20,6 +20,7 @@
               class="flex mx-auto overflow-hidden bg-red-800 border-2 border-red-800 rounded"
             >
               <button
+                aria-label="subscribe"
                 class="px-4 py-1 focus:outline-none"
                 :class="{
                   'text-white': subscribe,
@@ -30,6 +31,7 @@
                 Anmelden
               </button>
               <button
+                aria-label="unsubscribe"
                 class="px-4 py-1 focus:outline-none"
                 :class="{
                   'text-white': !subscribe,
