@@ -3,6 +3,7 @@
     <div :style="'height:' + height + 'px'">
       <g-image
         v-if="images.length == 1"
+        alt="image"
         :src="images[0]"
         class="object-cover w-full cursor-pointer"
         :style="'height:' + height + 'px'"
@@ -26,6 +27,7 @@
               class="glide__slide"
             >
               <g-image
+                :alt="'image' + (index + 1)"
                 :src="images[index]"
                 class="object-cover w-full cursor-pointer"
                 :style="'height:' + height + 'px'"

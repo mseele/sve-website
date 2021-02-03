@@ -64,16 +64,19 @@
   "externalItems": [
     {
       "img": "facebook.svg",
-      "to": "https://www.facebook.com/sveutingen"
+      "to": "https://www.facebook.com/sveutingen",
+      "alt": "facebook"
     },
     {
       "img": "youtube.svg",
-      "to": "https://www.youtube.com/channel/UC6QXvcCp9CpHl4az3idhkYQ"
+      "to": "https://www.youtube.com/channel/UC6QXvcCp9CpHl4az3idhkYQ",
+      "alt": "youtube"
     },
     {
       "img": "fussball_de.svg",
       "to":
-        "http://www.fussball.de/verein/sv-eutingen-wuerttemberg/-/id/00ES8GNAUG000068VV0AG08LVUPGND5I"
+        "http://www.fussball.de/verein/sv-eutingen-wuerttemberg/-/id/00ES8GNAUG000068VV0AG08LVUPGND5I",
+      "alt": "fussball.de"
     }
   ]
 }

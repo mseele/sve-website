@@ -13,6 +13,7 @@
           viewBox="0 0 539.78 634.31"
           xmlns="http://www.w3.org/2000/svg"
         >
+          <title>Logo SV Eutingen</title>
           <path
             id="path12"
             fill="#D7BD5E"

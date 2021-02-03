@@ -1,6 +1,6 @@
 <template>
   <div class="relative w-screen h-screen">
-    <g-image :src="image" class="object-cover w-full h-full" />
+    <g-image :src="image" class="object-cover w-full h-full" alt="hero image" />
     <div class="absolute inset-0 flex items-center p-4">
       <div class="container mx-auto sm:px-10 md:px-20">
         <header-title

@@ -26,6 +26,7 @@
                 >
                   <g-image
                     :src="event.node.image"
+                    :alt="event.node.name"
                     class="absolute object-cover w-full h-full transition duration-500 ease-in-out group-hover:transform-gpu group-hover:scale-110"
                   />
                 </div>

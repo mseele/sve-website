@@ -28,6 +28,7 @@
                 :class="{ invisible: !value.teamID }"
               >
                 <g-image
+                  alt="link to fussball.de"
                   class="w-5 h-5"
                   :src="require('@/assets/fussball_de.svg')"
                 />
