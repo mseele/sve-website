@@ -16,7 +16,9 @@ module.exports = function (api) {
   })
 
   api.loadSource(async (actions) => {
-    const { data } = await axios.get(eventsAPI + '?beta=' + process.env.BETA)
+    const { data } = await axios.get(
+      eventsAPI + '?beta=' + process.env.GRIDSOME_BETA
+    )
     const events = actions.addCollection('Event')
     for (const event of data) {
       // convert values
