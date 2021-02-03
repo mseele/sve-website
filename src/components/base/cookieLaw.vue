@@ -68,15 +68,15 @@ export default {
       const gdpr = isVisited()
       if (!gdpr === true) {
         isOpen.value = true
-        if (!process.env.BETA) {
+        if (!process.env.GRIDSOME_BETA) {
           Vue.$ga.disable()
         }
       } else if (gdpr === 'true') {
-        if (!process.env.BETA) {
+        if (!process.env.GRIDSOME_BETA) {
           Vue.$ga.enable()
         }
       } else if (gdpr === 'false') {
-        if (!process.env.BETA) {
+        if (!process.env.GRIDSOME_BETA) {
           Vue.$ga.disable()
         }
       }
@@ -86,7 +86,7 @@ export default {
       setVisited(true)
       isOpen.value = false
       emit('accept')
-      if (!process.env.BETA) {
+      if (!process.env.GRIDSOME_BETA) {
         Vue.$ga.enable()
       }
     }
@@ -95,7 +95,7 @@ export default {
       setVisited(false)
       isOpen.value = false
       emit('deny')
-      if (!process.env.BETA) {
+      if (!process.env.GRIDSOME_BETA) {
         Vue.$ga.disable()
       }
     }
