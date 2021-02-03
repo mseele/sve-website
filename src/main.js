@@ -1,4 +1,4 @@
-import defaultLayout from '@/layouts/default.vue'
+import defaultLayout from '@/layouts/default'
 import scrollBehavior from '@/util/scrollBehavior'
 
 require('@/assets/tailwind.css')

@@ -17,10 +17,8 @@
 import links from '@/data/links.json'
 
 export default {
-  data() {
-    return {
-      links,
-    }
+  setup() {
+    return { links }
   },
 }
 </script>

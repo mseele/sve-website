@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import { ref } from '@vue/composition-api'
+
 export default {
   props: {
     faqs: {
@@ -59,20 +61,19 @@ export default {
       default: () => [],
     },
   },
-  data() {
-    return {
-      openItems: [],
-    }
-  },
-  methods: {
-    toggle(index) {
-      const idx = this.openItems.indexOf(index)
+  setup() {
+    const openItems = ref([])
+
+    function toggle(index) {
+      const idx = openItems.value.indexOf(index)
       if (idx != -1) {
-        this.openItems.splice(idx, 1)
+        openItems.value.splice(idx, 1)
       } else {
-        this.openItems.push(index)
+        openItems.value.push(index)
       }
-    },
+    }
+
+    return { openItems, toggle }
   },
 }
 </script>

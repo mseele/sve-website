@@ -99,6 +99,7 @@
 </template>
 
 <script>
+import { onMounted, onUnmounted, ref } from '@vue/composition-api'
 import Glide, {
   Controls,
   Autoplay,
@@ -117,39 +118,40 @@ export default {
       default: () => [],
     },
   },
-  data() {
-    return {
-      fullscreen: false,
-      fullscreenIndex: 0,
-      swipe: false,
-      glide: undefined,
-    }
-  },
-  mounted() {
-    if (this.images.length > 1) {
-      this.glide = new Glide(this.$refs.carousel, {
-        type: 'carousel',
-        gap: 0,
-        autoplay: 3000,
-      })
+  setup(props) {
+    const fullscreen = ref(false)
+    const fullscreenIndex = ref(0)
+    const carousel = ref()
+    const glide = ref()
 
-      this.glide.mount({
-        Controls,
-        Autoplay,
-      })
+    function showFullscreen(event, index) {
+      fullscreenIndex.value = index
+      fullscreen.value = true
     }
-  },
-  unmounted() {
-    if (this.glide) {
-      this.glide.destroy()
-      this.glide = undefined
-    }
-  },
-  methods: {
-    showFullscreen(e, index) {
-      this.fullscreenIndex = index
-      this.fullscreen = true
-    },
+
+    onMounted(() => {
+      if (props.images.length > 1) {
+        glide.value = new Glide(carousel.value, {
+          type: 'carousel',
+          gap: 0,
+          autoplay: 3000,
+        })
+
+        glide.value.mount({
+          Controls,
+          Autoplay,
+        })
+      }
+    })
+
+    onUnmounted(() => {
+      if (glide.value) {
+        glide.value.destroy()
+        glide.value = undefined
+      }
+    })
+
+    return { fullscreen, fullscreenIndex, carousel, showFullscreen }
   },
 }
 </script>

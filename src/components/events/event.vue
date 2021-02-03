@@ -148,6 +148,7 @@
 </template>
 
 <script>
+import { onMounted, computed, getCurrentInstance } from '@vue/composition-api'
 import axios from 'axios'
 import heroSection from '@/components/common/heroSection'
 import pageSection from '@/components/common/pageSection'
@@ -156,8 +157,6 @@ import booking from '@/components/events/booking'
 import emailSubscription from '@/components/events/emailSubscription'
 import { toSubscribers } from '@/util/converters'
 import { useStore } from '@/composables/store'
-
-const { updateEventsCounter, eventsCounter } = useStore()
 
 export default {
   components: {
@@ -185,68 +184,78 @@ export default {
       default: undefined,
     },
   },
-  data() {
-    return {
-      toSubscribers,
-      countersAvailable: false,
-    }
-  },
-  computed: {
-    eventsCounter() {
-      return eventsCounter.value
-    },
-    bookingTitle() {
-      if (this.counterAvailable()) {
-        if (this.canBook()) {
+  setup(props) {
+    const { updateEventsCounter, eventsCounter } = useStore()
+
+    const bookingTitle = computed(() => {
+      if (counterAvailable()) {
+        if (canBook()) {
           return 'Anmeldung'
-        } else if (!this.isBookedUp()) {
+        } else if (!isBookedUp()) {
           return 'Warteliste'
         }
         return 'Ausgebucht'
       }
       return 'Anmeldung'
-    },
-  },
-  mounted() {
-    axios.get(this.$static.metadata.eventsAPI + '/counter').then((res) => {
-      updateEventsCounter(res.data)
     })
-  },
-  methods: {
-    eventCounter() {
-      const e = this.event
-      return this.eventsCounter.find((counter) => counter.id === e.id)
-    },
-    counterAvailable() {
-      return typeof this.eventCounter() !== 'undefined'
-    },
-    isBookedUp() {
-      const eventCounter = this.eventCounter()
-      if (eventCounter.maxSubscribers === -1) {
+
+    onMounted(() => {
+      axios
+        .get(getCurrentInstance().proxy.$static.metadata.eventsAPI + '/counter')
+        .then((res) => {
+          updateEventsCounter(res.data)
+        })
+    })
+
+    function eventCounter() {
+      const e = props.event
+      return eventsCounter.value.find((counter) => counter.id === e.id)
+    }
+
+    function counterAvailable() {
+      return typeof eventCounter() !== 'undefined'
+    }
+
+    function isBookedUp() {
+      const counter = eventCounter()
+      if (counter.maxSubscribers === -1) {
         return false
       }
       return (
-        eventCounter.subscribers >= eventCounter.maxSubscribers &&
-        eventCounter.waitingList >= eventCounter.maxWaitingList
+        counter.subscribers >= counter.maxSubscribers &&
+        counter.waitingList >= counter.maxWaitingList
       )
-    },
-    availableSubscribers() {
-      const eventCounter = this.eventCounter()
-      if (eventCounter.maxSubscribers === -1) {
+    }
+
+    function availableSubscribers() {
+      const counter = eventCounter()
+      if (counter.maxSubscribers === -1) {
         return -1
       }
-      return eventCounter.maxSubscribers - eventCounter.subscribers
-    },
-    durationPrefix() {
-      if (this.event.type === 'Fitness') {
+      return counter.maxSubscribers - counter.subscribers
+    }
+
+    function durationPrefix() {
+      if (props.event.type === 'Fitness') {
         return 'Kurslänge:'
       }
       return 'Eventlänge: ca.'
-    },
-    canBook() {
-      const availableSubscribers = this.availableSubscribers()
-      return availableSubscribers === -1 || availableSubscribers > 0
-    },
+    }
+
+    function canBook() {
+      const available = availableSubscribers()
+      return available === -1 || available > 0
+    }
+
+    return {
+      toSubscribers,
+      bookingTitle,
+      counterAvailable,
+      isBookedUp,
+      availableSubscribers,
+      durationPrefix,
+      canBook,
+    }
   },
 }
 </script>

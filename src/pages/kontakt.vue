@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { ref, onMounted } from '@vue/composition-api'
 import pageSection from '@/components/common/pageSection'
 import inputLabel from '@/components/controls/inputLabel'
 import team from '@/components/contact/team'
@@ -52,8 +53,18 @@ export default {
     sponsoring,
     other,
   },
-  data() {
+  setup(props, { root }) {
+    const category = ref(null)
+
+    onMounted(() => {
+      const selection = root.$route.query.auswahl
+      if (selection) {
+        category.value = selection
+      }
+    })
+
     return {
+      category,
       categories: [
         { value: 'team', text: 'Kontakt zu einer Mannschaft herstellen' },
         { value: 'kunstrasen', text: 'den Kunstrasen buchen' },
@@ -68,13 +79,6 @@ export default {
         { value: 'sponsoring', text: 'Kontakt zum Thema Sponsoring aufnehmen' },
         { value: 'other', text: 'ein anderes Thema besprechen' },
       ],
-      category: null,
-    }
-  },
-  mounted() {
-    const selection = this.$route.query.auswahl
-    if (selection) {
-      this.category = selection
     }
   },
 }

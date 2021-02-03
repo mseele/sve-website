@@ -30,13 +30,12 @@
 </template>
 
 <script>
+import { ref, getCurrentInstance, onMounted } from '@vue/composition-api'
 import axios from 'axios'
 import { ValidationProvider, extend } from 'vee-validate'
 import { required, email } from 'vee-validate/dist/rules'
 import btn from '@/components/controls/primaryButton'
 import { useStore } from '@/composables/store'
-
-const { showInfo, showError } = useStore()
 
 extend('required', {
   ...required,
@@ -64,78 +63,87 @@ export default {
       default: 'subscribe',
     },
   },
-  data() {
-    return {
-      email: '',
-      loading: false,
+  setup(props) {
+    const { showInfo, showError } = useStore()
+
+    const email = ref('')
+    const loading = ref(false)
+
+    let $static = null
+    onMounted(() => {
+      $static = getCurrentInstance().proxy.$static
+    })
+
+    function isSubscription() {
+      return props.type === 'subscribe'
     }
-  },
-  methods: {
-    isSubscription() {
-      return this.type === 'subscribe'
-    },
-    onClick(errors) {
-      if (this.newsTypes.length === 0) {
+
+    function onClick(errors) {
+      if (props.newsTypes.length === 0) {
         showError(
           'Bitte wähle mindestens eine Newletter Option aus. Vielen Dank.'
         )
       } else if (errors.length > 0) {
         showError(errors[0])
       } else {
-        const value = this.email.trim()
-        if (this.isSubscription()) {
-          this.subscribe(value)
+        const value = email.value.trim()
+        if (isSubscription()) {
+          subscribe(value)
         } else {
-          this.unsubscribe(value)
+          unsubscribe(value)
         }
       }
-    },
-    unsubscribe(email) {
-      this.loading = true
-      const data = {
-        email: email,
-        types: this.newsTypes,
-      }
-      axios
-        .post(this.$static.metadata.newsAPI + '/unsubscribe', data)
-        .then((response) => {
-          this.loading = false
-          this.email = ''
-          showInfo(this.successMessage)
-        })
-        .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.log(error)
-          this.loading = false
-          this.email = ''
-          showError(
-            'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
-          )
-        })
-    },
-    subscribe(value) {
-      this.loading = true
+    }
+
+    function unsubscribe(value) {
+      loading.value = true
       const data = {
         email: value,
-        types: this.newsTypes,
+        types: props.newsTypes,
       }
       axios
-        .post(this.$static.metadata.newsAPI + '/subscribe', data)
+        .post($static.metadata.newsAPI + '/unsubscribe', data)
         .then((response) => {
-          this.loading = false
-          this.email = ''
-          showInfo(this.successMessage)
+          loading.value = false
+          email.value = ''
+          showInfo(props.successMessage)
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
           console.log(error)
-          this.loading = false
-          this.email = ''
+          loading.value = false
+          email.value = ''
           showError(
             'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
           )
         })
-    },
+    }
+
+    function subscribe(value) {
+      loading.value = true
+      const data = {
+        email: value,
+        types: props.newsTypes,
+      }
+      axios
+        .post($static.metadata.newsAPI + '/subscribe', data)
+        .then((response) => {
+          loading.value = false
+          email.value = ''
+          showInfo(props.successMessage)
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log(error)
+          loading.value = false
+          email.value = ''
+          showError(
+            'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
+          )
+        })
+    }
+
+    return { email, loading, isSubscription, onClick }
   },
 }
 </script>

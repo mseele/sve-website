@@ -66,32 +66,34 @@
 </template>
 
 <script>
+import { watch, ref } from '@vue/composition-api'
 import links from '@/data/links.json'
 import externalLinks from '@/components/controls/externalLinks'
 
 export default {
   components: { externalLinks },
   props: {
-    value: Boolean,
-  },
-  data() {
-    return {
-      drawer: this.value,
-      links,
-    }
-  },
-  computed: {
-    items() {
-      return this.links.mainItems.concat(this.links.items)
+    value: {
+      type: Boolean,
+      deafult: false,
     },
   },
-  watch: {
-    value(val) {
-      this.drawer = val
-    },
-    drawer(val) {
-      this.$emit('input', val)
-    },
+  setup(props, { emit }) {
+    const drawer = ref(props.value)
+    const items = links.mainItems.concat(links.items)
+
+    watch(
+      () => props.value,
+      (newValue) => {
+        drawer.value = newValue
+      }
+    )
+
+    watch(drawer, (newValue) => {
+      emit('input', newValue)
+    })
+
+    return { drawer, items }
   },
 }
 </script>

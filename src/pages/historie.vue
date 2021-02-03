@@ -77,6 +77,7 @@
 </template>
 
 <script>
+import { ref } from '@vue/composition-api'
 import pageSection from '@/components/common/pageSection'
 import imageViewer from '@/components/common/imageViewer'
 import fullscreenImageViewer from '@/components/common/fullscreenImageViewer'
@@ -86,17 +87,20 @@ export default {
     title: 'Historie',
   },
   components: { pageSection, imageViewer, fullscreenImageViewer },
-  data() {
-    return {
-      fullscreen: false,
-      fullscreenImages: [],
+  setup() {
+    const fullscreen = ref(false)
+    const fullscreenImages = ref([])
+
+    function showFullscreen(images) {
+      fullscreenImages.value = images
+      fullscreen.value = true
     }
-  },
-  methods: {
-    showFullscreen(images) {
-      this.fullscreenImages = images
-      this.fullscreen = true
-    },
+
+    return {
+      fullscreen,
+      fullscreenImages,
+      showFullscreen,
+    }
   },
 }
 </script>

@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { ref, onMounted, watch } from '@vue/composition-api'
 import inputLabel from '@/components/controls/inputLabel'
 import contact from './contact'
 import touches from './touches'
@@ -49,93 +50,95 @@ import data from '@/data/teams.js'
 
 export default {
   components: { inputLabel, contact, touches },
-  data() {
-    return {
-      data,
-      team: null,
-      toItems: [],
-      to: null,
-      groups: [
-        { key: 'herren', text: 'Herrenfussball' },
-        { key: 'frauen', text: 'Frauenfussball' },
-        { key: 'jugend_herren', text: 'Jugendfussball (männlich)' },
-        { key: 'jugend_frauen', text: 'Jugendfussball (weiblich)' },
-        { key: 'kinder', text: 'Kinderfussball' },
-        { key: 'volleyball', text: 'Volleyball' },
-      ],
-    }
-  },
-  watch: {
-    team(val) {
+  setup(props, { root }) {
+    const team = ref(null)
+    const toItems = ref([])
+    const to = ref(null)
+
+    onMounted(() => {
+      const selection = root.$route.query.team
+      if (selection) {
+        team.value = selection
+      }
+    })
+
+    watch(team, (val) => {
       const items = []
       if (val != null) {
-        const team = this.findTeam(val)
+        const team = findTeam(val)
         if (team != null) {
           if (team.coach && team.coach.email) {
             items.push({
               value: team.coach.email,
-              text: this.fullyQualifiedCoachName(team.coach),
+              text: fullyQualifiedCoachName(team.coach),
             })
           }
           if (team.contact && team.contact.email) {
             items.push({
               value: team.contact.email,
-              text: this.fullyQualifiedContactName(team.contact),
+              text: fullyQualifiedContactName(team.contact),
             })
           }
         }
       }
-      this.$nextTick(() => {
-        this.toItems = items
-        this.to = items.length > 0 ? items[0].value : 'info@sv-eutingen.de'
+      root.$nextTick(() => {
+        toItems.value = items
+        to.value = items.length > 0 ? items[0].value : 'info@sv-eutingen.de'
       })
-    },
-  },
-  mounted() {
-    const selection = this.$route.query.team
-    if (selection) {
-      this.team = selection
-    }
-  },
-  methods: {
-    teams() {
+    })
+
+    const groups = [
+      { key: 'herren', text: 'Herrenfussball' },
+      { key: 'frauen', text: 'Frauenfussball' },
+      { key: 'jugend_herren', text: 'Jugendfussball (männlich)' },
+      { key: 'jugend_frauen', text: 'Jugendfussball (weiblich)' },
+      { key: 'kinder', text: 'Kinderfussball' },
+      { key: 'volleyball', text: 'Volleyball' },
+    ]
+
+    function teams() {
       const teams = []
-      for (const group of this.groups) {
-        for (const item of this.data[group.key]) {
+      for (const group of groups) {
+        for (const item of data[group.key]) {
           teams.push({ value: item.key, text: group.text + ' - ' + item.team })
         }
       }
       return teams
-    },
-    coachName(key) {
-      const team = this.findTeam(key)
+    }
+
+    function coachName(key) {
+      const team = findTeam(key)
       if (team != null && team.coach != null) {
-        return this.fullyQualifiedCoachName(team.coach)
+        return fullyQualifiedCoachName(team.coach)
       }
       return null
-    },
-    coachTouches(key) {
-      const team = this.findTeam(key)
+    }
+
+    function coachTouches(key) {
+      const team = findTeam(key)
       if (team != null && team.coach != null) {
-        return this.resolveTouches(team.coach)
+        return resolveTouches(team.coach)
       }
       return []
-    },
-    contactName(key) {
-      const team = this.findTeam(key)
+    }
+
+    function contactName(key) {
+      const team = findTeam(key)
       if (team != null && team.contact != null) {
-        return this.fullyQualifiedContactName(team.contact)
+        return fullyQualifiedContactName(team.contact)
       }
       return null
-    },
-    contactTouches(key) {
-      const team = this.findTeam(key)
+    }
+
+    function contactTouches(key) {
+      const team = findTeam(key)
       if (team != null && team.contact != null) {
-        return this.resolveTouches(team.contact)
+        return resolveTouches(team.contact)
       }
       return []
-    },
-    resolveTouches(contact) {
+    }
+
+    function resolveTouches(contact) {
       const touches = []
       if (contact.phone) {
         touches.push({
@@ -166,24 +169,38 @@ export default {
         })
       }
       return touches
-    },
-    findTeam(key) {
-      for (const name in this.data) {
-        for (const team of this.data[name]) {
+    }
+
+    function findTeam(key) {
+      for (const name in data) {
+        for (const team of data[name]) {
           if (team.key === key) {
             return team
           }
         }
       }
       return null
-    },
-    fullyQualifiedCoachName(coach) {
+    }
+
+    function fullyQualifiedCoachName(coach) {
       const prefix = coach.title ? coach.title : 'Trainer'
       return prefix + ' ' + coach.name
-    },
-    fullyQualifiedContactName(contact) {
+    }
+
+    function fullyQualifiedContactName(contact) {
       return contact.title + ' ' + contact.name
-    },
+    }
+
+    return {
+      team,
+      toItems,
+      to,
+      teams,
+      coachName,
+      coachTouches,
+      contactName,
+      contactTouches,
+    }
   },
 }
 </script>

@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { ref } from '@vue/composition-api'
 import headerTitle from '@/components/controls/headerTitle'
 import sendMessage from './sendMessage'
 
@@ -44,10 +45,14 @@ export default {
       default: '',
     },
   },
-  methods: {
-    selectToItem(index) {
-      this.$refs.sendMessage.selectToItem(index)
-    },
+  setup() {
+    const sendMessage = ref()
+
+    function selectToItem(index) {
+      sendMessage.value.selectToItem(index)
+    }
+
+    return { sendMessage, selectToItem }
   },
 }
 </script>

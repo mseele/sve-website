@@ -21,7 +21,7 @@ import touches from './touches'
 
 export default {
   components: { contact, touches },
-  data() {
+  setup() {
     return {
       touches: [
         {

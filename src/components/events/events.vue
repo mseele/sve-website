@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import { ref, onMounted, getCurrentInstance } from '@vue/composition-api'
 import axios from 'axios'
 import pageSection from '@/components/common/pageSection'
 import faqs from '@/components/common/faqs'
@@ -86,8 +87,6 @@ import emailSubscription from '@/components/events/emailSubscription'
 import preBooking from '@/components/events/preBooking'
 import { toSubscribers } from '@/util/converters'
 import { useStore } from '@/composables/store'
-
-const { updateEventsCounter, eventsCounter } = useStore()
 
 export default {
   components: { pageSection, emailSubscription, faqs, preBooking },
@@ -129,51 +128,58 @@ export default {
       default: undefined,
     },
   },
-  data() {
-    return {
-      toSubscribers,
-      preBookingHash: null,
-    }
-  },
-  computed: {
-    eventsCounter() {
-      return eventsCounter.value
-    },
-  },
-  mounted() {
-    const preBookingValue = this.$route.query.pb
-    if (preBookingValue) {
-      this.preBookingHash = preBookingValue
-    }
-    axios.get(this.$static.metadata.eventsAPI + '/counter').then((res) => {
-      updateEventsCounter(res.data)
+  setup(props, { root }) {
+    const { updateEventsCounter, eventsCounter } = useStore()
+
+    const preBookingHash = ref(null)
+
+    onMounted(() => {
+      const preBookingValue = root.$route.query.pb
+      if (preBookingValue) {
+        preBookingHash.value = preBookingValue
+      }
+      axios
+        .get(getCurrentInstance().proxy.$static.metadata.eventsAPI + '/counter')
+        .then((res) => {
+          updateEventsCounter(res.data)
+        })
     })
-  },
-  methods: {
-    eventCounter(event) {
-      return this.eventsCounter.find((counter) => counter.id === event.id)
-    },
-    counterAvailable(event) {
-      const eventCounter = this.eventCounter(event)
-      return typeof eventCounter !== 'undefined'
-    },
-    isBookedUp(event) {
-      const eventCounter = this.eventCounter(event)
-      if (eventCounter.maxSubscribers === -1) {
+
+    function eventCounter(event) {
+      return eventsCounter.value.find((counter) => counter.id === event.id)
+    }
+
+    function counterAvailable(event) {
+      const counter = eventCounter(event)
+      return typeof counter !== 'undefined'
+    }
+
+    function isBookedUp(event) {
+      const counter = eventCounter(event)
+      if (counter.maxSubscribers === -1) {
         return false
       }
       return (
-        eventCounter.subscribers >= eventCounter.maxSubscribers &&
-        eventCounter.waitingList >= eventCounter.maxWaitingList
+        counter.subscribers >= counter.maxSubscribers &&
+        counter.waitingList >= counter.maxWaitingList
       )
-    },
-    availableSubscribers(event) {
-      const eventCounter = this.eventCounter(event)
-      if (eventCounter.maxSubscribers === -1) {
+    }
+
+    function availableSubscribers(event) {
+      const counter = eventCounter(event)
+      if (counter.maxSubscribers === -1) {
         return -1
       }
-      return eventCounter.maxSubscribers - eventCounter.subscribers
-    },
+      return counter.maxSubscribers - counter.subscribers
+    }
+
+    return {
+      toSubscribers,
+      preBookingHash,
+      counterAvailable,
+      isBookedUp,
+      availableSubscribers,
+    }
   },
 }
 </script>

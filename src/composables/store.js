@@ -1,6 +1,5 @@
-import { ref, computed } from '@vue/composition-api'
 import Vue from 'vue'
-import VueCompositionApi from '@vue/composition-api'
+import VueCompositionApi, { ref, computed } from '@vue/composition-api'
 
 Vue.use(VueCompositionApi)
 
@@ -19,7 +18,7 @@ export function useStore() {
     notification.value = message
   }
 
-  function hideNotification(value) {
+  function hideNotification() {
     notification.value = undefined
   }
 

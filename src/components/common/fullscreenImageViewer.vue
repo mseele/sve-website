@@ -101,6 +101,7 @@
 </template>
 
 <script>
+import { computed, ref, watch } from '@vue/composition-api'
 import Glide, {
   Controls,
   Autoplay,
@@ -126,34 +127,28 @@ export default {
       required: false,
     },
   },
-  data() {
-    return {
-      glide: undefined,
-    }
-  },
-  computed: {
-    visible: {
-      get() {
-        return this.value
-      },
-      set(val) {
-        this.$emit('input', val)
-      },
-    },
-  },
-  watch: {
-    visible(val) {
+  setup(props, { root, emit }) {
+    const glide = ref()
+
+    const carousel = ref()
+
+    const visible = computed({
+      get: () => props.value,
+      set: (val) => emit('input', val),
+    })
+
+    watch(visible, (val) => {
       if (val) {
-        if (this.images.length > 1) {
-          this.$nextTick(() => {
-            this.glide = new Glide(this.$refs.carousel, {
+        if (props.images.length > 1) {
+          root.$nextTick(() => {
+            glide.value = new Glide(carousel.value, {
               type: 'carousel',
               gap: 0,
               autoplay: 3000,
-              startAt: this.startIndex,
+              startAt: props.startIndex,
             })
 
-            this.glide.mount({
+            glide.value.mount({
               Controls,
               Autoplay,
               Swipe,
@@ -162,13 +157,14 @@ export default {
           })
         }
       } else {
-        if (this.glide) {
-          this.glide.destroy()
-          this.glide = undefined
+        if (glide.value) {
+          glide.value.destroy()
+          glide.value = undefined
         }
       }
-    },
+    })
+
+    return { visible, carousel }
   },
-  mounted() {},
 }
 </script>

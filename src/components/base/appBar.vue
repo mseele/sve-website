@@ -130,7 +130,7 @@
       </g-link>
       <nav class="items-center hidden space-x-5 sm:flex">
         <g-link
-          v-for="(item, index) in items()"
+          v-for="(item, index) in items"
           :key="index"
           :to="item.to"
           class="px-3 py-1 text-sm font-semibold tracking-widest uppercase rounded-full cursor-pointer on-focus-dark"
@@ -178,6 +178,7 @@
 </template>
 
 <script>
+import { ref, computed, onBeforeMount, onUnmounted } from '@vue/composition-api'
 import links from '@/data/links.json'
 
 export default {
@@ -191,43 +192,40 @@ export default {
       default: false,
     },
   },
-  data() {
-    return {
-      currentScroll: 0,
-      links,
+  setup(props, { emit }) {
+    const items = links.mainItems
+
+    const currentScroll = ref(0)
+
+    const isTransparent = computed(() => {
+      return props.transparent && currentScroll.value < 25
+    })
+
+    const showElevation = computed(() => {
+      return !props.transparent || currentScroll.value > 1
+    })
+
+    function drawerClick() {
+      emit('input', true)
     }
-  },
-  computed: {
-    isTransparent() {
-      return this.transparent && this.currentScroll < 25
-    },
-    showElevation() {
-      return !this.transparent || this.currentScroll > 1
-    },
-  },
-  created() {
-    if (process.isClient) {
-      window.addEventListener('scroll', this.onScroll)
+
+    onBeforeMount(() => {
+      if (process.isClient) {
+        window.addEventListener('scroll', onScroll)
+        onScroll()
+      }
+    })
+    onUnmounted(() => {
+      if (process.isClient) {
+        window.removeEventListener('scroll', onScroll)
+      }
+    })
+
+    function onScroll() {
+      currentScroll.value = window.pageYOffset
     }
-  },
-  destroyed() {
-    if (process.isClient) {
-      window.removeEventListener('scroll', this.onScroll)
-    }
-  },
-  beforeMount() {
-    this.currentScroll = window.pageYOffset
-  },
-  methods: {
-    items() {
-      return this.links.mainItems
-    },
-    drawerClick() {
-      this.$emit('input', true)
-    },
-    onScroll(e) {
-      this.currentScroll = window.pageYOffset
-    },
+
+    return { items, isTransparent, showElevation, drawerClick }
   },
 }
 </script>
