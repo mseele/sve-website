@@ -230,11 +230,6 @@ export default {
       league: 'EnBW-Oberliga BaWü',
       coach: {
         name: 'Rainer Kalbacher',
-        email: 'Rainer.kalbacher@t-online.de',
-        mobile: {
-          formatted: '0151 74117189',
-          raw: '+4915174117189',
-        },
       },
       contact: jugendleiter,
       teamID: '011MI98PJG000000VTVG0001VTR8C1K7',
