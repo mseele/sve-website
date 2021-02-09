@@ -1,97 +1,77 @@
 <template>
   <Layout>
-    <section id="kunstrasen" class="section">
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <h2>MITGLIED WERDEN</h2>
-          </v-col>
-          <v-col cols="12" class="subtitle-1">
-            Über 5,3 Millionen Menschen in Baden-Württemberg engagieren sich
-            ehrenamtlich. Dafür bieten wir auch beim SVE viele Möglichkeiten. Ob
-            Vereinsamt oder reine Mitgliedschaft - mit Deinem Einsatz
-            unterstützt Du unsere Arbeit und stiftest gesellschaftlichen
-            Nutzen.<br />
-            Dein Engagement kann von einer tatkräftigen Unterstützung als
-            Helfer, Trainer, Betreuer oder Macher für eine gute Infrastruktur
-            über finanzielle Hilfen bis hin zu einer einfachen Mitgliedschaft
-            sein.<br />
-            Jede Form der Hilfe ist ein Baustein für das große Ganze und
-            ermöglicht uns als Verein, dieses wichtige gesellschaftliche Angebot
-            aufrechtzuerhalten und Stück für Stück besser zu werden.
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-    <section id="details" class="section_alt">
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <h2>MITGLIEDSANTRAG</h2>
-          </v-col>
-          <v-col cols="12" class="subtitle-1">
-            Hier findest du unseren Mitgliedsantrag als PDF Datei:
-          </v-col>
-          <v-col cols="12">
-            <v-row justify="center" no-gutters>
-              <v-btn
-                text
-                rounded
-                color="primary"
-                href="/downloads/2020/Mitgliedsantrag-SVE.pdf"
-                target="_blank"
-              >
-                <v-icon left>{{ mdiCloudDownload }}</v-icon
-                >Download Mitgliedsantrag</v-btn
-              >
-            </v-row>
-          </v-col>
-          <v-col cols="12" class="subtitle-1">
-            Bitte ausfüllen und dann postalisch an<br />
-            <br />
-            SV Eutingen 1947 e.V.<br />
-            Marktstr. 84<br />
-            72184 Eutingen im Gäu<br />
-            <br />
-            senden.
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-    <section class="section">
-      <v-container>
-        <v-row>
-          <v-col cols="12">
-            <h2>SPENDEN</h2>
-          </v-col>
-          <v-col cols="12" class="subtitle-1">
+    <page-section title="Mitglied werden">
+      <div>
+        Über 5,3 Millionen Menschen in Baden-Württemberg engagieren sich
+        ehrenamtlich. Dafür bieten wir auch beim SVE viele Möglichkeiten. Ob
+        Vereinsamt oder reine Mitgliedschaft - mit Deinem Einsatz unterstützt Du
+        unsere Arbeit und stiftest gesellschaftlichen Nutzen.<br />
+        Dein Engagement kann von einer tatkräftigen Unterstützung als Helfer,
+        Trainer, Betreuer oder Macher für eine gute Infrastruktur über
+        finanzielle Hilfen bis hin zu einer einfachen Mitgliedschaft sein.<br />
+        Jede Form der Hilfe ist ein Baustein für das große Ganze und ermöglicht
+        uns als Verein, dieses wichtige gesellschaftliche Angebot
+        aufrechtzuerhalten und Stück für Stück besser zu werden.
+      </div>
+      <div class="flex flex-wrap pt-6">
+        <div class="w-full md:w-1/2 md:pr-2">
+          <header-title dark class="text-xl font-medium">
+            Mitgliedschaft
+          </header-title>
+          <div class="pt-4">
+            Du möchtest Mitglied werden?
+            <a
+              class="font-medium default-link on-focus-dark"
+              href="/downloads/2020/Mitgliedsantrag-SVE.pdf"
+              target="_blank"
+              >Download Mitgliedsantrag</a
+            >, fülle ihn aus und sende ihn postialisch an die folgende Adresse.
+          </div>
+          <div class="pt-4 text-sm font-bold tracking-wider uppercase">
+            Adresse
+          </div>
+          <div class="pt-2">
+            <div>
+              SV Eutingen 1947 e.V.<br />
+              Marktstr. 84<br />
+              72184 Eutingen im Gäu
+            </div>
+          </div>
+        </div>
+        <div class="w-full pt-6 md:w-1/2 md:pl-2 md:pt-0">
+          <header-title dark class="text-xl font-medium">
+            Spenden
+          </header-title>
+          <div class="pt-4">
             Mit Deiner Spende kannst Du direkt Gutes tun und förderst damit
             unser sportliches und kulturelles Angebot. Dabei hilft uns jeder
             Betrag!
-          </v-col>
-          <v-col cols="12" class="subtitle-1">
-            <b>Kontoverbindung</b><br />
+          </div>
+          <div class="pt-4 text-sm font-bold tracking-wider uppercase">
+            Kontoverbindung
+          </div>
+          <div class="pt-2">
             Sportverein Eutingen<br />
             Volksbank Horb-Freudenstadt eG<br />
             IBAN: DE28 642 910 10 00 344 69 001<br />
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
+          </div>
+        </div>
+      </div>
+    </page-section>
   </Layout>
 </template>
 
 <script>
-import { mdiCloudDownload } from '@mdi/js'
+import pageSection from '@/components/common/pageSection'
+import headerTitle from '@/components/controls/headerTitle'
 
 export default {
   metaInfo: {
     title: 'Mitglied werden',
   },
-  data() {
-    return {
-      mdiCloudDownload,
-    }
+  components: {
+    pageSection,
+    headerTitle,
   },
 }
 </script>

@@ -11,7 +11,7 @@ function load(addSchemaTypes) {
         beta: Boolean
         shortDescription: String
         description: String
-        image: String
+        image: Image
         light: Boolean
         dates: [String]
         customDate: String
