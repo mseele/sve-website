@@ -3,6 +3,7 @@
     <div :style="'height:' + height + 'px'">
       <g-image
         v-if="images.length == 1"
+        alt="image"
         :src="images[0]"
         class="object-cover w-full cursor-pointer"
         :style="'height:' + height + 'px'"
@@ -26,6 +27,7 @@
               class="glide__slide"
             >
               <g-image
+                :alt="'image' + (index + 1)"
                 :src="images[index]"
                 class="object-cover w-full cursor-pointer"
                 :style="'height:' + height + 'px'"
@@ -38,6 +40,7 @@
           <button
             v-for="(image, index) in images"
             :key="index"
+            :aria-label="'bullet' + (index + 1)"
             class="glide__bullet"
             :data-glide-dir="'=' + index"
           ></button>
@@ -47,6 +50,7 @@
             class="absolute z-10 inline-flex w-8 h-8 -mt-4 bg-black rounded-full left-5 opacity-20 focus:outline-none top-1/2"
           />
           <button
+            aria-label="previous"
             class="absolute z-10 inline-flex -mt-4 text-white rounded-full left-5 hover:text-gray-300 focus:outline-none top-1/2"
             data-glide-dir="<"
           >
@@ -69,6 +73,7 @@
             class="absolute z-10 inline-flex w-8 h-8 -mt-4 bg-black rounded-full right-5 opacity-20 focus:outline-none top-1/2"
           />
           <button
+            aria-label="next"
             class="absolute z-10 inline-flex -mt-4 text-white rounded-full right-5 hover:text-gray-300 focus:outline-none top-1/2"
             data-glide-dir=">"
           >
@@ -99,6 +104,7 @@
 </template>
 
 <script>
+import { onMounted, onUnmounted, ref } from '@vue/composition-api'
 import Glide, {
   Controls,
   Autoplay,
@@ -117,39 +123,40 @@ export default {
       default: () => [],
     },
   },
-  data() {
-    return {
-      fullscreen: false,
-      fullscreenIndex: 0,
-      swipe: false,
-      glide: undefined,
-    }
-  },
-  mounted() {
-    if (this.images.length > 1) {
-      this.glide = new Glide(this.$refs.carousel, {
-        type: 'carousel',
-        gap: 0,
-        autoplay: 3000,
-      })
+  setup(props) {
+    const fullscreen = ref(false)
+    const fullscreenIndex = ref(0)
+    const carousel = ref()
+    const glide = ref()
 
-      this.glide.mount({
-        Controls,
-        Autoplay,
-      })
+    function showFullscreen(event, index) {
+      fullscreenIndex.value = index
+      fullscreen.value = true
     }
-  },
-  unmounted() {
-    if (this.glide) {
-      this.glide.destroy()
-      this.glide = undefined
-    }
-  },
-  methods: {
-    showFullscreen(e, index) {
-      this.fullscreenIndex = index
-      this.fullscreen = true
-    },
+
+    onMounted(() => {
+      if (props.images.length > 1) {
+        glide.value = new Glide(carousel.value, {
+          type: 'carousel',
+          gap: 0,
+          autoplay: 3000,
+        })
+
+        glide.value.mount({
+          Controls,
+          Autoplay,
+        })
+      }
+    })
+
+    onUnmounted(() => {
+      if (glide.value) {
+        glide.value.destroy()
+        glide.value = undefined
+      }
+    })
+
+    return { fullscreen, fullscreenIndex, carousel, showFullscreen }
   },
 }
 </script>

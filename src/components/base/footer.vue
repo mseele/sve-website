@@ -36,10 +36,8 @@ import externalLinks from '@/components/controls/externalLinks'
 
 export default {
   components: { externalLinks },
-  data() {
-    return {
-      links,
-    }
+  setup() {
+    return { links }
   },
 }
 </script>

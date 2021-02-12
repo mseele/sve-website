@@ -18,7 +18,7 @@ import touches from './touches'
 
 export default {
   components: { contact, touches },
-  data() {
+  setup() {
     return {
       toItems: [
         { value: 'fitness@sv-eutingen.de', text: 'Fitness' },

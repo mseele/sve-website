@@ -26,7 +26,9 @@
 </template>
 
 <script>
-import { ValidationObserver, ValidationProvider, extend } from 'vee-validate'
+import { computed } from '@vue/composition-api'
+import Vue from 'vue'
+import { ValidationProvider, extend } from 'vee-validate'
 
 extend('privacy', (v) => !!v || 'Die Zustimmung wird benötigt')
 
@@ -39,7 +41,6 @@ export default {
       type: Boolean,
       default: false,
     },
-
     buttonText: {
       type: String,
       default: undefined,
@@ -53,21 +54,18 @@ export default {
       default: undefined,
     },
   },
-  computed: {
-    privacy: {
-      get() {
-        return this.value
-      },
-      set(val) {
-        this.$emit('input', val)
-      },
-    },
-  },
-  methods: {
-    toggle(validate) {
-      this.privacy = !this.privacy
-      this.$nextTick(() => validate())
-    },
+  setup(props, { emit }) {
+    const privacy = computed({
+      get: () => props.value,
+      set: (value) => emit('input', value),
+    })
+
+    function toggle(validate) {
+      privacy.value = !privacy.value
+      Vue.nextTick(() => validate())
+    }
+
+    return { privacy, toggle }
   },
 }
 </script>

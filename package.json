@@ -1,6 +1,6 @@
 {
   "name": "sve-website",
-  "version": "3.1.4",
+  "version": "3.2.0",
   "description": "Website SV Eutingen",
   "author": "mseele",
   "private": true,
@@ -8,13 +8,16 @@
     "develop": "gridsome develop",
     "explore": "gridsome explore",
     "build": "gridsome build",
-    "release": "standard-version"
+    "release": "standard-version",
+    "ncu": "ncu -p yarn -x autoprefixer,postcss,webpack",
+    "ncuu": "ncu -u -p yarn -x autoprefixer,postcss,webpack"
   },
   "dependencies": {
     "@glidejs/glide": "^3.4.1",
     "@gridsome/plugin-google-analytics": "^0.1.2",
     "@gridsome/plugin-sitemap": "^0.4.0",
     "@tailwindcss/forms": "^0.2.1",
+    "@vue/composition-api": "^1.0.0-rc.1",
     "autoprefixer": "^9",
     "axios": "^0.21.1",
     "focus-visible": "^5.2.0",
@@ -28,7 +31,6 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "vee-validate": "^3.4.5",
     "vue-scrollto": "^2.20.0",
-    "vuex": "^3.6.0",
     "webpack": "^4.1.0"
   },
   "devDependencies": {
@@ -39,12 +41,12 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
     "cache-loader": "^4.1.0",
-    "eslint": "^7.18.0",
+    "eslint": "^7.19.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-gridsome": "^1.6.1",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.5.0",
-    "husky": "^4.3.8",
+    "husky": "^5.0.9",
     "prettier": "^2.2.1",
     "standard-version": "^9.1.0"
   }

@@ -60,6 +60,7 @@
             <div class="relative overflow-hidden pb-3/5 sm:pb-1/2 md:pb-2/5">
               <g-image
                 :src="edge.node.image"
+                :alt="edge.node.title"
                 class="absolute object-cover w-full h-full transition duration-500 ease-in-out group-hover:transform-gpu group-hover:scale-110"
               />
             </div>

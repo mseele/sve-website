@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { computed } from '@vue/composition-api'
+
 export default {
   props: {
     value: {
@@ -21,15 +23,12 @@ export default {
       default: false,
     },
   },
-  computed: {
-    toggle: {
-      get() {
-        return this.value
-      },
-      set(val) {
-        this.$emit('input', val)
-      },
-    },
+  setup(props, { emit }) {
+    const toggle = computed({
+      get: () => props.value,
+      set: (value) => emit('input', value),
+    })
+    return { toggle }
   },
 }
 </script>

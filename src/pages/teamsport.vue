@@ -99,7 +99,7 @@ export default {
     pageSection,
     teamInfos,
   },
-  data() {
+  setup() {
     return {
       teams,
       sections: [

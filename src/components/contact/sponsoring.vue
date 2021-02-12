@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { ref, onMounted } from '@vue/composition-api'
 import headerTitle from '@/components/controls/headerTitle'
 import contact from './contact'
 import touches from './touches'
@@ -33,8 +34,25 @@ const emailBande = 'franznesch@kabelbw.de'
 
 export default {
   components: { headerTitle, contact, touches },
-  data() {
+  setup(props, { root }) {
+    const contact = ref()
+
+    onMounted(() => {
+      const selection = root.$route.query.thema
+      if (selection) {
+        switch (selection) {
+          case 'sponsoring':
+            root.$nextTick(() => contact.value.selectToItem(0))
+            break
+          case 'bande':
+            root.$nextTick(() => contact.value.selectToItem(1))
+            break
+        }
+      }
+    })
+
     return {
+      contact,
       items: [
         {
           value: emailSponsoring,
@@ -86,19 +104,6 @@ export default {
           href: 'mailto:tsakermann@kabelbw.de',
         },
       ],
-    }
-  },
-  mounted() {
-    const selection = this.$route.query.thema
-    if (selection) {
-      switch (selection) {
-        case 'sponsoring':
-          this.$nextTick(() => this.$refs.contact.selectToItem(0))
-          break
-        case 'bande':
-          this.$nextTick(() => this.$refs.contact.selectToItem(1))
-          break
-      }
     }
   },
 }

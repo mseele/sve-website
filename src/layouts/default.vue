@@ -17,11 +17,12 @@
 </template>
 
 <script>
+import { ref } from '@vue/composition-api'
 import appBar from '@/components/base/appBar'
 import navigationDrawer from '@/components/base/navigationDrawer'
 import appFooter from '@/components/base/footer'
-import cookieLaw from '@/components/base/cookieLaw.vue'
-import notification from '@/components/base/notification.vue'
+import cookieLaw from '@/components/base/cookieLaw'
+import notification from '@/components/base/notification'
 
 export default {
   components: {
@@ -41,10 +42,9 @@ export default {
       default: false,
     },
   },
-  data() {
-    return {
-      drawer: false,
-    }
+  setup() {
+    const drawer = ref(false)
+    return { drawer }
   },
 }
 </script>

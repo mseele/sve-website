@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <Layout>
     <page-section title="Historie">
@@ -42,6 +43,7 @@
                 <div>{{ edge.node.date }}</div>
                 <button
                   v-if="edge.node.images"
+                  aria-label="show fullscreen"
                   class="block h-6 ml-2 text-gray-500 lg:hidden"
                   @click="showFullscreen(edge.node.images)"
                 >
@@ -77,6 +79,7 @@
 </template>
 
 <script>
+import { ref } from '@vue/composition-api'
 import pageSection from '@/components/common/pageSection'
 import imageViewer from '@/components/common/imageViewer'
 import fullscreenImageViewer from '@/components/common/fullscreenImageViewer'
@@ -86,17 +89,20 @@ export default {
     title: 'Historie',
   },
   components: { pageSection, imageViewer, fullscreenImageViewer },
-  data() {
-    return {
-      fullscreen: false,
-      fullscreenImages: [],
+  setup() {
+    const fullscreen = ref(false)
+    const fullscreenImages = ref([])
+
+    function showFullscreen(images) {
+      fullscreenImages.value = images
+      fullscreen.value = true
     }
-  },
-  methods: {
-    showFullscreen(images) {
-      this.fullscreenImages = images
-      this.fullscreen = true
-    },
+
+    return {
+      fullscreen,
+      fullscreenImages,
+      showFullscreen,
+    }
   },
 }
 </script>

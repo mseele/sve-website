@@ -59,12 +59,14 @@
 </template>
 
 <script>
+import { ref, onMounted, watch, getCurrentInstance } from '@vue/composition-api'
 import axios from 'axios'
 import { ValidationObserver } from 'vee-validate'
 import inputLabel from '@/components/controls/inputLabel'
 import labeledInput from '@/components/controls/labeledInput'
 import privacyCheckbox from '@/components/controls/privacyCheckbox'
 import btn from '@/components/controls/primaryButton'
+import { useStore } from '@/composables/store'
 
 export default {
   components: {
@@ -92,79 +94,96 @@ export default {
       default: () => [],
     },
   },
-  data() {
-    return {
-      submitLoading: false,
-      toSelection: null,
-      name: '',
-      email: '',
-      phone: '',
-      message: '',
-      privacy: false,
-    }
-  },
-  watch: {
-    toItems(val) {
-      this.updateToSelection()
-    },
-    to(val) {
-      this.updateToSelection()
-    },
-  },
-  mounted() {
-    this.updateToSelection()
-  },
-  methods: {
-    selectToItem(index) {
-      this.toSelection = this.toItems[index].value
-    },
-    updateToSelection() {
-      this.$nextTick(() => {
-        this.toSelection =
-          this.toItems && this.toItems.length > 0
-            ? this.toItems[0].value
-            : this.to
+  setup(props, { root }) {
+    const { showInfo, showError } = useStore()
+
+    const form = ref()
+    const submitLoading = ref(false)
+    const toSelection = ref(null)
+    const name = ref('')
+    const email = ref('')
+    const phone = ref('')
+    const message = ref('')
+    const privacy = ref(false)
+
+    let $static
+    onMounted(() => {
+      $static = getCurrentInstance().proxy.$static
+      updateToSelection()
+    })
+
+    watch(
+      () => props.toItems,
+      (val) => {
+        updateToSelection()
+      }
+    )
+    watch(
+      () => props.to,
+      (val) => {
+        updateToSelection()
+      }
+    )
+
+    function updateToSelection() {
+      root.$nextTick(() => {
+        toSelection.value =
+          props.toItems && props.toItems.length > 0
+            ? props.toItems[0].value
+            : props.to
       })
-    },
-    submit() {
-      this.submitLoading = true
+    }
+
+    function submit() {
+      submitLoading.value = true
       const data = {
-        type: this.type,
-        to: this.toSelection,
-        name: this.name.trim(),
-        email: this.email.trim(),
-        phone: this.phone ? this.phone.trim() : '',
-        message: this.message.trim(),
+        type: props.type,
+        to: toSelection.value,
+        name: name.value.trim(),
+        email: email.value.trim(),
+        phone: phone.value ? phone.value.trim() : '',
+        message: message.value.trim(),
       }
       axios
-        .post(this.$static.metadata.contactAPI + '/message', data)
+        .post($static.metadata.contactAPI + '/message', data)
         .then((response) => {
-          this.submitLoading = false
-          this.reset()
-          this.$store.commit(
-            'notification_showInfo',
+          submitLoading.value = false
+          reset()
+          showInfo(
             'Danke für deine Nachricht. Wir melden uns umgehend bei Dir.'
           )
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
           console.log(error)
-          this.submitLoading = false
-          this.reset()
-          this.$store.commit(
-            'notification_showError',
+          submitLoading.value = false
+          reset()
+          showError(
             'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
           )
         })
-    },
-    reset() {
-      this.name = ''
-      this.email = ''
-      this.phone = ''
-      this.message = ''
-      this.privacy = false
-      this.$refs.form.reset()
-    },
+    }
+
+    function reset() {
+      name.value = ''
+      email.value = ''
+      phone.value = ''
+      message.value = ''
+      privacy.value = false
+      form.value.reset()
+    }
+
+    return {
+      form,
+      submitLoading,
+      toSelection,
+      name,
+      email,
+      phone,
+      message,
+      privacy,
+      submit,
+    }
   },
 }
 </script>

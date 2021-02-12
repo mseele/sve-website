@@ -98,11 +98,15 @@
 </template>
 
 <script>
+import { ref, onMounted, getCurrentInstance } from '@vue/composition-api'
 import axios from 'axios'
 import { ValidationObserver } from 'vee-validate'
 import labeledInput from '@/components/controls/labeledInput'
 import privacyCheckbox from '@/components/controls/privacyCheckbox'
 import btn from '@/components/controls/primaryButton'
+import { useStore } from '@/composables/store'
+
+const { updateEventsCounter, showInfo, showError } = useStore()
 
 export default {
   components: {
@@ -125,70 +129,90 @@ export default {
       default: undefined,
     },
   },
-  data() {
-    return {
-      firstName: '',
-      lastName: '',
-      street: '',
-      city: '',
-      email: '',
-      phone: '',
-      comments: '',
-      member: false,
-      updates: false,
-      privacy: false,
-      submitLoading: false,
-    }
-  },
-  methods: {
-    submit() {
-      this.submitLoading = true
+  setup(props) {
+    const form = ref()
+    const firstName = ref('')
+    const lastName = ref('')
+    const street = ref('')
+    const city = ref('')
+    const email = ref('')
+    const phone = ref('')
+    const comments = ref('')
+    const member = ref(false)
+    const updates = ref(false)
+    const privacy = ref(false)
+    const submitLoading = ref(false)
+
+    let $static
+    onMounted(() => {
+      $static = getCurrentInstance().proxy.$static
+    })
+
+    function submit() {
+      submitLoading.value = true
       const data = {
-        eventId: this.eventId,
-        firstName: this.firstName,
-        lastName: this.lastName,
-        street: this.street,
-        city: this.city,
-        email: this.email,
-        phone: this.phone,
-        member: this.member,
-        updates: this.updates,
-        comments: this.comments,
+        eventId: props.eventId,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        street: street.value,
+        city: city.value,
+        email: email.value,
+        phone: phone.value,
+        member: member.value,
+        updates: updates.value,
+        comments: comments.value,
       }
       axios
-        .post(this.$static.metadata.eventsAPI + '/booking', data)
+        .post($static.metadata.eventsAPI + '/booking', data)
         .then((response) => {
-          this.submitLoading = false
-          this.reset()
-          const type = response.data.success ? 'showInfo' : 'showError'
-          this.$store.commit('notification_' + type, response.data.message)
+          submitLoading.value = false
+          reset()
           if (response.data.success) {
-            this.$store.commit('events_updateCounter', response.data.counter)
+            showInfo(response.data.message)
+            updateEventsCounter(response.data.counter)
+          } else {
+            showError(response.data.message)
           }
         })
         // eslint-disable-next-line handle-callback-err
         .catch((error) => {
-          this.submitLoading = false
-          this.reset()
-          this.$store.commit(
-            'notification_showError',
+          submitLoading.value = false
+          reset()
+          showError(
             'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
           )
         })
-    },
-    reset() {
-      this.firstName = ''
-      this.lastName = ''
-      this.street = ''
-      this.city = ''
-      this.email = ''
-      this.phone = ''
-      this.comments = ''
-      this.member = false
-      this.updates = false
-      this.privacy = false
-      this.$refs.form.reset()
-    },
+    }
+
+    function reset() {
+      firstName.value = ''
+      lastName.value = ''
+      street.value = ''
+      city.value = ''
+      email.value = ''
+      phone.value = ''
+      comments.value = ''
+      member.value = false
+      updates.value = false
+      privacy.value = false
+      form.value.reset()
+    }
+
+    return {
+      form,
+      firstName,
+      lastName,
+      street,
+      city,
+      email,
+      phone,
+      comments,
+      member,
+      updates,
+      privacy,
+      submitLoading,
+      submit,
+    }
   },
 }
 </script>

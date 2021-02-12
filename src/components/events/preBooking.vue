@@ -138,6 +138,7 @@
 </template>
 
 <script>
+import { ref, watch, onMounted, getCurrentInstance } from '@vue/composition-api'
 import pageSection from '@/components/common/pageSection'
 import btn from '@/components/controls/primaryButton'
 import axios from 'axios'
@@ -154,49 +155,54 @@ export default {
       default: undefined,
     },
   },
-  data() {
-    return {
-      success: null,
-      error: null,
-    }
-  },
-  watch: {
-    value(newVal, oldVal) {
-      if (newVal !== null && newVal !== oldVal) {
-        this.submit(newVal)
+  setup(props, { root, emit }) {
+    const success = ref(null)
+    const error = ref(null)
+
+    let $static
+    onMounted(() => {
+      $static = getCurrentInstance().proxy.$static
+      if (props.value !== null) {
+        submit(props.value)
       }
-    },
-  },
-  mounted() {
-    if (this.value !== null) {
-      this.submit(this.value)
-    }
-  },
-  methods: {
-    submit(data) {
+    })
+
+    watch(
+      () => props.value,
+      (newVal, oldVal) => {
+        if (newVal !== null && newVal !== oldVal) {
+          submit(newVal)
+        }
+      }
+    )
+
+    function submit(data) {
       axios
-        .post(this.$static.metadata.eventsAPI + '/prebooking', data, {
+        .post($static.metadata.eventsAPI + '/prebooking', data, {
           headers: {
             'Content-Type': 'text/plain',
           },
         })
         .then((response) => {
           if (response.data.success) {
-            this.success = response.data.message
+            success.value = response.data.message
           } else {
-            this.error = response.data.message
+            error.value = response.data.message
           }
         })
         // eslint-disable-next-line handle-callback-err
         .catch((error) => {
-          this.error =
+          error.value =
             'Leider ist etwas schief gelaufen. Bitte versuche es später noch einmal.'
         })
-    },
-    goBack() {
-      this.$router.replace({ path: this.$router.currentRoute.path })
-      this.$emit('input', null)
-    },
+    }
+
+    function goBack() {
+      root.$router.replace({ path: root.$router.currentRoute.path })
+      emit('input', null)
+    }
+
+    return { success, error, goBack }
   },
 }
 </script>

@@ -60,12 +60,13 @@ export default {
       required: false,
     },
   },
-  methods: {
-    onClick() {
-      if (!this.disabled) {
-        this.$emit('click')
+  setup(props, { emit }) {
+    function onClick() {
+      if (!props.disabled) {
+        emit('click')
       }
-    },
+    }
+    return { onClick }
   },
 }
 </script>

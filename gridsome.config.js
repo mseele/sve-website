@@ -19,7 +19,7 @@ module.exports = {
       use: '@gridsome/plugin-google-analytics',
       options: {
         id: 'UA-156250391-1',
-        disabled: process.env.BETA,
+        disabled: process.env.GRIDSOME_BETA,
       },
     },
   ],

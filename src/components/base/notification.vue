@@ -59,46 +59,45 @@
 </template>
 
 <script>
+import { watch, ref, computed } from '@vue/composition-api'
+import { useStore } from '@/composables/store'
+
 export default {
-  data() {
-    return {
-      activeTimeout: -1,
-    }
-  },
-  computed: {
-    type() {
-      return this.$store.state.notification_type
-    },
-    message() {
-      return this.$store.state.notification_message
-    },
-    visible: {
-      get() {
-        return this.$store.state.notification_visible
-      },
-      set(value) {
-        this.$store.commit('notification_toggleVisibility', value)
-      },
-    },
-  },
-  watch: {
-    visible(newValue) {
-      if (newValue) {
-        this.setTimeout()
-      }
-    },
-  },
-  methods: {
-    setTimeout() {
-      window.clearTimeout(this.activeTimeout)
-      this.activeTimeout = window.setTimeout(() => {
-        this.visible = false
+  setup() {
+    const {
+      hideNotification,
+      notificationMessage,
+      notificationType,
+    } = useStore()
+
+    const activeTimeout = ref(-1)
+
+    const visible = computed(() => notificationMessage.value !== undefined)
+
+    function setTimeout() {
+      window.clearTimeout(activeTimeout.value)
+      activeTimeout.value = window.setTimeout(() => {
+        hideNotification()
       }, 5000)
-    },
-    close() {
-      window.clearTimeout(this.activeTimeout)
-      this.visible = false
-    },
+    }
+
+    function close() {
+      window.clearTimeout(activeTimeout.value)
+      hideNotification()
+    }
+
+    watch(visible, (newValue) => {
+      if (newValue) {
+        setTimeout()
+      }
+    })
+
+    return {
+      type: notificationType,
+      message: notificationMessage,
+      visible,
+      close,
+    }
   },
 }
 </script>

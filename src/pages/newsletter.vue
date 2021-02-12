@@ -20,6 +20,7 @@
               class="flex mx-auto overflow-hidden bg-red-800 border-2 border-red-800 rounded"
             >
               <button
+                aria-label="subscribe"
                 class="px-4 py-1 focus:outline-none"
                 :class="{
                   'text-white': subscribe,
@@ -30,6 +31,7 @@
                 Anmelden
               </button>
               <button
+                aria-label="unsubscribe"
                 class="px-4 py-1 focus:outline-none"
                 :class="{
                   'text-white': !subscribe,
@@ -71,6 +73,7 @@
 </template>
 
 <script>
+import { ref, computed } from '@vue/composition-api'
 import pageSection from '@/components/common/pageSection'
 import toogle from '@/components/controls/toggle'
 import emailSubscription from '@/components/common/emailSubscription'
@@ -84,36 +87,45 @@ export default {
     toogle,
     emailSubscription,
   },
-  data() {
-    return {
-      subscribe: true,
-      common: true,
-      fitness: true,
-      events: true,
-    }
-  },
-  computed: {
-    type() {
-      return this.subscribe ? 'subscribe' : 'unsubscribe'
-    },
-    newsTypes() {
+  setup() {
+    const subscribe = ref(true)
+    const common = ref(true)
+    const fitness = ref(true)
+    const events = ref(true)
+
+    const type = computed(() => {
+      return subscribe.value ? 'subscribe' : 'unsubscribe'
+    })
+
+    const newsTypes = computed(() => {
       const types = []
-      if (this.common) {
+      if (common.value) {
         types.push('General')
       }
-      if (this.fitness) {
+      if (fitness.value) {
         types.push('Fitness')
       }
-      if (this.events) {
+      if (events.value) {
         types.push('Events')
       }
       return types
-    },
-    successMessage() {
-      return this.subscribe
+    })
+
+    const successMessage = computed(() => {
+      return subscribe.value
         ? 'Du erhälst für die ausgewählten Optionen automatisch eine E-Mail. Vielen Dank.'
         : 'Du bist für die ausgewählten Optionen vom Newsletter abgemeldet worden und erhälst ab sofort keine Emails mehr.'
-    },
+    })
+
+    return {
+      subscribe,
+      common,
+      fitness,
+      events,
+      type,
+      newsTypes,
+      successMessage,
+    }
   },
 }
 </script>

@@ -43,6 +43,9 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import { ref, onMounted } from '@vue/composition-api'
+
 export default {
   props: {
     storageName: {
@@ -50,51 +53,54 @@ export default {
       default: 'gdpr:accepted',
     },
   },
-  data() {
-    return {
-      isOpen: false,
+  setup(props, { emit }) {
+    const isOpen = ref(false)
+
+    function setVisited(value) {
+      localStorage.setItem(props.storageName, value.toString())
     }
-  },
-  created() {
-    const gdpr = this.isVisited()
-    if (!gdpr === true) {
-      this.isOpen = true
-      if (!process.env.BETA) {
-        this.$ga.disable()
+
+    function isVisited() {
+      return localStorage.getItem(props.storageName)
+    }
+
+    onMounted(() => {
+      const gdpr = isVisited()
+      if (!gdpr === true) {
+        isOpen.value = true
+        if (!process.env.GRIDSOME_BETA) {
+          Vue.$ga.disable()
+        }
+      } else if (gdpr === 'true') {
+        if (!process.env.GRIDSOME_BETA) {
+          Vue.$ga.enable()
+        }
+      } else if (gdpr === 'false') {
+        if (!process.env.GRIDSOME_BETA) {
+          Vue.$ga.disable()
+        }
       }
-    } else if (gdpr === 'true') {
-      if (!process.env.BETA) {
-        this.$ga.enable()
-      }
-    } else if (gdpr === 'false') {
-      if (!process.env.BETA) {
-        this.$ga.disable()
+    })
+
+    function accept() {
+      setVisited(true)
+      isOpen.value = false
+      emit('accept')
+      if (!process.env.GRIDSOME_BETA) {
+        Vue.$ga.enable()
       }
     }
-  },
-  methods: {
-    setVisited(value) {
-      localStorage.setItem(this.storageName, value)
-    },
-    isVisited() {
-      return localStorage.getItem(this.storageName)
-    },
-    accept() {
-      this.setVisited(true)
-      this.isOpen = false
-      this.$emit('accept')
-      if (!process.env.BETA) {
-        this.$ga.enable()
+
+    function deny() {
+      setVisited(false)
+      isOpen.value = false
+      emit('deny')
+      if (!process.env.GRIDSOME_BETA) {
+        Vue.$ga.disable()
       }
-    },
-    deny() {
-      this.setVisited(false)
-      this.isOpen = false
-      this.$emit('deny')
-      if (!process.env.BETA) {
-        this.$ga.disable()
-      }
-    },
+    }
+
+    return { isOpen, accept, deny }
   },
 }
 </script>

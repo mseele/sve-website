@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/mseele/sve-website/compare/v3.1.4...v3.2.0) (2021-02-12)
+
+
+### Features
+
+* **accessibility:** add aria-label to buttons ([8541140](https://github.com/mseele/sve-website/commit/8541140e75046bba72fd6e9aaecc303b4a731330))
+
+
+### Bug Fixes
+
+* **accessibility:** add alt tags to all images ([40be9f4](https://github.com/mseele/sve-website/commit/40be9f4af93f93c12dd9393ca5a1248cc1d29d67))
+* **accessibility:** add title to iframe ([1075319](https://github.com/mseele/sve-website/commit/1075319fe2bf64ec1bd1eb2c5c2b394c0f38ee94))
+* **env:** correct environment variable name ([6ac3098](https://github.com/mseele/sve-website/commit/6ac3098d6c36747df97446f3dc026760635780b9))
+* **env:** use GRIDSOME prefix to keep environment variable in production build ([f98cdf6](https://github.com/mseele/sve-website/commit/f98cdf6c4632c27ea41cc1536a68f8028d29fb9a))
+* **tailwind:** add json files to purge list ([0d863d2](https://github.com/mseele/sve-website/commit/0d863d2844ecfb388ba145912cce1bb10a9d635e))
+
 ### [3.1.4](https://github.com/mseele/sve-website/compare/v3.1.3...v3.1.4) (2021-01-25)
 
 

@@ -46,7 +46,7 @@ export default {
     title: 'Fitness',
   },
   components: { events },
-  data() {
+  setup() {
     return {
       faqs: [
         {

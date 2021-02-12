@@ -44,9 +44,10 @@
 </template>
 
 <script>
-import inputLabel from './inputLabel'
+import { computed } from '@vue/composition-api'
 import { ValidationProvider, extend } from 'vee-validate'
 import { required, email } from 'vee-validate/dist/rules'
+import inputLabel from './inputLabel'
 
 extend('email', {
   ...email,
@@ -89,15 +90,12 @@ export default {
       default: 'text',
     },
   },
-  computed: {
-    input: {
-      get() {
-        return this.value
-      },
-      set(val) {
-        this.$emit('input', val)
-      },
-    },
+  setup(props, { emit }) {
+    const input = computed({
+      get: () => props.value,
+      set: (value) => emit('input', value),
+    })
+    return { input }
   },
 }
 </script>

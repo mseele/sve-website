@@ -156,35 +156,30 @@ export default {
     title: 'Sponsoring',
   },
   components: { heroSection, pageSection, headerTitle, btn },
-  data() {
-    return {
-      sponsors: this.groupSponsors(sponsoring),
-    }
-  },
-  methods: {
-    groupSponsors(sponsoring) {
-      return sponsoring
-        .slice()
-        .sort((a, b) => {
-          const nameA = a.groupBy.toUpperCase()
-          const nameB = b.groupBy.toUpperCase()
-          if (nameA < nameB) {
-            return -1
-          }
-          if (nameA > nameB) {
-            return 1
-          }
-          return 0
-        })
-        .reduce((acc, item) => {
-          const key = item.groupBy.toUpperCase().charAt(0)
-          if (!acc[key]) {
-            acc[key] = []
-          }
-          acc[key].push(item)
-          return acc
-        }, {})
-    },
+  setup() {
+    const sponsors = sponsoring
+      .slice()
+      .sort((a, b) => {
+        const nameA = a.groupBy.toUpperCase()
+        const nameB = b.groupBy.toUpperCase()
+        if (nameA < nameB) {
+          return -1
+        }
+        if (nameA > nameB) {
+          return 1
+        }
+        return 0
+      })
+      .reduce((acc, item) => {
+        const key = item.groupBy.toUpperCase().charAt(0)
+        if (!acc[key]) {
+          acc[key] = []
+        }
+        acc[key].push(item)
+        return acc
+      }, {})
+
+    return { sponsors }
   },
 }
 </script>
