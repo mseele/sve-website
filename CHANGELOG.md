@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.1](https://github.com/mseele/sve-website/compare/v3.2.0...v3.2.1) (2021-02-23)
+
+
+### Bug Fixes
+
+* **env:** correct beta toggle ([9860570](https://github.com/mseele/sve-website/commit/9860570e8e86240820acc61e11bb86b2ddc40a2a))
+* set beta to false ([51076c7](https://github.com/mseele/sve-website/commit/51076c7c72a42e0c98d1ddb818f61ff022495330))
+
 ## [3.2.0](https://github.com/mseele/sve-website/compare/v3.1.4...v3.2.0) (2021-02-12)
 
 
