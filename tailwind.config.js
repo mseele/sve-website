@@ -2,12 +2,17 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  purge: [
-    './src/**/*.html',
-    './src/**/*.vue',
-    './src/**/*.jsx',
-    './src/**/*.json',
-  ],
+  purge: {
+    content: [
+      './src/**/*.html',
+      './src/**/*.vue',
+      './src/**/*.jsx',
+      './src/**/*.json',
+    ],
+    options: {
+      safelist: ['list-disc	', 'list-inside'],
+    },
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
