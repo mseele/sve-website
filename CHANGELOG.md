@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/mseele/sve-website/compare/v3.3.4...v3.4.0) (2021-05-25)
+
+
+### Features
+
+* add new JSF asset ([5463819](https://github.com/mseele/sve-website/commit/5463819641eea979df62422682c34b0ec4dae515))
+
 ### [3.3.4](https://github.com/mseele/sve-website/compare/v3.3.3...v3.3.4) (2021-04-14)
 
 ### [3.3.3](https://github.com/mseele/sve-website/compare/v3.3.2...v3.3.3) (2021-04-14)

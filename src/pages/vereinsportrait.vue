@@ -71,8 +71,19 @@
             PDF
           </a>
         </li>
+        <li>
+          Anerkannte Einsatzstelle für das
+          <a
+            class="default-link on-focus-dark"
+            href="https://www.lsvbw.de/sportwelten/sportjugend/fsj-sport-und-schule/"
+            target="_blank"
+            >FSJ Sport und Schule</a
+          >
+        </li>
       </ul>
-      <div class="flex flex-col pt-6 md:flex-row md:justify-center">
+      <div
+        class="flex flex-col pt-6 space-y-4 md:flex-row md:justify-center md:space-y-0 md:space-x-4"
+      >
         <btn
           v-slot="{ imageClass }"
           href="/downloads/2020/Vereinssatzung-SVE.pdf"
