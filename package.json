@@ -1,6 +1,6 @@
 {
   "name": "sve-website",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "Website SV Eutingen",
   "author": "mseele",
   "private": true,
@@ -17,6 +17,7 @@
     "@gridsome/plugin-google-analytics": "^0.1.2",
     "@gridsome/plugin-sitemap": "^0.4.0",
     "@tailwindcss/forms": "^0.2.1",
+    "@tailwindcss/typography": "^0.4.1",
     "@vue/composition-api": "^1.0.0-rc.5",
     "autoprefixer": "^9",
     "axios": "^0.21.1",
