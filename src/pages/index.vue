@@ -33,7 +33,7 @@
             </div>
           </div>
           <!-- eslint-disable-next-line prettier/prettier | eslint-disable-next-line vue/no-v-html -->
-          <div class="text-gray-700 " v-html="edge.node.text"/>
+          <div class="prose text-gray-700" v-html="edge.node.text"/>
         </div>
       </div>
     </page-section>
