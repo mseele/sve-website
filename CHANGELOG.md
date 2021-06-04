@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://github.com/mseele/sve-website/compare/v3.4.0...v3.5.0) (2021-06-04)
+
+
+### Features
+
+* add @tailwindcss/typography plugin ([8c211ad](https://github.com/mseele/sve-website/commit/8c211ad9efdb8e2cee33853f056444478ee6f860))
+
 ## [3.4.0](https://github.com/mseele/sve-website/compare/v3.3.4...v3.4.0) (2021-05-25)
 
 
