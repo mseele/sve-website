@@ -32,8 +32,10 @@
               {{ edge.node.title }}
             </div>
           </div>
-          <!-- eslint-disable-next-line prettier/prettier | eslint-disable-next-line vue/no-v-html -->
-          <div class="prose text-gray-700" v-html="edge.node.text"/>
+          <expandableContent
+            :content="edge.node.text"
+            :collapsed="edge.node.collapsed"
+          />
         </div>
       </div>
     </page-section>
@@ -84,11 +86,13 @@
 <script>
 import heroSection from '@/components/common/heroSection'
 import pageSection from '@/components/common/pageSection'
+import expandableContent from '@/components/controls/expandableContent'
 
 export default {
   components: {
     heroSection,
     pageSection,
+    expandableContent,
   },
 }
 </script>
@@ -104,6 +108,7 @@ query {
         id
         title
         text
+        collapsed
       }
     }
   }

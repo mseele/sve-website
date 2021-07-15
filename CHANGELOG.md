@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0](https://github.com/mseele/sve-website/compare/v3.5.1...v3.6.0) (2021-07-15)
+
+
+### Features
+
+* make news collapsable ([97cc59f](https://github.com/mseele/sve-website/commit/97cc59f9daaeb2ad9cba6a2d4053820a01fcc2bd))
+
 ### [3.5.1](https://github.com/mseele/sve-website/compare/v3.5.0...v3.5.1) (2021-07-14)
 
 ## [3.5.0](https://github.com/mseele/sve-website/compare/v3.4.0...v3.5.0) (2021-06-04)
