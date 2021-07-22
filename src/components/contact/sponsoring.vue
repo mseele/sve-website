@@ -17,8 +17,11 @@
       <header-title dark class="pt-4 text-xl font-medium">
         Bandenwerbung
       </header-title>
-      <touches class="pt-4" title="Franz Nesch" :touches="bandeFranz" />
-      <touches class="pt-4" title="Thomas Akermann" :touches="bandeThomas" />
+      <touches
+        class="pt-4"
+        title="Vorsitzender Sebastian Lazar"
+        :touches="sponsoring"
+      />
     </template>
   </contact>
 </template>
@@ -28,9 +31,6 @@ import { ref, onMounted } from '@vue/composition-api'
 import headerTitle from '@/components/controls/headerTitle'
 import contact from './contact'
 import touches from './touches'
-
-const emailSponsoring = 'vorstand@sv-eutingen.de'
-const emailBande = 'franznesch@kabelbw.de'
 
 export default {
   components: { headerTitle, contact, touches },
@@ -55,11 +55,11 @@ export default {
       contact,
       items: [
         {
-          value: emailSponsoring,
+          value: 'vorstand@sv-eutingen.de',
           text: 'Sponsoring',
         },
         {
-          value: emailBande,
+          value: 'vorstand@sv-eutingen.de',
           text: 'Bandenwerbung',
         },
       ],
@@ -71,37 +71,13 @@ export default {
         },
         {
           type: 'email',
-          text: emailSponsoring,
-          href: 'mailto:' + emailSponsoring,
+          text: 'vorstand@sv-eutingen.de',
+          href: 'mailto:vorstand@sv-eutingen.de',
         },
         {
           type: 'whatsapp',
           text: 'WhatsApp',
           href: 'https://wa.me/4917630774678',
-        },
-      ],
-      bandeFranz: [
-        {
-          type: 'phone',
-          text: '07459 8720',
-          href: 'tel:+4974598720',
-        },
-        {
-          type: 'email',
-          text: emailBande,
-          href: 'mailto:' + emailBande,
-        },
-      ],
-      bandeThomas: [
-        {
-          type: 'phone',
-          text: '07459 1003',
-          href: 'tel:+4974591003',
-        },
-        {
-          type: 'email',
-          text: 'tsakermann@kabelbw.de',
-          href: 'mailto:tsakermann@kabelbw.de',
         },
       ],
     }
