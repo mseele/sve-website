@@ -91,7 +91,7 @@
               <div
                 class="text-xs font-medium tracking-wide text-gray-500 uppercase"
               >
-                Dienstag bis Freitag
+                Mittwoch bis Freitag
               </div>
               <div class="font-medium">16 - 1 Uhr</div>
               <div
