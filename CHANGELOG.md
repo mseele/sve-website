@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.2](https://github.com/mseele/sve-website/compare/v3.6.1...v3.6.2) (2021-08-13)
+
+
+### Bug Fixes
+
+* change opening days ([257eece](https://github.com/mseele/sve-website/commit/257eece0fece47a876463faa60f0e0c709be803c))
+
 ### [3.6.1](https://github.com/mseele/sve-website/compare/v3.6.0...v3.6.1) (2021-07-22)
 
 ## [3.6.0](https://github.com/mseele/sve-website/compare/v3.5.1...v3.6.0) (2021-07-15)
