@@ -86,7 +86,7 @@
       >
         <btn
           v-slot="{ imageClass }"
-          href="/downloads/2020/Vereinssatzung-SVE.pdf"
+          href="/downloads/2021/Vereinssatzung-SVE.pdf"
           first-row="DOWNLOAD"
           second-row="Vereinssatzung"
         >
