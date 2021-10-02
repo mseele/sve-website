@@ -18,15 +18,6 @@ const jugendleiter = {
   },
 }
 
-const coachEJunioren = {
-  name: 'Heiko Bube',
-  email: 'heiko.bube@gmail.com',
-  mobile: {
-    formatted: '0176 40741543',
-    raw: '+4917640741543',
-  },
-}
-
 export default {
   herren: [
     {
@@ -122,11 +113,11 @@ export default {
       team: 'A-Junioren 1 SGM SV Eutingen',
       league: 'Bezirksstaffel',
       coach: {
-        name: 'Mario Pargolo',
-        email: 'mario.pargolo@arag-partner.de',
+        name: 'Daniel Braun',
+        email: 'daniel.braun@arag-partner.de',
         mobile: {
-          formatted: '0172 2303172',
-          raw: '+491722303172',
+          formatted: '01577 6835312',
+          raw: '+4915776835312',
         },
       },
       contact: jugendleiter,
@@ -137,11 +128,11 @@ export default {
       team: 'A-Junioren 2 SGM SV Eutingen',
       league: 'Leistungsstaffel',
       coach: {
-        name: 'Yannik Janzen',
-        email: 'yjanzen98@gmail.com',
+        name: 'Gerald Öhrlich',
+        email: 'g_h_oehrlich@msn.com',
         mobile: {
-          formatted: '0163 7296476',
-          raw: '+491637296476',
+          formatted: '01577 0319784',
+          raw: '+4915770319784',
         },
       },
       contact: jugendleiter,
@@ -167,55 +158,41 @@ export default {
       team: 'B-Junioren 2 SGM SV Vollmaringen',
       league: 'Leistungsstaffel',
       coach: {
-        name: 'Dirk Vialkowitsch',
-        email: 'dirk.vialkowitsch@vacos.de',
+        name: 'Volker Löffler',
+        email: 'volker.loeffler@t-online.de',
         mobile: {
-          formatted: '0172 7750843',
-          raw: '+491727750843',
+          formatted: '01512 6412922',
+          raw: '+4915126412922',
         },
       },
       contact: jugendleiter,
       teamID: '02B8ESCO64000000VS5489B2VSCHU9TQ',
     },
     {
-      key: 'c-junioren-1',
-      team: 'C-Junioren 1 SGM FC Göttelfingen',
-      league: 'Bezirksstaffel',
-      coach: {
-        name: 'Volker Löffler',
-        email: 'volker.loeffler@t-online.de',
-        mobile: {
-          formatted: '0151 26412922',
-          raw: '+4915126412922',
-        },
-      },
-      contact: jugendleiter,
-      teamID: '02B9VNNOVK000000VS5489B1VU20GQ5T',
-    },
-    {
-      key: 'c-junioren-2',
-      team: 'C-Junioren 2 SGM FC Göttelfingen',
+      key: 'c-junioren',
+      team: 'C-Junioren SGM VFL Hochdorf',
       league: 'Leistungsstaffel',
       coach: {
-        name: 'Bünyamin Kalali',
+        name: 'Josip Mrsic',
+        email: 'jmrv79@outlook.de',
         mobile: {
-          formatted: '0174 7508050',
-          raw: '+491747508050',
+          formatted: '0176 62073007',
+          raw: '+4917662073007',
         },
       },
       contact: jugendleiter,
-      teamID: '02B9VNVD7S000000VS5489B1VU20GQ5T',
+      teamID: '02EVQMB9VG000000VS5489B1VT1H0S9M',
     },
     {
       key: 'd-junioren-1',
       team: 'D-Junioren 1 SGM SV Eutingen',
-      league: 'Leistungsstaffel',
+      league: '9er Bezirksstaffel',
       coach: {
-        name: 'Nika Ziebart',
-        email: 'nikolausziebart321@gmail.com',
+        name: 'Heiko Bube',
+        email: 'heiko.bube@gmail.com',
         mobile: {
-          formatted: '0176 60174003',
-          raw: '+4917660174003',
+          formatted: '0176 40741543',
+          raw: '+4917640741543',
         },
       },
       contact: jugendleiter,
@@ -226,11 +203,11 @@ export default {
       team: 'D-Junioren 2 SGM SV Eutingen',
       league: '9er Kreisstaffel',
       coach: {
-        name: 'Heinfried Weiss',
-        email: 'heinfried.weiss@gmx.net',
+        name: 'Nika Ziebart',
+        email: 'nikolausziebart321@gmail.com',
         mobile: {
-          formatted: '0172 7522880',
-          raw: '+491727522880',
+          formatted: '0176 60174003',
+          raw: '+4917660174003',
         },
       },
       contact: jugendleiter,
@@ -264,9 +241,9 @@ export default {
       teamID: '011MIE4SVS000000VTVG0001VTR8C1K7',
     },
     {
-      key: 'c-juniorinnen',
+      key: 'c-juniorinnen-1',
       team: 'C-Juniorinnen 1 SGM SV Eutingen',
-      league: 'Qualistaffel',
+      league: 'Kreisstaffel',
       coach: {
         name: 'Carsten Oswald',
         email: '01795450311@O2Online.de',
@@ -279,28 +256,34 @@ export default {
       teamID: '027ISEG2HS000000VS5489B1VUA37ON8',
     },
     {
-      key: 'd-juniorinnen',
-      team: 'D-Juniorinnen SGM SV Eutingen',
-      league: 'Qualistaffel',
+      key: 'c-juniorinnen-2',
+      team: 'C-Juniorinnen 2 SGM SV Eutingen',
+      league: 'Kreisstaffel',
       coach: {
-        title: 'Trainerin',
-        name: 'Jenny Nesch',
-        email: 'jennypauline.nesch@gmail.com',
+        name: 'Carsten Oswald',
+        email: '01795450311@O2Online.de',
         mobile: {
-          formatted: '0157 89606128',
-          raw: '+4915789606128',
+          formatted: '0179 5450311',
+          raw: '+491795450311',
         },
       },
       contact: jugendleiter,
-      teamID: '0240ABCB3K000000VS548985VV3HBH6M',
+      teamID: '02ESSVG5SC000000VS5489B1VT0RKM5V',
     },
   ],
   kinder: [
     {
       key: 'e-junioren-1',
       team: 'E-Junioren 1 SGM VfL Hochdorf',
-      league: 'Freundschaftsstaffel 1',
-      coach: coachEJunioren,
+      league: 'Freundschaftsstaffel 2',
+      coach: {
+        name: 'Kai Weihing',
+        email: 'annaweihing@gmx.de',
+        mobile: {
+          formatted: '0173 7288791',
+          raw: '+491737288791',
+        },
+      },
       contact: jugendleiter,
       teamID: '027H92NVVC000000VS5489B1VUA37ON8',
     },
@@ -308,7 +291,14 @@ export default {
       key: 'e-junioren-2',
       team: 'E-Junioren 2 SGM VfL Hochdorf',
       league: 'Freundschaftsstaffel 2',
-      coach: coachEJunioren,
+      coach: {
+        name: 'Pascal Akermann',
+        email: 'pascal.akermann@web.de',
+        mobile: {
+          formatted: '0176 92412152',
+          raw: '+4917692412152',
+        },
+      },
       contact: jugendleiter,
       teamID: '027H92V6UO000000VS5489B1VUA37ON8',
     },
@@ -317,11 +307,11 @@ export default {
       team: 'F-Junioren',
       league: 'Spieltage',
       coach: {
-        name: 'Kai Weihing',
-        email: 'Maldini82@gmx.de',
+        name: 'Michael Köhn',
+        email: 'michael_koehn@gmx.de',
         mobile: {
-          formatted: '0173 7288791',
-          raw: '+491737288791',
+          formatted: '0172 5616742',
+          raw: '+491725616742',
         },
       },
       contact: jugendleiter,
@@ -331,11 +321,11 @@ export default {
       team: 'Bambini',
       league: 'Spieltage',
       coach: {
-        name: 'Michael Köhn',
-        email: 'michael_koehn@gmx.de',
+        name: 'Thomas Kehm',
+        email: 't.kehm@gmx.de',
         mobile: {
-          formatted: '0172 5616742',
-          raw: '+491725616742',
+          formatted: '0173 6659554',
+          raw: '+491736659554',
         },
       },
       contact: jugendleiter,
