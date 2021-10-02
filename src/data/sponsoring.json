@@ -131,11 +131,6 @@
     "groupBy": "as-Schwabe"
   },
   {
-    "name": "Mini-Rock-Festival",
-    "url": "https://mini-rock-festival.de/",
-    "groupBy": "Mini-Rock-Festival"
-  },
-  {
     "name": "Steuerberatungsgesellschaft MBH Hertkorn/Heberle",
     "url": "https://hertkorn-heberle.de/",
     "groupBy": "MBH Hertkorn/Heberle"
@@ -257,5 +252,30 @@
     "name": "VPV Generalagentur Ostertag - Köhn",
     "url": "https://www.vpv.de/agentur.ostertag-koehn/Startseite/",
     "groupBy": "VPV Ostertag"
+  },
+  {
+    "name": "ADREX Photovoltaikanlagen GmbH",
+    "url": "https://www.adrex.de/",
+    "groupBy": "ADREX"
+  },
+  {
+    "name": "Sven Katz / BSB Versicherungsmakler",
+    "url": "https://www.bsb-gmbh.de/unser-team/sven-katz/",
+    "groupBy": "BSB Versicherungsmakler"
+  },
+  {
+    "name": "Angels of Hairstyle",
+    "url": "https://de-de.facebook.com/pages/category/Barber-Shop/Angels-of-Hairstyle-1490881394550803/",
+    "groupBy": "Angels of Hairstyle"
+  },
+  {
+    "name": "Werner Sanierung",
+    "url": "https://werner-sanierung.de/",
+    "groupBy": "Werner Sanierung"
+  },
+  {
+    "name": "Lebensmittelmärkte Rainer Rentschler e.K.",
+    "url": "https://www.edeka-rentschler.de/",
+    "groupBy": "Rentschler e.K."
   }
 ]
