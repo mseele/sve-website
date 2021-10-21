@@ -113,11 +113,11 @@ export default {
       team: 'A-Junioren 1 SGM SV Eutingen',
       league: 'Bezirksstaffel',
       coach: {
-        name: 'Daniel Braun',
-        email: 'daniel.braun@arag-partner.de',
+        name: 'Mario Pargolo',
+        email: 'mario.pargolo@arag-partner.de',
         mobile: {
-          formatted: '01577 6835312',
-          raw: '+4915776835312',
+          formatted: '0172 2303172',
+          raw: '+491722303172',
         },
       },
       contact: jugendleiter,
