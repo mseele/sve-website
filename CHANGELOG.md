@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0](https://github.com/mseele/sve-website/compare/v3.6.5...v3.7.0) (2021-11-10)
+
+
+### Features
+
+* add news video ([620c9e7](https://github.com/mseele/sve-website/commit/620c9e725a4a4ceb7875ccf38a8a10d2befb08c1))
+
 ### [3.6.5](https://github.com/mseele/sve-website/compare/v3.6.4...v3.6.5) (2021-10-21)
 
 ### [3.6.4](https://github.com/mseele/sve-website/compare/v3.6.3...v3.6.4) (2021-10-02)
