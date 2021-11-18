@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0](https://github.com/mseele/sve-website/compare/v3.6.5...v3.8.0) (2021-11-18)
+
+
+### Features
+
+* add news snippet ([5dbe027](https://github.com/mseele/sve-website/commit/5dbe027805aac5cb726f829c187a6defd388449c))
+* add news video ([c813033](https://github.com/mseele/sve-website/commit/c813033534933c31d104d3168243d4ddd611b4b3))
+
 ## [3.7.0](https://github.com/mseele/sve-website/compare/v3.6.5...v3.7.0) (2021-11-10)
 
 
