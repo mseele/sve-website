@@ -35,10 +35,10 @@ export default {
       team: '2. Mannschaft',
       league: 'Kreisliga B1',
       coach: {
-        name: 'Philipp Dettling',
+        name: "Michele Dell'Agli",
         mobile: {
-          formatted: '01512 1930003',
-          raw: '+4915121930003',
+          formatted: '0176 24671575',
+          raw: '+4917624671575',
         },
       },
       contact: abteilungsleiterHerren,
