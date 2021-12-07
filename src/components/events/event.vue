@@ -85,7 +85,11 @@
             <slot name="bookingHeader"></slot>
           </div>
           <booking
-            button-text="Kostenpflichtig buchen"
+            :button-text="
+              event.bookingButton
+                ? event.bookingButton
+                : 'Kostenpflichtig buchen'
+            "
             :event-id="event.id"
             :label-updates="labelUpdates"
             @on-booking="onBooking($event)"
