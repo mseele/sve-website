@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.10.0](https://github.com/mseele/sve-website/compare/v3.9.0...v3.10.0) (2021-12-07)
+
+
+### Features
+
+* make booking button configurable ([1e0c77b](https://github.com/mseele/sve-website/commit/1e0c77bfa9724b35a4c6eb0f116849adcc33219b))
+
+
+### Bug Fixes
+
+* change event image ([2712f7d](https://github.com/mseele/sve-website/commit/2712f7dcdc11b6cf91f1216e3249469307d32b02))
+
 ## [3.9.0](https://github.com/mseele/sve-website/compare/v3.8.1...v3.9.0) (2021-12-02)
 
 

@@ -25,6 +25,7 @@ function load(addSchemaTypes) {
         location: String
         bookingTemplate: String
         waitingTemplate: String
+        bookingButton: String
         externalOperator: Boolean
       }
     `)
