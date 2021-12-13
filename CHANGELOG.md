@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.3](https://github.com/mseele/sve-website/compare/v3.10.2...v3.10.3) (2021-12-13)
+
+
+### Bug Fixes
+
+* remove duplicate slash ([52c80e0](https://github.com/mseele/sve-website/commit/52c80e0b114c385d46523acc46c43fcbd9af03fc))
+
 ### [3.10.2](https://github.com/mseele/sve-website/compare/v3.10.1...v3.10.2) (2021-12-13)
 
 
