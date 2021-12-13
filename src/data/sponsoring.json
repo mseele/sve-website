@@ -277,5 +277,10 @@
     "name": "Lebensmittelmärkte Rainer Rentschler e.K.",
     "url": "https://www.edeka-rentschler.de/",
     "groupBy": "Rentschler e.K."
+  },
+  {
+    "name": "Stoz GmbH",
+    "url": "https://www.stoz.gmbh//",
+    "groupBy": "Stoz GmbH"
   }
 ]
