@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.5](https://github.com/mseele/sve-website/compare/v3.10.4...v3.10.5) (2021-12-15)
+
+
+### Bug Fixes
+
+* update event image ([a88ab32](https://github.com/mseele/sve-website/commit/a88ab32f1be01e6d3bf7d0d91484a21ffea9cec6))
+
 ### [3.10.4](https://github.com/mseele/sve-website/compare/v3.10.3...v3.10.4) (2021-12-15)
 
 ### [3.10.3](https://github.com/mseele/sve-website/compare/v3.10.2...v3.10.3) (2021-12-13)
