@@ -121,59 +121,60 @@
       </div>
     </page-section>
     <page-section id="buchung" title="Buchung">
-      Aufgrund der pandemiebedingten Schließung der Sportstätten können wir zum
+      <!-- Aufgrund der pandemiebedingten Schließung der Sportstätten können wir zum
       jetzigen Zeitpunkt keine Vermietung vornehmen. Bitte schaut auf dieser
       Seite wieder vorbei, sobald Fußballspiele und die Nutzung von Sportstätten
-      rechtlich wieder erlaubt sind.
-      <!--
-          <v-col cols="12">
-            <v-row justify="center" no-gutters>
-              <v-btn
-                text
-                rounded
-                color="primary"
-                :to="{
-                  path: $static.metadata.pathPrefix + '/kontakt',
-                  query: { auswahl: 'kunstrasen' },
-                }"
-              >
-                Bucht ganz unkompliziert über unsere Kontaktseite
-              </v-btn>
-            </v-row>
-          </v-col>
-          <v-col cols="12">
-            Freie Buchungstermine für eine konkrete Anfrage entnehmt Ihr dem
-            Belegungskalender.<br />
-            Im Falle einer erfolgreichen Buchung erhaltet Ihr eine schriftliche
-            Bestätigung inkl. der zu beachtenden Platzordnung.
-          </v-col>
-          -->
+      rechtlich wieder erlaubt sind. -->
+      Freie Buchungstermine für eine konkrete Anfrage entnehmt Ihr dem
+      Belegungskalender.<br />
+      Im Falle einer erfolgreichen Buchung erhaltet Ihr eine schriftliche
+      Bestätigung inkl. der zu beachtenden Platzordnung.
+      <div
+        class="flex flex-col pt-6 space-y-4 md:flex-row md:justify-center md:space-y-0 md:space-x-4"
+      >
+        <g-link
+          class="inline-flex items-center px-5 py-3 text-black rounded-lg on-focus-dark bg-white hover:bg-gray-200"
+          :to="{
+            path: '/kontakt',
+            query: { auswahl: 'kunstrasen' },
+          }"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-8 h-8"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <span class="flex flex-col items-start ml-4 leading-none">
+            <span class="mb-1 text-xs text-gray-600">BUCHUNG</span>
+            <span class="font-medium title-font">Kunstrasen</span>
+          </span>
+        </g-link>
+      </div>
     </page-section>
-    <!--
-    <section id="belegung" class="section_alt">
-      <v-container ref="resizeContainer">
-        <v-row>
-          <v-col cols="12">
-            <h2>BELEGUNG</h2>
-          </v-col>
-          <v-col v-resize="onResize" cols="12">
-            <iframe
-              src="https://calendar.google.com/calendar/embed?title=Kunstrasenplatz%20SV%20Eutingen%20-%20Belegung%20&amp;showTz=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23d8d8d8&amp;src=fvrnk6edkmbinqefobuoallft0%40group.calendar.google.com&amp;color=%23711616&amp;ctz=Europe%2FBerlin"
-              style="border-width: 0;"
-              :width="gcalWidth"
-              height="600"
-              frameborder="0"
-              scrolling="no"
-            ></iframe>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-    -->
+    <page-section id="belegung" title="Belegung" dark>
+      <div ref="resizeContainer" v-resize="onResize">
+        <iframe
+          src="https://calendar.google.com/calendar/embed?title=Kunstrasenplatz%20SV%20Eutingen%20-%20Belegung%20&amp;showTz=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23d8d8d8&amp;src=fvrnk6edkmbinqefobuoallft0%40group.calendar.google.com&amp;color=%23711616&amp;ctz=Europe%2FBerlin"
+          style="border-width: 0"
+          :width="gcalWidth"
+          height="600"
+          frameborder="0"
+          scrolling="no"
+        ></iframe>
+      </div>
+    </page-section>
   </Layout>
 </template>
 
 <script>
+import resize from 'vue-resize-directive'
 import pageSection from '@/components/common/pageSection'
 
 export default {
@@ -181,27 +182,19 @@ export default {
     title: 'Kunstrasen',
   },
   components: { pageSection },
-  // data() {
-  //   return {
-  //     gcalWidth: 800,
-  //   }
-  // },
-  // mounted() {
-  //   this.onResize()
-  // },
-  // methods: {
-  //   onResize() {
-  //     this.gcalWidth = this.$refs.resizeContainer.offsetWidth
-  //     // window.innerWidth
-  //   },
-  // },
+  directives: { resize },
+  data() {
+    return {
+      gcalWidth: 800,
+    }
+  },
+  mounted() {
+    this.onResize()
+  },
+  methods: {
+    onResize() {
+      this.gcalWidth = this.$refs.resizeContainer.offsetWidth
+    },
+  },
 }
 </script>
-
-<!--static-query>
-query {
-  metadata {
-    pathPrefix
-  }
-}
-</static-query-->
