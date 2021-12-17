@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.7](https://github.com/mseele/sve-website/compare/v3.10.6...v3.10.7) (2021-12-17)
+
+
+### Bug Fixes
+
+* correct directive installation ([2377ec7](https://github.com/mseele/sve-website/commit/2377ec77013c11fed8a82cfdb096cd93cd50b4b2))
+
 ### [3.10.6](https://github.com/mseele/sve-website/compare/v3.10.5...v3.10.6) (2021-12-16)
 
 
