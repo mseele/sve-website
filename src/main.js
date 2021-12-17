@@ -1,5 +1,6 @@
 import defaultLayout from '@/layouts/default'
 import scrollBehavior from '@/util/scrollBehavior'
+import resize from 'vue-resize-directive'
 
 require('@/assets/tailwind.css')
 require('inter-ui/inter-hinted.css')
@@ -11,6 +12,8 @@ export default function (Vue, { head, router }) {
     name: 'theme-color',
     content: '#991B1B',
   })
+
+  Vue.directive('resize', resize)
 
   // customize scrollBehavior
   router.options.scrollBehavior = (...args) => scrollBehavior(...args)

@@ -174,7 +174,6 @@
 </template>
 
 <script>
-import resize from 'vue-resize-directive'
 import pageSection from '@/components/common/pageSection'
 
 export default {
@@ -182,7 +181,6 @@ export default {
     title: 'Kunstrasen',
   },
   components: { pageSection },
-  directives: { resize },
   data() {
     return {
       gcalWidth: 800,
