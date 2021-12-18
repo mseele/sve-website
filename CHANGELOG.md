@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.9](https://github.com/mseele/sve-website/compare/v3.10.8...v3.10.9) (2021-12-18)
+
 ### [3.10.8](https://github.com/mseele/sve-website/compare/v3.10.7...v3.10.8) (2021-12-18)
 
 
