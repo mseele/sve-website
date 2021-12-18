@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.8](https://github.com/mseele/sve-website/compare/v3.10.7...v3.10.8) (2021-12-18)
+
+
+### Bug Fixes
+
+* implement on-resize on my own ([e61090e](https://github.com/mseele/sve-website/commit/e61090ecc981a41ccbdef26cb984c870270ed2f4))
+
+### [3.10.7](https://github.com/mseele/sve-website/compare/v3.10.6...v3.10.7) (2021-12-17)
+
+
+### Bug Fixes
+
+* correct directive installation ([2377ec7](https://github.com/mseele/sve-website/commit/2377ec77013c11fed8a82cfdb096cd93cd50b4b2))
+
+### [3.10.6](https://github.com/mseele/sve-website/compare/v3.10.5...v3.10.6) (2021-12-16)
+
+
+### Bug Fixes
+
+* re-enable kunstrasen booking ([088053a](https://github.com/mseele/sve-website/commit/088053a924877d3652e3a735726c8b3c4879aea4))
+
 ### [3.10.5](https://github.com/mseele/sve-website/compare/v3.10.4...v3.10.5) (2021-12-15)
 
 
