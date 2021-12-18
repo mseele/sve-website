@@ -86,8 +86,8 @@
           </div>
           <booking
             :button-text="
-              event.bookingButton
-                ? event.bookingButton
+              event.altBookingButtonText
+                ? event.altBookingButtonText
                 : 'Kostenpflichtig buchen'
             "
             :event-id="event.id"
