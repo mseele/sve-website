@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.8](https://github.com/mseele/sve-website/compare/v3.10.7...v3.10.8) (2021-12-18)
+
+
+### Bug Fixes
+
+* implement on-resize on my own ([e61090e](https://github.com/mseele/sve-website/commit/e61090ecc981a41ccbdef26cb984c870270ed2f4))
+
 ### [3.10.7](https://github.com/mseele/sve-website/compare/v3.10.6...v3.10.7) (2021-12-17)
 
 
