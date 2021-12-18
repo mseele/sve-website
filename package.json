@@ -31,7 +31,6 @@
     "postcss-focus-visible": "^5.0.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "vee-validate": "^3.4.5",
-    "vue-resize-directive": "^1.2.0",
     "vue-scrollto": "^2.20.0",
     "webpack": "^4.1.0"
   },

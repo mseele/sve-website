@@ -159,7 +159,7 @@
       </div>
     </page-section>
     <page-section id="belegung" title="Belegung" dark>
-      <div ref="resizeContainer" v-resize="onResize">
+      <div ref="resizeContainer">
         <iframe
           src="https://calendar.google.com/calendar/embed?title=Kunstrasenplatz%20SV%20Eutingen%20-%20Belegung%20&amp;showTz=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23d8d8d8&amp;src=fvrnk6edkmbinqefobuoallft0%40group.calendar.google.com&amp;color=%23711616&amp;ctz=Europe%2FBerlin"
           style="border-width: 0"
@@ -186,8 +186,18 @@ export default {
       gcalWidth: 800,
     }
   },
+  created() {
+    if (process.isClient) {
+      window.addEventListener('resize', this.onResize)
+    }
+  },
   mounted() {
     this.onResize()
+  },
+  destroyed() {
+    if (process.isClient) {
+      window.removeEventListener('resize', this.onResize)
+    }
   },
   methods: {
     onResize() {

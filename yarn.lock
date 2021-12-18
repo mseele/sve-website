@@ -3776,11 +3776,6 @@ css-declaration-sorter@^4.0.1:
     postcss "^7.0.1"
     timsort "^0.3.0"
 
-css-element-queries@^1.0.2:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/css-element-queries/-/css-element-queries-1.2.3.tgz#e14940b1fcd4bf0da60ea4145d05742d7172e516"
-  integrity sha512-QK9uovYmKTsV2GXWQiMOByVNrLn2qz6m3P7vWpOR4IdD6I3iXoDw5qtgJEN3Xq7gIbdHVKvzHjdAtcl+4Arc4Q==
-
 css-loader@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-2.1.1.tgz"
@@ -6702,11 +6697,6 @@ interpret@^1.0.0:
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.4.0.tgz"
   integrity sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==
 
-intersection-observer@^0.5.0:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.5.1.tgz#e340fc56ce74290fe2b2394d1ce88c4353ac6dfa"
-  integrity sha512-Zd7Plneq82kiXFixs7bX62YnuZ0BMRci9br7io88LwDyF3V43cQMI+G5IiTlTNTt+LsDUppl19J/M2Fp9UkH6g==
-
 into-stream@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/into-stream/-/into-stream-3.1.0.tgz"
@@ -7530,11 +7520,6 @@ lodash.castarray@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.castarray/-/lodash.castarray-4.4.0.tgz#c02513515e309daddd4c24c60cfddcf5976d9115"
   integrity sha1-wCUTUV4wna3dTCTGDP3c9ZdtkRU=
-
-lodash.debounce@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
-  integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
 lodash.deburr@^4.1.0:
   version "4.1.0"
@@ -12074,15 +12059,6 @@ vue-meta@^2.2.2:
   integrity sha512-XEeZUmlVeODclAjCNpWDnjgw+t3WA6gdzs6ENoIAgwO1J1d5p1tezDhtteLUFwcaQaTtayRrsx7GL6oXp/m2Jw==
   dependencies:
     deepmerge "^4.2.2"
-
-vue-resize-directive@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/vue-resize-directive/-/vue-resize-directive-1.2.0.tgz#4214ca8a80a425529b036ea868cad54a38f613e4"
-  integrity sha512-LmpFexQcl1XYyz3DQrTrq3Efgj50MKEON60nR9MMAq1D2ZtXFg1WDcy1wy1T0SeduNtIu9hos2aLTsJUplvjlQ==
-  dependencies:
-    css-element-queries "^1.0.2"
-    intersection-observer "^0.5.0"
-    lodash.debounce "^4.0.8"
 
 vue-router@^3.1.3:
   version "3.4.3"
