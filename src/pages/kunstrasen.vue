@@ -161,7 +161,7 @@
     <page-section id="belegung" title="Belegung" dark>
       <div ref="resizeContainer">
         <iframe
-          src="https://calendar.google.com/calendar/embed?title=Kunstrasenplatz%20SV%20Eutingen%20-%20Belegung%20&amp;showTz=0&amp;mode=WEEK&amp;height=600&amp;wkst=2&amp;bgcolor=%23d8d8d8&amp;src=fvrnk6edkmbinqefobuoallft0%40group.calendar.google.com&amp;color=%23711616&amp;ctz=Europe%2FBerlin"
+          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23e7e5e4&ctz=Europe%2FBerlin&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=1&showTz=1&src=a3Vuc3RyYXNlbkBzdi1ldXRpbmdlbi5kZQ&color=%23039BE5"
           style="border-width: 0"
           :width="gcalWidth"
           height="600"
