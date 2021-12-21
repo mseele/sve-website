@@ -48,7 +48,7 @@ query($id: ID!) {
     duration
     costMember
     costNonMember
-    bookingButton
+    altBookingButtonText
     externalOperator
   }
 }
