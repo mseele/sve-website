@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.1](https://github.com/mseele/sve-website/compare/v3.11.0...v3.11.1) (2022-01-31)
+
+
+### Bug Fixes
+
+* change phone number ([95b89fc](https://github.com/mseele/sve-website/commit/95b89fc4e3f26a8c47949ba526bbc1a8d1b2d2bd))
+* change sentence ([6fe572f](https://github.com/mseele/sve-website/commit/6fe572f96fbc16bb83dab9e89b11b0a2b997b602))
+
 ## [3.11.0](https://github.com/mseele/sve-website/compare/v3.10.10...v3.11.0) (2022-01-19)
 
 
