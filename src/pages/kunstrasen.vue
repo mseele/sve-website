@@ -44,8 +44,7 @@
           </li>
           <li>
             ausschließlich Inanspruchnahme der Flutlichtanlage pro Spiel oder
-            Trainingseinheit (90 Minuten): 10 Euro für Großspielfeld // 5 Euro
-            für Kleinspielfeld
+            Trainingseinheit (90 Minuten): 10 Euro
           </li>
         </ul>
       </div>

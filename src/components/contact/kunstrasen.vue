@@ -26,8 +26,8 @@ export default {
       touches: [
         {
           type: 'phone',
-          text: '0157 85834875',
-          href: 'tel:+4915785834875',
+          text: '0173 4205370',
+          href: 'tel:+491734205370',
         },
         {
           type: 'email',
@@ -37,7 +37,7 @@ export default {
         {
           type: 'whatsapp',
           text: 'WhatsApp',
-          href: 'https://wa.me/4915785834875',
+          href: 'https://wa.me/491734205370',
         },
       ],
     }
