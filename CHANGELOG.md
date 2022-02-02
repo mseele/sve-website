@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0](https://github.com/mseele/sve-website/compare/v3.11.1...v3.12.0) (2022-02-02)
+
+
+### Features
+
+* add event image ([0814b6f](https://github.com/mseele/sve-website/commit/0814b6ff08554fa4d7f0bc4e52438e5b0993256a))
+
 ### [3.11.1](https://github.com/mseele/sve-website/compare/v3.11.0...v3.11.1) (2022-01-31)
 
 
