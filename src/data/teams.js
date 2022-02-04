@@ -65,10 +65,11 @@ export default {
       team: '1. Mannschaft',
       league: 'Verbandsliga',
       coach: {
-        name: 'Peter Steeb',
+        name: 'Dominik Rakoczy',
+        email: 'domraky@gmail.com',
         mobile: {
-          formatted: '0176 23748586',
-          raw: '+4917623748586',
+          formatted: '01511 8566050',
+          raw: '+4915118566050',
         },
       },
       contact: {
@@ -113,11 +114,11 @@ export default {
       team: 'A-Junioren 1 SGM SV Eutingen',
       league: 'Bezirksstaffel',
       coach: {
-        name: 'Mario Pargolo',
-        email: 'mario.pargolo@arag-partner.de',
+        name: 'Yannik Janzen',
+        email: 'yjanzen98@gmail.com',
         mobile: {
-          formatted: '0172 2303172',
-          raw: '+491722303172',
+          formatted: '0163 7296476',
+          raw: '+491637296476',
         },
       },
       contact: jugendleiter,
@@ -230,11 +231,11 @@ export default {
       team: 'B-Juniorinnen 2 SGM SV Eutingen',
       league: 'Bezirksstaffel',
       coach: {
-        name: 'Francesco Caboli',
-        email: 'Franco030878@gmail.com',
+        name: 'Aylin Gühring',
+        email: 'guehring.aylin@gmail.com',
         mobile: {
-          formatted: '0162 5869821',
-          raw: '+491625869821',
+          formatted: '01512 5108250',
+          raw: '+4915125108250',
         },
       },
       contact: jugendleiter,
