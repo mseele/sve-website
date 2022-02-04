@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.12.1](https://github.com/mseele/sve-website/compare/v3.12.0...v3.12.1) (2022-02-04)
+
+
+### Bug Fixes
+
+* change coaches ([4de7140](https://github.com/mseele/sve-website/commit/4de714069efadcda78ffb77dce833e3684de7320))
+
 ## [3.12.0](https://github.com/mseele/sve-website/compare/v3.11.1...v3.12.0) (2022-02-02)
 
 
