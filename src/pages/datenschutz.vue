@@ -1,6 +1,10 @@
+<page>
+title: Datenschutz
+</page>
+
 <template>
   <Layout>
-    <page-section class="break-words" title="Datenschutzerklärung">
+    <PageSection class="break-words" title="Datenschutzerklärung">
       <div id="m14" class="pb-4 text-2xl font-medium">Einleitung</div>
       <div class="pb-8 space-y-2">
         <div>
@@ -1354,7 +1358,7 @@
       </div>
       <div>
         <a
-          class="text-gray-600 underline on-focus focus-visible:ring-offset-2"
+          class="text-stone-600 underline on-focus focus-visible:ring-offset-2"
           href="https://datenschutz-generator.de/?l=de"
           title="Rechtstext von Dr. Schwenke - für weitere Informationen bitte anklicken."
           target="_blank"
@@ -1363,19 +1367,6 @@
           Schwenke</a
         >
       </div>
-    </page-section>
+    </PageSection>
   </Layout>
 </template>
-
-<script>
-import pageSection from '@/components/common/pageSection'
-
-export default {
-  metaInfo: {
-    title: 'Datenschutz',
-  },
-  components: {
-    pageSection,
-  },
-}
-</script>

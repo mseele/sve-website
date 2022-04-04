@@ -1,13 +1,17 @@
+<page>
+title: Sponsoring
+</page>
+
 <template>
   <Layout :transparent="true">
-    <hero-section
+    <HeroSection
       title="Sponsoring"
       subtitle="PROFITIERE MIT UNS"
-      :image="$page.heroImages.src"
+      image="sponsoring.jpg"
       :primary-button="{ text: 'Bandenwerbung', to: '#bande' }"
       :secondary-button="{ text: 'Unsere Partner', to: '#partner' }"
     />
-    <page-section title="Sponsoring">
+    <PageSection title="Sponsoring">
       <span
         >Unsere Partner ermöglichen durch ihre finanzielle und materielle
         Unterstützung das sportliche und kulturelle Angebot des SV Eutingen.
@@ -19,44 +23,44 @@
         oder sonstigem Equipment Werbung machen.<br />
         Hast auch Du Interesse an einer Partnerschaft?<br />
         Dann wende Dich bitte über das
-        <g-link
-          class="default-link on-focus focus-visible:ring-offset-2 whitespace-nowrap"
+        <router-link
+          class="default-link on-focus whitespace-nowrap focus-visible:ring-offset-2"
           :to="{
             path: '/kontakt/',
             query: { auswahl: 'sponsoring', thema: 'sponsoring' },
           }"
-          >Kontaktformular</g-link
+          >Kontaktformular</router-link
         >
         an unseren Vorsitzenden Sebastian Lazar (<a
           href="mailto:vorstand@sv-eutingen.de"
-          class="default-link on-focus focus-visible:ring-offset-2 whitespace-nowrap"
+          class="default-link on-focus whitespace-nowrap focus-visible:ring-offset-2"
           >vorstand@sv-eutingen.de</a
         >), der für Gespräche gerne zur Verfügung steht.</span
       >
-    </page-section>
-    <page-section id="bande" title="Bandenwerbung" dark>
+    </PageSection>
+    <PageSection id="bande" title="Bandenwerbung" dark>
       <span>
         Außerdem bieten wir seit über 20 Jahren eine attrative Bandenwerbung auf
         unserer sehr belebten Sportanlage. Die Abwicklung läuft unkompliziert.
         Wir kümmern uns über Anschaffung und Pflege der Bandenwerbung.<br />
         Du hast Interesse an diesem sehenswerten Auftritt?<br />
         Wende Dich bitte über das
-        <g-link
-          class="inline-block default-link on-focus-dark focus-visible:ring-offset-2 whitespace-nowrap"
+        <router-link
+          class="default-link on-focus-dark inline-block whitespace-nowrap focus-visible:ring-offset-2"
           :to="{
             path: '/kontakt/',
             query: { auswahl: 'sponsoring', thema: 'bande' },
           }"
-          >Kontaktformular</g-link
+          >Kontaktformular</router-link
         >
         an unseren Vorsitzenden Sebastian Lazar (<a
           href="mailto:vorstand@sv-eutingen.de"
-          class="default-link on-focus-dark focus-visible:ring-offset-2 whitespace-nowrap"
+          class="default-link on-focus-dark whitespace-nowrap focus-visible:ring-offset-2"
           >vorstand@sv-eutingen.de</a
         >).
       </span>
-    </page-section>
-    <page-section id="partner" title="Unsere Partner">
+    </PageSection>
+    <PageSection id="partner" title="Unsere Partner">
       <div class="-mb-2">
         Mit diesen langjährigen Partnern leben wir Zusammenarbeit. Durch ihre
         materielle und finanzielle Unterstützung ermöglichen sie unser
@@ -71,25 +75,25 @@
         :key="groupIndex"
         class="pt-8"
       >
-        <header-title dark class="text-xl font-medium">
+        <HeaderTitle dark class="text-xl font-medium">
           {{ key }}
-        </header-title>
+        </HeaderTitle>
         <div class="flex flex-wrap lg:-ml-4">
           <div
             v-for="(item, index) of sponsors[key]"
             :key="index"
-            class="w-full pt-4 lg:pl-4 lg:w-1/2"
+            class="w-full pt-4 lg:w-1/2 lg:pl-4"
           >
             <component
               :is="item.url ? 'a' : 'div'"
               :href="item.url"
               target="_blank"
               rel="noopener"
-              class="flex items-center h-full p-4 text-black bg-white rounded on-focus-dark"
-              :class="{ 'hover:bg-gray-200': item.url }"
+              class="on-focus-dark flex h-full items-center rounded bg-white p-4 text-black"
+              :class="{ 'hover:bg-stone-200': item.url }"
             >
               <svg
-                class="flex-shrink-0 w-6 h-6 mr-4 text-red-800"
+                class="mr-4 h-6 w-6 flex-shrink-0 text-red-800"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
                 fill="currentColor"
@@ -100,59 +104,38 @@
                   clip-rule="evenodd"
                 />
               </svg>
-              <span class="font-medium title-font">{{ item.name }}</span>
+              <span class="title-font font-medium">{{ item.name }}</span>
             </component>
           </div>
         </div>
       </div>
-    </page-section>
+    </PageSection>
   </Layout>
 </template>
 
-<script>
-import heroSection from '@/components/common/heroSection'
-import pageSection from '@/components/common/pageSection'
-import headerTitle from '@/components/controls/headerTitle'
-import btn from '@/components/controls/downloadButton'
-import sponsoring from '@/data/sponsoring.json'
+<script setup lang="ts">
+import sponsoring from '@/data/sponsoring'
+import { Sponsor } from '@/models'
 
-export default {
-  metaInfo: {
-    title: 'Sponsoring',
-  },
-  components: { heroSection, pageSection, headerTitle, btn },
-  setup() {
-    const sponsors = sponsoring
-      .slice()
-      .sort((a, b) => {
-        const nameA = a.groupBy.toUpperCase()
-        const nameB = b.groupBy.toUpperCase()
-        if (nameA < nameB) {
-          return -1
-        }
-        if (nameA > nameB) {
-          return 1
-        }
-        return 0
-      })
-      .reduce((acc, item) => {
-        const key = item.groupBy.toUpperCase().charAt(0)
-        if (!acc[key]) {
-          acc[key] = []
-        }
-        acc[key].push(item)
-        return acc
-      }, {})
-
-    return { sponsors }
-  },
-}
+const sponsors = sponsoring
+  .slice()
+  .sort((a, b) => {
+    const nameA = a.groupBy.toUpperCase()
+    const nameB = b.groupBy.toUpperCase()
+    if (nameA < nameB) {
+      return -1
+    }
+    if (nameA > nameB) {
+      return 1
+    }
+    return 0
+  })
+  .reduce((acc: Record<string, Sponsor[]>, item) => {
+    const key = item.groupBy.toUpperCase().charAt(0)
+    if (!acc[key]) {
+      acc[key] = []
+    }
+    acc[key].push(item)
+    return acc
+  }, {})
 </script>
-
-<page-query>
-query {
-  heroImages(id: "sponsoring") {
-    src
-  }
-}
-</page-query>

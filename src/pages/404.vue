@@ -1,6 +1,10 @@
+<page>
+title: Fehler
+</page>
+
 <template>
   <Layout>
-    <page-section title="404">
+    <PageSection title="404">
       <div
         class="flex flex-col items-center justify-center flex-grow m-6 text-center"
       >
@@ -53,28 +57,14 @@
           </g>
         </svg>
         <div
-          class="pb-6 text-lg text-gray-500 lg:text-xl 2xl:pb-12 2xl:text-2xl"
+          class="pb-6 text-lg text-stone-500 lg:text-xl 2xl:pb-12 2xl:text-2xl"
         >
           Die gewünschte Seite wurde leider nicht gefunden.
         </div>
-        <btn
-          class="w-full sm:mx-auto sm:w-1/2"
-          @click="$router.push({ path: '/' })"
-          >Zurück zur Startseite</btn
+        <PrimaryLink class="w-full sm:mx-auto sm:w-1/2" to="/"
+          >Zurück zur Startseite</PrimaryLink
         >
       </div>
-    </page-section>
+    </PageSection>
   </Layout>
 </template>
-
-<script>
-import pageSection from '@/components/common/pageSection'
-import btn from '@/components/controls/primaryButton'
-
-export default {
-  metaInfo: {
-    title: 'Fehler',
-  },
-  components: { pageSection, btn },
-}
-</script>

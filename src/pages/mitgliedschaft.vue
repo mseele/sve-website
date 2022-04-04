@@ -1,6 +1,10 @@
+<page>
+title: Mitglied werden
+</page>
+
 <template>
   <Layout>
-    <page-section title="Mitglied werden">
+    <PageSection title="Mitglied werden">
       <div>
         Über 5,3 Millionen Menschen in Baden-Württemberg engagieren sich
         ehrenamtlich. Dafür bieten wir auch beim SVE viele Möglichkeiten. Ob
@@ -15,19 +19,19 @@
       </div>
       <div class="flex flex-wrap pt-6">
         <div class="w-full md:w-1/2 md:pr-2">
-          <header-title dark class="text-xl font-medium">
+          <HeaderTitle dark class="text-xl font-medium">
             Mitgliedschaft
-          </header-title>
+          </HeaderTitle>
           <div class="pt-4">
             Du möchtest Mitglied werden?
             <a
-              class="font-medium default-link on-focus-dark"
+              class="default-link on-focus-dark font-medium"
               href="/downloads/2020/Mitgliedsantrag-SVE.pdf"
               target="_blank"
               >Download Mitgliedsantrag</a
             >, fülle ihn aus und sende ihn postialisch an die folgende Adresse.
           </div>
-          <div class="pt-4 text-sm font-bold tracking-wider uppercase">
+          <div class="pt-4 text-sm font-bold uppercase tracking-wider">
             Adresse
           </div>
           <div class="pt-2">
@@ -39,15 +43,13 @@
           </div>
         </div>
         <div class="w-full pt-6 md:w-1/2 md:pl-2 md:pt-0">
-          <header-title dark class="text-xl font-medium">
-            Spenden
-          </header-title>
+          <HeaderTitle dark class="text-xl font-medium">Spenden</HeaderTitle>
           <div class="pt-4">
             Mit Deiner Spende kannst Du direkt Gutes tun und förderst damit
             unser sportliches und kulturelles Angebot. Dabei hilft uns jeder
             Betrag!
           </div>
-          <div class="pt-4 text-sm font-bold tracking-wider uppercase">
+          <div class="pt-4 text-sm font-bold uppercase tracking-wider">
             Kontoverbindung
           </div>
           <div class="pt-2">
@@ -57,21 +59,6 @@
           </div>
         </div>
       </div>
-    </page-section>
+    </PageSection>
   </Layout>
 </template>
-
-<script>
-import pageSection from '@/components/common/pageSection'
-import headerTitle from '@/components/controls/headerTitle'
-
-export default {
-  metaInfo: {
-    title: 'Mitglied werden',
-  },
-  components: {
-    pageSection,
-    headerTitle,
-  },
-}
-</script>

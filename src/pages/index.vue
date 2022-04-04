@@ -1,23 +1,23 @@
 <template>
   <Layout :transparent="true" :light="true">
-    <hero-section
+    <HeroSection
       id="home"
       title="SV Eutingen"
       subtitle="#mehralseinverein"
-      :image="$page.heroImages.src"
+      image="home.jpg"
       :primary-button="{ text: 'Aktuelles', to: '#aktuelles' }"
       :secondary-button="{ text: 'Mach mit', to: '#mach-mit' }"
     />
-    <page-section id="aktuelles" title="Aktuelles">
+    <PageSection id="aktuelles" title="Aktuelles">
       <div class="space-y-4">
         <div
-          v-for="edge in $page.news.edges"
-          :key="edge.node.id"
-          class="p-4 bg-white border-2 border-gray-300 rounded"
+          v-for="(item, index) in news"
+          :key="index"
+          class="rounded border-2 border-stone-300 bg-white p-4"
         >
           <div class="flex flex-row items-center pb-4">
             <svg
-              class="flex-none w-5 h-5 text-red-800 fill-current"
+              class="h-5 w-5 flex-none fill-current text-red-800"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -29,17 +29,18 @@
               />
             </svg>
             <div class="pl-2 text-xl font-semibold">
-              {{ edge.node.title }}
+              {{ item.title }}
             </div>
           </div>
-          <expandableContent
-            :content="edge.node.text"
-            :collapsed="edge.node.collapsed"
+          <ExpandableContent
+            client:idle
+            :content="item.text"
+            :collapsed="item.collapsed"
           />
         </div>
       </div>
-    </page-section>
-    <page-section id="mach-mit" dark title="Mach mit">
+    </PageSection>
+    <PageSection id="mach-mit" dark title="Mach mit">
       <div class="font-medium">
         Du suchst Teamsport oder Fitness-Angebote? Du hast Lust auf Ehrenamt?
         Oder suchst eine starke Sponsoringpartnerschaft für Dein Unternehmen?
@@ -49,79 +50,83 @@
         Mannschafts- und Gesundheitssport, stiften Gemeinschaft und leben
         Partnerschaften.
       </div>
-      <div class="flex flex-wrap -m-2">
+      <div class="-m-2 flex flex-wrap">
         <div
-          v-for="edge in $page.joins.edges"
-          :key="edge.node.id"
+          v-for="(item, index) in joins"
+          :key="index"
           class="w-full p-2 lg:w-1/2"
         >
-          <g-link
-            :to="edge.node.link"
-            class="flex flex-col h-full overflow-hidden bg-white border-2 border-gray-300 rounded hover:shadow-sm group focus:outline-none focus-visible:ring-2 focus:ring-red-600 focus:ring-opacity-50"
+          <router-link
+            :to="item.link"
+            class="group flex h-full flex-col overflow-hidden rounded border-2 border-stone-300 bg-white hover:shadow-sm focus:outline-none focus:ring-red-600 focus:ring-opacity-50 focus-visible:ring-2"
           >
-            <div class="relative overflow-hidden pb-3/5 sm:pb-1/2 md:pb-2/5">
-              <g-image
-                :src="edge.node.image"
-                :alt="edge.node.title"
-                class="absolute object-cover w-full h-full transition duration-500 ease-in-out group-hover:transform-gpu group-hover:scale-110"
+            <div
+              class="aspect-[5/3] overflow-hidden sm:aspect-[2/1] lg:aspect-[5/3]"
+            >
+              <DynamicPictureCard
+                :name="item.image"
+                :alt="item.title"
+                class="h-full w-full object-cover transition duration-500 ease-in-out group-hover:scale-110 group-hover:transform-gpu"
               />
             </div>
-            <div class="flex flex-col flex-grow p-4">
+            <div class="flex flex-grow flex-col p-4">
               <div
-                class="mb-3 text-lg font-medium text-gray-800 group-hover:text-black"
+                class="mb-3 text-lg font-medium text-stone-800 group-hover:text-black"
               >
-                {{ edge.node.title }}
+                {{ item.title }}
               </div>
-              <p class="flex-grow text-gray-700 group-hover:text-gray-900">
-                {{ edge.node.text }}
+              <p class="flex-grow text-stone-700 group-hover:text-stone-900">
+                {{ item.text }}
               </p>
             </div>
-          </g-link>
+          </router-link>
         </div>
       </div>
-    </page-section>
+    </PageSection>
   </Layout>
 </template>
 
-<script>
-import heroSection from '@/components/common/heroSection'
-import pageSection from '@/components/common/pageSection'
-import expandableContent from '@/components/controls/expandableContent'
+<script setup lang="ts">
+import allNews from '@/data/news'
 
-export default {
-  components: {
-    heroSection,
-    pageSection,
-    expandableContent,
+const news = allNews.slice(0, 4)
+
+const joins = [
+  {
+    title: 'Fußball - unsere Leidenschaft',
+    text: 'Auf unserer tollen Sportanlage u.a. mit neuwertigen Kunstrasenplätzen bieten wir für Frauen und Männer ein breites Fußballangebot in verschiedenen Ligen.',
+    image: 'join_fussball.jpg',
+    link: '/teamsport#fussball',
   },
-}
+  {
+    title: 'Teilhabe für Kinder und Jugendliche',
+    text: 'Eine sinnstiftende Freizeitbeschäftigung für Kinder und Jugendliche ist Schwerpunkt unserer Vereinsarbeit. Wir bieten für alle Altersklassen sowie Mädchen und Jungs die Möglichkeit, Fußball zu spielen. Ebenfalls im Programm haben wir regelmäßige Schwimmkurse für Kinder.',
+    image: 'join_jugend.jpg',
+    link: '/teamsport#jugend',
+  },
+  {
+    title: "Fühl' Dich wohl durch Fitness",
+    text: 'Unser breites Fitnessangebot bietet für jedes Alter den perfekten Ausgleich zum Alltag und schafft spürbar mehr Lebensqualität. Rückenfit, Yoga, Pilates, Power Hour... - bei uns findest Du einen passenden Kurs.',
+    image: 'join_fitness.jpg',
+    link: '/fitness',
+  },
+  {
+    title: 'Volleyball - genau Dein Ding',
+    text: 'Unsere Hobbygruppe heißt Dich als Anfänger, ehemaliger Profi oder Wiedereinsteiger des Volleyballsports herzlich willkommen. Immer freitags um 20 Uhr steht die Freude am Sport im Vordergrund.',
+    image: 'join_volleyball.jpg',
+    link: '/teamsport#volleyball',
+  },
+  {
+    title: 'Sponsoring - wir leben Partnerschaft',
+    text: 'Geben und Nehmen - so lautet unser Grundsatz für gelungene Partnerschaften. Wir bieten Werbemöglichkeiten, um auf unserer belebten Sportanlage auf Unternehmen und Dienstleistungen aufmerksam zu machen. Für unsere Partner stehen wir auch parat, wenn sie die Hilfe unserer tatkräftigen Mitglieder bspw. für ein Firmenjubiläum benötigen.',
+    image: 'join_sponsoring.jpg',
+    link: '/sponsoring',
+  },
+  {
+    title: 'Mach mit und werde Mitglied',
+    text: 'Über 5,3 Millionen Menschen in Baden-Württemberg engagieren sich ehrenamtlich. Dafür bieten wir auch beim SVE viele Möglichkeiten. Ob Vereinsamt oder reine Mitgliedschaft - mit Deinem Einsatz unterstützt Du unsere Arbeit und stiftest gesellschaftlichen Nutzen.',
+    image: 'join_mitglied.jpg',
+    link: '/mitgliedschaft',
+  },
+]
 </script>
-
-<page-query>
-query {
-  heroImages(id: "home") {
-    src
-  }
-  news: allNews(order: ASC) {
-    edges {
-      node {
-        id
-        title
-        text
-        collapsed
-      }
-    }
-  }
-  joins: allJoin(order: ASC) {
-    edges {
-      node {
-        id
-        title
-        text
-        link
-        image(width: 620)
-      }
-    }
-  }
-}
-</page-query>

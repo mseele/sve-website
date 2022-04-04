@@ -1,6 +1,10 @@
+<page>
+title: Teamsport
+</page>
+
 <template>
   <Layout>
-    <page-section id="fussball" title="Teamsport">
+    <PageSection id="fussball" title="Teamsport">
       <div class="pb-1">
         Fußball ist der beliebteste Breitensport in Deutschland. Zu sehr
         günstigen Konditionen bieten wir in unseren verschiedenen Abteilungen
@@ -12,21 +16,21 @@
         Neben dem breiten Fussballangebot gibt es beim SV Eutingen auch die
         Möglichkeit Volleyball zu spielen.
       </div>
-      <div class="grid w-full grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-2">
+      <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         <a
           v-for="(section, index) of sections"
           :key="index"
           :href="section.to"
-          class="flex items-center p-3 font-medium text-red-800 bg-white rounded w-fill hover:bg-gray-200 on-focus-dark"
+          class="w-fill on-focus-dark flex items-center rounded bg-white p-3 font-medium text-red-800 hover:bg-stone-200"
         >
           <div
-            class="relative inline-flex items-center justify-center flex-shrink-0 w-5 h-5 text-white bg-red-800 rounded-full"
+            class="relative inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-red-800 text-white"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
-              class="w-4 h-4"
+              class="h-4 w-4"
             >
               <path
                 fillRule="evenodd"
@@ -40,18 +44,18 @@
           </div>
         </a>
       </div>
-    </page-section>
-    <team-infos id="herren" dark title="Herrenfussball" :teams="teams.herren">
+    </PageSection>
+    <TeamInfos id="herren" dark title="Herrenfussball" :teams="teams.herren">
       In unserer Herrenfußballabteilung ermöglichen wir Teamsport auf
       verschiedenen Leistungsniveaus. Bei uns ist für jeden etwas dabei. Durch
       teambuildende Aktionen stärken wir Gemeinschaft und Wir-Gefühl.
-    </team-infos>
-    <team-infos id="frauen" title="Frauenfussball" :teams="teams.frauen">
+    </TeamInfos>
+    <TeamInfos id="frauen" title="Frauenfussball" :teams="teams.frauen">
       In unserer Frauenfußballabteilung ermöglichen wir Teamsport auf
       verschiedenen Leistungsniveaus. Bei uns ist für jede Frau etwas dabei.
       Durch teambuildende Aktionen stärken wir Gemeinschaft und Wir-Gefühl.
-    </team-infos>
-    <team-infos
+    </TeamInfos>
+    <TeamInfos
       id="jugend"
       dark
       title="Jugendfussball (männlich)"
@@ -61,8 +65,8 @@
       wir ein schönes Sportangebot, bei dem neben dem sportlichen Ehrgeiz die
       Freude an der Gemeinschaft im Mittelpunkt steht. Viele Aktionen bereichern
       unsere Jugendabteilung und bieten Abwechslung.
-    </team-infos>
-    <team-infos
+    </TeamInfos>
+    <TeamInfos
       id="jugend-weiblich"
       title="Jugendfussball (weiblich)"
       :teams="teams.jugend_frauen"
@@ -71,46 +75,30 @@
       wir ein schönes Sportangebot, bei dem neben dem sportlichen Ehrgeiz die
       Freude an der Gemeinschaft im Mittelpunkt steht. Viele Aktionen bereichern
       unsere Jugendabteilung und bieten Abwechslung.
-    </team-infos>
-    <team-infos id="kinder" dark title="Kinderfussball" :teams="teams.kinder">
+    </TeamInfos>
+    <TeamInfos id="kinder" dark title="Kinderfussball" :teams="teams.kinder">
       Kinder sind unsere Zukunft. Mit unseren Trainern und Betreuern bieten wir
       ein schönes Sportangebot, bei dem für die Kinder Bewegung, Sport und die
       Freude an der Gemeinschaft im Mittelpunkt stehen. Viele Aktionen
       bereichern unser Kinderangebot und bieten Abwechslung.
-    </team-infos>
-    <team-infos id="volleyball" title="Volleyball" :teams="teams.volleyball">
+    </TeamInfos>
+    <TeamInfos id="volleyball" title="Volleyball" :teams="teams.volleyball">
       Unsere Volleyballgruppe nimmt zwar nicht am regulären Wettbewerb teil,
       aber erlebt tolle Stunden. Denn Volleyball macht in dieser Hobbygruppe
       richtig viel Spaß.
-    </team-infos>
+    </TeamInfos>
   </Layout>
 </template>
 
-<script>
-import teams from '@/data/teams.js'
-import pageSection from '@/components/common/pageSection'
-import teamInfos from '@/components/common/teamInfos'
+<script setup lang="ts">
+import teams from '@/data/teams'
 
-export default {
-  metaInfo: {
-    title: 'Teamsport',
-  },
-  components: {
-    pageSection,
-    teamInfos,
-  },
-  setup() {
-    return {
-      teams,
-      sections: [
-        { title: 'Herrenfussball', to: '#herren' },
-        { title: 'Frauenfussball', to: '#frauen' },
-        { title: 'Jugendfussball (männlich)', to: '#jugend' },
-        { title: 'Jugendfussball (weiblich)', to: '#jugend-weiblich' },
-        { title: 'Kinderfussball', to: '#kinder' },
-        { title: 'Volleyball', to: '#volleyball' },
-      ],
-    }
-  },
-}
+const sections = [
+  { title: 'Herrenfussball', to: '#herren' },
+  { title: 'Frauenfussball', to: '#frauen' },
+  { title: 'Jugendfussball (männlich)', to: '#jugend' },
+  { title: 'Jugendfussball (weiblich)', to: '#jugend-weiblich' },
+  { title: 'Kinderfussball', to: '#kinder' },
+  { title: 'Volleyball', to: '#volleyball' },
+]
 </script>
