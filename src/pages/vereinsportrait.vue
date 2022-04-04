@@ -1,6 +1,10 @@
+<page>
+title: Vereinsportrait
+</page>
+
 <template>
   <Layout>
-    <page-section title="Der SVE - #mehralseinverein">
+    <PageSection title="Der SVE - #mehralseinverein">
       <ul class="pl-6 list-disc">
         <li>SV Eutingen 1947 e.V.</li>
         <li>unterstützt durch Förderverein des SV Eutingen 1947 e.V.</li>
@@ -84,7 +88,7 @@
       <div
         class="flex flex-col pt-6 space-y-4 md:flex-row md:justify-center md:space-y-0 md:space-x-4"
       >
-        <btn
+        <DownloadButton
           v-slot="{ imageClass }"
           href="/downloads/2021/Vereinssatzung-SVE.pdf"
           first-row="DOWNLOAD"
@@ -102,10 +106,10 @@
               clip-rule="evenodd"
             />
           </svg>
-        </btn>
+        </DownloadButton>
       </div>
-    </page-section>
-    <page-section title="Unser Leitbild" dark>
+    </PageSection>
+    <PageSection title="Unser Leitbild" dark>
       <div class="pb-4 text-xl font-medium">
         SV Eutingen – #mehralseinverein.
       </div>
@@ -180,8 +184,8 @@
         Verfügung. Diese pflegen wir und gehen mit Ressourcen schonend um.
       </div>
       <div class="text-xl font-medium">#mehralseinverein</div>
-    </page-section>
-    <page-section id="heimspiel" title="Heimspiel">
+    </PageSection>
+    <PageSection id="heimspiel" title="Heimspiel">
       Wie wichtig sind kleine Vereine gegenüber großen? Warum sollte man gerade
       auch kleine Vereinsstrukturen erhalten und fördern?<br />
       Die an.kox GmbH hat gemeinsam mit unseren SVE-Frauen auf wichtige
@@ -192,7 +196,7 @@
       von den el Pistolero Studios, die den Film produziert haben.<br />
       Viel Freude beim Anschauen!
       <div class="flex flex-col pt-6 sm:flex-row sm:justify-center">
-        <btn
+        <DownloadButton
           v-slot="{ imageClass }"
           href="https://vimeo.com/359776983"
           first-row="LINK ZUM"
@@ -209,20 +213,8 @@
               d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"
             />
           </svg>
-        </btn>
+        </DownloadButton>
       </div>
-    </page-section>
+    </PageSection>
   </Layout>
 </template>
-
-<script>
-import pageSection from '@/components/common/pageSection'
-import btn from '@/components/controls/downloadButton'
-
-export default {
-  metaInfo: {
-    title: 'Leitbild',
-  },
-  components: { pageSection, btn },
-}
-</script>

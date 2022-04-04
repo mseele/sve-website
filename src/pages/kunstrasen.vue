@@ -1,6 +1,10 @@
+<page>
+title: Kunstrasen
+</page>
+
 <template>
   <Layout>
-    <page-section id="kunstrasen" title="Vermietung Kunstrasenplatz">
+    <PageSection id="kunstrasen" title="Vermietung Kunstrasenplatz">
       Seit 2018 verfügen wir über eine hochmoderne Sportanlage mit einem
       Kunstrasengroß- und Kleinspielfeld inklusive Flutlicht. Der Sportbereich
       mit vier geschlechtergetrennten Kabinen und separaten Räumen für
@@ -9,13 +13,13 @@
       Gerne stellen wir Eurem Team den großen Kunstrasenplatz (100 x 70 Meter)
       für eine Trainings- oder Spieleinheit zur Verfügung, wenn die Anlage nicht
       durch unsere vielen eigenen Teams genutzt wird.
-    </page-section>
-    <page-section id="details" title="Details" dark>
+    </PageSection>
+    <PageSection id="details" title="Details" dark>
       <div>
         <div class="pb-1 font-medium">
           Tarife für Sportvereine außerhalb der Gemeinde Eutingen im Gäu:
         </div>
-        <ul class="pl-6 list-disc">
+        <ul class="list-disc pl-6">
           <li>
             Wintertarif ohne Flutlicht: von Oktober bis März für Spiel und
             Trainingseinheit (90 Minuten) zwischen 10 und 16 Uhr: 110 Euro pro
@@ -36,7 +40,7 @@
         <div class="pb-1 font-medium">
           Tarife für Sportvereine innerhalb der Gemeinde Eutingen im Gäu:
         </div>
-        <ul class="pl-6 list-disc">
+        <ul class="list-disc pl-6">
           <li>
             bei Inanspruchnahme der Umkleidekabinen, Sanitärräume und
             Flutlichtanlage pro Spiel oder Trainingseinheit (90 Minuten): 30
@@ -56,7 +60,7 @@
       <div class="pt-4">
         <div class="pb-1 font-medium">Anstoßzeiten:</div>
         <div>
-          <ul class="pl-6 list-disc">
+          <ul class="list-disc pl-6">
             <li>10:00 Uhr</li>
             <li>12:00 Uhr</li>
             <li>14:00 Uhr</li>
@@ -118,8 +122,8 @@
           vom mietenden Verein zu informieren.
         </span>
       </div>
-    </page-section>
-    <page-section id="buchung" title="Buchung">
+    </PageSection>
+    <PageSection id="buchung" title="Buchung">
       <!-- Aufgrund der pandemiebedingten Schließung der Sportstätten können wir zum
       jetzigen Zeitpunkt keine Vermietung vornehmen. Bitte schaut auf dieser
       Seite wieder vorbei, sobald Fußballspiele und die Nutzung von Sportstätten
@@ -129,10 +133,10 @@
       Im Falle einer erfolgreichen Buchung erhaltet Ihr eine schriftliche
       Bestätigung inkl. der zu beachtenden Platzordnung.
       <div
-        class="flex flex-col pt-6 space-y-4 md:flex-row md:justify-center md:space-y-0 md:space-x-4"
+        class="flex flex-col space-y-4 pt-6 md:flex-row md:justify-center md:space-y-0 md:space-x-4"
       >
-        <g-link
-          class="inline-flex items-center px-5 py-3 text-black rounded-lg on-focus-dark bg-white hover:bg-gray-200"
+        <router-link
+          class="on-focus-dark inline-flex items-center rounded-lg bg-white px-5 py-3 text-black hover:bg-stone-200"
           :to="{
             path: '/kontakt',
             query: { auswahl: 'kunstrasen' },
@@ -140,7 +144,7 @@
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-8 h-8"
+            class="h-8 w-8"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -150,58 +154,18 @@
               clip-rule="evenodd"
             />
           </svg>
-          <span class="flex flex-col items-start ml-4 leading-none">
-            <span class="mb-1 text-xs text-gray-600">BUCHUNG</span>
-            <span class="font-medium title-font">Kunstrasen</span>
+          <span class="ml-4 flex flex-col items-start leading-none">
+            <span class="mb-1 text-xs text-stone-600">BUCHUNG</span>
+            <span class="title-font font-medium">Kunstrasen</span>
           </span>
-        </g-link>
+        </router-link>
       </div>
-    </page-section>
-    <page-section id="belegung" title="Belegung" dark>
-      <div ref="resizeContainer">
-        <iframe
-          src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23e7e5e4&ctz=Europe%2FBerlin&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=1&showTz=1&src=a3Vuc3RyYXNlbkBzdi1ldXRpbmdlbi5kZQ&color=%23039BE5"
-          style="border-width: 0"
-          :width="gcalWidth"
-          height="600"
-          frameborder="0"
-          scrolling="no"
-        ></iframe>
-      </div>
-    </page-section>
+    </PageSection>
+    <PageSection id="belegung" title="Belegung" dark>
+      <GoogleCal
+        client:visible
+        src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23e7e5e4&ctz=Europe%2FBerlin&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=1&showTz=1&src=a3Vuc3RyYXNlbkBzdi1ldXRpbmdlbi5kZQ&color=%23039BE5"
+      />
+    </PageSection>
   </Layout>
 </template>
-
-<script>
-import pageSection from '@/components/common/pageSection'
-
-export default {
-  metaInfo: {
-    title: 'Kunstrasen',
-  },
-  components: { pageSection },
-  data() {
-    return {
-      gcalWidth: 800,
-    }
-  },
-  created() {
-    if (process.isClient) {
-      window.addEventListener('resize', this.onResize)
-    }
-  },
-  mounted() {
-    this.onResize()
-  },
-  destroyed() {
-    if (process.isClient) {
-      window.removeEventListener('resize', this.onResize)
-    }
-  },
-  methods: {
-    onResize() {
-      this.gcalWidth = this.$refs.resizeContainer.offsetWidth
-    },
-  },
-}
-</script>

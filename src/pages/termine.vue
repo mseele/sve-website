@@ -1,6 +1,10 @@
+<page>
+title: Termine
+</page>
+
 <template>
   <Layout>
-    <page-section title="Termine">
+    <PageSection title="Termine">
       <div class="pb-6">
         Hier findest Du unsere wichtigsten Vereinstermine mit unterschiedlichen
         Veranstaltungen und Events. Details erfährst Du durch einen Klick auf
@@ -9,54 +13,51 @@
         persönlichen Kalender integrieren, dann entgeht Dir sicher kein Termin
         mehr.
       </div>
-      <div
-        v-if="$page.appointments.edges.length > 0"
-        class="w-full h-full mx-auto"
-      >
-        <div class="relative h-full overflow-hidden wrap">
+      <div v-if="appointments.length > 0" class="mx-auto h-full w-full">
+        <div class="wrap relative h-full overflow-hidden">
           <div
-            class="absolute h-full border border-gray-700 border-opacity-25 left-1/2"
+            class="absolute left-1/2 h-full border border-stone-700 border-opacity-25"
           />
           <div
-            v-for="(edge, index) in $page.appointments.edges"
+            v-for="(appointment, index) in appointments"
             :key="index"
-            class="flex justify-between w-full"
+            class="flex w-full justify-between"
             :class="{ 'mt-8': index > 0 }"
           >
             <div class="order-1 w-5/12">
               <div
-                class="pb-1 font-medium text-right text-gray-900 md:text-lg lg:text-xl 2xl:text-2xl"
+                class="pb-1 text-right font-medium text-stone-900 md:text-lg lg:text-xl 2xl:text-2xl"
               >
-                {{ edge.node.date }}
+                {{ appointment.date }}
               </div>
               <div
-                class="text-sm font-medium text-right text-gray-500 lg:text-base 2xl:text-lg"
+                class="text-right text-sm font-medium text-stone-500 lg:text-base 2xl:text-lg"
               >
-                {{ edge.node.time }}
+                {{ appointment.time }}
               </div>
             </div>
             <div
-              class="z-10 flex items-center self-center flex-none order-1 w-6 h-6 bg-red-800 border-white rounded-full shadow border-3"
+              class="border-3 z-10 order-1 flex h-6 w-6 flex-none items-center self-center rounded-full border-white bg-red-800 shadow"
             >
               <div class="mx-auto text-lg font-semibold text-white"></div>
             </div>
-            <div class="order-1 w-5/12">
+            <div class="order-1 w-5/12 flex items-center">
               <component
-                :is="edge.node.link ? 'a' : 'div'"
-                :href="edge.node.link"
+                :is="appointment.link ? 'a' : 'div'"
+                :href="appointment.link"
                 target="_blank"
                 rel="noreferrer"
               >
                 <div
-                  class="pb-1 font-medium text-gray-900 md:text-lg lg:text-xl 2xl:text-2xl"
+                  class="pb-1 font-medium text-stone-900 md:text-lg lg:text-xl 2xl:text-2xl"
                 >
-                  {{ edge.node.title }}
+                  {{ appointment.title }}
                 </div>
                 <div
-                  v-if="edge.node.description"
-                  class="text-sm text-gray-700 md:text-base lg:text-lg 2xl:text-xl"
+                  v-if="appointment.description"
+                  class="text-sm text-stone-700 md:text-base lg:text-lg 2xl:text-xl"
                 >
-                  {{ edge.node.description }}
+                  {{ appointment.description }}
                 </div>
               </component>
             </div>
@@ -65,7 +66,7 @@
       </div>
       <div v-else class="flex flex-col items-center">
         <svg
-          class="w-36 h-36 2xl:w-48 2xl:h-48"
+          class="h-36 w-36 2xl:h-48 2xl:w-48"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 864 716.5"
         >
@@ -120,12 +121,12 @@
             />
           </g>
         </svg>
-        <div class="text-xl text-center text-gray-500 text-medium">
+        <div class="text-medium text-center text-xl text-stone-500">
           In der nächsten Zeit steht kein größerer Termin an.
         </div>
       </div>
-    </page-section>
-    <page-section title="Tipps & Tricks" dark>
+    </PageSection>
+    <PageSection title="Tipps & Tricks" dark>
       <div>
         Über
         <a
@@ -149,33 +150,11 @@
         >
         für mehr Informationen.
       </div>
-    </page-section>
+    </PageSection>
   </Layout>
 </template>
 
-<script>
-import pageSection from '@/components/common/pageSection'
-
-export default {
-  metaInfo: {
-    title: 'Termine',
-  },
-  components: { pageSection },
-}
+<script setup lang="ts">
+import { getAppointments } from '~/logic/appointments'
+let appointments = await getAppointments()
 </script>
-
-<page-query>
-query {
-  appointments: allAppointment(sortBy: "sortIndex", order: ASC) {
-    edges {
-      node {
-        date
-        time
-        title
-        description
-        link
-      }
-    }
-  }
-}
-</page-query>

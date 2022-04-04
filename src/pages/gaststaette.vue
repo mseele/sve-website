@@ -1,14 +1,18 @@
+<page>
+title: Gaststätte
+</page>
+
 <template>
   <Layout :transparent="true">
-    <hero-section
+    <HeroSection
       dark
       title="Auszeit"
       subtitle="UNSERE VEREINSGASTSTÄTTE"
-      :image="$page.heroImages.src"
+      image="gaststaette.jpg"
       :primary-button="{ text: 'Infos', to: '#infos' }"
       :secondary-button="{ text: 'Öffnungszeiten', to: '#oeffnungszeiten' }"
     />
-    <page-section id="infos" title="Infos">
+    <PageSection id="infos" title="Infos">
       <div class="pb-2 font-medium">
         In unserer Vereinsgaststätte Auszeit Eutingen findest Du die perfekte
         Einkehrmöglichkeit.
@@ -26,7 +30,7 @@
       <div class="pb-2">
         Weitere Informationen findest Du auf der
         <a
-          class="rounded on-focus-dark"
+          class="on-focus-dark rounded"
           href="https://fb.com/Auszeit-Eutingen-981850018516219"
           target="_blank"
           rel="noreferrer"
@@ -35,7 +39,7 @@
         der Auszeit Eutingen.
       </div>
       <div class="flex flex-col pt-6 sm:flex-row sm:justify-center">
-        <btn
+        <DownloadButton
           v-slot="{ imageClass }"
           href="/downloads/2020/Speisekarte-Auszeit.pdf"
           first-row="UNSERE"
@@ -52,13 +56,13 @@
               d="M208 15c1 5 16 95 16 129 0 52-28 90-69 105l13 238c1 13-10 25-24 25H80c-14 0-25-11-24-25l13-238C28 234 0 196 0 144 0 110 15 20 16 15c3-20 45-20 48 1v142c1 3 15 3 16 0l8-142c3-21 45-21 48 0l8 142c1 3 15 3 16 0V16c3-21 45-21 48-1zm119 286l-15 185c-1 14 10 26 24 26h56c13 0 24-11 24-24V24c0-13-11-24-24-24-82 0-221 179-65 301z"
             />
           </svg>
-        </btn>
-        <btn
+        </DownloadButton>
+        <DownloadButton
           v-slot="{ imageClass }"
           href="/downloads/2020/Eiskarte-Auszeit.pdf"
           first-row="UNSERE"
           second-row="Eiskarte"
-          class="w-full mt-4 sm:w-1/3 xl:w-1/4 2xl:w-1/5 sm:ml-4 sm:mt-0 lg:ml-8 2xl:ml-20"
+          class="mt-4 w-full sm:ml-4 sm:mt-0 sm:w-1/3 lg:ml-8 xl:w-1/4 2xl:ml-20 2xl:w-1/5"
         >
           <svg
             :class="imageClass"
@@ -70,115 +74,94 @@
               d="M368 160h-1a144 144 0 10-286 0h-1a48 48 0 000 96h288a48 48 0 000-96zM195 494a32 32 0 0058 0l99-206H96z"
             />
           </svg>
-        </btn>
+        </DownloadButton>
       </div>
-    </page-section>
-    <page-section title="Bilder" dark>
-      <div class="flex flex-col lg:flex-row">
-        <image-viewer
-          class="w-full lg:mr-3 lg:w-2/3"
-          height="480"
-          :images="$page.gaststaette.images"
-        />
-        <div class="flex flex-col w-full mt-6 lg:ml-3 lg:-mt-15 lg:w-1/3">
-          <div id="oeffnungszeiten" class="pb-6">
-            <header-title dark class="pb-6 text-3xl font-semibold uppercase">
-              Öffnungszeiten
-            </header-title>
-            <div
-              class="flex flex-col p-4 bg-white border-2 border-gray-300 rounded"
-            >
-              <div
-                class="text-xs font-medium tracking-wide text-gray-500 uppercase"
-              >
-                Mittwoch bis Freitag
-              </div>
-              <div class="font-medium">16 - 1 Uhr</div>
-              <div
-                class="pt-4 text-xs font-medium tracking-wide text-gray-500 uppercase"
-              >
-                Samstag
-              </div>
-              <div class="font-medium">14 - 1 Uhr</div>
-              <div
-                class="pt-4 text-xs font-medium tracking-wide text-gray-500 uppercase"
-              >
-                Sonntag
-              </div>
-              <div class="font-medium">14 - 22 Uhr</div>
-            </div>
+    </PageSection>
+    <div class="bg-stone-200">
+      <div
+        class="grid gap-6 p-4 py-10 sm:container sm:mx-auto sm:px-10 md:px-20 xl:grid-cols-3"
+      >
+        <div class="xl:col-span-2">
+          <HeaderTitle dark class="pb-6 text-3xl font-semibold uppercase">
+            Bilder
+          </HeaderTitle>
+          <div class="relative h-[480px]">
+            <ImageViewer
+              class="absolute inset-0"
+              height="480"
+              :images="['gaststaette_1', 'gaststaette_2', 'gaststaette_3']"
+              client:idle
+            />
           </div>
-          <div>
-            <header-title dark class="pb-6 text-3xl font-semibold uppercase">
-              Kontakt
-            </header-title>
+        </div>
+        <div id="oeffnungszeiten" class="scroll-mt-20 xl:scroll-mt-24">
+          <HeaderTitle dark class="pb-6 text-3xl font-semibold uppercase">
+            Öffnungszeiten
+          </HeaderTitle>
+          <div
+            class="flex flex-col rounded border-2 border-stone-300 bg-white p-4"
+          >
             <div
-              class="flex flex-col p-4 bg-white border-2 border-gray-300 rounded"
+              class="text-xs font-medium uppercase tracking-wide text-stone-500"
             >
-              <div
-                class="text-lg font-medium tracking-wide text-gray-500 uppercase"
+              Mittwoch bis Freitag
+            </div>
+            <div class="font-medium">16 - 1 Uhr</div>
+            <div
+              class="pt-4 text-xs font-medium uppercase tracking-wide text-stone-500"
+            >
+              Samstag
+            </div>
+            <div class="font-medium">14 - 1 Uhr</div>
+            <div
+              class="pt-4 text-xs font-medium uppercase tracking-wide text-stone-500"
+            >
+              Sonntag
+            </div>
+            <div class="font-medium">14 - 22 Uhr</div>
+          </div>
+          <HeaderTitle dark class="mt-6 pb-6 text-3xl font-semibold uppercase">
+            Kontakt
+          </HeaderTitle>
+          <div
+            class="flex flex-col rounded border-2 border-stone-300 bg-white p-4"
+          >
+            <div
+              class="text-lg font-medium uppercase tracking-wide text-stone-500"
+            >
+              Auszeit Eutingen
+            </div>
+            <div class="pt-4 font-medium">Micha Gruidl</div>
+            <div class="pt-2 font-medium">
+              Marktstr. 84<br />
+              72184 Eutingen im Gäu
+            </div>
+            <div class="pt-4 text-center">
+              <router-link
+                :to="{
+                  path: '/kontakt/',
+                  query: { auswahl: 'restaurant' },
+                }"
+                class="on-focus col-start-1 col-end-2 inline-flex items-center justify-center rounded-full px-3 py-1 font-medium text-red-800 hover:bg-red-100 hover:bg-opacity-50 active:text-red-900 md:mb-2 lg:mb-0"
               >
-                Auszeit Eutingen
-              </div>
-              <div class="pt-4 font-medium">Micha Gruidl</div>
-              <div class="pt-2 font-medium">
-                Marktstr. 84<br />
-                72184 Eutingen im Gäu
-              </div>
-              <div class="pt-4 text-center">
-                <g-link
-                  :to="{
-                    path: '/kontakt/',
-                    query: { auswahl: 'restaurant' },
-                  }"
-                  class="inline-flex items-center justify-center col-start-1 col-end-2 px-3 py-1 font-medium text-red-800 rounded-full hover:bg-red-100 hover:bg-opacity-50 active:text-red-900 md:mb-2 lg:mb-0 on-focus"
+                Kontakt
+                <svg
+                  class="ml-2 h-4 w-4"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 >
-                  Kontakt
-                  <svg
-                    class="w-4 h-4 ml-2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="3"
-                    fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M5 12h14"></path>
-                    <path d="M12 5l7 7-7 7"></path>
-                  </svg>
-                </g-link>
-              </div>
+                  <path d="M5 12h14"></path>
+                  <path d="M12 5l7 7-7 7"></path>
+                </svg>
+              </router-link>
             </div>
           </div>
         </div>
       </div>
-    </page-section>
+    </div>
   </Layout>
 </template>
-
-<script>
-import heroSection from '@/components/common/heroSection'
-import pageSection from '@/components/common/pageSection'
-import headerTitle from '@/components/controls/headerTitle'
-import btn from '@/components/controls/downloadButton'
-import imageViewer from '@/components/common/imageViewer'
-
-export default {
-  metaInfo: {
-    title: 'Gaststätte',
-  },
-  components: { heroSection, pageSection, headerTitle, btn, imageViewer },
-  layout: 'transparent',
-}
-</script>
-
-<page-query>
-query {
-  heroImages(id: "gaststaette") {
-    src
-  }
-  gaststaette(id: "0") {
-    images
-  }
-}
-</page-query>

@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/mseele/sve-website/compare/v3.12.2...v4.0.0) (2022-04-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate from gridesome to iles
+
+### Features
+
+* migrate from gridesome to iles ([9a9ec67](https://github.com/mseele/sve-website/commit/9a9ec679325bc8dac7a70177f09aa940e06da9bc))
+
 ### [3.12.2](https://github.com/mseele/sve-website/compare/v3.12.1...v3.12.2) (2022-03-24)
 
 ### [3.12.1](https://github.com/mseele/sve-website/compare/v3.12.0...v3.12.1) (2022-02-04)

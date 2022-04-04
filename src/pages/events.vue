@@ -1,13 +1,17 @@
+<page>
+title: Events
+description: Herzlich Willkommen beim Eventangebot des SV Eutingen. Ob Fussballturnier, Kochkurs, Theateraufführung oder Partyhighlight. Auf dieser Seite findest Du das gesamte Eventangebot des SV Eutingen und kannst Dich über Programm, Ort und Zeit auf dem Laufenden halten.
+</page>
+
 <template>
   <Layout>
-    <events
+    <EventsContent
       title="EVENTS"
       event-title="AKTUELLE EVENTS"
-      :events="$page.events.edges"
-      to-prefix="/events/"
+      :events="events"
+      to-prefix="/events"
       subscribe-success="Du erhälst automatisch eine E-Mail sobald neue Eventangebote online sind. Vielen Dank."
       news-type="Events"
-      pre-booking-prefix="Event"
     >
       <template #header>
         <div class="pb-4 font-medium leading-relaxed">
@@ -33,37 +37,13 @@
       <template #subscribeInfo>
         Erhalte automatisch eine E-Mail sobald neue Events online sind.
       </template>
-    </events>
+    </EventsContent>
   </Layout>
 </template>
 
-<script>
-import axios from 'axios'
-import events from '@/components/events/events'
+<script setup lang="ts">
+import { getEvents } from '@/logic/events'
+import { EventType } from '@/models'
 
-export default {
-  metaInfo: {
-    title: 'Events',
-  },
-  components: { events },
-}
+let events = await getEvents(EventType.Events)
 </script>
-
-<page-query>
-query {
-  events: allEvent(
-    sortBy: "sortIndex"
-    order: ASC
-    filter: { type: { eq: "Events" } }
-  ) {
-    edges {
-      node {
-        id
-        name
-        image(width: 620)
-        shortDescription
-      }
-    }
-  }
-}
-</page-query>

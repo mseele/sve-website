@@ -1,17 +1,4 @@
 {
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "editor.formatOnSave": true,
-  "eslint.validate": ["vue", "html", "javascript"],
-  "eslint.format.enable": true,
   "telemetry.enableTelemetry": false,
-  "explorer.confirmDragAndDrop": false,
-  "git.enableSmartCommit": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "git.confirmSync": false,
-  "gitlens.currentLine.enabled": false,
-  "gitlens.hovers.currentLine.over": "line",
-  "gitlens.codeLens.enabled": false,
-  "gitlens.views.repositories.location": "scm"
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
