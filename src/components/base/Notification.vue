@@ -39,7 +39,7 @@
             <span
               class="mx-2 flex-auto text-left text-sm font-medium sm:text-base 2xl:text-2xl"
             >
-              {{ notification.message }}
+              {{ notification?.message }}
             </span>
             <svg
               class="h-4 w-4 flex-none cursor-pointer fill-current opacity-75 hover:opacity-50 sm:h-5 sm:w-5 2xl:h-8 2xl:w-8"
@@ -68,7 +68,7 @@ const activeTimeout = ref(-1)
 
 const visible = computed(() => notification.value !== undefined)
 
-const isInfo = computed(() => notification.value.type === NotificationType.Info)
+const isInfo = computed(() => notification.value?.type === NotificationType.Info)
 
 function setTimeout() {
   window.clearTimeout(activeTimeout.value)
