@@ -241,11 +241,6 @@ const sponsoring: Sponsor[] = [
     groupBy: 'Leitenberger',
   },
   {
-    name: 'Carsten Gaiser, Institut für individuelle Entwicklung',
-    url: 'http://carsten-gaiser.de/',
-    groupBy: 'Gaiser',
-  },
-  {
     name: 'Gühring GmbH & Co. KG',
     url: 'https://www.energieprojekt.de/',
     groupBy: 'Gühring',

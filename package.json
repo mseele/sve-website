@@ -1,12 +1,12 @@
 {
   "name": "sve-website",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Website SV Eutingen",
   "author": "mseele",
   "private": true,
   "scripts": {
     "dev": "iles dev --open",
-    "build": "DEBUG=* iles build",
+    "build": "iles build",
     "preview": "iles preview --open --port 5050",
     "typecheck": "vue-tsc --noEmit",
     "release": "standard-version"
@@ -22,7 +22,7 @@
     "@types/glidejs": "^1.0.31",
     "@types/numeral": "^2.0.2",
     "@vee-validate/rules": "^4.5.10",
-    "@vueuse/core": "^8.2.4",
+    "@vueuse/core": "^8.2.5",
     "autoprefixer": "^10.4.4",
     "iles": "^0.7.37",
     "inter-ui": "^3.19.3",
