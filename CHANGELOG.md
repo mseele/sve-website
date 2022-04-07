@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/mseele/sve-website/compare/v4.0.0...v4.1.0) (2022-04-07)
+
+
+### Bug Fixes
+
+* remove sponsoring partner ([dae9e49](https://github.com/mseele/sve-website/commit/dae9e4991c66971ff4c2dede3a3b82a4021df760))
+
+## [3.7.0](https://github.com/mseele/sve-website/compare/v3.6.5...v3.7.0) (2021-11-10)
+
+
+### Features
+
+* add news video ([620c9e7](https://github.com/mseele/sve-website/commit/620c9e725a4a4ceb7875ccf38a8a10d2befb08c1))
+
 ## [4.0.0](https://github.com/mseele/sve-website/compare/v3.12.2...v4.0.0) (2022-04-04)
 
 
