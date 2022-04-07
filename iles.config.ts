@@ -26,7 +26,7 @@ export default defineConfig({
           },
         }),
       },
-      { cacheDir: '.cache/images' }
+      { cacheDir: '.image_cache' }
     ),
   ],
   vite: {

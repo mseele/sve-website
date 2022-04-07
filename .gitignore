@@ -59,6 +59,9 @@ typings/
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
+# iles image cache
+.image_cache
+
 # next.js build output
 .next
 
