@@ -45,6 +45,7 @@ import history_frauen_2016_3 from '@/assets/history/frauen-2016-3.jpg?preset=ful
 import history_kunstrasen_2016_1 from '@/assets/history/kunstrasen-2016-1.jpg?preset=full'
 import history_maenner_2016_1 from '@/assets/history/maenner-2016-1.jpg?preset=full'
 
+import adventure from '@/assets/events/adventure.jpg?preset=full'
 import after_work from '@/assets/events/after_work.jpg?preset=full'
 import aqua_2 from '@/assets/events/aqua_2.jpg?preset=full'
 import aqua_3 from '@/assets/events/aqua_3.jpg?preset=full'
@@ -114,6 +115,7 @@ let assets = new Map<string, any>([
   ['history_kunstrasen_2016_1', history_kunstrasen_2016_1],
   ['history_maenner_2016_1', history_maenner_2016_1],
 
+  ['adventure.jpg', adventure],
   ['after_work.jpg', after_work],
   ['aqua_2.jpg', aqua_2],
   ['aqua_3.jpg', aqua_3],
