@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.1](https://github.com/mseele/sve-website/compare/v4.1.0...v4.1.1) (2022-04-11)
+
+
+### Bug Fixes
+
+* correct typescript errors ([f5a5509](https://github.com/mseele/sve-website/commit/f5a5509f05d1a5ba0a1cf1dd17373037d0f1234e))
+* display special text if event is free of charge ([182fb36](https://github.com/mseele/sve-website/commit/182fb36b9509b9b0dd4da3f2ddd5fb1beb61e724))
+
 ## [4.1.0](https://github.com/mseele/sve-website/compare/v4.0.0...v4.1.0) (2022-04-07)
 
 
