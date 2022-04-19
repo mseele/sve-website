@@ -41,7 +41,7 @@ title: Gaststätte
       <div class="flex flex-col pt-6 sm:flex-row sm:justify-center">
         <DownloadButton
           v-slot="{ imageClass }"
-          href="/downloads/2020/Speisekarte-Auszeit.pdf"
+          href="/downloads/2022/Speisekarte-Auszeit.pdf"
           first-row="UNSERE"
           second-row="Speisekarte"
           class="w-full sm:w-1/3 xl:w-1/4 2xl:w-1/5"
@@ -59,7 +59,7 @@ title: Gaststätte
         </DownloadButton>
         <DownloadButton
           v-slot="{ imageClass }"
-          href="/downloads/2020/Eiskarte-Auszeit.pdf"
+          href="/downloads/2022/Eiskarte-Auszeit.pdf"
           first-row="UNSERE"
           second-row="Eiskarte"
           class="mt-4 w-full sm:ml-4 sm:mt-0 sm:w-1/3 lg:ml-8 xl:w-1/4 2xl:ml-20 2xl:w-1/5"
