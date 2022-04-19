@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.2](https://github.com/mseele/sve-website/compare/v4.1.1...v4.1.2) (2022-04-19)
+
+
+### Bug Fixes
+
+* correct property name ([1461385](https://github.com/mseele/sve-website/commit/14613854a00fa7ab59100917aa435e1dfe325c39))
+* use beta for next branch ([5eec47d](https://github.com/mseele/sve-website/commit/5eec47d881d85f33c1f6472078c23a061650b939))
+
 ### [4.1.1](https://github.com/mseele/sve-website/compare/v4.1.0...v4.1.1) (2022-04-11)
 
 
