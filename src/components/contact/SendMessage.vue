@@ -39,7 +39,7 @@
     <LabeledInput
       class="w-full pb-2"
       label="Nachricht"
-      foild="message"
+      field="message"
       name="message"
       textarea
       required

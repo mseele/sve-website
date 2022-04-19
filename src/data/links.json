@@ -68,6 +68,11 @@
       "alt": "facebook"
     },
     {
+      "img": "instagram",
+      "to": "https://www.instagram.com/sveutingen1947",
+      "alt": "instagram"
+    },
+    {
       "img": "youtube",
       "to": "https://www.youtube.com/channel/UC6QXvcCp9CpHl4az3idhkYQ",
       "alt": "youtube"
