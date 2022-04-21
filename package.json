@@ -39,5 +39,8 @@
     "vite-plugin-compression": "^0.5.1",
     "vite-svg-loader": "^3.2.0",
     "vue-tsc": "^0.34"
+  },
+  "devDependencies": {
+    "netlify-plugin-cache-folder": "^0.0.8"
   }
 }
