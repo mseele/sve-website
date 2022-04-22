@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.4](https://github.com/mseele/sve-website/compare/v4.1.3...v4.1.4) (2022-04-22)
+
+
+### Bug Fixes
+
+* correct netlify cache ([8652f7f](https://github.com/mseele/sve-website/commit/8652f7f1fa5c133e23c624678e0de86f172e7a05))
+* correct netlify cache ([6f1421b](https://github.com/mseele/sve-website/commit/6f1421ba9ad4c8cee85772a99c7a9f1daf005124))
+
 ### [4.1.3](https://github.com/mseele/sve-website/compare/v4.1.2...v4.1.3) (2022-04-19)
 
 ### [4.1.2](https://github.com/mseele/sve-website/compare/v4.1.1...v4.1.2) (2022-04-19)
