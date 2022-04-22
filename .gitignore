@@ -60,7 +60,7 @@ typings/
 .cache
 
 # iles image cache
-image_cache
+_cache
 
 # next.js build output
 .next
