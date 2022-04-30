@@ -5,7 +5,7 @@ title: Vereinsportrait
 <template>
   <Layout>
     <PageSection title="Der SVE - #mehralseinverein">
-      <ul class="pl-6 list-disc">
+      <ul class="list-disc pl-6">
         <li>SV Eutingen 1947 e.V.</li>
         <li>unterstützt durch Förderverein des SV Eutingen 1947 e.V.</li>
         <li>
@@ -17,7 +17,7 @@ title: Vereinsportrait
         </li>
         <li>
           Vorstandschaft:
-          <ul class="pl-6 list-disc">
+          <ul class="list-disc pl-6">
             <li>
               Sebastian Lazar (<a
                 class="default-link on-focus-dark"
@@ -86,7 +86,7 @@ title: Vereinsportrait
         </li>
       </ul>
       <div
-        class="flex flex-col pt-6 space-y-4 md:flex-row md:justify-center md:space-y-0 md:space-x-4"
+        class="flex flex-col space-y-4 pt-6 md:flex-row md:justify-center md:space-y-0 md:space-x-4"
       >
         <DownloadButton
           v-slot="{ imageClass }"
@@ -114,76 +114,103 @@ title: Vereinsportrait
         SV Eutingen – #mehralseinverein.
       </div>
       <div class="pb-4 text-xl font-medium">
-        Wir stiften gesellschaftliche Teilhabe durch Sport und Begegnung.
+        1. Wir ermöglichen Teilhabe durch Sport und Begegnung
       </div>
       <div class="pb-4 leading-relaxed">
         Unser sportliches und kulturelles Angebot ermöglicht gesellschaftliche
-        Teilhabe. Bei uns begegnen sich Menschen, schließen Freundschaften,
-        erfahren Teilhabe und erleben eine schöne Zeit.<br />
-        Wir lieben die Freudenschreie ausgelassener Kinder, den Torjubel für
-        unsere Teams, den Treffpunkt durch unsere Gaststätte Auszeit, die
-        Abendsonne am Lagerfeuer.<br />
-        <br />
-        Wir entfalten die Talente unserer Mitglieder, packen an und trauen
-        einander etwas zu. Durch Reflexion, ehrliches Feedback, Aus- und
-        Weiterbildung werden wir besser. Unser Verein entwickelt sich gesund.
-        Was sich seit 1947 bewährt hat, führen wir fort und steuern auch neue
-        Ufer an.<br />
-        Unser Verein bringt sich aktiv in Eutingen und der Region ein. Durch
-        unser Sport-, Kultur- und Veranstaltungsangebot schaffen wir Heimat.<br />
-        Bei uns wird nicht nach Herkunft, Geschlecht oder Alter gefragt, sondern
-        nach der gemeinsamen Motivation, etwas auf die Beine zu stellen.<br />
+        Teilhabe. Bei uns begegnen sich Menschen, sie schließen Freundschaften
+        und sie können was bewegen – kurzum: Sie erleben eine schöne und
+        wertvolle Zeit.
       </div>
       <div class="pb-4 text-xl font-medium">
-        Wertschätzung wird bei uns spürbar.
+        2. Wir lieben Emotionen und Gemeinschaft
       </div>
       <div class="pb-4 leading-relaxed">
-        <ul class="pl-6 space-y-2 list-disc">
+        Wir lieben die Freudenschreie ausgelassener Kinder, den Torjubel unserer
+        Teams und auch die Abendsonne am Lagerfeuer. Besonders stolz sind wir
+        auf unser Sportgelände und die Gaststätte „Auszeit“. Dort leben wir
+        Gemeinschaft und festigen unseren Zusammenhalt. Dort schlägt unser
+        SVE-Herz.
+      </div>
+      <div class="pb-4 text-xl font-medium">3. Wir entfalten Talente</div>
+      <div class="pb-4 leading-relaxed">
+        Wir möchten die Fähigkeiten unserer Mitglieder zur Geltung bringen und
+        Talente entfalten. Wir trauen einander etwas zu! Durch ehrliches
+        Feedback und Aus- und Weiterbildung werden wir besser.
+      </div>
+      <div class="pb-4 text-xl font-medium">4. Wir sind Teil von Eutingen</div>
+      <div class="pb-4 leading-relaxed">
+        Wir bringen uns aktiv in unserer Heimatgemeinde und in der Region ein.
+        Durch unser Sport-, Kultur- und Veranstaltungsangebot schaffen wir
+        Heimat. Wir machen Eutingen liebens- und lebenswert.
+      </div>
+
+      <div class="pb-4 text-xl font-medium">
+        5. Bei uns wird Wertschätzung spürbar
+      </div>
+      <div class="pb-4 leading-relaxed">
+        Wertschätzung ist für uns nicht nur ein Schlagwort, Wertschätzung
+        erfahren …
+
+        <ul class="list-disc space-y-2 pl-6">
           <li>
-            Für aktive Kinder, Jugendliche, Spielerinnen, Spieler, Trainer- und
+            aktive Kinder, Jugendliche, Spielerinnen und Spieler, Trainer- und
             Betreuerteams, die wir am Spielfeldrand anfeuern, mit denen wir
-            Siege feiern und Niederlagen verdauen.
+            Siege feiern und Niederlagen verarbeiten,
           </li>
           <li>
-            Für passive Mitglieder und Macher, die Ehrenämter ausüben, unsere
-            Infrastruktur in Schuss halten und mit persönlichem Einsatz unser
-            Anliegen wahr werden lassen.
+            Mitglieder und Macher, die Ehrenämter ausüben, unsere Infrastruktur
+            in Schuss halten und mit persönlichem Einsatz unser Anliegen wahr
+            werden lassen,
           </li>
           <li>
-            Für unsere Pächter, Partner und Dienstleister, mit denen wir
-            Zusammenarbeit leben.
+            unsere Pächter, Partner und Dienstleister, mit denen wir im besten
+            Sinne zusammenarbeiten.
           </li>
         </ul>
       </div>
       <div class="pb-4 text-xl font-medium">
-        Teamgeist, Fairness, Leistungsbereitschaft und Gesundheitsförderung -
-        Grundsätze unseres Sportangebots.
+        6. Unser Sportangebot fördert Gesundheit und Teamgeist
       </div>
       <div class="pb-4 leading-relaxed">
-        Unseren Mitgliedern und Kunden bieten wir aktive sportliche
-        Betätigung.<br />
-        Dadurch stärken sie ihre mentale und körperliche Gesundheit, erleben
-        Gemeinschaftsgefühl und Erfolge in Teams sowie Wettkampf. Durch
-        Niederlagen lernen wir den fairen Umgang damit.<br />
-        <br />
-        Unser Sportangebot richtet sich an alle. Die Formate reichen von offenen
-        Individualangeboten bis zu Teamsport im Hobby-, Amateur- und
-        Leistungsbereich.<br />
-        Fußball ist unser Schwerpunkt – für Kinder, Jugendliche, Frauen und
-        Männer.<br />
-        Sportliche Ziele, die wir mit fairem Einsatz und Ehrgeiz erreichen
-        können, wollen wir auch erreichen.<br />
-        Statt kurzfristiger Liga- und Tabellenplatzsituationen steht für uns im
-        Vordergrund, das Beste aus den Teams herauszuholen und kontinuierlich
-        besser zu werden.<br />
-        <br />
-        Durch Teamgeist, Fairness und gesunde Leistungsbereitschaft binden wir
-        Kinder, Jugendliche, Spielerinnen und Spieler nachhaltig an den Verein.
-        Dies sichert die Zukunft.<br />
-        Für unsere Angebote stellen wir eine sehr gute Infrastruktur zur
-        Verfügung. Diese pflegen wir und gehen mit Ressourcen schonend um.
+        Unseren Mitgliedern bieten wir aktive sportliche Betätigung. Dadurch
+        stärken sie ihre mentale und körperliche Gesundheit, sie erleben
+        Gemeinschaft, Teamgeist und ein Wir-Gefühl. Wer an Wettkämpfen
+        teilnimmt, lernt den Umgang mit Erfolgen und Rückschlägen.
       </div>
-      <div class="text-xl font-medium">#mehralseinverein</div>
+
+      <div class="pb-4 text-xl font-medium">
+        7. Unser Sportangebot richtet sich an alle
+      </div>
+      <div class="pb-4 leading-relaxed">
+        Bei uns wird nicht nach Herkunft, Geschlecht oder Alter gefragt, sondern
+        nach der gemeinsamen Motivation, etwas auf die Beine zu stellen. Alle
+        packen mit an! Von offenen Individualangeboten bis zu Teamsport im
+        Hobby-, Amateur-, und Leistungsbereich – wir bieten Sport für viele
+        Geschmäcker. Ganz klar: Fußball ist unser Schwerpunkt – für Kinder,
+        Jugendliche, Frauen und Männer.
+      </div>
+      <div class="pb-4 text-xl font-medium">
+        8. Wir fördern Leistungsbereitschaft und langfristige Entwicklung
+      </div>
+      <div class="pb-4 leading-relaxed">
+        Sportliche Ziele, die wir fair und mit gesundem Ehrgeiz erreichen
+        können, wollen wir auch erreichen. Statt kurzfristiger Liga- und
+        Tabellenplatzsituation steht bei uns die kontinuierliche Entwicklung im
+        Vordergrund, um das Beste aus unseren Teams herauszuholen. Durch
+        Teamgeist, Fairness und gesunde Leistungsbereitschaft binden wir Kinder,
+        Jugendliche, Spielerinnen und Spieler nachhaltig an den Verein.
+      </div>
+      <div class="pb-4 text-xl font-medium">
+        9. Wir haben die Zukunft fest im Blick
+      </div>
+      <div class="pb-4 leading-relaxed">
+        Für unsere Angebote stellen wir eine sehr gute Infrastruktur zur
+        Verfügung. Diese pflegen wir und gehen mit Ressourcen schonend um. Was
+        sich seit 1947 bewährt hat, führen wir fort. Wir brechen aber auch zu
+        neuen Ufern auf. Dadurch sichern wir die Zukunft unseres SVE. Unser
+        oberstes Ziel: Eine gesunde Vereinsentwicklung.
+      </div>
     </PageSection>
     <PageSection id="heimspiel" title="Heimspiel">
       Wie wichtig sind kleine Vereine gegenüber großen? Warum sollte man gerade
