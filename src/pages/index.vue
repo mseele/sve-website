@@ -119,8 +119,8 @@ const joins = [
   {
     title: 'Sponsoring - wir leben Partnerschaft',
     text: 'Geben und Nehmen - so lautet unser Grundsatz für gelungene Partnerschaften. Wir bieten Werbemöglichkeiten, um auf unserer belebten Sportanlage auf Unternehmen und Dienstleistungen aufmerksam zu machen. Für unsere Partner stehen wir auch parat, wenn sie die Hilfe unserer tatkräftigen Mitglieder bspw. für ein Firmenjubiläum benötigen.',
-    image: 'join_sponsoring.jpg',
-    link: '/sponsoring',
+    image: 'join_partnerschaft.jpg',
+    link: '/partnerschaft',
   },
   {
     title: 'Mach mit und werde Mitglied',

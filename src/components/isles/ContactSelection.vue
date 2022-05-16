@@ -22,7 +22,7 @@ import team from '@/components/contact/Team.vue'
 import kunstrasen from '@/components/contact/Kunstrasen.vue'
 import fitnessEvents from '@/components/contact/FitnessEvents.vue'
 import restaurant from '@/components/contact/Restaurant.vue'
-import sponsoring from '@/components/contact/Sponsoring.vue'
+import partnerschaft from '@/components/contact/Partnerschaft.vue'
 import other from '@/components/contact/Other.vue'
 
 export default {
@@ -31,7 +31,7 @@ export default {
     kunstrasen,
     fitnessEvents,
     restaurant,
-    sponsoring,
+    partnerschaft,
     other,
   },
 }
@@ -62,7 +62,7 @@ const categories = [
     value: 'restaurant',
     text: 'Kontakt zur Gaststätte "Auszeit" aufnehmen',
   },
-  { value: 'sponsoring', text: 'Kontakt zum Thema Sponsoring aufnehmen' },
+  { value: 'partnerschaft', text: 'Kontakt zum Thema Partnerschaft aufnehmen' },
   { value: 'other', text: 'ein anderes Thema besprechen' },
 ]
 </script>

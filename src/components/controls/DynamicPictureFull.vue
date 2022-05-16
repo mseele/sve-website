@@ -6,7 +6,7 @@
 import { computed } from 'vue'
 
 import home from '@/assets/home/main.jpg?preset=full'
-import sponsoring from '@/assets/sponsoring/main.jpg?preset=full'
+import partnerschaft from '@/assets/partnerschaft/main.jpg?preset=full'
 import gaststaette from '@/assets/gaststaette/main.jpg?preset=full'
 
 import gaststaette_1 from '@/assets/gaststaette/1.jpg?preset=full'
@@ -76,7 +76,7 @@ import zumba from '@/assets/events/zumba.jpg?preset=full'
 
 let assets = new Map<string, any>([
   ['home.jpg', home],
-  ['sponsoring.jpg', sponsoring],
+  ['partnerschaft.jpg', partnerschaft],
   ['gaststaette.jpg', gaststaette],
 
   ['gaststaette_1', gaststaette_1],

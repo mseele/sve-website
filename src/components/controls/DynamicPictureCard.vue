@@ -9,7 +9,7 @@ import join_fussball from '@/assets/home/fussball.jpg?preset=card'
 import join_jugend from '@/assets/home/jugend.jpg?preset=card'
 import join_fitness from '@/assets/home/fitness.jpg?preset=card'
 import join_volleyball from '@/assets/home/volleyball.jpg?preset=card'
-import join_sponsoring from '@/assets/home/sponsoring.jpg?preset=card'
+import join_partnerschaft from '@/assets/home/partnerschaft.jpg?preset=card'
 import join_mitglied from '@/assets/home/mitglied.jpg?preset=card'
 
 import gaststaette_1 from '@/assets/gaststaette/1.jpg?preset=card'
@@ -82,7 +82,7 @@ let assets = new Map<string, any>([
   ['join_jugend.jpg', join_jugend],
   ['join_fitness.jpg', join_fitness],
   ['join_volleyball.jpg', join_volleyball],
-  ['join_sponsoring.jpg', join_sponsoring],
+  ['join_partnerschaft.jpg', join_partnerschaft],
   ['join_mitglied.jpg', join_mitglied],
 
   ['gaststaette_1', gaststaette_1],
