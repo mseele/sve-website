@@ -280,6 +280,16 @@ const sponsoring: Sponsor[] = [
     url: 'https://www.stoz.gmbh/',
     groupBy: 'Stoz GmbH',
   },
+  {
+    name: 'Dachser SE',
+    url: 'https://www.dachser.de/',
+    groupBy: 'Dachser SE',
+  },
+  {
+    name: 'Kramer Autolackiererei',
+    url: 'https://lackiererei-kramer.de/',
+    groupBy: 'Kramer Autolackiererei',
+  },
 ]
 
 export default sponsoring
