@@ -1,17 +1,17 @@
 <page>
-title: Sponsoring
+title: Partnerschaft
 </page>
 
 <template>
   <Layout :transparent="true">
     <HeroSection
-      title="Sponsoring"
+      title="Partnerschaft"
       subtitle="PROFITIERE MIT UNS"
-      image="sponsoring.jpg"
+      image="partnerschaft.jpg"
       :primary-button="{ text: 'Bandenwerbung', to: '#bande' }"
       :secondary-button="{ text: 'Unsere Partner', to: '#partner' }"
     />
-    <PageSection title="Sponsoring">
+    <PageSection title="Partnerschaft">
       <span
         >Unsere Partner ermöglichen durch ihre finanzielle und materielle
         Unterstützung das sportliche und kulturelle Angebot des SV Eutingen.
@@ -27,7 +27,7 @@ title: Sponsoring
           class="default-link on-focus whitespace-nowrap focus-visible:ring-offset-2"
           :to="{
             path: '/kontakt/',
-            query: { auswahl: 'sponsoring', thema: 'sponsoring' },
+            query: { auswahl: 'partnerschaft', thema: 'partnerschaft' },
           }"
           >Kontaktformular</router-link
         >
@@ -49,7 +49,7 @@ title: Sponsoring
           class="default-link on-focus-dark inline-block whitespace-nowrap focus-visible:ring-offset-2"
           :to="{
             path: '/kontakt/',
-            query: { auswahl: 'sponsoring', thema: 'bande' },
+            query: { auswahl: 'partnerschaft', thema: 'bande' },
           }"
           >Kontaktformular</router-link
         >

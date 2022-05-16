@@ -7,12 +7,12 @@
     </template>
     <template #touches>
       <header-title dark class="pt-4 text-xl font-medium">
-        Sponsoring
+        Partnerschaft
       </header-title>
       <Touches
         class="pt-4"
         title="Vorsitzender Sebastian Lazar"
-        :touches="sponsoring"
+        :touches="partnerschaft"
       />
       <HeaderTitle dark class="pt-4 text-xl font-medium">
         Bandenwerbung
@@ -20,7 +20,7 @@
       <Touches
         class="pt-4"
         title="Vorsitzender Sebastian Lazar"
-        :touches="sponsoring"
+        :touches="partnerschaft"
       />
     </template>
   </Contact>
@@ -36,7 +36,7 @@ const contact = ref<InstanceType<typeof Contact> | null>(null)
 onMounted(() => {
   const selection = new URLSearchParams(window.location.search).get('thema')
   switch (selection) {
-    case 'sponsoring':
+    case 'partnerschaft':
       nextTick(() => contact.value?.selectToItem(0))
       break
     case 'bande':
@@ -48,7 +48,7 @@ onMounted(() => {
 const items = [
   {
     value: 'vorstand@sv-eutingen.de',
-    text: 'Sponsoring',
+    text: 'Partnerschaft',
   },
   {
     value: 'vorstand@sv-eutingen.de',
@@ -56,7 +56,7 @@ const items = [
   },
 ]
 
-const sponsoring: Touch[] = [
+const partnerschaft: Touch[] = [
   {
     type: TouchType.Phone,
     text: '0176 30774678',
