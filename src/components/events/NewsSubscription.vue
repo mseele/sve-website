@@ -7,10 +7,10 @@
       </div>
     </div>
     <EmailSubscription
-      script:idle
+      client:idle
       :success-message="subscribeSuccess"
       :news-types="[newsType]"
-      class="w-full lg:w-1/2 lg:pl-2"
+      class="w-full lg:pl-2"
     />
   </div>
 </template>
