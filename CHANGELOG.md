@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.11](https://github.com/mseele/sve-website/compare/v4.1.10...v4.1.11) (2022-06-05)
+
+
+### Bug Fixes
+
+* move client-script activation one level up ([0c167eb](https://github.com/mseele/sve-website/commit/0c167eba8fb2516047e6f8845c38e6d54fc03819))
+
 ### [4.1.10](https://github.com/mseele/sve-website/compare/v4.1.9...v4.1.10) (2022-06-05)
 
 
