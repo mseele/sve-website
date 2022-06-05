@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.9](https://github.com/mseele/sve-website/compare/v4.1.8...v4.1.9) (2022-06-05)
+
+
+### Bug Fixes
+
+* bump dependencies ([bbd1237](https://github.com/mseele/sve-website/commit/bbd1237825ca8f76b9cf95949e813659ff81567e))
+
 ### [4.1.8](https://github.com/mseele/sve-website/compare/v4.1.7...v4.1.8) (2022-06-05)
 
 
