@@ -103,6 +103,7 @@
           <NewsSubscription
             :subscribe-success="subscribeSuccess"
             :news-type="newsType"
+            :event-detail="true"
             class="pt-8 lg:pt-4"
           >
             <slot name="subscribeInfo"></slot>
