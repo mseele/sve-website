@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.8](https://github.com/mseele/sve-website/compare/v4.1.7...v4.1.8) (2022-06-05)
+
+
+### Bug Fixes
+
+* change bank name ([e453fb1](https://github.com/mseele/sve-website/commit/e453fb1afd4195680fc14f722608bf4abf4df17b))
+* correct hydration tag ([170fa6b](https://github.com/mseele/sve-website/commit/170fa6b1a789196623a2cf7a6ec65e4d038d93e5))
+
 ### [4.1.7](https://github.com/mseele/sve-website/compare/v4.1.6...v4.1.7) (2022-05-16)
 
 
