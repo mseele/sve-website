@@ -46,7 +46,7 @@ title: Vereinsportrait
           Adresse: SV Eutingen 1947 e.V. / Marktstr. 84 / 72184 Eutingen im Gäu
         </li>
         <li>
-          Kontoverbindung: Sportverein Eutingen / Volksbank Horb-Freudenstadt eG
+          Kontoverbindung: Sportverein Eutingen / Volksbank eG im Kreis Freudenstadt
           / IBAN: DE28 642 910 10 00 344 69 001
         </li>
         <li>
