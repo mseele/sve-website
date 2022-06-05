@@ -9,7 +9,7 @@
     <EmailSubscription
       :success-message="props.subscribeSuccess"
       :news-types="[props.newsType]"
-      class="w-full lg:pl-2"
+      class="w-full lg:w-1/2 lg:pl-2"
     />
   </div>
 </template>
