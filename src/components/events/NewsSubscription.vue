@@ -7,7 +7,6 @@
       </div>
     </div>
     <EmailSubscription
-      :client:idle="!props.eventDetail"
       :success-message="props.subscribeSuccess"
       :news-types="[props.newsType]"
       class="w-full lg:pl-2"
@@ -24,10 +23,6 @@ const props = defineProps({
   newsType: {
     type: String,
     required: true,
-  },
-  eventDetail: {
-    type: Boolean,
-    default: false,
   },
 })
 </script>

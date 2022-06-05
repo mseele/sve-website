@@ -45,6 +45,7 @@
         <slot name="infoEmpty"></slot>
       </div>
       <NewsSubscription
+        client:idle
         :subscribe-success="subscribeSuccess"
         :news-type="newsType"
         class="pt-8"
