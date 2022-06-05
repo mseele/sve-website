@@ -54,7 +54,7 @@ title: Mitglied werden
           </div>
           <div class="pt-2">
             Sportverein Eutingen<br />
-            Volksbank Horb-Freudenstadt eG<br />
+            Volksbank eG im Kreis Freudenstadt<br />
             IBAN: DE28 642 910 10 00 344 69 001<br />
           </div>
         </div>
