@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.13](https://github.com/mseele/sve-website/compare/v4.1.12...v4.1.13) (2022-06-23)
+
+
+### Bug Fixes
+
+* add new sponsors ([c4c4bea](https://github.com/mseele/sve-website/commit/c4c4bea1d5b3c96064bdea3bd595fb72f308bc86))
+* switch to beta ([f1bf769](https://github.com/mseele/sve-website/commit/f1bf769960a8a80ac7229f6b35a19c3fcd01adb8))
+* use beta = false in master branch ([118e4e8](https://github.com/mseele/sve-website/commit/118e4e8b6a0b2725ceb79a77ce033fd91bdb1560))
+
 ### [4.1.12](https://github.com/mseele/sve-website/compare/v4.1.11...v4.1.12) (2022-06-18)
 
 ### [4.1.11](https://github.com/mseele/sve-website/compare/v4.1.10...v4.1.11) (2022-06-05)
