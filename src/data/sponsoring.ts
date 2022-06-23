@@ -290,6 +290,16 @@ const sponsoring: Sponsor[] = [
     url: 'https://lackiererei-kramer.de/',
     groupBy: 'Kramer Autolackiererei',
   },
+  {
+    name: 'Eberhardt Antriebstechnik GmbH',
+    url: 'https://www.eberhardt-antriebstechnik.de/',
+    groupBy: 'Eberhardt Antriebstechnik GmbH',
+  },
+  {
+    name: 'Auszeit Eutingen',
+    url: 'https://de-de.facebook.com/auszeiteutingen/',
+    groupBy: 'Auszeit Eutingen',
+  },
 ]
 
 export default sponsoring
