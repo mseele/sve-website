@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.16](https://github.com/mseele/sve-website/compare/v4.1.15...v4.1.16) (2022-07-17)
+
+
+### Bug Fixes
+
+* go back to iles 0.7.40 ([a4d3768](https://github.com/mseele/sve-website/commit/a4d3768a4d6d9d9efd331fb619b02f0743e86302))
+
+### [4.1.15](https://github.com/mseele/sve-website/compare/v4.1.14...v4.1.15) (2022-07-17)
+
+### [4.1.14](https://github.com/mseele/sve-website/compare/v4.1.13...v4.1.14) (2022-06-25)
+
+
+### Bug Fixes
+
+* remove sponsoring partner ([e6117b3](https://github.com/mseele/sve-website/commit/e6117b37adc1fbd314c6d54dd87a2dc8927bfc01))
+
 ### [4.1.13](https://github.com/mseele/sve-website/compare/v4.1.12...v4.1.13) (2022-06-23)
 
 

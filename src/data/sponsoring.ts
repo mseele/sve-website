@@ -177,11 +177,6 @@ const sponsoring: Sponsor[] = [
     groupBy: 'REUKO',
   },
   {
-    name: 'Lutz Bedachungen',
-    url: 'http://www.lutz-bedachungen.de/',
-    groupBy: 'Lutz',
-  },
-  {
     name: 'Schlagerbar Eutingen',
     url: 'https://www.schlagerbar-eutingen.de/',
     groupBy: 'Schlagerbar',
