@@ -2,6 +2,16 @@ import { Moment } from '@/models'
 
 const history: Moment[] = [
   {
+    date: '8. - 10. Juli 2022',
+    text: 'Mit einem dreitägigen Veranstaltungswochende begeht der SVE seinen 75. Geburtstag und bot dafür sportliche und kulturelle Highlights. Am Freitagabend fand ein Ehrungsabend für Mitglieder und Sponsoren statt, bei dem Bürgermeister Armin Jöchle und weitere Gäste Grußworte sprachen. Erstmals wurde auch der SVE-Imageclip gezeigt, der in zwei Minuten zusammenfasst wofür der Verein steht.<br/>Am Samstag stand ein Legendenspiel mit ehemaligen Spielerinnen und Spielern auf der Tagesordnung, das viele Gäste auf das Gelände lockte. Auch bei der Sportlerparty am Samstagabend war das Zelt voll. Obwohl bis in die frühen Morgenstunden gefeiert wurde, war das Festgelände am Sonntag um 10 Uhr bereit für einen schönen Gottesdienst mit Pfarrer Bernhard Tschullik. Danach spielten die Heimathelden zum Frühschoppen und am Abend Honk&Blow, bis das Fest am Sonntagabend zu Ende ging. Am Sonntagnachmittag war ein breites Essens- und Kinderangebot mit Hüpfburg, Kinderschminken usw geboten. Auf dem Rasenspielfeld duellierte sich die Auswahl von A1-A2- Spielern, bei der das A1-Team mit 6:4 gewann.',
+    images: ['history_2022_07_2'],
+  },
+  {
+    date: '1. Juli 2022',
+    text: 'Der SVE erhält den renommierten WLSB-Förderpreis für das Corona-Jahr 2020. Mit dem Projekt "mehralseinverein - gemeinsam durch die Pandemie" konnte der SVE die Jury mit seinem vielfältigen Angebot auch während den anstrengenden Monaten der Pandemie überzeugen. Damit setzte sich der SVE gegen Hunderte andere Vereine in Baden-Württemberg durch und wurde mit dem Preisgeld über 4.000 € belohnt, das von der Kreissparkasse Esslingen-Nürtingen gestiftet wurde. Am Ehrungsabend nahmen Eva Stoll, Wolfgang Nesch und Sebastian Lazar die Auszeichnung entgegen.',
+    images: ['history_2022_07_1'],
+  },
+  {
     date: 'Januar 2021',
     text: 'Mit über 16.000 Arbeitsstunden und unzähligen Planungsrunden konnte der SVE mit seinem Megaprojekt und den Bausteinen Kunstrasenneubau, Neubau des Vereinsheims und der Sanierung des Rasenplatzes die Jury des WFV-Ehrenamtspreises überzeugen. Anfang 2021 erhielten wir die freudige Botschaft, dass wir den WFV-Ehrenamtspreis 2020 gewonnen haben.',
     images: ['history_2021_01_1'],
