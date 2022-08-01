@@ -27,7 +27,11 @@ const teams: Record<string, Team[]> = {
       team: '1. Mannschaft',
       league: 'Kreisliga A2',
       coach: {
-        name: 'Sergej Golubkow',
+        name: 'Alexander Esslinger',
+        mobile: {
+          formatted: '0163 8184870',
+          raw: '+491638184870',
+        },
       },
       contact: abteilungsleiterHerren,
       teamID: '011MID6OM0000000VTVG0001VTR8C1K7',
@@ -37,14 +41,28 @@ const teams: Record<string, Team[]> = {
       team: '2. Mannschaft',
       league: 'Kreisliga B1',
       coach: {
-        name: "Michele Dell'Agli",
+        name: "Yannik Janzen",
         mobile: {
-          formatted: '0176 24671575',
-          raw: '+4917624671575',
+          formatted: '0163 7296476',
+          raw: '+491637296476',
         },
       },
       contact: abteilungsleiterHerren,
       teamID: '01A1LJM17C000000VV0AG80NVSEJ47CH',
+    },
+    {
+      key: 'herren-3',
+      team: '3. Mannschaft',
+      league: 'Kreisliga B2 (Reserve)',
+      coach: {
+        name: "Yannik Janzen",
+        mobile: {
+          formatted: '0163 7296476',
+          raw: '+491637296476',
+        },
+      },
+      contact: abteilungsleiterHerren,
+      teamID: '02IPFLU5SG000000VS5489B2VU3QR439',
     },
     {
       key: 'ah',
@@ -65,7 +83,7 @@ const teams: Record<string, Team[]> = {
     {
       key: 'frauen-1',
       team: '1. Mannschaft',
-      league: 'Verbandsliga',
+      league: 'Landesliga',
       coach: {
         name: 'Dominik Rakoczy',
         email: 'domraky@gmail.com',
@@ -88,7 +106,7 @@ const teams: Record<string, Team[]> = {
     {
       key: 'frauen-2',
       team: '2. Mannschaft',
-      league: 'Bezirksliga',
+      league: 'Regionenliga',
       coach: {
         title: 'Trainerin',
         name: 'Chrissi Gaiser',
