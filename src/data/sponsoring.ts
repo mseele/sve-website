@@ -295,6 +295,11 @@ const sponsoring: Sponsor[] = [
     url: 'https://de-de.facebook.com/auszeiteutingen/',
     groupBy: 'Auszeit Eutingen',
   },
+  {
+    name: 'ELB Express-Logistik',
+    url: 'https://www.elb-express.de/',
+    groupBy: 'ELB Express-Logistik',
+  },
 ]
 
 export default sponsoring
