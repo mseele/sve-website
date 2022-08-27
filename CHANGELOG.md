@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.18](https://github.com/mseele/sve-website/compare/v4.1.17...v4.1.18) (2022-08-27)
+
+
+### Bug Fixes
+
+* add sponsoring partner ([50d903f](https://github.com/mseele/sve-website/commit/50d903f0c245b5f5e79dea3e14b83b911f919afb))
+* improve svg import ([351e5c5](https://github.com/mseele/sve-website/commit/351e5c5738541102f00f1a08274b17bf88ded291))
+
 ### [4.1.17](https://github.com/mseele/sve-website/compare/v4.1.16...v4.1.17) (2022-08-01)
 
 ### [4.1.16](https://github.com/mseele/sve-website/compare/v4.1.15...v4.1.16) (2022-07-17)
