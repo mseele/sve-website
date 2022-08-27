@@ -13,5 +13,5 @@ const props = defineProps({
     default: true,
   },
 })
-const currentIcon = await import('../../assets/' + props.name + '.svg')
+const currentIcon = await import(`../../assets/${props.name}.svg`)
 </script>
