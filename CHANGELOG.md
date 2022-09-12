@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.19](https://github.com/mseele/sve-website/compare/v4.1.18...v4.1.19) (2022-09-12)
+
+
+### Bug Fixes
+
+* change team contacts ([b815b67](https://github.com/mseele/sve-website/commit/b815b67f55b8be8f06618906dded86ab0a3a00c5))
+* set beta = true on next branch ([c5174a9](https://github.com/mseele/sve-website/commit/c5174a9caf9bd0020bb1ba9da78ab72f2c6ed71c))
+* use beta = false in master branch ([225169d](https://github.com/mseele/sve-website/commit/225169d0e73d944de50a3a3389669bca5c55c6f0))
+
 ### [4.1.18](https://github.com/mseele/sve-website/compare/v4.1.17...v4.1.18) (2022-08-27)
 
 
