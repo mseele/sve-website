@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.20](https://github.com/mseele/sve-website/compare/v4.1.19...v4.1.20) (2022-09-24)
+
+
+### Bug Fixes
+
+* add sponsoring partners ([8ee13ff](https://github.com/mseele/sve-website/commit/8ee13ff04bd1b1ad3015e2846fb9c327a3f6911f))
+
 ### [4.1.19](https://github.com/mseele/sve-website/compare/v4.1.18...v4.1.19) (2022-09-12)
 
 
