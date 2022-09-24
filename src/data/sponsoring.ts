@@ -300,6 +300,16 @@ const sponsoring: Sponsor[] = [
     url: 'https://www.elb-express.de/',
     groupBy: 'ELB Express-Logistik',
   },
+  {
+    name: 'Bausysteme Kaupp',
+    url: 'https://www.bausysteme-kaupp.de/',
+    groupBy: 'Kaupp Bausysteme',
+  },
+  {
+    name: 'Martin Baur GmbH',
+    url: 'http://baurbauts.de/',
+    groupBy: 'Baur Martin GmbH',
+  },
 ]
 
 export default sponsoring
