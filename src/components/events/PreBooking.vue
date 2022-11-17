@@ -155,7 +155,7 @@ onMounted(() => {
     post(code)
   } else {
     error.value =
-      'Die Buchung konnte nicht durchgeführt werden da kein Frühbuchungscode erkannt wurde'
+      'Die Buchung konnte nicht durchgeführt werden da kein Buchungscode erkannt wurde'
   }
 })
 
