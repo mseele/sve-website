@@ -160,11 +160,8 @@ onMounted(() => {
 })
 
 function post(hash: string) {
-  let url = import.meta.env.VITE_BACKEND_API + '/events/prebooking'
-  $fetch<BookingResponse>(url, {
-    method: 'POST',
-    body: { hash: hash },
-  })
+  let url = import.meta.env.VITE_BACKEND_API + '/events/prebooking/' + hash
+  $fetch<BookingResponse>(url)
     .then((response) => {
       if (response.success) {
         success.value = response.message

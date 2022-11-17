@@ -7,7 +7,7 @@ const appointmentsPath =
   import.meta.env.VITE_BACKEND_API + '/calendar/appointments'
 
 function bySortIndex(a: RawAppointment, b: RawAppointment) {
-  return a.sortIndex - b.sortIndex
+  return a.sort_index - b.sort_index
 }
 
 function toAppointment(appointment: RawAppointment): Appointment {

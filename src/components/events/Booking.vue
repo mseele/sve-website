@@ -128,9 +128,9 @@ const onSubmit = handleSubmit((values, { resetForm }) => {
   submitLoading.value = true
   let url = import.meta.env.VITE_BACKEND_API + '/events/booking'
   const body: Booking = {
-    eventId: props.eventId,
-    firstName: values.firstName.trim(),
-    lastName: values.lastName.trim(),
+    event_id: props.eventId,
+    first_name: values.firstName.trim(),
+    last_name: values.lastName.trim(),
     street: values.street.trim(),
     city: values.city.trim(),
     email: values.email.trim(),
