@@ -11,32 +11,26 @@ export enum NotificationType {
 // Raw item from the server
 export interface RawEvent {
   id: string
-  sheetId: string
-  gid: number
   type: EventType
   name: string
-  sortIndex: number
-  visible: boolean
-  beta: boolean
-  shortDescription: string
+  sort_index: number
+  short_description: string
   description: string
   image: string
   light: boolean
   dates: string[]
-  customDate?: string
-  durationInMinutes: number
-  maxSubscribers: number
-  subscribers: number
-  costMember: number
-  costNonMember: number
-  waitingList: number
-  maxWaitingList: number
+  custom_date?: string
+  duration_in_minutes: number
+  max_subscribers: number
+  max_waiting_list: number
+  cost_member: number
+  cost_non_member: number
   location: string
-  bookingTemplate: string
-  waitingTemplate: string
-  altBookingButtonText?: string
-  altEmailAddress?: string
-  externalOperator: boolean
+  booking_template: string
+  payment_account: string
+  alt_booking_button_text?: string
+  alt_email_address?: string
+  external_operator: boolean
 }
 
 export interface Event {
@@ -62,16 +56,16 @@ export enum EventType {
 
 export interface EventCounter {
   id: string
-  maxSubscribers: number
+  max_subscribers: number
   subscribers: number
-  waitingList: number
-  maxWaitingList: number
+  waiting_list: number
+  max_waiting_list: number
 }
 
 export interface Booking {
-  eventId: string
-  firstName: string
-  lastName: string
+  event_id: string
+  first_name: string
+  last_name: string
   street: string
   city: string
   email: string
@@ -90,14 +84,14 @@ export interface BookingResponse {
 // Raw item from the server
 export interface RawAppointment {
   id?: string
-  sortIndex: number
+  sort_index: number
   title?: string
   link?: string
   description?: string
-  startDate?: string
-  endDate?: string
-  startDateTime?: string
-  endDateTime?: string
+  start_date?: string
+  end_date?: string
+  start_date_time?: string
+  end_date_time?: string
 }
 
 export interface Appointment {

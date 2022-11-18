@@ -7,13 +7,13 @@ const eventsPath =
   import.meta.env.VITE_BACKEND_API + '/events?beta=' + import.meta.env.VITE_BETA
 
 function bySortIndex(a: RawEvent, b: RawEvent) {
-  return a.sortIndex - b.sortIndex
+  return a.sort_index - b.sort_index
 }
 
 function toEvent(event: RawEvent): Event {
   let dates
-  if (event.customDate) {
-    dates = [event.customDate]
+  if (event.custom_date) {
+    dates = [event.custom_date]
   } else {
     dates = event.dates.map((date) => toDate(date))
   }
@@ -23,15 +23,15 @@ function toEvent(event: RawEvent): Event {
     name: event.name,
     image: event.image,
     light: event.light,
-    shortDescription: event.shortDescription,
+    shortDescription: event.short_description,
     description: event.description,
     location: event.location,
     dates,
-    duration: durationPrefix(event.type) + toDuration(event.durationInMinutes),
-    costMember: toCurrency(event.costMember),
-    costNonMember: toCurrency(event.costNonMember),
-    externalOperator: event.externalOperator,
-    altBookingButtonText: event.altBookingButtonText,
+    duration: durationPrefix(event.type) + toDuration(event.duration_in_minutes),
+    costMember: toCurrency(event.cost_member),
+    costNonMember: toCurrency(event.cost_non_member),
+    externalOperator: event.external_operator,
+    altBookingButtonText: event.alt_booking_button_text,
   }
 }
 

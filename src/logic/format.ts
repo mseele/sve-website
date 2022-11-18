@@ -42,16 +42,16 @@ export function toDuration(value: number): string {
 }
 
 export function toDatespan(appointment: RawAppointment): string {
-  if (appointment.startDate && appointment.endDate) {
-    const start = moment(appointment.startDate)
-    const end = moment(appointment.endDate)
+  if (appointment.start_date && appointment.end_date) {
+    const start = moment(appointment.start_date)
+    const end = moment(appointment.end_date)
     if (isEqualDate(start, end)) {
       return start.format(DATE_PATTERN)
     }
     return start.format(DATE_PATTERN) + ' - ' + end.format(DATE_PATTERN)
   }
-  const start = moment(appointment.startDateTime)
-  const end = moment(appointment.endDateTime)
+  const start = moment(appointment.start_date_time)
+  const end = moment(appointment.end_date_time)
   if (
     isEqualDate(start, end) ||
     isEqualDate(start, end.clone().subtract(1, 'minutes'))
@@ -70,10 +70,10 @@ function isEqualDate(start: Moment, end: Moment) {
 }
 
 export function toTimespan(appointment: RawAppointment) {
-  if (appointment.startDate && appointment.endDate) {
+  if (appointment.start_date && appointment.end_date) {
     return 'ganztägig'
   }
-  const start = moment(appointment.startDateTime)
-  const end = moment(appointment.endDateTime)
+  const start = moment(appointment.start_date_time)
+  const end = moment(appointment.end_date_time)
   return start.format(TIME_PATTERN) + ' - ' + end.format(TIME_PATTERN) + ' Uhr'
 }

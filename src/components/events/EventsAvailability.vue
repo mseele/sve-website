@@ -39,12 +39,12 @@ const counterAvailable = computed<boolean>(() => {
 const isBookedUp = computed<boolean | undefined>(() => {
   const counter = eventCounter.value
   if (counter) {
-    if (counter.maxSubscribers === -1) {
+    if (counter.max_subscribers === -1) {
       return false
     }
     return (
-      counter.subscribers >= counter.maxSubscribers &&
-      counter.waitingList >= counter.maxWaitingList
+      counter.subscribers >= counter.max_subscribers &&
+      counter.waiting_list >= counter.max_waiting_list
     )
   }
   return undefined // never should be here

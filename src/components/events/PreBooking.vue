@@ -155,16 +155,13 @@ onMounted(() => {
     post(code)
   } else {
     error.value =
-      'Die Buchung konnte nicht durchgeführt werden da kein Frühbuchungscode erkannt wurde'
+      'Die Buchung konnte nicht durchgeführt werden da kein Buchungscode erkannt wurde'
   }
 })
 
 function post(hash: string) {
-  let url = import.meta.env.VITE_BACKEND_API + '/events/prebooking'
-  $fetch<BookingResponse>(url, {
-    method: 'POST',
-    body: { hash: hash },
-  })
+  let url = import.meta.env.VITE_BACKEND_API + '/events/prebooking/' + hash
+  $fetch<BookingResponse>(url)
     .then((response) => {
       if (response.success) {
         success.value = response.message

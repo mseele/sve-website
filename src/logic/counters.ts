@@ -29,9 +29,9 @@ export function updateCounters(
 
 export function availableSubscribers(counter: EventCounter): string {
   const value =
-    counter.maxSubscribers === -1
+    counter.max_subscribers === -1
       ? -1
-      : counter.maxSubscribers - counter.subscribers
+      : counter.max_subscribers - counter.subscribers
   if (value === -1) {
     return 'Freie Plätze verfügbar'
   } else if (value === 1) {
