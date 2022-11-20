@@ -2,7 +2,10 @@ import { computed, ref } from 'vue'
 import { $fetch } from 'ohmyfetch'
 import { EventCounter } from '@/models'
 
-const counterPath = import.meta.env.VITE_BACKEND_API + '/events/counter'
+const counterPath =
+  import.meta.env.VITE_BACKEND_API +
+  '/events/counter?beta=' +
+  import.meta.env.VITE_BETA
 
 const _counters = ref<EventCounter[]>()
 
