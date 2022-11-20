@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.22](https://github.com/mseele/sve-website/compare/v4.1.21...v4.1.22) (2022-11-20)
+
+
+### Bug Fixes
+
+* add beta parameter ([b63e7ec](https://github.com/mseele/sve-website/commit/b63e7ec2a9e2f942639dafddae7ab474abb32e8e))
+
 ### [4.1.21](https://github.com/mseele/sve-website/compare/v4.1.20...v4.1.21) (2022-11-18)
 
 
