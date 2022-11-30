@@ -28,8 +28,8 @@ function toEvent(event: RawEvent): Event {
     location: event.location,
     dates,
     duration: durationPrefix(event.type) + toDuration(event.duration_in_minutes),
-    costMember: toCurrency(event.cost_member),
-    costNonMember: toCurrency(event.cost_non_member),
+    priceMember: toCurrency(event.price_member),
+    priceNonMember: toCurrency(event.price_non_member),
     externalOperator: event.external_operator,
     altBookingButtonText: event.alt_booking_button_text,
   }

@@ -23,8 +23,8 @@ export interface RawEvent {
   duration_in_minutes: number
   max_subscribers: number
   max_waiting_list: number
-  cost_member: number
-  cost_non_member: number
+  price_member: number
+  price_non_member: number
   location: string
   booking_template: string
   payment_account: string
@@ -43,8 +43,8 @@ export interface Event {
   location: string
   dates: string[]
   duration: string
-  costMember: string
-  costNonMember: string
+  priceMember: string
+  priceNonMember: string
   altBookingButtonText?: string
   externalOperator: boolean
 }
