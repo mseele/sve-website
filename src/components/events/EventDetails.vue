@@ -17,19 +17,19 @@
         <ul class="w-full space-y-3 md:w-1/2">
           <InfoListItem
             v-if="
-              event.costMember === event.costNonMember &&
-              event.costMember === '0 €'
+              event.priceMember === event.priceNonMember &&
+              event.priceMember === '0 €'
             "
           >
             kostenlos
           </InfoListItem>
-          <InfoListItem v-else-if="event.costMember === event.costNonMember">
-            {{ event.costMember }} pro Teilnehmer
+          <InfoListItem v-else-if="event.priceMember === event.priceNonMember">
+            {{ event.priceMember }} pro Teilnehmer
           </InfoListItem>
           <template v-else>
-            <InfoListItem>{{ event.costMember }} für Mitglieder</InfoListItem>
+            <InfoListItem>{{ event.priceMember }} für Mitglieder</InfoListItem>
             <InfoListItem
-              >{{ event.costNonMember }} für Nicht-Mitglieder</InfoListItem
+              >{{ event.priceNonMember }} für Nicht-Mitglieder</InfoListItem
             >
           </template>
           <InfoListItem>Wo: {{ event.location }}</InfoListItem>
