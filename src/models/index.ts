@@ -25,6 +25,7 @@ export interface RawEvent {
   max_waiting_list: number
   price_member: number
   price_non_member: number
+  cost_per_date?: number
   location: string
   booking_template: string
   payment_account: string
