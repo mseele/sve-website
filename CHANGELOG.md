@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.24](https://github.com/mseele/sve-website/compare/v4.1.23...v4.1.24) (2022-12-11)
+
+
+### Bug Fixes
+
+* add news ([4ef890d](https://github.com/mseele/sve-website/commit/4ef890ddec678557d0209a65513eefb5c61aa20d))
+* change coach ([1383c9e](https://github.com/mseele/sve-website/commit/1383c9efffc552f1f2385d81099ced9e43b8df59))
+
 ### [4.1.23](https://github.com/mseele/sve-website/compare/v4.1.22...v4.1.23) (2022-12-01)
 
 ### [4.1.22](https://github.com/mseele/sve-website/compare/v4.1.21...v4.1.22) (2022-11-20)
