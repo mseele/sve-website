@@ -196,7 +196,12 @@ const teams: Record<string, Team[]> = {
       team: 'B-Juniorinnen 1',
       league: 'EnBW-Oberliga BaWü',
       coach: {
-        name: 'Rainer Kalbacher',
+        name: 'Manuel Strobel',
+        email: 'manuelstrobel93@web.de',
+        mobile: {
+          formatted: '01515 6072107',
+          raw: '+4915156072107',
+        },
       },
       contact: jugendleiter,
       teamID: '011MI98PJG000000VTVG0001VTR8C1K7',
