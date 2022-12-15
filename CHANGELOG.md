@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.25](https://github.com/mseele/sve-website/compare/v4.1.24...v4.1.25) (2022-12-15)
+
+
+### Bug Fixes
+
+* switch coach ([0c47773](https://github.com/mseele/sve-website/commit/0c47773925340f89dc126c5e629055e95874f4ae))
+* try to convert value to number ([c4ea17c](https://github.com/mseele/sve-website/commit/c4ea17c1bda327113c70f95d4d24b30b1dea065e))
+
 ### [4.1.24](https://github.com/mseele/sve-website/compare/v4.1.23...v4.1.24) (2022-12-11)
 
 
