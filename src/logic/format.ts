@@ -12,7 +12,7 @@ const DATE_PATTERN = 'dd., D. MMM YYYY'
 const TIME_PATTERN = 'H:mm'
 
 export function toCurrency(value: number): string {
-  if (typeof value !== 'number') {
+  if (typeof value !== 'number' && Number.isNaN(Number(value))) {
     return value
   }
   return numeral(value).format('0,0[.]00 $')
