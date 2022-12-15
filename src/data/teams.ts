@@ -179,11 +179,11 @@ const teams: Record<string, Team[]> = {
       team: 'D-Junioren SGM SV Eutingen',
       league: '9er Bezirksstaffel',
       coach: {
-        name: 'Heiko Bube',
-        email: 'heiko.bube@gmail.com',
+        name: 'Thorsten Weiss',
+        email: 'Thorsten.Weiss1@gmx.de',
         mobile: {
-          formatted: '0176 40741543',
-          raw: '+4917640741543',
+          formatted: '0172 7240436',
+          raw: '+491727240436',
         },
       },
       contact: jugendleiter,
