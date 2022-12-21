@@ -2,6 +2,11 @@ import { NewsItem } from '@/models'
 
 const news: NewsItem[] = [
   {
+    title: '20. Dezember 2022',
+    collapsed: false,
+    text: "+++ Infobrief 2022 +++<br/><br/>Liebe Mitglieder und Freunde des SVE,<br/>was für ein Jahr 2022!<br/>Wir haben...<br/>...zu Jahresbeginn noch mit erheblichen Einschränkungen durch die Pandemie gekämpft,<br/>...nach zwei abgesagten Saisons endlich wieder eine Fußballrunde zu Ende spielen können,<br/>...im Sommer unser 75-jähriges Jubiläum mit einem wunderschönen Festwochenende gefeiert<br/>...und blicken trotz sorgenvoller Entwicklungen überall auf der Welt auf ein gutes SVE-Jahr 2022 zurück und optimistisch nach vorne.<br/><br/><a href='/downloads/2022/Infobrief-2022.pdf' target='_blank'>...Weiterlesen</a>",
+  },
+  {
     title: '10. Dezember 2022',
     collapsed: true,
     text: 'Workshop Jugendfußball ⚽️<br/><br/>Mit unseren Partnern in der Jugendarbeit vom VfL Hochdorf 1911 e.V. und SV Vollmaringen waren wir heute im Projektraum42 von Projektmensch. in Horb.<br/><br/>In diesen super ausgestatteten Räumlichkeiten haben wir unsere Jugendfußballarbeit weiterentwickelt, Themen diskutiert und konkrete nächste Schritte besprochen.<br/><br/>Ein roter Faden war dabei: wir möchten Kinder und Jugendliche nicht nur sportlich, sondern auch menschlich begleiten und durch gute Nachwuchsarbeit dafür sorgen, dass unsere Vereine auch in Zukunft eigenständige Fußballteams im Erwachsenenbereich stellen können.<br/><br/>Deshalb ein riesiges Dankeschön an alle, die sich als Trainer, Betreuer oder in der Jugendleitung einbringen. Ihr macht super Arbeit, ohne die Vereine keine Zukunft haben. 🙏',
