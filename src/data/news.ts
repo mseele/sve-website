@@ -2,6 +2,11 @@ import { NewsItem } from '@/models'
 
 const news: NewsItem[] = [
   {
+    title: '20. Januar 2023',
+    collapsed: false,
+    text: "+++ Stammzellen retten Leben +++<br/><br/>Vor wenigen Monaten konnten wir bei der Aktion „Wir gegen Blutkebs“ mit mehr als 100 neuen Registrierungen deutschlandweit den ersten Platz bei der DKMS-FUSSBALLHELDEN-Aktion belegen. Das war eine wirklich tolle Sache!<br/><br/>Vor einigen Tagen erreichte unseren Daniel dann einen Anruf, dass er tatsächlich als Spender in Frage käme und einem Menschen die Chance auf ein zweites Leben geben könnte.<br/><br/><a href='/downloads/2022/DKMS-Spende.pdf' target='_blank'>...Weiterlesen</a>",
+  },
+  {
     title: '20. Dezember 2022',
     collapsed: false,
     text: "+++ Infobrief 2022 +++<br/><br/>Liebe Mitglieder und Freunde des SVE,<br/>was für ein Jahr 2022!<br/>Wir haben...<br/>...zu Jahresbeginn noch mit erheblichen Einschränkungen durch die Pandemie gekämpft,<br/>...nach zwei abgesagten Saisons endlich wieder eine Fußballrunde zu Ende spielen können,<br/>...im Sommer unser 75-jähriges Jubiläum mit einem wunderschönen Festwochenende gefeiert<br/>...und blicken trotz sorgenvoller Entwicklungen überall auf der Welt auf ein gutes SVE-Jahr 2022 zurück und optimistisch nach vorne.<br/><br/><a href='/downloads/2022/Infobrief-2022.pdf' target='_blank'>...Weiterlesen</a>",
