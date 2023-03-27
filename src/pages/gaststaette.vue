@@ -85,10 +85,10 @@ title: Gaststätte
           <HeaderTitle dark class="pb-6 text-3xl font-semibold uppercase">
             Bilder
           </HeaderTitle>
-          <div class="relative h-[480px]">
+          <div class="relative h-[533px]">
             <ImageViewer
               class="absolute inset-0"
-              height="480"
+              height="533"
               :images="['gaststaette_1', 'gaststaette_2', 'gaststaette_3']"
               client:idle
             />
@@ -104,21 +104,27 @@ title: Gaststätte
             <div
               class="text-xs font-medium uppercase tracking-wide text-stone-500"
             >
-              Mittwoch bis Freitag
+              Mittwoch und Donnerstag
             </div>
-            <div class="font-medium">16 - 1 Uhr</div>
+            <div class="font-medium">16 - 0 Uhr</div>
+            <div
+              class="pt-4 text-xs font-medium uppercase tracking-wide text-stone-500"
+            >
+              Freitag
+            </div>
+            <div class="font-medium">16 - 2 Uhr</div>
             <div
               class="pt-4 text-xs font-medium uppercase tracking-wide text-stone-500"
             >
               Samstag
             </div>
-            <div class="font-medium">14 - 1 Uhr</div>
+            <div class="font-medium">14 - 2 Uhr</div>
             <div
               class="pt-4 text-xs font-medium uppercase tracking-wide text-stone-500"
             >
               Sonntag
             </div>
-            <div class="font-medium">14 - 22 Uhr</div>
+            <div class="font-medium">11:30 - 21 Uhr</div>
           </div>
           <HeaderTitle dark class="mt-6 pb-6 text-3xl font-semibold uppercase">
             Kontakt
