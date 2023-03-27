@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.28](https://github.com/mseele/sve-website/compare/v4.1.27...v4.1.28) (2023-03-27)
+
+
+### Bug Fixes
+
+* change opening hours ([7ee2816](https://github.com/mseele/sve-website/commit/7ee281691fe8918cc892975553e0e97c41c2d5f7))
+
 ### [4.1.27](https://github.com/mseele/sve-website/compare/v4.1.26...v4.1.27) (2023-01-20)
 
 
