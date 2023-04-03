@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.29](https://github.com/mseele/sve-website/compare/v4.1.28...v4.1.29) (2023-04-03)
+
+
+### Bug Fixes
+
+* correct fussball.de svg ([75263f9](https://github.com/mseele/sve-website/commit/75263f948be655b84f1fac13083c63cbcaeeda28))
+* use better youtube url ([73966ad](https://github.com/mseele/sve-website/commit/73966ad44429b7f9d65d524f004a808eedbe038a))
+
 ### [4.1.28](https://github.com/mseele/sve-website/compare/v4.1.27...v4.1.28) (2023-03-27)
 
 
