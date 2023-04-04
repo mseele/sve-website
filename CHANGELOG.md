@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.0](https://github.com/mseele/sve-website/compare/v4.1.29...v4.2.0) (2023-04-04)
+
+
+### Features
+
+* add video section ([e6aab6d](https://github.com/mseele/sve-website/commit/e6aab6defbe4b088d1ceed129918aae1c2a983ee))
+
 ### [4.1.29](https://github.com/mseele/sve-website/compare/v4.1.28...v4.1.29) (2023-04-03)
 
 

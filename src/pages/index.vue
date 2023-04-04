@@ -40,7 +40,28 @@
         </div>
       </div>
     </PageSection>
-    <PageSection id="mach-mit" dark title="Mach mit">
+    <PageSection id="der-sve" dark title="Der SVE">
+      <div class="space-y-2">
+        <div>Das ist Eutingen. Das sind wir.</div>
+        <div>
+          Frauen, Männer und Kinder in unterschiedlichem Alter, verschiedenen
+          Lebensabschnitten, Lebenslagen und diversen Nationalitäten. Verbunden
+          durch den Sport und dem gesellschaftlichen Beisammensein.
+        </div>
+        <div>Wir sind <span class="font-medium">#MEHRALSEINVEREIN</span>.</div>
+        <div class="pt-2">
+          <iframe
+            class="aspect-video w-full rounded-md"
+            src="https://www.youtube-nocookie.com/embed/M_weDDLyPOs"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </PageSection>
+    <PageSection id="mach-mit" title="Mach mit">
       <div class="font-medium">
         Du suchst Teamsport oder Fitness-Angebote? Du hast Lust auf Ehrenamt?
         Oder suchst eine starke Sponsoringpartnerschaft für Dein Unternehmen?
