@@ -41,7 +41,7 @@ title: Gaststätte
       <div class="flex flex-col pt-6 sm:flex-row sm:justify-center">
         <DownloadButton
           v-slot="{ imageClass }"
-          href="/downloads/2022/Speisekarte-Auszeit.pdf"
+          href="/downloads/2023/Speisekarte-Auszeit.pdf"
           first-row="UNSERE"
           second-row="Speisekarte"
           class="w-full sm:w-1/3 xl:w-1/4 2xl:w-1/5"
