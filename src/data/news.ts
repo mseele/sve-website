@@ -2,6 +2,11 @@ import { NewsItem } from '@/models'
 
 const news: NewsItem[] = [
   {
+    title: '13. April 2022',
+    collapsed: true,
+    text: "+++ 76. Mitgliederversammlung +++<br/><br/>Liebe Vereinsmitglieder,<br/>wir laden Euch herzlich zur 76. Mitgliederversammlung des SV Eutingen 1947 e.V. am<br/><b>Samstag, den 22. April 2023 um 18 Uhr</b><br/>in unsere Vereinsgaststätte Auszeit, Marktstraße 84, 72184 Eutingen im Gäu ein.<br/><br/>Tagesordnung<ol><li>Eröffnung und Begrüßung</li><li>Totenehrung</li><li>Berichte</li><li>Diskussion zu den Berichten</li><li>Entlastung der Vorstandschaft</li><li>Wahlen</li><li>Anträge</li><li>Termine 2023</li><li>Verschiedenes</li></ol>Anträge zur Mitgliederversammlung können bis zum 20. April 2023 schriftlich beim 1. Vorsitzenden Sebastian Lazar (<a href='mailto:vorstand@sv-eutingen.de'>vorstand@sv-eutingen.de</a> oder postalisch an Marktstraße 84, 72184 Eutingen im Gäu) eingereicht werden.",
+  },
+  {
     title: '20. Januar 2023',
     collapsed: false,
     text: "+++ Stammzellen retten Leben +++<br/><br/>Vor wenigen Monaten konnten wir bei der Aktion „Wir gegen Blutkebs“ mit mehr als 100 neuen Registrierungen deutschlandweit den ersten Platz bei der DKMS-FUSSBALLHELDEN-Aktion belegen. Das war eine wirklich tolle Sache!<br/><br/>Vor einigen Tagen erreichte unseren Daniel dann einen Anruf, dass er tatsächlich als Spender in Frage käme und einem Menschen die Chance auf ein zweites Leben geben könnte.<br/><br/><a href='/downloads/2022/DKMS-Spende.pdf' target='_blank'>...Weiterlesen</a>",
