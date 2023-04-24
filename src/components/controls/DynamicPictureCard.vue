@@ -61,6 +61,7 @@ import brot from '@/assets/events/brot.jpg?preset=card'
 import deep from '@/assets/events/deep.jpg?preset=card'
 import fit_gesund from '@/assets/events/fit_gesund.jpg?preset=card'
 import fit from '@/assets/events/fit.jpg?preset=card'
+import forest from '@/assets/events/forest.jpg?preset=card'
 import fussballtor from '@/assets/events/fussballtor.jpg?preset=card'
 import jugendturnier from '@/assets/events/jugendturnier.jpg?preset=card'
 import meerjungfrau from '@/assets/events/meerjungfrau.jpg?preset=card'
@@ -136,6 +137,7 @@ let assets = new Map<string, any>([
   ['deep.jpg', deep],
   ['fit_gesund.jpg', fit_gesund],
   ['fit.jpg', fit],
+  ['forest.jpg', forest],
   ['fussballtor.jpg', fussballtor],
   ['jugendturnier.jpg', jugendturnier],
   ['meerjungfrau.jpg', meerjungfrau],
