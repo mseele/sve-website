@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.2.5](https://github.com/mseele/sve-website/compare/v4.2.4...v4.2.5) (2023-05-12)
+
+
+### Bug Fixes
+
+* switch abteilungsleiter herren ([45b9436](https://github.com/mseele/sve-website/commit/45b9436d0b1cff6e2c8ab6969375e29a4d92536b))
+
 ### [4.2.4](https://github.com/mseele/sve-website/compare/v4.2.3...v4.2.4) (2023-04-29)
 
 
