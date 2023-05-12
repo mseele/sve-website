@@ -2,11 +2,11 @@ import { Contact, Team } from '@/models'
 
 const abteilungsleiterHerren: Contact = {
   title: 'Abteilungsleiter',
-  name: 'Daniel Neuss',
+  name: 'Raphael Sickler',
   email: 'herrenabteilung@sv-eutingen.de',
   mobile: {
-    formatted: '0172 7770447',
-    raw: '+491727770447',
+    formatted: '0176 32396224',
+    raw: '+4917632396224',
   },
 }
 
