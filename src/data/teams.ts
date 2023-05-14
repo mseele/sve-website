@@ -28,10 +28,6 @@ const teams: Record<string, Team[]> = {
       league: 'Kreisliga A2',
       coach: {
         name: 'Alexander Esslinger',
-        mobile: {
-          formatted: '0163 8184870',
-          raw: '+491638184870',
-        },
       },
       contact: abteilungsleiterHerren,
       teamID: '011MID6OM0000000VTVG0001VTR8C1K7',

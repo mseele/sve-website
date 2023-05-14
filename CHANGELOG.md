@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.2.6](https://github.com/mseele/sve-website/compare/v4.2.5...v4.2.6) (2023-05-14)
+
+
+### Bug Fixes
+
+* remove mobile number from a coach ([a07c3d0](https://github.com/mseele/sve-website/commit/a07c3d0545b77133a90f47f69c2b6557955c6a01))
+
 ### [4.2.5](https://github.com/mseele/sve-website/compare/v4.2.4...v4.2.5) (2023-05-12)
 
 
