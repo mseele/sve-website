@@ -2,6 +2,20 @@ import { Moment } from '@/models'
 
 const history: Moment[] = [
   {
+    date: '10. Juni 2023',
+    text: 'Die 1. Herrenmannschaft macht eine Saison für die Geschichtsbücher perfekt. Nach sage und schreibe 22 Siegen in Folge machen die Jungs um Spielertrainer Alex Esslinger und Co-Spielertrainer Kai Sieb die Kreisliga A2-Meisterschaft und damit die Rückkehr in die Bezirksliga perfekt. Ein 7:0-Auswärtssieg in Horb ist der Beginn einer sagenhaften Meisterfeier mit allen Meisterteams des SVE. Denn zuvor haben die 1. Frauenmannschaft, die B1-Juniorinnen, die B2-Juniorinnen, die 3. Herrenmannschaft insgesamt fünf Meistertitel und die A-Junioren den Pokalsieg nach Eutingen geholt.<br/>Mit einem riesigen Meister-LKW geht es von Horb über Mühlen, Weitingen und Rohrdorf nach Eutingen. Dort geht es im Marsch mit der Musikkapelle durch die Straßen Eutingens und zum Sportgelände, wo bis 9 Uhr Sonntagmorgen gefeiert wird. An diesem Abend fließen nicht wenige Freudentränen.',
+    images: ['history_2023_06_2'],
+  },
+  {
+    date: '4. Juni 2023',
+    text: 'Unsere 1. Frauenmannschaft hat mit einem souveränen 5:1-Heimsieg gegen den zweitplatzierten Sondelfingen die Landesliga-Meisterschaft am vorletzten Spieltag perfekt gemacht und steigt wieder in die Verbandsliga auf. 500 Gäste sehen vor traumhafter Kulisse ein bockstarkes Spiel unserer Frauen und Tore von Jana Rinderknecht (2x), Nina Notter, Jana Nesch und Vanessa Eisele. Gleichzeitig ist es das letzte Heimspiel von Jana Nesch und Eva Stoll, die mit Tränen in den Augen und Standing Ovations verabschiedet werden. Nach dem Spiel geht es auf den Bruckner-Meister-LKW auf eine Runde durch Eutingen. Dann wird bis Mitternacht gefeiert.',
+    images: ['history_2023_06_1'],
+  },
+  {
+    date: '13. Mai 2023',
+    text: 'Unsere B-Juniorinnen schaffen den bislang höchsten sportlichen Erfolg für den SVE und fahren in der EnBW-Oberliga den Meistertitel ein. Damit haben sie sich für das Aufstiegsturnier zur B-Juniorinnen Bundesliga Süd qualifiziert. Auch wenn es beim Turniertag am 20. Mai in Asperg für den Bundesliga-Aufstieg nicht gereicht hat, bleibt ein sensationeller Erfolg auf den die Mädels und das Trainerteam stolz sein können.',
+  },
+  {
     date: '8. - 10. Juli 2022',
     text: 'Mit einem dreitägigen Veranstaltungswochende begeht der SVE seinen 75. Geburtstag und bot dafür sportliche und kulturelle Highlights. Am Freitagabend fand ein Ehrungsabend für Mitglieder und Sponsoren statt, bei dem Bürgermeister Armin Jöchle und weitere Gäste Grußworte sprachen. Erstmals wurde auch der SVE-Imageclip gezeigt, der in zwei Minuten zusammenfasst wofür der Verein steht.<br/>Am Samstag stand ein Legendenspiel mit ehemaligen Spielerinnen und Spielern auf der Tagesordnung, das viele Gäste auf das Gelände lockte. Auch bei der Sportlerparty am Samstagabend war das Zelt voll. Obwohl bis in die frühen Morgenstunden gefeiert wurde, war das Festgelände am Sonntag um 10 Uhr bereit für einen schönen Gottesdienst mit Pfarrer Bernhard Tschullik. Danach spielten die Heimathelden zum Frühschoppen und am Abend Honk&Blow, bis das Fest am Sonntagabend zu Ende ging. Am Sonntagnachmittag war ein breites Essens- und Kinderangebot mit Hüpfburg, Kinderschminken usw geboten. Auf dem Rasenspielfeld duellierte sich die Auswahl von A1-A2- Spielern, bei der das A1-Team mit 6:4 gewann.',
     images: ['history_2022_07_2'],
