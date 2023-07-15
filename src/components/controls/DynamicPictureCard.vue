@@ -44,6 +44,8 @@ import history_2020_12_2 from '@/assets/history/2020-12-2.jpg?preset=card'
 import history_2021_01_1 from '@/assets/history/2021-01-1.jpg?preset=card'
 import history_2022_07_1 from '@/assets/history/2022_07_1.jpg?preset=card'
 import history_2022_07_2 from '@/assets/history/2022_07_2.jpg?preset=card'
+import history_2023_06_1 from '@/assets/history/2023_06-1.jpg?preset=card'
+import history_2023_06_2 from '@/assets/history/2023_06-2.jpg?preset=card'
 import history_frauen_2016_1 from '@/assets/history/frauen-2016-1.jpg?preset=card'
 import history_frauen_2016_2 from '@/assets/history/frauen-2016-2.jpg?preset=card'
 import history_frauen_2016_3 from '@/assets/history/frauen-2016-3.jpg?preset=card'
@@ -120,6 +122,8 @@ let assets = new Map<string, any>([
   ['history_2021_01_1', history_2021_01_1],
   ['history_2022_07_1', history_2022_07_1],
   ['history_2022_07_2', history_2022_07_2],
+  ['history_2023_06_1', history_2023_06_1],
+  ['history_2023_06_2', history_2023_06_2],
   ['history_frauen_2016_1', history_frauen_2016_1],
   ['history_frauen_2016_2', history_frauen_2016_2],
   ['history_frauen_2016_3', history_frauen_2016_3],
