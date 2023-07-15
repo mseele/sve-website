@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.3.0](https://github.com/mseele/sve-website/compare/v4.2.6...v4.3.0) (2023-07-15)
+
+
+### Features
+
+* add new history bullets ([ba059d5](https://github.com/mseele/sve-website/commit/ba059d561e8beea0740ccf47411f438d56b33865)), closes [#322](https://github.com/mseele/sve-website/issues/322)
+
+
+### Bug Fixes
+
+* add a news bullet ([26ccb55](https://github.com/mseele/sve-website/commit/26ccb55ad9dd46a92060c20d53739f0ec6972b70))
+
 ### [4.2.6](https://github.com/mseele/sve-website/compare/v4.2.5...v4.2.6) (2023-05-14)
 
 
