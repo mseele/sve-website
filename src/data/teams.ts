@@ -102,7 +102,7 @@ const teams: Record<string, Team[]> = {
     {
       key: 'frauen-2',
       team: '2. Mannschaft',
-      league: 'Regionenliga',
+      league: 'Bezirksliga',
       coach: {
         title: 'Trainer',
         name: 'Robert Hank',
