@@ -79,7 +79,7 @@ const teams: Record<string, Team[]> = {
     {
       key: 'frauen-1',
       team: '1. Mannschaft',
-      league: 'Landesliga',
+      league: 'Verbandsliga',
       coach: {
         name: 'Dominik Rakoczy',
         email: 'domraky@gmail.com',
@@ -102,19 +102,18 @@ const teams: Record<string, Team[]> = {
     {
       key: 'frauen-2',
       team: '2. Mannschaft',
-      league: 'Regionenliga',
+      league: 'Bezirksliga',
       coach: {
-        title: 'Trainerin',
-        name: 'Chrissi Gaiser',
-        email: 'chrissi.heitmann@gmail.com',
+        title: 'Trainer',
+        name: 'Robert Hank',
         mobile: {
-          formatted: '0157 51505470',
-          raw: '+4915751505470',
+          formatted: '0160 99666790',
+          raw: '+4916099666790',
         },
       },
       contact: {
         title: 'Abteilungsleiterin',
-        name: 'Christina Saile',
+        name: 'Christina Marquardt',
         email: 'Saile.christina@web.de',
         mobile: {
           formatted: '01578 8571421',
