@@ -104,12 +104,11 @@ const teams: Record<string, Team[]> = {
       team: '2. Mannschaft',
       league: 'Regionenliga',
       coach: {
-        title: 'Trainerin',
-        name: 'Chrissi Gaiser',
-        email: 'chrissi.heitmann@gmail.com',
+        title: 'Trainer',
+        name: 'Robert Hank',
         mobile: {
-          formatted: '0157 51505470',
-          raw: '+4915751505470',
+          formatted: '0160 99666790',
+          raw: '+4916099666790',
         },
       },
       contact: {
