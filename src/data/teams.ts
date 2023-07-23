@@ -113,7 +113,7 @@ const teams: Record<string, Team[]> = {
       },
       contact: {
         title: 'Abteilungsleiterin',
-        name: 'Christina Saile',
+        name: 'Christina Marquardt',
         email: 'Saile.christina@web.de',
         mobile: {
           formatted: '01578 8571421',
