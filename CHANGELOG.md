@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.1](https://github.com/mseele/sve-website/compare/v4.3.0...v4.3.1) (2023-07-23)
+
+
+### Bug Fixes
+
+* change choach ([aa8442e](https://github.com/mseele/sve-website/commit/aa8442e75f0ef57ec840bd2db00649a7e861c539))
+* change league ([9d62a3d](https://github.com/mseele/sve-website/commit/9d62a3df12e8248d78ce3b81c9fd6361affdf94b))
+* change league ([7ca01aa](https://github.com/mseele/sve-website/commit/7ca01aa3761976ab00d7845fd448f6215d0b9eec))
+* change name ([c7b62af](https://github.com/mseele/sve-website/commit/c7b62af953767f48d493bb2b4bc4deacdf627b17))
+
 ## [4.3.0](https://github.com/mseele/sve-website/compare/v4.2.6...v4.3.0) (2023-07-15)
 
 
