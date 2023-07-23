@@ -79,7 +79,7 @@ const teams: Record<string, Team[]> = {
     {
       key: 'frauen-1',
       team: '1. Mannschaft',
-      league: 'Landesliga',
+      league: 'Verbandsliga',
       coach: {
         name: 'Dominik Rakoczy',
         email: 'domraky@gmail.com',
