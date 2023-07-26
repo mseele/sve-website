@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.2](https://github.com/mseele/sve-website/compare/v4.3.1...v4.3.2) (2023-07-26)
+
+
+### Bug Fixes
+
+* correct subscribers calculation on overbooking ([98b8ae0](https://github.com/mseele/sve-website/commit/98b8ae068f13276031d79352416767dc4b9ca79e))
+
 ### [4.3.1](https://github.com/mseele/sve-website/compare/v4.3.0...v4.3.1) (2023-07-23)
 
 
