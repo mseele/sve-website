@@ -223,7 +223,7 @@ const availableSubscribers = computed<number>(() => {
     if (counter.max_subscribers === -1) {
       return -1
     }
-    return counter.max_subscribers - counter.subscribers
+    return counter.max_subscribers - Math.min(counter.subscribers, counter.max_subscribers)
   }
   return 0
 })
