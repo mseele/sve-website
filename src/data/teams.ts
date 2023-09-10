@@ -25,7 +25,7 @@ const teams: Record<string, Team[]> = {
     {
       key: 'herren-1',
       team: '1. Mannschaft',
-      league: 'Kreisliga A2',
+      league: 'Bezirksliga',
       coach: {
         name: 'Alexander Esslinger',
       },
@@ -35,12 +35,13 @@ const teams: Record<string, Team[]> = {
     {
       key: 'herren-2',
       team: '2. Mannschaft',
-      league: 'Kreisliga B1',
+      league: 'Kreisliga B2',
       coach: {
-        name: "Yannik Janzen",
+        name: 'Marcel Dettling',
+        email: 'dettlingmarcel@web.de',
         mobile: {
-          formatted: '0163 7296476',
-          raw: '+491637296476',
+          formatted: '0176 47864896',
+          raw: '+4917647864896',
         },
       },
       contact: abteilungsleiterHerren,
@@ -49,12 +50,13 @@ const teams: Record<string, Team[]> = {
     {
       key: 'herren-3',
       team: '3. Mannschaft',
-      league: 'Kreisliga B2 (Reserve)',
+      league: 'Kreisliga B1',
       coach: {
-        name: "Yannik Janzen",
+        name: 'Raphael Teufel',
+        email: 'teufelraphael.1@web.de',
         mobile: {
-          formatted: '0163 7296476',
-          raw: '+491637296476',
+          formatted: '0151 44357549',
+          raw: '+4915144357549',
         },
       },
       contact: abteilungsleiterHerren,
