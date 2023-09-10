@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.3.3](https://github.com/mseele/sve-website/compare/v4.3.2...v4.3.3) (2023-09-10)
+
+
+### Bug Fixes
+
+* update teams ([43146e1](https://github.com/mseele/sve-website/commit/43146e11e70da63656675728f4569c4c7850c68d))
+
 ### [4.3.2](https://github.com/mseele/sve-website/compare/v4.3.1...v4.3.2) (2023-07-26)
 
 
