@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.0](https://github.com/mseele/sve-website/compare/v4.4.0...v4.5.0) (2023-09-13)
+
+
+### Features
+
+* switch back to google on the backend ([1ecb5a0](https://github.com/mseele/sve-website/commit/1ecb5a0042cd78d71e1f40a402c52d2f99319f74))
+
 ## [4.4.0](https://github.com/mseele/sve-website/compare/v4.3.3...v4.4.0) (2023-09-12)
 
 
