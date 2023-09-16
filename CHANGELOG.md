@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.6.0](https://github.com/mseele/sve-website/compare/v4.5.0...v4.6.0) (2023-09-16)
+
+
+### Features
+
+* switch to aws on the backend ([c4d0477](https://github.com/mseele/sve-website/commit/c4d047701d9abbf029286205d10c94184dcbb673))
+
 ## [4.5.0](https://github.com/mseele/sve-website/compare/v4.4.0...v4.5.0) (2023-09-13)
 
 
