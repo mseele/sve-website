@@ -1,44 +1,21 @@
 {
-  "name": "sve-website",
-  "version": "4.6.0",
-  "description": "Website SV Eutingen",
-  "author": "mseele",
-  "private": true,
+  "name": "sve-website-new",
+  "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "iles dev --open",
-    "build": "iles build",
-    "preview": "iles preview --open --port 5050",
-    "typecheck": "vue-tsc --noEmit",
+    "dev": "astro dev",
+    "build": "astro build",
+    "format": "prettier --write . --plugin=prettier-plugin-astro",
     "release": "standard-version"
   },
-  "engines": {
-    "node": "^14.18 || >= 16.0.0"
-  },
   "dependencies": {
-    "@glidejs/glide": "^3.5.2",
-    "@islands/images": "^0.3.2",
-    "@tailwindcss/forms": "^0.5.2",
-    "@tailwindcss/typography": "^0.5.4",
-    "@types/glidejs": "^1.0.31",
-    "@types/numeral": "^2.0.2",
-    "@vee-validate/rules": "^4.6.1",
-    "@vueuse/core": "^8.9.4",
-    "autoprefixer": "^10.4.7",
-    "iles": "^0.7.40",
-    "inter-ui": "^3.19.3",
-    "moment": "^2.29.4",
-    "netlify-plugin-cache-folder": "^0.0.8",
-    "numeral": "^2.0.6",
-    "ohmyfetch": "^0.4.18",
-    "postcss": "^8.4.14",
-    "prettier": "^2.7.1",
-    "prettier-plugin-tailwindcss": "^0.1.12",
-    "standard-version": "^9.5.0",
-    "tailwindcss": "^3.1.6",
-    "typescript": "^4.7",
-    "vee-validate": "^4.6.1",
-    "vite-plugin-compression": "^0.5.1",
-    "vite-svg-loader": "^3.4.0",
-    "vue-tsc": "^0.38"
+    "@astrojs/tailwind": "^5.0.0",
+    "astro": "^3.2.1",
+    "tailwindcss": "^3.3.3"
+  },
+  "devDependencies": {
+    "prettier": "3.0.3",
+    "prettier-plugin-astro": "^0.12.0",
+    "standard-version": "^9.5.0"
   }
 }
