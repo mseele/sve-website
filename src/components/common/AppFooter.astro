@@ -1,0 +1,100 @@
+---
+import { Icon } from 'astro-icon'
+import Container from './Container.astro'
+import { SITE } from '@/config.mjs'
+
+const links = [
+  {
+    to: '/impressum',
+    label: 'Impressum'
+  },
+  {
+    to: '/datenschutz',
+    label: 'Datenschutz'
+  },
+  {
+    to: '/mitgliedschaft',
+    label: 'Mitglied werden'
+  },
+  {
+    to: '/kontakt',
+    label: 'Kontakt'
+  },
+  {
+    to: '/newsletter',
+    label: 'Newsletter'
+  }
+]
+
+const external = [
+  {
+    to: 'https://www.facebook.com/sveutingen',
+    title: 'Facebook',
+    icon: 'mdi:facebook'
+  },
+  {
+    to: 'https://www.instagram.com/sveutingen1947',
+    title: 'Instagram',
+    icon: 'mdi:instagram'
+  },
+  {
+    to: 'https://www.youtube.com/@SVEutingeneV',
+    title: 'Youtube',
+    icon: 'mdi:youtube'
+  },
+  {
+    to: 'http://www.fussball.de/verein/sv-eutingen-wuerttemberg/-/id/00ES8GNAUG000068VV0AG08LVUPGND5I',
+    title: 'Fussball.de',
+    icon: 'fussball_de'
+  }
+]
+---
+
+<footer class="bg-gradient-to-b from-transparent to-gray-100 py-12 dark:to-gray-900">
+  <Container>
+    <a href="/" aria-label="logo" class="flex items-center justify-center space-x-2">
+      <div aria-hidden="true" class="flex flex-col space-y-0.5">
+        <Icon class="m-auto h-7 w-7" name="logo" />
+      </div>
+      <span class="text-2xl font-bold text-gray-900 dark:text-white">#mehralseinverein</span>
+    </a>
+
+    <ul
+      role="list"
+      class="mt-12 flex flex-wrap items-center justify-center gap-4 py-4 text-gray-600 dark:text-gray-400 sm:gap-8"
+    >
+      {
+        links.map((link) => (
+          <li role="listitem">
+            <a href={link.to} class="duration-300 hover:text-primary dark:hover:text-white">
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="m-auto mt-4 flex w-max items-center justify-between space-x-4 text-gray-500">
+      {
+        external.map((link) => (
+          <a
+            class="duration-300 hover:text-gray-600 dark:hover:text-white"
+            href={link.to}
+            title={link.title}
+            target="blank"
+            rel="noreferrer"
+            aria-label={link.title}
+          >
+            <Icon fill="currentColor" class="m-auto h-6 w-6" name={link.icon} />
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="mt-12 text-center">
+      <span class="text-sm tracking-wide text-gray-500"
+        >Copyright © {new Date().getFullYear()} - {SITE.name} | Alle Rechte vorbehalten</span
+      >
+    </div>
+  </Container>
+</footer>
