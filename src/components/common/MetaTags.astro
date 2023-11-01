@@ -1,0 +1,80 @@
+---
+import { AstroSeo } from '@astrolib/seo'
+import { getImage } from 'astro:assets'
+
+import { SITE } from '@/config.mjs'
+import { type MetaSEO } from '@/types'
+
+export interface Props extends MetaSEO {
+  dontUseTitleTemplate?: boolean
+}
+
+const getCanonical = (path = ''): string | URL => {
+  const url = String(new URL(path, Astro.site))
+  if (SITE.trailingSlash == false && path && url.endsWith('/')) {
+    return url.slice(0, -1)
+  } else if (SITE.trailingSlash == true && path && !url.endsWith('/')) {
+    return url + '/'
+  }
+  return url
+}
+
+const defaultImage = SITE.defaultImage
+  ? (
+      await getImage({
+        src: SITE.defaultImage,
+        alt: 'Default image',
+        width: 1200,
+        height: 628
+      })
+    ).src
+  : ''
+
+const {
+  title = SITE.name,
+  description = '',
+  image: _image = defaultImage,
+
+  noindex = false,
+  nofollow = false,
+  canonical = String(getCanonical(Astro.url.pathname)),
+
+  ogTitle = title,
+  ogType = 'website',
+  ogLocale = `${SITE.language}_DE`,
+
+  dontUseTitleTemplate = false
+} = Astro.props
+
+const image = typeof _image === 'string' ? new URL(_image, Astro.site) : null
+---
+
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<AstroSeo
+  title={title}
+  titleTemplate={dontUseTitleTemplate ? '%s' : `%s — ${SITE.name}`}
+  description={description}
+  noindex={noindex}
+  nofollow={nofollow}
+  openGraph={{
+    url: canonical,
+    title: ogTitle,
+    description: description,
+    type: ogType,
+    locale: ogLocale,
+    images: image
+      ? [
+          {
+            url: image.toString(),
+            alt: ogTitle
+          }
+        ]
+      : undefined
+  }}
+/>
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="mask-icon" href="/favicon.svg" color="#FFFFFF" />
+<link rel="sitemap" href="/sitemap-index.xml" />

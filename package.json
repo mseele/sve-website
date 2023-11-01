@@ -1,7 +1,7 @@
 {
-  "name": "sve-website-new",
+  "name": "sve-website",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -9,13 +9,18 @@
     "release": "standard-version"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^5.0.0",
-    "astro": "^3.2.1",
-    "tailwindcss": "^3.3.3"
+    "@astrojs/sitemap": "^3.0.3",
+    "@astrojs/tailwind": "^5.0.2",
+    "@astrolib/seo": "^0.6.0",
+    "@fontsource-variable/dm-sans": "^5.0.3",
+    "astro": "^3.4.2",
+    "astro-robots-txt": "^1.0.0",
+    "tailwindcss": "^3.3.5",
+    "vite": "^4.5.0"
   },
   "devDependencies": {
     "prettier": "3.0.3",
-    "prettier-plugin-astro": "^0.12.0",
+    "prettier-plugin-astro": "^0.12.1",
     "standard-version": "^9.5.0"
   }
 }
