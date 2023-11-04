@@ -4,6 +4,7 @@ import { type MetaSEO } from '@/types'
 import { SITE } from '@/config.mjs'
 import MetaTags from '@/components/common/MetaTags.astro'
 import BasicScripts from '@/components/common/BasicScripts.astro'
+import AppHeader from '@/components/common/AppHeader.astro'
 import AppFooter from '@/components/common/AppFooter.astro'
 
 export interface Props {
@@ -21,6 +22,7 @@ const { language, textDirection } = SITE
     <BasicScripts />
   </head>
   <body class="font-sans scroll-smooth bg-white dark:bg-darker m-0 overflow-x-hidden">
+    <AppHeader />
     <slot />
     <AppFooter />
   </body>
