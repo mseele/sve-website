@@ -3,6 +3,7 @@ import '@fontsource-variable/dm-sans'
 import { type MetaSEO } from '@/types'
 import { SITE } from '@/config.mjs'
 import MetaTags from '@/components/common/MetaTags.astro'
+import BasicScripts from '@/components/common/BasicScripts.astro'
 import AppFooter from '@/components/common/AppFooter.astro'
 
 export interface Props {
@@ -17,24 +18,7 @@ const { language, textDirection } = SITE
 <html lang={language} dir={textDirection}>
   <head>
     <MetaTags {...meta} />
-    {
-      /* 
-      if (
-        localStorage.theme === 'dark' ||
-        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-      ) {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
-      */
-    }
-    <script is:inline>
-      'dark' === localStorage.theme ||
-      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-        ? document.documentElement.classList.add('dark')
-        : document.documentElement.classList.remove('dark')
-    </script>
+    <BasicScripts />
   </head>
   <body class="font-sans scroll-smooth bg-white dark:bg-darker m-0 overflow-x-hidden">
     <slot />
