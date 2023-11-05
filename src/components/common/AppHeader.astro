@@ -67,6 +67,7 @@ const links = [
 
           <div class="flex">
             <div
+            id="top_links"
               class="hidden lg:flex lg:items-center lg:border-r lg:border-black/5 lg:dark:border-white/5"
             >
               {
@@ -173,5 +174,9 @@ const links = [
 
   #toggle_nav:checked ~ div #hamburger #line2 {
     @apply -translate-y-1 -rotate-45;
+  }
+
+  #toggle_nav:checked ~ div #top_links {
+    @apply hidden
   }
 </style>
