@@ -14,6 +14,8 @@ const CONFIG = {
   language: 'de',
   textDirection: 'ltr',
 
+  imageWidths: [240, 540, 720, 1200, 1600],
+
   dateFormatter: new Intl.DateTimeFormat('de', {
     year: 'numeric',
     month: 'short',
