@@ -8,7 +8,7 @@ const CONFIG = {
 
   title: 'SV Eutingen 1947 e.V. - #mehralseinverein',
   description:
-    'Willkommen beim SV Eutingen – Ihrem Verein für Sport und Gemeinschaft in Eutingen im Gäu. Entdecken Sie unser breites Angebot an Sportarten für Jung und Alt. Von Fußball über Volleyball bis hin zu Fitnesskursen bieten wir vielfältige Möglichkeiten, aktiv zu sein und Freundschaften zu knüpfen. Erfahren Sie mehr über unseren Verein und treten Sie unserer sportlichen Gemeinschaft bei.',
+    'Willkommen beim SV Eutingen - Dein Verein für Sport und Gemeinschaft in Eutingen im Gäu. Entdecke unser umfangreiches Sportangebot für Jung und Alt. Von Fußball über Volleyball bis hin zu Fitnesskursen bieten wir viele Möglichkeiten aktiv zu sein und Freundschaften zu knüpfen. Erfahre mehr über unseren Verein und werde Teil unserer sportlichen Gemeinschaft.',
   defaultImage: defaultImage,
 
   language: 'de',
