@@ -1,0 +1,25 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import HeroSection from '@/components/common/HeroSection.astro'
+import imageLight from '@/assets/images/404-light.png'
+import imageDark from '@/assets/images/404-dark.png'
+
+const meta = {
+  title: 'Seite nicht gefunden',
+  description:
+    'Hoppla, hier ist wohl etwas schiefgelaufen! Die Seite wurde vom Platz genommen. Bitte prüfen Sie die URL oder nutzen Sie die Navigation für eine andere Seite. Danke für Ihr Verständnis!'
+}
+---
+
+<Layout {meta}>
+  <main>
+    <HeroSection
+      title={meta.title}
+      description={meta.description}
+      primaryButton={{ label: 'Startseite', to: '/' }}
+      secondaryButton={{ label: 'Kontakt', to: '/kontakt' }}
+      imageLight={imageLight}
+      imageDark={imageDark}
+    />
+  </main>
+</Layout>
