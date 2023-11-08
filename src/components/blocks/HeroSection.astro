@@ -16,12 +16,14 @@ interface Props {
     label: string
     to: string
   }
-  imageLight: ImageMetadata
-  imageDark: ImageMetadata
+  image: {
+    light: ImageMetadata
+    dark: ImageMetadata
+    alt: string
+  }
 }
 
-const { id, title, description, primaryButton, secondaryButton, imageLight, imageDark } =
-  Astro.props
+const { id, title, description, primaryButton, secondaryButton, image } = Astro.props
 ---
 
 <div class="relative overflow-hidden dark:bg-darker lg:overflow-auto" id={id}>
@@ -75,15 +77,15 @@ const { id, title, description, primaryButton, secondaryButton, imageLight, imag
         <div class="relative mt-20 md:mt-0 md:w-2/5 lg:w-3/5">
           <div class="-ml-6 md:-mr-72 lg:mr-0">
             <Image
-              src={imageLight}
+              src={image.light}
               class="h-full object-cover object-left dark:hidden"
-              alt="app screenshot"
+              alt={image.alt}
               widths={SITE.imageWidths}
             />
             <Image
-              src={imageDark}
+              src={image.dark}
               class="hidden h-full object-cover object-left dark:block"
-              alt="app screenshot"
+              alt={image.alt}
               widths={SITE.imageWidths}
             />
           </div>
