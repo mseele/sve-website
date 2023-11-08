@@ -67,7 +67,7 @@ const links = [
 
           <div class="flex">
             <div
-            id="top_links"
+              id="top_links"
               class="hidden lg:flex lg:items-center lg:border-r lg:border-black/5 lg:dark:border-white/5"
             >
               {
@@ -167,6 +167,18 @@ const links = [
   </nav>
 </header>
 
+<script>
+  const button = document.querySelector('[data-theme-switcher]')
+  if (button) {
+    button.addEventListener('click', () => {
+      const toggle_nav = document.querySelector<HTMLInputElement>('#toggle_nav')
+      if (toggle_nav) {
+        toggle_nav.checked = false
+      }
+    })
+  }
+</script>
+
 <style>
   #toggle_nav:checked ~ div #hamburger #line {
     @apply translate-y-1.5 rotate-45;
@@ -177,6 +189,6 @@ const links = [
   }
 
   #toggle_nav:checked ~ div #top_links {
-    @apply hidden
+    @apply hidden;
   }
 </style>
