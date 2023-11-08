@@ -1,6 +1,9 @@
 ---
 import { SITE } from '@/config.mjs'
 import Layout from '@/layouts/Layout.astro'
+import HeroSection from '@/components/common/HeroSection.astro'
+import imageLight from '@/assets/images/home-light.png'
+import imageDark from '@/assets/images/home-dark.png'
 
 const meta = {
   title: SITE.title,
@@ -11,6 +14,14 @@ const meta = {
 
 <Layout {meta}>
   <main>
-    <div class="h-96"><!-- TODO: content --></div>
+    <HeroSection
+      id="home"
+      title="SV Eutingen"
+      description="Willkommen beim SV Eutingen - Dein Verein für Sport und Gemeinschaft in Eutingen im Gäu. Entdecke unser umfangreiches Sportangebot für Jung und Alt."
+      primaryButton={{ label: 'Aktuelles', to: '#aktuelles' }}
+      secondaryButton={{ label: 'Mach mit', to: '#mach-mit' }}
+      imageLight={imageLight}
+      imageDark={imageDark}
+    />
   </main>
 </Layout>
