@@ -4,6 +4,7 @@ import Button from '@/components/controls/Button.astro'
 import Container from './Container.astro'
 
 interface Props {
+  id?: string
   title: string
   description: string
   primaryButton?: {
@@ -18,10 +19,11 @@ interface Props {
   imageDark: ImageMetadata
 }
 
-const { title, description, primaryButton, secondaryButton, imageLight, imageDark } = Astro.props
+const { id, title, description, primaryButton, secondaryButton, imageLight, imageDark } =
+  Astro.props
 ---
 
-<div class="relative overflow-hidden dark:bg-darker lg:overflow-auto" id="home">
+<div class="relative overflow-hidden dark:bg-darker lg:overflow-auto" id={id}>
   <div class="absolute inset-x-0 top-32 lg:hidden">
     <div
       aria-hidden="true"
