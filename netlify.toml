@@ -6,3 +6,4 @@
 [build.environment]
   NODE_ENV = "production"
   NODE_VERSION = "20"
+  NODE_OPTIONS = "–max-old-space-size=8192"
