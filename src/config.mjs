@@ -14,7 +14,7 @@ const CONFIG = {
   language: 'de',
   textDirection: 'ltr',
 
-  imageWidths: [240, 540, 720, 1200, 1600],
+  imageWidths: [240, 540, 720, 1200],
   imageFormats: ['avif', 'webp']
 }
 
