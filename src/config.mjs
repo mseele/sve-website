@@ -15,7 +15,7 @@ const CONFIG = {
   textDirection: 'ltr',
 
   imageWidths: [240, 540, 720, 1200, 1600],
-  imageFormats: ['avif', 'webp'],
+  imageFormats: ['avif', 'webp']
 }
 
 export const SITE = { ...CONFIG }

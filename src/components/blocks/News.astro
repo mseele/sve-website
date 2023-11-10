@@ -1,0 +1,33 @@
+---
+import Container from '@/components/common/Container.astro'
+import { getCollection } from 'astro:content'
+import NewsItem from './NewsItem.astro'
+
+// display only the last 3 news
+const news = (await getCollection('news'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3)
+
+interface Props {
+  id?: string
+}
+
+const { id } = Astro.props
+---
+
+<div id={id}>
+  <Container>
+    <div class="pt-10 mb-12 space-y-2 text-center">
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+        Aktuelles
+      </h2>
+      <p class="text-gray-600 dark:text-gray-300 lg:mx-auto lg:w-6/12">
+        Bleib auf dem Laufenden! Hier erfährst du die neuesten Infos und Updates.
+      </p>
+    </div>
+
+    <div>
+      {news.map((item) => <NewsItem news={item} />)}
+    </div>
+  </Container>
+</div>

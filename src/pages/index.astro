@@ -1,9 +1,10 @@
 ---
+import imageDark from '@/assets/pages/home-dark.png'
+import imageLight from '@/assets/pages/home-light.png'
+import HeroSection from '@/components/blocks/HeroSection.astro'
+import News from '@/components/blocks/News.astro'
 import { SITE } from '@/config.mjs'
 import Layout from '@/layouts/Layout.astro'
-import HeroSection from '@/components/blocks/HeroSection.astro'
-import imageLight from '@/assets/pages/home-light.png'
-import imageDark from '@/assets/pages/home-dark.png'
 
 const meta = {
   title: SITE.title,
@@ -22,5 +23,6 @@ const meta = {
       secondaryButton={{ label: 'Mach mit', to: '#mach-mit' }}
       image={{ light: imageLight, dark: imageDark, alt: 'fussballfeld auf dem gespielt wird' }}
     />
+    <News id="aktuelles" />
   </main>
 </Layout>

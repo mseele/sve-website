@@ -1,0 +1,64 @@
+---
+import Prose from '@/components/common/Prose.astro'
+import { SITE } from '@/config.mjs'
+import { formatDate } from '@/utils'
+import { Picture } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+  news: CollectionEntry<'news'>
+}
+
+const { news } = Astro.props
+
+const { Content } = await news.render()
+---
+
+<div
+  class="group relative -mx-4 p-6 sm:p-8 rounded-3xl bg-white dark:bg-transparent border border-transparent hover:border-gray-100 dark:shadow-none dark:hover:border-gray-700 dark:hover:bg-gray-800 shadow-2xl shadow-transparent hover:shadow-gray-600/10 sm:gap-8 sm:flex transition duration-300 hover:z-10"
+>
+  <div
+    class="sm:w-2/6 rounded-3xl overflow-hidden transition-all duration-500 group-hover:rounded-xl"
+  >
+    <Picture
+      src={news.data.imageLight}
+      class="dark:hidden h-56 sm:h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
+      alt={news.data.title}
+      widths={SITE.imageWidths}
+      formats={SITE.imageFormats}
+    />
+    <Picture
+      src={news.data.imageDark}
+      class="hidden dark:block h-56 sm:h-full w-full object-cover object-top transition duration-500 group-hover:scale-105"
+      alt={news.data.title}
+      widths={SITE.imageWidths}
+      formats={SITE.imageFormats}
+    />
+  </div>
+
+  <div class="sm:p-2 sm:pl-0 sm:w-4/6 flex flex-col">
+    <span class="mt-4 mb-2 inline-block font-medium text-gray-400 dark:text-gray-500 sm:mt-0">
+      {formatDate(news.data.date)}
+    </span>
+    <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">{news.data.title}</h3>
+    <div class="mt-6 text-gray-600 dark:text-gray-300 flex-grow">
+      <Prose>
+        <Content />
+      </Prose>
+    </div>
+
+    {
+      news.data.download && (
+        <div class="mt-6">
+          <a
+            href={news.data.download}
+            target="_blank"
+            class="px-3 py-1 rounded-full border border-gray-100 text-sm font-medium text-primary transition duration-300 hover:border-transparent hover:bg-primary hover:text-white dark:border-gray-700 dark:text-gray-300"
+          >
+            Weiterlesen
+          </a>
+        </div>
+      )
+    }
+  </div>
+</div>
