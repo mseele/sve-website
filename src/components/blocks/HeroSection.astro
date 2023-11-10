@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import { Picture } from 'astro:assets'
 import { SITE } from '@/config.mjs'
 import Button from '@/components/controls/Button.astro'
 import Container from '@/components/common/Container.astro'
@@ -76,17 +76,19 @@ const { id, title, description, primaryButton, secondaryButton, image } = Astro.
         </div>
         <div class="relative mt-20 md:mt-0 md:w-2/5 lg:w-3/5">
           <div class="-ml-6 md:-mr-72 lg:mr-0">
-            <Image
+            <Picture
               src={image.light}
               class="h-full object-cover object-left dark:hidden"
               alt={image.alt}
               widths={SITE.imageWidths}
+              formats={SITE.imageFormats}
             />
-            <Image
+            <Picture
               src={image.dark}
               class="hidden h-full object-cover object-left dark:block"
               alt={image.alt}
               widths={SITE.imageWidths}
+              formats={SITE.imageFormats}
             />
           </div>
         </div>
