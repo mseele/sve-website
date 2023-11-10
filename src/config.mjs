@@ -1,4 +1,4 @@
-import defaultImage from './assets/images/default.png'
+import defaultImage from './assets/meta/default.png'
 
 const CONFIG = {
   name: 'SV Eutingen 1947 e.V.',
