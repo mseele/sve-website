@@ -16,13 +16,6 @@ const CONFIG = {
 
   imageWidths: [240, 540, 720, 1200, 1600],
   imageFormats: ['avif', 'webp'],
-
-  dateFormatter: new Intl.DateTimeFormat('de', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    timeZone: 'GMT'
-  })
 }
 
 export const SITE = { ...CONFIG }
