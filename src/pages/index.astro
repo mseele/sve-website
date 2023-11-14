@@ -2,9 +2,11 @@
 import imageDark from '@/assets/pages/home-dark.png'
 import imageLight from '@/assets/pages/home-light.png'
 import HeroSection from '@/components/blocks/HeroSection.astro'
+import Container from '@/components/common/Container.astro'
 import News from '@/components/blocks/News.astro'
 import { SITE } from '@/config.mjs'
 import Layout from '@/layouts/Layout.astro'
+import { YouTube } from '@astro-community/astro-embed-youtube'
 
 const meta = {
   title: SITE.title,
@@ -23,6 +25,32 @@ const meta = {
       secondaryButton={{ label: 'Mach mit', to: '#mach-mit' }}
       image={{ light: imageLight, dark: imageDark, alt: 'fussballfeld auf dem gespielt wird' }}
     />
+
     <News id="aktuelles" />
+
+    <div id="der-sve" class="pt-20">
+      <Container>
+        <div class="relative">
+          <div
+            aria-hidden="true"
+            class="lg:hidden absolute inset-0 my-auto h-32 sm:h-52 w-96 rotate-45 translate-y-24 sm:translate-y-0 bg-gradient-to-r from-red-200 to-primary opacity-50 blur-3xl dark:from-red-700"
+          >
+          </div>
+          <div class="mb-12 space-y-2 pt-10 text-center">
+            <h2
+              class="text-3xl font-bold text-gray-900 dark:text-white md:pb-4 md:text-4xl lg:text-5xl"
+            >
+              Der SVE <span class="dark:text-primaryLight text-primary">#mehralseinverein</span>
+            </h2>
+            <p class="text-gray-600 dark:text-gray-300 lg:mx-auto lg:w-6/12">
+              Frauen, Männer und Kinder in unterschiedlichem Alter, verschiedenen Lebensabschnitten,
+              Lebenslagen und diversen Nationalitäten. Verbunden durch den Sport und dem
+              gesellschaftlichen Beisammensein.
+            </p>
+          </div>
+          <YouTube id="M_weDDLyPOs" class="mx-auto rounded-xl" />
+        </div>
+      </Container>
+    </div>
   </main>
 </Layout>

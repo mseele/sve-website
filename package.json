@@ -9,6 +9,7 @@
     "release": "standard-version"
   },
   "dependencies": {
+    "@astro-community/astro-embed-youtube": "^0.4.1",
     "@astrojs/sitemap": "^3.0.3",
     "@astrojs/tailwind": "^5.0.2",
     "@astrolib/seo": "^0.6.0",
