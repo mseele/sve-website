@@ -21,10 +21,10 @@ const { language, textDirection } = SITE
     <MetaTags {...meta} />
     <BasicScripts />
   </head>
-  <body class="font-sans scroll-smooth bg-white dark:bg-darker m-0 overflow-x-hidden">
+  <body class="m-0 overflow-x-hidden scroll-smooth bg-white font-sans dark:bg-darker">
     <AppHeader />
     <main class="mb-40">
-    <slot />
+      <slot />
     </main>
     <AppFooter />
   </body>

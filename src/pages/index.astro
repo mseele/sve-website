@@ -16,39 +16,39 @@ const meta = {
 ---
 
 <Layout {meta}>
-    <HeroSection
-      id="home"
-      title="SV Eutingen"
-      description="Willkommen beim SV Eutingen - Dein Verein für Sport und Gemeinschaft in Eutingen im Gäu. Entdecke unser umfangreiches Sportangebot für Jung und Alt."
-      primaryButton={{ label: 'Aktuelles', to: '#aktuelles' }}
-      secondaryButton={{ label: 'Mach mit', to: '#mach-mit' }}
-      image={{ light: imageLight, dark: imageDark, alt: 'fussballfeld auf dem gespielt wird' }}
-    />
+  <HeroSection
+    id="home"
+    title="SV Eutingen"
+    description="Willkommen beim SV Eutingen - Dein Verein für Sport und Gemeinschaft in Eutingen im Gäu. Entdecke unser umfangreiches Sportangebot für Jung und Alt."
+    primaryButton={{ label: 'Aktuelles', to: '#aktuelles' }}
+    secondaryButton={{ label: 'Mach mit', to: '#mach-mit' }}
+    image={{ light: imageLight, dark: imageDark, alt: 'fussballfeld auf dem gespielt wird' }}
+  />
 
-    <News id="aktuelles" />
+  <News id="aktuelles" />
 
-    <div id="der-sve" class="pt-20">
-      <Container>
-        <div class="relative">
-          <div
-            aria-hidden="true"
-            class="lg:hidden absolute inset-0 my-auto h-32 sm:h-52 w-96 rotate-45 translate-y-24 sm:translate-y-0 bg-gradient-to-r from-red-200 to-primary opacity-50 blur-3xl dark:from-red-700"
-          >
-          </div>
-          <div class="mb-12 space-y-2 pt-10 text-center">
-            <h2
-              class="text-3xl font-bold text-gray-900 dark:text-white md:pb-4 md:text-4xl lg:text-5xl"
-            >
-              Der SVE <span class="dark:text-primaryLight text-primary">#mehralseinverein</span>
-            </h2>
-            <p class="text-gray-600 dark:text-gray-300 lg:mx-auto lg:w-6/12">
-              Frauen, Männer und Kinder in unterschiedlichem Alter, verschiedenen Lebensabschnitten,
-              Lebenslagen und diversen Nationalitäten. Verbunden durch den Sport und dem
-              gesellschaftlichen Beisammensein.
-            </p>
-          </div>
-          <YouTube id="M_weDDLyPOs" class="mx-auto rounded-xl" />
+  <div id="der-sve" class="pt-20">
+    <Container>
+      <div class="relative">
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 my-auto h-32 w-96 translate-y-24 rotate-45 bg-gradient-to-r from-red-200 to-primary opacity-50 blur-3xl dark:from-red-700 sm:h-52 sm:translate-y-0 lg:hidden"
+        >
         </div>
-      </Container>
-    </div>
+        <div class="mb-12 space-y-2 pt-10 text-center">
+          <h2
+            class="text-3xl font-bold text-gray-900 dark:text-white md:pb-4 md:text-4xl lg:text-5xl"
+          >
+            Der SVE <span class="dark:text-primaryLight text-primary">#mehralseinverein</span>
+          </h2>
+          <p class="text-gray-600 dark:text-gray-300 lg:mx-auto lg:w-6/12">
+            Frauen, Männer und Kinder in unterschiedlichem Alter, verschiedenen Lebensabschnitten,
+            Lebenslagen und diversen Nationalitäten. Verbunden durch den Sport und dem
+            gesellschaftlichen Beisammensein.
+          </p>
+        </div>
+        <YouTube id="M_weDDLyPOs" class="mx-auto rounded-xl" />
+      </div>
+    </Container>
+  </div>
 </Layout>
