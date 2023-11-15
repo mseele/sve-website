@@ -1,13 +1,77 @@
 ---
 import imageDark from '@/assets/pages/home-dark.png'
+import joinFitnessDark from '@/assets/pages/home-fitness-dark.jpg'
+import joinFitnessLight from '@/assets/pages/home-fitness-light.jpg'
+import joinFussballDark from '@/assets/pages/home-fussball-dark.jpg'
+import joinFussballLight from '@/assets/pages/home-fussball-light.jpg'
+import joinJugendDark from '@/assets/pages/home-jugend-dark.jpg'
+import joinJugendLight from '@/assets/pages/home-jugend-light.jpg'
 import imageLight from '@/assets/pages/home-light.png'
+import joinMitgliedDark from '@/assets/pages/home-mitglied-dark.jpg'
+import joinMitgliedLight from '@/assets/pages/home-mitglied-light.jpg'
+import joinPartnerDark from '@/assets/pages/home-partner-dark.jpg'
+import joinPartnerLight from '@/assets/pages/home-partner-light.jpg'
+import joinVolleyballDark from '@/assets/pages/home-volleyball-dark.jpg'
+import joinVolleyballLight from '@/assets/pages/home-volleyball-light.jpg'
+import Blog from '@/components/blocks/Blog.astro'
+import BlogItem from '@/components/blocks/BlogItem.astro'
 import HeroSection from '@/components/blocks/HeroSection.astro'
-import Container from '@/components/common/Container.astro'
 import News from '@/components/blocks/News.astro'
+import Container from '@/components/common/Container.astro'
 import { SITE } from '@/config.mjs'
 import Layout from '@/layouts/Layout.astro'
 import { YouTube } from '@astro-community/astro-embed-youtube'
 
+const joins = [
+  {
+    title: 'Fußball - unsere Leidenschaft',
+    description:
+      'Auf unserer erstklassigen Sportanlage, die unter anderem hochmoderne Kunstrasenplätze umfasst, bieten wir ein vielfältiges Fußballangebot für Frauen und Männer, das sich über verschiedene Ligen erstreckt.',
+    imageLight: joinFussballLight,
+    imageDark: joinFussballDark,
+    link: '/teamsport#fussball'
+  },
+  {
+    title: 'Teilhabe für Kinder und Jugendliche',
+    description:
+      'Eine sinnstiftende Freizeitbeschäftigung für Kinder und Jugendliche ist Schwerpunkt unserer Vereinsarbeit. Wir bieten für alle Altersklassen sowie Mädchen und Jungs die Möglichkeit, Fußball zu spielen. Ebenfalls im Programm haben wir regelmäßige Schwimmkurse für Kinder.',
+    imageLight: joinJugendLight,
+    imageDark: joinJugendDark,
+    link: '/teamsport#jugend'
+  },
+  {
+    title: "Fühl' Dich wohl durch Fitness",
+    description:
+      'Unser breites Fitnessangebot bietet für jedes Alter den perfekten Ausgleich zum Alltag und schafft spürbar mehr Lebensqualität. Rückenfit, Yoga, Pilates, Power Hour... - bei uns findest Du einen passenden Kurs.',
+    imageLight: joinFitnessLight,
+    imageDark: joinFitnessDark,
+    link: '/fitness'
+  },
+  {
+    title: 'Volleyball - genau Dein Ding',
+    description:
+      'Unsere Hobbygruppe heißt Dich als Anfänger, ehemaliger Profi oder Wiedereinsteiger des Volleyballsports herzlich willkommen. Immer freitags um 20 Uhr steht die Freude am Sport im Vordergrund.',
+    imageLight: joinVolleyballLight,
+    imageDark: joinVolleyballDark,
+    link: '/teamsport#volleyball'
+  },
+  {
+    title: 'Sponsoring - wir leben Partnerschaft',
+    description:
+      'Unser Grundsatz: Geben und Nehmen. Auf unserer belebten Sportanlage bieten wir Werbemöglichkeiten für Unternehmen und Dienstleistungen. Unsere tatkräftigen Mitglieder unterstützen auch gerne bei besonderen Anlässen wie Firmenjubiläen.',
+    imageLight: joinPartnerLight,
+    imageDark: joinPartnerDark,
+    link: '/partnerschaft'
+  },
+  {
+    title: 'Mach mit und werde Mitglied',
+    description:
+      'Über 5,3 Millionen Menschen in Baden-Württemberg engagieren sich ehrenamtlich. Dafür bieten wir auch beim SVE viele Möglichkeiten. Ob Vereinsamt oder reine Mitgliedschaft - mit Deinem Einsatz unterstützt Du unsere Arbeit und stiftest gesellschaftlichen Nutzen.',
+    imageLight: joinMitgliedLight,
+    imageDark: joinMitgliedDark,
+    link: '/mitgliedschaft'
+  }
+]
 const meta = {
   title: SITE.title,
   description: SITE.description,
@@ -27,7 +91,7 @@ const meta = {
 
   <News id="aktuelles" />
 
-  <div id="der-sve" class="pt-20">
+  <div id="der-sve" class="pt-10">
     <Container>
       <div class="relative">
         <div
@@ -51,4 +115,23 @@ const meta = {
       </div>
     </Container>
   </div>
+  <Blog
+    id="mach-mit"
+    title="Mach mit"
+    description="Teamsport, Fitness, Ehrenamt, Sponsoring – Bei uns bist du genau richtig! Wir fördern Talente, ermöglichen Mannschafts- und Gesundheitssport, stiften Gemeinschaft und leben Partnerschaften."
+  >
+    {
+      joins.map((item) => (
+        <BlogItem
+          title={item.title}
+          image={{ light: item.imageLight, dark: item.imageDark, alt: item.title }}
+        >
+          <p class="mb-8 mt-6 flex-grow text-gray-600 dark:text-gray-300">{item.description}</p>
+          <a class="inline-block" href={item.link}>
+            <span class="text-info dark:text-blue-300">Mach mit</span>
+          </a>
+        </BlogItem>
+      ))
+    }
+  </Blog>
 </Layout>
