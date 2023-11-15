@@ -1,4 +1,4 @@
-import { defineConfig, squooshImageService } from 'astro/config'
+import { defineConfig, sharpImageService } from 'astro/config'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { loadEnv } from 'vite'
@@ -22,9 +22,8 @@ export default defineConfig({
 
   integrations: [tailwind(), sitemap(), robotsTxt()],
 
-  // TODO: try again to get sharp running
   image: {
-    service: squooshImageService()
+    service: sharpImageService()
   },
 
   vite: {
