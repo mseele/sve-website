@@ -1,8 +1,9 @@
 ---
-import { Picture } from 'astro:assets'
-import { SITE } from '@/config.mjs'
-import Button from '@/components/controls/Button.astro'
 import Container from '@/components/common/Container.astro'
+import Button from '@/components/controls/Button.astro'
+import { SITE } from '@/config.mjs'
+import type { ThemedImage } from '@/types'
+import { Picture } from 'astro:assets'
 
 interface Props {
   id?: string
@@ -16,11 +17,7 @@ interface Props {
     label: string
     to: string
   }
-  image: {
-    light: ImageMetadata
-    dark: ImageMetadata
-    alt: string
-  }
+  image: ThemedImage
 }
 
 const { id, title, description, primaryButton, secondaryButton, image } = Astro.props

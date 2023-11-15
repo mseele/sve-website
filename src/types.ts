@@ -11,3 +11,9 @@ export interface MetaSEO {
   ogType?: string
   ogLocale?: string
 }
+
+export interface ThemedImage {
+  light: ImageMetadata
+  dark: ImageMetadata
+  alt: string
+}
