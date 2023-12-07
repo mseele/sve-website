@@ -2,6 +2,11 @@ import { NewsItem } from '@/models'
 
 const news: NewsItem[] = [
   {
+    title: '7. Dezember 2023',
+    collapsed: false,
+    text: "+++ Liam berichtet über sein FSJ beim SVE +++<br/><br/>Wiso hast du dich für ein FSJ entschieden?<br/><br/>In erster Linie ist es eine extrem gute Möglichkeit sich sozial zu engagieren und Berufserfahrung zu sammeln. Außerdem macht die Arbeit mit Kindern extrem viel Spaß und man bekommt gute Möglichkeiten in die Struktur und Organisation eines Vereins Einblicke zu bekommen.<br/><br/><a href='/downloads/2023/FSJ-Liam.pdf' target='_blank'>...Weiterlesen</a>",
+  },
+  {
     title: '13. Juli 2023',
     collapsed: false,
     text: "+++ Menschen beim SVE mit Spielertrainer Alex Esslinger +++<br/><br/>Wir stellen Menschen und ihre Geschichten mit dem SVE vor.<br/><br/>Heute: Alex Esslinger, Spielertrainer unserer Herren. Er hat vor wenigen Wochen die Meisterschaft in der Kreisliga A2 eingefahren und den Bezirksliga-Aufstieg perfekt gemacht.<br/><br/>Alex, herzlichen Glückwunsch zur Meisterschaft mit unserer 1. Herrenmannschaft! Hast Du schon realisiert, was für einen Erfolg Du gemeinsam mit dem Team und dem Verein erreicht hast?.<br/><br/><a href='/downloads/2023/Menschen-beim-SVE-Alex-Esslinger.pdf' target='_blank'>...Weiterlesen</a>",
