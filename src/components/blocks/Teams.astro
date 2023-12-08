@@ -1,0 +1,84 @@
+---
+import Card from '@/components/common/Card.astro'
+import Container from '@/components/common/Container.astro'
+import { type Team } from '@/types'
+import Icon from 'astro-icon'
+import { isRenderTemplateResult } from 'astro/runtime/server/render/astro/render-template.js'
+
+interface Props {
+  id: string
+  title: string
+  teams: Team[]
+}
+
+const { id, title, teams } = Astro.props
+---
+
+<div class="pt-4 pb-16" id={id}>
+  <Container>
+    <div class="mb-12 space-y-2 text-center">
+      <h2 class="text-3xl font-bold text-gray-800 md:text-4xl dark:text-white">{title}</h2>
+      <p class="text-gray-600 dark:text-gray-300 lg:mx-auto lg:w-6/12">
+        <slot />
+      </p>
+    </div>
+    <div class="relative mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        aria-hidden="true"
+        class="absolute inset-0 h-max w-full m-auto grid grid-cols-2 -space-x-52 opacity-30 dark:opacity-10"
+      >
+        <div
+          class="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:from-purle-800"
+        >
+        </div>
+        <div
+          class="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-green-900 dark:to-green-500"
+        >
+        </div>
+      </div>
+      {
+        teams.map((item) => (
+          <Card>
+            <div class="flex">
+              <h4 class="text-xl font-semibold text-gray-900 dark:text-white grow">{item.team}</h4>
+              <div>
+                <div class="flex">
+                  {item.teamID && (
+                    <a
+                      class="duration-300 dark:text-gray-400 hover:text-gray-600 dark:hover:text-white pr-2 border-r border-black/5 dark:border-white/5"
+                      href={`http://www.fussball.de/mannschaft/sv-eutingen-ii-sv-eutingen-wuerttemberg/-/saison/9999/team-id/${item.teamID}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      title="Fussball.de"
+                      aria-label="Fussball.de"
+                    >
+                      <Icon fill="currentColor" class="m-auto h-6 w-6" name="fussball_de" />
+                    </a>
+                  )}
+                  <a
+                    class="duration-300 dark:text-gray-400 hover:text-gray-600 dark:hover:text-white pl-2"
+                    href={`kontakt?auswahl=team&team=${item.key}`}
+                    title="Kontakt"
+                    aria-label="Kontakt"
+                  >
+                    <Icon fill="currentColor" class="m-auto h-6 w-6" name="mdi:email" />
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h6 class="mt-3 font-semibold text-gray-900 dark:text-white">Spielklasse</h6>
+              <p class="text-gray-600 dark:text-gray-400">{item.league}</p>
+              <h6 class="mt-3 font-semibold text-gray-900 dark:text-white">
+                {item.coach?.title ?? 'Trainer'}
+              </h6>
+              <p class="text-gray-600 dark:text-gray-400">{item.coach?.name ?? '-'}</p>
+              <h6 class="mt-3 font-semibold text-gray-900 dark:text-white">{item.contact.title}</h6>
+              <p class="text-gray-600 dark:text-gray-400">{item.contact.name}</p>
+            </div>
+          </Card>
+        ))
+      }
+    </div>
+  </Container>
+</div>
