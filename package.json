@@ -9,24 +9,24 @@
     "release": "standard-version"
   },
   "dependencies": {
-    "@astro-community/astro-embed-youtube": "^0.4.2",
+    "@astro-community/astro-embed-youtube": "^0.4.3",
     "@astrojs/sitemap": "^3.0.3",
-    "@astrojs/tailwind": "^5.0.2",
+    "@astrojs/tailwind": "^5.0.3",
     "@astrolib/seo": "^0.6.0",
     "@fontsource-variable/dm-sans": "^5.0.3",
     "@tailwindcss/typography": "^0.5.10",
-    "astro": "^3.6.0",
-    "astro-icon": "^0.8.1",
+    "astro": "^4.0.3",
+    "astro-icon": "^0.8.2",
     "astro-robots-txt": "^1.0.0",
     "date-fns": "^2.30.0",
-    "sharp": "^0.32.6",
-    "tailwindcss": "^3.3.5",
-    "vite": "^5.0.2"
+    "sharp": "^0.33.0",
+    "tailwindcss": "^3.3.6",
+    "vite": "^5.0.7"
   },
   "devDependencies": {
     "prettier": "3.1.0",
     "prettier-plugin-astro": "^0.12.2",
-    "prettier-plugin-tailwindcss": "^0.5.7",
+    "prettier-plugin-tailwindcss": "^0.5.9",
     "standard-version": "^9.5.0"
   }
 }
