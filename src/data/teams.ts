@@ -1,4 +1,4 @@
-import { Contact, Team } from '@/types'
+import { type Contact, type Team } from '@/types'
 
 const abteilungsleiterHerren: Contact = {
   title: 'Abteilungsleiter',
