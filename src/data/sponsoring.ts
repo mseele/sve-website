@@ -310,6 +310,16 @@ const sponsoring: Sponsor[] = [
     url: 'http://baurbauts.de/',
     groupBy: 'Baur Martin GmbH',
   },
+  {
+    name: 'Physio Perform',
+    url: 'https://physio-perform.de/',
+    groupBy: 'Physio Perform',
+  },
+  {
+    name: 'Gemeinde Eutingen im Gäu',
+    url: 'https://www.eutingen-im-gaeu.de/',
+    groupBy: 'Eutingen im Gäu',
+  },
 ]
 
 export default sponsoring

@@ -2,6 +2,11 @@ import { NewsItem } from '@/models'
 
 const news: NewsItem[] = [
   {
+    title: '15. Dezember 2023',
+    collapsed: false,
+    text: "+++ Infobrief 2023 +++<br/><br/>In unserem jährlichen Infobrief geben wir ein paar Einblicke, was uns als Sportverein 2023 bewegt hat – und was wir 2023 gemeinsam bewegen konnten.<br/><br/><a href='/downloads/2023/Infobrief-2023.pdf' target='_blank'>...Weiterlesen</a>",
+  },
+  {
     title: '7. Dezember 2023',
     collapsed: false,
     text: "+++ Liam berichtet über sein FSJ beim SVE +++<br/><br/>Wiso hast du dich für ein FSJ entschieden?<br/><br/>In erster Linie ist es eine extrem gute Möglichkeit sich sozial zu engagieren und Berufserfahrung zu sammeln. Außerdem macht die Arbeit mit Kindern extrem viel Spaß und man bekommt gute Möglichkeiten in die Struktur und Organisation eines Vereins Einblicke zu bekommen.<br/><br/><a href='/downloads/2023/FSJ-Liam.pdf' target='_blank'>...Weiterlesen</a>",
