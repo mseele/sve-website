@@ -252,7 +252,7 @@ const sponsoring: Sponsor[] = [
   },
   {
     name: 'Sven Katz / BSB Versicherungsmakler',
-    url: 'https://www.bsb-gmbh.de/unser-team/sven-katz/',
+    url: 'https://bsb-finanzen.de/katz/',
     groupBy: 'BSB Versicherungsmakler',
   },
   {
