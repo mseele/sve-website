@@ -3,6 +3,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { loadEnv } from 'vite'
 
+import icon from 'astro-icon'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 import robotsTxt from 'astro-robots-txt'
@@ -20,7 +21,14 @@ export default defineConfig({
 
   output: 'static',
 
-  integrations: [tailwind(), sitemap(), robotsTxt()],
+  integrations: [
+    tailwind(),
+    icon({
+      iconDir: 'src/assets/icons'
+    }),
+    sitemap(),
+    robotsTxt()
+  ],
 
   image: {
     service: sharpImageService()
