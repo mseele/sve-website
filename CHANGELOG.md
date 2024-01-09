@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.4](https://github.com/mseele/sve-website/compare/v4.6.3...v4.6.4) (2024-01-09)
+
+
+### Bug Fixes
+
+* reomve phone numbers ([1b879d1](https://github.com/mseele/sve-website/commit/1b879d16a1607d2779a0a19fbf602960e32770c4))
+
 ### [4.6.3](https://github.com/mseele/sve-website/compare/v4.6.2...v4.6.3) (2024-01-01)
 
 ### [4.6.2](https://github.com/mseele/sve-website/compare/v4.6.1...v4.6.2) (2023-12-15)

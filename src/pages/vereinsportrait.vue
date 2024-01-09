@@ -23,10 +23,6 @@ title: Vereinsportrait
                 class="default-link on-focus-dark"
                 href="mailto:vorstand@sv-eutingen.de"
                 >vorstand@sv-eutingen.de</a
-              >
-              /
-              <a class="default-link on-focus-dark" href="tel:+4917630774678"
-                >0176-30774678</a
               >) / Dominik Rakoczy / Dietmar Kurbjun
             </li>
             <li>
@@ -34,10 +30,6 @@ title: Vereinsportrait
                 class="default-link on-focus-dark"
                 href="mailto:vorstand@sv-eutingen.de"
                 >vorstand@sv-eutingen.de</a
-              >
-              /
-              <a class="default-link on-focus-dark" href="tel:+491625323142"
-                >0162-5323142</a
               >)
             </li>
           </ul>
@@ -46,8 +38,8 @@ title: Vereinsportrait
           Adresse: SV Eutingen 1947 e.V. / Marktstr. 84 / 72184 Eutingen im Gäu
         </li>
         <li>
-          Kontoverbindung: Sportverein Eutingen / Volksbank eG im Kreis Freudenstadt
-          / IBAN: DE28 642 910 10 00 344 69 001
+          Kontoverbindung: Sportverein Eutingen / Volksbank eG im Kreis
+          Freudenstadt / IBAN: DE28 642 910 10 00 344 69 001
         </li>
         <li>
           Homepage:
