@@ -1,0 +1,82 @@
+---
+import Container from '@/components/common/Container.astro'
+import Layout from '@/layouts/Layout.astro'
+
+const meta = {
+  title: 'Impressum',
+  description: 'Das Impressum des SV Eutingen 1947 e.V. - #mehralseinverein'
+}
+---
+
+<Layout {meta}>
+  <div class="break-words pt-20 dark:text-white lg:pt-28">
+    <Container>
+      <div class="pb-12 text-4xl font-medium">Impressum</div>
+      <div class="pb-4 text-2xl font-medium">Diensteanbieter</div>
+      <div class="space-y-2 pb-8">
+        <div>SV Eutingen 1947 e.V.</div>
+        <div>Marktstraße 84</div>
+        <div>72184 Eutingen im Gäu</div>
+      </div>
+      <div class="pb-4 text-2xl font-medium">Kontaktmöglichkeiten</div>
+      <div class="space-y-2 pb-8">
+        <div><strong>E-Mail-Adresse</strong>: info@sv-eutingen.de</div>
+        <div><strong>Telefon</strong>: +49 (0)7459 12 04</div>
+        <div><strong>Fax</strong>: -</div>
+      </div>
+      <div class="pb-4 text-2xl font-medium">Vertretungsberechtigte</div>
+      <div class="pb-8">
+        <strong>Vertretungsberechtigt</strong>: Sebastian Lazar (1. Vorstand)
+      </div>
+      <div class="pb-4 text-2xl font-medium">Register und Registernummer</div>
+      <div class="space-y-2 pb-8">
+        <div>Vereinsregister</div>
+        <div><strong>Geführt bei</strong>: Vereinsregister Stuttgart</div>
+        <div><strong>Nummer</strong>: VR 440031</div>
+      </div>
+      <div class="pb-4 text-2xl font-medium">Social Media und andere Onlinepräsenzen</div>
+      <div class="space-y-2 pb-8">
+        <div>
+          <strong
+            >Dieses Impressum gilt auch für die folgenden Social-Media-Präsenzen und Onlineprofile</strong
+          >:
+        </div>
+        <div>
+          <a
+            class="text-gray-600 duration-300 hover:text-primary dark:text-gray-400 dark:hover:text-white"
+            href="https://facebook.com/sveutingen"
+            target="_blank"
+            rel="noreferrer">https://facebook.com/sveutingen</a
+          >
+        </div>
+        <div>
+          <a
+            class="text-gray-600 duration-300 hover:text-primary dark:text-gray-400 dark:hover:text-white"
+            href="https://www.youtube.com/channel/UC6QXvcCp9CpHl4az3idhkYQ"
+            target="_blank"
+            rel="noreferrer"
+          >
+            https://www.youtube.com/channel/UC6QXvcCp9CpHl4az3idhkYQ
+          </a>
+        </div>
+      </div>
+      <div class="pb-4 text-2xl font-medium">Haftungs- und Urheberrechtshinweise</div>
+      <div class="pb-8">
+        <strong>Links auf fremde Webseiten</strong>: Inhalte fremder Webseiten, auf die wir direkt
+        oder indirekt verweisen, liegen außerhalb unseres Verantwortungsbereiches und machen wir uns
+        nicht zu Eigen. Für alle Inhalte und insbesondere für Schäden, die aus der Nutzung der in
+        den verlinkten Webseiten aufrufbaren Informationen entstehen, haftet allein der Anbieter der
+        verlinkten Webseiten.
+      </div>
+      <a
+        class="text-gray-600 duration-300 hover:text-primary dark:text-gray-400 dark:hover:text-white"
+        href="https://datenschutz-generator.de/?l=de"
+        title="Rechtstext von Dr. Schwenke - für weitere Informationen bitte anklicken."
+        target="_blank"
+        rel="noreferrer"
+      >
+        Erstellt mit kostenlosem Datenschutz-Generator.de von Dr. Thomas Schwenke
+      </a>
+    </Container>
+  </div>
+</Layout>
