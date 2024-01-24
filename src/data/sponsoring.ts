@@ -99,11 +99,6 @@ const sponsoring: Sponsor[] = [
     groupBy: 'Cengiz'
   },
   {
-    name: 'Neckar-Sport-Horb',
-    url: 'https://www.neckar-sport-horb.de/',
-    groupBy: 'Neckar-Sport-Horb'
-  },
-  {
     name: 'Gasthof zur Linde',
     url: 'http://www.linde-eutingen.de/',
     groupBy: 'Linde'
