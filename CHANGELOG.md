@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.6](https://github.com/mseele/sve-website/compare/v4.6.5...v4.6.6) (2024-02-15)
+
+
+### Bug Fixes
+
+* update menu cards ([7473f57](https://github.com/mseele/sve-website/commit/7473f576074bb3fc0f7390463d8eec2d6e609352))
+
 ### [4.6.5](https://github.com/mseele/sve-website/compare/v4.6.4...v4.6.5) (2024-01-24)
 
 
