@@ -315,6 +315,16 @@ const sponsoring: Sponsor[] = [
     url: 'https://www.eutingen-im-gaeu.de/',
     groupBy: 'Eutingen im Gäu',
   },
+  {
+    name: 'Micki Sport Rottenburg',
+    url: 'https://www.sportwelten.de/',
+    groupBy: 'Micki Sport Rottenburg',
+  },
+  {
+    name: 'Schmid Bau',
+    url: 'https://janschmid-bau.de/',
+    groupBy: 'Schmid Bau',
+  },
 ]
 
 export default sponsoring
