@@ -66,6 +66,7 @@ import fit from '@/assets/events/fit.jpg?preset=card'
 import forest from '@/assets/events/forest.jpg?preset=card'
 import fussballtor from '@/assets/events/fussballtor.jpg?preset=card'
 import jugendturnier from '@/assets/events/jugendturnier.jpg?preset=card'
+import kinderturnen from '@/assets/events/kinderturnen.jpg?preset=card'
 import meerjungfrau from '@/assets/events/meerjungfrau.jpg?preset=card'
 import pilates from '@/assets/events/pilates.jpg?preset=card'
 import rf from '@/assets/events/rf.jpg?preset=card'
@@ -73,6 +74,7 @@ import ski from '@/assets/events/ski.jpg?preset=card'
 import sommerferien from '@/assets/events/sommerferien.jpg?preset=card'
 import spargel from '@/assets/events/spargel.jpg?preset=card'
 import sv from '@/assets/events/sv.jpg?preset=card'
+import sv_frauen from '@/assets/events/sv_frauen.jpg?preset=card'
 import swabian from '@/assets/events/swabian.jpg?preset=card'
 import thekla from '@/assets/events/thekla.jpg?preset=card'
 import walking from '@/assets/events/walking.jpg?preset=card'
@@ -144,6 +146,7 @@ let assets = new Map<string, any>([
   ['forest.jpg', forest],
   ['fussballtor.jpg', fussballtor],
   ['jugendturnier.jpg', jugendturnier],
+  ['kinderturnen.jpg', kinderturnen],
   ['meerjungfrau.jpg', meerjungfrau],
   ['pilates.jpg', pilates],
   ['rf.jpg', rf],
@@ -151,6 +154,7 @@ let assets = new Map<string, any>([
   ['sommerferien.jpg', sommerferien],
   ['spargel.jpg', spargel],
   ['sv.jpg', sv],
+  ['sv_frauen.jpg', sv_frauen],
   ['swabian.jpg', swabian],
   ['thekla.jpg', thekla],
   ['walking.jpg', walking],
