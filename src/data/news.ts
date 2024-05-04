@@ -4,7 +4,7 @@ const news: NewsItem[] = [
   {
     title: '22. April 2024',
     collapsed: false,
-    text: "+++ Bericht von der 77. Mitgliederversammlung +++<br/><br/>70 Mitglieder kamen zur 77. Mitgliederversammlung des SVE am 20. April. Vorstandsmitglied Sebastian Lazar blickte auf 2023 zurück: „Hinter uns liegt ein Jahr für die Geschichtsbücher<br/><br/><a href='/downloads/2024/Bericht-77-Mitgliederversammlung.pdf' target='_blank'>...Weiterlesen</a>",
+    text: "+++ Bericht von der 77. Mitgliederversammlung +++<br/><br/>70 Mitglieder kamen zur 77. Mitgliederversammlung des SVE am 20. April. Vorstandsmitglied Sebastian Lazar blickte auf 2023 zurück: „Hinter uns liegt ein Jahr für die Geschichtsbücher, in dem wir mit unseren fünf Erwachsenen- und 13 Jugendfußballteams mehrere Meisterschaften und Aufstiege feiern konnten."<br/><br/><a href='/downloads/2024/Bericht-77-Mitgliederversammlung.pdf' target='_blank'>...Weiterlesen</a>",
   },
   {
     title: '8. März 2024',
