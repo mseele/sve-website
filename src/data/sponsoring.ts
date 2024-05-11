@@ -328,7 +328,7 @@ const sponsoring: Sponsor[] = [
   {
     name: 'Brandschutztechnik Steck GmbH',
     url: 'https://www.brandschutz-steck.de/',
-    groupBy: 'Brandschutztechnik Steck',
+    groupBy: 'Steck Brandschutztechnik',
   },
 ]
 
