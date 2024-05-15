@@ -84,13 +84,8 @@ title: Partnerschaft
             :key="index"
             class="w-full pt-4 lg:w-1/2 lg:pl-4"
           >
-            <component
-              :is="item.url ? 'a' : 'div'"
-              :href="item.url"
-              target="_blank"
-              rel="noopener"
+            <div
               class="on-focus-dark flex h-full items-center rounded bg-white p-4 text-black"
-              :class="{ 'hover:bg-stone-200': item.url }"
             >
               <svg
                 class="mr-4 h-6 w-6 flex-shrink-0 text-red-800"
@@ -105,7 +100,7 @@ title: Partnerschaft
                 />
               </svg>
               <span class="title-font font-medium">{{ item.name }}</span>
-            </component>
+            </div>
           </div>
         </div>
       </div>

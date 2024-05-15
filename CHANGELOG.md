@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.18](https://github.com/mseele/sve-website/compare/v4.6.17...v4.6.18) (2024-05-15)
+
+
+### Bug Fixes
+
+* remove urls from partner links ([b52a424](https://github.com/mseele/sve-website/commit/b52a424fb8f9326998dae0bf6547053096164e31))
+
 ### [4.6.17](https://github.com/mseele/sve-website/compare/v4.6.16...v4.6.17) (2024-05-11)
 
 
