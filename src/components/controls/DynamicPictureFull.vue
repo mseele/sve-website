@@ -48,6 +48,10 @@ import history_frauen_2016_2 from '@/assets/history/frauen-2016-2.jpg?preset=ful
 import history_frauen_2016_3 from '@/assets/history/frauen-2016-3.jpg?preset=full'
 import history_kunstrasen_2016_1 from '@/assets/history/kunstrasen-2016-1.jpg?preset=full'
 import history_maenner_2016_1 from '@/assets/history/maenner-2016-1.jpg?preset=full'
+import history_2023_11_1 from '@/assets/history/2023_11-1.jpg?preset=full'
+import history_2024_03_1 from '@/assets/history/2024_03-1.jpg?preset=full'
+import history_2024_05_1 from '@/assets/history/2024_05-1.jpg?preset=full'
+import history_2024_05_2 from '@/assets/history/2024_05-2.jpg?preset=full'
 
 import adventure from '@/assets/events/adventure.jpg?preset=full'
 import after_work from '@/assets/events/after_work.jpg?preset=full'
@@ -125,6 +129,10 @@ let assets = new Map<string, any>([
   ['history_frauen_2016_3', history_frauen_2016_3],
   ['history_kunstrasen_2016_1', history_kunstrasen_2016_1],
   ['history_maenner_2016_1', history_maenner_2016_1],
+  ['history_2023_11_1', history_2023_11_1],
+  ['history_2024_03_1', history_2024_03_1],
+  ['history_2024_05_1', history_2024_05_1],
+  ['history_2024_05_2', history_2024_05_2],
 
   ['adventure.jpg', adventure],
   ['after_work.jpg', after_work],
