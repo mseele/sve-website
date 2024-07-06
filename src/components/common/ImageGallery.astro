@@ -15,7 +15,7 @@ const id = ulid()
 <ImageCarousel images={images} dialogId={id} />
 <dialog
   id={`image-gallery-popup-${id}`}
-  class="m-0 h-screen max-h-full w-screen max-w-full backdrop:overflow-hidden backdrop:scrollbar-none"
+  class="m-0 h-screen max-h-full w-screen max-w-full backdrop:overflow-hidden backdrop:scrollbar-none dark:bg-gray-900"
 >
   <div class="relative h-full p-4">
     <div class="grid h-full items-center">
@@ -24,7 +24,7 @@ const id = ulid()
       </div>
     </div>
     <button
-      class="absolute right-4 top-4 grid place-items-center hover:text-gray-500"
+      class="absolute right-4 top-4 grid place-items-center hover:text-gray-500 dark:text-gray-100 dark:hover:text-gray-300"
       onclick={`document.querySelector('#image-gallery-popup-${id}').close(); document.body.classList.remove('overflow-hidden')`}
     >
       <Icon class="size-7" name="mdi:close" />
