@@ -957,5 +957,5 @@ module.exports = {
     'active',
     'disabled'
   ],
-  plugins: [require('@tailwindcss/typography')]
+  plugins: [require('@tailwindcss/typography'), require('tailwind-scrollbar')]
 }
