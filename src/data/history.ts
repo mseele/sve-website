@@ -2,6 +2,35 @@ import { Moment } from '@/models'
 
 const history: Moment[] = [
   {
+    date: '10. Mai 2024',
+    text: "Nach einem Holperstart siegte unsere zweite Herrenmannschaft in der Kreisliga B2 insgesamt 23 Spiele am Stück und holte sich die Meisterschaft souverän mit 12 Punkten Vorsprung in der Saison 23/24. Eine grandiose Leistung der Jungs um Trainer Michelle Dell'Agli und Spielertrainer Marcel Dettling, der beeindruckende 31 Tore zu diesem Erfolg beigetragen hat. Durch diesen Aufstieg spielt erstmals eine zweite Herrenmannschaft des SVE ab der neuen Saison in der Kreisliga A.",
+    images: ['history_2024_05_2'],
+  },
+
+  {
+    date: '9. Mai 2024',
+    text: 'Die B1-Juniorinnen haben ihre Spitzenleistung der Vorsaison bestätigt und holten sich die Vizemeisterschaft in der EnBW-Oberliga. Highlight war dann aber der Sieg im WfV-Pokalfinale am 9. Mai gegen den VfB Stuttgart mit einem im 5:4-Elfmeterkrimi. Damit hat das Team erneut SVE-Geschichte geschrieben und diesen größten Erfolg im Verbandsgebiet nach Eutingen geholt.',
+    images: ['history_2024_05_1'],
+  },
+  {
+    date: 'März 2024',
+    text: 'Der SVE macht blau und rüstet auch nach dem Rasenspielfeld in 2022 auch das Flutlicht auf dem Kunstrasen auf energiesparende LED um. Damit werden dank moderne Dimmtechnologie künftig 60-70 % Strom bei der Nutzung des Flutlichts auf den Kunstrasenspielfeldern gespart. Ein Beitrag für die Vereinskasse und den Klimaschutz.',
+    images: ['history_2024_03_1'],
+  },
+  {
+    date: '26. November 2023',
+    text: 'Der SVE gewinnt den WFV-Ehrenamtspreis 2023 im Bezirk Nördlicher Schwarzwald. Damit haben wir nach dem 3. Platz in 2019, dem 1. Platz in 2020 und dem 1. Platz in 2023 in wenigen Jahren mit großem Erfolg an diesem renommierten WFV-Preis teilgenommen. Jedes Jahr prämiert der WFV insgesamt 48 der 1.800 Vereine im Verbandsgebiet.',
+    images: ['history_2023_11_1'],
+  },
+  {
+    date: '25. Oktober 2023',
+    text: 'Der SVE verdoppelt sein Sonnenkraftwerk. Bisher hatte der Verein 30 kWp Leistung an Photovoltaik auf dem SVE-Dach installiert.<br/>Mit dem Partner ADREX Photovoltaikanlagen GmbH wurde diese Kapazität verdoppelt. So werden künftig 70.000-80.000 kWh sauberer Strom pro Jahr produziert. Die SVE Macherinnen und Macher haben dabei 180 Stunden Eigenleistungen eingebracht.',
+  },
+  {
+    date: '24. Juli 2023',
+    text: 'Mit Chantal Hagel vom VfL Wolfsburg kommt eine ehemalige Jugendspielerin des SVE bei der Frauen-Weltmeisterschaft in Australien und Neuseeland gegen das Team aus Marokko (6:0-Sieg) zum Einsatz. Leider scheiterte das DFB-Team später in der Vorrunde.',
+  },
+  {
     date: '10. Juni 2023',
     text: 'Die 1. Herrenmannschaft macht eine Saison für die Geschichtsbücher perfekt. Nach sage und schreibe 22 Siegen in Folge machen die Jungs um Spielertrainer Alex Esslinger und Co-Spielertrainer Kai Sieb die Kreisliga A2-Meisterschaft und damit die Rückkehr in die Bezirksliga perfekt. Ein 7:0-Auswärtssieg in Horb ist der Beginn einer sagenhaften Meisterfeier mit allen Meisterteams des SVE. Denn zuvor haben die 1. Frauenmannschaft, die B1-Juniorinnen, die B2-Juniorinnen, die 3. Herrenmannschaft insgesamt fünf Meistertitel und die A-Junioren den Pokalsieg nach Eutingen geholt.<br/>Mit einem riesigen Meister-LKW geht es von Horb über Mühlen, Weitingen und Rohrdorf nach Eutingen. Dort geht es im Marsch mit der Musikkapelle durch die Straßen Eutingens und zum Sportgelände, wo bis 9 Uhr Sonntagmorgen gefeiert wird. An diesem Abend fließen nicht wenige Freudentränen.',
     images: ['history_2023_06_2'],
@@ -110,7 +139,11 @@ const history: Moment[] = [
   {
     date: '5. Juni 2016',
     text: 'Die Frauen des SV Eutingen schaffen den grandiosen Aufstieg in die Verbandsliga.',
-    images: ['history_frauen_2016_1', 'history_frauen_2016_2', 'history_frauen_2016_3'],
+    images: [
+      'history_frauen_2016_1',
+      'history_frauen_2016_2',
+      'history_frauen_2016_3',
+    ],
   },
   {
     date: '17. Mai 2016',
