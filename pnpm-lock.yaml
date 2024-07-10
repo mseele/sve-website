@@ -44,6 +44,9 @@ importers:
       sharp:
         specifier: ^0.33.4
         version: 0.33.4
+      tailwind-scrollbar:
+        specifier: ^3.1.0
+        version: 3.1.0(tailwindcss@3.4.4)
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.4
@@ -66,9 +69,6 @@ importers:
       standard-version:
         specifier: ^9.5.0
         version: 9.5.0
-      tailwind-scrollbar:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwindcss@3.4.4)
 
 packages:
 
