@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.2",
+    "@astrojs/netlify": "^5.4.0",
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/tailwind": "^5.1.0",
     "@astrolib/seo": "1.0.0-beta.5",
