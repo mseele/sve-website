@@ -202,7 +202,7 @@ const teams: Record<string, Team[]> = {
       },
       contact: {
         title: 'Teammanager',
-        name: 'Rainer Kalmbacher',
+        name: 'Rainer Kalbacher',
         email: 'rainer.kalbacher@t-online.de',
         mobile: {
           formatted: '01517 4117189',
