@@ -200,7 +200,15 @@ const teams: Record<string, Team[]> = {
           raw: '+4915156072107',
         },
       },
-      contact: jugendleiter,
+      contact: {
+        title: 'Teammanager',
+        name: 'Rainer Kalmbacher',
+        email: 'rainer.kalbacher@t-online.de',
+        mobile: {
+          formatted: '01517 4117189',
+          raw: '+4915174117189',
+        }
+      },
       teamID: '011MI98PJG000000VTVG0001VTR8C1K7',
     },
     {
