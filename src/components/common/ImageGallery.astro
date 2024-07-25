@@ -1,8 +1,8 @@
 ---
 import type { ThemedImage } from '@/types'
-import ImageCarousel from './ImageCarousel.astro'
 import { ulid } from 'ulid'
-import { Icon } from 'astro-icon/components'
+import ImageCarousel from './ImageCarousel.astro'
+import ImageDialog from './ImageDialog.astro'
 
 interface Props {
   images: ThemedImage[]
@@ -13,31 +13,4 @@ const id = ulid()
 ---
 
 <ImageCarousel images={images} dialogId={id} />
-<dialog
-  id={`image-gallery-popup-${id}`}
-  class="m-0 h-screen max-h-full w-screen max-w-full backdrop:overflow-hidden backdrop:scrollbar-none dark:bg-gray-900"
->
-  <div class="relative grid place-items-center h-full p-4">
-    <div class="max-w-[95dvw] max-h-[95dvh] items-center">
-        <ImageCarousel images={images} indexId={id} />
-    </div>
-    <button
-      class="absolute right-4 top-4 grid place-items-center hover:text-gray-500 dark:text-gray-100 dark:hover:text-gray-300"
-      onclick={`document.querySelector('#image-gallery-popup-${id}').close(); document.body.classList.remove('overflow-hidden')`}
-    >
-      <Icon class="size-7" name="mdi:close" />
-    </button>
-  </div>
-</dialog>
-
-<script>
-  document.addEventListener('open-image-dialog', (event) => {
-    const { id, index } = (event as any).detail
-    const imageGallery = document.getElementById(`image-gallery-popup-${id}`) as HTMLDialogElement
-    if (imageGallery) {
-      imageGallery.showModal()
-      document.body.classList.add('overflow-hidden')
-      document.dispatchEvent(new CustomEvent('show-image-index', { detail: { id, index } }))
-    }
-  })
-</script>
+<ImageDialog images={images} id={id} />
