@@ -12,6 +12,25 @@ const newsCollection = defineCollection({
     })
 })
 
+const historyCollection = defineCollection({
+  type: 'content',
+  schema: ({ image }) =>
+    z.object({
+      date: z.string(),
+      tags: z.string().array().optional(),
+      images: z
+        .array(
+          z.object({
+            light: image(),
+            dark: image(),
+            alt: z.string()
+          })
+        )
+        .optional()
+    })
+})
+
 export const collections = {
-  news: newsCollection
+  news: newsCollection,
+  history: historyCollection
 }
