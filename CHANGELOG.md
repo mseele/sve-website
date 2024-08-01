@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.22](https://github.com/mseele/sve-website/compare/v4.6.21...v4.6.22) (2024-08-01)
+
+
+### Bug Fixes
+
+* add new dance picture ([ecba68a](https://github.com/mseele/sve-website/commit/ecba68a166cabb5502393181bea4a395f71e1de8))
+
 ### [4.6.21](https://github.com/mseele/sve-website/compare/v4.6.20...v4.6.21) (2024-07-23)
 
 

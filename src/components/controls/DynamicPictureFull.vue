@@ -61,6 +61,7 @@ import aqua from '@/assets/events/aqua.jpg?preset=full'
 import baby from '@/assets/events/baby.jpg?preset=full'
 import bretzel from '@/assets/events/bretzel.jpg?preset=full'
 import brot from '@/assets/events/brot.jpg?preset=full'
+import dance from '@/assets/events/dance.jpg?preset=full'
 import deep from '@/assets/events/deep.jpg?preset=full'
 import fit_gesund from '@/assets/events/fit_gesund.jpg?preset=full'
 import fit from '@/assets/events/fit.jpg?preset=full'
@@ -142,6 +143,7 @@ let assets = new Map<string, any>([
   ['baby.jpg', baby],
   ['bretzel.jpg', bretzel],
   ['brot.jpg', brot],
+  ['dance.jpg', dance],
   ['deep.jpg', deep],
   ['fit_gesund.jpg', fit_gesund],
   ['fit.jpg', fit],
