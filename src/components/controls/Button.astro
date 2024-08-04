@@ -1,18 +1,24 @@
 ---
-const { El, label, type, emphasis, to } = Astro.props
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends HTMLAttributes<'a'> {
+  label: string
+  type?: string
+  emphasis?: 'primary' | 'secondary'}
+const { label, type, emphasis, to, ...attrs } = Astro.props
 ---
 
-<El
-  href={to}
+<a
   class={emphasis == 'primary'
     ? 'before:bg-primary'
     : 'before:border before:border-transparent before:bg-primary/10 dark:before:border-gray-700 dark:before:bg-gray-800'}
   type={type}
+  {...attrs}
 >
   <span class={emphasis == 'primary' ? 'text-white' : 'text-primary dark:text-white'}>
     {label}
   </span>
-</El>
+</a>
 
 <style>
   a,

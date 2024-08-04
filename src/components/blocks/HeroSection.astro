@@ -52,18 +52,16 @@ const { id, title, description, primaryButton, secondaryButton, image } = Astro.
                 <div class="mt-12 flex justify-center gap-4 sm:gap-6 md:justify-start">
                   {primaryButton && (
                     <Button
-                      El="a"
                       emphasis="primary"
                       label={primaryButton.label}
-                      to={primaryButton.to}
+                      href={primaryButton.to}
                     />
                   )}
                   {secondaryButton && (
                     <Button
-                      El="a"
                       emphasis="secondary"
                       label={secondaryButton.label}
-                      to={secondaryButton.to}
+                      href={secondaryButton.to}
                     />
                   )}
                 </div>
