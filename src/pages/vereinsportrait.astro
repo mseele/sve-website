@@ -1,0 +1,263 @@
+---
+import imageDark from '@/assets/pages/vereinsportrait-dark.jpg'
+import imageLight from '@/assets/pages/vereinsportrait-light.jpg'
+import HeroSection from '@/components/blocks/HeroSection.astro'
+import Container from '@/components/common/Container.astro'
+import Layout from '@/layouts/Layout.astro'
+import type { MetaSEO } from '@/types'
+import { Icon } from 'astro-icon/components'
+import { Content as Leitbild } from '@/markdown/leitbild.md'
+import Prose from '@/components/common/Prose.astro'
+import Button from '@/components/controls/Button.astro'
+
+// TODO: add custom meta image
+const meta: MetaSEO = {
+  title: 'Vereinsporträt',
+  description:
+    'Entdecke das umfassende Vereinsangebot des SV Eutingen! Erfahre mehr über unsere Geschichte, sportlichen Aktivitäten und unser Engagement für die Gemeinschaft. Werde Teil unserer lebendigen Vereinsfamilie und genieße Sport, Spaß und Zusammenhalt.'
+}
+---
+
+<Layout {meta}>
+  <HeroSection
+    id="home"
+    title="Vereinsporträt"
+    description="Entdecke das umfassende Vereinsangebot des SV Eutingen. Werde Teil unserer lebendigen Vereinsfamilie und genieße Sport, Spaß und Zusammenhalt."
+    primaryButton={{ label: 'Infos zum Verein', to: '#infos' }}
+    secondaryButton={{ label: 'Leitbild', to: '#leitbild' }}
+    image={{ light: imageLight, dark: imageDark, alt: 'fussballfeld auf dem gespielt wird' }}
+  />
+  <div class="pb-16 pt-6" id="infos">
+    <Container>
+      <div class="text-gray-600">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+          Infos zum Verein
+        </h2>
+        <p class="my-12 text-gray-600 dark:text-gray-300">
+          Der SV Eutingen 1947 e.V., unterstützt durch den Förderverein des SV Eutingen 1947 e.V.,
+          hat 460 Mitglieder, darunter 160 Kinder und Jugendliche unter 18 Jahren.
+          <br />
+          Der Verein bietet eine Vielzahl von Abteilungen an, darunter Frauenfußball, Herrenfußball,
+          Kinder- und Jugendfußball, Gymnastik, Volleyball, Fitness und Ernährung. Zusätzlich organisiert
+          der Verein diverse Events.
+          <br />
+          <br />
+          Die Vorstandschaft des SV Eutingen 1947 e.V. besteht aus Sebastian Lazar, Dominik Rakoczy und
+          Dietmar Kurbjun. Wolfgang Nesch übernimmt die Rolle des Kassiers.
+          <br />
+          <br />
+          Sebastian Lazar ist über die E-Mail-Adresse <a
+            class="underline hover:text-primary"
+            href="mailto:vorstand@sv-eutingen.de">vorstand@sv-eutingen.de</a
+          > erreichbar.
+        </p>
+        <div class="space-y-4 divide-y divide-gray-100 dark:divide-gray-800">
+          <a
+            class="mt-8 flex gap-4 md:items-center"
+            href="https://maps.app.goo.gl/EoTKoenVQKPmYZTN8"
+            target="_blank"
+            title="Adresse"
+            aria-label="Adresse"
+          >
+            <div class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900">
+              <Icon
+                class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300"
+                name="mdi:map-marker-outline"
+              />
+            </div>
+            <div class="w-5/6">
+              <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                <span>Unsere Adresse</span>
+              </h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                <span class="sm:hidden">Marktstr. 84 • 72184 Eutingen i.G.</span>
+                <span class="hidden sm:block"
+                  >SV Eutingen 1947 e.V. • Marktstr. 84 • 72184 Eutingen im Gäu</span
+                >
+              </p>
+            </div>
+          </a>
+          <div
+            class="mt-8 flex gap-4 pt-4 md:items-center"
+            title="Kontoverbindung"
+            aria-label="Kontoverbindung"
+          >
+            <div class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900">
+              <Icon
+                class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300"
+                name="mdi:bank-outline"
+              />
+            </div>
+            <div class="w-5/6">
+              <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                <span>Kontoverbindung</span>
+              </h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                <span class="sm:hidden">IBAN: DE28 642 910 10 00 344 69 001</span>
+                <span class="hidden sm:block lg:hidden"
+                  >Volksbank eG im Kreis FDS • IBAN: DE28 642 910 10 00 344 69 001</span
+                >
+                <span class="hidden lg:block"
+                  >Sportverein Eutingen • Volksbank eG im Kreis Freudenstadt • IBAN: DE28 642 910 10
+                  00 344 69 001</span
+                >
+              </p>
+            </div>
+          </div>
+          <a
+            class="mt-8 flex gap-4 pt-4 md:items-center"
+            href="mailto:info@sv-eutingen.de"
+            title="Mailaddresse"
+            aria-label="Mailaddresse"
+          >
+            <div class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900">
+              <Icon
+                class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300"
+                name="mdi:email-open-outline"
+              />
+            </div>
+            <div class="w-5/6">
+              <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                <span>Mailaddresse</span>
+              </h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                <span>info@sv-eutingen.de</span>
+              </p>
+            </div>
+          </a>
+          <a
+            class="mt-8 flex gap-4 pt-6 md:items-center"
+            href="mitgliedschaft"
+            title="Mitgliedschaft"
+            aria-label="Mitgliedschaft"
+          >
+            <div class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900">
+              <Icon
+                class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300"
+                name="mdi:badge-account-horizontal-outline"
+              />
+            </div>
+            <div class="w-5/6">
+              <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                <span>Mitglied werden</span>
+              </h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                <span class="sm:hidden">Alle Informationen zu einer Mitgliedschaft</span>
+                <span class="hidden sm:block"
+                  >Interesse? Hier findest du alle Informationen zu einer Mitgliedschaft</span
+                >
+              </p>
+            </div>
+          </a>
+          <a
+            class="mt-8 flex gap-4 pt-4 md:items-center"
+            href="downloads/2020/Aufsichtspflicht-SVE.pdf"
+            target="_blank"
+            title="Aufsichtspflicht"
+            aria-label="Aufsichtspflicht"
+          >
+            <div class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900">
+              <Icon
+                class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300"
+                name="mdi:account-outline"
+              />
+            </div>
+            <div class="w-5/6">
+              <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                <span>Aufsichtspflicht</span>
+              </h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                <span class="sm:hidden">Alle Informationen zur Aufsichtspflicht</span>
+                <span class="hidden sm:block lg:hidden">
+                  Verantwortung ist uns wichtig. Hier gibt's alle Infos zur Aufsichtspflicht
+                </span>
+                <span class="hidden lg:block">
+                  Verantwortung ist uns wichtig. Hier gibt es alle Informationen zur
+                  Aufsichtspflicht
+                </span>
+              </p>
+            </div>
+          </a>
+          <a
+            class="mt-8 flex gap-4 pt-4 md:items-center"
+            href="https://www.lsvbw.de/sportwelten/sportjugend/fsj-sport-und-schule/"
+            target="_blank"
+            title="Freiwilliges Soziales Jahr"
+            aria-label="Freiwilliges Soziales Jahr"
+          >
+            <div class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900">
+              <Icon
+                class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300"
+                name="mdi:school-outline"
+              />
+            </div>
+            <div class="w-5/6">
+              <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                <span>Freiwilliges Soziales Jahr</span>
+              </h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                <span class="sm:hidden">Anerkannte Einsatzstelle für FSJ Sport und Schule</span>
+                <span class="hidden sm:block"
+                  >Wir sind eine anerkannte Einsatzstelle für das FSJ Sport und Schule</span
+                >
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </Container>
+  </div>
+  <div class="pb-16 pt-6" id="leitbild">
+    <Container>
+      <div class="text-gray-600">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+          Unser Leitbild
+        </h2>
+        <div class="mt-12 text-gray-600 dark:text-gray-300">
+          <Prose>
+            <Leitbild />
+          </Prose>
+        </div>
+      </div>
+    </Container>
+  </div>
+  <div class="pt-6" id="heimspiel">
+    <Container>
+      <div class="text-gray-600">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+          Heimspiel
+        </h2>
+        <p class="my-12 text-gray-600 dark:text-gray-300">
+          Wie wichtig sind kleine Vereine gegenüber großen? Warum sollte man gerade auch kleine
+          Vereinsstrukturen erhalten und fördern?
+          <br />
+          <br />
+          Die <a class="underline hover:text-primary" href="https://www.an-kox.de/" target="_blank"
+            >an.kox GmbH</a
+          > hat gemeinsam mit unseren SVE-Frauen auf wichtige Zukunftsthemen aufmerksam gemacht und diese
+          in einem Film aufgegriffen. Diese neun Minuten zeigen sehr schön, was unser Anliegen ist: Teilhabe
+          durch Sport und Begegnung.
+          <br />
+          <br />
+          Ein großer Dank geht an unsere Partner der <a
+            class="underline hover:text-primary"
+            href="https://www.an-kox.de/"
+            target="_blank">an.kox GmbH</a
+          > und Oliver Lozano von den <a
+            class="underline hover:text-primary"
+            href="https://elpistolero.de/"
+            target="_blank">el Pistolero Studios</a
+          >, die den Film produziert haben.
+          <br />
+          <br />
+          <Button
+            label="Zum Film"
+            emphasis="primary"
+            href="https://vimeo.com/359776983"
+            target="_blank"
+          />
+        </p>
+      </div>
+    </Container>
+  </div>
+</Layout>
