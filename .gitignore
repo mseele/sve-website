@@ -1,8 +1,9 @@
 # build output
 dist/
 
-# generated types
+# generated files
 .astro/
+.netlify/
 
 # dependencies
 node_modules/
