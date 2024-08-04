@@ -13,7 +13,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // https://astro.build/config
 export default defineConfig({
-  site: `https://${SUBDOMAIN}.sv-eutingen.de/`,
+  site:
+    import.meta.env.MODE === `production`
+      ? `https://${SUBDOMAIN}.sv-eutingen.de/`
+      : `http://localhost:4321/`,
   base: SITE.basePathname,
   trailingSlash: SITE.trailingSlash ? 'always' : 'never',
   output: 'static',
