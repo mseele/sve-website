@@ -5,12 +5,14 @@
 - Sommertarif ohne Flutlicht: von April bis September für Spiel und Trainingseinheit (90 Minuten): 110 Euro pro Team
 
 ### Tarife für Sportvereine innerhalb der Gemeinde Eutingen im Gäu
+
 - bei Inanspruchnahme der Umkleidekabinen, Sanitärräume und Flutlichtanlage pro Spiel oder Trainingseinheit (90 Minuten): 30 Euro
 - ausschließlich Inanspruchnahme der Flutlichtanlage pro Spiel oder Trainingseinheit (90 Minuten): 10 Euro
 
 Die Platzgebühren sind unmittelbar vor der Nutzung in bar zu entrichten und enthalten die gesetzliche Mehrwertsteuer. Eine Quittung wird ausgestellt.
 
 ### Anstoßzeiten
+
 - 10:00 Uhr
 - 12:00 Uhr
 - 14:00 Uhr
