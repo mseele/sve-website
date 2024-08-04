@@ -52,3 +52,9 @@ export interface Sponsor {
   url?: string
   groupBy: string
 }
+
+export interface Faq {
+  question: string
+  answer: string
+}
+
