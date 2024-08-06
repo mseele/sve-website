@@ -1,0 +1,151 @@
+---
+import HeaderSection from '@/components/blocks/HeaderSection.astro'
+import Container from '@/components/common/Container.astro'
+import Button from '@/components/controls/Button.astro'
+import Layout from '@/layouts/Layout.astro'
+import type { MetaSEO } from '@/types'
+import { Icon } from 'astro-icon/components'
+
+// TODO: add custom meta image
+const meta: MetaSEO = {
+  title: 'Mitglied werden',
+  description:
+    'Engagiere dich beim SVE in Baden-Württemberg und werde Teil unserer starken Gemeinschaft. Ob als Helfer, Trainer oder Mitglied – deine Unterstützung ist entscheidend, um positive Veränderungen zu bewirken und unser Angebot zu verbessern.'
+}
+---
+
+<Layout {meta}>
+  <HeaderSection
+    title="Mitglied werden"
+    description="Engagiere dich beim SVE und werde Teil einer starken Gemeinschaft, die gesellschaftlichen Nutzen stiftet. Ob als Helfer, Trainer, Betreuer oder Mitglied – dein Engagement ist entscheidend."
+  />
+  <div class="pb-16">
+    <Container>
+      <div class="">
+        <div
+          class="relative rounded-3xl border border-gray-100 bg-white shadow-2xl shadow-gray-600/20 transition duration-500 dark:border-white/10 dark:bg-gray-900 dark:shadow-none"
+        >
+          <div
+            class="flex flex-col gap-6 divide-y p-10 md:p-12 md:gap-12 dark:divide-gray-800 md:flex-row md:divide-x md:divide-y-0"
+          >
+            <div class="space-y-10 text-center md:w-5/12">
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
+                Du möchtest Mitglied werden?
+              </h3>
+
+              <div class="flex justify-center">
+                <Button
+                  label="Download Mitgliedsantrag"
+                  emphasis="primary"
+                  href="downloads/2020/Mitgliedsantrag-SVE.pdf"
+                  target="_blank"
+                />
+              </div>
+
+              <div class="text-lg text-gray-600 dark:text-gray-300">
+                Fülle das Formular aus und sende es postalisch an uns zurück
+              </div>
+
+              <p class="mt-12 text-sm text-gray-500 dark:text-gray-400">
+                SV Eutingen 1947 e.V. • Marktstr. 84 • 72184 Eutingen im Gäu
+              </p>
+            </div>
+            <div class="relative md:w-7/12 md:pl-12">
+              <ul role="list" class="space-y-4 py-6 text-gray-600 dark:text-gray-300 md:pb-12">
+                <li class="space-x-2">
+                  <span class="font-semibold text-primary dark:text-gray-300">&check;</span>
+                  <span>Teil einer starken Gemeinschaft</span>
+                </li>
+                <li class="space-x-2">
+                  <span class="font-semibold text-primary dark:text-gray-300">&check;</span>
+                  <span>Vielfältige Engagementmöglichkeiten</span>
+                </li>
+                <li class="space-x-2">
+                  <span class="font-semibold text-primary dark:text-gray-300">&check;</span>
+                  <span>Gesellschaftlicher Mehrwert</span>
+                </li>
+                <li class="space-x-2">
+                  <span class="font-semibold text-primary dark:text-gray-300">&check;</span>
+                  <span>Aktiver Beitrag zur Verbesserung</span>
+                </li>
+              </ul>
+              <p class="text-gray-700 dark:text-white">
+                Vielen Dank für deine Unterstützung! Deine Mitgliedschaft stärkt unsere Gemeinschaft
+                und hilft uns, positive Veränderungen zu bewirken.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </div>
+  <div>
+    <Container>
+      <div class="text-gray-600">
+        <p class="mb-12 text-gray-600 dark:text-gray-300">
+          Mit deiner Spende kannst du direkt Gutes tun und unser sportliches sowie kulturelles
+          Angebot fördern. Jeder Beitrag, egal wie groß oder klein, hilft uns, unsere Projekte und
+          Initiativen aufrechtzuerhalten und weiterzuentwickeln.
+          <br />
+          <br />
+          Vielen Dank für deine Unterstützung!
+        </p>
+        <div class="space-y-4 divide-y divide-gray-100 dark:divide-gray-800">
+          <div
+            class="mt-8 flex gap-4 pt-4 md:items-center"
+            title="Empfänger"
+            aria-label="Empfänger"
+          >
+            <div class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900">
+              <Icon
+                class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300"
+                name="mdi:account-outline"
+              />
+            </div>
+            <div class="w-5/6">
+              <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                <span>Empfänger</span>
+              </h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                <span>Sportverein Eutingen</span>
+              </p>
+            </div>
+          </div>
+          <div
+            class="mt-8 flex gap-4 pt-4 md:items-center"
+            title="Kreditinstitut"
+            aria-label="Kreditinstitut"
+          >
+            <div class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900">
+              <Icon
+                class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300"
+                name="mdi:bank-outline"
+              />
+            </div>
+            <div class="w-5/6">
+              <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                <span>Kreditinstitut</span>
+              </h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                <span>Volksbank eG im Kreis Freudenstadt</span>
+              </p>
+            </div>
+          </div>
+          <div class="mt-8 flex gap-4 pt-4 md:items-center" title="IBAN" aria-label="IBAN">
+            <div class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900">
+              <Icon class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300" name="mdi:numeric" />
+            </div>
+            <div class="w-5/6">
+              <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                <span>IBAN</span>
+              </h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                <span>DE28 642 910 10 00 344 69 001</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </div>
+</Layout>
