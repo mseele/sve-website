@@ -58,3 +58,23 @@ export interface Faq {
   answer: string
 }
 
+// Raw item from the server
+export interface RawAppointment {
+  id?: string
+  sort_index: number
+  title?: string
+  link?: string
+  description?: string
+  start_date?: string
+  end_date?: string
+  start_date_time?: string
+  end_date_time?: string
+}
+
+export interface Appointment {
+  date: string
+  time: string
+  title: string
+  description?: string
+  link?: string
+}
