@@ -13,10 +13,10 @@ const { id, name, left, right } = Astro.props
   class="relative flex h-10 min-w-[200px] items-center overflow-hidden rounded-full bg-gray-200 p-1 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-500"
 >
   <div class="flex w-full justify-center">
-    <button id="left" class="w-full">{left}</button>
+    <button type="button" id="left" class="w-full">{left}</button>
   </div>
   <div class="flex w-full justify-center">
-    <button id="right" class="w-full">{right}</button>
+    <button type="button" id="right" class="w-full">{right}</button>
   </div>
   <span
     id="toggle"
