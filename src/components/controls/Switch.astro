@@ -10,7 +10,7 @@ interface Props {
 const { id, name, title, description, checked } = Astro.props
 ---
 
-<form class="w-full max-w-sm space-y-4" data-shade="900">
+<div class="w-full space-y-4">
   <div class="relative">
     <div class="grid items-center [grid-template-columns:1fr_auto]">
       <label for={id} class="text-lg text-gray-900 dark:text-white">{title}</label>
@@ -32,4 +32,4 @@ const { id, name, title, description, checked } = Astro.props
     </div>
     {description && <span class="block text-sm text-gray-500">{description}</span>}
   </div>
-</form>
+</div>
