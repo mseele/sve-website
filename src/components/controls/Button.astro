@@ -1,25 +1,30 @@
 ---
-import type { HTMLAttributes } from 'astro/types'
 
-interface Props extends HTMLAttributes<'a'> {
+interface Props {
+  El?: 'a' | 'button'
   label: string
-  type?: string
+  type?: 'submit'
   emphasis?: 'primary' | 'secondary'
+  href?: string
+  target?: '_blank'
+  rel?: 'noreferrer'
 }
-const { label, type, emphasis, ...attrs } = Astro.props
+const { El = 'a', label, emphasis, href, target, rel, type } = Astro.props
 ---
 
-<a
+<El
   class={emphasis == 'primary'
     ? 'before:bg-primary'
     : 'before:border before:border-transparent before:bg-primary/10 dark:before:border-gray-700 dark:before:bg-gray-800'}
+  href={href}
+  target={target}
+  rel={rel}
   type={type}
-  {...attrs}
 >
   <span class={emphasis == 'primary' ? 'text-white' : 'text-primary dark:text-white'}>
     {label}
   </span>
-</a>
+</El>
 
 <style>
   a,
