@@ -31,7 +31,7 @@ const { id, name, left, right } = Astro.props
   const toggle = document.querySelector<HTMLSpanElement>('#toggle')
   const left = document.querySelector<HTMLButtonElement>('#left')
   const right = document.querySelector<HTMLButtonElement>('#right')
-  const input = toggle.parentElement?.querySelector<HTMLInputElement>('input')
+  const input = toggle?.parentElement?.querySelector<HTMLInputElement>('input')
   if (toggle && input) {
     left?.addEventListener('click', function () {
       toggle.classList.remove('translate-x-full', '!-left-1')
