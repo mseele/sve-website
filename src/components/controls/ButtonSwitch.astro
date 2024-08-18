@@ -34,13 +34,13 @@ const { id, name, left, right } = Astro.props
   const input = toggle.parentElement?.querySelector<HTMLInputElement>('input')
   if (toggle && input) {
     left?.addEventListener('click', function () {
-      toggle.classList.remove('translate-x-full', '-left-1')
+      toggle.classList.remove('translate-x-full', '!-left-1')
       toggle.innerText = left.innerText
       input.checked = true
     })
 
     right?.addEventListener('click', function () {
-      toggle.classList.add('translate-x-full', '-left-1')
+      toggle.classList.add('translate-x-full', '!-left-1')
       toggle.innerText = right.innerText
       input.checked = false
     })
