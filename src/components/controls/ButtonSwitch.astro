@@ -4,13 +4,17 @@ interface Props {
   name: string
   left: String
   right: String
+  class?: string
 }
 
-const { id, name, left, right } = Astro.props
+const { id, name, left, right, class: className } = Astro.props
 ---
 
 <div
-  class="relative flex h-10 min-w-[200px] items-center overflow-hidden rounded-full bg-gray-200 p-1 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-500"
+  class:list={[
+    'relative flex h-10 min-w-[200px] items-center overflow-hidden rounded-full bg-gray-200 p-1 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-500',
+    className
+  ]}
 >
   <div class="flex w-full justify-center">
     <button type="button" id="left" class="w-full">{left}</button>

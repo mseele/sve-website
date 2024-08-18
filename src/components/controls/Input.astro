@@ -7,13 +7,17 @@ interface Props extends HTMLAttributes<'input'> {
   label?: string
   value?: string
   placeholder?: string
+  class?: string
 }
 
-const { id, name, label, value, placeholder, ...attrs } = Astro.props
+const { id, name, label, value, placeholder, class: className, ...attrs } = Astro.props
 ---
 
 <div
-  class="relative space-y-2.5 *:has-[:disabled]:opacity-50 *:has-[:disabled]:pointer-events-none"
+  class:list={[
+    'relative space-y-2.5 *:has-[:disabled]:pointer-events-none *:has-[:disabled]:opacity-50',
+    className
+  ]}
 >
   {
     label && (
@@ -28,6 +32,6 @@ const { id, name, label, value, placeholder, ...attrs } = Astro.props
     placeholder={placeholder}
     value={value}
     {...attrs}
-    class="w-full placeholder-gray-400 text-gray-900 invalid:text-red-500 rounded-xl text-sm h-9 shadow-sm px-3 bg-white shadow-gray-950/5 dark:text-white dark:bg-gray-800 dark:shadow-gray-950/30 outline-2 focus:outline-primary invalid:border-red-500 invalid:focus:outline-red-500 dark:invalid:text-red-500 -outline-offset-1 focus:outline border border-gray-300 dark:border-gray-700"
+    class="h-9 w-full rounded-xl border border-gray-300 bg-white px-3 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-gray-950/5 outline-2 -outline-offset-1 invalid:border-red-500 invalid:text-red-500 focus:outline focus:outline-primary invalid:focus:outline-red-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:shadow-gray-950/30 dark:invalid:text-red-500"
   />
 </div>
