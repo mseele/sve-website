@@ -16,8 +16,8 @@ function toAppointment(appointment: RawAppointment): Appointment {
 }
 
 export async function getAppointments(): Promise<Appointment[]> {
-  const appointments = await fetch(`${import.meta.env.BACKEND_API}/calendar/appointments`).then(
-    (res): Promise<RawAppointment[]> => res.json()
-  )
+  const appointments = await fetch(
+    `${import.meta.env.PUBLIC_BACKEND_API}/calendar/appointments`
+  ).then((res): Promise<RawAppointment[]> => res.json())
   return appointments.sort(bySortIndex).map(toAppointment)
 }

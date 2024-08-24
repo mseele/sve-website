@@ -3,6 +3,7 @@
 
 interface ImportMetaEnv {
   readonly SUBDOMAIN: string
+  readonly PUBLIC_BACKEND_API: string
 }
 
 interface ImportMeta {
