@@ -6,30 +6,32 @@ interface Props {
   href?: string
   target?: '_blank'
   rel?: 'noreferrer'
+  disabled?: boolean
+  class?: string
 }
-const { El = 'a', emphasis, href, target, rel, type } = Astro.props
+const { El = 'a', emphasis, href, target, rel, type, disabled, class: className } = Astro.props
 ---
 
 <El
-  class={emphasis == 'primary'
-    ? 'before:bg-primary'
-    : 'before:border before:border-transparent before:bg-primary/10 dark:before:border-gray-700 dark:before:bg-gray-800'}
+  class:list={[
+    'relative flex h-11 w-max items-center justify-center px-5 before:absolute before:inset-0 before:rounded-full enabled:before:transition enabled:before:duration-300 enabled:hover:before:scale-105 enabled:active:duration-75 enabled:active:before:scale-95 disabled:cursor-not-allowed disabled:opacity-75',
+    emphasis == 'primary'
+      ? 'before:bg-primary'
+      : 'before:border before:border-transparent before:bg-primary/10 dark:before:border-gray-700 dark:before:bg-gray-800',
+    className
+  ]}
+  disabled={disabled}
   href={href}
   target={target}
   rel={rel}
   type={type}
 >
-  <span class={emphasis == 'primary' ? 'text-white' : 'text-primary dark:text-white'}>
+  <span
+    class:list={[
+      'relative w-max text-base font-semibold',
+      emphasis == 'primary' ? 'text-white' : 'text-primary dark:text-white'
+    ]}
+  >
     <slot />
   </span>
 </El>
-
-<style>
-  a,
-  button {
-    @apply relative flex h-11 w-max items-center justify-center px-5 before:absolute before:inset-0 before:rounded-full before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95;
-  }
-  span {
-    @apply relative w-max text-base font-semibold;
-  }
-</style>
