@@ -59,6 +59,9 @@ importers:
       tailwindcss:
         specifier: ^3.4.10
         version: 3.4.10
+      typescript:
+        specifier: ^5.5.4
+        version: 5.5.4
       ulid:
         specifier: ^2.3.0
         version: 2.3.0
@@ -78,9 +81,6 @@ importers:
       standard-version:
         specifier: ^9.5.0
         version: 9.5.0
-      typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
 
 packages:
 
