@@ -2,8 +2,8 @@
 interface Props {
   id: string
   name: string
-  left: String
-  right: String
+  left: string
+  right: string
   class?: string
 }
 
@@ -28,25 +28,34 @@ const { id, name, left, right, class: className } = Astro.props
   >
     {left}
   </span>
-  <input checked class="absolute -top-6 size-2" type="checkbox" id={id} name={name} />
+  <input class="absolute -top-6 size-2" type="checkbox" id={id} name={name} checked />
 </div>
 
 <script>
   const toggle = document.querySelector<HTMLSpanElement>('#toggle')
+  const input = toggle?.parentElement?.querySelector<HTMLInputElement>('input')
   const left = document.querySelector<HTMLButtonElement>('#left')
   const right = document.querySelector<HTMLButtonElement>('#right')
-  const input = toggle?.parentElement?.querySelector<HTMLInputElement>('input')
+
   if (toggle && input) {
-    left?.addEventListener('click', function () {
-      toggle.classList.remove('translate-x-full', '!-left-1')
-      toggle.innerText = left.innerText
-      input.checked = true
+    input.addEventListener('change', () => {
+      if (input.checked) {
+        toggle.classList.remove('translate-x-full', '!-left-1')
+        toggle.innerText = left?.innerText || ''
+      } else {
+        toggle.classList.add('translate-x-full', '!-left-1')
+        toggle.innerText = right?.innerText || ''
+      }
     })
 
-    right?.addEventListener('click', function () {
-      toggle.classList.add('translate-x-full', '!-left-1')
-      toggle.innerText = right.innerText
+    left?.addEventListener('click', () => {
+      input.checked = true
+      input.dispatchEvent(new Event('change'))
+    })
+
+    right?.addEventListener('click', () => {
       input.checked = false
+      input.dispatchEvent(new Event('change'))
     })
   }
 </script>
