@@ -4,16 +4,24 @@ import { Icon } from 'astro-icon/components'
 
 <dialog id="notification-popup">
   <div
-    class="animate-slide-up fixed bottom-6 left-6 right-6 grid justify-center sm:left-auto lg:bottom-7 lg:right-7"
+    class="fixed bottom-6 left-6 right-6 grid animate-slide-up justify-center sm:left-auto lg:bottom-7 lg:right-7"
   >
     <div
-      class="relative flex max-w-md items-center gap-2 rounded-2xl border border-gray-100 bg-white p-4 text-gray-900 shadow-lg"
+      class="relative flex max-w-md items-center gap-4 overflow-hidden rounded-2xl border border-gray-100 bg-white p-4 text-gray-900 shadow-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:shadow-gray-950/30"
     >
-      <Icon id="success" class="size-6 shrink-0 text-green-600" name="mdi:information-outline" />
-      <Icon id="error" class="size-6 shrink-0 text-red-600" name="mdi:alert-circle-outline" />
+      <Icon
+        id="success"
+        class="size-6 shrink-0 text-green-600 dark:text-green-400"
+        name="mdi:information-outline"
+      />
+      <Icon
+        id="error"
+        class="size-6 shrink-0 text-red-600 dark:text-red-400"
+        name="mdi:alert-circle-outline"
+      />
       <div class="flex flex-col">
         <div id="title" class="text-base font-semibold"></div>
-        <div id="message" class="text-sm text-gray-500"></div>
+        <div id="message" class="text-sm text-gray-500 dark:text-gray-300"></div>
       </div>
       <div class="absolute right-0 top-0 grid place-items-center">
         <button
