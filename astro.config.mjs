@@ -1,4 +1,4 @@
-import { defineConfig, sharpImageService } from 'astro/config'
+import { defineConfig, sharpImageService, envField } from 'astro/config'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { loadEnv } from 'vite'
@@ -8,6 +8,7 @@ import tailwind from '@astrojs/tailwind'
 import robotsTxt from 'astro-robots-txt'
 import { SITE } from './src/config.mjs'
 import netlify from '@astrojs/netlify'
+
 const { SUBDOMAIN } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -31,6 +32,14 @@ export default defineConfig({
   ],
   image: {
     service: sharpImageService()
+  },
+  experimental: {
+    env: {
+      schema: {
+        SUBDOMAIN: envField.string({ context: 'server', access: 'public' }),
+        BACKEND_API: envField.string({ context: 'client', access: 'public' })
+      }
+    }
   },
   vite: {
     resolve: {

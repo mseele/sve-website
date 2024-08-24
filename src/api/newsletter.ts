@@ -1,3 +1,5 @@
+import { BACKEND_API } from "astro:env/client"
+
 export async function manageSubscription(
   subscribe: boolean,
   email: string,
@@ -5,7 +7,7 @@ export async function manageSubscription(
   fitness: boolean,
   events: boolean
 ): Promise<Response> {
-  const url = `${import.meta.env.PUBLIC_BACKEND_API}/news/${subscribe ? 'subscribe' : 'unsubscribe'}`
+  const url = `${BACKEND_API}/news/${subscribe ? 'subscribe' : 'unsubscribe'}`
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify({ email, types: newsTypes(general, fitness, events) }),
