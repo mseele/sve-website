@@ -1,14 +1,13 @@
 ---
 interface Props {
   El?: 'a' | 'button'
-  label: string
   type?: 'submit'
   emphasis?: 'primary' | 'secondary'
   href?: string
   target?: '_blank'
   rel?: 'noreferrer'
 }
-const { El = 'a', label, emphasis, href, target, rel, type } = Astro.props
+const { El = 'a', emphasis, href, target, rel, type } = Astro.props
 ---
 
 <El
@@ -21,7 +20,7 @@ const { El = 'a', label, emphasis, href, target, rel, type } = Astro.props
   type={type}
 >
   <span class={emphasis == 'primary' ? 'text-white' : 'text-primary dark:text-white'}>
-    {label}
+    <slot />
   </span>
 </El>
 

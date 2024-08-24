@@ -51,18 +51,14 @@ const { id, title, description, primaryButton, secondaryButton, image } = Astro.
               (primaryButton || secondaryButton) && (
                 <div class="mt-12 flex justify-center gap-4 sm:gap-6 md:justify-start">
                   {primaryButton && (
-                    <Button
-                      emphasis="primary"
-                      label={primaryButton.label}
-                      href={primaryButton.to}
-                    />
+                    <Button emphasis="primary" href={primaryButton.to}>
+                      {primaryButton.label}
+                    </Button>
                   )}
                   {secondaryButton && (
-                    <Button
-                      emphasis="secondary"
-                      label={secondaryButton.label}
-                      href={secondaryButton.to}
-                    />
+                    <Button emphasis="secondary" href={secondaryButton.to}>
+                      {secondaryButton.label}
+                    </Button>
                   )}
                 </div>
               )
@@ -70,7 +66,7 @@ const { id, title, description, primaryButton, secondaryButton, image } = Astro.
           </div>
         </div>
         <div class="relative mt-20 md:mt-0 md:w-2/5 lg:w-3/5">
-          <div class="-ml-6 md:-mr-72 lg:mr-0 overflow-hidden rounded-3xl">
+          <div class="-ml-6 overflow-hidden rounded-3xl md:-mr-72 lg:mr-0">
             <Picture
               src={image.light}
               class="h-full object-cover object-left dark:hidden"
