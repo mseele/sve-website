@@ -5,11 +5,13 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "check": "tsc --noEmit && astro check",
     "format": "prettier --write . --plugin=prettier-plugin-astro",
     "release": "standard-version"
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.3",
+    "@astrojs/check": "^0.9.3",
     "@astrojs/netlify": "^5.5.1",
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/tailwind": "^5.1.0",
@@ -32,6 +34,7 @@
     "prettier": "3.3.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.6",
-    "standard-version": "^9.5.0"
+    "standard-version": "^9.5.0",
+    "typescript": "^5.5.4"
   }
 }
