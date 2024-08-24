@@ -1,0 +1,45 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends HTMLAttributes<'select'> {
+  id: string
+  name: string
+  label?: string
+  values: { value: string; label: string; selected?: boolean; disabled?: boolean }[]
+  class?: string
+}
+
+const { id, name, label, values, class: className, ...attrs } = Astro.props
+---
+
+<div class:list={['relative space-y-2.5', className]} data-field={id}>
+  <label class="text-gray-900 dark:text-white" for={id}>{label}</label>
+  <div class="relative">
+    <svg
+      class="pointer-events-none absolute inset-y-0 right-2.5 my-auto text-gray-900 opacity-75 dark:text-white"
+      xmlns="http://www.w3.org/2000/svg"
+      width="0.75rem"
+      height="0.75rem"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"><path d="m7 15 5 5 5-5"></path><path d="m7 9 5-5 5 5"></path></svg
+    >
+    <select
+      id={id}
+      name={name}
+      class="h-9 w-full appearance-none rounded-xl border border-gray-300 bg-white pl-3 pr-7 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-gray-950/5 outline-2 -outline-offset-1 invalid:border-red-500 invalid:text-red-500 focus:outline focus:outline-primary invalid:focus:outline-red-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:shadow-gray-950/30 dark:invalid:text-red-500"
+      {...attrs}
+    >
+      {
+        values.map(({ value, label, selected, disabled }) => (
+          <option value={value} selected={selected} disabled={disabled}>
+            {label}
+          </option>
+        ))
+      }
+    </select>
+  </div>
+</div>
