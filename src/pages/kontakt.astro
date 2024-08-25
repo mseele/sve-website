@@ -374,6 +374,18 @@ const meta: MetaSEO = {
       if (value) {
         contactInput.value = value
         handleContactInputChange()
+
+        // scroll to contact card
+        if (window.location.hash == '#contact-card') {
+          const contactCards = document.querySelectorAll<HTMLElement>('#contact-card')
+          for (const contactCard of contactCards) {
+            if (contactCard.classList.contains('hidden')) {
+              continue
+            }
+            contactCard.scrollIntoView({ behavior: 'smooth' })
+            break
+          }
+        }
       }
     })
   }
