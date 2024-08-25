@@ -34,6 +34,7 @@ export default defineConfig({
     service: sharpImageService()
   },
   experimental: {
+    contentLayer: true,
     env: {
       schema: {
         SUBDOMAIN: envField.string({ context: 'server', access: 'public' }),

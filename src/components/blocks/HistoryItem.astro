@@ -1,10 +1,10 @@
 ---
+import ImageDialog from '@/components/common/ImageDialog.astro'
 import Prose from '@/components/common/Prose.astro'
 import { SITE } from '@/config.mjs'
 import { Picture } from 'astro:assets'
-import type { CollectionEntry } from 'astro:content'
+import { type CollectionEntry, render } from 'astro:content'
 import { ulid } from 'ulid'
-import ImageDialog from '@/components/common/ImageDialog.astro'
 
 interface Props {
   history: CollectionEntry<'history'>
@@ -12,7 +12,7 @@ interface Props {
 
 const { history } = Astro.props
 
-const { Content } = await history.render()
+const { Content } = await render(history)
 const id = ulid()
 ---
 

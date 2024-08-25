@@ -3,7 +3,7 @@ import Prose from '@/components/common/Prose.astro'
 import { SITE } from '@/config.mjs'
 import { formatDate } from '@/utils'
 import { Picture } from 'astro:assets'
-import type { CollectionEntry } from 'astro:content'
+import { type CollectionEntry, render } from 'astro:content'
 
 interface Props {
   news: CollectionEntry<'news'>
@@ -11,7 +11,7 @@ interface Props {
 
 const { news } = Astro.props
 
-const { Content } = await news.render()
+const { Content } = await render(news)
 ---
 
 <div
