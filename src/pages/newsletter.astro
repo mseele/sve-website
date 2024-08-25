@@ -110,26 +110,20 @@ const meta: MetaSEO = {
 
 <script>
   import { manageSubscription } from '@/api/newsletter'
+  import { checkRequiredInput, clearCustomValidityOnInput } from '@/client/forms'
   import { notify } from '@/client/notifications'
 
   const form = document.querySelector<HTMLFormElement>('#newsletter-form')
   const input = form?.querySelector<HTMLInputElement>('#email')
 
-  // clear custom validity message for empty input
-  input?.addEventListener('input', function () {
-    if (input && input.value.trim().length > 0) {
-      input.setCustomValidity('') // Setzt die Nachricht zurück
-    }
-  })
+  clearCustomValidityOnInput(input)
 
   // handle form submission
   form?.addEventListener('submit', async (event) => {
     event.preventDefault()
 
-    // show error message if input is empty
-    if (input && input.value.trim() === '') {
-      input.setCustomValidity('Bitte gib eine gültige E-Mail-Adresse ein.')
-      return input.reportValidity()
+    if (!checkRequiredInput(input, 'Bitte gib eine gültige E-Mail-Adresse ein.')) {
+      return false
     }
 
     const subscribeInput = form?.querySelector<HTMLInputElement>('#abo')
