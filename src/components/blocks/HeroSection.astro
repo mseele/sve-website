@@ -69,14 +69,14 @@ const { id, title, description, primaryButton, secondaryButton, image } = Astro.
           <div class="-ml-6 overflow-hidden rounded-3xl md:-mr-72 lg:mr-0">
             <Picture
               src={image.light}
-              class="h-full object-cover object-left dark:hidden"
+              class="h-full object-cover object-left dark:hidden lg:object-center"
               alt={image.alt}
               widths={SITE.imageWidths}
               formats={SITE.imageFormats}
             />
             <Picture
               src={image.dark}
-              class="hidden h-full object-cover object-left dark:block"
+              class="hidden h-full object-cover object-left dark:block lg:object-center"
               alt={image.alt}
               widths={SITE.imageWidths}
               formats={SITE.imageFormats}
