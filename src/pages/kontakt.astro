@@ -1,0 +1,396 @@
+---
+import HeaderSection from '@/components/blocks/HeaderSection.astro'
+import Container from '@/components/common/Container.astro'
+import Notification from '@/components/common/Notification.astro'
+import Select from '@/components/controls/Select.astro'
+import Layout from '@/layouts/Layout.astro'
+import type { Coach, Contact, MetaSEO, PersonalData, Team } from '@/types'
+import teams from '@/data/teams'
+import ContactCard, {
+  ContactMethodType,
+  type ContactInfo,
+  type ContactMethod
+} from '@/components/blocks/ContactCard.astro'
+
+const groups = [
+  { key: 'herren' as const, label: 'Herrenfussball' },
+  { key: 'frauen' as const, label: 'Frauenfussball' },
+  { key: 'jugend_herren' as const, label: 'Jugendfussball (männlich)' },
+  { key: 'jugend_frauen' as const, label: 'Jugendfussball (weiblich)' },
+  { key: 'kinder' as const, label: 'Kinderfussball' },
+  { key: 'volleyball' as const, label: 'Volleyball' }
+]
+
+const teamOptions = groups.flatMap((group) => {
+  return teams[group.key].map((team: Team) => ({
+    value: team.key,
+    label: `${group.label} - ${team.team}`
+  }))
+})
+
+interface ContactCardInput {
+  identifier: string
+  description: string
+  contactList: ContactInfo[]
+  recipientTitle?: string
+  recipients: { value: string; label: string }[]
+}
+
+const contactCardInputs: ContactCardInput[] = [
+  {
+    identifier: 'kunstrasen',
+    description:
+      'Über diese Kanäle kannst Du eine Buchungsanfrage für unseren Kunstrasenplatz starten. Unser Ansprechpartner setzt sich dann direkt mit Dir in Verbindung und klärt alle Details.',
+    contactList: [
+      {
+        title: 'Ansprechpartner Johannes Seeger',
+        contactMethods: [
+          {
+            methodType: ContactMethodType.Phone,
+            label: '0173 4205370',
+            url: 'tel:+491734205370'
+          },
+          {
+            methodType: ContactMethodType.Email,
+            label: 'kunstrasen@sv-eutingen.de',
+            url: 'mailto:kunstrasen@sv-eutingen.de'
+          },
+          {
+            methodType: ContactMethodType.WhatsApp,
+            label: 'WhatsApp',
+            url: 'https://wa.me/491734205370'
+          }
+        ]
+      }
+    ],
+    recipients: [{ value: 'kunstrasen@sv-eutingen.de', label: 'Kunstrasen' }]
+  },
+  {
+    identifier: 'fitnessEvents',
+    description:
+      'Du hast Fragen rund um unsere Fitnesskurse oder zu den Events? Dann nutze diese Kanäle um direkt mit den zuständigen Personen bei uns im Verein Kontakt aufzunehmen. Wir bearbeiten Dein Anliegen schnellstmöglich.',
+    contactList: [
+      {
+        title: 'Fitnessangebot',
+        contactMethods: [
+          {
+            methodType: ContactMethodType.Email,
+            label: 'fitness@sv-eutingen.de',
+            url: 'mailto:fitness@sv-eutingen.de'
+          }
+        ]
+      },
+      {
+        title: 'Eventangebot',
+        contactMethods: [
+          {
+            methodType: ContactMethodType.Email,
+            label: 'events@sv-eutingen.de',
+            url: 'mailto:events@sv-eutingen.de'
+          }
+        ]
+      }
+    ],
+    recipientTitle: 'Um welches Angebot geht es?',
+    recipients: [
+      { value: 'fitness@sv-eutingen.de', label: 'Fitness' },
+      { value: 'events@sv-eutingen.de', label: 'Event' }
+    ]
+  },
+  {
+    identifier: 'restaurant',
+    description:
+      'Du hast Fragen oder Buchungswünsche rund um unsere Gaststätte Auszeit? Über diese Kanäle kannst Du direkt mit unseren Pächtern in Kontakt treten. Wir freuen uns, Dich in der "Auszeit" begrüßen zu dürfen.',
+    contactList: [
+      {
+        title: 'Gastwirt Micha Gruidl',
+        contactMethods: [
+          {
+            methodType: ContactMethodType.Phone,
+            label: '07459 1204',
+            url: 'tel:+4974591204'
+          },
+          {
+            methodType: ContactMethodType.Email,
+            label: 'ingo1508@gmx.de',
+            url: 'mailto:ingo1508@gmx.de'
+          }
+        ]
+      }
+    ],
+    recipients: [{ value: 'ingo1508@gmx.de', label: 'Auszeit' }]
+  },
+  {
+    identifier: 'partnerschaft',
+    description:
+      'Du hast Fragen rund ums Sponsoring oder zur Bandenwerbung? Dann nutze diese Kanäle um direkt mit den zuständigen Personen bei uns im Verein Kontakt aufzunehmen. Wir bearbeiten Dein Anliegen schnellstmöglich.',
+    contactList: [
+      {
+        title: 'Partnerschaft',
+        contactMethods: [
+          {
+            methodType: ContactMethodType.Phone,
+            label: '0176 30774678',
+            url: 'tel:+4917630774678'
+          },
+          {
+            methodType: ContactMethodType.Email,
+            label: 'vorstand@sv-eutingen.de',
+            url: 'mailto:vorstand@sv-eutingen.de'
+          },
+          {
+            methodType: ContactMethodType.WhatsApp,
+            label: 'WhatsApp',
+            url: 'https://wa.me/4917630774678'
+          }
+        ]
+      },
+      {
+        title: 'Bandenwerbung',
+        contactMethods: [
+          {
+            methodType: ContactMethodType.Phone,
+            label: '0176 30774678',
+            url: 'tel:+4917630774678'
+          },
+          {
+            methodType: ContactMethodType.Email,
+            label: 'vorstand@sv-eutingen.de',
+            url: 'mailto:vorstand@sv-eutingen.de'
+          },
+          {
+            methodType: ContactMethodType.WhatsApp,
+            label: 'WhatsApp',
+            url: 'https://wa.me/4917630774678'
+          }
+        ]
+      }
+    ],
+    recipientTitle: 'Um welches Thema geht es?',
+    recipients: [
+      { value: 'vorstand@sv-eutingen.de', label: 'Partnerschaft' },
+      { value: 'vorstand@sv-eutingen.de', label: 'Bandenwerbung' }
+    ]
+  },
+  {
+    identifier: 'other',
+    description:
+      'Bei allen anderen Themen und Anliegen in Zusammenhang mit unserem Verein kannst Du diese Kanäle nutzen. Wir bearbeiten Dein Anliegen schnellstmöglich.',
+    contactList: [
+      {
+        title: 'Allgemein',
+        contactMethods: [
+          {
+            methodType: ContactMethodType.Email,
+            label: 'info@sv-eutingen.de',
+            url: 'mailto:info@sv-eutingen.de'
+          }
+        ]
+      }
+    ],
+    recipients: [{ value: 'info@sv-eutingen.de', label: 'Allgemein' }]
+  }
+]
+
+contactCardInputs.push(
+  ...groups.flatMap((group) => {
+    return teams[group.key].map((team: Team) => {
+      const contactList: ContactInfo[] = []
+      const recipients = []
+      if (team.coach?.email) {
+        const title = fullyQualifiedCoachName(team.coach)
+        contactList.push({
+          title,
+          contactMethods: createContactMethods(team.coach)
+        })
+        recipients.push({
+          value: team.coach.email,
+          label: title
+        })
+      }
+      if (team.contact?.email) {
+        const title = fullyQualifiedContactName(team.contact)
+        contactList.push({
+          title,
+          contactMethods: createContactMethods(team.contact)
+        })
+        recipients.push({
+          value: team.contact.email,
+          label: title
+        })
+      }
+      return {
+        identifier: team.key,
+        description:
+          'Unsere Ansprechpartner stehen Dir für sämtliche Fragen rund um unseren Spielbetrieb zur Verfügung. Du erreichst Sie über folgende Kanäle oder kannst Ihnen ganz einfach eine Nachricht per Kontaktformular senden.',
+        contactList: contactList,
+        recipientTitle: 'Wenn möchtest du kontaktieren?',
+        recipients
+      }
+    })
+  })
+)
+
+function createContactMethods(data: PersonalData): ContactMethod[] {
+  const contactMethods: ContactMethod[] = []
+  if (data.phone) {
+    contactMethods.push({
+      methodType: ContactMethodType.Phone,
+      label: data.phone.formatted,
+      url: 'tel:' + data.phone.raw
+    })
+  }
+  if (data.mobile) {
+    contactMethods.push({
+      methodType: ContactMethodType.Phone,
+      label: data.mobile.formatted,
+      url: 'tel:' + data.mobile.raw
+    })
+  }
+  if (data.email) {
+    contactMethods.push({
+      methodType: ContactMethodType.Email,
+      label: data.email,
+      url: 'mailto:' + data.email
+    })
+  }
+  if (data.mobile) {
+    contactMethods.push({
+      methodType: ContactMethodType.WhatsApp,
+      label: 'WhatsApp',
+      url: 'https://wa.me/' + data.mobile.raw.substring(1)
+    })
+  }
+  return contactMethods
+}
+
+function fullyQualifiedCoachName(coach: Coach) {
+  const prefix = coach.title || 'Trainer'
+  return prefix + ' ' + coach.name
+}
+
+function fullyQualifiedContactName(contact: Contact) {
+  return contact.title + ' ' + contact.name
+}
+
+// TODO: add custom meta image
+const meta: MetaSEO = {
+  title: 'Kontakt',
+  description:
+    'Kontaktiere den SV Eutingen direkt über unser Formular. Wähle die passende Kategorie aus, und wir leiten dein Anliegen schnell an die richtige Person weiter. Wir freuen uns, von dir zu hören!'
+}
+---
+
+<Layout {meta}>
+  <HeaderSection
+    title="Kontakt"
+    description="Nutze unser Kontaktformular, um direkt die richtige Ansprechperson in unserem Verein zu erreichen. Wähle einfach die passende Kategorie für dein Anliegen aus, und wir kümmern uns schnellstmöglich darum. Wir freuen uns auf deine Nachricht!"
+  />
+  <div class="-mt-10 pb-16">
+    <Container>
+      <div class="m-auto space-y-10 md:w-8/12 lg:w-7/12">
+        <Select
+          id="contact"
+          name="contact"
+          label="Ich möchte"
+          values={[
+            { value: '', label: '...', selected: true, disabled: true },
+            { value: 'team', label: 'Kontakt zu einer Mannschaft herstellen' },
+            { value: 'kunstrasen', label: 'den Kunstrasen buchen' },
+            {
+              value: 'fitnessEvents',
+              label: 'Kontakt zum Thema Fitness/Eventangebote aufnehmen'
+            },
+            {
+              value: 'restaurant',
+              label: 'Kontakt zur Gaststätte "Auszeit" aufnehmen'
+            },
+            { value: 'partnerschaft', label: 'Kontakt zum Thema Partnerschaft aufnehmen' },
+            { value: 'other', label: 'ein anderes Thema besprechen' }
+          ]}
+        />
+        <Select
+          id="team"
+          name="team"
+          label="Welche Mannschaft möchtest du kontaktieren?"
+          values={[{ value: '', label: '...', selected: true, disabled: true }, ...teamOptions]}
+          class="hidden"
+        />
+      </div>
+    </Container>
+  </div>
+  <div>
+    <Container>
+      {
+        contactCardInputs.map((contactCardInput) => (
+          <ContactCard
+            identifier={contactCardInput.identifier}
+            description={contactCardInput.description}
+            contactList={contactCardInput.contactList}
+            recipientTitle={contactCardInput.recipientTitle}
+            recipients={contactCardInput.recipients}
+          />
+        ))
+      }
+    </Container>
+  </div>
+  <Notification />
+</Layout>
+
+<script>
+  const contactInput = document.querySelector<HTMLSelectElement>('#contact')
+  const teamSelect = document.querySelector<HTMLDivElement>('[data-field="team"]')
+  const teamInput = teamSelect?.querySelector<HTMLSelectElement>('select')
+
+  if (contactInput && teamSelect && teamInput) {
+    const handleContactInputChange = () => {
+      if (contactInput.value === 'team') {
+        teamSelect.classList.remove('hidden')
+
+        // Prefill team select with query parameters if available
+        const query = new URLSearchParams(window.location.search)
+        const value = query.get('team')
+        if (value) {
+          teamInput.value = value
+          teamInput.dispatchEvent(new Event('change'))
+        }
+      } else {
+        teamSelect.classList.add('hidden')
+        teamInput.value = ''
+        showContactCard(contactInput.value)
+      }
+    }
+
+    contactInput.addEventListener('change', handleContactInputChange)
+
+    teamInput.addEventListener('change', () => {
+      showContactCard(teamInput.value)
+    })
+
+    // prefill form with query params
+    document.addEventListener('DOMContentLoaded', () => {
+      const query = new URLSearchParams(window.location.search)
+      const value = query.get('auswahl')
+      if (value) {
+        contactInput.value = value
+        handleContactInputChange()
+      }
+    })
+  }
+
+  function showContactCard(identifier: string) {
+    const contactCards = document.querySelectorAll<HTMLDivElement>('#contact-card[data-identifier]')
+    for (const contactCard of contactCards) {
+      console.log(
+        identifier,
+        contactCard.dataset.identifier,
+        contactCard.dataset.identifier === identifier ? 'show-contact-card' : 'hide-contact-card'
+      )
+      contactCard.dispatchEvent(
+        new CustomEvent(
+          contactCard.dataset.identifier === identifier ? 'show-contact-card' : 'hide-contact-card'
+        )
+      )
+    }
+  }
+</script>
