@@ -6,13 +6,14 @@ interface Props extends HTMLAttributes<'select'> {
   name: string
   label?: string
   values: { value: string; label: string; selected?: boolean; disabled?: boolean }[]
+  hidden?: boolean
   class?: string
 }
 
-const { id, name, label, values, class: className, ...attrs } = Astro.props
+const { id, name, label, values, hidden, class: className, ...attrs } = Astro.props
 ---
 
-<div class:list={['relative space-y-2.5', className]} data-field={id}>
+<div class:list={['relative space-y-2.5', hidden && 'hidden', className]} data-field={id}>
   <label class="text-gray-900 dark:text-white" for={id}>{label}</label>
   <div class="relative">
     <svg
@@ -31,6 +32,7 @@ const { id, name, label, values, class: className, ...attrs } = Astro.props
       id={id}
       name={name}
       class="h-9 w-full appearance-none rounded-xl border border-gray-300 bg-white pl-3 pr-7 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-gray-950/5 outline-2 -outline-offset-1 invalid:border-red-500 invalid:text-red-500 focus:outline focus:outline-primary invalid:focus:outline-red-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:shadow-gray-950/30 dark:invalid:text-red-500"
+      hidden={hidden}
       {...attrs}
     >
       {
