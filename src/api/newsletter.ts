@@ -1,4 +1,4 @@
-import { BACKEND_API } from "astro:env/client"
+import { BACKEND_API } from 'astro:env/client'
 
 export async function manageSubscription(
   subscribe: boolean,
