@@ -381,11 +381,6 @@ const meta: MetaSEO = {
   function showContactCard(identifier: string) {
     const contactCards = document.querySelectorAll<HTMLDivElement>('#contact-card[data-identifier]')
     for (const contactCard of contactCards) {
-      console.log(
-        identifier,
-        contactCard.dataset.identifier,
-        contactCard.dataset.identifier === identifier ? 'show-contact-card' : 'hide-contact-card'
-      )
       contactCard.dispatchEvent(
         new CustomEvent(
           contactCard.dataset.identifier === identifier ? 'show-contact-card' : 'hide-contact-card'
