@@ -110,6 +110,7 @@ const meta: MetaSEO = {
 
 <script>
   import { manageSubscription } from '@/api/newsletter'
+  import { notify } from '@/client/notifications'
 
   const form = document.querySelector<HTMLFormElement>('#newsletter-form')
   const input = form?.querySelector<HTMLInputElement>('#email')
@@ -178,16 +179,4 @@ const meta: MetaSEO = {
       )
     }
   })
-
-  function notify(title: string, message: string, error = false) {
-    document.dispatchEvent(
-      new CustomEvent('show-notification', {
-        detail: {
-          title,
-          message,
-          error
-        }
-      })
-    )
-  }
 </script>
