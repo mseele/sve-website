@@ -1,11 +1,8 @@
 ---
 import HeaderSection from '@/components/blocks/HeaderSection.astro'
+import NewsletterCard from '@/components/blocks/NewsletterCard.astro'
 import Container from '@/components/common/Container.astro'
 import Notification from '@/components/common/Notification.astro'
-import ButtonSwitch from '@/components/controls/ButtonSwitch.astro'
-import Input from '@/components/controls/Input.astro'
-import SubmitButton from '@/components/controls/SubmitButton.astro'
-import Switch from '@/components/controls/Switch.astro'
 import Layout from '@/layouts/Layout.astro'
 import type { MetaSEO } from '@/types'
 
@@ -24,62 +21,7 @@ const meta: MetaSEO = {
   />
   <div>
     <Container>
-      <div class="grid justify-center">
-        <div
-          class="relative max-w-lg rounded-3xl border border-gray-100 bg-white shadow-2xl shadow-gray-600/20 dark:border-white/10 dark:bg-gray-900 dark:shadow-none"
-        >
-          <div class="flex flex-col gap-6 divide-y p-10 dark:divide-gray-800">
-            <div class="space-y-10">
-              <h3 class="text-center text-2xl font-bold text-gray-900 dark:text-white">
-                Bleib auf dem Laufenden
-              </h3>
-              <form id="newsletter-form">
-                <ButtonSwitch id="abo" name="abo" left="Abonnieren" right="Abmelden" />
-                <Input
-                  class="mt-10"
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Deine E-Mail-Adresse"
-                />
-                <div class="mt-10 space-y-4">
-                  <Switch
-                    checked
-                    id="general"
-                    name="general"
-                    title="Allgemein"
-                    description="Info's rund um den SV Eutingen"
-                  />
-                  <Switch
-                    checked
-                    id="fitness"
-                    name="fitness"
-                    title="Fitness"
-                    description="Alles über unser Fitnessangebot"
-                  />
-                  <Switch
-                    checked
-                    id="events"
-                    name="events"
-                    title="Events"
-                    description="Neuigkeiten über unsere Events"
-                  />
-                </div>
-
-                <div class="mt-10 flex justify-center">
-                  <SubmitButton>Absenden</SubmitButton>
-                </div>
-                <p class="mt-6 text-sm text-gray-500 dark:text-gray-400">
-                  Wir nehmen Datenschutz sehr ernst. Informiere dich in unserer <a
-                    class="text-gray-600 underline duration-300 hover:text-primary dark:text-gray-400 dark:hover:text-white"
-                    href="/datenschutz">Datenschutzerklärung</a
-                  >.
-                </p>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+      <NewsletterCard />
     </Container>
   </div>
   <Notification />

@@ -1,0 +1,155 @@
+---
+import ButtonSwitch from '@/components/controls/ButtonSwitch.astro'
+import Input from '@/components/controls/Input.astro'
+import SubmitButton from '@/components/controls/SubmitButton.astro'
+import Switch from '@/components/controls/Switch.astro'
+
+interface Props {
+  description?: string
+  topic?: 'general' | 'fitness' | 'events'
+}
+
+const { description, topic } = Astro.props as Props
+---
+
+<div class="grid justify-center">
+  <div
+    class="relative max-w-lg rounded-3xl border border-gray-100 bg-white shadow-2xl shadow-gray-600/20 dark:border-white/10 dark:bg-gray-900 dark:shadow-none"
+  >
+    <div class="flex flex-col gap-6 divide-y p-10 dark:divide-gray-800">
+      <div class="space-y-10">
+        <h3 class="text-center text-2xl font-bold text-gray-900 dark:text-white">
+          Bleib auf dem Laufenden
+        </h3>
+        {
+          description && (
+            <p class="!mt-5 text-center text-gray-600 dark:text-white">{description}</p>
+          )
+        }
+        <form id="newsletter-form">
+          {!topic && <ButtonSwitch id="abo" name="abo" left="Abonnieren" right="Abmelden" />}
+          <Input
+            class="mt-10"
+            id="email"
+            name="email"
+            type="email"
+            placeholder="Deine E-Mail-Adresse"
+          />
+          {
+            !topic && (
+              <div class="mt-10 space-y-4">
+                <Switch
+                  checked
+                  id="general"
+                  name="general"
+                  title="Allgemein"
+                  description="Info's rund um den SV Eutingen"
+                />
+                <Switch
+                  checked
+                  id="fitness"
+                  name="fitness"
+                  title="Fitness"
+                  description="Alles über unser Fitnessangebot"
+                />
+                <Switch
+                  checked
+                  id="events"
+                  name="events"
+                  title="Events"
+                  description="Neuigkeiten über unsere Events"
+                />
+              </div>
+            )
+          }
+
+          {
+            topic && (
+              <>
+                <input type="hidden" id="abo" name="abo" checked />
+                <input type="hidden" id={topic} name={topic} checked />
+              </>
+            )
+          }
+
+          <div class="mt-10 flex justify-center">
+            <SubmitButton>{topic ? 'Anmelden' : 'Absenden'}</SubmitButton>
+          </div>
+          <p class="mt-6 text-sm text-gray-500 dark:text-gray-400">
+            Wir nehmen Datenschutz sehr ernst. Informiere dich in unserer <a
+              class="text-gray-600 underline duration-300 hover:text-primary dark:text-gray-400 dark:hover:text-white"
+              href="/datenschutz">Datenschutzerklärung</a
+            >.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { manageSubscription } from '@/api/forms'
+  import { checkRequiredInput, clearCustomValidityOnInput } from '@/client/forms'
+  import { notify } from '@/client/notifications'
+
+  const form = document.querySelector<HTMLFormElement>('#newsletter-form')
+  const input = form?.querySelector<HTMLInputElement>('#email')
+
+  clearCustomValidityOnInput(input)
+
+  // handle form submission
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    if (!checkRequiredInput(input, 'Bitte gib eine gültige E-Mail-Adresse ein.')) {
+      return false
+    }
+
+    const subscribeInput = form?.querySelector<HTMLInputElement>('#abo')
+    const generalCheckbox = form?.querySelector<HTMLInputElement>('#general')
+    const fitnessCheckbox = form?.querySelector<HTMLInputElement>('#fitness')
+    const eventsCheckbox = form?.querySelector<HTMLInputElement>('#events')
+
+    const subscribe = subscribeInput?.checked || false
+    const email = (input?.value || '').trim()
+    const general = generalCheckbox?.checked || false
+    const fitness = fitnessCheckbox?.checked || false
+    const events = eventsCheckbox?.checked || false
+
+    // check if at least one category is selected
+    if (!general && !fitness && !events) {
+      notify('Newsletter', 'Bitte wähle mindestens eine Newsletter-Kategorie aus.', true)
+      return false
+    }
+
+    let success = false
+    const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]')
+    try {
+      if (button) button.disabled = true
+      success = (await manageSubscription(subscribe, email, general, fitness, events)).ok
+      if (success) {
+        if (input) input.value = ''
+        if (subscribeInput) {
+          subscribeInput.checked = true
+          subscribeInput.dispatchEvent(new Event('change'))
+        }
+        if (generalCheckbox) generalCheckbox.checked = true
+        if (fitnessCheckbox) fitnessCheckbox.checked = true
+        if (eventsCheckbox) eventsCheckbox.checked = true
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      if (button) button.disabled = false
+    }
+    if (success) {
+      notify('Newsletter', 'Du hast dich erfolgreich für unseren Newsletter angemeldet.')
+    } else {
+      notify(
+        'Newsletter',
+        'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
+        true
+      )
+    }
+  })
+</script>
