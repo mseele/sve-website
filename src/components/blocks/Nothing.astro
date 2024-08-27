@@ -1,0 +1,41 @@
+---
+import { imageConfig, Picture } from 'astro:assets'
+import { SITE } from '@/config.mjs'
+import type { ThemedImage } from '@/types'
+
+interface Props {
+  title: string
+  image: ThemedImage
+}
+
+const { title, image } = Astro.props
+---
+
+<div class="mx-auto flex flex-col items-center gap-6 sm:w-4/5 md:w-full md:flex-row lg:gap-12">
+  <div class="md:w-1/2">
+    <Picture
+      src={image.light}
+      loading="lazy"
+      class="relative dark:hidden"
+      alt={image.alt}
+      widths={SITE.imageWidths}
+      formats={SITE.imageFormats}
+    />
+    <Picture
+      src={image.dark}
+      loading="lazy"
+      class="relative hidden dark:block"
+      alt={image.alt}
+      widths={SITE.imageWidths}
+      formats={SITE.imageFormats}
+    />
+  </div>
+  <div class="ml-auto h-full md:w-1/2">
+    <h3 class="text-2xl font-bold text-gray-900 dark:text-white md:text-3xl lg:text-4xl">
+      {title}
+    </h3>
+    <p class="my-12 text-gray-600 dark:text-gray-300">
+      <slot />
+    </p>
+  </div>
+</div>

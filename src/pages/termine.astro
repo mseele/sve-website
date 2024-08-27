@@ -6,9 +6,8 @@ import noAppointmentsLight from '@/assets/pages/termine-light.png'
 import noAppointmentsDark from '@/assets/pages/termine-dark.png'
 import Layout from '@/layouts/Layout.astro'
 import type { MetaSEO } from '@/types'
-import { SITE } from '@/config.mjs'
-import { Picture } from 'astro:assets'
 import Faqs from '@/components/common/Faqs.astro'
+import Nothing from '@/components/blocks/Nothing.astro'
 
 const appointments = await getAppointments()
 
@@ -40,40 +39,7 @@ const meta: MetaSEO = {
     <Container>
       <div class="text-gray-600 dark:text-gray-300">
         {
-          (appointments ?? []).length == 0 ? (
-            <div class="mx-auto flex flex-col items-center gap-6 sm:w-4/5 md:w-full md:flex-row lg:gap-12">
-              <div class="md:w-1/2">
-                <Picture
-                  src={noAppointmentsLight}
-                  loading="lazy"
-                  class="relative dark:hidden"
-                  alt="Aktuell keine Termine"
-                  widths={SITE.imageWidths}
-                  formats={SITE.imageFormats}
-                />
-                <Picture
-                  src={noAppointmentsDark}
-                  loading="lazy"
-                  class="relative hidden dark:block"
-                  alt="Aktuell keine Termine"
-                  widths={SITE.imageWidths}
-                  formats={SITE.imageFormats}
-                />
-              </div>
-              <div class="ml-auto h-full md:w-1/2">
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white md:text-3xl lg:text-4xl">
-                  Aktuell keine Termine
-                </h3>
-                <p class="my-12 text-gray-600 dark:text-gray-300">
-                  In der nächsten Zeit steht kein größerer Termin an. Bitte schaue regelmäßig
-                  vorbei, um über zukünftige Veranstaltungen informiert zu bleiben.
-                  <br />
-                  <br />
-                  Du kannst auch unseren Kalender abonnieren, um keine Neuigkeiten zu verpassen.
-                </p>
-              </div>
-            </div>
-          ) : (
+          appointments.length > 0 ? (
             <div class="flex justify-center">
               <div class="grid w-full max-w-3xl gap-6">
                 {appointments.map((appointment) => (
@@ -108,6 +74,21 @@ const meta: MetaSEO = {
                 ))}
               </div>
             </div>
+          ) : (
+            <Nothing
+              title="Aktuell keine Termine"
+              image={{
+                light: noAppointmentsLight,
+                dark: noAppointmentsDark,
+                alt: 'Aktuell keine Termine'
+              }}
+            >
+              In der nächsten Zeit steht kein größerer Termin an. Bitte schaue regelmäßig vorbei, um
+              über zukünftige Veranstaltungen informiert zu bleiben.
+              <br />
+              <br />
+              Du kannst auch unseren Kalender abonnieren, um keine Neuigkeiten zu verpassen.
+            </Nothing>
           )
         }
         <Faqs faqs={faqs} />
