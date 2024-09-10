@@ -38,7 +38,7 @@ const teams: Record<string, Team[]> = {
       league: 'Kreisliga B2',
       coach: {
         name: 'Marcel Dettling',
-        email: 'dettlingmarcel@web.de',
+        email: 'Marceldettling@gmx.de',
         mobile: {
           formatted: '0176 47864896',
           raw: '+4917647864896',
