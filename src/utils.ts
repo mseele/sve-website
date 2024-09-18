@@ -1,44 +1,79 @@
-import { format } from 'date-fns'
+import { differenceInMinutes, format, isSameDay, parseISO } from 'date-fns'
+import { formatInTimeZone } from 'date-fns-tz'
 import { de } from 'date-fns/locale'
-import moment, { type Moment } from 'moment'
+import numeral from 'numeral'
+import 'numeral/locales/de'
 import type { RawAppointment } from './types'
 
 const DATE_PATTERN = 'd. MMMM yyyy'
-const LONG_DATE_PATTERN = 'dd., D. MMM YYYY'
+const LONG_DATE_PATTERN = 'eee, d. MMM yyyy'
 const TIME_PATTERN = 'H:mm'
 
-moment.locale('de')
+numeral.locale('de')
+numeral.localeData('de').delimiters.thousands = '.'
 
 export function formatDate(date: Date) {
   return format(date, DATE_PATTERN, { locale: de })
 }
 
-export function formatDatespan(appointment: RawAppointment): string {
-  if (appointment.start_date && appointment.end_date) {
-    const start = moment(appointment.start_date)
-    const end = moment(appointment.end_date)
-    if (isEqualDate(start, end)) {
-      return start.format(LONG_DATE_PATTERN)
-    }
-    return start.format(LONG_DATE_PATTERN) + ' - ' + end.format(LONG_DATE_PATTERN)
-  }
-  const start = moment(appointment.start_date_time)
-  const end = moment(appointment.end_date_time)
-  if (isEqualDate(start, end) || isEqualDate(start, end.clone().subtract(1, 'minutes'))) {
-    return start.format(LONG_DATE_PATTERN)
-  }
-  return start.format(LONG_DATE_PATTERN) + ' - ' + end.format(LONG_DATE_PATTERN)
+export function formatDatetime(value: string): string {
+  return `${formatInTimeZone(value, 'UTC', `${LONG_DATE_PATTERN}, ${TIME_PATTERN}`, { locale: de })} Uhr`
 }
 
-function isEqualDate(start: Moment, end: Moment) {
-  return start.date() === end.date() && start.month() === end.month() && start.year() === end.year()
+export function formatDatespan(appointment: RawAppointment): string {
+  if (appointment.start_date && appointment.end_date) {
+    const start = parseISO(appointment.start_date)
+    const end = parseISO(appointment.end_date)
+    if (isSameDay(start, end)) {
+      return format(start, LONG_DATE_PATTERN, { locale: de })
+    }
+    return `${format(start, LONG_DATE_PATTERN, { locale: de })} - ${format(end, LONG_DATE_PATTERN, { locale: de })}`
+  }
+  if (appointment.start_date_time && appointment.end_date_time) {
+    const start = parseISO(appointment.start_date_time)
+    const end = parseISO(appointment.end_date_time)
+
+    if (isSameDay(start, end) || differenceInMinutes(end, start) === 1) {
+      return format(start, LONG_DATE_PATTERN)
+    }
+    return format(start, LONG_DATE_PATTERN) + ' - ' + format(end, LONG_DATE_PATTERN)
+  }
+  throw new Error('Appointment has no start or end date')
 }
 
 export function formatTimespan(appointment: RawAppointment) {
   if (appointment.start_date && appointment.end_date) {
     return 'ganztägig'
   }
-  const start = moment(appointment.start_date_time)
-  const end = moment(appointment.end_date_time)
-  return start.format(TIME_PATTERN) + ' - ' + end.format(TIME_PATTERN) + ' Uhr'
+  if (appointment.start_date_time && appointment.end_date_time) {
+    const start = parseISO(appointment.start_date_time)
+    const end = parseISO(appointment.end_date_time)
+    return `${format(start, TIME_PATTERN, { locale: de })} - ${format(end, TIME_PATTERN, { locale: de })} Uhr`
+  }
+  throw new Error('Appointment has no start or end date time')
+}
+
+export function formatDuration(value: number): string {
+  const hours = Math.floor(value / 60)
+  const minutes = value % 60
+  let string = ''
+  if (hours > 1) {
+    string += hours + ' Stunden'
+  } else if (hours > 0) {
+    string += hours + ' Stunde'
+  }
+  if (string && minutes > 0) {
+    string += ' und '
+  }
+  if (minutes > 0) {
+    string += minutes + ' Minuten'
+  }
+  return string
+}
+
+export function formatCurrency(value: number): string {
+  if (typeof value !== 'number' && Number.isNaN(Number(value))) {
+    return value
+  }
+  return numeral(value).format('0,0[.]00 $')
 }
