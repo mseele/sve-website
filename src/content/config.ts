@@ -1,5 +1,7 @@
-import { z, defineCollection } from 'astro:content'
+import { loadEvents } from '@/api/events'
+import { EventType } from '@/types'
 import { glob } from 'astro/loaders'
+import { defineCollection, type SchemaContext, z } from 'astro:content'
 
 const news = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/data/news' }),
@@ -31,7 +33,35 @@ const history = defineCollection({
     })
 })
 
+const eventSchema = ({ image }: SchemaContext) =>
+  z.object({
+    id: z.string(),
+    name: z.string(),
+    image: z.any(), //FIXME: image(),
+    shortDescription: z.string(),
+    description: z.string(),
+    location: z.string(),
+    dates: z.array(z.string()),
+    duration: z.string(),
+    priceMember: z.string(),
+    priceNonMember: z.string(),
+    altBookingButtonText: z.string().optional(),
+    externalOperator: z.boolean()
+  })
+
+const fitness = defineCollection({
+  loader: async () => await loadEvents(EventType.Fitness),
+  schema: eventSchema
+})
+
+const events = defineCollection({
+  loader: async () => await loadEvents(EventType.Events),
+  schema: eventSchema
+})
+
 export const collections = {
   news,
-  history
+  history,
+  fitness,
+  events
 }

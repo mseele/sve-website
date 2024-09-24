@@ -1,0 +1,432 @@
+---
+import Input from '@/components//controls/Input.astro'
+import Container from '@/components/common/Container.astro'
+import Notification from '@/components/common/Notification.astro'
+import Checkbox from '@/components/controls/Checkbox.astro'
+import SubmitButton from '@/components/controls/SubmitButton.astro'
+import Textarea from '@/components/controls/Textarea.astro'
+import { Icon } from 'astro-icon/components'
+import type { CollectionEntry } from 'astro:content'
+import HeroSection from './HeroSection.astro'
+import NewsletterCard from './NewsletterCard.astro'
+
+interface Props<T extends 'events' | 'fitness'> {
+  type: T
+  entry: CollectionEntry<T>
+  newsletterDescription: string
+}
+
+const { type, entry, newsletterDescription } = Astro.props as Props<'events' | 'fitness'>
+
+const details: {
+  id: string
+  icon: string
+  title: string
+  label: string
+}[] = []
+
+details.push({
+  id: 'availability',
+  icon: 'mdi:ticket-confirmation-outline',
+  title: 'Verfügbarkeit',
+  label: 'Verfügbarkeit wird geprüft'
+})
+
+details.push({
+  id: 'dates',
+  icon: 'mdi:calendar-month-outline',
+  title: 'Termine',
+  label: entry.data.dates.length == 1 ? entry.data.dates[0] : `${entry.data.dates.length} Termine`
+})
+
+details.push({
+  id: 'duration',
+  icon: 'mdi:clock-outline',
+  title: 'Dauer',
+  label: entry.data.duration
+})
+
+if (entry.data.priceMember === entry.data.priceNonMember) {
+  if (entry.data.priceMember === '0 €') {
+    details.push({
+      id: 'price',
+      icon: 'mdi:cash',
+      title: 'Preis',
+      label: 'Kostenlos'
+    })
+  } else {
+    details.push({
+      id: 'price',
+      icon: 'mdi:cash',
+      title: 'Preis pro Teilnehmer',
+      label: entry.data.priceMember
+    })
+  }
+} else {
+  details.push({
+    id: 'price',
+    title: 'Preis für Mitglieder',
+    icon: 'mdi:cash',
+    label: entry.data.priceMember
+  })
+  details.push({
+    id: 'price',
+    title: 'Preis für Nicht-Mitglieder',
+    icon: 'mdi:cash-multiple',
+    label: entry.data.priceNonMember
+  })
+}
+
+if (entry.data.externalOperator) {
+  details.push({
+    id: 'organiser',
+    title: 'Veranstalter',
+    icon: 'mdi:account-multiple',
+    label: 'Förderverein SV Eutingen 1947 e.V.'
+  })
+}
+
+details.push({
+  id: 'location',
+  title: 'Standort',
+  icon: 'mdi:map-marker-outline',
+  label: entry.data.location
+})
+---
+
+<>
+  <div data-identifier={entry.id}>
+    <HeroSection
+      title={entry.data.name}
+      description={entry.data.shortDescription}
+      primaryButton={{ label: 'Mehr Infos', to: '#beschreibung' }}
+      secondaryButton={{ label: 'Anmeldung', to: '#anmeldung' }}
+      image={{ light: entry.data.image, dark: entry.data.image, alt: entry.data.name }}
+    />
+    <div class="pb-16 pt-6" id="beschreibung">
+      <Container>
+        <div class="text-gray-600">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+            Beschreibung
+          </h2>
+          <div class="mt-12 text-gray-600 dark:text-gray-300" set:html={entry.data.description} />
+        </div>
+      </Container>
+    </div>
+    <div class="pb-16" id="details">
+      <Container>
+        <div class="text-gray-600">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+            Details
+          </h2>
+          <div class="space-y-4 divide-y divide-gray-100 dark:divide-gray-800">
+            {
+              details.map((item) => {
+                return (
+                  <div
+                    class="mt-8 flex gap-4 pt-4 first:pt-0 md:items-center"
+                    title={item.title}
+                    aria-label={item.title}
+                  >
+                    <div class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-800">
+                      <Icon
+                        class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300"
+                        name={item.icon}
+                      />
+                    </div>
+                    <div class="w-5/6">
+                      <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                        <span data-title={item.id}>{item.title}</span>
+                      </h3>
+                      <p class="text-gray-500 dark:text-gray-400">
+                        <span data-label={item.id}>{item.label}</span>
+                      </p>
+                    </div>
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
+      </Container>
+    </div>
+    {
+      entry.data.dates.length > 0 && (
+        <div class="pb-16">
+          <Container>
+            <div class="text-gray-600">
+              <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+                Termine
+              </h2>
+              {
+                <div class="mt-2 grid grid-cols-1 text-gray-600 dark:text-gray-300 sm:grid-cols-2">
+                  <ul>
+                    {entry.data.dates
+                      .slice(0, Math.ceil(entry.data.dates.length / 2))
+                      .map((date) => (
+                        <li class="mt-6 flex items-center">
+                          <Icon class="mr-2 size-6 sm:size-8" name="mdi:calendar-blank" />
+                          <span>{date}</span>
+                        </li>
+                      ))}
+                  </ul>
+                  <ul>
+                    {entry.data.dates.slice(Math.ceil(entry.data.dates.length / 2)).map((date) => (
+                      <li class="mt-6 flex items-center">
+                        <Icon class="mr-2 size-6 sm:size-8" name="mdi:calendar-blank" />
+                        <span>{date}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              }
+            </div>
+          </Container>
+        </div>
+      )
+    }
+    <div id="anmeldung" class="hidden">
+      <Container>
+        <div class="text-gray-600">
+          <h2
+            id="title"
+            class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl"
+          >
+          </h2>
+          <p id="description" class="mt-5 text-lg text-gray-600 dark:text-gray-400"></p>
+          <div
+            id="booking-card"
+            class="lg:mt-15 relative mt-10 rounded-3xl border border-gray-100 bg-white shadow-2xl shadow-gray-600/20 dark:border-white/10 dark:bg-gray-900 dark:shadow-none"
+          >
+            <div
+              class="flex flex-col divide-y p-10 dark:divide-gray-800 lg:flex-row lg:gap-12 lg:divide-x lg:divide-y-0 lg:p-12"
+            >
+              <div class="flex w-full flex-col gap-10">
+                <form id="form" class="grid gap-6 md:grid-cols-2 md:gap-10 lg:gap-6">
+                  <Input id="firstname" name="firstname" label="Vorname" />
+                  <Input id="lastname" name="lastname" label="Nachname" />
+                  <Input id="street" name="street" label="Straße & Hausnummer" />
+                  <Input id="plz" name="plz" label="PLZ & Wohnort" />
+                  <Input id="email" name="email" label="E-Mail" type="email" />
+                  <Input id="phone" name="phone" label="Telefon (optional)" type="tel" />
+                  <Textarea
+                    id="comment"
+                    name="comment"
+                    label="Kommentar (optional)"
+                    class="md:col-span-2"
+                  />
+                  <Checkbox
+                    id="member"
+                    name="member"
+                    title="Ich bin Mitglied beim SV Eutingen 1947 e.V."
+                  />
+                  <Checkbox
+                    id="newsletter"
+                    name="newsletter"
+                    title={type === 'events'
+                      ? 'Ich möchte über zukünftige Events per E-Mail informiert werden'
+                      : 'Ich möchte über zukünftige Kurse per E-Mail informiert werden'}
+                  />
+                  <Checkbox
+                    id="consent"
+                    name="consent"
+                    title="Ich stimme der Verarbeitung meiner personenbezogenen Daten zu"
+                    class="md:col-span-2"
+                  />
+                  <div class="flex justify-center md:col-span-2">
+                    <SubmitButton>
+                      {
+                        entry.data.altBookingButtonText ? (
+                          entry.data.altBookingButtonText
+                        ) : (
+                          <span id="button" />
+                        )
+                      }
+                    </SubmitButton>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div id="newsletter-card" class="mt-20 hidden">
+            <NewsletterCard description={newsletterDescription} topic={type} />
+          </div>
+        </div>
+      </Container>
+    </div>
+  </div>
+  <Notification />
+</>
+
+<script>
+  import { bookEvent, loadEventAvailability } from '@/api/events'
+  import { checkRequiredInput, clearCustomValidityOnInput } from '@/client/forms'
+  import { notify } from '@/client/notifications'
+  import type { EventAvailability } from '@/types'
+
+  const id = document
+    .querySelector<HTMLDivElement>('[data-identifier]')
+    ?.getAttribute('data-identifier')
+  if (id) {
+    const callback = (availability: EventAvailability) => {
+      const element = document.querySelector<HTMLDivElement>('[data-label="availability"]')
+      if (element) {
+        element.innerHTML = availability.message
+      }
+      const container = document.querySelector<HTMLDivElement>('#anmeldung')
+      if (container) {
+        let title: string | undefined
+        let description: string | undefined
+        let button: string | undefined
+
+        if (availability.isWaitingList && availability.availableSlots > 0) {
+          title = 'Warteliste'
+          description =
+            'Leider sind schon alle Plätze belegt. Gerne kannst Du Dich auf die Warteliste setzen lassen. Wir benachrichtigen Dich, wenn Plätze frei werden.'
+          button = 'Auf die Warteliste setzen'
+        } else if (availability.availableSlots === -1 || availability.availableSlots > 0) {
+          title = 'Anmeldung'
+          button = 'Kostenpflichtig buchen'
+        } else {
+          title = 'Ausgebucht'
+          description =
+            'Leider sind schon alle Plätze belegt und die Warteliste ist voll. Wir planen aber schon die nächste Runde. Schaue bald wieder vorbei.'
+        }
+
+        const titleElement = container.querySelector<HTMLHeadingElement>('#title')
+        if (titleElement) {
+          titleElement.innerHTML = title
+        }
+        const descriptionElement = container.querySelector<HTMLHeadingElement>('#description')
+        if (descriptionElement) {
+          if (description) {
+            descriptionElement.innerHTML = description
+            descriptionElement.classList.remove('hidden')
+          } else {
+            descriptionElement.classList.add('hidden')
+          }
+        }
+
+        if (button) {
+          container.querySelector<HTMLDivElement>('#booking-card')?.classList.remove('hidden')
+          container.querySelector<HTMLDivElement>('#newsletter-card')?.classList.add('hidden')
+
+          const buttonElement = container.querySelector<HTMLSpanElement>('#button')
+          if (buttonElement) {
+            buttonElement.innerHTML = button
+          }
+        } else {
+          container.querySelector<HTMLDivElement>('#booking-card')?.classList.add('hidden')
+          container.querySelector<HTMLDivElement>('#newsletter-card')?.classList.remove('hidden')
+        }
+
+        container.classList.remove('hidden')
+      }
+    }
+
+    const form = document.querySelector<HTMLFormElement>('#form')
+    if (form) {
+      const firstname = form.querySelector<HTMLInputElement>('#firstname')
+      clearCustomValidityOnInput(firstname)
+
+      const lastname = form.querySelector<HTMLInputElement>('#lastname')
+      clearCustomValidityOnInput(lastname)
+
+      const street = form.querySelector<HTMLInputElement>('#street')
+      clearCustomValidityOnInput(street)
+
+      const plz = form.querySelector<HTMLInputElement>('#plz')
+      clearCustomValidityOnInput(plz)
+
+      const email = form.querySelector<HTMLInputElement>('#email')
+      clearCustomValidityOnInput(email)
+
+      const phone = form.querySelector<HTMLInputElement>('#phone')
+
+      const comment = form.querySelector<HTMLTextAreaElement>('#comment')
+
+      const member = form.querySelector<HTMLInputElement>('#member')
+
+      const newsletter = form.querySelector<HTMLInputElement>('#newsletter')
+
+      const consent = form.querySelector<HTMLInputElement>('#consent')
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault()
+
+        if (!checkRequiredInput(firstname, 'Bitte gib deinen Vornamen ein.')) {
+          return false
+        }
+
+        if (!checkRequiredInput(lastname, 'Bitte gib deinen Nachnamen ein.')) {
+          return false
+        }
+
+        if (!checkRequiredInput(street, 'Bitte gib eine gültige Straße & Hausnummer ein.')) {
+          return false
+        }
+
+        if (!checkRequiredInput(plz, 'Bitte gib eine gültige PLZ & Wohnort ein.')) {
+          return false
+        }
+
+        if (!checkRequiredInput(email, 'Bitte gib eine gültige E-Mail-Adresse ein.')) {
+          return false
+        }
+
+        if (consent && !consent.checked) {
+          consent.setCustomValidity(
+            'Bitte stimme der Verarbeitung deiner personenbezogenen Daten zu.'
+          )
+          return consent.reportValidity()
+        }
+
+        const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]')
+        try {
+          if (button) button.disabled = true
+          const response = await bookEvent(
+            {
+              event_id: id,
+              first_name: firstname!.value,
+              last_name: lastname!.value,
+              street: street!.value,
+              city: plz!.value,
+              email: email!.value,
+              phone: phone?.value,
+              member: member?.checked,
+              updates: newsletter?.checked,
+              comments: comment?.value
+            },
+            callback
+          )
+          if (response.success) {
+            if (firstname) firstname.value = ''
+            if (lastname) lastname.value = ''
+            if (street) street.value = ''
+            if (plz) plz.value = ''
+            if (email) email.value = ''
+            if (phone) phone.value = ''
+            if (comment) comment.value = ''
+            if (member) member.checked = false
+            if (newsletter) newsletter.checked = false
+            if (consent) consent.checked = false
+            notify('Buchung', response.message)
+          } else {
+            notify('Buchung', response.message, true)
+          }
+        } catch (err) {
+          console.error(err)
+          notify(
+            'Buchung',
+            'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
+            true
+          )
+        } finally {
+          if (button) button.disabled = false
+        }
+      })
+    }
+
+    loadEventAvailability(id, callback)
+  }
+</script>

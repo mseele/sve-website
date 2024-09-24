@@ -38,7 +38,8 @@ export default defineConfig({
     env: {
       schema: {
         SUBDOMAIN: envField.string({ context: 'server', access: 'public' }),
-        BACKEND_API: envField.string({ context: 'client', access: 'public' })
+        BACKEND_API: envField.string({ context: 'client', access: 'public' }),
+        PREVIEW: envField.boolean({ context: 'client', access: 'public' })
       }
     }
   },

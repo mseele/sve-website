@@ -1,0 +1,88 @@
+---
+import Nothing from '@/components/blocks/Nothing.astro'
+import Container from '@/components/common/Container.astro'
+import Faqs from '@/components/common/Faqs.astro'
+import Notification from '@/components/common/Notification.astro'
+import type { Faq, ThemedImage } from '@/types'
+import type { CollectionEntry } from 'astro:content'
+import BlogItem from './BlogItem.astro'
+import NewsletterCard from './NewsletterCard.astro'
+
+interface Props<T extends 'events' | 'fitness'> {
+  type: T
+  entries: CollectionEntry<T>[]
+  nothing: {
+    title: string
+    image: ThemedImage
+  }
+  newsletterDescription: string
+  faqs?: Faq[]
+}
+
+const { type, entries, nothing, newsletterDescription, faqs } = Astro.props as Props<
+  'events' | 'fitness'
+>
+---
+
+<div>
+  <Container>
+    {
+      entries.length > 0 ? (
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {entries.map((entry) => (
+            <a href={`/${type}/${entry.id}`} class="h-full">
+              <BlogItem
+                title={entry.data.name}
+                image={{ light: entry.data.image, dark: entry.data.image, alt: entry.data.name }}
+              >
+                <p
+                  data-availability-identifier={entry.id}
+                  data-availability="loading"
+                  class="font-medium data-[availability=available]:text-green-600 data-[availability=loading]:text-blue-600 data-[availability=unavailable]:text-red-600 dark:data-[availability=available]:text-green-400 dark:data-[availability=loading]:text-blue-400 dark:data-[availability=unavailable]:text-red-400"
+                >
+                  Verfügbarkeit wird geprüft
+                </p>
+                <p class="mb-8 mt-6 flex-grow text-gray-600 dark:text-gray-300">
+                  {entry.data.shortDescription}
+                </p>
+                <span class="text-primary dark:text-red-500">Mehr erfahren</span>
+              </BlogItem>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <Nothing title={nothing.title} image={nothing.image}>
+          <slot name="nothingDescription" />
+        </Nothing>
+      )
+    }
+    <div class="mt-20">
+      <NewsletterCard description={newsletterDescription} topic={type} />
+    </div>
+    {faqs && faqs.length > 0 && <Faqs faqs={faqs} />}
+  </Container>
+  <Notification />
+</div>
+
+<script>
+  import { loadEventsAvailability } from '@/api/events'
+
+  loadEventsAvailability((data) => {
+    const elements = document.querySelectorAll<HTMLParagraphElement>(
+      '[data-availability-identifier]'
+    )
+    for (const element of elements) {
+      const id = element.getAttribute('data-availability-identifier')
+      if (id) {
+        const availability = data[id]
+        if (availability) {
+          element.innerHTML = availability.message
+          element.setAttribute(
+            'data-availability',
+            availability.availableSlots === 0 ? 'unavailable' : 'available'
+          )
+        }
+      }
+    }
+  })
+</script>
