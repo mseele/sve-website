@@ -42,10 +42,10 @@ const teams: {
     {
       key: 'herren-2',
       team: '2. Mannschaft',
-      league: 'Kreisliga B2',
+      league: 'Kreisliga A3',
       coach: {
         name: 'Marcel Dettling',
-        email: 'dettlingmarcel@web.de',
+        email: 'Marceldettling@gmx.de',
         mobile: {
           formatted: '0176 47864896',
           raw: '+4917647864896'
@@ -207,7 +207,15 @@ const teams: {
           raw: '+4915156072107'
         }
       },
-      contact: jugendleiter,
+      contact: {
+        title: 'Teammanager',
+        name: 'Rainer Kalbacher',
+        email: 'rainer.kalbacher@t-online.de',
+        mobile: {
+          formatted: '01517 4117189',
+          raw: '+4915174117189'
+        }
+      },
       teamID: '011MI98PJG000000VTVG0001VTR8C1K7'
     },
     {
