@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "check": "tsc --noEmit && astro check",
-    "format": "prettier --write . --plugin=prettier-plugin-astro",
+    "format": "prettier --write .",
     "release": "standard-version"
   },
   "dependencies": {
