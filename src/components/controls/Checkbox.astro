@@ -5,12 +5,13 @@ interface Props {
   title: string
   description?: string
   checked?: boolean
+  class?: string
 }
 
-const { id, name, title, description, checked } = Astro.props
+const { id, name, title, description, checked, class: className } = Astro.props
 ---
 
-<div class="w-full space-y-4">
+<div class:list={['w-full space-y-4', className]}>
   <div class="relative">
     <div class="grid items-center gap-x-3 gap-y-1 [grid-template-columns:auto_1fr]">
       <label
