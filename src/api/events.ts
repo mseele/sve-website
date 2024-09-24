@@ -186,3 +186,15 @@ export async function bookEvent(
     message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.'
   }
 }
+
+export async function prebooking(hash: string) {
+  const response = await fetch(`${BACKEND_API}/events/prebooking/${hash}`)
+  if (response.ok) {
+    const data: BookingResponse = await response.json()
+    return { success: data.success, message: data.message }
+  }
+  return {
+    success: false,
+    message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.'
+  }
+}

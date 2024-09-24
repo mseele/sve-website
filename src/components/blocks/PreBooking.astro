@@ -1,0 +1,77 @@
+---
+
+---
+
+<dialog
+  id="prebooking"
+  class="backdrop:overflow-hidden backdrop:backdrop-blur-sm backdrop:scrollbar-none"
+>
+  <div class="fixed inset-0 flex items-center justify-center">
+    <div
+      class="grid justify-items-center rounded-3xl border border-gray-100 bg-white p-8 opacity-75 shadow-2xl shadow-gray-600/10 dark:border-gray-700 dark:bg-gray-800 dark:opacity-90 dark:shadow-none"
+    >
+      <svg
+        class="size-16 animate-spin text-primary"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+      <p class="mt-6 text-lg font-medium text-gray-600 dark:text-gray-200">
+        Die Buchung wird durchgeführt...
+      </p>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  import { prebooking } from '@/api/events'
+  import { notify } from '@/client/notifications'
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const name = 'code'
+    const queryCode = new URLSearchParams(window.location.search).get(name)
+    if (queryCode) {
+      const dialog = document.querySelector<HTMLDialogElement>('#prebooking')
+      if (dialog) {
+        const newUrl = new URL(window.location.href)
+        newUrl.searchParams.delete(name)
+        window.history.replaceState({}, '', newUrl)
+
+        dialog.showModal()
+
+        try {
+          const response = await prebooking(queryCode)
+          if (response.success) {
+            notify('Frühbuchung', response.message)
+          } else {
+            notify('Frühbuchung', response.message, true)
+          }
+        } catch (err) {
+          console.error(err)
+          notify(
+            'Frühbuchung',
+            'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
+            true
+          )
+        } finally {
+          dialog.close()
+        }
+      }
+    }
+  })
+</script>
+
+<!-- <style>
+  /* TailwindCSS doesn't directly support styling <dialog>, so custom positioning is applied here. */
+  dialog::backdrop {
+    background-color: rgba(31, 41, 55, 0.7); /* Matches the Tailwind gray-800 with opacity */
+  }
+</style> -->

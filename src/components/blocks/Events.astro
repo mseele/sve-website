@@ -7,6 +7,7 @@ import type { Faq, ThemedImage } from '@/types'
 import type { CollectionEntry } from 'astro:content'
 import BlogItem from './BlogItem.astro'
 import NewsletterCard from './NewsletterCard.astro'
+import PreBooking from './PreBooking.astro'
 
 interface Props<T extends 'events' | 'fitness'> {
   type: T
@@ -61,6 +62,7 @@ const { type, entries, nothing, newsletterDescription, faqs } = Astro.props as P
     </div>
     {faqs && faqs.length > 0 && <Faqs faqs={faqs} />}
   </Container>
+  <PreBooking />
   <Notification />
 </div>
 
