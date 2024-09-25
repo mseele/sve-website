@@ -16,7 +16,7 @@
     <Contact
       v-if="team"
       :to-items="toItems"
-      to-label="Wenn möchtest du kontaktieren?"
+      to-label="Wen möchtest du kontaktieren?"
     >
       <template #description>
         Unsere Ansprechpartner stehen Dir für sämtliche Fragen rund um unseren
