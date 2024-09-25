@@ -92,7 +92,7 @@ const teams: Record<string, Team[]> = {
       },
       contact: {
         title: 'Abteilungsleiterin',
-        name: 'Carolin Schmipf',
+        name: 'Carolin Schimpf',
         email: 'caro1214@gmx.de',
         mobile: {
           formatted: '0176 81132107',
