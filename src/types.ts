@@ -51,7 +51,6 @@ export interface PhoneNumber {
 
 export interface Sponsor {
   name: string
-  url?: string
   groupBy: string
 }
 
