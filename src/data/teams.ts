@@ -99,11 +99,11 @@ const teams: {
       },
       contact: {
         title: 'Abteilungsleiterin',
-        name: 'Samantha Becker',
-        email: 'Samantha.becker.sb@gmail.com',
+        name: 'Caro Schmipf',
+        email: 'caro1214@gmx.de',
         mobile: {
-          formatted: '0172 1951443',
-          raw: '+491721951443'
+          formatted: '0176 81132107',
+          raw: '+4917681132107'
         }
       },
       teamID: '011MIBTDHG000000VTVG0001VTR8C1K7'
