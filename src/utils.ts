@@ -1,3 +1,4 @@
+import { getImage } from 'astro:assets'
 import { differenceInMinutes, format, isSameDay, parseISO } from 'date-fns'
 import { formatInTimeZone } from 'date-fns-tz'
 import { de } from 'date-fns/locale'

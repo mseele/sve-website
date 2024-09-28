@@ -3,7 +3,7 @@ import type { ImageMetadata } from 'astro'
 export interface MetaSEO {
   title?: string
   description?: string
-  image?: string
+  image?: ImageMetadata
 
   canonical?: string
   noindex?: boolean
