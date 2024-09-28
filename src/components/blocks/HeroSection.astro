@@ -71,28 +71,26 @@ const { id, title, description, primaryButton, secondaryButton, image, images } 
         <div class="relative mt-20 md:mt-0 md:w-2/5 lg:w-3/5">
           <div class="-ml-6 overflow-hidden rounded-3xl md:-mr-72 lg:mr-0">
             {
-              image
-                ? [image]
-                : images.map((image, index) => (
-                    <>
-                      <Picture
-                        data-image-index={index}
-                        src={image.light}
-                        class="h-full object-cover object-left dark:hidden lg:object-center"
-                        alt={image.alt}
-                        widths={SITE.imageWidths}
-                        formats={SITE.imageFormats}
-                      />
-                      <Picture
-                        data-image-index={index}
-                        src={image.dark}
-                        class="hidden h-full object-cover object-left dark:block lg:object-center"
-                        alt={image.alt}
-                        widths={SITE.imageWidths}
-                        formats={SITE.imageFormats}
-                      />
-                    </>
-                  ))
+              (image ? [image] : images).map((image, index) => (
+                <>
+                  <Picture
+                    data-image-index={index}
+                    src={image.light}
+                    class="h-full object-cover object-left dark:hidden lg:object-center"
+                    alt={image.alt}
+                    widths={SITE.imageWidths}
+                    formats={SITE.imageFormats}
+                  />
+                  <Picture
+                    data-image-index={index}
+                    src={image.dark}
+                    class="hidden h-full object-cover object-left dark:block lg:object-center"
+                    alt={image.alt}
+                    widths={SITE.imageWidths}
+                    formats={SITE.imageFormats}
+                  />
+                </>
+              ))
             }
           </div>
         </div>
