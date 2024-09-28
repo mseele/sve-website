@@ -1,12 +1,22 @@
 ---
-import imageDark from '@/assets/pages/home-dark.jpg'
+import home1Dark from '@/assets/pages/home-1-dark.jpg'
+import home1Light from '@/assets/pages/home-1-light.jpg'
+import home2Dark from '@/assets/pages/home-2-dark.jpg'
+import home2Light from '@/assets/pages/home-2-light.jpg'
+import home3Dark from '@/assets/pages/home-3-dark.jpg'
+import home3Light from '@/assets/pages/home-3-light.jpg'
+import home4Dark from '@/assets/pages/home-4-dark.jpg'
+import home4Light from '@/assets/pages/home-4-light.jpg'
+import home5Dark from '@/assets/pages/home-5-dark.jpg'
+import home5Light from '@/assets/pages/home-5-light.jpg'
+import home6Dark from '@/assets/pages/home-6-dark.jpg'
+import home6Light from '@/assets/pages/home-6-light.jpg'
 import joinFitnessDark from '@/assets/pages/home-fitness-dark.jpg'
 import joinFitnessLight from '@/assets/pages/home-fitness-light.jpg'
 import joinFussballDark from '@/assets/pages/home-fussball-dark.jpg'
 import joinFussballLight from '@/assets/pages/home-fussball-light.jpg'
 import joinJugendDark from '@/assets/pages/home-jugend-dark.jpg'
 import joinJugendLight from '@/assets/pages/home-jugend-light.jpg'
-import imageLight from '@/assets/pages/home-light.jpg'
 import joinMitgliedDark from '@/assets/pages/home-mitglied-dark.jpg'
 import joinMitgliedLight from '@/assets/pages/home-mitglied-light.jpg'
 import joinPartnerDark from '@/assets/pages/home-partner-dark.jpg'
@@ -86,7 +96,14 @@ const meta = {
     description="Willkommen beim SV Eutingen - Wir sind Dein Verein für Sport und Gemeinschaft in Eutingen im Gäu. Entdecke unser umfangreiches Sportangebot."
     primaryButton={{ label: 'Aktuelles', to: '#aktuelles' }}
     secondaryButton={{ label: 'Mach mit', to: '#mach-mit' }}
-    image={{ light: imageLight, dark: imageDark, alt: 'fussballfeld auf dem gespielt wird' }}
+    images={[
+      { light: home1Light, dark: home1Dark, alt: 'fussballfeld auf dem gespielt wird' },
+      { light: home2Light, dark: home2Dark, alt: 'fussballfeld mit sve streuwagen im vordergrund' },
+      { light: home3Light, dark: home3Dark, alt: 'sve sportgelände von oben' },
+      { light: home4Light, dark: home4Dark, alt: 'theatergruppe des sve' },
+      { light: home5Light, dark: home5Dark, alt: 'kreis von fussballspielerinnen' },
+      { light: home6Light, dark: home6Dark, alt: 'fussballspielerin im flutlicht' }
+    ]}
   />
 
   <News id="aktuelles" />
