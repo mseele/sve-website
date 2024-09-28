@@ -6,6 +6,7 @@ import HeaderSection from '@/components/blocks/HeaderSection.astro'
 import Layout from '@/layouts/Layout.astro'
 import type { Faq, MetaSEO } from '@/types'
 import { getCollection } from 'astro:content'
+import image from '@/assets/meta/fitness.jpg'
 
 const entries = await getCollection('fitness')
 
@@ -27,11 +28,11 @@ const faqs: Faq[] = [
   }
 ]
 
-// TODO: add custom meta image
 const meta: MetaSEO = {
   title: 'Fitness',
   description:
-    'Entdecke das vielseitige Kursangebot für jedes Fitnesslevel beim SV Eutingen 1947 e.V. Werde fit und habe Spaß! Sei dabei und melde Dich direkt online an!'
+    'Entdecke das vielseitige Kursangebot für jedes Fitnesslevel beim SV Eutingen 1947 e.V. Werde fit und habe Spaß! Sei dabei und melde Dich direkt online an!',
+  image
 }
 ---
 

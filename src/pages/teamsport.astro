@@ -4,6 +4,7 @@ import Teams from '@/components/blocks/Teams.astro'
 import Layout from '@/layouts/Layout.astro'
 import type { MetaSEO } from '@/types'
 import teams from '@/data/teams'
+import image from '@/assets/meta/teamsport.jpg'
 
 const sections = [
   {
@@ -50,11 +51,11 @@ const sections = [
   }
 ]
 
-// TODO: add custom meta image
 const meta: MetaSEO = {
   title: 'Teamsport',
   description:
-    'Entdecken Sie Fußball beim SV Eutingen! Attraktive Fußballangebote für alle Altersgruppen zu günstigen Konditionen. Fußball ist unser Herzstück und Integrationsmotor. Probieren Sie auch Volleyball!'
+    'Entdecken Sie Fußball beim SV Eutingen! Attraktive Fußballangebote für alle Altersgruppen zu günstigen Konditionen. Fußball ist unser Herzstück und Integrationsmotor. Probieren Sie auch Volleyball!',
+  image
 }
 ---
 

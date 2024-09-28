@@ -6,14 +6,15 @@ import HeaderSection from '@/components/blocks/HeaderSection.astro'
 import Layout from '@/layouts/Layout.astro'
 import type { MetaSEO } from '@/types'
 import { getCollection } from 'astro:content'
+import image from '@/assets/meta/events.jpg'
 
 const entries = await getCollection('events')
 
-// TODO: add custom meta image
 const meta: MetaSEO = {
   title: 'Events',
   description:
-    'Entdecke das Eventangebot des SV Eutingen 1947 e.V. mit Fußballturnieren, Kochkursen und Theateraufführungen. Alle Infos zu Programm, Ort und Anmeldung findest Du hier. Sei dabei und melde Dich direkt online an!'
+    'Entdecke das Eventangebot des SV Eutingen 1947 e.V. mit Fußballturnieren, Kochkursen und Theateraufführungen. Alle Infos zu Programm, Ort und Anmeldung findest Du hier. Sei dabei und melde Dich direkt online an!',
+  image
 }
 ---
 

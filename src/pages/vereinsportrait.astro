@@ -10,11 +10,11 @@ import { Content as Leitbild } from '@/markdown/leitbild.md'
 import type { MetaSEO } from '@/types'
 import { Icon } from 'astro-icon/components'
 
-// TODO: add custom meta image
 const meta: MetaSEO = {
   title: 'Vereinsporträt',
   description:
-    'Entdecke das umfassende Vereinsangebot des SV Eutingen! Erfahre mehr über unsere Geschichte, sportlichen Aktivitäten und unser Engagement für die Gemeinschaft. Werde Teil unserer lebendigen Vereinsfamilie und genieße Sport, Spaß und Zusammenhalt.'
+    'Entdecke das umfassende Vereinsangebot des SV Eutingen! Erfahre mehr über unsere Geschichte, sportlichen Aktivitäten und unser Engagement für die Gemeinschaft. Werde Teil unserer lebendigen Vereinsfamilie und genieße Sport, Spaß und Zusammenhalt.',
+  image: imageLight
 }
 ---
 
@@ -25,7 +25,11 @@ const meta: MetaSEO = {
     description="Entdecke das umfassende Vereinsangebot des SV Eutingen. Werde Teil unserer lebendigen Vereinsfamilie und genieße Sport, Spaß und Zusammenhalt."
     primaryButton={{ label: 'Infos zum Verein', to: '#infos' }}
     secondaryButton={{ label: 'Leitbild', to: '#leitbild' }}
-    image={{ light: imageLight, dark: imageDark, alt: 'fussballfeld mit sve streuwagen im vordergrund' }}
+    image={{
+      light: imageLight,
+      dark: imageDark,
+      alt: 'fussballfeld mit sve streuwagen im vordergrund'
+    }}
   />
   <div class="pb-16 pt-6" id="infos">
     <Container>

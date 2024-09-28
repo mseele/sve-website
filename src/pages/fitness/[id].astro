@@ -24,10 +24,10 @@ interface Props {
 
 const { entry } = Astro.props
 
-// TODO: add custom meta image
 const meta: MetaSEO = {
   title: entry.data.name,
-  description: entry.data.shortDescription
+  description: entry.data.shortDescription,
+  image: entry.data.image
 }
 ---
 
