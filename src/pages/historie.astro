@@ -2,15 +2,11 @@
 import imageDark from '@/assets/pages/historie-dark.jpg'
 import imageLight from '@/assets/pages/historie-light.jpg'
 import HeroSection from '@/components/blocks/HeroSection.astro'
+import HistoryItem from '@/components/blocks/HistoryItem.astro'
 import Container from '@/components/common/Container.astro'
 import Layout from '@/layouts/Layout.astro'
 import type { MetaSEO } from '@/types'
-import { Icon } from 'astro-icon/components'
-import Card from '@/components/common/Card.astro'
-import ImageGallery from '@/components/common/ImageGallery.astro'
-
 import { getCollection } from 'astro:content'
-import HistoryItem from '@/components/blocks/HistoryItem.astro'
 
 const history = (await getCollection('history')).reverse()
 
