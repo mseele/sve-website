@@ -18,7 +18,7 @@ const { title, image } = Astro.props
     <Picture
       src={image.light}
       loading="lazy"
-      class="h-64 w-full object-cover object-top transition duration-500 group-hover:scale-105 dark:hidden"
+      class="h-64 w-full object-cover object-center transition duration-500 group-hover:scale-105 dark:hidden"
       alt={image.alt}
       widths={SITE.imageWidths}
       formats={SITE.imageFormats}
@@ -26,7 +26,7 @@ const { title, image } = Astro.props
     <Picture
       src={image.dark}
       loading="lazy"
-      class="hidden h-64 w-full object-cover object-top transition duration-500 group-hover:scale-105 dark:block"
+      class="hidden h-64 w-full object-cover object-center transition duration-500 group-hover:scale-105 dark:block"
       alt={image.alt}
       widths={SITE.imageWidths}
       formats={SITE.imageFormats}
