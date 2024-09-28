@@ -1,6 +1,7 @@
 ---
-import Container from './Container.astro'
 import { Icon } from 'astro-icon/components'
+import { external } from './AppFooter.astro'
+import Container from './Container.astro'
 
 const topLinks = [
   {
@@ -131,11 +132,11 @@ const links = [
             </ul>
           </div>
 
-          <div class="mt-10 md:px-4">
+          <div class="mt-8 flex items-center md:px-4">
             <button
               aria-label="theme switcher"
               data-theme-switcher
-              class="group relative flex h-9 w-9 max-w-[2.25rem] items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-300 before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 disabled:before:scale-100 disabled:before:bg-gray-300 dark:before:border-gray-700 dark:before:bg-gray-800"
+              class="group relative flex size-9 max-w-[2.25rem] shrink-0 items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-300 before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 disabled:before:scale-100 disabled:before:bg-gray-300 dark:before:border-gray-700 dark:before:bg-gray-800"
             >
               <svg
                 aria-hidden="true"
@@ -161,6 +162,24 @@ const links = [
                   clip-rule="evenodd"></path>
               </svg>
             </button>
+            <div
+              class="ml-4 flex items-center space-x-4 overflow-hidden border-l border-black/5 py-1 pl-4 text-gray-500 dark:border-white/5 dark:text-gray-300"
+            >
+              {
+                external.map((link) => (
+                  <a
+                    class="duration-300 hover:text-primary dark:hover:text-white"
+                    href={link.to}
+                    title={link.title}
+                    target="blank"
+                    rel="noreferrer"
+                    aria-label={link.title}
+                  >
+                    <Icon fill="currentColor" class="m-auto size-6" name={link.icon} />
+                  </a>
+                ))
+              }
+            </div>
           </div>
         </div>
       </div>
