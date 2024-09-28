@@ -50,7 +50,7 @@ const teams: Record<string, Team[]> = {
     {
       key: 'herren-3',
       team: '3. Mannschaft',
-      league: 'Kreisliga B1',
+      league: 'Kreisliga B3',
       coach: {
         name: 'Raphael Teufel',
         email: 'teufelraphael.1@web.de',
@@ -60,7 +60,7 @@ const teams: Record<string, Team[]> = {
         },
       },
       contact: abteilungsleiterHerren,
-      teamID: '02IPFLU5SG000000VS5489B2VU3QR439',
+      teamID: '02LUSRQ9Q8000000VS5489B1VVVHS1D7',
     },
     {
       key: 'ah',
@@ -127,64 +127,64 @@ const teams: Record<string, Team[]> = {
   ],
   jugend_herren: [
     {
-      key: 'a-junioren-1',
-      team: 'A-Junioren 1 SGM SV Eutingen',
-      league: 'Regionenstaffel Mitte 1',
+      key: 'b-junioren',
+      team: 'B-Junioren SGM SV Vollmaringen',
+      league: 'Quali Kreiasstaffel 1',
       coach: {
-        name: 'Wolfgang Mey',
-        email: 'w.mey@vodafone.de',
+        name: 'Niklas Stephan',
+        email: 'niklas.stephan02@googlemail.com',
         mobile: {
-          formatted: '0162 2063637',
-          raw: '+491622063637',
+          formatted: '0157 39035505',
+          raw: '+4915739035505',
         },
       },
       contact: jugendleiter,
-      teamID: '012GED15C4000000VV0AG811VT1UN0HI',
-    },
-    {
-      key: 'a-junioren-2',
-      team: 'A-Junioren 2 SGM SV Eutingen',
-      league: 'Quali-Staffel NSW',
-      coach: {
-        name: 'Claudius Stützel',
-        email: 'claudius-stuetzel.bvb@web.de',
-        mobile: {
-          formatted: '01573 7031432',
-          raw: '+4915737031432',
-        },
-      },
-      contact: jugendleiter,
-      teamID: '02B8KTGDLG000000VS5489B1VU7OHECJ',
+      teamID: '02M7UGNE54000000VS5489B2VUHJA7LU',
     },
     {
       key: 'c-junioren',
-      team: 'C-Junioren SGM VFL Hochdorf',
-      league: 'Quali-Staffel NSW',
-      coach: {
-        name: 'Michael Eberhard',
-        email: 'michaeleberhard@t-online.de',
-        mobile: {
-          formatted: '0171 3655494',
-          raw: '+491713655494',
-        },
-      },
-      contact: jugendleiter,
-      teamID: '02EVQMB9VG000000VS5489B1VT1H0S9M',
-    },
-    {
-      key: 'd-junioren',
-      team: 'D-Junioren SGM SV Eutingen',
-      league: '9er Bezirksstaffel',
+      team: 'C-Junioren SGM VfL Hochdorf',
+      league: 'Quali Staffel 4',
       coach: {
         name: 'Thorsten Weiss',
-        email: 'Thorsten.Weiss1@gmx.de',
+        email: 'thorsten.weiss@gmx.de',
         mobile: {
           formatted: '0172 7240436',
           raw: '+491727240436',
         },
       },
       contact: jugendleiter,
-      teamID: '02B8KVQK4G000000VS5489B1VU7OHECJ',
+      teamID: '02PRQBJ68G000000VS5489B1VVQNIHJA',
+    },
+    {
+      key: 'd-junioren-1',
+      team: 'D-Junioren 1 SGM VfL Hochdorf',
+      league: 'Quali Bezirksstaffel',
+      coach: {
+        name: 'Volker Löffler',
+        email: 'volker.loeffler@t-online.de',
+        mobile: {
+          formatted: '0151 26412922',
+          raw: '+4915126412922',
+        },
+      },
+      contact: jugendleiter,
+      teamID: '02M86HTPKO000000VS5489B2VUHJA7LU',
+    },
+    {
+      key: 'd-junioren-2',
+      team: 'D-Junioren 2 SGM VfL Hochdorf',
+      league: 'Quali Staffel 2',
+      coach: {
+        name: 'Kai Weihing',
+        email: 'maldini82@gmx.de',
+        mobile: {
+          formatted: '0173 7288791',
+          raw: '+491737288791',
+        },
+      },
+      contact: jugendleiter,
+      teamID: '02M86IH7UO000000VS5489B2VUHJA7LU',
     },
   ],
   jugend_frauen: [
@@ -207,7 +207,7 @@ const teams: Record<string, Team[]> = {
         mobile: {
           formatted: '01517 4117189',
           raw: '+4915174117189',
-        }
+        },
       },
       teamID: '011MI98PJG000000VTVG0001VTR8C1K7',
     },
@@ -216,11 +216,11 @@ const teams: Record<string, Team[]> = {
       team: 'B-Juniorinnen 2 SGM SV Eutingen',
       league: 'Bezirksstaffel Flex',
       coach: {
-        name: 'Carsten Oswald',
-        email: '01795450311@O2Online.de',
+        name: 'Alexandra Haizmann',
+        email: 'Alex.haizmann@gmx.de',
         mobile: {
-          formatted: '0179 5450311',
-          raw: '+491795450311',
+          formatted: '0173 5692040',
+          raw: '+491735692040',
         },
       },
       contact: jugendleiter,
@@ -246,37 +246,7 @@ const teams: Record<string, Team[]> = {
     {
       key: 'e-junioren-1',
       team: 'E-Junioren 1 SGM VfL Hochdorf',
-      league: 'Freundschaftsstaffel 2',
-      coach: {
-        name: 'Kai Weihing',
-        email: 'annaweihing@gmx.de',
-        mobile: {
-          formatted: '0173 7288791',
-          raw: '+491737288791',
-        },
-      },
-      contact: jugendleiter,
-      teamID: '027H92NVVC000000VS5489B1VUA37ON8',
-    },
-    {
-      key: 'e-junioren-2',
-      team: 'E-Junioren 2 SGM VfL Hochdorf',
-      league: 'Freundschaftsstaffel 2',
-      coach: {
-        name: 'Volker Löffler',
-        email: 'volker.loeffler@t-online.de',
-        mobile: {
-          formatted: '01512 6412922',
-          raw: '+4915126412922',
-        },
-      },
-      contact: jugendleiter,
-      teamID: '027H92V6UO000000VS5489B1VUA37ON8',
-    },
-    {
-      key: 'f-junioren',
-      team: 'F-Junioren',
-      league: 'Spieltage',
+      league: 'Freundschaftsstaffel 5',
       coach: {
         name: 'Michael Köhn',
         email: 'michael_koehn@gmx.de',
@@ -286,10 +256,55 @@ const teams: Record<string, Team[]> = {
         },
       },
       contact: jugendleiter,
+      teamID: '02PRCOH7OS000000VS5489B2VSE05932',
     },
     {
-      key: 'bambini',
-      team: 'Bambini',
+      key: 'e-junioren-2',
+      team: 'E-Junioren 2 SGM VfL Hochdorf',
+      league: 'Freundschaftsstaffel 8',
+      coach: {
+        name: 'Boris Rakoczy',
+        email: 'boraky@gmail.com',
+        mobile: {
+          formatted: '0173 3211358',
+          raw: '+491733211358',
+        },
+      },
+      contact: jugendleiter,
+      teamID: '02PRCPPLQS000000VS5489B2VSE05932',
+    },
+    {
+      key: 'e-junioren-3',
+      team: 'E-Junioren 3 SGM VfL Hochdorf',
+      league: 'Freundschaftsstaffel 9',
+      coach: {
+        name: 'Raphael Braun',
+        email: 'raphibraun@t-online.de',
+        mobile: {
+          formatted: '0157 33112704',
+          raw: '+4915733112704',
+        },
+      },
+      contact: jugendleiter,
+      teamID: '02PRCQ3GV0000000VS5489B2VSE05932',
+    },
+    {
+      key: 'f-junioren',
+      team: 'F-Junioren',
+      league: 'Spieltage',
+      coach: {
+        name: 'Michael Platz',
+        email: 'mikeplatz_1991@web.de',
+        mobile: {
+          formatted: '0178 6048401',
+          raw: '+491786048401',
+        },
+      },
+      contact: jugendleiter,
+    },
+    {
+      key: 'g-junioren',
+      team: 'G-Junioren (Bambini)',
       league: 'Spieltage',
       coach: {
         name: 'Thomas Kehm',
