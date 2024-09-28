@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.27](https://github.com/mseele/sve-website/compare/v4.6.26...v4.6.27) (2024-09-28)
+
+
+### Bug Fixes
+
+* correct name ([31906ff](https://github.com/mseele/sve-website/commit/31906ffb1f8f85eb8556cf30ca15162fb8c5549b))
+* correct name ([d4cec24](https://github.com/mseele/sve-website/commit/d4cec24550768ae32adf25574f19f24afe6f98cc))
+* correct team contacts ([846b900](https://github.com/mseele/sve-website/commit/846b900c26e68b47fad238ed7c7a249be207fb99))
+
 ### [4.6.26](https://github.com/mseele/sve-website/compare/v4.6.25...v4.6.26) (2024-09-25)
 
 
