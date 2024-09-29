@@ -136,7 +136,7 @@ const links = [
             <button
               aria-label="theme switcher"
               data-theme-switcher
-              class="group relative flex size-9 max-w-[2.25rem] shrink-0 items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-300 before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 disabled:before:scale-100 disabled:before:bg-gray-300 dark:before:border-gray-700 dark:before:bg-gray-800"
+              class="group relative flex size-9 max-w-[2.25rem] flex-none items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-300 before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 disabled:before:scale-100 disabled:before:bg-gray-300 dark:before:border-gray-700 dark:before:bg-gray-800"
             >
               <svg
                 aria-hidden="true"
@@ -168,7 +168,8 @@ const links = [
               {
                 external.map((link) => (
                   <a
-                    class="duration-300 hover:text-primary dark:hover:text-white"
+                    id="external"
+                    class="transition-colors duration-300 hover:text-primary dark:hover:text-white"
                     href={link.to}
                     title={link.title}
                     target="blank"
@@ -212,3 +213,32 @@ const links = [
     @apply hidden;
   }
 </style>
+
+<script>
+  const externalLinks = document.querySelectorAll('#external')
+  const parent = externalLinks.item(0)?.parentElement
+
+  function checkVisibility() {
+    const parentRect = parent?.getBoundingClientRect()
+    if (parentRect) {
+      for (const link of externalLinks) {
+        const rect = link.getBoundingClientRect()
+
+        const isVisible =
+          rect.top >= parentRect.top &&
+          rect.left >= parentRect.left &&
+          rect.bottom <= parentRect.bottom &&
+          rect.right <= parentRect.right
+
+        if (!isVisible) {
+          link.classList.add('invisible')
+        } else {
+          link.classList.remove('invisible')
+        }
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', checkVisibility, { once: true })
+  parent && new ResizeObserver(checkVisibility).observe(parent)
+</script>
