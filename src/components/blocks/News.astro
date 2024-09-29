@@ -34,7 +34,7 @@ const { id } = Astro.props
         class="inset-0 flex h-11 w-max rounded-full border border-transparent bg-primary/10 px-5 text-primary dark:border-gray-700 dark:bg-gray-800 sm:px-8"
       >
         {
-          external.map((link) => (
+          external.map((link, index) => (
             <a
               class="m-auto border-l border-black/5 px-4 text-primary first:border-none first:pl-0 last:pr-0 dark:border-white/5 dark:text-gray-300 sm:px-6"
               href={link.to}
@@ -45,7 +45,10 @@ const { id } = Astro.props
             >
               <Icon
                 fill="currentColor"
-                class="size-6 duration-300 hover:scale-125 active:scale-95 active:duration-75"
+                class:list={[
+                  'size-6 duration-300 hover:scale-125 active:scale-95 active:duration-75',
+                  index % 2 == 0 ? 'hover:rotate-12' : 'hover:-rotate-12'
+                ]}
                 name={link.icon}
               />
             </a>
