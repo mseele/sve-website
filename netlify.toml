@@ -1,9 +1,7 @@
 [build]
   base = "/"
   publish = "dist/"
-  command = "pnpm run build"
+  command = "bun run build"
 
 [build.environment]
   NODE_ENV = "production"
-  NODE_VERSION = "20"
-  NODE_OPTIONS = "–max-old-space-size=8192"
