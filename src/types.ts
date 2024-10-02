@@ -109,7 +109,7 @@ export interface RawEvent {
 export interface Event {
   id: string
   name: string
-  image: ImageMetadata
+  image: string
   shortDescription: string
   description: string
   location: string

@@ -8,10 +8,7 @@ import {
   type RawEventCounter,
 } from '@/types'
 import { formatCurrency, formatDatetime, formatDuration } from '@/utils'
-import type { ImageMetadata } from 'astro'
 import { BACKEND_API, PREVIEW } from 'astro:env/client'
-
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/events/*.{jpeg,jpg,png}')
 
 export async function loadEvents(type: EventType): Promise<Event[]> {
   const events: RawEvent[] = await fetch(`${BACKEND_API}/events?type=${type}&beta=${PREVIEW}`).then(
@@ -32,7 +29,7 @@ export async function loadEvents(type: EventType): Promise<Event[]> {
         return {
           id: event.id,
           name: event.name,
-          image: await loadImage(event.image),
+          image: `src/assets/events/${event.image}`,
           shortDescription: event.short_description,
           description: event.description,
           location: event.location,
@@ -45,14 +42,6 @@ export async function loadEvents(type: EventType): Promise<Event[]> {
         }
       }),
   )
-}
-
-async function loadImage(filename: string) {
-  const path = `/src/assets/events/${filename}`
-  if (!images[path]) {
-    throw new Error(`Image ${path} not found`)
-  }
-  return (await images[path]()).default
 }
 
 function durationPrefix(type: EventType) {
