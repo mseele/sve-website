@@ -22,7 +22,7 @@
     "@iconify-json/mdi": "^1.2.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/numeral": "^2.0.5",
-    "astro": "^4.15.9",
+    "astro": "^4.15.10",
     "astro-icon": "^1.1.1",
     "astro-robots-txt": "^1.0.0",
     "date-fns": "^4.1.0",
