@@ -6,8 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "check": "tsc --noEmit && astro check",
-    "format": "prettier --write .",
-    "release": "standard-version"
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.3",
@@ -36,7 +35,6 @@
   "devDependencies": {
     "prettier": "3.3.3",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.6.8",
-    "standard-version": "^9.5.0"
+    "prettier-plugin-tailwindcss": "^0.6.8"
   }
 }
