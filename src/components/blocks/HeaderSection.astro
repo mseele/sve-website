@@ -5,9 +5,10 @@ interface Props {
   id?: string
   title: string
   description: string
+  color?: 'red' | 'green' | 'gray'
 }
 
-const { id, title, description } = Astro.props
+const { id, title, description, color = 'red' } = Astro.props
 ---
 
 <div id={id} class="relative py-16">
@@ -15,9 +16,15 @@ const { id, title, description } = Astro.props
     aria-hidden="true"
     class="pointer-events-none absolute inset-0 m-auto grid h-max w-full grid-cols-2 -space-x-52 opacity-50 dark:opacity-30"
   >
-    <div class="dark:from-purle-800 h-56 bg-gradient-to-br from-primary to-purple-400 blur-[106px]">
+    <div
+      data-color={color}
+      class="dark:from-purle-800 h-56 bg-gradient-to-br blur-[106px] data-[color=gray]:from-gray-500 data-[color=green]:from-secondary data-[color=red]:from-primary data-[color=gray]:to-gray-700 data-[color=green]:to-green-600 data-[color=red]:to-red-600"
+    >
     </div>
-    <div class="h-32 bg-gradient-to-r from-cyan-400 to-sky-900 blur-[106px] dark:to-indigo-500">
+    <div
+      data-color={color !== 'gray' ? 'default' : color}
+      class="h-32 bg-gradient-to-r blur-[106px] data-[color=gray]:from-blue-400 data-[color=default]:from-gray-400 data-[color=gray]:to-blue-900 data-[color=default]:to-gray-900 data-[color=gray]:dark:to-blue-400 data-[color=default]:dark:to-gray-400"
+    >
     </div>
   </div>
   <Container>
