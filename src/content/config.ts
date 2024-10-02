@@ -37,7 +37,7 @@ const eventSchema = ({ image }: SchemaContext) =>
   z.object({
     id: z.string(),
     name: z.string(),
-    image: z.any(), //FIXME: image(),
+    image: image(),
     shortDescription: z.string(),
     description: z.string(),
     location: z.string(),
