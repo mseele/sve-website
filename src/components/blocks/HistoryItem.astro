@@ -1,0 +1,58 @@
+---
+import ImageDialog from '@/components/common/ImageDialog.astro'
+import Prose from '@/components/common/Prose.astro'
+import { SITE } from '@/config.mjs'
+import { Picture } from 'astro:assets'
+import { type CollectionEntry, render } from 'astro:content'
+import { ulid } from 'ulid'
+
+interface Props {
+  history: CollectionEntry<'history'>
+}
+
+const { history } = Astro.props
+
+const { Content } = await render(history)
+const id = ulid()
+---
+
+<div
+  class="group flex w-full max-w-3xl flex-col rounded-3xl border border-gray-100 bg-white p-6 opacity-95 shadow-2xl shadow-gray-600/10 dark:border-gray-700 dark:bg-gray-800 dark:shadow-none sm:p-8"
+>
+  {
+    history.data.images !== undefined && history.data.images.length > 0 && (
+      <>
+        <button
+          class="relative overflow-hidden rounded-xl"
+          onclick={`document.dispatchEvent(new CustomEvent('open-image-dialog', { detail: { id: '${id}', index: 0 } }))`}
+        >
+          <Picture
+            src={history.data.images[0].light}
+            loading="lazy"
+            class="h-64 w-full object-cover object-center transition duration-500 group-hover:scale-105 dark:hidden"
+            alt={history.data.images[0].alt}
+            widths={SITE.imageWidths}
+            formats={SITE.imageFormats}
+          />
+          <Picture
+            src={history.data.images[0].dark}
+            loading="lazy"
+            class="hidden h-64 w-full object-cover object-center transition duration-500 group-hover:scale-105 dark:block"
+            alt={history.data.images[0].alt}
+            widths={SITE.imageWidths}
+            formats={SITE.imageFormats}
+          />
+        </button>
+        <ImageDialog images={history.data.images} id={id} />
+      </>
+    )
+  }
+  <div class="relative mt-6 flex flex-grow flex-col">
+    <h3 class="text-center text-xl font-semibold text-gray-800 dark:text-white">
+      {history.data.date}
+    </h3>
+    <Prose>
+      <Content />
+    </Prose>
+  </div>
+</div>

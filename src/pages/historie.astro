@@ -1,0 +1,57 @@
+---
+import imageDark from '@/assets/pages/historie-dark.jpg'
+import imageLight from '@/assets/pages/historie-light.jpg'
+import HeroSection from '@/components/blocks/HeroSection.astro'
+import HistoryItem from '@/components/blocks/HistoryItem.astro'
+import Container from '@/components/common/Container.astro'
+import Layout from '@/layouts/Layout.astro'
+import type { MetaSEO } from '@/types'
+import { getCollection } from 'astro:content'
+
+const history = (await getCollection('history')).reverse()
+
+const meta: MetaSEO = {
+  title: 'Historie',
+  description:
+    'Erlebe die Geschichte des SV Eutingen 1947 e.V. – von sportlichen Erfolgen bis zu wichtigen Vereinsmeilensteinen. Erfahre mehr über unsere Entwicklung und unser Engagement für die Gemeinschaft.',
+  image: imageLight,
+}
+---
+
+<Layout {meta}>
+  <HeroSection
+    id="home"
+    title="Historie"
+    description=`Entdecke die wichtigsten Ereignisse und Entwicklungen des SV Eutingen 1947 e.V.`
+    image={{
+      light: imageLight,
+      dark: imageDark,
+      alt: 'Schwarz-Weiß-Foto einer Fußballmannschaft des SV Eutingen, die in einer Reihe auf einem Spielfeld steht',
+    }}
+  />
+  <div class="pb-16 pt-6">
+    <Container>
+      <div class="text-gray-600">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+          Wurzeln für die Zukunft
+        </h2>
+        <p class="my-12 text-gray-600 dark:text-gray-300">
+          Dank der großartigen Recherchearbeiten unserer Dorfhistoriker Willi Schaupp, Peter Mücke
+          und Rainer Sattler verfügen wir über eine detaillierte Auflistung der SVE-Historie. Für
+          unseren Verein sind diese Informationen sehr wertvoll. Denn wer Zukunft gestalten will,
+          muss seine Wurzeln kennen.
+        </p>
+      </div>
+      <div class="relative">
+        <div class="absolute inset-y-0 left-1/2">
+          <div class="h-20 w-1 bg-gradient-to-t from-primary opacity-75"></div>
+          <div class="b-0 h-full w-1 bg-primary opacity-75"></div>
+          <div class="h-20 w-1 bg-gradient-to-b from-primary opacity-75"></div>
+        </div>
+        <div class="relative z-10 grid grid-cols-1 justify-items-center gap-10 py-20">
+          {history.map((item) => <HistoryItem history={item} />)}
+        </div>
+      </div>
+    </Container>
+  </div>
+</Layout>

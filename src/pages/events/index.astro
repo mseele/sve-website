@@ -1,0 +1,44 @@
+---
+import nothingDark from '@/assets/pages/events-dark.png'
+import nothingLight from '@/assets/pages/events-light.png'
+import Events from '@/components/blocks/Events.astro'
+import HeaderSection from '@/components/blocks/HeaderSection.astro'
+import Layout from '@/layouts/Layout.astro'
+import type { MetaSEO } from '@/types'
+import { getCollection } from 'astro:content'
+import image from '@/assets/meta/events.jpg'
+
+const entries = await getCollection('events')
+
+const meta: MetaSEO = {
+  title: 'Events',
+  description:
+    'Entdecke das Eventangebot des SV Eutingen 1947 e.V. mit Fußballturnieren, Kochkursen und Theateraufführungen. Alle Infos zu Programm, Ort und Anmeldung findest Du hier. Sei dabei und melde Dich direkt online an!',
+  image,
+}
+---
+
+<Layout {meta}>
+  <HeaderSection
+    title="Events"
+    description="Entdecke unser vielseitiges Eventangebot mit Fußballturnieren, Tanzveranstaltungen, Wanderungen und Theateraufführungen. Alle Infos zu Programm, Ort und Anmeldung findest Du hier."
+    color="gray"
+  />
+  <Events
+    type="events"
+    entries={entries}
+    nothing={{
+      title: 'Aktuell keine Events',
+      image: { light: nothingLight, dark: nothingDark, alt: 'Aktuell keine Events' },
+    }}
+    newsletterDescription="Erhalte automatisch eine E-Mail sobald neue Events online sind."
+  >
+    <Fragment slot="nothingDescription">
+      Aktuell sind keine größeren Events geplant. Schau regelmäßig vorbei, um über kommende
+      Veranstaltungen informiert zu bleiben.
+      <br />
+      <br />
+      Abonniere unseren Newsletter, um alle neuen Eventangebote direkt per E-Mail zu erhalten.
+    </Fragment>
+  </Events>
+</Layout>

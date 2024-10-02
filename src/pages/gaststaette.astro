@@ -1,0 +1,163 @@
+---
+import imageDark from '@/assets/pages/gaststaette-dark.jpg'
+import imageLight from '@/assets/pages/gaststaette-light.jpg'
+import slider1Dark from '@/assets/pages/gaststaette-1-dark.jpg'
+import slider1Light from '@/assets/pages/gaststaette-1-light.jpg'
+import slider2Dark from '@/assets/pages/gaststaette-2-dark.jpg'
+import slider2Light from '@/assets/pages/gaststaette-2-light.jpg'
+import HeroSection from '@/components/blocks/HeroSection.astro'
+import Container from '@/components/common/Container.astro'
+import Layout from '@/layouts/Layout.astro'
+import type { MetaSEO } from '@/types'
+import { Icon } from 'astro-icon/components'
+import Card from '@/components/common/Card.astro'
+import ImageGallery from '@/components/common/ImageGallery.astro'
+
+const downloads = [
+  {
+    href: '/downloads/2024/Speisekarte-Auszeit.pdf',
+    icon: 'mdi:silverware-fork-knife',
+    title: 'Speisekarte',
+    description: 'Entdeckt eine vielfältige Speisekarte für jeden Geschmack!',
+  },
+  {
+    href: '/downloads/2024/Eiskarte-Auszeit.pdf',
+    icon: 'mdi:ice-cream',
+    title: 'Eiskarte',
+    description: 'Genießt eine erfrischende Auswahl an verlockenden Eissorten!',
+  },
+]
+
+const meta: MetaSEO = {
+  title: 'Gaststätte',
+  description:
+    'Entdecken Sie die einladende Atmosphäre der Gaststätte "Auszeit" beim SV Eutingen. Genießen Sie kulinarische Vielfalt in geselliger Runde für Jung und Alt. Erfahren Sie mehr über unser abwechslungsreiches Angebot und erleben Sie gemütliche Stunden voller Genuss und Geselligkeit.',
+  image: imageLight,
+}
+---
+
+<Layout {meta}>
+  <HeroSection
+    id="home"
+    title="Auszeit"
+    description=`Herzlich willkommen in der Gaststätte "Auszeit" des SV Eutingen – einem Ort für Jung und Alt, wo Gemeinschaft und Genuss im Mittelpunkt stehen.`
+    primaryButton={{ label: 'Infos', to: '#infos' }}
+    secondaryButton={{ label: 'Öffnungszeiten', to: '#oeffnungszeiten' }}
+    image={{ light: imageLight, dark: imageDark, alt: 'Gastraum in der Auszeit' }}
+  />
+  <div class="pb-16 pt-6" id="infos">
+    <Container>
+      <div class="text-gray-600">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+          Infos
+        </h2>
+        <p class="my-12 text-gray-600 dark:text-gray-300">
+          In unserer Vereinsgaststätte Auszeit findest Du die perfekte Einkehrmöglichkeit. Ob
+          Samstags zur Bundesliga, unter der Woche mit Freunden, auf ein Eis an heißen Sommertagen
+          auf der Terrasse oder für ein deftiges Essen:<br />
+          Schau' bei unseren bewährten Pächtern Andrea und Micha vorbei und erlebe gesellige Stunden.<br
+          /><br />
+          Auch für eine Firmenfeier, Geburtstage und sonstige Anlässe bietet die Gaststätte Platz für
+          bis zu 150 Personen.<br /><br />
+          Weitere Informationen findest Du auf der <a
+            class="underline duration-300 hover:text-gray-800 hover:dark:text-gray-200"
+            href="https://fb.com/Auszeit-Eutingen-981850018516219"
+            target="_blank"
+            rel="noreferrer">Facebook-Seite</a
+          > oder der <a
+            class="underline duration-300 hover:text-gray-800 hover:dark:text-gray-200"
+            href="https://www.instagram.com/auszeit.eutingen/"
+            target="_blank"
+            rel="noreferrer">Instagram-Seite</a
+          > der Auszeit Eutingen.
+        </p>
+        <div class="relative mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            downloads.map((item) => (
+              <a class="group" href={item.href} target="_blank">
+                <Card hover class="h-full">
+                  <Icon
+                    class="h-10 w-10 text-gray-700 duration-300 group-hover:scale-125 dark:text-gray-300"
+                    name={item.icon}
+                  />
+                  <div>
+                    <h4 class="text-xl font-semibold text-gray-900 dark:text-white">
+                      {item.title}
+                    </h4>
+                    <p class="mt-3 text-gray-600 dark:text-gray-400">{item.description}</p>
+                  </div>
+                </Card>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </Container>
+  </div>
+  <div class="pb-16 pt-6">
+    <Container>
+      <div class="w-full">
+        <ImageGallery
+          images={[
+            {
+              light: slider1Light,
+              dark: slider1Dark,
+              alt: 'Tisch mit Blumen und Speisekarte in der Auszeit',
+            },
+            { light: slider2Light, dark: slider2Dark, alt: 'Die Dartscheiben in der Auszeit' },
+            { light: imageLight, dark: imageDark, alt: 'Gastraum in der Auszeit' },
+          ]}
+        />
+      </div>
+    </Container>
+  </div>
+  <div class="pb-16 pt-6">
+    <Container>
+      <div class="grid gap-6 sm:grid-cols-2">
+        <Card>
+          <div class="flex">
+            <h4 class="grow text-xl font-semibold text-gray-900 dark:text-white">Öffnungszeiten</h4>
+          </div>
+          <div>
+            {
+              [
+                { title: 'Mittwoch und Donnerstag', time: '16:00 - 0:00 Uhr' },
+                { title: 'Freitag', time: '16:00 - 2:00 Uhr' },
+                { title: 'Samstag', time: '14:00 - 2:00 Uhr' },
+                { title: 'Sonntag', time: '11:30 - 21:00 Uhr' },
+              ].map((item) => (
+                <>
+                  <h6 class="mt-3 font-semibold text-gray-900 dark:text-white">{item.title}</h6>
+                  <p class="text-gray-600 dark:text-gray-400">{item.time}</p>
+                </>
+              ))
+            }
+          </div>
+        </Card>
+        <Card>
+          <div class="flex">
+            <h4 class="grow text-xl font-semibold text-gray-900 dark:text-white">Kontakt</h4>
+            <div>
+              <div class="flex">
+                <a
+                  class="pl-2 duration-300 hover:text-gray-600 dark:text-gray-400 dark:hover:text-white"
+                  href={`kontakt?auswahl=restaurant`}
+                  title="Kontakt"
+                  aria-label="Kontakt"
+                >
+                  <Icon fill="currentColor" class="m-auto h-6 w-6" name="mdi:email" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h6 class="mt-3 font-semibold text-gray-900 dark:text-white">Andrea Gruidl</h6>
+            <p class="mt-3 text-gray-600 dark:text-gray-400">
+              Marktstr. 84<br />72184 Eutingen im Gäu
+            </p>
+          </div>
+        </Card>
+      </div>
+    </Container>
+  </div>
+</Layout>

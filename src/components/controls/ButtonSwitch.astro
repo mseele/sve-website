@@ -1,0 +1,61 @@
+---
+interface Props {
+  id: string
+  name: string
+  left: string
+  right: string
+  class?: string
+}
+
+const { id, name, left, right, class: className } = Astro.props
+---
+
+<div
+  class:list={[
+    'relative flex h-10 min-w-[200px] items-center overflow-hidden rounded-full bg-gray-200 p-1 text-gray-900 shadow dark:bg-gray-800 dark:text-gray-500',
+    className,
+  ]}
+>
+  <div class="flex w-full justify-center">
+    <button type="button" id="left" class="w-full">{left}</button>
+  </div>
+  <div class="flex w-full justify-center">
+    <button type="button" id="right" class="w-full">{right}</button>
+  </div>
+  <span
+    id="toggle"
+    class="absolute left-1 top-[4px] flex h-8 w-1/2 cursor-default items-center justify-center rounded-full bg-primary text-white shadow transition-all"
+  >
+    {left}
+  </span>
+  <input class="absolute -top-6 size-2" type="checkbox" id={id} name={name} checked />
+</div>
+
+<script>
+  const toggle = document.querySelector<HTMLSpanElement>('#toggle')
+  const input = toggle?.parentElement?.querySelector<HTMLInputElement>('input')
+  const left = document.querySelector<HTMLButtonElement>('#left')
+  const right = document.querySelector<HTMLButtonElement>('#right')
+
+  if (toggle && input) {
+    input.addEventListener('change', () => {
+      if (input.checked) {
+        toggle.classList.remove('translate-x-full', '!-left-1')
+        toggle.innerText = left?.innerText || ''
+      } else {
+        toggle.classList.add('translate-x-full', '!-left-1')
+        toggle.innerText = right?.innerText || ''
+      }
+    })
+
+    left?.addEventListener('click', () => {
+      input.checked = true
+      input.dispatchEvent(new Event('change'))
+    })
+
+    right?.addEventListener('click', () => {
+      input.checked = false
+      input.dispatchEvent(new Event('change'))
+    })
+  }
+</script>

@@ -1,0 +1,119 @@
+---
+import Container from '@/components/common/Container.astro'
+import Button from '@/components/controls/Button.astro'
+import { SITE } from '@/config.mjs'
+import type { ThemedImage } from '@/types'
+import { Picture } from 'astro:assets'
+
+interface PropsBase {
+  id?: string
+  title: string
+  description: string
+  primaryButton?: {
+    label: string
+    to: string
+  }
+  secondaryButton?: {
+    label: string
+    to: string
+  }
+}
+
+type Props =
+  | (PropsBase & { image: ThemedImage; images?: never })
+  | (PropsBase & { images: ThemedImage[]; image?: never })
+
+const { id, title, description, primaryButton, secondaryButton, image, images } = Astro.props
+---
+
+<div class="relative overflow-hidden dark:bg-darker lg:overflow-auto" id={id}>
+  <div class="absolute inset-x-0 top-32 lg:hidden">
+    <div
+      aria-hidden="true"
+      class="grid grid-cols-2 -space-x-52 opacity-50 dark:opacity-60 2xl:mx-auto 2xl:max-w-6xl"
+    >
+      <div class="h-60 bg-gradient-to-br from-primary to-red-400 blur-3xl dark:from-red-700"></div>
+      <div
+        class="h-72 rounded-full bg-gradient-to-r from-transparent to-gray-500 blur-3xl dark:to-gray-600 md:from-gray-600 md:to-gray-200"
+      >
+      </div>
+    </div>
+  </div>
+  <Container>
+    <div class="relative ml-auto pb-10 pt-40 xl:pt-36">
+      <div class="gap-12 md:flex md:items-center">
+        <div class="text-center sm:px-12 md:w-2/3 md:px-0 md:text-left lg:w-1/2">
+          <h1 class="break-words text-5xl font-black dark:text-white md:text-6xl xl:text-7xl">
+            {title}
+          </h1>
+          <div class="">
+            <p class="mt-8 text-lg text-gray-700 dark:text-gray-100">
+              {description}
+            </p>
+            {
+              (primaryButton || secondaryButton) && (
+                <div class="mt-12 flex justify-center gap-4 sm:gap-6 md:justify-start">
+                  {primaryButton && (
+                    <Button emphasis="primary" href={primaryButton.to}>
+                      {primaryButton.label}
+                    </Button>
+                  )}
+                  {secondaryButton && (
+                    <Button emphasis="secondary" href={secondaryButton.to}>
+                      {secondaryButton.label}
+                    </Button>
+                  )}
+                </div>
+              )
+            }
+          </div>
+        </div>
+        <div class="relative mt-20 md:mt-0 md:w-2/5 lg:w-3/5">
+          <div class="-ml-6 overflow-hidden rounded-3xl md:-mr-72 lg:mr-0">
+            {
+              (image ? [image] : images).map((image, index) => (
+                <>
+                  <Picture
+                    data-image-index={index}
+                    src={image.light}
+                    class="h-full object-cover object-left dark:hidden lg:object-center"
+                    alt={image.alt}
+                    widths={SITE.imageWidths}
+                    formats={SITE.imageFormats}
+                  />
+                  <Picture
+                    data-image-index={index}
+                    src={image.dark}
+                    class="hidden h-full object-cover object-left dark:block lg:object-center"
+                    alt={image.alt}
+                    widths={SITE.imageWidths}
+                    formats={SITE.imageFormats}
+                  />
+                </>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</div>
+
+<script>
+  document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+      const images = document.querySelectorAll<HTMLElement>('[data-image-index]')
+      const ids = new Set(Array.from(images).map((img) => img.dataset.imageIndex))
+      if (ids.size > 1) {
+        const randomIndex = Math.floor(Math.random() * ids.size).toString()
+        for (const image of images) {
+          if (image.dataset.imageIndex !== randomIndex) {
+            image.parentElement?.removeChild(image)
+          }
+        }
+      }
+    },
+    { once: true },
+  )
+</script>

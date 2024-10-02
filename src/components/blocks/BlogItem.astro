@@ -1,0 +1,41 @@
+---
+import { SITE } from '@/config.mjs'
+import type { ThemedImage } from '@/types'
+import { Picture } from 'astro:assets'
+
+interface Props {
+  title: string
+  image: ThemedImage
+}
+
+const { title, image } = Astro.props
+---
+
+<div
+  class="group flex h-full flex-col rounded-3xl border border-gray-100 bg-white bg-opacity-50 p-6 shadow-2xl shadow-gray-600/10 dark:border-gray-700 dark:bg-gray-800 dark:shadow-none sm:p-8"
+>
+  <div class="relative overflow-hidden rounded-xl">
+    <Picture
+      src={image.light}
+      loading="lazy"
+      class="h-64 w-full object-cover object-center transition duration-500 group-hover:scale-105 dark:hidden"
+      alt={image.alt}
+      widths={SITE.imageWidths}
+      formats={SITE.imageFormats}
+    />
+    <Picture
+      src={image.dark}
+      loading="lazy"
+      class="hidden h-64 w-full object-cover object-center transition duration-500 group-hover:scale-105 dark:block"
+      alt={image.alt}
+      widths={SITE.imageWidths}
+      formats={SITE.imageFormats}
+    />
+  </div>
+  <div class="relative mt-6 flex flex-grow flex-col">
+    <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">
+      {title}
+    </h3>
+    <slot />
+  </div>
+</div>

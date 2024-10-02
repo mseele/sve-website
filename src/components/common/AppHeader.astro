@@ -1,0 +1,244 @@
+---
+import { Icon } from 'astro-icon/components'
+import { external } from '@/data/links'
+import Container from './Container.astro'
+
+const topLinks = [
+  {
+    to: '/teamsport',
+    label: 'Teamsport',
+  },
+  {
+    to: '/events',
+    label: 'Events',
+  },
+  {
+    to: '/fitness',
+    label: 'Fitness',
+  },
+]
+
+const links = [
+  ...topLinks,
+  {
+    to: '/historie',
+    label: 'Historie',
+  },
+  {
+    to: '/partnerschaft',
+    label: 'Partnerschaft',
+  },
+  {
+    to: '/vereinsportrait',
+    label: 'Vereinsportrait',
+  },
+  {
+    to: '/gaststaette',
+    label: 'Gaststätte Auszeit',
+  },
+  {
+    to: '/kunstrasen',
+    label: 'Kunstrasen Vermietung',
+  },
+  {
+    to: '/termine',
+    label: 'Termine',
+  },
+]
+---
+
+<header>
+  <nav
+    class="absolute z-10 w-full border-b border-black/5 dark:border-white/5 lg:border-transparent lg:dark:border-transparent"
+  >
+    <Container>
+      <div class="relative flex flex-wrap items-center justify-between gap-6 py-2 md:gap-0 md:py-4">
+        <input
+          aria-hidden="true"
+          type="checkbox"
+          name="toggle_nav"
+          id="toggle_nav"
+          autocomplete="off"
+          class="peer hidden"
+        />
+        <div class="relative z-20 flex w-full justify-between md:px-0">
+          <a href="/" aria-label="logo" class="flex items-center space-x-2">
+            <Icon aria-hidden="true" class="h-7 w-7" name="logo" />
+            <span class="text-2xl font-bold text-gray-900 dark:text-white">SV Eutingen</span>
+          </a>
+
+          <div class="flex">
+            <div
+              id="top_links"
+              class="hidden lg:flex lg:items-center lg:border-r lg:border-black/5 lg:dark:border-white/5"
+            >
+              {
+                topLinks.map((link) => (
+                  <a
+                    href={link.to}
+                    class="block text-gray-600 transition hover:text-primary dark:text-gray-200 dark:hover:text-white md:px-4"
+                  >
+                    <span>{link.label}</span>
+                  </a>
+                ))
+              }
+            </div>
+            <div class="relative flex max-h-10 items-center">
+              <label
+                role="button"
+                for="toggle_nav"
+                aria-label="humburger"
+                id="hamburger"
+                class="relative -mr-6 p-6"
+              >
+                <div
+                  aria-hidden="true"
+                  id="line"
+                  class="m-auto h-0.5 w-5 rounded bg-sky-900 transition duration-300 dark:bg-gray-300"
+                >
+                </div>
+                <div
+                  aria-hidden="true"
+                  id="line2"
+                  class="m-auto mt-2 h-0.5 w-5 rounded bg-sky-900 transition duration-300 dark:bg-gray-300"
+                >
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          aria-hidden="true"
+          class="fixed inset-0 z-10 h-screen w-screen origin-bottom scale-y-0 bg-white/70 backdrop-blur-2xl transition duration-500 peer-checked:origin-top peer-checked:scale-y-100 dark:bg-gray-900/70"
+        >
+        </div>
+        <div
+          class="invisible absolute left-0 top-full z-20 w-full origin-top translate-y-1 scale-95 flex-col flex-wrap justify-end gap-6 rounded-3xl border border-gray-100 bg-white p-8 opacity-0 shadow-2xl shadow-gray-600/10 transition-all duration-300 peer-checked:visible peer-checked:scale-100 peer-checked:opacity-100 dark:border-gray-700 dark:bg-gray-800 dark:shadow-none"
+        >
+          <div class="w-full text-gray-600 dark:text-gray-200">
+            <ul class="flex flex-col gap-6 tracking-wide">
+              {
+                links.map((link) => (
+                  <li>
+                    <a
+                      href={link.to}
+                      class="block transition hover:text-primary dark:hover:text-white md:px-4"
+                    >
+                      <span>{link.label}</span>
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div class="mt-8 flex items-center md:px-4">
+            <button
+              aria-label="theme switcher"
+              data-theme-switcher
+              class="group relative flex size-9 max-w-[2.25rem] flex-none items-center justify-center before:absolute before:inset-0 before:rounded-full before:border before:border-gray-300 before:bg-white before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 disabled:before:scale-100 disabled:before:bg-gray-300 dark:before:border-gray-700 dark:before:bg-gray-800"
+            >
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="relative hidden h-5 w-5 text-yellow-500 duration-300 group-hover:rotate-180 dark:inline-block"
+              >
+                <path
+                  d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"
+                ></path>
+              </svg>
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="relative h-4 w-4 text-gray-600 duration-300 group-hover:-rotate-90 dark:hidden"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </button>
+            <div
+              class="ml-4 flex items-center space-x-4 overflow-hidden border-l border-black/5 py-1 pl-4 text-gray-500 dark:border-white/5 dark:text-gray-300"
+            >
+              {
+                external.map((link) => (
+                  <a
+                    id="external"
+                    class="transition-colors duration-300 hover:text-primary dark:hover:text-white"
+                    href={link.to}
+                    title={link.title}
+                    target="blank"
+                    rel="noreferrer"
+                    aria-label={link.title}
+                  >
+                    <Icon fill="currentColor" class="m-auto size-6" name={link.icon} />
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </nav>
+</header>
+
+<script>
+  const button = document.querySelector('[data-theme-switcher]')
+  if (button) {
+    button.addEventListener('click', () => {
+      const toggle_nav = document.querySelector<HTMLInputElement>('#toggle_nav')
+      if (toggle_nav) {
+        toggle_nav.checked = false
+      }
+    })
+  }
+</script>
+
+<style>
+  #toggle_nav:checked ~ div #hamburger #line {
+    @apply translate-y-1.5 rotate-45;
+  }
+
+  #toggle_nav:checked ~ div #hamburger #line2 {
+    @apply -translate-y-1 -rotate-45;
+  }
+
+  #toggle_nav:checked ~ div #top_links {
+    @apply hidden;
+  }
+</style>
+
+<script>
+  const externalLinks = document.querySelectorAll('#external')
+  const parent = externalLinks.item(0)?.parentElement
+
+  function checkVisibility() {
+    const parentRect = parent?.getBoundingClientRect()
+    if (parentRect) {
+      for (const link of externalLinks) {
+        const rect = link.getBoundingClientRect()
+
+        const isVisible =
+          rect.top >= parentRect.top &&
+          rect.left >= parentRect.left &&
+          rect.bottom <= parentRect.bottom &&
+          rect.right <= parentRect.right
+
+        if (!isVisible) {
+          link.classList.add('invisible')
+        } else {
+          link.classList.remove('invisible')
+        }
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', checkVisibility, { once: true })
+  parent && new ResizeObserver(checkVisibility).observe(parent)
+</script>

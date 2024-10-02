@@ -1,0 +1,108 @@
+---
+import FaqComponent from './Faq.astro'
+import type { Faq } from '@/types'
+
+interface Props {
+  title?: string
+  description?: string
+  faqs: Faq[]
+}
+
+const { title, description, faqs } = Astro.props
+---
+
+<script>
+  const faqs = document.querySelectorAll('.faq')
+
+  for (let i = 0; i < faqs.length; i++) {
+    const answer = faqs[i].querySelector<HTMLElement>('.faq-answer')
+    const icon = faqs[i].querySelector<HTMLElement>('.arrow-down')
+
+    if (answer && icon) {
+      faqs[i].addEventListener('click', () => {
+        for (let j = 0; j < faqs.length; j++) {
+          const answer2 = faqs[j].querySelector<HTMLElement>('.faq-answer')
+          const icon2 = faqs[j].querySelector<HTMLElement>('.arrow-down')
+
+          if (faqs[i] != faqs[j] && answer2 && icon2) {
+            answer2.style.maxHeight = '0px'
+            icon2.classList.replace('rotate-180', 'rotate-0')
+          }
+        }
+
+        if (icon.classList.contains('rotate-180')) {
+          answer.style.maxHeight = 0 + 'px'
+          icon.classList.replace('rotate-180', 'rotate-0')
+        } else {
+          answer.style.maxHeight = answer.scrollHeight + 'px'
+          icon.classList.replace('rotate-0', 'rotate-180')
+        }
+      })
+    }
+  }
+</script>
+
+<div class="mt-20 flex flex-col gap-12 md:mt-32 lg:flex-row">
+  <div class="text-center lg:w-5/12 lg:pl-12 lg:text-left">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white md:text-3xl lg:text-4xl">
+      {title ?? 'Häufig gestellte Fragen'}
+    </h2>
+    {description && <p class="mt-4 text-gray-600 dark:text-gray-300">{description}</p>}
+  </div>
+  <div
+    class="divide-y divide-gray-200 border-y border-gray-200 dark:divide-gray-800 dark:border-gray-800 lg:w-7/12"
+  >
+    {
+      faqs.map((item, index) => (
+        <FaqComponent id={`faq-${index}`} question={item.question}>
+          <p class="pb-6 text-base text-gray-600 dark:text-gray-400">
+            <Fragment set:html={item.answer} />
+          </p>
+        </FaqComponent>
+      ))
+    }
+    <!-- <Faq id="faq-1" question="How to customize the template ?">
+      <p class="pb-6 text-base text-gray-600 dark:text-gray-400">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum quod pariatur possimus at
+        fugit natus aspernatur molestiae. Velit, odio modi provident necessitatibus molestias qui
+        voluptatibus similique magnam a nam rem!
+      </p>
+    </Faq>
+    <Faq id="faq-2" question="How many times can I use the template ?">
+      <div class="pb-6 text-base text-gray-600 dark:text-gray-400">
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum quod pariatur possimus
+          at fugit natus aspernatur molestiae. Velit, odio modi provident necessitatibus molestias
+          qui voluptatibus similique magnam a nam rem!
+        </p>
+        <ul class="mt-4 list-outside list-disc pl-4">
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+          <li>Item 4</li>
+        </ul>
+      </div>
+    </Faq>
+    <Faq id="faq-3" question="How to customize the template ?">
+      <p class="pb-6 text-base text-gray-600 dark:text-gray-400">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum quod pariatur possimus at
+        fugit natus aspernatur molestiae. Velit, odio modi provident necessitatibus molestias qui
+        voluptatibus similique magnam a nam rem!
+      </p>
+    </Faq>
+    <Faq id="faq-4" question="How to customize the template ?">
+      <p class="pb-6 text-base text-gray-600 dark:text-gray-400">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum quod pariatur possimus at
+        fugit natus aspernatur molestiae. Velit, odio modi provident necessitatibus molestias qui
+        voluptatibus similique magnam a nam rem!
+      </p>
+    </Faq>
+    <Faq id="faq-5" question="How to customize the template ?">
+      <p class="pb-6 text-base text-gray-600 dark:text-gray-400">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum quod pariatur possimus at
+        fugit natus aspernatur molestiae. Velit, odio modi provident necessitatibus molestias qui
+        voluptatibus similique magnam a nam rem!
+      </p>
+    </Faq> -->
+  </div>
+</div>

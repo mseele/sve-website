@@ -1,0 +1,92 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+
+<dialog id="notification-popup">
+  <div
+    class="fixed bottom-6 left-6 right-6 grid animate-slide-up justify-center sm:left-auto lg:bottom-7 lg:right-7"
+  >
+    <div
+      class="relative flex max-w-md items-center gap-4 overflow-hidden rounded-2xl border border-gray-100 bg-white p-4 text-gray-900 shadow-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:shadow-gray-950/30"
+    >
+      <Icon
+        id="success"
+        class="size-6 shrink-0 text-green-600 dark:text-green-400"
+        name="mdi:information-outline"
+      />
+      <Icon
+        id="error"
+        class="size-6 shrink-0 text-red-600 dark:text-red-400"
+        name="mdi:alert-circle-outline"
+      />
+      <div class="flex flex-col">
+        <div id="title" class="text-base font-semibold"></div>
+        <div id="message" class="text-sm text-gray-500 dark:text-gray-300"></div>
+      </div>
+      <div class="absolute right-0 top-0 grid place-items-center">
+        <button
+          class="p-3 text-gray-500 transition hover:text-gray-900 focus:outline-none dark:text-gray-400 dark:hover:text-white"
+          onclick="document.dispatchEvent(new CustomEvent('close-notification'))"
+        >
+          <Icon class="size-5" name="mdi:close" />
+        </button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  let closeTimeoutId: number | undefined
+
+  document.addEventListener('show-notification', (event) => {
+    const { error, title, message } = (event as any).detail
+    const dialog = document.querySelector<HTMLDialogElement>('#notification-popup')
+    if (dialog) {
+      dialog.show()
+      if (error) {
+        dialog.querySelector<HTMLElement>('#success')?.classList.add('hidden')
+        dialog.querySelector<HTMLElement>('#error')?.classList.remove('hidden')
+      } else {
+        dialog.querySelector<HTMLElement>('#success')?.classList.remove('hidden')
+        dialog.querySelector<HTMLElement>('#error')?.classList.add('hidden')
+      }
+
+      const titleElement = dialog.querySelector<HTMLDivElement>('#title')
+      if (titleElement) {
+        titleElement.textContent = title
+      }
+      const messageElement = dialog.querySelector<HTMLDivElement>('#message')
+      if (messageElement) {
+        messageElement.textContent = message
+      }
+
+      closeTimeoutId = window.setTimeout(
+        () => document.dispatchEvent(new CustomEvent('close-notification')),
+        5000,
+      )
+    }
+  })
+
+  document.addEventListener('close-notification', (event) => {
+    const dialog = document.querySelector<HTMLDialogElement>('#notification-popup')
+    if (dialog) {
+      const card = dialog.children.item(0)
+      if (card) {
+        card.classList.remove('animate-slide-up')
+        card.classList.add('animate-slide-right')
+
+        if (closeTimeoutId !== undefined) {
+          clearTimeout(closeTimeoutId)
+        }
+
+        setTimeout(() => {
+          card.classList.add('animate-slide-up')
+          card.classList.remove('animate-slide-right')
+          dialog.close()
+        }, 300)
+      } else {
+        dialog.close()
+      }
+    }
+  })
+</script>

@@ -1,0 +1,23 @@
+---
+import Container from '@/components/common/Container.astro'
+
+interface Props {
+  id?: string
+  title: string
+  description: string
+}
+
+const { id, title, description } = Astro.props
+---
+
+<div id={id}>
+  <Container>
+    <div class="mb-12 space-y-2 pt-10 text-center">
+      <h2 class="text-3xl font-bold text-gray-800 dark:text-white md:text-4xl">{title}</h2>
+      <p class="text-gray-600 dark:text-gray-300 lg:mx-auto lg:w-6/12">{description}</p>
+    </div>
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <slot />
+    </div>
+  </Container>
+</div>

@@ -1,0 +1,16 @@
+---
+import type { ThemedImage } from '@/types'
+import { ulid } from 'ulid'
+import ImageCarousel from './ImageCarousel.astro'
+import ImageDialog from './ImageDialog.astro'
+
+interface Props {
+  images: ThemedImage[]
+}
+
+const { images } = Astro.props
+const id = ulid()
+---
+
+<ImageCarousel images={images} dialogId={id} />
+<ImageDialog images={images} id={id} />

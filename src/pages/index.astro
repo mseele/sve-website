@@ -1,0 +1,154 @@
+---
+import home1Dark from '@/assets/pages/home-1-dark.jpg'
+import home1Light from '@/assets/pages/home-1-light.jpg'
+import home2Dark from '@/assets/pages/home-2-dark.jpg'
+import home2Light from '@/assets/pages/home-2-light.jpg'
+import home3Dark from '@/assets/pages/home-3-dark.jpg'
+import home3Light from '@/assets/pages/home-3-light.jpg'
+import home4Dark from '@/assets/pages/home-4-dark.jpg'
+import home4Light from '@/assets/pages/home-4-light.jpg'
+import home5Dark from '@/assets/pages/home-5-dark.jpg'
+import home5Light from '@/assets/pages/home-5-light.jpg'
+import home6Dark from '@/assets/pages/home-6-dark.jpg'
+import home6Light from '@/assets/pages/home-6-light.jpg'
+import joinFitnessDark from '@/assets/pages/home-fitness-dark.jpg'
+import joinFitnessLight from '@/assets/pages/home-fitness-light.jpg'
+import joinFussballDark from '@/assets/pages/home-fussball-dark.jpg'
+import joinFussballLight from '@/assets/pages/home-fussball-light.jpg'
+import joinJugendDark from '@/assets/pages/home-jugend-dark.jpg'
+import joinJugendLight from '@/assets/pages/home-jugend-light.jpg'
+import joinMitgliedDark from '@/assets/pages/home-mitglied-dark.jpg'
+import joinMitgliedLight from '@/assets/pages/home-mitglied-light.jpg'
+import joinPartnerDark from '@/assets/pages/home-partner-dark.jpg'
+import joinPartnerLight from '@/assets/pages/home-partner-light.jpg'
+import joinVolleyballDark from '@/assets/pages/home-volleyball-dark.jpg'
+import joinVolleyballLight from '@/assets/pages/home-volleyball-light.jpg'
+import Blog from '@/components/blocks/Blog.astro'
+import BlogItem from '@/components/blocks/BlogItem.astro'
+import HeroSection from '@/components/blocks/HeroSection.astro'
+import News from '@/components/blocks/News.astro'
+import Container from '@/components/common/Container.astro'
+import { SITE } from '@/config.mjs'
+import Layout from '@/layouts/Layout.astro'
+import { YouTube } from '@astro-community/astro-embed-youtube'
+
+const joins = [
+  {
+    title: 'Fußball - unsere Leidenschaft',
+    description:
+      'Auf unserer modernen Sportanlage mit einem Rasen- und zwei Kunstrasenplätzen bieten wir ein vielfältiges Fußballangebot für Kinder, Jugendliche, Frauen und Männer, das sich über verschiedene Ligen erstreckt.',
+    imageLight: joinFussballLight,
+    imageDark: joinFussballDark,
+    link: '/teamsport#fussball',
+  },
+  {
+    title: 'Teilhabe für Kinder und Jugendliche',
+    description:
+      'Eine sinnstiftende Freizeitbeschäftigung für Kinder und Jugendliche ist Schwerpunkt unserer Vereinsarbeit. Wir bieten für alle Altersklassen sowie Mädchen und Jungs die Möglichkeit, Fußball zu spielen. Ebenfalls im Programm haben wir regelmäßige Schwimmkurse für Kinder.',
+    imageLight: joinJugendLight,
+    imageDark: joinJugendDark,
+    link: '/teamsport#jugend',
+  },
+  {
+    title: "Fühl' Dich wohl durch Fitness",
+    description:
+      'Unser breites Fitnessangebot bietet für jedes Alter den perfekten Ausgleich zum Alltag und schafft spürbar mehr Lebensqualität. Rückenfit, Reha-Sport, Yoga, Pilates, Power Hour... - bei uns findest Du das Richtige für Dich!',
+    imageLight: joinFitnessLight,
+    imageDark: joinFitnessDark,
+    link: '/fitness',
+  },
+  {
+    title: 'Volleyball - genau Dein Ding',
+    description:
+      'Unsere Volleyball-Hobbygruppe heißt Dich willkommen, egal ob mit oder ohne Volleyball-Vorerfahrung. Immer freitagsabends steht die Freude am Sport und in der Gemeinschaft im Vordergrund.',
+    imageLight: joinVolleyballLight,
+    imageDark: joinVolleyballDark,
+    link: '/teamsport#volleyball',
+  },
+  {
+    title: 'Sponsoring - wir leben Partnerschaft',
+    description:
+      'Unser Grundsatz: Partnerschaft leben! Auf unserer belebten Sportanlage bieten wir Werbemöglichkeiten für Unternehmen und Dienstleistungen. Unsere Reichweite erstreckt sich dank hoher Liga-Zugehörigkeit über ganz Baden-Württemberg.',
+    imageLight: joinPartnerLight,
+    imageDark: joinPartnerDark,
+    link: '/partnerschaft',
+  },
+  {
+    title: 'Mach mit und werde Mitglied',
+    description:
+      'Über 5,3 Millionen Menschen in Baden-Württemberg engagieren sich ehrenamtlich. Dafür bieten auch wir mit über 500 SVE-Mitgliedern viele Möglichkeiten. Ob Vereinsamt oder Fördermitgliedschaft - mit Deinem Einsatz stiftest Du einen gesellschaftlichen Nutzen.',
+    imageLight: joinMitgliedLight,
+    imageDark: joinMitgliedDark,
+    link: '/mitgliedschaft',
+  },
+]
+const meta = {
+  title: SITE.title,
+  description: SITE.description,
+  dontUseTitleTemplate: true,
+}
+---
+
+<Layout {meta}>
+  <HeroSection
+    id="home"
+    title="SV Eutingen"
+    description="Willkommen beim SV Eutingen - Wir sind Dein Verein für Sport und Gemeinschaft in Eutingen im Gäu. Entdecke unser umfangreiches Sportangebot."
+    primaryButton={{ label: 'Aktuelles', to: '#aktuelles' }}
+    secondaryButton={{ label: 'Mach mit', to: '#mach-mit' }}
+    images={[
+      { light: home1Light, dark: home1Dark, alt: 'fussballfeld auf dem gespielt wird' },
+      { light: home2Light, dark: home2Dark, alt: 'fussballfeld mit sve streuwagen im vordergrund' },
+      { light: home3Light, dark: home3Dark, alt: 'sve sportgelände von oben' },
+      { light: home4Light, dark: home4Dark, alt: 'theatergruppe des sve' },
+      { light: home5Light, dark: home5Dark, alt: 'kreis von fussballspielerinnen' },
+      { light: home6Light, dark: home6Dark, alt: 'fussballspielerin im flutlicht' },
+    ]}
+  />
+
+  <News id="aktuelles" />
+
+  <div id="der-sve" class="pt-10">
+    <Container>
+      <div class="relative">
+        <div
+          aria-hidden="true"
+          class="absolute inset-0 my-auto h-32 w-96 translate-y-24 rotate-45 bg-gradient-to-r from-red-200 to-primary opacity-50 blur-3xl dark:from-red-700 sm:h-52 sm:translate-y-0 lg:hidden"
+        >
+        </div>
+        <div class="mb-12 space-y-2 pt-10 text-center">
+          <h2
+            class="text-3xl font-bold text-gray-900 dark:text-white md:pb-4 md:text-4xl lg:text-5xl"
+          >
+            Der SVE <span class="dark:text-primaryLight text-primary">#mehralseinverein</span>
+          </h2>
+          <p class="text-gray-600 dark:text-gray-300 lg:mx-auto lg:w-6/12">
+            Wir sind eine vielfältige Gemeinschaft aus Frauen, Männern, jungen und erfahrenen
+            Menschen. Was uns verbindet ist der Sport und die Überzeugung, dass wir als Gemeinschaft
+            etwas Gutes schaffen können.
+          </p>
+        </div>
+        <YouTube id="M_weDDLyPOs" class="mx-auto rounded-xl" />
+      </div>
+    </Container>
+  </div>
+  <Blog
+    id="mach-mit"
+    title="Mach mit"
+    description="Teamsport, Fitness, Ehrenamt, Sponsoring – Bei uns bist du genau richtig! Wir fördern Talente, ermöglichen Mannschafts- und Gesundheitssport, stiften Gemeinschaft und leben Partnerschaften."
+  >
+    {
+      joins.map((item) => (
+        <BlogItem
+          title={item.title}
+          image={{ light: item.imageLight, dark: item.imageDark, alt: item.title }}
+        >
+          <p class="mb-8 mt-6 flex-grow text-gray-600 dark:text-gray-300">{item.description}</p>
+          <a class="inline-block" href={item.link}>
+            <span class="text-primary dark:text-red-500">Mach mit</span>
+          </a>
+        </BlogItem>
+      ))
+    }
+  </Blog>
+</Layout>

@@ -1,0 +1,35 @@
+---
+interface Props {
+  id: string
+  name: string
+  title: string
+  description?: string
+  checked?: boolean
+}
+
+const { id, name, title, description, checked } = Astro.props
+---
+
+<div class="w-full space-y-4">
+  <div class="relative">
+    <div class="grid items-center [grid-template-columns:1fr_auto]">
+      <label for={id} class="text-lg text-gray-900 dark:text-white">{title}</label>
+      <label
+        for={id}
+        class="relative block h-5 w-8 overflow-hidden rounded-full border bg-gray-100 transition duration-300 has-[:checked]:border-white/5 has-[:checked]:bg-primary dark:border-gray-700 dark:bg-gray-800 dark:has-[:checked]:border-white/5 dark:has-[:checked]:bg-primary"
+      >
+        <input
+          checked={checked}
+          class="peer absolute -left-6 size-2"
+          type="checkbox"
+          id={id}
+          name={name}
+        />
+        <span
+          class="absolute inset-x-[1px] inset-y-0 my-auto size-4 rounded-full bg-white shadow-sm shadow-gray-950/25 transition-[transform,width] duration-300 ease-in-out will-change-transform peer-checked:translate-x-3"
+        ></span>
+      </label>
+    </div>
+    {description && <span class="block text-sm text-gray-500">{description}</span>}
+  </div>
+</div>
