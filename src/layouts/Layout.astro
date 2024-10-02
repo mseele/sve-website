@@ -1,0 +1,31 @@
+---
+import '@fontsource-variable/dm-sans'
+import { type MetaSEO } from '@/types'
+import { SITE } from '@/config.mjs'
+import MetaTags from '@/components/common/MetaTags.astro'
+import BasicScripts from '@/components/common/BasicScripts.astro'
+import AppHeader from '@/components/common/AppHeader.astro'
+import AppFooter from '@/components/common/AppFooter.astro'
+
+export interface Props {
+  meta?: MetaSEO
+}
+
+const { meta = {} } = Astro.props
+const { language, textDirection } = SITE
+---
+
+<!doctype html>
+<html lang={language} dir={textDirection} class="scroll-smooth">
+  <head>
+    <MetaTags {...meta} />
+    <BasicScripts />
+  </head>
+  <body class="m-0 overflow-x-hidden scroll-smooth bg-white font-sans dark:bg-darker">
+    <AppHeader />
+    <main class="mb-20">
+      <slot />
+    </main>
+    <AppFooter />
+  </body>
+</html>

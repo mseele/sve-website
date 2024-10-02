@@ -1,0 +1,68 @@
+---
+interface Props {
+  id: string
+  name: string
+  title: string
+  description?: string
+  checked?: boolean
+  class?: string
+}
+
+const { id, name, title, description, checked, class: className } = Astro.props
+---
+
+<div class:list={['w-full space-y-4', className]}>
+  <div class="relative">
+    <div class="grid items-center gap-x-3 gap-y-1 [grid-template-columns:auto_1fr]">
+      <label
+        for={id}
+        class="group relative block size-[1.125rem] overflow-hidden rounded border border-gray-300 shadow-sm shadow-gray-950/5 transition duration-300 has-[:checked]:border-white/5 has-[:checked]:bg-primary dark:border-gray-700 dark:bg-gray-800 dark:has-[:checked]:border-white/5 dark:has-[:checked]:bg-primary"
+      >
+        <input
+          class="peer absolute -left-6 size-2"
+          type="checkbox"
+          id={id}
+          name={name}
+          checked={checked}
+        />
+        <svg
+          class="absolute inset-0 m-auto size-3.5 scale-75 text-gray-950 opacity-0 transition duration-300 group-hover:opacity-25 peer-checked:scale-100 peer-checked:text-white peer-checked:opacity-100 dark:text-white"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          style="pointer-events: none;"><path d="M20 6 9 17l-5-5"></path></svg
+        >
+      </label>
+      <label for={id} class="block select-none text-gray-900 dark:text-white">{title}</label>
+      {description && <span class="text-caption col-start-2 block text-sm">{description}</span>}
+    </div>
+  </div>
+
+  <!-- <div class="relative">
+    <div class="grid items-center [grid-template-columns:1fr_auto]">
+      <label for={id} class="text-lg text-gray-900 dark:text-white">{title}</label>
+      <label
+        for={id}
+        class="relative block h-5 w-8 overflow-hidden rounded-full border bg-gray-100 transition duration-300 has-[:checked]:border-white/5 has-[:checked]:bg-primary dark:border-gray-600 dark:bg-gray-700 dark:has-[:checked]:border-white/5 dark:has-[:checked]:bg-primary"
+      >
+        <input
+          checked={checked}
+          class="peer absolute -left-6 size-2"
+          type="checkbox"
+          id={id}
+          name={name}
+        />
+        <span
+          class="absolute inset-x-[1px] inset-y-0 my-auto size-4 rounded-full bg-white shadow-sm shadow-gray-950/25 transition-[transform,width] duration-300 ease-in-out will-change-transform peer-checked:translate-x-3"
+        ></span>
+      </label>
+    </div>
+    {description && <span class="block text-sm text-gray-500">{description}</span>}
+  </div> -->
+</div>

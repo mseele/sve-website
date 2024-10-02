@@ -1,0 +1,63 @@
+---
+import nothingDark from '@/assets/pages/fitness-dark.png'
+import nothingLight from '@/assets/pages/fitness-light.png'
+import Events from '@/components/blocks/Events.astro'
+import HeaderSection from '@/components/blocks/HeaderSection.astro'
+import Layout from '@/layouts/Layout.astro'
+import type { Faq, MetaSEO } from '@/types'
+import { getCollection } from 'astro:content'
+import image from '@/assets/meta/fitness.jpg'
+
+const entries = await getCollection('fitness')
+
+const faqs: Faq[] = [
+  {
+    question: 'Was muss ich zum Kurs mitbringen?',
+    answer:
+      'Alle notwendigen Utensilien werden bei der Anmeldung per E-Mail mitgeteilt. Vor allem in den Sommermonaten ist es wichtig, etwas zu trinken mitzubringen.',
+  },
+  {
+    question: 'Können Schichtarbeiter am Kursprogramm teilnehmen?',
+    answer:
+      'Wenn du Schichtmitarbeiter bist und trotzdem an dem Kurs teilnehmen möchtest, dann suche dir einen Partner aus deiner Gegenschicht und ihr teilt euch den Kurs. Gib einfach bei der Anmeldung im Kommentarfeld an, mit wem du den Kurs teilst.',
+  },
+  {
+    question: 'Kann ich den Kurs über meine Krankenkasse bezuschussen lassen?',
+    answer:
+      'Das hängt von der Krankenkasse und dem Kurs ab. Erkundige Dich am besten bei Deiner Krankenkasse, welche Zuschüsse für Dich möglich sind. Wir stellen dir am Ende des Kurses eine Teilnahmebestätigung aus.',
+  },
+]
+
+const meta: MetaSEO = {
+  title: 'Fitness',
+  description:
+    'Entdecke das vielseitige Kursangebot für jedes Fitnesslevel beim SV Eutingen 1947 e.V. Werde fit und habe Spaß! Sei dabei und melde Dich direkt online an!',
+  image,
+}
+---
+
+<Layout {meta}>
+  <HeaderSection
+    title="Fitness"
+    description="Unsere Fitnesskurse bieten Dir die ideale Kombination aus Bewegung und Spaß, unabhängig von Deinem Fitnesslevel. Alle Infos zu Programmen, Terminen und Anmeldungen findest Du hier."
+    color="green"
+  />
+  <Events
+    type="fitness"
+    entries={entries}
+    nothing={{
+      title: 'Aktuell keine Kurse',
+      image: { light: nothingLight, dark: nothingDark, alt: 'Aktuell keine Kurse' },
+    }}
+    newsletterDescription="Erhalte automatisch eine E-Mail sobald neue Kursangebote online sind."
+    faqs={faqs}
+  >
+    <Fragment slot="nothingDescription">
+      Wir befinden uns aktuell in der Kurspause und planen die nächste Runde. Schau regelmäßig
+      vorbei, um über kommende Kurse informiert zu bleiben.
+      <br />
+      <br />
+      Abonniere unseren Newsletter, um alle neuen Kursangebote direkt per E-Mail zu erhalten.
+    </Fragment>
+  </Events>
+</Layout>

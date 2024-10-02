@@ -1,0 +1,94 @@
+---
+import HeaderSection from '@/components/blocks/HeaderSection.astro'
+import NewsletterCard from '@/components/blocks/NewsletterCard.astro'
+import Container from '@/components/common/Container.astro'
+import Notification from '@/components/common/Notification.astro'
+import Layout from '@/layouts/Layout.astro'
+import type { MetaSEO } from '@/types'
+
+const meta: MetaSEO = {
+  title: 'Newsletter',
+  description:
+    'Bleib auf dem Laufenden mit unseren Newslettern zu Teamsport, Events und Fitness. Erhalte interessante, gesammelte Informationen über das SVE-Angebot – garantiert ohne Spam. Jetzt abonnieren!',
+}
+---
+
+<Layout {meta}>
+  <HeaderSection
+    title="Newsletter"
+    description="Bleib auf dem Laufenden mit unseren Newslettern zu Teamsport, Events und Fitness und erhalte interessante, gesammelte Informationen über das SVE-Angebot – garantiert ohne Spam."
+  />
+  <div>
+    <Container>
+      <NewsletterCard />
+    </Container>
+  </div>
+  <Notification />
+</Layout>
+
+<script>
+  import { manageSubscription } from '@/api/forms'
+  import { checkRequiredInput, clearCustomValidityOnInput } from '@/client/forms'
+  import { notify } from '@/client/notifications'
+
+  const form = document.querySelector<HTMLFormElement>('#newsletter-form')
+  const input = form?.querySelector<HTMLInputElement>('#email')
+
+  clearCustomValidityOnInput(input)
+
+  // handle form submission
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    if (!checkRequiredInput(input, 'Bitte gib eine gültige E-Mail-Adresse ein.')) {
+      return false
+    }
+
+    const subscribeInput = form?.querySelector<HTMLInputElement>('#abo')
+    const generalCheckbox = form?.querySelector<HTMLInputElement>('#general')
+    const fitnessCheckbox = form?.querySelector<HTMLInputElement>('#fitness')
+    const eventsCheckbox = form?.querySelector<HTMLInputElement>('#events')
+
+    const subscribe = subscribeInput?.checked || false
+    const email = (input?.value || '').trim()
+    const general = generalCheckbox?.checked || false
+    const fitness = fitnessCheckbox?.checked || false
+    const events = eventsCheckbox?.checked || false
+
+    // check if at least one category is selected
+    if (!general && !fitness && !events) {
+      notify('Newsletter', 'Bitte wähle mindestens eine Newsletter-Kategorie aus.', true)
+      return false
+    }
+
+    let success = false
+    const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]')
+    try {
+      if (button) button.disabled = true
+      success = (await manageSubscription(subscribe, email, general, fitness, events)).ok
+      if (success) {
+        if (input) input.value = ''
+        if (subscribeInput) {
+          subscribeInput.checked = true
+          subscribeInput.dispatchEvent(new Event('change'))
+        }
+        if (generalCheckbox) generalCheckbox.checked = true
+        if (fitnessCheckbox) fitnessCheckbox.checked = true
+        if (eventsCheckbox) eventsCheckbox.checked = true
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      if (button) button.disabled = false
+    }
+    if (success) {
+      notify('Newsletter', 'Du hast dich erfolgreich für unseren Newsletter angemeldet.')
+    } else {
+      notify(
+        'Newsletter',
+        'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
+        true,
+      )
+    }
+  })
+</script>

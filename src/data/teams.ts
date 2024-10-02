@@ -1,4 +1,4 @@
-import { Contact, Team } from '@/models'
+import { type Contact, type Team } from '@/types'
 
 const abteilungsleiterHerren: Contact = {
   title: 'Abteilungsleiter',
@@ -20,7 +20,14 @@ const jugendleiter: Contact = {
   },
 }
 
-const teams: Record<string, Team[]> = {
+const teams: {
+  herren: Team[]
+  frauen: Team[]
+  jugend_herren: Team[]
+  jugend_frauen: Team[]
+  kinder: Team[]
+  volleyball: Team[]
+} = {
   herren: [
     {
       key: 'herren-1',

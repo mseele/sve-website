@@ -1,0 +1,257 @@
+---
+import { Icon } from 'astro-icon/components'
+import Input from '../controls/Input.astro'
+import Select from '../controls/Select.astro'
+import Textarea from '../controls/Textarea.astro'
+import Checkbox from '../controls/Checkbox.astro'
+import SubmitButton from '../controls/SubmitButton.astro'
+
+export interface ContactInfo {
+  title: string
+  contactMethods: ContactMethod[]
+}
+
+export interface ContactMethod {
+  methodType: ContactMethodType
+  label: string
+  url: string
+}
+
+export enum ContactMethodType {
+  Phone,
+  Email,
+  WhatsApp,
+}
+
+interface Props {
+  identifier: string
+  description: string
+  contactList: ContactInfo[]
+  recipientTitle?: string
+  recipients: { value: string; label: string }[]
+}
+
+const { identifier, description, contactList, recipientTitle, recipients } = Astro.props
+
+function contactMethodIcon(methodType: ContactMethodType) {
+  switch (methodType) {
+    case ContactMethodType.Phone:
+      return 'mdi:phone'
+    case ContactMethodType.Email:
+      return 'mdi:email-outline'
+    case ContactMethodType.WhatsApp:
+      return 'mdi:whatsapp'
+  }
+}
+
+function contactMethodDescription(methodType: ContactMethodType) {
+  switch (methodType) {
+    case ContactMethodType.Phone:
+      return 'Erreiche uns gerne per Telefon'
+    case ContactMethodType.Email:
+      return 'Schreibe uns jederzeit eine E-Mail'
+    case ContactMethodType.WhatsApp:
+      return 'Kontaktiere uns bequem über WhatsApp'
+  }
+}
+---
+
+<contact-card id="contact-card" data-identifier={identifier} class="relative hidden">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute bottom-0 left-0 m-auto grid h-max w-full rotate-180 grid-cols-2 -space-x-52 opacity-50 dark:opacity-30"
+  >
+    <div class="dark:from-purle-800 h-56 bg-gradient-to-br from-primary to-purple-400 blur-[106px]">
+    </div>
+    <div class="h-32 bg-gradient-to-r from-cyan-400 to-sky-900 blur-[106px] dark:to-indigo-500">
+    </div>
+  </div>
+  <div
+    class="relative rounded-3xl border border-gray-100 bg-white shadow-2xl shadow-gray-600/20 dark:border-white/10 dark:bg-gray-900 dark:shadow-none"
+  >
+    <div
+      class="flex flex-col divide-y p-10 dark:divide-gray-800 lg:flex-row lg:gap-12 lg:divide-x lg:divide-y-0 lg:p-12"
+    >
+      <div class="flex flex-col gap-10 lg:w-1/2">
+        <h3 class="text-center text-2xl font-bold text-gray-900 dark:text-white">
+          Kontakt aufnehmen
+        </h3>
+
+        <p class="text-gray-700 dark:text-white">{description}</p>
+
+        {
+          contactList.map((contactInfo) => (
+            <div>
+              <h2 class="text-lg font-bold text-gray-900 dark:text-white">{contactInfo.title}</h2>
+              <div class="mt-4 space-y-4 divide-y divide-gray-100 dark:divide-gray-800">
+                {contactInfo.contactMethods.map((contactMethod) => (
+                  <a
+                    class="flex gap-4 pt-4 first:pt-0 md:items-center"
+                    href={contactMethod.url}
+                    rel="noreferrer"
+                    title={contactMethod.label}
+                    aria-label={contactMethod.label}
+                  >
+                    <div class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-800">
+                      <Icon
+                        class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300"
+                        name={contactMethodIcon(contactMethod.methodType)}
+                      />
+                    </div>
+                    <div class="w-5/6">
+                      <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                        {contactMethod.label}
+                      </h3>
+                      <p class="text-gray-500 dark:text-gray-400">
+                        {contactMethodDescription(contactMethod.methodType)}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+
+        <p
+          class="flex grow place-items-end justify-center text-sm text-gray-500 dark:text-gray-400"
+        >
+          <span class="hidden lg:block">
+            SV Eutingen 1947 e.V. • Marktstr. 84 • 72184 Eutingen im Gäu
+          </span>
+        </p>
+      </div>
+      <div class="relative pt-10 lg:w-1/2 lg:pl-12 lg:pt-0">
+        <h3 class="pb-10 text-center text-2xl font-bold text-gray-900 dark:text-white">
+          Nachricht senden
+        </h3>
+        <form id="contact-form" class="grid gap-6 md:gap-10 lg:gap-6">
+          <Select
+            id="recipient"
+            name="recipient"
+            label={recipientTitle}
+            values={recipients}
+            required
+            hidden={recipients.length === 1}
+          />
+          <Input id="name" name="name" label="Vor- und Nachname" />
+          <Input id="email" name="email" label="E-Mail" type="email" />
+          <Input id="phone" name="phone" label="Telefon (optional)" type="tel" />
+          <Textarea id="message" name="message" label="Nachricht" />
+          <Checkbox
+            id="consent"
+            name="consent"
+            title="Ich stimme der Verarbeitung meiner personenbezogenen Daten zu"
+          />
+          <div class="flex justify-center">
+            <SubmitButton>Absenden</SubmitButton>
+          </div>
+        </form>
+        <p class="pt-10 text-center text-sm text-gray-500 dark:text-gray-400 lg:hidden">
+          SV Eutingen 1947 e.V. • Marktstr. 84 • 72184 Eutingen im Gäu
+        </p>
+      </div>
+    </div>
+  </div>
+</contact-card>
+
+<script>
+  import { sendContactMessage } from '@/api/forms'
+  import { checkRequiredInput, clearCustomValidityOnInput } from '@/client/forms'
+  import { notify } from '@/client/notifications'
+
+  class ContactCard extends HTMLElement {
+    constructor() {
+      super()
+
+      const form = this.querySelector<HTMLFormElement>('#contact-form')
+      if (form) {
+        const recipient = form.querySelector<HTMLSelectElement>('#recipient')
+
+        const name = form.querySelector<HTMLInputElement>('#name')
+        clearCustomValidityOnInput(name)
+
+        const email = form.querySelector<HTMLInputElement>('#email')
+        clearCustomValidityOnInput(email)
+
+        const phone = form.querySelector<HTMLInputElement>('#phone')
+
+        const message = form.querySelector<HTMLTextAreaElement>('#message')
+        clearCustomValidityOnInput(message)
+
+        const consent = form.querySelector<HTMLInputElement>('#consent')
+
+        form.addEventListener('submit', async (event) => {
+          event.preventDefault()
+
+          if (!checkRequiredInput(name, 'Bitte gib deinen Vor- und Nachnamen ein.')) {
+            return false
+          }
+
+          if (!checkRequiredInput(email, 'Bitte gib eine gültige E-Mail-Adresse ein.')) {
+            return false
+          }
+
+          if (!checkRequiredInput(message, 'Bitte gib eine Nachricht ein.')) {
+            return false
+          }
+
+          if (consent && !consent.checked) {
+            consent.setCustomValidity(
+              'Bitte stimme der Verarbeitung deiner personenbezogenen Daten zu.',
+            )
+            return consent.reportValidity()
+          }
+
+          let success = false
+          const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]')
+          try {
+            if (button) button.disabled = true
+            success = (
+              await sendContactMessage(
+                recipient?.value!,
+                name?.value!,
+                email?.value!,
+                phone?.value!,
+                message?.value!,
+              )
+            ).ok
+            if (success) {
+              if (name) name.value = ''
+              if (email) email.value = ''
+              if (phone) phone.value = ''
+              if (message) message.value = ''
+              if (consent) {
+                consent.checked = false
+              }
+            }
+          } catch (err) {
+            console.error(err)
+          } finally {
+            if (button) button.disabled = false
+          }
+          if (success) {
+            notify('Kontakt', 'Danke für deine Nachricht. Wir melden uns umgehend bei Dir.')
+          } else {
+            notify(
+              'Kontakt',
+              'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
+              true,
+            )
+          }
+        })
+      }
+
+      this.addEventListener('show-contact-card', () => {
+        this.classList.remove('hidden')
+      })
+
+      this.addEventListener('hide-contact-card', () => {
+        this.classList.add('hidden')
+        form?.reset()
+      })
+    }
+  }
+
+  customElements.define('contact-card', ContactCard)
+</script>

@@ -1,0 +1,37 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends HTMLAttributes<'input'> {
+  id: string
+  name: string
+  label?: string
+  value?: string
+  placeholder?: string
+  class?: string
+}
+
+const { id, name, label, value, placeholder, class: className, ...attrs } = Astro.props
+---
+
+<div
+  class:list={[
+    'relative space-y-2.5 *:has-[:disabled]:pointer-events-none *:has-[:disabled]:opacity-50',
+    className,
+  ]}
+>
+  {
+    label && (
+      <label class="text-gray-900 dark:text-white" for={id}>
+        {label}
+      </label>
+    )
+  }
+  <input
+    id={id}
+    name={name}
+    placeholder={placeholder}
+    value={value}
+    {...attrs}
+    class="h-9 w-full rounded-xl border border-gray-300 bg-white px-3 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-gray-950/5 outline-2 -outline-offset-1 invalid:border-red-500 invalid:text-red-500 focus:outline focus:outline-primary invalid:focus:outline-red-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:shadow-gray-950/30 dark:invalid:text-red-500"
+  />
+</div>

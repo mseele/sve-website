@@ -1,0 +1,187 @@
+---
+import imageDark from '@/assets/pages/partnerschaft-dark.jpg'
+import imageLight from '@/assets/pages/partnerschaft-light.jpg'
+import bandleLight from '@/assets/pages/partnerschaft-bande-light.png'
+import bandleDark from '@/assets/pages/partnerschaft-bande-dark.png'
+import HeroSection from '@/components/blocks/HeroSection.astro'
+import Container from '@/components/common/Container.astro'
+import Layout from '@/layouts/Layout.astro'
+import type { MetaSEO } from '@/types'
+import { Icon } from 'astro-icon/components'
+import Button from '@/components/controls/Button.astro'
+import { Picture } from 'astro:assets'
+import { SITE } from '@/config.mjs'
+import sponsoring from '@/data/sponsoring'
+import { type Sponsor } from '@/types'
+
+const sponsors = sponsoring
+  .slice()
+  .sort((a, b) => {
+    const nameA = a.groupBy.toUpperCase()
+    const nameB = b.groupBy.toUpperCase()
+    if (nameA < nameB) {
+      return -1
+    }
+    if (nameA > nameB) {
+      return 1
+    }
+    return 0
+  })
+  .reduce((acc: Record<string, Sponsor[]>, item) => {
+    const key = item.groupBy.toUpperCase().charAt(0)
+    if (!acc[key]) {
+      acc[key] = []
+    }
+    acc[key].push(item)
+    return acc
+  }, {})
+
+const meta: MetaSEO = {
+  title: 'Partnerschaft',
+  description:
+    'Entdecke die Kraft der Partnerschaft: Unterstütze das sportliche und kulturelle Angebot des SV Eutingen durch eine Sponsoringpartnerschaft. Investiere in die Aus- und Weiterbildung unserer engagierten Jugendtrainer oder platziere deine Werbung auf den Trikots und Equipment eines Teams. Werde Teil unseres Netzwerks und gestalte aktiv mit! Jetzt Interesse an einer Partnerschaft zeigen.',
+  image: imageLight,
+}
+---
+
+<Layout {meta}>
+  <HeroSection
+    id="home"
+    title="Partnerschaft"
+    description="Entdecke die Kraft der Partnerschaft: Unterstütze das sportliche und kulturelle Angebot des SV Eutingen durch eine Sponsoringpartnerschaft."
+    primaryButton={{ label: 'Bandenwerbung', to: '#bande' }}
+    secondaryButton={{ label: 'Unsere Partner', to: '#partner' }}
+    image={{ light: imageLight, dark: imageDark, alt: 'fussballfeld auf dem gespielt wird' }}
+  />
+  <div class="pb-16 pt-6">
+    <Container>
+      <div class="text-gray-600">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+          Wir leben Zusammenarbeit
+        </h2>
+        <p class="my-12 text-gray-600 dark:text-gray-300">
+          Unsere Partner ermöglichen durch ihre finanzielle und materielle Unterstützung das
+          sportliche und kulturelle Angebot des SV Eutingen. Durch diese Zusammenarbeit ist es
+          möglich, ein ehrenamtlich breites Sportangebot auf die Beine zu stellen.<br />
+          <br />
+          Die Möglichkeiten einer Sponsoringpartnerschaft sind vielfältig: Sponsoren können bspw. direkt
+          in die Aus- und Weiterbildung unserer Jugendtrainer investieren oder für ein bestimmtes Team
+          auf deren Trikots oder sonstigem Equipment Werbung machen.
+        </p>
+        <div class="space-y-4 divide-y divide-gray-100 dark:divide-gray-800">
+          <a
+            class="mt-8 flex gap-4 md:items-center"
+            href="/kontakt?auswahl=partnerschaft&thema=partnerschaft#contact-card"
+            title="Kontakt"
+            aria-label="Kontakt"
+          >
+            <div class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-800">
+              <Icon
+                class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300"
+                name="mdi:comment-text-outline"
+              />
+            </div>
+            <div class="w-5/6">
+              <h3 class="text-lg font-semibold text-gray-700 dark:text-white">
+                <span class="sm:hidden">Interesse geweckt?</span>
+                <span class="hidden sm:block">Interesse an einer Partnerschaft?</span>
+              </h3>
+              <p class="text-gray-500 dark:text-gray-400">
+                <span class="sm:hidden">Klicke zur Kontaktaufnahme</span>
+                <span class="hidden sm:block">Die Kontaktaufname ist nur ein Klick entfernt</span>
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </Container>
+  </div>
+  <div class="pb-24 pt-12" id="bande">
+    <Container>
+      <div
+        class="mx-auto flex flex-col items-center gap-6 sm:w-4/5 md:w-full md:flex-row lg:gap-12"
+      >
+        <div class="relative md:w-1/2">
+          <div
+            aria-hidden="true"
+            class="absolute inset-0 m-auto grid h-3/5 w-3/5 grid-cols-2 -space-x-52 opacity-40 dark:opacity-60"
+          >
+            <div
+              class="h-full rounded-full bg-gradient-to-br from-primary to-purple-400 blur-[106px] dark:from-blue-700"
+            >
+            </div>
+            <div
+              class="h-full bg-gradient-to-r from-cyan-400 to-primary blur-[106px] dark:to-indigo-600"
+            >
+            </div>
+          </div>
+          <Picture
+            src={bandleLight}
+            loading="lazy"
+            class="relative dark:hidden"
+            alt="Partnerschaft mit Bandenwerbung"
+            widths={SITE.imageWidths}
+            formats={SITE.imageFormats}
+          />
+          <Picture
+            src={bandleDark}
+            loading="lazy"
+            class="relative hidden dark:block"
+            alt="Partnerschaft mit Bandenwerbung"
+            widths={SITE.imageWidths}
+            formats={SITE.imageFormats}
+          />
+        </div>
+        <div class="ml-auto h-full md:w-1/2">
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white md:text-3xl lg:text-4xl">
+            Profitiere durch Bandenwerbung
+          </h3>
+          <p class="my-12 text-gray-600 dark:text-gray-300">
+            Wir bieten seit über 20 Jahren eine attrative Bandenwerbung auf unserer sehr belebten
+            Sportanlage. Die Abwicklung läuft unkompliziert. Wir kümmern uns über Anschaffung und
+            Pflege der Bandenwerbung.<br />
+            <br />
+            Du hast Interesse an diesem sehenswerten Auftritt?
+          </p>
+          <Button emphasis="primary" href="/kontakt?auswahl=partnerschaft&thema=bande#contact-card">
+            Kontaktiere uns
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </div>
+  <div class="pb-16 pt-6" id="partner">
+    <Container>
+      <div class="text-gray-600">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+          Unsere Partner
+        </h2>
+        <p class="my-12 text-gray-600 dark:text-gray-300">
+          Diese langjährigen Partnern ermöglichen unser ehrenamtliches Angebot und machen auf ihre
+          Produkte und Dienstleistungen aufmerksam. Partnerschaft bedeutet für uns, dass beide
+          Seiten profitieren.
+        </p>
+        <div class="space-y-10">
+          {
+            Object.keys(sponsors).map((key) => (
+              <div>
+                <h3 class="text-2xl font-semibold tracking-wider text-gray-800 dark:text-white">
+                  {key}
+                </h3>
+                <div class="mt-4 grid gap-4 lg:grid-cols-2">
+                  {sponsors[key].map((item) => (
+                    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-gray-200 to-white p-px dark:from-gray-700 dark:via-gray-800 dark:to-darker">
+                      <div class="gap-6 rounded-2xl bg-gray-100 p-8 font-semibold text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+                        {item.name}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </Container>
+  </div>
+</Layout>

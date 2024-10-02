@@ -1,0 +1,40 @@
+---
+import Event from '@/components/blocks/Event.astro'
+import Layout from '@/layouts/Layout.astro'
+import type { MetaSEO } from '@/types'
+import type { GetStaticPaths } from 'astro'
+import { getCollection, type CollectionEntry } from 'astro:content'
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const collection = await getCollection('events')
+  if (!collection) return []
+  return collection.map((entry) => ({
+    params: {
+      id: entry.data.id,
+    },
+    props: {
+      entry,
+    },
+  }))
+}
+
+interface Props {
+  entry: CollectionEntry<'events'>
+}
+
+const { entry } = Astro.props
+
+const meta: MetaSEO = {
+  title: entry.data.name,
+  description: entry.data.shortDescription,
+  image: entry.data.image,
+}
+---
+
+<Layout {meta}>
+  <Event
+    type="events"
+    entry={entry}
+    newsletterDescription="Erhalte automatisch eine E-Mail sobald neue Events online sind."
+  />
+</Layout>
