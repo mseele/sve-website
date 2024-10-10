@@ -1,17 +1,11 @@
-import { getImage } from 'astro:assets'
 import { differenceInMinutes, format, isSameDay, parseISO } from 'date-fns'
 import { formatInTimeZone } from 'date-fns-tz'
 import { de } from 'date-fns/locale'
-import numeral from 'numeral'
-import 'numeral/locales/de'
 import type { RawAppointment } from './types'
 
 const DATE_PATTERN = 'd. MMMM yyyy'
 const LONG_DATE_PATTERN = 'eee, d. MMM yyyy'
 const TIME_PATTERN = 'H:mm'
-
-numeral.locale('de')
-numeral.localeData('de').delimiters.thousands = '.'
 
 export function formatDate(date: Date) {
   return format(date, DATE_PATTERN, { locale: de })
@@ -76,5 +70,9 @@ export function formatCurrency(value: number): string {
   if (typeof value !== 'number' && Number.isNaN(Number(value))) {
     return value
   }
-  return numeral(value).format('0,0[.]00 $')
+  return new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 2,
+  }).format(value)
 }
