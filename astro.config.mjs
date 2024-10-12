@@ -8,6 +8,7 @@ import tailwind from '@astrojs/tailwind'
 import robotsTxt from 'astro-robots-txt'
 import { SITE } from './src/config.mjs'
 import netlify from '@astrojs/netlify'
+import pagefind from 'astro-pagefind'
 
 const { SUBDOMAIN } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -26,6 +27,7 @@ export default defineConfig({
     }),
     sitemap(),
     robotsTxt(),
+    pagefind(),
   ],
   image: {
     service: sharpImageService(),

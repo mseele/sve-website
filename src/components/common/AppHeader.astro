@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components'
 import { external } from '@/data/links'
 import Container from './Container.astro'
+import Search from './Search.astro'
 
 const topLinks = [
   {
@@ -68,10 +69,7 @@ const links = [
           </a>
 
           <div class="flex">
-            <div
-              id="top_links"
-              class="hidden lg:flex lg:items-center lg:border-r lg:border-black/5 lg:dark:border-white/5"
-            >
+            <div id="top_links" class="hidden lg:flex lg:items-center">
               {
                 topLinks.map((link) => (
                   <a
@@ -82,6 +80,19 @@ const links = [
                   </a>
                 ))
               }
+            </div>
+            <div
+              id="search"
+              class="relative flex max-h-10 items-center border-r border-black/5 dark:border-white/5"
+            >
+              <label
+                role="button"
+                class="p-4 text-gray-900 dark:text-white"
+                onclick="document.dispatchEvent(new CustomEvent('open-search'))"
+              >
+                <Icon class="m-auto size-6" name="mdi:magnify" />
+              </label>
+              <Search />
             </div>
             <div class="relative flex max-h-10 items-center">
               <label
@@ -210,6 +221,10 @@ const links = [
   }
 
   #toggle_nav:checked ~ div #top_links {
+    @apply hidden;
+  }
+
+  #toggle_nav:checked ~ div #search {
     @apply hidden;
   }
 </style>
