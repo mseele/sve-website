@@ -300,7 +300,7 @@ const teams: {
       team: 'F-Junioren',
       league: 'Spieltage',
       coach: {
-        name: 'Michael Platz',
+        name: 'Mike Platz',
         email: 'mikeplatz_1991@web.de',
         mobile: {
           formatted: '0178 6048401',
