@@ -1,0 +1,149 @@
+---
+const bundlePath = `${import.meta.env.BASE_URL}pagefind/`
+---
+
+<dialog
+  id="search_dialog"
+  class="backdrop:overflow-hidden backdrop:backdrop-blur-sm backdrop:scrollbar-none"
+>
+  <div class="fixed inset-0 flex h-screen w-screen items-center justify-center p-3 md:p-[10vh]">
+    <div
+      id="content"
+      class="h-full w-full overflow-hidden rounded-lg bg-white text-gray-900 opacity-95 dark:bg-gray-800 dark:text-white dark:opacity-90 md:max-w-[700px] md:rounded-3xl md:border md:border-gray-100 md:shadow-2xl md:shadow-gray-600/10 md:dark:border-gray-700 md:dark:shadow-none"
+    >
+      <div
+        class="pagefind-init h-full overflow-hidden"
+        data-pagefind-ui
+        data-bundle-path={bundlePath}
+      >
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  document.addEventListener('open-search', async (event) => {
+    const dialog = document.querySelector<HTMLDialogElement>('#search_dialog')
+    if (dialog) {
+      await initPageFind(dialog)
+
+      dialog.addEventListener('close', () => {
+        document.body.classList.remove('overflow-hidden')
+      })
+
+      dialog.addEventListener('click', (event) => {
+        const rect = dialog.querySelector('#content')?.getBoundingClientRect()
+        if (rect) {
+          const isClickOutside = !(
+            event.clientX >= rect.left &&
+            event.clientX <= rect.right &&
+            event.clientY >= rect.top &&
+            event.clientY <= rect.bottom
+          )
+          if (isClickOutside) {
+            dialog.close()
+          }
+        }
+      })
+
+      // clear input before open
+      const input = dialog.querySelector<HTMLInputElement>(`input[type="text"]`)
+      if (input) {
+        input.value = ''
+        input.dispatchEvent(new Event('input', { bubbles: true }))
+      }
+
+      // open dialog
+      dialog.showModal()
+      document.body.classList.add('overflow-hidden')
+    }
+  })
+
+  async function initPageFind(dialog: HTMLDialogElement) {
+    // @ts-expect-error: pagefind ui is not typed
+    const { PagefindUI } = await import('@pagefind/default-ui')
+    const allSelector = '[data-pagefind-ui]'
+    for (const el of document.querySelectorAll(`${allSelector}.pagefind-init`)) {
+      const elSelector = [
+        ...(el.id ? [`#${el.id}`] : []),
+        ...[...el.classList.values()].map((c) => `.${c}`),
+        allSelector,
+      ].join('')
+      const bundlePath = el.getAttribute('data-bundle-path')
+      new PagefindUI({
+        bundlePath,
+        element: elSelector,
+        showImages: false,
+      })
+      el.classList.remove('pagefind-init')
+      const clearButton = el.querySelector('.pagefind-ui__search-clear')
+      if (clearButton) {
+        clearButton.textContent = 'esc'
+        clearButton.addEventListener('click', (event) => {
+          event.preventDefault()
+          dialog.close()
+        })
+      }
+    }
+  }
+</script>
+
+<style is:global>
+  .pagefind-ui {
+    @apply relative h-full overflow-hidden;
+  }
+
+  .pagefind-ui__form {
+    @apply flex h-full flex-col overflow-hidden;
+  }
+
+  .pagefind-ui__search-input {
+    @apply w-full border-b border-black/5 !p-4 !pr-16 focus:outline-none dark:border-white/10 dark:bg-gray-800 dark:bg-opacity-90;
+  }
+
+  .pagefind-ui__search-clear {
+    @apply absolute right-0 top-0 m-4 rounded-md border border-gray-200 px-1.5 py-1 text-[10px] font-medium uppercase shadow-sm hover:border-gray-300;
+  }
+
+  .pagefind-ui__drawer {
+    @apply relative grow;
+  }
+
+  .pagefind-ui__results-area {
+    @apply absolute inset-0 flex flex-col gap-2 overflow-hidden py-4;
+  }
+
+  .pagefind-ui__message {
+    @apply px-4 font-semibold;
+  }
+
+  .pagefind-ui__results {
+    @apply grid grow gap-4 divide-y divide-black/10 dark:divide-white/20 overflow-y-auto overflow-x-hidden px-4;
+  }
+
+  .pagefind-ui__result {
+    @apply pt-2 first:pt-0;
+  }
+
+  .pagefind-ui__result-inner {
+  }
+
+  .pagefind-ui__result-title {
+    @apply pb-1 text-lg font-bold;
+  }
+
+  .pagefind-ui__result-link {
+  }
+
+  .pagefind-ui__result-excerpt {
+    @apply text-sm;
+  }
+
+  .pagefind-ui__result-excerpt mark {
+    @apply bg-yellow-200;
+  }
+
+  .pagefind-ui__button {
+    @apply px-4 pt-2 font-semibold;
+  }
+</style>

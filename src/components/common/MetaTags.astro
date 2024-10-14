@@ -51,7 +51,8 @@ const image =
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+{/* TODO: move back to AstroSeo when https://github.com/onwidget/astrolib/issues/19 is fixed */}
+<link data-pagefind-meta="url[href]" rel="canonical" href={canonical} />
 <AstroSeo
   title={title}
   titleTemplate={dontUseTitleTemplate ? '%s' : `%s — ${SITE.name}`}
