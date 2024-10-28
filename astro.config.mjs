@@ -10,7 +10,7 @@ import { SITE } from './src/config.mjs'
 import netlify from '@astrojs/netlify'
 import pagefind from 'astro-pagefind'
 
-const { SUBDOMAIN } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
+const { SUBDOMAIN, PREVIEW } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // https://astro.build/config
@@ -26,7 +26,9 @@ export default defineConfig({
       iconDir: 'src/assets/icons',
     }),
     sitemap(),
-    robotsTxt(),
+    robotsTxt({
+      policy: PREVIEW === 'true' ? [{ userAgent: '*', disallow: '/' }] : undefined,
+    }),
     pagefind(),
   ],
   image: {
