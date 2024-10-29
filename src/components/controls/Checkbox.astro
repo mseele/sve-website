@@ -40,7 +40,13 @@ const { id, name, title, description, checked, class: className } = Astro.props
         >
       </label>
       <label for={id} class="block select-none text-gray-900 dark:text-white">{title}</label>
-      {description && <span class="text-caption col-start-2 block text-sm">{description}</span>}
+      {
+        description && (
+          <span class="text-caption col-start-2 block text-sm text-gray-900 dark:text-white">
+            {description}
+          </span>
+        )
+      }
     </div>
   </div>
 </div>
