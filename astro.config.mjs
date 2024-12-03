@@ -34,14 +34,11 @@ export default defineConfig({
   image: {
     service: sharpImageService(),
   },
-  experimental: {
-    contentLayer: true,
-    env: {
-      schema: {
-        SUBDOMAIN: envField.string({ context: 'server', access: 'public' }),
-        BACKEND_API: envField.string({ context: 'client', access: 'public' }),
-        PREVIEW: envField.boolean({ context: 'client', access: 'public' }),
-      },
+  env: {
+    schema: {
+      SUBDOMAIN: envField.string({ context: 'server', access: 'public' }),
+      BACKEND_API: envField.string({ context: 'client', access: 'public' }),
+      PREVIEW: envField.boolean({ context: 'client', access: 'public' }),
     },
   },
   vite: {
