@@ -13,6 +13,7 @@ import SubmitButton from '@/components/controls/SubmitButton.astro'
 import SuccessVideo from '@/assets/videos/success-cup.webm'
 
 const membershipTypes = [
+  { value: 'Family', label: 'Familienbeitrag - beliebig viele Kinder (alle Sparten)', price: 160 },
   { value: 'AdultActive', label: 'Erwachsener Aktive (alle Sparten)', price: 100 },
   { value: 'AdultPremium', label: 'Erwachsener Premiummitglied (alle Sparten)', price: 85 },
   { value: 'AdultSuporting', label: 'Erwachsener Fördermitglied (alle Sparten)', price: 65 },
@@ -135,11 +136,54 @@ const meta: MetaSEO = {
               <Input id="email" name="email" label="E-Mail" type="email" />
               <Input id="phone" name="phone" label="Telefon" type="tel" />
               <Input id="birthday" name="birthday" label="Geburtstag" type="date" max={minDate} />
+              <div id="familiy_members" class="hidden gap-6 md:col-span-2 md:grid-cols-2">
+                <div class="-mb-4 flex items-center gap-4 md:col-span-2">
+                  <h4 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    Familienmitglieder
+                  </h4>
+                  <button id="add_familiy_member"
+                    ><Icon class="m-auto size-6 text-green-600" name="mdi:plus-circle" /></button
+                  >
+                </div>
+                {
+                  Array.from({ length: 25 }, (_, i) => i).map((i) => (
+                    <div
+                      id="familiy_member"
+                      class:list={[
+                        i === 0 ? 'grid' : 'hidden',
+                        'gap-6 md:col-span-3 md:grid-cols-2',
+                      ]}
+                    >
+                      <h4 class="-mb-4 mt-4 font-semibold text-gray-900 dark:text-white md:col-span-3">
+                        {i + 1}. Familienmitglied
+                      </h4>
+                      <Input
+                        id="family_member_firstname"
+                        name="family_member_firstname"
+                        label="Vorname"
+                      />
+                      <Input
+                        id="family_member_lastname"
+                        name="family_member_lastname"
+                        label="Nachname"
+                      />
+                      <Input
+                        id="family_member_birthday"
+                        name="family_member_birthday"
+                        label="Geburtstag"
+                        type="date"
+                        max={new Date().toISOString().split('T')[0]}
+                      />
+                    </div>
+                  ))
+                }
+              </div>
               <div class="mt-4 flex justify-center gap-4 md:col-span-2">
                 <Button El="button" id="previous">Zurück</Button>
                 <Button El="button" emphasis="primary" id="next">Weiter</Button>
               </div>
             </div>
+
             <div id="payment" class="hidden gap-6 md:grid-cols-2 md:gap-10">
               <Input id="iban" name="iban" label="IBAN" />
               <Input id="account_owner" name="account_owner" label="Kontoinhaber" />
@@ -168,6 +212,7 @@ const meta: MetaSEO = {
                 <Button El="button" emphasis="primary" id="next">Weiter</Button>
               </div>
             </div>
+
             <div id="summary" class="hidden gap-3 md:grid-cols-2 md:gap-6">
               {
                 [
@@ -194,6 +239,17 @@ const meta: MetaSEO = {
                   </div>
                 ))
               }
+              {
+                Array.from({ length: 25 }, (_, i) => i).map((i) => (
+                  <div id="familiy_member" class="hidden gap-3 md:col-span-2 md:grid-cols-2">
+                    <h4 class="text-sm text-gray-500 dark:text-gray-400 md:col-span-2">
+                      {i + 1}. Familienmitglied
+                    </h4>
+                    <div id="family_member_name" />
+                    <div id="family_member_birthday" />
+                  </div>
+                ))
+              }
 
               <Checkbox
                 class="mt-6 md:col-span-2"
@@ -215,6 +271,7 @@ const meta: MetaSEO = {
                 <SubmitButton id="next">Mitgliedschaft beantragen</SubmitButton>
               </div>
             </div>
+
             <div id="success" class="hidden place-items-center gap-10">
               <video autoplay loop muted playsinline>
                 <source src={SuccessVideo} type="video/webm" />
@@ -350,7 +407,8 @@ const meta: MetaSEO = {
       current
         ?.querySelector<HTMLButtonElement>('button#next')
         ?.addEventListener('click', async () => {
-          if (memershipCheckboxes.find((cb) => cb.checked) === undefined) {
+          const membership_checkbox = memershipCheckboxes.find((cb) => cb.checked)
+          if (membership_checkbox === undefined) {
             const firstCheckbox = memershipCheckboxes[0]
             firstCheckbox.setCustomValidity('Bitte wähle eine Art der Mitgliedschaft aus.')
             return firstCheckbox.reportValidity()
@@ -358,6 +416,16 @@ const meta: MetaSEO = {
 
           const next = form.querySelector<HTMLDivElement>('#personal')
           if (current && next) {
+            const familiy_members_panel = next.querySelector<HTMLDivElement>('#familiy_members')
+            if (familiy_members_panel) {
+              if (membership_checkbox.name === 'Family') {
+                familiy_members_panel.classList.remove('hidden')
+                familiy_members_panel.classList.add('grid')
+              } else {
+                familiy_members_panel.classList.remove('grid')
+                familiy_members_panel.classList.add('hidden')
+              }
+            }
             displayNextStep(title, current, next, 'Persönliche Daten')
           }
         })
@@ -369,6 +437,22 @@ const meta: MetaSEO = {
     const personal_data_container = form.querySelector<HTMLDivElement>('#personal')
     {
       const current = personal_data_container
+
+      const familiy_members_panel = current?.querySelector<HTMLDivElement>('#familiy_members')
+      familiy_members_panel
+        ?.querySelector<HTMLButtonElement>('#add_familiy_member')
+        ?.addEventListener('click', () => {
+          const familiy_members = current?.querySelectorAll<HTMLDivElement>('#familiy_member')
+          if (familiy_members) {
+            for (const familiy_member of familiy_members) {
+              if (familiy_member.classList.contains('hidden')) {
+                familiy_member.classList.remove('hidden')
+                familiy_member.classList.add('grid')
+                break
+              }
+            }
+          }
+        })
 
       current?.querySelector<HTMLButtonElement>('button#next')?.addEventListener('click', () => {
         const salutation = current?.querySelector<HTMLSelectElement>('#salutation')
@@ -502,6 +586,25 @@ const meta: MetaSEO = {
           setInnerHTML(next, 'birthday', data.birthday)
           setInnerHTML(next, 'iban', data.iban)
           setInnerHTML(next, 'account_owner', data.account_owner)
+
+          const familiy_members = next.querySelectorAll<HTMLDivElement>('#familiy_member')
+          if (familiy_members) {
+            familiy_members.forEach((familiy_member, index) => {
+              const item = data.family_members?.at(index)
+              if (item) {
+                familiy_member.classList.replace('hidden', 'grid')
+                setInnerHTML(
+                  familiy_member,
+                  'family_member_name',
+                  `${item.first_name} ${item.last_name}`,
+                )
+                setInnerHTML(familiy_member, 'family_member_birthday', item.birthday)
+              } else {
+                familiy_member.classList.replace('grid', 'hidden')
+              }
+            })
+          }
+
           displayNextStep(title, current, next, 'Zusammenfassung')
         }
       })
@@ -604,6 +707,44 @@ const meta: MetaSEO = {
     const birthday = personal_data_container.querySelector<HTMLInputElement>('#birthday')?.value
     const iban = payment_data_container.querySelector<HTMLInputElement>('#iban')?.value
 
+    let familiy_members_data:
+      | { first_name: string; last_name: string; birthday: string }[]
+      | undefined = undefined
+    if (membership_checkbox?.name === 'Family') {
+      const familiy_members =
+        personal_data_container.querySelectorAll<HTMLDivElement>('#familiy_member')
+      if (familiy_members) {
+        familiy_members_data = []
+        for (const familiy_member of familiy_members) {
+          if (!familiy_member.classList.contains('hidden')) {
+            const first_name = familiy_member
+              .querySelector<HTMLInputElement>('#family_member_firstname')
+              ?.value?.trim()
+            const last_name = familiy_member
+              .querySelector<HTMLInputElement>('#family_member_lastname')
+              ?.value?.trim()
+            const birthday = familiy_member
+              .querySelector<HTMLInputElement>('#family_member_birthday')
+              ?.value?.trim()
+            if (
+              first_name &&
+              first_name.length > 0 &&
+              last_name &&
+              last_name.length > 0 &&
+              birthday &&
+              birthday.length > 0
+            ) {
+              familiy_members_data.push({
+                first_name,
+                last_name,
+                birthday: labels ? birthday?.split('-').reverse().join('.') : birthday,
+              })
+            }
+          }
+        }
+      }
+    }
+
     return {
       membership_type: labels
         ? membership_checkbox?.parentElement?.parentElement?.innerText
@@ -621,6 +762,7 @@ const meta: MetaSEO = {
       iban: labels ? iban : iban?.trim().replace(/\s/g, ''),
       account_owner:
         payment_data_container.querySelector<HTMLInputElement>('#account_owner')?.value,
+      family_members: familiy_members_data,
     }
   }
 
