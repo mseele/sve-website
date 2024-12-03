@@ -1,8 +1,13 @@
 ---
 import Button from './Button.astro'
+
+interface Props {
+  id?: string
+}
+const { id } = Astro.props
 ---
 
-<Button El="button" type="submit" emphasis="primary" class="group">
+<Button El="button" type="submit" emphasis="primary" class="group" id={id}>
   <span class="flex items-center">
     <svg
       class="-ml-1 mr-3 hidden h-5 w-5 animate-spin text-white group-disabled:block"

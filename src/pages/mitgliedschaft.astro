@@ -2,9 +2,29 @@
 import HeaderSection from '@/components/blocks/HeaderSection.astro'
 import Container from '@/components/common/Container.astro'
 import Button from '@/components/controls/Button.astro'
+import Select from '@/components/controls/Select.astro'
+import Input from '@/components/controls/Input.astro'
 import Layout from '@/layouts/Layout.astro'
 import type { MetaSEO } from '@/types'
 import { Icon } from 'astro-icon/components'
+import Checkbox from '@/components/controls/Checkbox.astro'
+import Notification from '@/components/common/Notification.astro'
+import SubmitButton from '@/components/controls/SubmitButton.astro'
+import SuccessVideo from '@/assets/videos/success-cup.webm'
+
+const membershipTypes = [
+  { value: 'AdultActive', label: 'Erwachsener Aktive (alle Sparten)', price: 100 },
+  { value: 'AdultPremium', label: 'Erwachsener Premiummitglied (alle Sparten)', price: 85 },
+  { value: 'AdultSuporting', label: 'Erwachsener Fördermitglied (alle Sparten)', price: 65 },
+  { value: 'Youth', label: 'Jugendlicher/Kind (alle Sparten)', price: 55 },
+  { value: 'Fitness', label: 'Sparte Fitness', price: 65 },
+]
+
+// Calculate the date 18 years ago from today
+const today = new Date()
+const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate())
+  .toISOString()
+  .split('T')[0]
 
 const meta: MetaSEO = {
   title: 'Mitglied werden',
@@ -23,53 +43,196 @@ const meta: MetaSEO = {
       <div
         class="relative rounded-3xl border border-gray-100 bg-white shadow-2xl shadow-gray-600/20 dark:border-white/10 dark:bg-gray-900 dark:shadow-none"
       >
-        <div
-          class="flex flex-col gap-6 divide-y p-10 dark:divide-gray-800 md:flex-row md:gap-12 md:divide-x md:divide-y-0 md:p-12"
-        >
-          <div class="space-y-10 text-center md:w-5/12">
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
-              Du möchtest Mitglied werden?
-            </h3>
+        <div class="flex flex-col gap-10 p-10">
+          <h3 id="title" class="text-center text-2xl font-bold text-gray-900 dark:text-white">
+            Du möchtest Mitglied werden?
+          </h3>
+          <div id="form" class="text-gray-900 dark:text-white">
+            <div
+              id="type"
+              class="grid gap-10 divide-y dark:divide-gray-800 lg:grid-cols-2 lg:gap-12 lg:divide-x lg:divide-y-0"
+            >
+              <div>
+                <h3
+                  class="mb-10 hidden text-center text-2xl font-bold text-gray-900 dark:text-white lg:block"
+                >
+                  Online Mitgliedsantrag
+                </h3>
+                <div class="grid gap-6 [grid-template-columns:auto_1fr] md:gap-10">
+                  {
+                    membershipTypes.map((type) => (
+                      <>
+                        <Checkbox id={type.value} name={type.value} title={type.label} />
+                        <div class="whitespace-nowrap text-right lg:text-left">{type.price} €</div>
+                      </>
+                    ))
+                  }
+                </div>
+                <div class="col-span-2 mt-4 flex justify-center">
+                  <Button El="button" emphasis="primary" id="next">Weiter</Button>
+                </div>
+              </div>
+              <div class="flex grow flex-col space-y-10 lg:pl-12 lg:pt-0">
+                <div class="mt-10 text-center text-lg text-gray-600 dark:text-gray-300 lg:mt-0">
+                  Alternativ zum Online-Antrag
+                </div>
 
-            <div class="flex justify-center">
-              <Button
-                emphasis="primary"
-                href="/downloads/2020/Mitgliedsantrag-SVE.pdf"
-                target="_blank">Download Mitgliedsantrag</Button
-              >
+                <div class="flex justify-center">
+                  <Button
+                    emphasis="primary"
+                    href="/downloads/2020/Mitgliedsantrag-SVE.pdf"
+                    target="_blank">Download Mitgliedsantrag</Button
+                  >
+                </div>
+
+                <div class="text-center text-lg text-gray-600 dark:text-gray-300">
+                  Fülle das Formular aus und sende es postalisch an uns zurück
+                </div>
+
+                <div class="flex grow justify-center">
+                  <ul role="list" class="space-y-4 text-gray-600 dark:text-gray-300">
+                    <li class="space-x-2">
+                      <span class="font-semibold text-primary dark:text-gray-300">&check;</span>
+                      <span>Teil einer starken Gemeinschaft</span>
+                    </li>
+                    <li class="space-x-2">
+                      <span class="font-semibold text-primary dark:text-gray-300">&check;</span>
+                      <span>Vielfältige Engagementmöglichkeiten</span>
+                    </li>
+                    <li class="space-x-2">
+                      <span class="font-semibold text-primary dark:text-gray-300">&check;</span>
+                      <span>Gesellschaftlicher Mehrwert</span>
+                    </li>
+                    <li class="space-x-2">
+                      <span class="font-semibold text-primary dark:text-gray-300">&check;</span>
+                      <span>Aktiver Beitrag zur Verbesserung</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <p class="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
+                  SV Eutingen 1947 e.V. • Marktstr. 84 • 72184 Eutingen im Gäu
+                </p>
+              </div>
             </div>
 
-            <div class="text-lg text-gray-600 dark:text-gray-300">
-              Fülle das Formular aus und sende es postalisch an uns zurück
+            <div id="personal" class="hidden grid-cols-1 gap-6 md:grid-cols-2 md:gap-10">
+              <Select
+                id="salutation"
+                name="salutation"
+                label="Anrede"
+                values={[
+                  { value: '', label: '', selected: true, disabled: true },
+                  { value: 'Frau', label: 'Frau' },
+                  { value: 'Herr', label: 'Herr' },
+                ]}
+              />
+              <Input id="firstname" name="firstname" label="Vorname" />
+              <Input id="lastname" name="lastname" label="Nachname" />
+              <Input id="street" name="street" label="Straße & Hausnummer" />
+              <Input id="zipcode" name="zipcode" label="PLZ" />
+              <Input id="city" name="city" label="Wohnort" />
+              <Input id="email" name="email" label="E-Mail" type="email" />
+              <Input id="phone" name="phone" label="Telefon" type="tel" />
+              <Input id="birthday" name="birthday" label="Geburtstag" type="date" max={minDate} />
+              <div class="mt-4 flex justify-center gap-4 md:col-span-2">
+                <Button El="button" id="previous">Zurück</Button>
+                <Button El="button" emphasis="primary" id="next">Weiter</Button>
+              </div>
             </div>
+            <div id="payment" class="hidden gap-6 md:grid-cols-2 md:gap-10">
+              <Input id="iban" name="iban" label="IBAN" />
+              <Input id="account_owner" name="account_owner" label="Kontoinhaber" />
+              <Checkbox
+                class="md:col-span-2"
+                id="approve_payment"
+                name="approve_payment"
+                title="Hiermit akzeptiere ich das SEPA-Lastschriftmandat. *"
+                description="Durch das Absenden des Formulars werden die von Dir angegebenen personenbezogenen Daten durch uns erhoben. Zur datenschutzrechtlichen Behandlung der von Dir gemachten Angaben verweisen wir im Übrigen auf unsere Datenschutzerklärung."
+              />
+              <div class="mt-4 flex justify-center text-sm md:col-span-2">
+                * Hinweise zum SEPA-Lastschriftmandat<br />
+                Ermächtigung zum Einzug von Forderungen mittels SEPA-Lastschrift (aus banktechnischen
+                Gründen nur von Konten teilnehmender Länder möglich) Hiermit ermächtige ich den SV Eutingen
+                1947 e.V. (Gläubiger-ID: DE28642910100034469001), Zahlungen für den Mitgliedsbeitrag
+                jährlich von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut
+                an, die vom SV Eutingen 1947 e.V. auf mein Konto gezogenen Lastschriften einzulösen.<br
+                />
+                <br />
+                Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung
+                des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten
+                Bedingungen.
+              </div>
+              <div class="mt-4 flex justify-center gap-4 md:col-span-2">
+                <Button El="button" id="previous">Zurück</Button>
+                <Button El="button" emphasis="primary" id="next">Weiter</Button>
+              </div>
+            </div>
+            <div id="summary" class="hidden gap-3 md:grid-cols-2 md:gap-6">
+              {
+                [
+                  {
+                    id: 'membership_type',
+                    label: 'Art der Mitgliedschaft',
+                    classname: 'md:col-span-2',
+                  },
+                  { id: 'salutation', label: 'Anrede', classname: 'md:col-span-2' },
+                  { id: 'firstname', label: 'Vorname' },
+                  { id: 'lastname', label: 'Nachname' },
+                  { id: 'street', label: 'Straße & Hausnummer' },
+                  { id: 'zipcode', label: 'PLZ' },
+                  { id: 'city', label: 'Wohnort' },
+                  { id: 'email', label: 'E-Mail' },
+                  { id: 'phone', label: 'Telefon' },
+                  { id: 'birthday', label: 'Geburtsdatum' },
+                  { id: 'iban', label: 'IBAN' },
+                  { id: 'account_owner', label: 'Kontoinhaber' },
+                ].map(({ id, label, classname }) => (
+                  <div class={classname}>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{label}</div>
+                    <div id={id} />
+                  </div>
+                ))
+              }
 
-            <p class="mt-12 text-sm text-gray-500 dark:text-gray-400">
-              SV Eutingen 1947 e.V. • Marktstr. 84 • 72184 Eutingen im Gäu
-            </p>
-          </div>
-          <div class="relative md:w-7/12 md:pl-12">
-            <ul role="list" class="space-y-4 py-6 text-gray-600 dark:text-gray-300 md:pb-12">
-              <li class="space-x-2">
-                <span class="font-semibold text-primary dark:text-gray-300">&check;</span>
-                <span>Teil einer starken Gemeinschaft</span>
-              </li>
-              <li class="space-x-2">
-                <span class="font-semibold text-primary dark:text-gray-300">&check;</span>
-                <span>Vielfältige Engagementmöglichkeiten</span>
-              </li>
-              <li class="space-x-2">
-                <span class="font-semibold text-primary dark:text-gray-300">&check;</span>
-                <span>Gesellschaftlicher Mehrwert</span>
-              </li>
-              <li class="space-x-2">
-                <span class="font-semibold text-primary dark:text-gray-300">&check;</span>
-                <span>Aktiver Beitrag zur Verbesserung</span>
-              </li>
-            </ul>
-            <p class="text-gray-700 dark:text-white">
-              Vielen Dank für deine Unterstützung! Deine Mitgliedschaft stärkt unsere Gemeinschaft
-              und hilft uns, positive Veränderungen zu bewirken.
-            </p>
+              <Checkbox
+                class="mt-6 md:col-span-2"
+                id="newsletter"
+                name="newsletter"
+                title="Ich möchte den Newsletter des SV Eutingen 1947 e.V. per E-Mail erhalten"
+              />
+
+              <Checkbox
+                class="md:col-span-2"
+                id="approve_membership"
+                name="approve_membership"
+                title="Ich beantrage die Mitgliedschaft beim SV Eutingen 1947 e.V. und erkenne die Satzung und die Ordnungen des Vereins an."
+                description="Durch das Absenden des Formulars werden die von Dir angegebenen personenbezogenen Daten durch uns erhoben. Zur datenschutzrechtlichen Behandlung der von Dir gemachten Angaben verweisen wir im Übrigen auf unsere Datenschutzerklärung."
+              />
+
+              <div class="mt-4 flex justify-center gap-4 md:col-span-2">
+                <Button El="button" id="previous">Zurück</Button>
+                <SubmitButton id="next">Mitgliedschaft beantragen</SubmitButton>
+              </div>
+            </div>
+            <div id="success" class="hidden place-items-center gap-10">
+              <video autoplay loop muted playsinline>
+                <source src={SuccessVideo} type="video/webm" />
+              </video>
+
+              <div class="space-y-5 text-center">
+                <h3
+                  class="flex items-center justify-center text-3xl font-semibold text-gray-700 dark:text-white"
+                >
+                  SV Eutingen +&nbsp;<span class="text-5xl font-bold text-primary">1</span>
+                </h3>
+                <p class="text-gray-500 dark:text-gray-400">
+                  <span>Vielen Dank für Deine Mitgliedschaft beim SV Eutingen 1947 e.V.</span>
+                </p>
+              </div>
+
+              <Button El="a" emphasis="primary" href="/mitgliedschaft">Neu Laden</Button>
+            </div>
           </div>
         </div>
       </div>
@@ -144,4 +307,330 @@ const meta: MetaSEO = {
       </div>
     </Container>
   </div>
+  <Notification />
 </Layout>
+
+<script>
+  import { membershipApplication } from '@/api/forms'
+  import {
+    checkRequiredInput,
+    checkRequiredSelect,
+    clearCustomValidityOnInput,
+    clearCustomValidityOnSelect,
+  } from '@/client/forms'
+  import { notify } from '@/client/notifications'
+  import { isValidIBAN } from 'ibantools'
+
+  const title = document.querySelector<HTMLHeadingElement>('#title')
+  const form = document.querySelector<HTMLDivElement>('#form')
+  if (title && form) {
+    // ------------------------
+    // 1. Step: Membership Type
+    // ------------------------
+    const membership_type_container = form.querySelector<HTMLDivElement>('#type')
+    {
+      const current = membership_type_container
+
+      const memershipCheckboxes = Array.from(
+        current?.querySelectorAll<HTMLInputElement>('input[type="checkbox"]') ?? [],
+      )
+      for (const checkbox of memershipCheckboxes) {
+        checkbox.addEventListener('change', () => {
+          const checked = checkbox.checked
+          if (checked) {
+            for (const cb of memershipCheckboxes) {
+              if (cb !== checkbox) {
+                cb.checked = false
+              }
+            }
+          }
+        })
+      }
+
+      current
+        ?.querySelector<HTMLButtonElement>('button#next')
+        ?.addEventListener('click', async () => {
+          if (memershipCheckboxes.find((cb) => cb.checked) === undefined) {
+            const firstCheckbox = memershipCheckboxes[0]
+            firstCheckbox.setCustomValidity('Bitte wähle eine Art der Mitgliedschaft aus.')
+            return firstCheckbox.reportValidity()
+          }
+
+          const next = form.querySelector<HTMLDivElement>('#personal')
+          if (current && next) {
+            displayNextStep(title, current, next, 'Persönliche Daten')
+          }
+        })
+    }
+
+    // ------------------------
+    // 2. Step: Personal Data
+    // ------------------------
+    const personal_data_container = form.querySelector<HTMLDivElement>('#personal')
+    {
+      const current = personal_data_container
+
+      current?.querySelector<HTMLButtonElement>('button#next')?.addEventListener('click', () => {
+        const salutation = current?.querySelector<HTMLSelectElement>('#salutation')
+        clearCustomValidityOnSelect(salutation)
+
+        const firstname = current?.querySelector<HTMLInputElement>('#firstname')
+        clearCustomValidityOnInput(firstname)
+
+        const lastname = current?.querySelector<HTMLInputElement>('#lastname')
+        clearCustomValidityOnInput(lastname)
+
+        const street = current?.querySelector<HTMLInputElement>('#street')
+        clearCustomValidityOnInput(street)
+
+        const zipcode = current?.querySelector<HTMLInputElement>('#zipcode')
+        clearCustomValidityOnInput(zipcode)
+
+        const city = current?.querySelector<HTMLInputElement>('#city')
+        clearCustomValidityOnInput(city)
+
+        const email = current?.querySelector<HTMLInputElement>('#email')
+        clearCustomValidityOnInput(email)
+
+        const phone = current?.querySelector<HTMLInputElement>('#phone')
+        clearCustomValidityOnInput(phone)
+
+        const birthday = current?.querySelector<HTMLInputElement>('#birthday')
+        clearCustomValidityOnInput(birthday)
+
+        if (!checkRequiredSelect(salutation, 'Bitte wähle eine Anrede aus.')) {
+          return
+        }
+
+        if (!checkRequiredInput(firstname, 'Bitte gib deinen Vornamen ein.')) {
+          return
+        }
+
+        if (!checkRequiredInput(lastname, 'Bitte gib deinen Nachnamen ein.')) {
+          return
+        }
+
+        if (!checkRequiredInput(street, 'Bitte gib eine gültige Straße & Hausnummer ein.')) {
+          return false
+        }
+
+        if (!checkRequiredInput(zipcode, 'Bitte gib eine gültige PLZ ein.')) {
+          return false
+        }
+
+        if (!checkRequiredInput(city, 'Bitte gib einen gültigen Wohnort ein.')) {
+          return false
+        }
+
+        if (!checkRequiredInput(email, 'Bitte gib eine gültige E-Mail-Adresse ein.')) {
+          return false
+        }
+
+        if (!checkRequiredInput(phone, 'Bitte gib eine gültige Telefonnummer ein.')) {
+          return false
+        }
+
+        if (!checkRequiredInput(birthday, 'Bitte gib ein gültiges Geburtsdatum ein.')) {
+          return false
+        }
+
+        const next = form.querySelector<HTMLDivElement>('#payment')
+        if (current && next) {
+          displayNextStep(title, current, next, 'Zahlungsinformationen')
+        }
+      })
+      current
+        ?.querySelector<HTMLButtonElement>('button#previous')
+        ?.addEventListener('click', () => {
+          const previous = form.querySelector<HTMLDivElement>('#type')
+          if (current && previous) {
+            displayNextStep(title, current, previous, 'Online Mitgliedsantrag')
+          }
+        })
+    }
+
+    // ------------------------
+    // 3. Step: Payment Data
+    // ------------------------
+    const payment_data_container = form.querySelector<HTMLDivElement>('#payment')
+    {
+      const current = payment_data_container
+
+      current?.querySelector<HTMLButtonElement>('button#next')?.addEventListener('click', () => {
+        const iban = current?.querySelector<HTMLInputElement>('#iban')
+        clearCustomValidityOnInput(iban)
+
+        const account_owner = current?.querySelector<HTMLInputElement>('#account_owner')
+        clearCustomValidityOnInput(account_owner)
+
+        const approve_payment = current?.querySelector<HTMLInputElement>('#approve_payment')
+
+        if (!checkRequiredInput(iban, 'Bitte gib eine IBAN ein.')) {
+          return
+        }
+        if (iban && !isValidIBAN(iban.value.trim().replace(/\s/g, ''))) {
+          iban.setCustomValidity('Bitte gib eine gültige IBAN ein.')
+          return iban.reportValidity()
+        }
+
+        if (!checkRequiredInput(account_owner, 'Bitte gib einen Kontoinhaber ein.')) {
+          return
+        }
+
+        if (approve_payment && approve_payment.checked !== true) {
+          approve_payment.setCustomValidity('Bitte akzeptiere das SEPA-Lastschriftmandat.')
+          return approve_payment.reportValidity()
+        }
+
+        const next = form.querySelector<HTMLDivElement>('#summary')
+        if (current && next) {
+          const data = collectData(
+            membership_type_container!,
+            personal_data_container!,
+            payment_data_container!,
+            true,
+          )
+          setInnerHTML(next, 'membership_type', data.membership_type)
+          setInnerHTML(next, 'salutation', data.salutation)
+          setInnerHTML(next, 'firstname', data.first_name)
+          setInnerHTML(next, 'lastname', data.last_name)
+          setInnerHTML(next, 'street', data.street)
+          setInnerHTML(next, 'zipcode', data.zipcode)
+          setInnerHTML(next, 'city', data.city)
+          setInnerHTML(next, 'email', data.email)
+          setInnerHTML(next, 'phone', data.phone)
+          setInnerHTML(next, 'birthday', data.birthday)
+          setInnerHTML(next, 'iban', data.iban)
+          setInnerHTML(next, 'account_owner', data.account_owner)
+          displayNextStep(title, current, next, 'Zusammenfassung')
+        }
+      })
+      current
+        ?.querySelector<HTMLButtonElement>('button#previous')
+        ?.addEventListener('click', () => {
+          const previous = form.querySelector<HTMLDivElement>('#personal')
+          if (current && previous) {
+            displayNextStep(title, current, previous, 'Persönliche Daten')
+          }
+        })
+    }
+
+    // ------------------------
+    // 4. Step: Summary
+    // ------------------------
+    {
+      const current = form.querySelector<HTMLDivElement>('#summary')
+
+      const button = current?.querySelector<HTMLButtonElement>('button#next')
+      button?.addEventListener('click', async () => {
+        const approve_membership = current?.querySelector<HTMLInputElement>('#approve_membership')
+
+        if (approve_membership && approve_membership.checked !== true) {
+          approve_membership.setCustomValidity('Bitte akzeptiere die Mitgliedschaft.')
+          return approve_membership.reportValidity()
+        }
+
+        const payload = {
+          newsletter: current?.querySelector<HTMLInputElement>('#newsletter')?.checked === true,
+          ...collectData(
+            membership_type_container!,
+            personal_data_container!,
+            payment_data_container!,
+          ),
+        }
+
+        try {
+          button.disabled = true
+          const response = await membershipApplication(payload)
+          if (response) {
+            const next = form.querySelector<HTMLDivElement>('#success')
+            if (current && next) {
+              displayNextStep(title, current, next, 'Mitgliedschaft erfolgreich beantragt')
+            }
+          } else {
+            notify(
+              'Mitgliedschaft',
+              'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
+              true,
+            )
+          }
+        } catch (err) {
+          console.error(err)
+          notify(
+            'Mitgliedschaft',
+            'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
+            true,
+          )
+        } finally {
+          button.disabled = false
+        }
+      })
+      current
+        ?.querySelector<HTMLButtonElement>('button#previous')
+        ?.addEventListener('click', () => {
+          const previous = form.querySelector<HTMLDivElement>('#payment')
+          if (current && previous) {
+            displayNextStep(title, current, previous, 'Zahlungsinformationen')
+          }
+        })
+    }
+  }
+
+  function displayNextStep(
+    title: HTMLHeadingElement,
+    current: HTMLDivElement,
+    next: HTMLDivElement,
+    text: string,
+  ) {
+    title.innerHTML = text
+    current.classList.add('hidden')
+    next.classList.remove('hidden')
+    next.classList.add('grid')
+    title.parentElement?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  function collectData(
+    membership_type_container: HTMLDivElement,
+    personal_data_container: HTMLDivElement,
+    payment_data_container: HTMLDivElement,
+    labels = false,
+  ) {
+    const memershipCheckboxes = Array.from(
+      membership_type_container?.querySelectorAll<HTMLInputElement>('input[type="checkbox"]') ?? [],
+    )
+    const membership_checkbox = memershipCheckboxes.find((cb) => cb.checked === true)
+    const salutation =
+      personal_data_container.querySelector<HTMLSelectElement>('#salutation')?.value
+    const birthday = personal_data_container.querySelector<HTMLInputElement>('#birthday')?.value
+    const iban = payment_data_container.querySelector<HTMLInputElement>('#iban')?.value
+
+    return {
+      membership_type: labels
+        ? membership_checkbox?.parentElement?.parentElement?.innerText
+        : membership_checkbox?.name,
+      salutation,
+      gender: salutation === 'Herr' ? 'male' : 'female',
+      first_name: personal_data_container.querySelector<HTMLInputElement>('#firstname')?.value,
+      last_name: personal_data_container.querySelector<HTMLInputElement>('#lastname')?.value,
+      street: personal_data_container.querySelector<HTMLInputElement>('#street')?.value,
+      zipcode: personal_data_container.querySelector<HTMLInputElement>('#zipcode')?.value,
+      city: personal_data_container.querySelector<HTMLInputElement>('#city')?.value,
+      email: personal_data_container.querySelector<HTMLInputElement>('#email')?.value,
+      phone: personal_data_container.querySelector<HTMLInputElement>('#phone')?.value,
+      birthday: labels ? birthday?.split('-').reverse().join('.') : birthday,
+      iban: labels ? iban : iban?.trim().replace(/\s/g, ''),
+      account_owner:
+        payment_data_container.querySelector<HTMLInputElement>('#account_owner')?.value,
+    }
+  }
+
+  function setInnerHTML(container: HTMLDivElement, id: string, text?: string) {
+    if (text === undefined) {
+      return
+    }
+    const element = container.querySelector<HTMLDivElement>(`#${id}`)
+    if (element) {
+      element.innerHTML = text
+    }
+  }
+</script>
