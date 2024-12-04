@@ -750,7 +750,7 @@ const meta: MetaSEO = {
         ? membership_checkbox?.parentElement?.parentElement?.innerText
         : membership_checkbox?.name,
       salutation,
-      gender: salutation === 'Herr' ? 'male' : 'female',
+      gender: salutation === 'Herr' ? 'männlich' : 'weiblich',
       first_name: personal_data_container.querySelector<HTMLInputElement>('#firstname')?.value,
       last_name: personal_data_container.querySelector<HTMLInputElement>('#lastname')?.value,
       street: personal_data_container.querySelector<HTMLInputElement>('#street')?.value,
