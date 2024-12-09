@@ -21,22 +21,22 @@
     "@fontsource-variable/dm-sans": "^5.1.0",
     "@iconify-json/mdi": "^1.2.1",
     "@tailwindcss/typography": "^0.5.15",
-    "astro": "5.0.1",
+    "astro": "5.0.4",
     "astro-icon": "^1.1.4",
-    "astro-pagefind": "^1.6.0",
+    "astro-pagefind": "^1.7.0",
     "astro-robots-txt": "^1.0.0",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "ibantools": "^4.5.1",
     "sharp": "^0.33.5",
     "tailwind-scrollbar": "^3.1.0",
-    "tailwindcss": "^3.4.15",
+    "tailwindcss": "^3.4.16",
     "typescript": "^5.7.2",
     "ulid": "^2.3.0",
-    "vite": "^6.0.2"
+    "vite": "^6.0.3"
   },
   "devDependencies": {
-    "prettier": "3.4.1",
+    "prettier": "3.4.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.9"
   }
