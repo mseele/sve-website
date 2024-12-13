@@ -7,9 +7,10 @@ interface Props {
   target?: '_blank'
   rel?: 'noreferrer'
   disabled?: boolean
+  id?: string
   class?: string
 }
-const { El = 'a', emphasis, href, target, rel, type, disabled, class: className } = Astro.props
+const { El = 'a', emphasis, href, target, rel, type, disabled, id, class: className } = Astro.props
 ---
 
 <El
@@ -28,6 +29,7 @@ const { El = 'a', emphasis, href, target, rel, type, disabled, class: className 
   target={target}
   rel={rel}
   type={type}
+  id={id}
 >
   <span
     class:list={[
