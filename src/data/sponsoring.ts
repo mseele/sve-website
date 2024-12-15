@@ -58,7 +58,7 @@ const sponsoring: Sponsor[] = [
     groupBy: 'Phase',
   },
   {
-    name: 'Sedelmaier GmbH Malergeschäft-Gerüstverleih',
+    name: 'Sedelmaier GmbH',
     groupBy: 'Sedelmaier',
   },
   {
@@ -268,6 +268,26 @@ const sponsoring: Sponsor[] = [
   {
     name: 'Brandschutztechnik Steck GmbH',
     groupBy: 'Steck Brandschutztechnik',
+  },
+  {
+    name: 'Reinhold Beitlich Stiftung',
+    groupBy: 'Beitlich',
+  },
+  {
+    name: 'Marc Cain GmbH',
+    groupBy: 'Marc Cain',
+  },
+  {
+    name: 'an.kox GmbH',
+    groupBy: 'an.kox',
+  },
+  {
+    name: 'Radiologische Gemeinschaftspraxis Dr. med. Mänz',
+    groupBy: 'Mänz Radiologische Gemeinschaftspraxis',
+  },
+  {
+    name: 'Maler Meyer GmbH',
+    groupBy: 'Meyer',
   },
 ]
 
