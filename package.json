@@ -21,7 +21,7 @@
     "@fontsource-variable/dm-sans": "^5.1.0",
     "@iconify-json/mdi": "^1.2.1",
     "@tailwindcss/typography": "^0.5.15",
-    "astro": "5.0.4",
+    "astro": "5.0.5",
     "astro-icon": "^1.1.4",
     "astro-pagefind": "^1.7.0",
     "astro-robots-txt": "^1.0.0",
