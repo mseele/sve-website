@@ -1,7 +1,17 @@
+import { loadSponsors } from '@/api/contentful'
 import { loadEvents } from '@/api/events'
 import { EventType } from '@/types'
 import { glob } from 'astro/loaders'
 import { defineCollection, type SchemaContext, z } from 'astro:content'
+
+const sponsoring = defineCollection({
+  loader: loadSponsors,
+  schema: () =>
+    z.object({
+      name: z.string(),
+      groupBy: z.string(),
+    }),
+})
 
 const news = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/data/news' }),
@@ -64,4 +74,5 @@ export const collections = {
   history,
   fitness,
   events,
+  sponsoring,
 }

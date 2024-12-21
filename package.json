@@ -25,6 +25,7 @@
     "astro-icon": "^1.1.4",
     "astro-pagefind": "^1.7.0",
     "astro-robots-txt": "^1.0.0",
+    "contentful": "^11.3.3",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "ibantools": "^4.5.1",
