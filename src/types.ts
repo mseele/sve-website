@@ -1,4 +1,5 @@
 import type { ImageMetadata } from 'astro'
+import { z } from 'astro:content'
 
 export interface MetaSEO {
   title?: string
@@ -21,33 +22,29 @@ export interface ThemedImage {
 }
 
 export interface Team {
-  key: string
-  team: string
+  id: string
+  name: string
   league: string
-  coach?: Coach
-  contact: Contact
+  coach?: Person
+  contact: Person
   teamID?: string
 }
 
-export interface Coach extends PersonalData {
-  title?: string
-}
+export const phoneNumberObject = z.object({
+  formatted: z.string(),
+  raw: z.string(),
+})
+export type PhoneNumber = z.infer<typeof phoneNumberObject>
 
-export interface Contact extends PersonalData {
-  title: string
-}
-
-export interface PersonalData {
-  name: string
-  email?: string
-  mobile?: PhoneNumber
-  phone?: PhoneNumber
-}
-
-export interface PhoneNumber {
-  formatted: string
-  raw: string
-}
+export const personObject = z.object({
+  id: z.string(),
+  name: z.string(),
+  position: z.string(),
+  email: z.string().optional(),
+  mobile: phoneNumberObject.optional(),
+  phone: phoneNumberObject.optional(),
+})
+export type Person = z.infer<typeof personObject>
 
 export interface Sponsor {
   name: string

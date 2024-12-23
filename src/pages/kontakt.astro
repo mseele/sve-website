@@ -4,13 +4,17 @@ import Container from '@/components/common/Container.astro'
 import Notification from '@/components/common/Notification.astro'
 import Select from '@/components/controls/Select.astro'
 import Layout from '@/layouts/Layout.astro'
-import type { Coach, Contact, MetaSEO, PersonalData, Team } from '@/types'
-import teams from '@/data/teams'
+import type { MetaSEO, Person, Team } from '@/types'
 import ContactCard, {
   ContactMethodType,
   type ContactInfo,
   type ContactMethod,
 } from '@/components/blocks/ContactCard.astro'
+import { getCollection } from 'astro:content'
+
+const teams = (await getCollection('teams'))
+  .map((item) => item.data)
+  .sort((a, b) => a.sortOrder - b.sortOrder)
 
 const groups = [
   { key: 'herren' as const, label: 'Herrenfussball' },
@@ -21,12 +25,10 @@ const groups = [
   { key: 'volleyball' as const, label: 'Volleyball' },
 ]
 
-const teamOptions = groups.flatMap((group) => {
-  return teams[group.key].map((team: Team) => ({
-    value: team.key,
-    label: `${group.label} - ${team.team}`,
-  }))
-})
+const teamOptions = teams.map((team) => ({
+  value: team.id,
+  label: `${team.category.name} - ${team.name}`,
+}))
 
 interface ContactCardInput {
   identifier: string
@@ -193,45 +195,43 @@ const contactCardInputs: ContactCardInput[] = [
 ]
 
 contactCardInputs.push(
-  ...groups.flatMap((group) => {
-    return teams[group.key].map((team: Team) => {
-      const contactList: ContactInfo[] = []
-      const recipients = []
-      if (team.coach?.email) {
-        const title = fullyQualifiedCoachName(team.coach)
-        contactList.push({
-          title,
-          contactMethods: createContactMethods(team.coach),
-        })
-        recipients.push({
-          value: team.coach.email,
-          label: title,
-        })
-      }
-      if (team.contact?.email) {
-        const title = fullyQualifiedContactName(team.contact)
-        contactList.push({
-          title,
-          contactMethods: createContactMethods(team.contact),
-        })
-        recipients.push({
-          value: team.contact.email,
-          label: title,
-        })
-      }
-      return {
-        identifier: team.key,
-        description:
-          'Unsere Ansprechpartner stehen Dir für sämtliche Fragen rund um unseren Spielbetrieb zur Verfügung. Du erreichst Sie über folgende Kanäle oder kannst Ihnen ganz einfach eine Nachricht per Kontaktformular senden.',
-        contactList: contactList,
-        recipientTitle: 'Wen möchtest du kontaktieren?',
-        recipients,
-      }
-    })
+  ...teams.map((team) => {
+    const contactList: ContactInfo[] = []
+    const recipients = []
+    if (team.coach?.email) {
+      const title = fullyQualifiedPersonName(team.coach)
+      contactList.push({
+        title,
+        contactMethods: createContactMethods(team.coach),
+      })
+      recipients.push({
+        value: team.coach.email,
+        label: title,
+      })
+    }
+    if (team.contact?.email) {
+      const title = fullyQualifiedPersonName(team.contact)
+      contactList.push({
+        title,
+        contactMethods: createContactMethods(team.contact),
+      })
+      recipients.push({
+        value: team.contact.email,
+        label: title,
+      })
+    }
+    return {
+      identifier: team.id,
+      description:
+        'Unsere Ansprechpartner stehen Dir für sämtliche Fragen rund um unseren Spielbetrieb zur Verfügung. Du erreichst Sie über folgende Kanäle oder kannst Ihnen ganz einfach eine Nachricht per Kontaktformular senden.',
+      contactList: contactList,
+      recipientTitle: 'Wen möchtest du kontaktieren?',
+      recipients,
+    }
   }),
 )
 
-function createContactMethods(data: PersonalData): ContactMethod[] {
+function createContactMethods(data: Person): ContactMethod[] {
   const contactMethods: ContactMethod[] = []
   if (data.phone) {
     contactMethods.push({
@@ -264,13 +264,8 @@ function createContactMethods(data: PersonalData): ContactMethod[] {
   return contactMethods
 }
 
-function fullyQualifiedCoachName(coach: Coach) {
-  const prefix = coach.title || 'Trainer'
-  return prefix + ' ' + coach.name
-}
-
-function fullyQualifiedContactName(contact: Contact) {
-  return contact.title + ' ' + contact.name
+function fullyQualifiedPersonName(person: Person) {
+  return `${person.position} ${person.name}`
 }
 
 const meta: MetaSEO = {
