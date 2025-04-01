@@ -2,54 +2,31 @@
 import HeaderSection from '@/components/blocks/HeaderSection.astro'
 import Teams from '@/components/blocks/Teams.astro'
 import Layout from '@/layouts/Layout.astro'
-import type { MetaSEO } from '@/types'
-import teams from '@/data/teams'
+import type { MetaSEO, Team } from '@/types'
 import image from '@/assets/meta/teamsport.jpg'
+import { getCollection } from 'astro:content'
 
-const sections = [
-  {
-    id: 'herren',
-    title: 'Herrenfußball',
-    teams: teams.herren,
-    description:
-      'In unserer Herrenfußballabteilung ermöglichen wir Teamsport auf verschiedenen Leistungsniveaus. Bei uns ist für jeden etwas dabei. Durch teambuildende Aktionen stärken wir Gemeinschaft und Wir-Gefühl.',
-  },
-  {
-    id: 'frauen',
-    title: 'Frauenfußball',
-    teams: teams.frauen,
-    description:
-      'In unserer Frauenfußballabteilung ermöglichen wir Teamsport auf verschiedenen Leistungsniveaus. Bei uns ist für jede Frau etwas dabei. Durch teambuildende Aktionen stärken wir Gemeinschaft und Wir-Gefühl.',
-  },
-  {
-    id: 'jugend-m',
-    title: 'Jugendfußball (männlich)',
-    teams: teams.jugend_herren,
-    description:
-      'Jugendliche sind unsere Zukunft. Mit unseren Trainern und Betreuern bieten wir ein schönes Sportangebot, bei dem neben dem sportlichen Ehrgeiz die Freude an der Gemeinschaft im Mittelpunkt steht. Viele Aktionen bereichern unsere Jugendabteilung und bieten Abwechslung.',
-  },
-  {
-    id: 'jugend-w',
-    title: 'Jugendfußball (weiblich)',
-    teams: teams.jugend_frauen,
-    description:
-      'Jugendliche sind unsere Zukunft. Mit unseren Trainern und Betreuern bieten wir ein schönes Sportangebot, bei dem neben dem sportlichen Ehrgeiz die Freude an der Gemeinschaft im Mittelpunkt steht. Viele Aktionen bereichern unsere Jugendabteilung und bieten Abwechslung.',
-  },
-  {
-    id: 'kinder',
-    title: 'Kinderfußball',
-    teams: teams.kinder,
-    description:
-      'Kinder sind unsere Zukunft. Mit unseren Trainern und Betreuern bieten wir ein schönes Sportangebot, bei dem für die Kinder Bewegung, Sport und die Freude an der Gemeinschaft im Mittelpunkt stehen. Viele Aktionen bereichern unser Kinderangebot und bieten Abwechslung.',
-  },
-  {
-    id: 'volleyball',
-    title: 'Volleyball',
-    teams: teams.volleyball,
-    description:
-      'Unsere Volleyballgruppe nimmt zwar nicht am regulären Wettbewerb teil, aber erlebt tolle Stunden. Denn Volleyball macht in dieser Hobbygruppe richtig viel Spaß.',
-  },
-]
+const groupedTeams: {
+  id: string
+  name: string
+  description: string
+  teams: Team[]
+}[] = []
+for (const team of (await getCollection('teams'))
+  .map((item) => item.data)
+  .sort((a, b) => a.sortOrder - b.sortOrder)) {
+  let group: any = groupedTeams.find((group) => group.id === team.category.id)
+  if (!group) {
+    group = {
+      id: team.category.id,
+      name: team.category.name,
+      description: team.category.description,
+      teams: [],
+    }
+    groupedTeams.push(group)
+  }
+  group.teams.push(team)
+}
 
 const meta: MetaSEO = {
   title: 'Teamsport',
@@ -66,14 +43,14 @@ const meta: MetaSEO = {
   >
     <nav class="mx-auto flex flex-wrap justify-center gap-3 px-5 md:px-12 lg:max-w-7xl">
       {
-        sections.map((item) => (
+        groupedTeams.map((item) => (
           <a
             href={`#${item.id}`}
-            title={item.title}
-            aria-label={item.title}
+            title={item.name}
+            aria-label={item.name}
             class="rounded-full border border-gray-200 px-3 py-1 text-sm font-medium text-primary transition duration-300 hover:border-transparent hover:bg-primary hover:text-white dark:border-gray-700 dark:text-gray-300"
           >
-            {item.title}
+            {item.name}
           </a>
         ))
       }
@@ -81,8 +58,8 @@ const meta: MetaSEO = {
   </HeaderSection>
 
   {
-    sections.map((item) => (
-      <Teams id={item.id} title={item.title} teams={item.teams}>
+    groupedTeams.map((item) => (
+      <Teams id={item.id} title={item.name} teams={item.teams}>
         {item.description}
       </Teams>
     ))

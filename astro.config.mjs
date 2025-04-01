@@ -39,6 +39,9 @@ export default defineConfig({
       SUBDOMAIN: envField.string({ context: 'server', access: 'public' }),
       BACKEND_API: envField.string({ context: 'client', access: 'public' }),
       PREVIEW: envField.boolean({ context: 'client', access: 'public' }),
+      CONTENTFUL_SPACE_ID: envField.string({ context: 'server', access: 'public' }),
+      CONTENTFUL_DELIVERY_TOKEN: envField.string({ context: 'server', access: 'public' }),
+      CONTENTFUL_PREVIEW_TOKEN: envField.string({ context: 'server', access: 'public' }),
     },
   },
   vite: {

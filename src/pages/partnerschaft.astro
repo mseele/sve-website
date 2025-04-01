@@ -11,11 +11,11 @@ import { Icon } from 'astro-icon/components'
 import Button from '@/components/controls/Button.astro'
 import { Picture } from 'astro:assets'
 import { SITE } from '@/config.mjs'
-import sponsoring from '@/data/sponsoring'
 import { type Sponsor } from '@/types'
+import { getCollection } from 'astro:content'
 
-const sponsors = sponsoring
-  .slice()
+const sponsors = (await getCollection('sponsoring'))
+  .map((item) => item.data)
   .sort((a, b) => {
     const nameA = a.groupBy.toUpperCase()
     const nameB = b.groupBy.toUpperCase()
