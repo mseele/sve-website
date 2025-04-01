@@ -67,7 +67,7 @@ import { Icon } from 'astro-icon/components'
     }
   })
 
-  document.addEventListener('close-notification', (event) => {
+  document.addEventListener('close-notification', () => {
     const dialog = document.querySelector<HTMLDialogElement>('#notification-popup')
     if (dialog) {
       const card = dialog.children.item(0)
