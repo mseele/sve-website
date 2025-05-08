@@ -21,12 +21,6 @@ const membershipTypes = [
   { value: 'Fitness', label: 'Sparte Fitness', price: 30 },
 ]
 
-// Calculate the date 18 years ago from today
-const today = new Date()
-const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate())
-  .toISOString()
-  .split('T')[0]
-
 const meta: MetaSEO = {
   title: 'Mitglied werden',
   description:
@@ -135,7 +129,7 @@ const meta: MetaSEO = {
               <Input id="city" name="city" label="Wohnort" />
               <Input id="email" name="email" label="E-Mail" type="email" />
               <Input id="phone" name="phone" label="Telefon" type="tel" />
-              <Input id="birthday" name="birthday" label="Geburtstag" type="date" max={minDate} />
+              <Input id="birthday" name="birthday" label="Geburtstag" type="date" max={new Date().toISOString().split('T')[0]} />
               <div id="familiy_members" class="hidden gap-6 md:col-span-2 md:grid-cols-2">
                 <div class="-mb-4 flex items-center gap-4 md:col-span-2">
                   <h4 class="text-lg font-semibold text-gray-900 dark:text-white">
