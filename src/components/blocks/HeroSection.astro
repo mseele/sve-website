@@ -12,10 +12,12 @@ interface PropsBase {
   primaryButton?: {
     label: string
     to: string
+    target?: '_blank' | undefined
   }
   secondaryButton?: {
     label: string
     to: string
+    target?: '_blank' | undefined
   }
 }
 
@@ -54,12 +56,20 @@ const { id, title, description, primaryButton, secondaryButton, image, images } 
               (primaryButton || secondaryButton) && (
                 <div class="mt-12 flex justify-center gap-4 sm:gap-6 md:justify-start">
                   {primaryButton && (
-                    <Button emphasis="primary" href={primaryButton.to}>
+                    <Button
+                      emphasis="primary"
+                      href={primaryButton.to}
+                      target={primaryButton.target}
+                    >
                       {primaryButton.label}
                     </Button>
                   )}
                   {secondaryButton && (
-                    <Button emphasis="secondary" href={secondaryButton.to}>
+                    <Button
+                      emphasis="secondary"
+                      href={secondaryButton.to}
+                      target={secondaryButton.target}
+                    >
                       {secondaryButton.label}
                     </Button>
                   )}
