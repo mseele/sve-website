@@ -21,12 +21,6 @@ const membershipTypes = [
   { value: 'Fitness', label: 'Sparte Fitness', price: 30 },
 ]
 
-// Calculate the date 18 years ago from today
-const today = new Date()
-const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate())
-  .toISOString()
-  .split('T')[0]
-
 const meta: MetaSEO = {
   title: 'Mitglied werden',
   description:
@@ -55,10 +49,13 @@ const meta: MetaSEO = {
             >
               <div>
                 <h3
-                  class="mb-10 hidden text-center text-2xl font-bold text-gray-900 dark:text-white lg:block"
+                  class="mb-5 hidden text-center text-2xl font-bold text-gray-900 dark:text-white lg:block"
                 >
                   Online Mitgliedsantrag
                 </h3>
+                <div class="mb-10 text-center text-lg text-gray-600 dark:text-gray-300">
+                  Fülle den Online-Antrag aus und werde Teil unserer starken Gemeinschaft
+                </div>
                 <div class="grid gap-6 [grid-template-columns:auto_1fr] md:gap-10">
                   {
                     membershipTypes.map((type) => (
@@ -69,8 +66,9 @@ const meta: MetaSEO = {
                     ))
                   }
                 </div>
-                <div class="col-span-2 mt-4 flex justify-center">
-                  <Button El="button" emphasis="primary" id="next">Weiter</Button>
+                <div class="col-span-2 mt-10 flex justify-center">
+                  <Button El="button" emphasis="primary" id="next">Mitgliedschaft beantragen</Button
+                  >
                 </div>
               </div>
               <div class="flex grow flex-col space-y-10 lg:pl-12 lg:pt-0">
@@ -135,7 +133,13 @@ const meta: MetaSEO = {
               <Input id="city" name="city" label="Wohnort" />
               <Input id="email" name="email" label="E-Mail" type="email" />
               <Input id="phone" name="phone" label="Telefon" type="tel" />
-              <Input id="birthday" name="birthday" label="Geburtstag" type="date" max={minDate} />
+              <Input
+                id="birthday"
+                name="birthday"
+                label="Geburtstag"
+                type="date"
+                max={new Date().toISOString().split('T')[0]}
+              />
               <div id="familiy_members" class="hidden gap-6 md:col-span-2 md:grid-cols-2">
                 <div class="-mb-4 flex items-center gap-4 md:col-span-2">
                   <h4 class="text-lg font-semibold text-gray-900 dark:text-white">
