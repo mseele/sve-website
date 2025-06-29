@@ -24,7 +24,7 @@ const { id, name, left, right, class: className } = Astro.props
   </div>
   <span
     id="toggle"
-    class="absolute left-1 top-[4px] flex h-8 w-1/2 cursor-default items-center justify-center rounded-full bg-primary text-white shadow transition-all"
+    class="bg-primary absolute top-[4px] left-1 flex h-8 w-1/2 cursor-default items-center justify-center rounded-full text-white shadow transition-all"
   >
     {left}
   </span>
@@ -40,10 +40,10 @@ const { id, name, left, right, class: className } = Astro.props
   if (toggle && input) {
     input.addEventListener('change', () => {
       if (input.checked) {
-        toggle.classList.remove('translate-x-full', '!-left-1')
+        toggle.classList.remove('translate-x-full', '-left-1!')
         toggle.innerText = left?.innerText || ''
       } else {
-        toggle.classList.add('translate-x-full', '!-left-1')
+        toggle.classList.add('translate-x-full', '-left-1!')
         toggle.innerText = right?.innerText || ''
       }
     })

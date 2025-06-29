@@ -53,10 +53,10 @@ const meta: MetaSEO = {
     secondaryButton={{ label: 'Unsere Partner', to: '#partner' }}
     image={{ light: imageLight, dark: imageDark, alt: 'fussballfeld auf dem gespielt wird' }}
   />
-  <div class="pb-16 pt-6">
+  <div class="pt-6 pb-16">
     <Container>
       <div class="text-gray-600">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+        <h2 class="text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
           Wir leben Zusammenarbeit
         </h2>
         <p class="my-12 text-gray-600 dark:text-gray-300">
@@ -96,7 +96,7 @@ const meta: MetaSEO = {
       </div>
     </Container>
   </div>
-  <div class="pb-24 pt-12" id="bande">
+  <div class="pt-12 pb-24" id="bande">
     <Container>
       <div
         class="mx-auto flex flex-col items-center gap-6 sm:w-4/5 md:w-full md:flex-row lg:gap-12"
@@ -104,14 +104,14 @@ const meta: MetaSEO = {
         <div class="relative md:w-1/2">
           <div
             aria-hidden="true"
-            class="absolute inset-0 m-auto grid h-3/5 w-3/5 grid-cols-2 -space-x-52 opacity-40 dark:opacity-60"
+            class="absolute inset-0 m-auto grid h-3/5 w-3/5 grid-cols-2 opacity-40 dark:opacity-60"
           >
             <div
-              class="h-full rounded-full bg-gradient-to-br from-primary to-purple-400 blur-[106px] dark:from-blue-700"
+              class="from-primary h-full rounded-full bg-linear-to-br to-purple-400 blur-[106px] dark:from-blue-700"
             >
             </div>
             <div
-              class="h-full bg-gradient-to-r from-cyan-400 to-primary blur-[106px] dark:to-indigo-600"
+              class="to-primary h-full bg-linear-to-r from-cyan-400 blur-[106px] dark:to-indigo-600"
             >
             </div>
           </div>
@@ -133,7 +133,7 @@ const meta: MetaSEO = {
           />
         </div>
         <div class="ml-auto h-full md:w-1/2">
-          <h3 class="text-2xl font-bold text-gray-900 dark:text-white md:text-3xl lg:text-4xl">
+          <h3 class="text-2xl font-bold text-gray-900 md:text-3xl lg:text-4xl dark:text-white">
             Profitiere durch Bandenwerbung
           </h3>
           <p class="my-12 text-gray-600 dark:text-gray-300">
@@ -150,10 +150,10 @@ const meta: MetaSEO = {
       </div>
     </Container>
   </div>
-  <div class="pb-16 pt-6" id="partner">
+  <div class="pt-6 pb-16" id="partner">
     <Container>
       <div class="text-gray-600">
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+        <h2 class="text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
           Unsere Partner
         </h2>
         <p class="my-12 text-gray-600 dark:text-gray-300">
@@ -170,7 +170,7 @@ const meta: MetaSEO = {
                 </h3>
                 <div class="mt-4 grid gap-4 lg:grid-cols-2">
                   {sponsors[key].map((item) => (
-                    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-gray-200 to-white p-px dark:from-gray-700 dark:via-gray-800 dark:to-darker">
+                    <div class="dark:to-darker relative overflow-hidden rounded-2xl bg-linear-to-b from-gray-200 to-white p-px dark:from-gray-700 dark:via-gray-800">
                       <div class="gap-6 rounded-2xl bg-gray-100 p-8 font-semibold text-gray-800 dark:bg-gray-900 dark:text-gray-100">
                         {item.name}
                       </div>

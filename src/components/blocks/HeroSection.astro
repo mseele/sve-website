@@ -28,24 +28,24 @@ type Props =
 const { id, title, description, primaryButton, secondaryButton, image, images } = Astro.props
 ---
 
-<div class="relative overflow-hidden dark:bg-darker lg:overflow-auto" id={id}>
+<div class="dark:bg-darker relative overflow-hidden lg:overflow-auto" id={id}>
   <div class="absolute inset-x-0 top-32 lg:hidden">
     <div
       aria-hidden="true"
-      class="grid grid-cols-2 -space-x-52 opacity-50 dark:opacity-60 2xl:mx-auto 2xl:max-w-6xl"
+      class="grid grid-cols-2 opacity-50 2xl:mx-auto 2xl:max-w-6xl dark:opacity-50"
     >
-      <div class="h-60 bg-gradient-to-br from-primary to-red-400 blur-3xl dark:from-red-700"></div>
+      <div class="from-primary h-60 bg-linear-to-br to-red-400 blur-3xl dark:from-red-700"></div>
       <div
-        class="h-72 rounded-full bg-gradient-to-r from-transparent to-gray-500 blur-3xl dark:to-gray-600 md:from-gray-600 md:to-gray-200"
+        class="h-72 rounded-full bg-linear-to-r from-transparent to-gray-500 blur-3xl md:from-gray-600 md:to-gray-200 dark:to-gray-600"
       >
       </div>
     </div>
   </div>
   <Container>
-    <div class="relative ml-auto pb-10 pt-40 xl:pt-36">
+    <div class="relative ml-auto pt-40 pb-10 xl:pt-36">
       <div class="gap-12 md:flex md:items-center">
         <div class="text-center sm:px-12 md:w-2/3 md:px-0 md:text-left lg:w-1/2">
-          <h1 class="break-words text-5xl font-black dark:text-white md:text-6xl xl:text-7xl">
+          <h1 class="text-5xl font-black break-words md:text-6xl xl:text-7xl dark:text-white">
             {title}
           </h1>
           <div class="">
@@ -86,7 +86,7 @@ const { id, title, description, primaryButton, secondaryButton, image, images } 
                   <Picture
                     data-image-index={index}
                     src={image.light}
-                    class="h-full object-cover object-left dark:hidden lg:object-center"
+                    class="h-full object-cover object-left lg:object-center dark:hidden"
                     alt={image.alt}
                     widths={SITE.imageWidths}
                     formats={SITE.imageFormats}
@@ -94,7 +94,7 @@ const { id, title, description, primaryButton, secondaryButton, image, images } 
                   <Picture
                     data-image-index={index}
                     src={image.dark}
-                    class="hidden h-full object-cover object-left dark:block lg:object-center"
+                    class="hidden h-full object-cover object-left lg:object-center dark:block"
                     alt={image.alt}
                     widths={SITE.imageWidths}
                     formats={SITE.imageFormats}

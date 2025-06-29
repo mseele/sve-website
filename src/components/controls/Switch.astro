@@ -12,11 +12,11 @@ const { id, name, title, description, checked } = Astro.props
 
 <div class="w-full space-y-4">
   <div class="relative">
-    <div class="grid items-center [grid-template-columns:1fr_auto]">
+    <div class="grid [grid-template-columns:1fr_auto] items-center">
       <label for={id} class="text-lg text-gray-900 dark:text-white">{title}</label>
       <label
         for={id}
-        class="relative block h-5 w-8 overflow-hidden rounded-full border bg-gray-100 transition duration-300 has-[:checked]:border-white/5 has-[:checked]:bg-primary dark:border-gray-700 dark:bg-gray-800 dark:has-[:checked]:border-white/5 dark:has-[:checked]:bg-primary"
+        class="has-checked:bg-primary dark:has-checked:bg-primary relative block h-5 w-8 overflow-hidden rounded-full border bg-gray-100 transition duration-300 has-checked:border-white/5 dark:border-gray-700 dark:bg-gray-800 dark:has-checked:border-white/5"
       >
         <input
           checked={checked}

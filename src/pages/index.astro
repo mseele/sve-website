@@ -113,16 +113,16 @@ const meta = {
       <div class="relative">
         <div
           aria-hidden="true"
-          class="absolute inset-0 my-auto h-32 w-96 translate-y-24 rotate-45 bg-gradient-to-r from-red-200 to-primary opacity-50 blur-3xl dark:from-red-700 sm:h-52 sm:translate-y-0 lg:hidden"
+          class="to-primary absolute inset-0 my-auto h-32 w-96 translate-y-24 rotate-45 bg-linear-to-r from-red-200 opacity-50 blur-3xl sm:h-52 sm:translate-y-0 lg:hidden dark:from-red-700"
         >
         </div>
         <div class="mb-12 space-y-2 pt-10 text-center">
           <h2
-            class="text-3xl font-bold text-gray-900 dark:text-white md:pb-4 md:text-4xl lg:text-5xl"
+            class="text-3xl font-bold text-gray-900 md:pb-4 md:text-4xl lg:text-5xl dark:text-white"
           >
             Der SVE <span class="dark:text-primaryLight text-primary">#mehralseinverein</span>
           </h2>
-          <p class="text-gray-600 dark:text-gray-300 lg:mx-auto lg:w-6/12">
+          <p class="text-gray-600 lg:mx-auto lg:w-6/12 dark:text-gray-300">
             Wir sind eine vielfältige Gemeinschaft aus Frauen, Männern, jungen und erfahrenen
             Menschen. Was uns verbindet ist der Sport und die Überzeugung, dass wir als Gemeinschaft
             etwas Gutes schaffen können.
@@ -143,7 +143,7 @@ const meta = {
           title={item.title}
           image={{ light: item.imageLight, dark: item.imageDark, alt: item.title }}
         >
-          <p class="mb-8 mt-6 flex-grow text-gray-600 dark:text-gray-300">{item.description}</p>
+          <p class="mt-6 mb-8 grow text-gray-600 dark:text-gray-300">{item.description}</p>
           <a class="inline-block" href={item.link}>
             <span class="text-primary dark:text-red-500">Mach mit</span>
           </a>

@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon/components'
 
 <dialog id="notification-popup">
   <div
-    class="fixed bottom-6 left-6 right-6 grid animate-slide-up justify-center sm:left-auto lg:bottom-7 lg:right-7"
+    class="animate-slide-up fixed right-6 bottom-6 left-6 grid justify-center sm:left-auto lg:right-7 lg:bottom-7"
   >
     <div
       class="relative flex max-w-md items-center gap-4 overflow-hidden rounded-2xl border border-gray-100 bg-white p-4 text-gray-900 shadow-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:shadow-gray-950/30"
@@ -23,9 +23,9 @@ import { Icon } from 'astro-icon/components'
         <div id="title" class="text-base font-semibold"></div>
         <div id="message" class="text-sm text-gray-500 dark:text-gray-300"></div>
       </div>
-      <div class="absolute right-0 top-0 grid place-items-center">
+      <div class="absolute top-0 right-0 grid place-items-center">
         <button
-          class="p-3 text-gray-500 transition hover:text-gray-900 focus:outline-none dark:text-gray-400 dark:hover:text-white"
+          class="p-3 text-gray-500 transition hover:text-gray-900 focus:outline-hidden dark:text-gray-400 dark:hover:text-white"
           onclick="document.dispatchEvent(new CustomEvent('close-notification'))"
         >
           <Icon class="size-5" name="mdi:close" />
