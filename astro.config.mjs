@@ -4,11 +4,11 @@ import { fileURLToPath } from 'url'
 import { loadEnv } from 'vite'
 import icon from 'astro-icon'
 import sitemap from '@astrojs/sitemap'
-import tailwind from '@astrojs/tailwind'
 import robotsTxt from 'astro-robots-txt'
 import { SITE } from './src/config.mjs'
 import netlify from '@astrojs/netlify'
 import pagefind from 'astro-pagefind'
+import tailwindcss from '@tailwindcss/vite'
 
 const { SUBDOMAIN, PREVIEW } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -21,7 +21,6 @@ export default defineConfig({
   output: 'static',
   adapter: netlify(),
   integrations: [
-    tailwind(),
     icon({
       iconDir: 'src/assets/icons',
     }),
@@ -50,5 +49,6 @@ export default defineConfig({
         '@': path.resolve(__dirname, './src'),
       },
     },
+    plugins: [tailwindcss()],
   },
 })

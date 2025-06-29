@@ -59,18 +59,17 @@ function contactMethodDescription(methodType: ContactMethodType) {
 <contact-card id="contact-card" data-identifier={identifier} class="relative hidden">
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute bottom-0 left-0 m-auto grid h-max w-full rotate-180 grid-cols-2 -space-x-52 opacity-50 dark:opacity-30"
+    class="pointer-events-none absolute bottom-0 left-0 m-auto grid h-max w-full rotate-180 grid-cols-2 opacity-50 dark:opacity-30"
   >
-    <div class="dark:from-purle-800 h-56 bg-gradient-to-br from-primary to-purple-400 blur-[106px]">
+    <div class="dark:from-purle-800 from-primary h-56 bg-linear-to-br to-purple-400 blur-[106px]">
     </div>
-    <div class="h-32 bg-gradient-to-r from-cyan-400 to-sky-900 blur-[106px] dark:to-indigo-500">
-    </div>
+    <div class="h-32 bg-linear-to-r from-cyan-400 to-sky-900 blur-[106px] dark:to-indigo-500"></div>
   </div>
   <div
     class="relative rounded-3xl border border-gray-100 bg-white shadow-2xl shadow-gray-600/20 dark:border-white/10 dark:bg-gray-900 dark:shadow-none"
   >
     <div
-      class="flex flex-col divide-y p-10 dark:divide-gray-800 lg:flex-row lg:gap-12 lg:divide-x lg:divide-y-0 lg:p-12"
+      class="flex flex-col divide-y p-10 lg:flex-row lg:gap-12 lg:divide-x lg:divide-y-0 lg:p-12 dark:divide-gray-800"
     >
       <div class="flex flex-col gap-10 lg:w-1/2">
         <h3 class="text-center text-2xl font-bold text-gray-900 dark:text-white">
@@ -121,7 +120,7 @@ function contactMethodDescription(methodType: ContactMethodType) {
           </span>
         </p>
       </div>
-      <div class="relative pt-10 lg:w-1/2 lg:pl-12 lg:pt-0">
+      <div class="relative pt-10 lg:w-1/2 lg:pt-0 lg:pl-12">
         <h3 class="pb-10 text-center text-2xl font-bold text-gray-900 dark:text-white">
           Nachricht senden
         </h3>
@@ -147,7 +146,7 @@ function contactMethodDescription(methodType: ContactMethodType) {
             <SubmitButton>Absenden</SubmitButton>
           </div>
         </form>
-        <p class="pt-10 text-center text-sm text-gray-500 dark:text-gray-400 lg:hidden">
+        <p class="pt-10 text-center text-sm text-gray-500 lg:hidden dark:text-gray-400">
           SV Eutingen 1947 e.V. • Marktstr. 84 • 72184 Eutingen im Gäu
         </p>
       </div>

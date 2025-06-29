@@ -13,10 +13,10 @@ const { id, name, title, description, checked, class: className } = Astro.props
 
 <div class:list={['w-full space-y-4', className]}>
   <div class="relative">
-    <div class="grid items-center gap-x-3 gap-y-1 [grid-template-columns:auto_1fr]">
+    <div class="grid [grid-template-columns:auto_1fr] items-center gap-x-3 gap-y-1">
       <label
         for={id}
-        class="group relative block size-[1.125rem] overflow-hidden rounded border border-gray-300 shadow-sm shadow-gray-950/5 transition duration-300 has-[:checked]:border-white/5 has-[:checked]:bg-primary dark:border-gray-700 dark:bg-gray-800 dark:has-[:checked]:border-white/5 dark:has-[:checked]:bg-primary"
+        class="group has-checked:bg-primary dark:has-checked:bg-primary relative block size-[1.125rem] overflow-hidden rounded border border-gray-300 shadow-sm shadow-gray-950/5 transition duration-300 has-checked:border-white/5 dark:border-gray-700 dark:bg-gray-800 dark:has-checked:border-white/5"
       >
         <input
           class="peer absolute -left-6 size-2"
@@ -39,7 +39,7 @@ const { id, name, title, description, checked, class: className } = Astro.props
           style="pointer-events: none;"><path d="M20 6 9 17l-5-5"></path></svg
         >
       </label>
-      <label for={id} class="block select-none text-gray-900 dark:text-white">{title}</label>
+      <label for={id} class="block text-gray-900 select-none dark:text-white">{title}</label>
       {
         description && (
           <span class="text-caption col-start-2 block text-sm text-gray-900 dark:text-white">

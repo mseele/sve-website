@@ -23,7 +23,7 @@ const { description, topic } = Astro.props as Props
         </h3>
         {
           description && (
-            <p class="!mt-5 text-center text-gray-600 dark:text-white">{description}</p>
+            <p class="mt-5! text-center text-gray-600 dark:text-white">{description}</p>
           )
         }
         <form id="newsletter-form">
@@ -78,7 +78,7 @@ const { description, topic } = Astro.props as Props
           </div>
           <p class="mt-6 text-sm text-gray-500 dark:text-gray-400">
             Wir nehmen Datenschutz sehr ernst. Informiere dich in unserer <a
-              class="text-gray-600 underline duration-300 hover:text-primary dark:text-gray-400 dark:hover:text-white"
+              class="hover:text-primary text-gray-600 underline duration-300 dark:text-gray-400 dark:hover:text-white"
               href="/datenschutz">Datenschutzerklärung</a
             >.
           </p>

@@ -28,7 +28,7 @@ const links = [
 ]
 ---
 
-<footer class="bg-gradient-to-b from-transparent to-gray-100 py-12 dark:to-gray-900">
+<footer class="bg-linear-to-b from-transparent to-gray-100 py-12 dark:to-gray-900">
   <Container>
     <a href="/" aria-label="logo" class="flex items-center justify-center space-x-2">
       <Icon aria-hidden="true" class="h-7 w-7" name="logo" />
@@ -37,12 +37,12 @@ const links = [
 
     <ul
       role="list"
-      class="mt-12 flex flex-wrap items-center justify-center gap-4 py-4 text-gray-600 dark:text-gray-400 sm:gap-8"
+      class="mt-12 flex flex-wrap items-center justify-center gap-4 py-4 text-gray-600 sm:gap-8 dark:text-gray-400"
     >
       {
         links.map((link) => (
           <li role="listitem">
-            <a href={link.to} class="duration-300 hover:text-primary dark:hover:text-white">
+            <a href={link.to} class="hover:text-primary duration-300 dark:hover:text-white">
               {link.label}
             </a>
           </li>

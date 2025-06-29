@@ -44,13 +44,13 @@ const { title, description, faqs } = Astro.props
 
 <div class="mt-20 flex flex-col gap-12 md:mt-32 lg:flex-row">
   <div class="text-center lg:w-5/12 lg:pl-12 lg:text-left">
-    <h2 class="text-2xl font-bold text-gray-800 dark:text-white md:text-3xl lg:text-4xl">
+    <h2 class="text-2xl font-bold text-gray-800 md:text-3xl lg:text-4xl dark:text-white">
       {title ?? 'Häufig gestellte Fragen'}
     </h2>
     {description && <p class="mt-4 text-gray-600 dark:text-gray-300">{description}</p>}
   </div>
   <div
-    class="divide-y divide-gray-200 border-y border-gray-200 dark:divide-gray-800 dark:border-gray-800 lg:w-7/12"
+    class="divide-y divide-gray-200 border-y border-gray-200 lg:w-7/12 dark:divide-gray-800 dark:border-gray-800"
   >
     {
       faqs.map((item, index) => (

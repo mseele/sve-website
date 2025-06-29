@@ -3,14 +3,11 @@
 ---
 
 <script>
-  if (
+  document.documentElement.classList.toggle(
+    'dark',
     localStorage.theme === 'dark' ||
-    (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  ) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-  }
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches),
+  )
 
   const buttons = document.querySelectorAll('[data-theme-switcher]')
   buttons.forEach((button) => {

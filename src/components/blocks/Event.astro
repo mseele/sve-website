@@ -103,10 +103,10 @@ details.push({
       secondaryButton={{ label: 'Anmeldung', to: '#anmeldung' }}
       image={{ light: entry.data.image, dark: entry.data.image, alt: entry.data.name }}
     />
-    <div class="pb-16 pt-6" id="beschreibung">
+    <div class="pt-6 pb-16" id="beschreibung">
       <Container>
         <div class="text-gray-600">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+          <h2 class="text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
             Beschreibung
           </h2>
           <div class="mt-12 text-gray-600 dark:text-gray-300" set:html={entry.data.description} />
@@ -116,7 +116,7 @@ details.push({
     <div class="pb-16" id="details">
       <Container>
         <div class="text-gray-600">
-          <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+          <h2 class="text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
             Details
           </h2>
           <div class="space-y-4 divide-y divide-gray-100 dark:divide-gray-800">
@@ -155,11 +155,11 @@ details.push({
         <div class="pb-16">
           <Container>
             <div class="text-gray-600">
-              <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+              <h2 class="text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
                 Termine
               </h2>
               {
-                <div class="mt-2 grid grid-cols-1 text-gray-600 dark:text-gray-300 sm:grid-cols-2">
+                <div class="mt-2 grid grid-cols-1 text-gray-600 sm:grid-cols-2 dark:text-gray-300">
                   <ul>
                     {entry.data.dates
                       .slice(0, Math.ceil(entry.data.dates.length / 2))
@@ -190,16 +190,16 @@ details.push({
         <div class="text-gray-600">
           <h2
             id="title"
-            class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl"
+            class="text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-white"
           >
           </h2>
           <p id="description" class="mt-5 text-lg text-gray-600 dark:text-gray-400"></p>
           <div
             id="booking-card"
-            class="lg:mt-15 relative mt-10 rounded-3xl border border-gray-100 bg-white shadow-2xl shadow-gray-600/20 dark:border-white/10 dark:bg-gray-900 dark:shadow-none"
+            class="relative mt-10 rounded-3xl border border-gray-100 bg-white shadow-2xl shadow-gray-600/20 lg:mt-15 dark:border-white/10 dark:bg-gray-900 dark:shadow-none"
           >
             <div
-              class="flex flex-col divide-y p-10 dark:divide-gray-800 lg:flex-row lg:gap-12 lg:divide-x lg:divide-y-0 lg:p-12"
+              class="flex flex-col divide-y p-10 lg:flex-row lg:gap-12 lg:divide-x lg:divide-y-0 lg:p-12 dark:divide-gray-800"
             >
               <div class="flex w-full flex-col gap-10">
                 <form id="form" class="grid gap-6 md:grid-cols-2 md:gap-10 lg:gap-6">

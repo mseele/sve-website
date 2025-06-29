@@ -15,21 +15,21 @@ const { Content } = await render(news)
 ---
 
 <div
-  class="group relative -mx-4 rounded-3xl border border-transparent bg-white p-6 shadow-2xl shadow-transparent transition duration-300 hover:z-10 hover:border-gray-100 hover:shadow-gray-600/10 dark:bg-transparent dark:shadow-none dark:hover:border-gray-700 dark:hover:bg-gray-800 sm:flex sm:gap-8 sm:p-8"
+  class="group relative -mx-4 rounded-3xl border border-transparent bg-white p-6 shadow-2xl shadow-transparent transition duration-300 hover:z-10 hover:border-gray-100 hover:shadow-gray-600/10 sm:flex sm:gap-8 sm:p-8 dark:bg-transparent dark:shadow-none dark:hover:border-gray-700 dark:hover:bg-gray-800"
 >
   <div
     class="overflow-hidden rounded-3xl transition-all duration-500 group-hover:rounded-xl sm:w-2/6"
   >
     <Picture
       src={news.data.imageLight}
-      class="h-56 w-full object-cover object-top transition duration-500 group-hover:scale-105 dark:hidden sm:h-full"
+      class="h-56 w-full object-cover object-top transition duration-500 group-hover:scale-105 sm:h-full dark:hidden"
       alt={news.data.title}
       widths={SITE.imageWidths}
       formats={SITE.imageFormats}
     />
     <Picture
       src={news.data.imageDark}
-      class="hidden h-56 w-full object-cover object-top transition duration-500 group-hover:scale-105 dark:block sm:h-full"
+      class="hidden h-56 w-full object-cover object-top transition duration-500 group-hover:scale-105 sm:h-full dark:block"
       alt={news.data.title}
       widths={SITE.imageWidths}
       formats={SITE.imageFormats}
@@ -37,11 +37,11 @@ const { Content } = await render(news)
   </div>
 
   <div class="flex flex-col sm:w-4/6 sm:p-2 sm:pl-0">
-    <span class="mb-2 mt-4 inline-block font-medium text-gray-400 dark:text-gray-500 sm:mt-0">
+    <span class="mt-4 mb-2 inline-block font-medium text-gray-400 sm:mt-0 dark:text-gray-500">
       {formatDate(news.data.date)}
     </span>
     <h3 class="text-2xl font-semibold text-gray-800 dark:text-white">{news.data.title}</h3>
-    <div class="mt-6 flex-grow text-gray-600 dark:text-gray-300">
+    <div class="mt-6 grow text-gray-600 dark:text-gray-300">
       <Prose>
         <Content />
       </Prose>
@@ -53,7 +53,7 @@ const { Content } = await render(news)
           <a
             href={news.data.download}
             target="_blank"
-            class="rounded-full border border-gray-100 px-3 py-1 text-sm font-medium text-primary transition duration-300 hover:border-transparent hover:bg-primary hover:text-white dark:border-gray-700 dark:text-gray-300"
+            class="text-primary hover:bg-primary rounded-full border border-gray-100 px-3 py-1 text-sm font-medium transition duration-300 hover:border-transparent hover:text-white dark:border-gray-700 dark:text-gray-300"
           >
             Weiterlesen
           </a>

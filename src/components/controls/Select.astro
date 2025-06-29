@@ -14,7 +14,7 @@ const { id, name, label, values, hidden, class: className, ...attrs } = Astro.pr
 ---
 
 <div class:list={['relative space-y-2.5', hidden && 'hidden', className]} data-field={id}>
-  <label class="text-gray-900 dark:text-white" for={id}>{label}</label>
+  <label class="block text-gray-900 dark:text-white" for={id}>{label}</label>
   <div class="relative">
     <svg
       class="pointer-events-none absolute inset-y-0 right-2.5 my-auto text-gray-900 opacity-75 dark:text-white"
@@ -31,7 +31,7 @@ const { id, name, label, values, hidden, class: className, ...attrs } = Astro.pr
     <select
       id={id}
       name={name}
-      class="h-9 w-full appearance-none rounded-xl border border-gray-300 bg-white pl-3 pr-7 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-gray-950/5 outline-2 -outline-offset-1 invalid:border-red-500 invalid:text-red-500 focus:outline focus:outline-primary invalid:focus:outline-red-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:shadow-gray-950/30 dark:invalid:text-red-500"
+      class="focus:outline-primary h-9 w-full appearance-none rounded-xl border border-gray-300 bg-white pr-7 pl-3 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-gray-950/5 -outline-offset-1 invalid:border-red-500 invalid:text-red-500 focus:outline-2 invalid:focus:outline-red-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:shadow-gray-950/30 dark:invalid:text-red-500"
       hidden={hidden}
       {...attrs}
     >

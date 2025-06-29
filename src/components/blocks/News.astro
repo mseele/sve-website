@@ -20,10 +20,10 @@ const { id } = Astro.props
 <div id={id}>
   <Container>
     <div class="mb-12 space-y-2 pt-10 text-center">
-      <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl">
+      <h2 class="text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
         Aktuelles
       </h2>
-      <p class="text-gray-600 dark:text-gray-300 lg:mx-auto lg:w-6/12">
+      <p class="text-gray-600 lg:mx-auto lg:w-6/12 dark:text-gray-300">
         Bleib auf dem Laufenden! Die neuesten Infos rund um den SVE erhältst du am schnellsten über
         unsere Social-Media-Kanäle. Zusätzlich findest du hier alle wichtigen News und Updates.
       </p>
@@ -31,12 +31,12 @@ const { id } = Astro.props
 
     <div class="my-12 flex justify-center">
       <div
-        class="inset-0 flex h-11 w-max rounded-full border border-transparent bg-primary/10 px-5 text-primary dark:border-gray-700 dark:bg-gray-800 sm:px-8"
+        class="bg-primary/10 text-primary inset-0 flex h-11 w-max rounded-full border border-transparent px-5 sm:px-8 dark:border-gray-700 dark:bg-gray-800"
       >
         {
           external.map((link, index) => (
             <a
-              class="m-auto border-l border-black/5 px-4 text-primary first:border-none first:pl-0 last:pr-0 dark:border-white/5 dark:text-gray-300 sm:px-6"
+              class="text-primary m-auto border-l border-black/5 px-4 first:border-none first:pl-0 last:pr-0 sm:px-6 dark:border-white/5 dark:text-gray-300"
               href={link.to}
               title={link.title}
               target="_blank"

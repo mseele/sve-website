@@ -17,7 +17,7 @@ const id = ulid()
 
 <div class="relative size-full overflow-hidden overscroll-contain rounded-2xl text-center">
   <div
-    class="flex snap-x snap-mandatory items-center space-x-10 overflow-x-auto scroll-smooth scrollbar-none"
+    class="scrollbar-none flex snap-x snap-mandatory items-center space-x-10 overflow-x-auto scroll-smooth"
   >
     {
       images.map((image, index) => (
@@ -58,8 +58,8 @@ const id = ulid()
             }
           />
           {images.length > 1 && (
-            <div class="pointer-events-none absolute inset-0 bottom-1/4 top-1/4">
-              <div class="max-w-40 pointer-events-auto absolute inset-y-0 right-0 flex w-1/3 items-center justify-end pr-2 opacity-0 transition-opacity duration-200 hover:opacity-100">
+            <div class="pointer-events-none absolute inset-0 top-1/4 bottom-1/4">
+              <div class="pointer-events-auto absolute inset-y-0 right-0 flex w-1/3 max-w-40 items-center justify-end pr-2 opacity-0 transition-opacity duration-200 hover:opacity-100">
                 <button
                   onclick={`document.querySelector('#slide-${id}-${index === images.length - 1 ? 0 : index + 1}')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })`}
                 >
@@ -69,7 +69,7 @@ const id = ulid()
                   />
                 </button>
               </div>
-              <div class="max-w-40 justify-left pointer-events-auto absolute inset-y-0 left-0 flex w-1/3 items-center pl-2 opacity-0 transition-opacity duration-200 hover:opacity-100">
+              <div class="justify-left pointer-events-auto absolute inset-y-0 left-0 flex w-1/3 max-w-40 items-center pl-2 opacity-0 transition-opacity duration-200 hover:opacity-100">
                 <button
                   onclick={`document.querySelector('#slide-${id}-${index === 0 ? images.length - 1 : index - 1}')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })`}
                 >
