@@ -33,6 +33,8 @@ export default defineConfig({
   ],
   image: {
     service: sharpImageService(),
+    responsiveStyles: true,
+    layout: 'constrained',
   },
   env: {
     schema: {
