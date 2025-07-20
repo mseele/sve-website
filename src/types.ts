@@ -101,6 +101,20 @@ export interface RawEvent {
   alt_booking_button_text?: string | null
   alt_email_address?: string | null
   external_operator: boolean
+  custom_fields: RawEventCustomField[]
+}
+
+export interface RawEventCustomField {
+  id: string
+  name: string
+  type: EventCustomFieldType
+  min_value?: number | null
+  max_value?: number | null
+}
+
+export enum EventCustomFieldType {
+  Text = 'Text',
+  Number = 'Number',
 }
 
 export interface Event {
@@ -116,11 +130,19 @@ export interface Event {
   priceNonMember: string
   altBookingButtonText?: string
   externalOperator: boolean
+  customFields: EventCustomField[]
 }
 
 export enum EventType {
   Fitness = 'Fitness',
   Events = 'Events',
+}
+
+export interface EventCustomField {
+  name: string
+  type: EventCustomFieldType
+  minValue?: number
+  maxValue?: number
 }
 
 // Raw item from the server
@@ -149,6 +171,7 @@ export interface Booking {
   member?: boolean
   updates?: boolean
   comments?: string
+  custom_values: string[]
 }
 
 export interface BookingResponse {
