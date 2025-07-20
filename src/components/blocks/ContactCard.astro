@@ -82,10 +82,10 @@ function contactMethodDescription(methodType: ContactMethodType) {
           contactList.map((contactInfo) => (
             <div>
               <h2 class="text-lg font-bold text-gray-900 dark:text-white">{contactInfo.title}</h2>
-              <div class="mt-4 space-y-4 divide-y divide-gray-100 dark:divide-gray-800">
+              <div class="mt-4 divide-y divide-gray-100 dark:divide-gray-800">
                 {contactInfo.contactMethods.map((contactMethod) => (
                   <a
-                    class="flex gap-4 pt-4 first:pt-0 md:items-center"
+                    class="flex gap-4 py-4 first:pt-0 md:items-center"
                     href={contactMethod.url}
                     rel="noreferrer"
                     title={contactMethod.label}
