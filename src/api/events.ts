@@ -39,6 +39,12 @@ export async function loadEvents(type: EventType): Promise<Event[]> {
           priceNonMember: formatCurrency(event.price_non_member),
           externalOperator: event.external_operator,
           altBookingButtonText: event.alt_booking_button_text || undefined,
+          customFields: event.custom_fields.map((field) => ({
+            name: field.name,
+            type: field.type,
+            minValue: field.min_value || undefined,
+            maxValue: field.max_value || undefined,
+          })),
         }
       }),
   )

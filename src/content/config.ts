@@ -77,6 +77,16 @@ const eventSchema = ({ image }: SchemaContext) =>
     priceNonMember: z.string(),
     altBookingButtonText: z.string().optional(),
     externalOperator: z.boolean(),
+    customFields: z
+      .array(
+        z.object({
+          name: z.string(),
+          type: z.enum(['Text', 'Number']),
+          minValue: z.number().optional(),
+          maxValue: z.number().optional(),
+        }),
+      )
+      .default([]),
   })
 
 const fitness = defineCollection({

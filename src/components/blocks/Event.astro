@@ -9,6 +9,7 @@ import { Icon } from 'astro-icon/components'
 import type { CollectionEntry } from 'astro:content'
 import HeroSection from './HeroSection.astro'
 import NewsletterCard from './NewsletterCard.astro'
+import { EventCustomFieldType } from '@/types'
 
 interface Props<T extends 'events' | 'fitness'> {
   type: T
@@ -209,6 +210,32 @@ details.push({
                   <Input id="plz" name="plz" label="PLZ & Wohnort" />
                   <Input id="email" name="email" label="E-Mail" type="email" />
                   <Input id="phone" name="phone" label="Telefon (optional)" type="tel" />
+                  {
+                    entry.data.customFields.map((field, idx) => {
+                      const isLast =
+                        idx === entry.data.customFields.length - 1 &&
+                        entry.data.customFields.length % 2 === 1
+                      const inputProps = {
+                        id: 'customfield',
+                        name: field.name,
+                        label: field.name,
+                        class: isLast ? 'md:col-span-2' : undefined,
+                      }
+                      switch (field.type) {
+                        case EventCustomFieldType.Text:
+                          return <Input {...inputProps} />
+                        case EventCustomFieldType.Number:
+                          return (
+                            <Input
+                              {...inputProps}
+                              type="number"
+                              min={field.minValue}
+                              max={field.maxValue}
+                            />
+                          )
+                      }
+                    })
+                  }
                   <Textarea
                     id="comment"
                     name="comment"
@@ -341,6 +368,11 @@ details.push({
       const email = form.querySelector<HTMLInputElement>('#email')
       clearCustomValidityOnInput(email)
 
+      const customFields = form.querySelectorAll<HTMLInputElement>('#customfield')
+      customFields.forEach((field) => {
+        clearCustomValidityOnInput(field)
+      })
+
       const phone = form.querySelector<HTMLInputElement>('#phone')
 
       const comment = form.querySelector<HTMLTextAreaElement>('#comment')
@@ -374,6 +406,12 @@ details.push({
           return false
         }
 
+        for (const customField of customFields) {
+          if (!checkRequiredInput(customField, `Bitte fülle das Feld ${customField.name} aus.`)) {
+            return false
+          }
+        }
+
         if (consent && !consent.checked) {
           consent.setCustomValidity(
             'Bitte stimme der Verarbeitung deiner personenbezogenen Daten zu.',
@@ -396,6 +434,7 @@ details.push({
               member: member?.checked,
               updates: newsletter?.checked,
               comments: comment?.value,
+              custom_values: Array.from(customFields).map((field) => field.value),
             },
             callback,
           )
@@ -410,6 +449,9 @@ details.push({
             if (member) member.checked = false
             if (newsletter) newsletter.checked = false
             if (consent) consent.checked = false
+            customFields.forEach((field) => {
+              field.value = ''
+            })
             notify('Buchung', response.message)
           } else {
             notify('Buchung', response.message, true)
