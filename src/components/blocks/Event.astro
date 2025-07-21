@@ -382,6 +382,7 @@ details.push({
       const newsletter = form.querySelector<HTMLInputElement>('#newsletter')
 
       const consent = form.querySelector<HTMLInputElement>('#consent')
+      consent?.addEventListener('input', () => consent.setCustomValidity(''));
 
       form.addEventListener('submit', async (event) => {
         event.preventDefault()
