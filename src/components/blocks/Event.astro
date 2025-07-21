@@ -36,8 +36,8 @@ details.push({
 details.push({
   id: 'dates',
   icon: 'mdi:calendar-month-outline',
-  title: 'Termine',
-  label: entry.data.dates.length == 1 ? entry.data.dates[0] : `${entry.data.dates.length} Termine`,
+  title: entry.data.dates.length === 1 ? 'Termin' : 'Termine',
+  label: entry.data.dates.length === 1 ? entry.data.dates[0] : `${entry.data.dates.length} Termine`,
 })
 
 details.push({
@@ -157,7 +157,7 @@ details.push({
           <Container>
             <div class="text-gray-600">
               <h2 class="text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
-                Termine
+                { entry.data.dates.length === 1 ? 'Termin' : 'Termine' }
               </h2>
               {
                 <div class="mt-2 grid grid-cols-1 text-gray-600 sm:grid-cols-2 dark:text-gray-300">
