@@ -157,7 +157,7 @@ details.push({
           <Container>
             <div class="text-gray-600">
               <h2 class="text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
-                { entry.data.dates.length === 1 ? 'Termin' : 'Termine' }
+                {entry.data.dates.length === 1 ? 'Termin' : 'Termine'}
               </h2>
               {
                 <div class="mt-2 grid grid-cols-1 text-gray-600 sm:grid-cols-2 dark:text-gray-300">
@@ -382,7 +382,7 @@ details.push({
       const newsletter = form.querySelector<HTMLInputElement>('#newsletter')
 
       const consent = form.querySelector<HTMLInputElement>('#consent')
-      consent?.addEventListener('input', () => consent.setCustomValidity(''));
+      consent?.addEventListener('input', () => consent.setCustomValidity(''))
 
       form.addEventListener('submit', async (event) => {
         event.preventDefault()
