@@ -26,7 +26,7 @@ export interface Team {
   name: string
   league: string
   coach?: Person
-  contact: Person
+  contact?: Person
   teamID?: string
 }
 
