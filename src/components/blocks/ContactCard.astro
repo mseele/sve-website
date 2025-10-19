@@ -181,6 +181,7 @@ function contactMethodDescription(methodType: ContactMethodType) {
         clearCustomValidityOnInput(message)
 
         const consent = form.querySelector<HTMLInputElement>(`#consent-${identifier}`)
+        consent?.addEventListener('input', () => consent.setCustomValidity(''))
 
         form.addEventListener('submit', async (event) => {
           event.preventDefault()
