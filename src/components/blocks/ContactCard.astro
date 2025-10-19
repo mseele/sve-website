@@ -138,7 +138,7 @@ function contactMethodDescription(methodType: ContactMethodType) {
           <Input id="phone" name="phone" label="Telefon (optional)" type="tel" />
           <Textarea id="message" name="message" label="Nachricht" />
           <Checkbox
-            id="consent"
+            id={`consent-${identifier}`}
             name="consent"
             title="Ich stimme der Verarbeitung meiner personenbezogenen Daten zu"
           />
@@ -163,8 +163,10 @@ function contactMethodDescription(methodType: ContactMethodType) {
     constructor() {
       super()
 
+      const identifier = this.dataset.identifier
+
       const form = this.querySelector<HTMLFormElement>('#contact-form')
-      if (form) {
+      if (identifier && form) {
         const recipient = form.querySelector<HTMLSelectElement>('#recipient')
 
         const name = form.querySelector<HTMLInputElement>('#name')
@@ -178,7 +180,8 @@ function contactMethodDescription(methodType: ContactMethodType) {
         const message = form.querySelector<HTMLTextAreaElement>('#message')
         clearCustomValidityOnInput(message)
 
-        const consent = form.querySelector<HTMLInputElement>('#consent')
+        const consent = form.querySelector<HTMLInputElement>(`#consent-${identifier}`)
+        consent?.addEventListener('input', () => consent.setCustomValidity(''))
 
         form.addEventListener('submit', async (event) => {
           event.preventDefault()
