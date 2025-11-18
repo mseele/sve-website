@@ -5,6 +5,7 @@ import Select from '../controls/Select.astro'
 import Textarea from '../controls/Textarea.astro'
 import Checkbox from '../controls/Checkbox.astro'
 import SubmitButton from '../controls/SubmitButton.astro'
+import { CAPTCHA_SITE_KEY } from 'astro:env/client'
 
 export interface ContactInfo {
   title: string
@@ -125,6 +126,7 @@ function contactMethodDescription(methodType: ContactMethodType) {
           Nachricht senden
         </h3>
         <form id="contact-form" class="grid gap-6 md:gap-10 lg:gap-6">
+          <h-captcha id="captcha" site-key={CAPTCHA_SITE_KEY} size="invisible"></h-captcha>
           <Select
             id="recipient"
             name="recipient"
@@ -158,12 +160,16 @@ function contactMethodDescription(methodType: ContactMethodType) {
   import { sendContactMessage } from '@/api/forms'
   import { checkRequiredInput, clearCustomValidityOnInput } from '@/client/forms'
   import { notify } from '@/client/notifications'
+  import '@hcaptcha/vanilla-hcaptcha'
+  import type { VanillaHCaptchaWebComponent } from '@hcaptcha/vanilla-hcaptcha'
 
   class ContactCard extends HTMLElement {
     constructor() {
       super()
 
       const identifier = this.dataset.identifier
+
+      const captcha = this.querySelector<VanillaHCaptchaWebComponent>('#captcha')
 
       const form = this.querySelector<HTMLFormElement>('#contact-form')
       if (identifier && form) {
@@ -209,6 +215,7 @@ function contactMethodDescription(methodType: ContactMethodType) {
           const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]')
           try {
             if (button) button.disabled = true
+            const token = (await captcha?.executeAsync())?.response
             success = (
               await sendContactMessage(
                 recipient?.value!,
@@ -216,6 +223,7 @@ function contactMethodDescription(methodType: ContactMethodType) {
                 email?.value!,
                 phone?.value!,
                 message?.value!,
+                token,
               )
             ).ok
             if (success) {
@@ -231,6 +239,7 @@ function contactMethodDescription(methodType: ContactMethodType) {
             console.error(err)
           } finally {
             if (button) button.disabled = false
+            captcha?.reset()
           }
           if (success) {
             notify('Kontakt', 'Danke für deine Nachricht. Wir melden uns umgehend bei Dir.')

@@ -6,6 +6,7 @@ export async function sendContactMessage(
   email: string,
   phone: string | undefined,
   message: string,
+  token: string,
 ): Promise<Response> {
   const url = `${BACKEND_API}/contact/message`
   return fetch(url, {
@@ -17,6 +18,7 @@ export async function sendContactMessage(
       email: email.trim(),
       phone: phone ? phone.trim() : undefined,
       message: message.trim(),
+      token,
     }),
     headers: {
       'Content-Type': 'application/json',
@@ -30,11 +32,12 @@ export async function manageSubscription(
   general: boolean,
   fitness: boolean,
   events: boolean,
+  token: string,
 ): Promise<Response> {
   const url = `${BACKEND_API}/news/${subscribe ? 'subscribe' : 'unsubscribe'}`
   return fetch(url, {
     method: 'POST',
-    body: JSON.stringify({ email, types: newsTypes(general, fitness, events) }),
+    body: JSON.stringify({ email, types: newsTypes(general, fitness, events), token }),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -49,10 +52,10 @@ function newsTypes(general: boolean, fitness: boolean, events: boolean) {
   return types
 }
 
-export async function membershipApplication(payload: any): Promise<boolean> {
+export async function membershipApplication(payload: any, token: string): Promise<boolean> {
   const response = await fetch(`${BACKEND_API}/membership/application`, {
     method: 'POST',
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ ...payload, token }),
     headers: {
       'Content-Type': 'application/json',
     },

@@ -3,6 +3,7 @@ import ButtonSwitch from '@/components/controls/ButtonSwitch.astro'
 import Input from '@/components/controls/Input.astro'
 import SubmitButton from '@/components/controls/SubmitButton.astro'
 import Switch from '@/components/controls/Switch.astro'
+import { CAPTCHA_SITE_KEY } from 'astro:env/client'
 
 interface Props {
   description?: string
@@ -27,6 +28,7 @@ const { description, topic } = Astro.props as Props
           )
         }
         <form id="newsletter-form">
+          <h-captcha id="captcha" site-key={CAPTCHA_SITE_KEY} size="invisible"></h-captcha>
           {!topic && <ButtonSwitch id="abo" name="abo" left="Abonnieren" right="Abmelden" />}
           <Input
             class="mt-10"
@@ -92,9 +94,12 @@ const { description, topic } = Astro.props as Props
   import { manageSubscription } from '@/api/forms'
   import { checkRequiredInput, clearCustomValidityOnInput } from '@/client/forms'
   import { notify } from '@/client/notifications'
+  import '@hcaptcha/vanilla-hcaptcha'
+  import type { VanillaHCaptchaWebComponent } from '@hcaptcha/vanilla-hcaptcha'
 
   const form = document.querySelector<HTMLFormElement>('#newsletter-form')
   const input = form?.querySelector<HTMLInputElement>('#email')
+  const captcha = form?.querySelector<VanillaHCaptchaWebComponent>('#captcha')
 
   clearCustomValidityOnInput(input)
 
@@ -127,7 +132,10 @@ const { description, topic } = Astro.props as Props
     const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]')
     try {
       if (button) button.disabled = true
-      success = (await manageSubscription(subscribe, email, general, fitness, events)).ok
+
+      const token = (await captcha?.executeAsync())?.response
+
+      success = (await manageSubscription(subscribe, email, general, fitness, events, token)).ok
       if (success) {
         if (input) input.value = ''
         if (subscribeInput) {
@@ -142,6 +150,7 @@ const { description, topic } = Astro.props as Props
       console.error(err)
     } finally {
       if (button) button.disabled = false
+      captcha?.reset()
     }
     if (success) {
       notify('Newsletter', 'Du hast dich erfolgreich für unseren Newsletter angemeldet.')

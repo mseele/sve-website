@@ -155,11 +155,12 @@ function processCounters(
 
 export async function bookEvent(
   formData: Booking,
+  token: string,
   callback: (availability: EventAvailability) => void,
 ) {
   const response = await fetch(`${BACKEND_API}/events/booking`, {
     method: 'POST',
-    body: JSON.stringify(formData),
+    body: JSON.stringify({ ...formData, token }),
     headers: {
       'Content-Type': 'application/json',
     },

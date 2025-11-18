@@ -10,6 +10,7 @@ import type { CollectionEntry } from 'astro:content'
 import HeroSection from './HeroSection.astro'
 import NewsletterCard from './NewsletterCard.astro'
 import { EventCustomFieldType } from '@/types'
+import { CAPTCHA_SITE_KEY } from 'astro:env/client'
 
 interface Props<T extends 'events' | 'fitness'> {
   type: T
@@ -204,6 +205,7 @@ details.push({
             >
               <div class="flex w-full flex-col gap-10">
                 <form id="form" class="grid gap-6 md:grid-cols-2 md:gap-10 lg:gap-6">
+                  <h-captcha id="captcha" site-key={CAPTCHA_SITE_KEY} size="invisible"></h-captcha>
                   <Input id="firstname" name="firstname" label="Vorname" />
                   <Input id="lastname" name="lastname" label="Nachname" />
                   <Input id="street" name="street" label="Straße & Hausnummer" />
@@ -290,10 +292,13 @@ details.push({
   import { checkRequiredInput, clearCustomValidityOnInput } from '@/client/forms'
   import { notify } from '@/client/notifications'
   import type { EventAvailability } from '@/types'
+  import '@hcaptcha/vanilla-hcaptcha'
+  import type { VanillaHCaptchaWebComponent } from '@hcaptcha/vanilla-hcaptcha'
 
   const id = document
     .querySelector<HTMLDivElement>('[data-identifier]')
     ?.getAttribute('data-identifier')
+  const captcha = document.querySelector<VanillaHCaptchaWebComponent>('#captcha')
   if (id) {
     const callback = (availability: EventAvailability) => {
       const element = document.querySelector<HTMLDivElement>('[data-label="availability"]')
@@ -423,6 +428,7 @@ details.push({
         const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]')
         try {
           if (button) button.disabled = true
+          const token = (await captcha?.executeAsync())?.response
           const response = await bookEvent(
             {
               event_id: id,
@@ -437,6 +443,7 @@ details.push({
               comments: comment?.value,
               custom_values: Array.from(customFields).map((field) => field.value),
             },
+            token,
             callback,
           )
           if (response.success) {
@@ -466,6 +473,7 @@ details.push({
           )
         } finally {
           if (button) button.disabled = false
+          captcha?.reset()
         }
       })
     }
