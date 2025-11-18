@@ -11,6 +11,7 @@ import Checkbox from '@/components/controls/Checkbox.astro'
 import Notification from '@/components/common/Notification.astro'
 import SubmitButton from '@/components/controls/SubmitButton.astro'
 import SuccessVideo from '@/assets/videos/success-cup.webm'
+import { CAPTCHA_SITE_KEY } from 'astro:env/client'
 
 const membershipTypes = [
   { value: 'Family', label: 'Familienbeitrag - beliebig viele Kinder (alle Sparten)', price: 160 },
@@ -43,6 +44,7 @@ const meta: MetaSEO = {
             Du möchtest Mitglied werden?
           </h3>
           <div id="form" class="text-gray-900 dark:text-white">
+            <h-captcha id="captcha" site-key={CAPTCHA_SITE_KEY} size="invisible"></h-captcha>
             <div
               id="type"
               class="grid gap-10 divide-y lg:grid-cols-2 lg:gap-12 lg:divide-x lg:divide-y-0 dark:divide-gray-800"
@@ -381,9 +383,12 @@ const meta: MetaSEO = {
   } from '@/client/forms'
   import { notify } from '@/client/notifications'
   import { isValidIBAN } from 'ibantools'
+  import '@hcaptcha/vanilla-hcaptcha'
+  import type { VanillaHCaptchaWebComponent } from '@hcaptcha/vanilla-hcaptcha'
 
   const title = document.querySelector<HTMLHeadingElement>('#title')
   const form = document.querySelector<HTMLDivElement>('#form')
+  const captcha = document.querySelector<VanillaHCaptchaWebComponent>('#captcha')
   if (title && form) {
     // ------------------------
     // 1. Step: Membership Type
@@ -648,7 +653,8 @@ const meta: MetaSEO = {
 
         try {
           button.disabled = true
-          const response = await membershipApplication(payload)
+          const token = (await captcha?.executeAsync())?.response
+          const response = await membershipApplication(payload, token)
           if (response) {
             const next = form.querySelector<HTMLDivElement>('#success')
             if (current && next) {
@@ -670,6 +676,7 @@ const meta: MetaSEO = {
           )
         } finally {
           button.disabled = false
+          captcha?.reset()
         }
       })
       current
