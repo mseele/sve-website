@@ -12,35 +12,35 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@astro-community/astro-embed-youtube": "^0.5.6",
-    "@astrojs/check": "^0.9.4",
-    "@astrojs/netlify": "6.5.2",
-    "@astrojs/sitemap": "^3.4.1",
+    "@astro-community/astro-embed-youtube": "^0.5.9",
+    "@astrojs/check": "^0.9.5",
+    "@astrojs/netlify": "6.6.2",
+    "@astrojs/sitemap": "^3.6.0",
     "@astrojs/tailwind": "^6.0.2",
     "@astrolib/seo": "1.0.0-beta.8",
-    "@fontsource-variable/dm-sans": "^5.2.6",
+    "@fontsource-variable/dm-sans": "^5.2.8",
     "@hcaptcha/vanilla-hcaptcha": "^1.1.4",
     "@iconify-json/mdi": "^1.2.3",
-    "@tailwindcss/typography": "^0.5.16",
-    "astro": "5.12.1",
+    "@tailwindcss/typography": "^0.5.19",
+    "astro": "5.16.0",
     "astro-icon": "^1.1.5",
-    "astro-pagefind": "^1.8.3",
+    "astro-pagefind": "^1.8.5",
     "astro-robots-txt": "^1.0.0",
-    "contentful": "^11.7.8",
+    "contentful": "^11.9.0",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "ibantools": "^4.5.1",
-    "sharp": "^0.34.3",
+    "sharp": "^0.34.5",
     "tailwind-scrollbar": "^4.0.2",
-    "tailwindcss": "^4.1.11",
-    "typescript": "^5.8.3",
+    "tailwindcss": "^4.1.17",
+    "typescript": "^5.9.3",
     "ulid": "^3.0.1",
-    "vite": "^7.0.5"
+    "vite": "^7.2.4"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.11",
+    "@tailwindcss/vite": "^4.1.17",
     "prettier": "3.6.2",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.6.14"
+    "prettier-plugin-tailwindcss": "^0.7.1"
   }
 }
