@@ -29,7 +29,7 @@ export async function loadEvents(type: EventType): Promise<Event[]> {
         return {
           id: event.id,
           name: event.name,
-          image: `src/assets/events/${event.image}`,
+          image: `/src/assets/events/${event.image}`,
           shortDescription: event.short_description,
           description: event.description,
           location: event.location,
