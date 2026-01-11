@@ -1,10 +1,10 @@
 [build]
-  base = "/"
-  publish = "dist/"
-  command = "bun run build"
+base = "/"
+publish = "dist/"
+command = "bun run build"
 
 [build.environment]
-  NODE_ENV = "production"
+NODE_ENV = "production"
 
 [build.processing.html]
-  pretty_urls = false
+pretty_urls = false

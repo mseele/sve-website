@@ -1,15 +1,15 @@
 {
   "name": "sve-website",
-  "type": "module",
   "version": "5.0.0",
+  "private": true,
   "description": "Website SV Eutingen",
   "author": "mseele",
-  "private": true,
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "check": "tsc --noEmit && astro check",
-    "format": "prettier --write ."
+    "format": "oxfmt"
   },
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.10",
@@ -39,8 +39,6 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",
-    "prettier": "3.7.4",
-    "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.7.2"
+    "oxfmt": "^0.23.0"
   }
 }
