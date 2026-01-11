@@ -303,7 +303,7 @@ details.push({
     const callback = (availability: EventAvailability) => {
       const element = document.querySelector<HTMLDivElement>('[data-label="availability"]')
       if (element) {
-        element.innerHTML = availability.message
+        element.textContent = availability.message
       }
       const container = document.querySelector<HTMLDivElement>('#anmeldung')
       if (container) {
@@ -327,12 +327,12 @@ details.push({
 
         const titleElement = container.querySelector<HTMLHeadingElement>('#title')
         if (titleElement) {
-          titleElement.innerHTML = title
+          titleElement.textContent = title
         }
         const descriptionElement = container.querySelector<HTMLHeadingElement>('#description')
         if (descriptionElement) {
           if (description) {
-            descriptionElement.innerHTML = description
+            descriptionElement.textContent = description
             descriptionElement.classList.remove('hidden')
           } else {
             descriptionElement.classList.add('hidden')
@@ -345,7 +345,7 @@ details.push({
 
           const buttonElement = container.querySelector<HTMLSpanElement>('#button')
           if (buttonElement) {
-            buttonElement.innerHTML = button
+            buttonElement.textContent = button
           }
         } else {
           container.querySelector<HTMLDivElement>('#booking-card')?.classList.add('hidden')

@@ -583,18 +583,18 @@ const meta: MetaSEO = {
             payment_data_container!,
             true,
           )
-          setInnerHTML(next, 'membership_type', data.membership_type)
-          setInnerHTML(next, 'salutation', data.salutation)
-          setInnerHTML(next, 'firstname', data.first_name)
-          setInnerHTML(next, 'lastname', data.last_name)
-          setInnerHTML(next, 'street', data.street)
-          setInnerHTML(next, 'zipcode', data.zipcode)
-          setInnerHTML(next, 'city', data.city)
-          setInnerHTML(next, 'email', data.email)
-          setInnerHTML(next, 'phone', data.phone)
-          setInnerHTML(next, 'birthday', data.birthday)
-          setInnerHTML(next, 'iban', data.iban)
-          setInnerHTML(next, 'account_owner', data.account_owner)
+          setTextContent(next, 'membership_type', data.membership_type)
+          setTextContent(next, 'salutation', data.salutation)
+          setTextContent(next, 'firstname', data.first_name)
+          setTextContent(next, 'lastname', data.last_name)
+          setTextContent(next, 'street', data.street)
+          setTextContent(next, 'zipcode', data.zipcode)
+          setTextContent(next, 'city', data.city)
+          setTextContent(next, 'email', data.email)
+          setTextContent(next, 'phone', data.phone)
+          setTextContent(next, 'birthday', data.birthday)
+          setTextContent(next, 'iban', data.iban)
+          setTextContent(next, 'account_owner', data.account_owner)
 
           const familiy_members = next.querySelectorAll<HTMLDivElement>('#familiy_member')
           if (familiy_members) {
@@ -602,12 +602,12 @@ const meta: MetaSEO = {
               const item = data.family_members?.at(index)
               if (item) {
                 familiy_member.classList.replace('hidden', 'grid')
-                setInnerHTML(
+                setTextContent(
                   familiy_member,
                   'family_member_name',
                   `${item.first_name} ${item.last_name}`,
                 )
-                setInnerHTML(familiy_member, 'family_member_birthday', item.birthday)
+                setTextContent(familiy_member, 'family_member_birthday', item.birthday)
               } else {
                 familiy_member.classList.replace('grid', 'hidden')
               }
@@ -696,7 +696,7 @@ const meta: MetaSEO = {
     next: HTMLDivElement,
     text: string,
   ) {
-    title.innerHTML = text
+    title.textContent = text
     current.classList.add('hidden')
     next.classList.remove('hidden')
     next.classList.add('grid')
@@ -777,13 +777,13 @@ const meta: MetaSEO = {
     }
   }
 
-  function setInnerHTML(container: HTMLDivElement, id: string, text?: string) {
+  function setTextContent(container: HTMLDivElement, id: string, text?: string) {
     if (text === undefined) {
       return
     }
     const element = container.querySelector<HTMLDivElement>(`#${id}`)
     if (element) {
-      element.innerHTML = text
+      element.textContent = text
     }
   }
 </script>

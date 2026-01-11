@@ -78,7 +78,7 @@ const { type, entries, nothing, newsletterDescription, faqs } = Astro.props as P
       if (id) {
         const availability = data[id]
         if (availability) {
-          element.innerHTML = availability.message
+          element.textContent = availability.message
           element.setAttribute(
             'data-availability',
             availability.availableSlots === 0 ? 'unavailable' : 'available',
