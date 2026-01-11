@@ -12,17 +12,17 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@astro-community/astro-embed-youtube": "^0.5.9",
+    "@astro-community/astro-embed-youtube": "^0.5.10",
     "@astrojs/check": "^0.9.6",
     "@astrojs/netlify": "6.6.3",
-    "@astrojs/sitemap": "^3.6.0",
+    "@astrojs/sitemap": "^3.6.1",
     "@astrojs/tailwind": "^6.0.2",
     "@astrolib/seo": "1.0.0-beta.8",
     "@fontsource-variable/dm-sans": "^5.2.8",
     "@hcaptcha/vanilla-hcaptcha": "^1.1.4",
     "@iconify-json/mdi": "^1.2.3",
     "@tailwindcss/typography": "^0.5.19",
-    "astro": "5.16.5",
+    "astro": "5.16.8",
     "astro-icon": "^1.1.5",
     "astro-pagefind": "^1.8.5",
     "astro-robots-txt": "^1.0.0",
@@ -35,7 +35,7 @@
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "ulid": "^3.0.2",
-    "vite": "^8.0.0-beta.2"
+    "vite": "^8.0.0-beta.7"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.18",
