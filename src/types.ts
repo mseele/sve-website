@@ -21,10 +21,19 @@ export interface ThemedImage {
   alt: string
 }
 
+export interface Category {
+  id: string
+  name: string
+  description: string
+  sortOrder: number
+  isYouthGroup: boolean
+}
+
 export interface Team {
   id: string
   name: string
   league: string
+  category: Category
   coach?: Person
   contact?: Person
   teamID?: string

@@ -15,6 +15,7 @@ const teams = defineCollection({
         id: z.string(),
         name: z.string(),
         description: z.string(),
+        isYouthGroup: z.boolean(),
         sortOrder: z.number(),
       }),
       sortOrder: z.number(),

@@ -33,6 +33,7 @@ function mapCategory(item: any) {
     name: item.fields.name as string,
     description: item.fields.description as string,
     sortOrder: item.fields.sortOrder as number,
+    isYouthGroup: item.fields.isYouthGroup as boolean,
   }
 }
 

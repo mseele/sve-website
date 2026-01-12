@@ -31,6 +31,23 @@ interface ContactCardInput {
 
 const contactCardInputs: ContactCardInput[] = [
   {
+    identifier: 'schutzbeauftragte',
+    description: 'Vertraulicher Ansprechpartner für Fragen zum Kinderschutz und zur Prävention sexueller Gewalt im Verein. Ihre Anliegen werden streng vertraulich behandelt.',
+    contactList: [
+      {
+        title: 'Julia Chrzanowski',
+        contactMethods: [
+          {
+            methodType: ContactMethodType.Email,
+            label: 'schutzbeauftragte@sv-eutingen.de',
+            url: 'mailto:schutzbeauftragte@sv-eutingen.de',
+          },
+        ],
+      },
+    ],
+    recipients: [{ value: 'schutzbeauftragte@sv-eutingen.de', label: 'Schutzbeauftragte für sexuelle Gewalt' }],
+  },
+  {
     identifier: 'kunstrasen',
     description:
       'Über diese Kanäle kannst Du eine Buchungsanfrage für unseren Kunstrasenplatz starten. Unser Ansprechpartner setzt sich dann direkt mit Dir in Verbindung und klärt alle Details.',
@@ -291,6 +308,7 @@ const meta: MetaSEO = {
               label: 'Kontakt zur Gaststätte "Auszeit" aufnehmen',
             },
             { value: 'partnerschaft', label: 'Kontakt zum Thema Partnerschaft aufnehmen' },
+            { value: 'schutzbeauftragte', label: 'Kontakt zur Schutzbeauftragten für sexuelle Gewalt' },
             { value: 'other', label: 'ein anderes Thema besprechen' },
           ]}
         />
