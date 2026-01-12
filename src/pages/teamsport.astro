@@ -10,6 +10,7 @@ const groupedTeams: {
   id: string
   name: string
   description: string
+  isYouthGroup: boolean
   teams: Team[]
 }[] = []
 for (const team of (await getCollection('teams'))
@@ -21,6 +22,7 @@ for (const team of (await getCollection('teams'))
       id: team.category.id,
       name: team.category.name,
       description: team.category.description,
+      isYouthGroup: team.category.isYouthGroup,
       teams: [],
     }
     groupedTeams.push(group)
@@ -61,6 +63,11 @@ const meta: MetaSEO = {
     groupedTeams.map((item) => (
       <Teams id={item.id} title={item.name} teams={item.teams}>
         {item.description}
+        {item.isYouthGroup && (
+          <div class="mt-4 rounded-2xl border border-gray-100 bg-white/40 p-4 text-sm text-gray-500 dark:border-gray-700 dark:bg-gray-800/50 dark:text-gray-400">
+            Kinderschutz im SVE: Für Fragen zur Sicherheit und Prävention sexueller Gewalt kontaktieren Sie unsere <a href="/kontakt?auswahl=schutzbeauftragte" class="text-primary hover:underline dark:text-primary/80">Schutzbeauftragte für sexuelle Gewalt</a>.
+          </div>
+        )}
       </Teams>
     ))
   }
