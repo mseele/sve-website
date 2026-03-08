@@ -14,31 +14,31 @@
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.10",
     "@astrojs/check": "^0.9.6",
-    "@astrojs/netlify": "6.6.3",
-    "@astrojs/sitemap": "^3.6.1",
+    "@astrojs/netlify": "6.6.4",
+    "@astrojs/sitemap": "^3.7.0",
     "@astrojs/tailwind": "^6.0.2",
     "@astrolib/seo": "1.0.0-beta.8",
     "@fontsource-variable/dm-sans": "^5.2.8",
     "@hcaptcha/vanilla-hcaptcha": "^1.1.4",
     "@iconify-json/mdi": "^1.2.3",
     "@tailwindcss/typography": "^0.5.19",
-    "astro": "5.16.8",
+    "astro": "5.18.0",
     "astro-icon": "^1.1.5",
     "astro-pagefind": "^1.8.5",
     "astro-robots-txt": "^1.0.0",
-    "contentful": "^11.10.1",
+    "contentful": "^11.10.5",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "ibantools": "^4.5.1",
     "sharp": "^0.34.5",
     "tailwind-scrollbar": "^4.0.2",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
     "ulid": "^3.0.2",
-    "vite": "^8.0.0-beta.7"
+    "vite": "^8.0.0-beta.16"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.18",
-    "oxfmt": "^0.23.0"
+    "@tailwindcss/vite": "^4.2.1",
+    "oxfmt": "^0.36.0"
   }
 }
