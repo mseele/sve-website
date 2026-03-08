@@ -22,23 +22,23 @@
     "@hcaptcha/vanilla-hcaptcha": "^1.1.4",
     "@iconify-json/mdi": "^1.2.3",
     "@tailwindcss/typography": "^0.5.19",
-    "astro": "5.17.1",
+    "astro": "5.18.0",
     "astro-icon": "^1.1.5",
     "astro-pagefind": "^1.8.5",
     "astro-robots-txt": "^1.0.0",
-    "contentful": "^11.10.3",
+    "contentful": "^11.10.5",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "ibantools": "^4.5.1",
     "sharp": "^0.34.5",
     "tailwind-scrollbar": "^4.0.2",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
     "ulid": "^3.0.2",
-    "vite": "^8.0.0-beta.11"
+    "vite": "^8.0.0-beta.16"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.18",
-    "oxfmt": "^0.27.0"
+    "@tailwindcss/vite": "^4.2.1",
+    "oxfmt": "^0.36.0"
   }
 }
