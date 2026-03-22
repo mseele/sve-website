@@ -20,6 +20,7 @@ export default defineConfig({
   trailingSlash: SITE.trailingSlash ? 'always' : 'never',
   output: 'static',
   adapter: netlify(),
+  csp: true,
   integrations: [
     icon({
       iconDir: 'src/assets/icons',
