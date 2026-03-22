@@ -28,6 +28,7 @@ bun install
 ## Code Style
 
 ### Formatter
+
 - Use `oxfmt` (not Prettier) - run via `bun run format`
 - Config: `.oxfmtrc.json`
 - Semicolons: **false**
@@ -37,11 +38,13 @@ bun install
 - Trailing commas: **all**
 
 ### Imports
+
 - Use `@/` alias for all `src/` imports (e.g., `@/components/common/Button`)
 - Group imports: external libs → `@/` aliases → relative imports
 - Use explicit file extensions for Astro components
 
 ### TypeScript
+
 - Strict mode enabled
 - Always use explicit types for function parameters and returns
 - Use `interface` for object shapes, `type` for unions/aliases
@@ -49,6 +52,7 @@ bun install
 - Use Zod for runtime validation (see `src/types.ts` examples)
 
 ### Naming Conventions
+
 - Components: PascalCase (e.g., `HeroSection.astro`)
 - Files: camelCase for TS, PascalCase for Astro components
 - Variables/functions: camelCase
@@ -56,6 +60,7 @@ bun install
 - Props interfaces: Use `Props` name in component files
 
 ### Astro Components
+
 - Use frontmatter script for server-side code
 - Client-side scripts in `<script>` tags at bottom
 - Use `Astro.props` with destructuring
@@ -63,18 +68,21 @@ bun install
 - Use Astro's built-in components (`Picture`, `Image`) for images
 
 ### Tailwind CSS
+
 - Use Tailwind v4 syntax
 - Dark mode: use `dark:` prefix
 - Custom colors: `primary`, `darker`, `primaryLight`
 - Typography: use `@tailwindcss/typography` plugin via `Prose` component
 
 ### Error Handling
+
 - Use early returns with guard clauses
 - Validate API responses with Zod schemas
 - Handle undefined/null with optional chaining (`?.`)
 - Throw descriptive errors for unexpected states
 
 ### Project Structure
+
 ```
 src/
 ├── api/           # API clients (Contentful, backend)
@@ -92,6 +100,7 @@ src/
 ```
 
 ### Key Patterns
+
 - Images: Use `ThemedImage` interface for light/dark variants
 - Forms: Use validation utilities from `src/client/forms.ts`
 - Dates: Use `date-fns` with German locale
@@ -99,10 +108,13 @@ src/
 - Icons: Use `astro-icon` with `@iconify-json/mdi`
 
 ### Environment Variables
+
 Access via `import.meta.env.*`:
+
 - `BACKEND_API`, `CAPTCHA_SITE_KEY`, `PREVIEW` (client)
 - `CONTENTFUL_*` tokens, `SUBDOMAIN` (server)
 
 ### Git
+
 - No specific commit message format required
 - Format code before committing
