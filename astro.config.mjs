@@ -1,4 +1,4 @@
-import { defineConfig, sharpImageService, envField } from 'astro/config'
+import { defineConfig, sharpImageService, envField, fontProviders } from 'astro/config'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { loadEnv } from 'vite'
@@ -21,6 +21,14 @@ export default defineConfig({
   output: 'static',
   adapter: netlify(),
   csp: true,
+  fonts: [
+    {
+      name: 'DM Sans',
+      cssVariable: '--font-dm-sans',
+      provider: fontProviders.fontsource(),
+      weights: ['100 900'],
+    },
+  ],
   integrations: [
     icon({
       iconDir: 'src/assets/icons',
