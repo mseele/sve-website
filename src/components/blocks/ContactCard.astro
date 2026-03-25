@@ -126,7 +126,7 @@ function contactMethodDescription(methodType: ContactMethodType) {
           Nachricht senden
         </h3>
         <form id="contact-form" class="grid gap-6 md:gap-10 lg:gap-6">
-          <h-captcha id="captcha" site-key={CAPTCHA_SITE_KEY} size="invisible"></h-captcha>
+          <h-captcha id="captcha" site-key={CAPTCHA_SITE_KEY} size="invisible" class="hidden"></h-captcha>
           <Select
             id="recipient"
             name="recipient"

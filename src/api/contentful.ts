@@ -1,10 +1,13 @@
 import { createClient } from 'contentful'
+import {
+  CONTENTFUL_SPACE_ID,
+  CONTENTFUL_DELIVERY_TOKEN,
+  CONTENTFUL_PREVIEW_TOKEN,
+} from 'astro:env/server'
 
 const contentfulClient = createClient({
-  space: import.meta.env.CONTENTFUL_SPACE_ID,
-  accessToken: import.meta.env.DEV
-    ? import.meta.env.CONTENTFUL_PREVIEW_TOKEN
-    : import.meta.env.CONTENTFUL_DELIVERY_TOKEN,
+  space: CONTENTFUL_SPACE_ID,
+  accessToken: import.meta.env.DEV ? CONTENTFUL_PREVIEW_TOKEN : CONTENTFUL_DELIVERY_TOKEN,
   host: import.meta.env.DEV ? 'preview.contentful.com' : 'cdn.contentful.com',
 })
 

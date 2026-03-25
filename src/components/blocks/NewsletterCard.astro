@@ -28,7 +28,7 @@ const { description, topic } = Astro.props as Props
           )
         }
         <form id="newsletter-form">
-          <h-captcha id="captcha" site-key={CAPTCHA_SITE_KEY} size="invisible"></h-captcha>
+          <h-captcha id="captcha" site-key={CAPTCHA_SITE_KEY} size="invisible" class="hidden"></h-captcha>
           {!topic && <ButtonSwitch id="abo" name="abo" left="Abonnieren" right="Abmelden" />}
           <Input
             class="mt-10"
