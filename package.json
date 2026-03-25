@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "check": "tsc --noEmit && astro check",
+    "check": "oxlint src/ && tsc --noEmit && astro check",
     "format": "oxfmt"
   },
   "dependencies": {
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.2",
-    "oxfmt": "^0.42.0"
+    "oxfmt": "^0.42.0",
+    "oxlint": "^1.57.0"
   }
 }
