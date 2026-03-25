@@ -3,9 +3,8 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "strict": true,
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   }
 }

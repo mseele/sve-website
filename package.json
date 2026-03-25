@@ -23,21 +23,21 @@
     "@tailwindcss/typography": "^0.5.19",
     "astro": "6.0.8",
     "astro-icon": "^1.1.5",
-    "astro-pagefind": "^1.8.5",
+    "astro-pagefind": "^1.8.6",
     "astro-robots-txt": "^1.0.0",
-    "contentful": "^11.11.1",
+    "contentful": "^11.12.0",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "ibantools": "^4.5.1",
     "sharp": "^0.34.5",
     "tailwind-scrollbar": "^4.0.2",
     "tailwindcss": "^4.2.2",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "ulid": "^3.0.2",
-    "vite": "^8.0.1"
+    "vite": "^8.0.2"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.2",
-    "oxfmt": "^0.41.0"
+    "oxfmt": "^0.42.0"
   }
 }
