@@ -339,8 +339,7 @@ function collectData(
     membership_type_container?.querySelectorAll<HTMLInputElement>('input[type="checkbox"]') ?? [],
   )
   const membership_checkbox = memershipCheckboxes.find((cb) => cb.checked === true)
-  const salutation =
-    personal_data_container.querySelector<HTMLSelectElement>('#salutation')?.value
+  const salutation = personal_data_container.querySelector<HTMLSelectElement>('#salutation')?.value
   const birthday = personal_data_container.querySelector<HTMLInputElement>('#birthday')?.value
   const iban = payment_data_container.querySelector<HTMLInputElement>('#iban')?.value
 
@@ -397,8 +396,7 @@ function collectData(
     phone: personal_data_container.querySelector<HTMLInputElement>('#phone')?.value,
     birthday: labels ? birthday?.split('-').reverse().join('.') : birthday,
     iban: labels ? iban : iban?.trim().replace(/\s/g, ''),
-    account_owner:
-      payment_data_container.querySelector<HTMLInputElement>('#account_owner')?.value,
+    account_owner: payment_data_container.querySelector<HTMLInputElement>('#account_owner')?.value,
     family_members: familiy_members_data,
   }
 }

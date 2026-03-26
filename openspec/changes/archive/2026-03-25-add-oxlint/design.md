@@ -7,12 +7,14 @@ Currently there is no linter. The project has 12 TypeScript/JavaScript files and
 ## Goals / Non-Goals
 
 **Goals:**
+
 - Add `oxlint` as a dev dependency and configure it for the Astro + TypeScript stack
 - Provide a `bun run lint` command for running lint checks
 - Fix all existing lint violations without changing application logic
 - Ensure lint configuration complements the existing `oxfmt` formatter (no rule conflicts)
 
 **Non-Goals:**
+
 - Adding linting to CI/CD pipeline (can be a follow-up)
 - Creating a pre-commit hook for linting
 - Fixing TypeScript type warnings from `bun run check` (separate concern)
@@ -21,18 +23,22 @@ Currently there is no linter. The project has 12 TypeScript/JavaScript files and
 ## Decisions
 
 **Use `.oxlintrc.json` at project root**
+
 - Rationale: Standard OXC config location, consistent with `.oxfmtrc.json` pattern
 - Alternative: Inline config in `package.json` — rejected for consistency with existing config approach
 
 **Enable `react`, `jsx-a11y`, and `import` plugins**
+
 - Rationale: Astro components use JSX-like syntax (`react` plugin); accessibility checks are valuable for a public website (`jsx-a11y` plugin); ESM import validation catches common module issues (`import` plugin)
 - `typescript`, `unicorn`, and `oxc` plugins are already enabled by default
 
 **Add `lint` as a separate script (not combined with `check`)**
+
 - Rationale: `check` handles TypeScript type checking + Astro diagnostics; lint handles code quality. Users should be able to run them independently.
 - Alternative: Combined `check:all` script — rejected to preserve existing `check` behavior
 
 **Use `bunx oxlint` in the script rather than requiring global install**
+
 - Rationale: Consistent with how `oxfmt` is invoked; ensures version pinning via `devDependencies`
 
 ## Risks / Trade-offs

@@ -1,7 +1,7 @@
 ---
 import { SITE } from '@/config.mjs'
 import { type MetaSEO } from '@/types'
-import { AstroSeo } from '@astrolib/seo'
+import { SEO } from 'astro-seo'
 import { getImage } from 'astro:assets'
 
 export interface Props extends MetaSEO {
@@ -34,9 +34,7 @@ const {
   dontUseTitleTemplate = false,
 } = Astro.props
 
-const image =
-  imageMetadata !== undefined
-    ? new URL(
+const image = new URL(
         (
           await getImage({
             src: imageMetadata,
@@ -46,33 +44,27 @@ const image =
         ).src,
         Astro.site,
       )
-    : null
 ---
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-{/* TODO: move back to AstroSeo when https://github.com/onwidget/astrolib/issues/19 is fixed */}
-<link data-pagefind-meta="url[href]" rel="canonical" href={canonical} />
-<AstroSeo
+<SEO
   title={title}
   titleTemplate={dontUseTitleTemplate ? '%s' : `%s — ${SITE.name}`}
   description={description}
+  canonical={canonical}
   noindex={noindex}
   nofollow={nofollow}
   openGraph={{
-    url: canonical,
-    title: ogTitle,
-    description: description,
-    type: ogType,
-    locale: ogLocale,
-    images: image
-      ? [
-          {
-            url: image.toString(),
-            alt: ogTitle,
-          },
-        ]
-      : undefined,
+    basic: {
+      title: ogTitle,
+      type: ogType,
+      image: image.toString(),
+    },
+    optional: {
+      description: description,
+      locale: ogLocale,
+    },
   }}
 />
 
