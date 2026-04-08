@@ -31,6 +31,8 @@ const {
   ogType = 'website',
   ogLocale = `${SITE.language}_DE`,
 
+  structuredData,
+
   dontUseTitleTemplate = false,
 } = Astro.props
 
@@ -44,6 +46,17 @@ const image = new URL(
         ).src,
         Astro.site,
       )
+
+const organizationSchema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: String(Astro.site),
+}
+
+if (SITE.defaultImage) {
+  organizationSchema.logo = new URL(SITE.defaultImage.src, Astro.site).toString()
+}
 ---
 
 <meta charset="UTF-8" />
@@ -57,6 +70,7 @@ const image = new URL(
   nofollow={nofollow}
   openGraph={{
     basic: {
+      url: canonical,
       title: ogTitle,
       type: ogType,
       image: image.toString(),
@@ -65,8 +79,21 @@ const image = new URL(
       description: description,
       locale: ogLocale,
     },
+    image: {
+      alt: ogTitle,
+    },
+  }}
+  twitter={{
+    card: 'summary_large_image',
+    title: title,
+    description: description,
+    image: image.toString(),
+    imageAlt: ogTitle,
   }}
 />
+
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+{structuredData && <script type="application/ld+json" set:html={structuredData} />}
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="mask-icon" href="/favicon.svg" color="#FFFFFF" />

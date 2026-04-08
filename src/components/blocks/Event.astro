@@ -9,16 +9,98 @@ import { Icon } from 'astro-icon/components'
 import type { CollectionEntry } from 'astro:content'
 import HeroSection from './HeroSection.astro'
 import NewsletterCard from './NewsletterCard.astro'
-import { EventCustomFieldType } from '@/types'
+import { EventCustomFieldType, type MetaSEO } from '@/types'
 import { CAPTCHA_SITE_KEY } from 'astro:env/client'
+import Layout from '@/layouts/Layout.astro'
+import { SITE } from '@/config.mjs'
+import { formatDatetime } from '@/utils'
+import { formatInTimeZone, fromZonedTime } from 'date-fns-tz'
 
 interface Props<T extends 'events' | 'fitness'> {
   type: T
   entry: CollectionEntry<T>
   newsletterDescription: string
+  newsletterText: string
+  schemaType: 'Event' | 'SportsEvent'
 }
 
-const { type, entry, newsletterDescription } = Astro.props as Props<'events' | 'fitness'>
+const { type, entry, newsletterDescription, newsletterText, schemaType } = Astro.props as Props<'events' | 'fitness'>
+
+function extractPrice(priceString: string): string {
+  const match = priceString.match(/[\d,]+/)
+  return match ? match[0].replace(',', '.') : '0'
+}
+
+function convertToISODuration(duration: string): string | undefined {
+  const match = duration.match(/(\d+)\s*Min/)
+  return match ? `PT${match[1]}M` : undefined
+}
+
+export function formatEventDate(value: string): string {
+  try {
+    return formatDatetime(value)
+  } catch {
+    // If parsing fails, it's a custom date format.
+    // In this case, we just return the original string.
+    return value
+  }
+}
+
+export function convertToLocalISO(value: string): string {
+  try {
+    // Remove UTC timezone indicators to treat as Berlin local time
+    const stripped = value.replace(/Z$/, '').replace(/\+00:00$/, '')
+    const utcDate = fromZonedTime(stripped, 'Europe/Berlin')
+    return formatInTimeZone(utcDate, 'Europe/Berlin', "yyyy-MM-dd'T'HH:mm:ssXXX")
+  } catch {
+    // If parsing fails, it's a custom date format.
+    // In this case, we just return the original string.
+    return value
+  }
+}
+
+const structuredData = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': schemaType,
+  name: entry.data.name,
+  description: entry.data.shortDescription,
+  image: new URL(entry.data.image.src, Astro.site).toString(),
+  startDate: convertToLocalISO(entry.data.dates[0]),
+  ...(entry.data.dates.length > 1 && { endDate: convertToLocalISO(entry.data.dates[entry.data.dates.length - 1]) }),
+  duration: convertToISODuration(entry.data.duration),
+  location: {
+    '@type': 'Place',
+    name: entry.data.location,
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: SITE.name,
+    url: String(Astro.site),
+  },
+  offers: [
+    {
+      '@type': 'Offer',
+      name: 'Mitglieder',
+      price: extractPrice(entry.data.priceMember),
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+    },
+    {
+      '@type': 'Offer',
+      name: 'Nicht-Mitglieder',
+      price: extractPrice(entry.data.priceNonMember),
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+    },
+  ],
+})
+
+const meta: MetaSEO = {
+  title: entry.data.name,
+  description: entry.data.shortDescription,
+  image: entry.data.image,
+  structuredData,
+}
 
 const details: {
   id: string
@@ -38,7 +120,7 @@ details.push({
   id: 'dates',
   icon: 'mdi:calendar-month-outline',
   title: entry.data.dates.length === 1 ? 'Termin' : 'Termine',
-  label: entry.data.dates.length === 1 ? entry.data.dates[0] : `${entry.data.dates.length} Termine`,
+  label: entry.data.dates.length === 1 ? formatEventDate(entry.data.dates[0]) : `${entry.data.dates.length} Termine`,
 })
 
 details.push({
@@ -96,7 +178,7 @@ details.push({
 })
 ---
 
-<>
+<Layout {meta}>
   <div data-identifier={entry.id}>
     <HeroSection
       title={entry.data.name}
@@ -168,7 +250,7 @@ details.push({
                       .map((date) => (
                         <li class="mt-6 flex items-center">
                           <Icon class="mr-2 size-6 sm:size-8" name="mdi:calendar-blank" />
-                          <span>{date}</span>
+                          <span>{formatEventDate(date)}</span>
                         </li>
                       ))}
                   </ul>
@@ -176,7 +258,7 @@ details.push({
                     {entry.data.dates.slice(Math.ceil(entry.data.dates.length / 2)).map((date) => (
                       <li class="mt-6 flex items-center">
                         <Icon class="mr-2 size-6 sm:size-8" name="mdi:calendar-blank" />
-                        <span>{date}</span>
+                        <span>{formatEventDate(date)}</span>
                       </li>
                     ))}
                   </ul>
@@ -252,9 +334,7 @@ details.push({
                   <Checkbox
                     id="newsletter"
                     name="newsletter"
-                    title={type === 'events'
-                      ? 'Ich möchte über zukünftige Events per E-Mail informiert werden'
-                      : 'Ich möchte über zukünftige Kurse per E-Mail informiert werden'}
+                    title={newsletterText}
                   />
                   <Checkbox
                     id="consent"
@@ -285,7 +365,7 @@ details.push({
     </div>
   </div>
   <Notification />
-</>
+</Layout>
 
 <script>
   import { bookEvent, loadEventAvailability } from '@/api/events'

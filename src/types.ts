@@ -13,6 +13,8 @@ export interface MetaSEO {
   ogTitle?: string
   ogType?: string
   ogLocale?: string
+
+  structuredData?: string
 }
 
 export interface ThemedImage {

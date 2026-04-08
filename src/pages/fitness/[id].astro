@@ -1,7 +1,5 @@
 ---
 import Event from '@/components/blocks/Event.astro'
-import Layout from '@/layouts/Layout.astro'
-import type { MetaSEO } from '@/types'
 import type { GetStaticPaths } from 'astro'
 import { getCollection, type CollectionEntry } from 'astro:content'
 
@@ -23,18 +21,12 @@ interface Props {
 }
 
 const { entry } = Astro.props
-
-const meta: MetaSEO = {
-  title: entry.data.name,
-  description: entry.data.shortDescription,
-  image: entry.data.image,
-}
 ---
 
-<Layout {meta}>
-  <Event
-    type="fitness"
-    entry={entry}
-    newsletterDescription="Erhalte automatisch eine E-Mail sobald neue Kursangebote online sind."
-  />
-</Layout>
+<Event
+  type="fitness"
+  entry={entry}
+  newsletterDescription="Erhalte automatisch eine E-Mail sobald neue Kursangebote online sind."
+  newsletterText="Ich möchte über zukünftige Kurse per E-Mail informiert werden"
+  schemaType="SportsEvent"
+/>
