@@ -178,7 +178,7 @@ export interface Booking {
   street: string
   city: string
   email: string
-  phone?: string
+  phone: string
   member?: boolean
   updates?: boolean
   comments?: string

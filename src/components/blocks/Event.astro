@@ -293,7 +293,7 @@ details.push({
                   <Input id="street" name="street" label="Straße & Hausnummer" />
                   <Input id="plz" name="plz" label="PLZ & Wohnort" />
                   <Input id="email" name="email" label="E-Mail" type="email" />
-                  <Input id="phone" name="phone" label="Telefon (optional)" type="tel" />
+                  <Input id="phone" name="phone" label="Telefon" type="tel" />
                   {
                     entry.data.customFields.map((field, idx) => {
                       const isLast =
@@ -459,6 +459,7 @@ details.push({
       })
 
       const phone = form.querySelector<HTMLInputElement>('#phone')
+      clearCustomValidityOnInput(phone)
 
       const comment = form.querySelector<HTMLTextAreaElement>('#comment')
 
@@ -492,6 +493,10 @@ details.push({
           return false
         }
 
+        if (!checkRequiredInput(phone, 'Bitte gib eine gültige Telefonnummer ein.')) {
+          return false
+        }
+
         for (const customField of customFields) {
           if (!checkRequiredInput(customField, `Bitte fülle das Feld ${customField.name} aus.`)) {
             return false
@@ -517,7 +522,7 @@ details.push({
               street: street!.value,
               city: plz!.value,
               email: email!.value,
-              phone: phone?.value,
+              phone: phone!.value,
               member: member?.checked,
               updates: newsletter?.checked,
               comments: comment?.value,
