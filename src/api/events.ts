@@ -7,7 +7,7 @@ import {
   type RawEvent,
   type RawEventCounter,
 } from '@/types'
-import { formatCurrency, formatDatetime, formatDuration } from '@/utils'
+import { formatCurrency, formatDuration } from '@/utils'
 import { BACKEND_API, PREVIEW } from 'astro:env/client'
 
 export async function loadEvents(type: EventType): Promise<Event[]> {
@@ -19,13 +19,6 @@ export async function loadEvents(type: EventType): Promise<Event[]> {
       .sort((a, b) => a.sort_index - b.sort_index)
       .filter((event) => event.type === type)
       .map<Promise<Event>>(async (event) => {
-        let dates: string[]
-        if (event.custom_date) {
-          dates = [event.custom_date]
-        } else {
-          dates = event.dates.map((date) => formatDatetime(date))
-        }
-
         return {
           id: event.id,
           name: event.name,
@@ -33,7 +26,9 @@ export async function loadEvents(type: EventType): Promise<Event[]> {
           shortDescription: event.short_description,
           description: event.description,
           location: event.location,
-          dates,
+          dates: event.custom_date
+            ? [event.custom_date]
+            : event.dates,
           duration: durationPrefix(event.type) + formatDuration(event.duration_in_minutes),
           priceMember: formatCurrency(event.price_member),
           priceNonMember: formatCurrency(event.price_non_member),

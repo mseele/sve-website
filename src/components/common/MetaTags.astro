@@ -1,7 +1,7 @@
 ---
 import { SITE } from '@/config.mjs'
 import { type MetaSEO } from '@/types'
-import { AstroSeo } from '@astrolib/seo'
+import { SEO } from 'astro-seo'
 import { getImage } from 'astro:assets'
 
 export interface Props extends MetaSEO {
@@ -31,12 +31,12 @@ const {
   ogType = 'website',
   ogLocale = `${SITE.language}_DE`,
 
+  structuredData,
+
   dontUseTitleTemplate = false,
 } = Astro.props
 
-const image =
-  imageMetadata !== undefined
-    ? new URL(
+const image = new URL(
         (
           await getImage({
             src: imageMetadata,
@@ -46,35 +46,54 @@ const image =
         ).src,
         Astro.site,
       )
-    : null
+
+const organizationSchema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.name,
+  url: String(Astro.site),
+}
+
+if (SITE.defaultImage) {
+  organizationSchema.logo = new URL(SITE.defaultImage.src, Astro.site).toString()
+}
 ---
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-{/* TODO: move back to AstroSeo when https://github.com/onwidget/astrolib/issues/19 is fixed */}
-<link data-pagefind-meta="url[href]" rel="canonical" href={canonical} />
-<AstroSeo
+<SEO
   title={title}
   titleTemplate={dontUseTitleTemplate ? '%s' : `%s — ${SITE.name}`}
   description={description}
+  canonical={canonical}
   noindex={noindex}
   nofollow={nofollow}
   openGraph={{
-    url: canonical,
-    title: ogTitle,
+    basic: {
+      url: canonical,
+      title: ogTitle,
+      type: ogType,
+      image: image.toString(),
+    },
+    optional: {
+      description: description,
+      locale: ogLocale,
+    },
+    image: {
+      alt: ogTitle,
+    },
+  }}
+  twitter={{
+    card: 'summary_large_image',
+    title: title,
     description: description,
-    type: ogType,
-    locale: ogLocale,
-    images: image
-      ? [
-          {
-            url: image.toString(),
-            alt: ogTitle,
-          },
-        ]
-      : undefined,
+    image: image.toString(),
+    imageAlt: ogTitle,
   }}
 />
+
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+{structuredData && <script type="application/ld+json" set:html={structuredData} />}
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="mask-icon" href="/favicon.svg" color="#FFFFFF" />

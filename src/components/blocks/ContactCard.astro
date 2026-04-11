@@ -211,18 +211,25 @@ function contactMethodDescription(methodType: ContactMethodType) {
             return consent.reportValidity()
           }
 
+          if (!recipient || !name || !email || !message) return
+
           let success = false
           const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]')
           try {
             if (button) button.disabled = true
             const token = (await captcha?.executeAsync())?.response
+            const recipientVal = recipient.value
+            const nameVal = name.value
+            const emailVal = email.value
+            const phoneVal = phone?.value
+            const messageVal = message.value
             success = (
               await sendContactMessage(
-                recipient?.value!,
-                name?.value!,
-                email?.value!,
-                phone?.value!,
-                message?.value!,
+                recipientVal,
+                nameVal,
+                emailVal,
+                phoneVal,
+                messageVal,
                 token,
               )
             ).ok

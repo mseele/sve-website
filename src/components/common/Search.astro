@@ -9,7 +9,7 @@ const bundlePath = `${import.meta.env.BASE_URL}pagefind/`
   <div class="fixed inset-0 flex h-screen w-screen items-center justify-center p-3 md:p-[10vh]">
     <div
       id="content"
-      class="h-full w-full overflow-hidden rounded-lg bg-white text-gray-900 opacity-95 md:max-w-[700px] md:rounded-3xl md:border md:border-gray-100 md:shadow-2xl md:shadow-gray-600/10 dark:bg-gray-800 dark:text-white dark:opacity-90 md:dark:border-gray-700 md:dark:shadow-none"
+      class="h-full w-full overflow-hidden rounded-lg bg-white text-gray-900 opacity-95 md:max-w-175 md:rounded-3xl md:border md:border-gray-100 md:shadow-2xl md:shadow-gray-600/10 dark:bg-gray-800 dark:text-white dark:opacity-90 md:dark:border-gray-700 md:dark:shadow-none"
     >
       <div
         class="pagefind-init h-full overflow-hidden"
@@ -100,7 +100,7 @@ const bundlePath = `${import.meta.env.BASE_URL}pagefind/`
   }
 
   .pagefind-ui__search-input {
-    @apply w-full border-b border-black/5 !p-4 !pr-16 focus:outline-hidden dark:border-white/10 dark:bg-gray-800/90;
+    @apply w-full border-b border-black/5 p-4! pr-16! focus:outline-hidden dark:border-white/10 dark:bg-gray-800/90;
   }
 
   .pagefind-ui__search-clear {

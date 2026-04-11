@@ -257,5 +257,5 @@ const links = [
   }
 
   document.addEventListener('DOMContentLoaded', checkVisibility, { once: true })
-  parent && new ResizeObserver(checkVisibility).observe(parent)
+  if (parent) new ResizeObserver(checkVisibility).observe(parent)
 </script>
