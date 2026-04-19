@@ -25,6 +25,7 @@ const teamOptions = teams.map((team) => ({
 
 interface ContactCardInput {
   identifier: string
+  contactType: string
   description: string
   contactList: ContactInfo[]
   recipientTitle?: string
@@ -34,6 +35,7 @@ interface ContactCardInput {
 const contactCardInputs: ContactCardInput[] = [
   {
     identifier: 'schutzbeauftragte',
+    contactType: 'Schutzbeauftragte',
     description: 'Vertraulicher Ansprechpartner für Fragen zum Kinderschutz und zur Prävention sexualisierter Gewalt im Verein. Ihre Anliegen werden streng vertraulich behandelt.',
     contactList: [
       {
@@ -51,6 +53,7 @@ const contactCardInputs: ContactCardInput[] = [
   },
   {
     identifier: 'kunstrasen',
+    contactType: 'Kunstrasenbuchung',
     description:
       'Über diese Kanäle kannst Du eine Buchungsanfrage für unseren Kunstrasenplatz starten. Unser Ansprechpartner setzt sich dann direkt mit Dir in Verbindung und klärt alle Details.',
     contactList: [
@@ -79,6 +82,7 @@ const contactCardInputs: ContactCardInput[] = [
   },
   {
     identifier: 'fitnessEvents',
+    contactType: 'Fitness und Events',
     description:
       'Du hast Fragen rund um unsere Fitnesskurse oder zu den Events? Dann nutze diese Kanäle um direkt mit den zuständigen Personen bei uns im Verein Kontakt aufzunehmen. Wir bearbeiten Dein Anliegen schnellstmöglich.',
     contactList: [
@@ -111,6 +115,7 @@ const contactCardInputs: ContactCardInput[] = [
   },
   {
     identifier: 'restaurant',
+    contactType: 'Restaurant',
     description:
       'Du hast Fragen oder Buchungswünsche rund um unsere Gaststätte Auszeit? Über diese Kanäle kannst Du direkt mit unseren Pächtern in Kontakt treten. Wir freuen uns, Dich in der "Auszeit" begrüßen zu dürfen.',
     contactList: [
@@ -134,6 +139,7 @@ const contactCardInputs: ContactCardInput[] = [
   },
   {
     identifier: 'partnerschaft',
+    contactType: 'Partnerschaft',
     description:
       'Du hast Fragen rund ums Sponsoring oder zur Bandenwerbung? Dann nutze diese Kanäle um direkt mit den zuständigen Personen bei uns im Verein Kontakt aufzunehmen. Wir bearbeiten Dein Anliegen schnellstmöglich.',
     contactList: [
@@ -186,6 +192,7 @@ const contactCardInputs: ContactCardInput[] = [
   },
   {
     identifier: 'other',
+    contactType: 'Allgemein',
     description:
       'Bei allen anderen Themen und Anliegen in Zusammenhang mit unserem Verein kannst Du diese Kanäle nutzen. Wir bearbeiten Dein Anliegen schnellstmöglich.',
     contactList: [
@@ -232,6 +239,7 @@ contactCardInputs.push(
     }
     return {
       identifier: team.id,
+      contactType: team.name,
       description:
         'Unsere Ansprechpartner stehen Dir für sämtliche Fragen rund um unseren Spielbetrieb zur Verfügung. Du erreichst Sie über folgende Kanäle oder kannst Ihnen ganz einfach eine Nachricht per Kontaktformular senden.',
       contactList: contactList,
@@ -291,7 +299,7 @@ contactCardInputs.forEach((input) => {
     if (phoneMethod || emailMethod) {
       contactPoints.push({
         '@type': 'ContactPoint',
-        contactType: input.identifier.charAt(0).toUpperCase() + input.identifier.slice(1),
+        contactType: input.contactType,
         ...(phoneMethod && { telephone: phoneMethod.url.replace('tel:', '') }),
         ...(emailMethod && { email: emailMethod.url.replace('mailto:', '') }),
       })
