@@ -8,12 +8,29 @@ import type { MetaSEO } from '@/types'
 import { Content as Details } from '@/markdown/kunstrasen.md'
 import Prose from '@/components/common/Prose.astro'
 import Button from '@/components/controls/Button.astro'
+import { postalAddress, organizationRef, schemaJsonLd, schemaImage, mainTelephone } from '@/schema'
+import type { SportsActivityLocation } from 'schema-dts'
+
+const description =
+  'Miete den modernen Kunstrasenplatz des SV Eutingen für dein Training oder deine Spiele. Das Spielfeld mit LED-Flutlicht bietet ideale Bedingungen bei jedem Wetter. Sieh dir unsere Tarife an und buche noch heute deinen Termin für ungestörtes Sportvergnügen.'
+
+const locationSchema: SportsActivityLocation = {
+  '@type': 'SportsActivityLocation',
+  name: 'Kunstrasenplatz SV Eutingen',
+  description,
+  image: await schemaImage(imageLight, Astro.site!),
+  address: postalAddress,
+  telephone: mainTelephone,
+  parentOrganization: organizationRef(Astro.site!),
+} satisfies SportsActivityLocation
+
+const structuredData = schemaJsonLd(locationSchema)
 
 const meta: MetaSEO = {
   title: 'Kunstrasen',
-  description:
-    'Miete den modernen Kunstrasenplatz des SV Eutingen für dein Training oder deine Spiele. Das Spielfeld mit LED-Flutlicht bietet ideale Bedingungen bei jedem Wetter. Sieh dir unsere Tarife an und buche noch heute deinen Termin für ungestörtes Sportvergnügen.',
+  description,
   image: imageLight,
+  structuredData,
 }
 ---
 

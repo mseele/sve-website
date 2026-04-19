@@ -9,12 +9,27 @@ import Layout from '@/layouts/Layout.astro'
 import { Content as Leitbild } from '@/markdown/leitbild.md'
 import type { MetaSEO } from '@/types'
 import { Icon } from 'astro-icon/components'
+import type { AboutPage } from 'schema-dts'
+import { organizationRef, schemaJsonLd, pageUrl } from '@/schema'
+
+const description =
+  'Entdecke das umfassende Vereinsangebot des SV Eutingen! Erfahre mehr über unsere Geschichte, sportlichen Aktivitäten und unser Engagement für die Gemeinschaft. Werde Teil unserer lebendigen Vereinsfamilie und genieße Sport, Spaß und Zusammenhalt.'
+
+const aboutPageSchema: AboutPage = {
+  '@type': 'AboutPage',
+  name: 'Vereinsporträt',
+  description,
+  about: organizationRef(Astro.site!),
+  url: pageUrl(Astro.url.pathname, Astro.site!),
+} satisfies AboutPage
+
+const structuredData = schemaJsonLd(aboutPageSchema)
 
 const meta: MetaSEO = {
   title: 'Vereinsporträt',
-  description:
-    'Entdecke das umfassende Vereinsangebot des SV Eutingen! Erfahre mehr über unsere Geschichte, sportlichen Aktivitäten und unser Engagement für die Gemeinschaft. Werde Teil unserer lebendigen Vereinsfamilie und genieße Sport, Spaß und Zusammenhalt.',
+  description,
   image: imageLight,
+  structuredData,
 }
 ---
 

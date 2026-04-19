@@ -11,6 +11,8 @@ import { Icon } from 'astro-icon/components'
 import Button from '@/components/controls/Button.astro'
 import { Picture } from 'astro:assets'
 import { SITE } from '@/config.mjs'
+import type { Country, Service } from 'schema-dts'
+import { organizationRef, schemaJsonLd } from '@/schema'
 import { type Sponsor } from '@/types'
 import { getCollection } from 'astro:content'
 
@@ -27,21 +29,41 @@ const sponsors = (await getCollection('sponsoring'))
     }
     return 0
   })
-  .reduce((acc: Record<string, Sponsor[]>, item) => {
+  .reduce((acc: Record<string, Sponsor[]>, item: Sponsor) => {
     const key = item.groupBy.toUpperCase().charAt(0)
     if (!acc[key]) {
       acc[key] = []
     }
     acc[key].push(item)
     return acc
-  }, {})
+  }, {} as Record<string, Sponsor[]>)
+
+const description =
+  'Entdecke die Kraft der Partnerschaft: Unterstütze das sportliche und kulturelle Angebot des SV Eutingen durch eine Sponsoringpartnerschaft. Investiere in die Aus- und Weiterbildung unserer engagierten Jugendtrainer oder platziere deine Werbung auf den Trikots und Equipment eines Teams. Werde Teil unseres Netzwerks und gestalte aktiv mit! Jetzt Interesse an einer Partnerschaft zeigen.'
+
+const areaServed: Country = {
+  '@type': 'Country',
+  name: 'DE',
+}
+
+const serviceSchema = {
+  '@type': 'Service',
+  name: 'Sponsoring',
+  description,
+  provider: organizationRef(Astro.site!),
+  areaServed: areaServed,
+  serviceType: 'Sponsorship',
+} satisfies Service
+
+const structuredData = schemaJsonLd(serviceSchema)
 
 const meta: MetaSEO = {
   title: 'Partnerschaft',
-  description:
-    'Entdecke die Kraft der Partnerschaft: Unterstütze das sportliche und kulturelle Angebot des SV Eutingen durch eine Sponsoringpartnerschaft. Investiere in die Aus- und Weiterbildung unserer engagierten Jugendtrainer oder platziere deine Werbung auf den Trikots und Equipment eines Teams. Werde Teil unseres Netzwerks und gestalte aktiv mit! Jetzt Interesse an einer Partnerschaft zeigen.',
+  description,
   image: imageLight,
+  structuredData,
 }
+
 ---
 
 <Layout {meta}>

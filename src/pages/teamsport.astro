@@ -5,6 +5,8 @@ import Layout from '@/layouts/Layout.astro'
 import type { MetaSEO, Team } from '@/types'
 import image from '@/assets/meta/teamsport.jpg'
 import { getCollection } from 'astro:content'
+import type { SportsTeam } from 'schema-dts'
+import { organizationRef, organizationId, schemaJsonLd } from '@/schema'
 
 const groupedTeams: {
   id: string
@@ -30,11 +32,42 @@ for (const team of (await getCollection('teams'))
   group.teams.push(team)
 }
 
+const description =
+  'Entdecken Sie Fußball beim SV Eutingen! Attraktive Fußballangebote für alle Altersgruppen zu günstigen Konditionen. Fußball ist unser Herzstück und Integrationsmotor. Probieren Sie auch Volleyball!'
+
+const memberCategories: SportsTeam[] = groupedTeams.map((group) => {
+  const sportName = group.name.toLowerCase().includes('volleyball') ? 'Volleyball' : 'Football'
+  const teamMembers: SportsTeam[] = group.teams.map((team) => ({
+    '@type': 'SportsTeam',
+    name: team.name,
+    sport: sportName,
+  }))
+  return {
+    '@type': 'SportsTeam',
+    name: group.name,
+    sport: sportName,
+    description: group.description,
+    member: teamMembers,
+  }
+})
+
+const sportsTeamSchema = {
+  '@id': organizationId(Astro.site!),
+  '@type': 'SportsTeam',
+  name: 'SV Eutingen Teamsport',
+  sport: ['Football', 'Volleyball'],
+  description,
+  subOrganization: organizationRef(Astro.site!),
+  member: memberCategories,
+} satisfies SportsTeam
+
+const structuredData = schemaJsonLd(sportsTeamSchema)
+
 const meta: MetaSEO = {
   title: 'Teamsport',
-  description:
-    'Entdecken Sie Fußball beim SV Eutingen! Attraktive Fußballangebote für alle Altersgruppen zu günstigen Konditionen. Fußball ist unser Herzstück und Integrationsmotor. Probieren Sie auch Volleyball!',
+  description,
   image,
+  structuredData,
 }
 ---
 

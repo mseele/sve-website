@@ -6,6 +6,8 @@ import noAppointmentsLight from '@/assets/pages/termine-light.png'
 import noAppointmentsDark from '@/assets/pages/termine-dark.png'
 import Layout from '@/layouts/Layout.astro'
 import type { MetaSEO } from '@/types'
+import type { Event as SchemaEvent, CollectionPage } from 'schema-dts'
+import { schemaJsonLd, pageUrl } from '@/schema'
 import Faqs from '@/components/common/Faqs.astro'
 import Nothing from '@/components/blocks/Nothing.astro'
 
@@ -22,10 +24,34 @@ const faqs = [
   },
 ]
 
+const description =
+  'Entdecke die wichtigsten Termine des SV Eutingen! Auf unserer Seite findest du alle Veranstaltungen und Events auf einen Blick.'
+
+const events: SchemaEvent[] = appointments
+  .filter(apt => apt.startDateISO)
+  .map(apt => ({
+    '@type': 'Event',
+    name: apt.title,
+    startDate: apt.startDateISO,
+    ...(apt.endDateISO && { endDate: apt.endDateISO }),
+    ...(apt.description && { description: apt.description }),
+    ...(apt.link && { url: apt.link }),
+  }))
+
+const collectionSchema = {
+  '@type': 'CollectionPage',
+  name: 'Termine SV Eutingen',
+  description,
+  url: pageUrl(Astro.url.pathname, Astro.site!),
+  ...(events.length > 0 && { mainEntity: events }),
+} satisfies CollectionPage
+
+const structuredData = schemaJsonLd(collectionSchema)
+
 const meta: MetaSEO = {
   title: 'Termine',
-  description:
-    'Entdecke die wichtigsten Termine des SV Eutingen! Auf unserer Seite findest du alle Veranstaltungen und Events auf einen Blick.',
+  description,
+  structuredData,
 }
 ---
 

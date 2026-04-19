@@ -7,12 +7,23 @@ function bySortIndex(a: RawAppointment, b: RawAppointment) {
 }
 
 function toAppointment(appointment: RawAppointment): Appointment {
+  let startISO: string | undefined
+  let endISO: string | undefined
+  if (appointment.start_date_time) {
+    startISO = appointment.start_date_time
+    endISO = appointment.end_date_time
+  } else if (appointment.start_date) {
+    startISO = appointment.start_date
+    endISO = appointment.end_date
+  }
   return {
     date: formatDatespan(appointment),
     time: formatTimespan(appointment),
     title: appointment.title || '-',
     description: appointment.description,
     link: appointment.link,
+    startDateISO: startISO,
+    endDateISO: endISO,
   }
 }
 

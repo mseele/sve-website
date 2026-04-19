@@ -6,7 +6,7 @@ Adding schema.org structured data (JSON-LD) to all pages improves SEO visibility
 
 - Add `Restaurant` schema to Gaststätte page with opening hours
 - Add `SportsActivityLocation` schema to Kunstrasen rental page
-- Add `SportsTeam` schema to Teamsport page 
+- Add `SportsTeam` schema to Teamsport page
 - Add `AboutPage` schema to Historie and Vereinsportrait pages
 - Add `WebSite` schema to Homepage with search action
 - Add `Event` collection schema to Termine/Appointments page
@@ -15,6 +15,7 @@ Adding schema.org structured data (JSON-LD) to all pages improves SEO visibility
 ## Capabilities
 
 ### New Capabilities
+
 - `page-schema`: Schema markup system for different page types
 - `restaurant-schema`: Restaurant/gaststätte schema with opening hours
 - `sports-location-schema`: Sports facility rental schema
@@ -31,6 +32,7 @@ Adding schema.org structured data (JSON-LD) to all pages improves SEO visibility
 ## Impact
 
 **Files Modified:**
+
 - `src/pages/gaststaette.astro`
 - `src/pages/kunstrasen.astro`
 - `src/pages/teamsport.astro`

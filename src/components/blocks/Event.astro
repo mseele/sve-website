@@ -1,5 +1,5 @@
 ---
-import Input from '@/components//controls/Input.astro'
+import Input from '@/components/controls/Input.astro'
 import Container from '@/components/common/Container.astro'
 import Notification from '@/components/common/Notification.astro'
 import Checkbox from '@/components/controls/Checkbox.astro'
@@ -7,12 +7,13 @@ import SubmitButton from '@/components/controls/SubmitButton.astro'
 import Textarea from '@/components/controls/Textarea.astro'
 import { Icon } from 'astro-icon/components'
 import type { CollectionEntry } from 'astro:content'
+import type { Place, Offer, Event as SchemaEvent } from 'schema-dts'
 import HeroSection from './HeroSection.astro'
 import NewsletterCard from './NewsletterCard.astro'
 import { EventCustomFieldType, type MetaSEO } from '@/types'
 import { CAPTCHA_SITE_KEY } from 'astro:env/client'
 import Layout from '@/layouts/Layout.astro'
-import { SITE } from '@/config.mjs'
+import { organizationRef, postalAddress, schemaJsonLd } from '@/schema'
 import { formatDatetime } from '@/utils'
 import { formatInTimeZone, fromZonedTime } from 'date-fns-tz'
 
@@ -31,9 +32,14 @@ function extractPrice(priceString: string): string {
   return match ? match[0].replace(',', '.') : '0'
 }
 
-function convertToISODuration(duration: string): string | undefined {
+function parseDurationMinutes(duration: string): number | undefined {
   const match = duration.match(/(\d+)\s*Min/)
-  return match ? `PT${match[1]}M` : undefined
+  return match ? parseInt(match[1], 10) : undefined
+}
+
+function convertToISODuration(duration: string): string | undefined {
+  const minutes = parseDurationMinutes(duration)
+  return minutes ? `PT${minutes}M` : undefined
 }
 
 export function formatEventDate(value: string): string {
@@ -59,41 +65,59 @@ export function convertToLocalISO(value: string): string {
   }
 }
 
-const structuredData = JSON.stringify({
-  '@context': 'https://schema.org',
+const eventLocation: Place = {
+  '@type': 'Place',
+  name: entry.data.location,
+  address: postalAddress,
+}
+
+const eventOffers: Offer[] = [
+  {
+    '@type': 'Offer',
+    name: 'Mitglieder',
+    price: extractPrice(entry.data.priceMember),
+    priceCurrency: 'EUR',
+    availability: 'https://schema.org/InStock',
+  },
+  {
+    '@type': 'Offer',
+    name: 'Nicht-Mitglieder',
+    price: extractPrice(entry.data.priceNonMember),
+    priceCurrency: 'EUR',
+    availability: 'https://schema.org/InStock',
+  },
+]
+
+const schemaStartDate = convertToLocalISO(entry.data.dates[0])
+
+let schemaEndDate: string | undefined
+if (entry.data.dates.length > 1) {
+  schemaEndDate = convertToLocalISO(entry.data.dates[entry.data.dates.length - 1])
+} else {
+  const durationMinutes = parseDurationMinutes(entry.data.duration)
+  if (durationMinutes) {
+    try {
+      const start = fromZonedTime(entry.data.dates[0].replace(/Z$/, '').replace(/\+00:00$/, ''), 'Europe/Berlin')
+      const end = new Date(start.getTime() + durationMinutes * 60000)
+      schemaEndDate = formatInTimeZone(end, 'Europe/Berlin', "yyyy-MM-dd'T'HH:mm:ssXXX")
+    } catch {
+      schemaEndDate = undefined
+    }
+  }
+}
+
+const structuredData = schemaJsonLd({
   '@type': schemaType,
   name: entry.data.name,
   description: entry.data.shortDescription,
   image: new URL(entry.data.image.src, Astro.site).toString(),
-  startDate: convertToLocalISO(entry.data.dates[0]),
-  ...(entry.data.dates.length > 1 && { endDate: convertToLocalISO(entry.data.dates[entry.data.dates.length - 1]) }),
+  startDate: schemaStartDate,
+  ...(schemaEndDate && { endDate: schemaEndDate }),
   duration: convertToISODuration(entry.data.duration),
-  location: {
-    '@type': 'Place',
-    name: entry.data.location,
-  },
-  organizer: {
-    '@type': 'Organization',
-    name: SITE.name,
-    url: String(Astro.site),
-  },
-  offers: [
-    {
-      '@type': 'Offer',
-      name: 'Mitglieder',
-      price: extractPrice(entry.data.priceMember),
-      priceCurrency: 'EUR',
-      availability: 'https://schema.org/InStock',
-    },
-    {
-      '@type': 'Offer',
-      name: 'Nicht-Mitglieder',
-      price: extractPrice(entry.data.priceNonMember),
-      priceCurrency: 'EUR',
-      availability: 'https://schema.org/InStock',
-    },
-  ],
-})
+  location: eventLocation,
+  organizer: organizationRef(Astro.site!),
+  offers: eventOffers,
+} satisfies SchemaEvent)
 
 const meta: MetaSEO = {
   title: entry.data.name,

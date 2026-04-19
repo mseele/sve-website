@@ -5,11 +5,28 @@ import Container from '@/components/common/Container.astro'
 import Notification from '@/components/common/Notification.astro'
 import Layout from '@/layouts/Layout.astro'
 import type { MetaSEO } from '@/types'
+import type { EmailMessage, SubscribeAction } from 'schema-dts'
+import { organizationRef, schemaJsonLd } from '@/schema'
+
+const resultMessage: EmailMessage = {
+  '@type': 'EmailMessage',
+}
+
+const subscribeActionSchema = {
+  '@type': 'SubscribeAction',
+  name: 'Newsletter abonnieren',
+  target: `${Astro.site}/newsletter`,
+  agent: organizationRef(Astro.site!),
+  result: resultMessage,
+} satisfies SubscribeAction
+
+const structuredData = schemaJsonLd(subscribeActionSchema)
 
 const meta: MetaSEO = {
   title: 'Newsletter',
   description:
     'Bleib auf dem Laufenden mit unseren Newslettern zu Teamsport, Events und Fitness. Erhalte interessante, gesammelte Informationen über das SVE-Angebot – garantiert ohne Spam. Jetzt abonnieren!',
+  structuredData,
 }
 ---
 

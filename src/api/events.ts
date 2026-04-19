@@ -26,9 +26,7 @@ export async function loadEvents(type: EventType): Promise<Event[]> {
           shortDescription: event.short_description,
           description: event.description,
           location: event.location,
-          dates: event.custom_date
-            ? [event.custom_date]
-            : event.dates,
+          dates: event.custom_date ? [event.custom_date] : event.dates,
           duration: durationPrefix(event.type) + formatDuration(event.duration_in_minutes),
           priceMember: formatCurrency(event.price_member),
           priceNonMember: formatCurrency(event.price_non_member),

@@ -9,13 +9,32 @@ import HeroSection from '@/components/blocks/HeroSection.astro'
 import Container from '@/components/common/Container.astro'
 import Layout from '@/layouts/Layout.astro'
 import type { MetaSEO } from '@/types'
+import { postalAddress, schemaJsonLd, schemaImage } from '@/schema'
 import ImageGallery from '@/components/common/ImageGallery.astro'
+import type { Restaurant } from 'schema-dts'
+
+const description =
+  'Entdecken Sie die einladende Atmosphäre der Gaststätte "Auszeit" beim SV Eutingen. Genießen Sie kulinarische Vielfalt in geselliger Runde für Jung und Alt. Erfahren Sie mehr über unser abwechslungsreiches Angebot und erleben Sie gemütliche Stunden voller Genuss und Geselligkeit.'
+
+const restaurantSchema = {
+  '@type': 'Restaurant',
+  name: 'Auszeit',
+  description: description,
+  url: 'https://www.auszeit-eutingen.de/',
+  image: await schemaImage(imageLight, Astro.site!),
+  address: postalAddress,
+  telephone: '+49 176 568 133 61',
+  servesCuisine: ['Deutsche Küche'],
+  priceRange: '$$',
+  menu: 'https://www.auszeit-eutingen.de/',
+  acceptsReservations: 'https://www.auszeit-eutingen.de/',
+} satisfies Restaurant
 
 const meta: MetaSEO = {
   title: 'Gaststätte',
-  description:
-    'Entdecken Sie die einladende Atmosphäre der Gaststätte "Auszeit" beim SV Eutingen. Genießen Sie kulinarische Vielfalt in geselliger Runde für Jung und Alt. Erfahren Sie mehr über unser abwechslungsreiches Angebot und erleben Sie gemütliche Stunden voller Genuss und Geselligkeit.',
+  description: description,
   image: imageLight,
+  structuredData: schemaJsonLd(restaurantSchema),
 }
 ---
 
