@@ -10,7 +10,9 @@ import ContactCard, {
   type ContactInfo,
   type ContactMethod,
 } from '@/components/blocks/ContactCard.astro'
+import { organizationRef, schemaJsonLd, pageUrl } from '@/schema'
 import { getCollection } from 'astro:content'
+import type { ContactPoint, ContactPage } from 'schema-dts'
 
 const teams = (await getCollection('teams'))
   .map((item) => item.data)
@@ -276,10 +278,44 @@ function fullyQualifiedPersonName(person: Person) {
   return `${person.position} ${person.name}`
 }
 
+const description =
+  'Kontaktiere den SV Eutingen direkt über unser Formular. Wähle die passende Kategorie aus, und wir leiten dein Anliegen schnell an die richtige Person weiter. Wir freuen uns, von dir zu hören!'
+
+const contactPoints: ContactPoint[] = []
+
+contactCardInputs.forEach((input) => {
+  input.contactList.forEach((contact) => {
+    const phoneMethod = contact.contactMethods.find(m => m.methodType === ContactMethodType.Phone)
+    const emailMethod = contact.contactMethods.find(m => m.methodType === ContactMethodType.Email)
+
+    if (phoneMethod || emailMethod) {
+      contactPoints.push({
+        '@type': 'ContactPoint',
+        contactType: input.identifier.charAt(0).toUpperCase() + input.identifier.slice(1),
+        ...(phoneMethod && { telephone: phoneMethod.url.replace('tel:', '') }),
+        ...(emailMethod && { email: emailMethod.url.replace('mailto:', '') }),
+      })
+    }
+  })
+})
+
+const contactPageSchema = {
+  '@type': 'ContactPage',
+  name: 'Kontakt SV Eutingen',
+  description,
+  url: pageUrl(Astro.url.pathname, Astro.site!),
+  mainEntity: {
+    ...organizationRef(Astro.site!),
+    contactPoint: contactPoints,
+  },
+} satisfies ContactPage
+
+const structuredData = schemaJsonLd(contactPageSchema)
+
 const meta: MetaSEO = {
   title: 'Kontakt',
-  description:
-    'Kontaktiere den SV Eutingen direkt über unser Formular. Wähle die passende Kategorie aus, und wir leiten dein Anliegen schnell an die richtige Person weiter. Wir freuen uns, von dir zu hören!',
+  description,
+  structuredData,
 }
 ---
 

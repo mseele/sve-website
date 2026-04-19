@@ -30,6 +30,8 @@ import News from '@/components/blocks/News.astro'
 import Container from '@/components/common/Container.astro'
 import { SITE } from '@/config.mjs'
 import Layout from '@/layouts/Layout.astro'
+import { postalAddress, organizationId, schemaJsonLd } from '@/schema'
+import type { SportsOrganization, Place, QuantitativeValue, OfferCatalog, ListItem, Offer } from 'schema-dts'
 import { YouTube } from '@astro-community/astro-embed-youtube'
 
 const joins = [
@@ -82,10 +84,58 @@ const joins = [
     link: '/mitgliedschaft',
   },
 ]
+
+
+const clubLocation: Place = {
+  '@type': 'Place',
+  name: 'Sportanlage SV Eutingen',
+  address: postalAddress,
+}
+
+const employees: QuantitativeValue = {
+  '@type': 'QuantitativeValue',
+  value: 500,
+}
+
+const offerItems: ListItem[] = joins.map((item, index) => {
+  const offer: Offer = {
+    '@type': 'Offer',
+    name: item.title,
+    description: item.description,
+    url: new URL(item.link, Astro.site).toString(),
+  }
+  const listItem: ListItem = {
+    '@type': 'ListItem',
+    position: index + 1,
+    item: offer,
+  }
+  return listItem
+})
+
+const offerCatalog: OfferCatalog = {
+  '@type': 'OfferCatalog',
+  name: 'Sportangebote',
+  itemListElement: offerItems,
+}
+
+const sportsOrganizationSchema = {
+  '@id': organizationId(Astro.site!),
+  '@type': 'SportsOrganization',
+  name: SITE.name,
+  url: String(Astro.site),
+  description: SITE.description,
+  foundingDate: '1947',
+  numberOfEmployees: employees,
+  sport: ['Fußball', 'Volleyball', 'Fitness'],
+  location: clubLocation,
+  hasOfferCatalog: offerCatalog,
+} satisfies SportsOrganization
+
 const meta = {
   title: SITE.title,
   description: SITE.description,
   dontUseTitleTemplate: true,
+  structuredData: schemaJsonLd(sportsOrganizationSchema),
 }
 ---
 

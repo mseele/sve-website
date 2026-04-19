@@ -38,11 +38,9 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.2",
+    "@types/bun": "latest",
     "oxfmt": "^0.44.0",
     "oxlint": "^1.59.0",
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
+    "schema-dts": "^2.0.0"
   }
 }

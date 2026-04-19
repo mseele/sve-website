@@ -12,6 +12,8 @@ import Notification from '@/components/common/Notification.astro'
 import SubmitButton from '@/components/controls/SubmitButton.astro'
 import SuccessVideo from '@/assets/videos/success-cup.webm'
 import { CAPTCHA_SITE_KEY } from 'astro:env/client'
+import type { Offer, Service } from 'schema-dts'
+import { organizationRef, schemaJsonLd } from '@/schema'
 
 const membershipTypes = [
   { value: 'Family', label: 'Familienbeitrag - beliebig viele Kinder (alle Sparten)', price: 160 },
@@ -22,10 +24,32 @@ const membershipTypes = [
   { value: 'Fitness', label: 'Sparte Fitness', price: 30 },
 ]
 
+const description =
+  'Engagiere dich beim SVE in Baden-Württemberg und werde Teil unserer starken Gemeinschaft. Ob als Helfer, Trainer oder Mitglied – deine Unterstützung ist entscheidend, um positive Veränderungen zu bewirken und unser Angebot zu verbessern.'
+
+const offers: Offer[] = membershipTypes.map((type) => ({
+  '@type': 'Offer',
+  name: type.label,
+  price: String(type.price),
+  priceCurrency: 'EUR',
+  availability: 'https://schema.org/InStock',
+}))
+
+const serviceSchema = {
+  '@type': 'Service',
+  name: 'Mitgliedschaft beim SV Eutingen',
+  provider: organizationRef(Astro.site!),
+  serviceType: 'Vereinsmitgliedschaft',
+  description,
+  offers: offers,
+} satisfies Service
+
+const structuredData = schemaJsonLd(serviceSchema)
+
 const meta: MetaSEO = {
   title: 'Mitglied werden',
-  description:
-    'Engagiere dich beim SVE in Baden-Württemberg und werde Teil unserer starken Gemeinschaft. Ob als Helfer, Trainer oder Mitglied – deine Unterstützung ist entscheidend, um positive Veränderungen zu bewirken und unser Angebot zu verbessern.',
+  description,
+  structuredData,
 }
 ---
 

@@ -86,6 +86,8 @@ export interface Appointment {
   title: string
   description?: string
   link?: string
+  startDateISO?: string
+  endDateISO?: string
 }
 
 // Raw item from the server

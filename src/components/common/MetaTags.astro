@@ -3,6 +3,7 @@ import { SITE } from '@/config.mjs'
 import { type MetaSEO } from '@/types'
 import { SEO } from 'astro-seo'
 import { getImage } from 'astro:assets'
+import { buildOrganization, schemaJsonLd } from '@/schema'
 
 export interface Props extends MetaSEO {
   dontUseTitleTemplate?: boolean
@@ -47,16 +48,7 @@ const image = new URL(
         Astro.site,
       )
 
-const organizationSchema: Record<string, unknown> = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: SITE.name,
-  url: String(Astro.site),
-}
-
-if (SITE.defaultImage) {
-  organizationSchema.logo = new URL(SITE.defaultImage.src, Astro.site).toString()
-}
+const organizationSchema = buildOrganization(Astro.site!)
 ---
 
 <meta charset="UTF-8" />
@@ -92,8 +84,8 @@ if (SITE.defaultImage) {
   }}
 />
 
-<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
-{structuredData && <script type="application/ld+json" set:html={structuredData} />}
+<script type="application/ld+json" is:inline set:html={schemaJsonLd(organizationSchema)} />
+{structuredData && <script type="application/ld+json" is:inline set:html={structuredData} />}
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="mask-icon" href="/favicon.svg" color="#FFFFFF" />
