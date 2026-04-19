@@ -30,7 +30,7 @@ import News from '@/components/blocks/News.astro'
 import Container from '@/components/common/Container.astro'
 import { SITE } from '@/config.mjs'
 import Layout from '@/layouts/Layout.astro'
-import { postalAddress, organizationId, schemaJsonLd } from '@/schema'
+import { postalAddress, organizationId, schemaGraphJsonLd, buildWebSite } from '@/schema'
 import type { SportsOrganization, Place, QuantitativeValue, OfferCatalog, ListItem, Offer } from 'schema-dts'
 import { YouTube } from '@astro-community/astro-embed-youtube'
 
@@ -135,7 +135,7 @@ const meta = {
   title: SITE.title,
   description: SITE.description,
   dontUseTitleTemplate: true,
-  structuredData: schemaJsonLd(sportsOrganizationSchema),
+  structuredData: schemaGraphJsonLd([buildWebSite(Astro.site!), sportsOrganizationSchema]),
 }
 ---
 

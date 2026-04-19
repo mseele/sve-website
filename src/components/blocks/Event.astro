@@ -13,7 +13,7 @@ import NewsletterCard from './NewsletterCard.astro'
 import { EventCustomFieldType, type MetaSEO } from '@/types'
 import { CAPTCHA_SITE_KEY } from 'astro:env/client'
 import Layout from '@/layouts/Layout.astro'
-import { organizationRef, schemaJsonLd } from '@/schema'
+import { organizationRef, postalAddress, schemaJsonLd } from '@/schema'
 import { formatDatetime } from '@/utils'
 import { formatInTimeZone, fromZonedTime } from 'date-fns-tz'
 
@@ -68,6 +68,7 @@ export function convertToLocalISO(value: string): string {
 const eventLocation: Place = {
   '@type': 'Place',
   name: entry.data.location,
+  address: postalAddress,
 }
 
 const eventOffers: Offer[] = [

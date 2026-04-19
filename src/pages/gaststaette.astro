@@ -20,12 +20,14 @@ const restaurantSchema = {
   '@type': 'Restaurant',
   name: 'Auszeit',
   description: description,
+  url: 'https://www.auszeit-eutingen.de/',
   image: await schemaImage(imageLight, Astro.site!),
   address: postalAddress,
   telephone: '+49 176 568 133 61',
   servesCuisine: ['Deutsche Küche'],
   priceRange: '$$',
   menu: 'https://www.auszeit-eutingen.de/',
+  acceptsReservations: 'https://www.auszeit-eutingen.de/',
 } satisfies Restaurant
 
 const meta: MetaSEO = {
