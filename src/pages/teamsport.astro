@@ -36,7 +36,6 @@ const description =
   'Entdecken Sie Fußball beim SV Eutingen! Attraktive Fußballangebote für alle Altersgruppen zu günstigen Konditionen. Fußball ist unser Herzstück und Integrationsmotor. Probieren Sie auch Volleyball!'
 
 const memberCategories: SportsTeam[] = groupedTeams.map((group) => {
-  const categoryTeamCount = group.teams.length
   const sportName = group.name.toLowerCase().includes('volleyball') ? 'Volleyball' : 'Football'
   const teamMembers: SportsTeam[] = group.teams.map((team) => ({
     '@type': 'SportsTeam',
@@ -48,8 +47,7 @@ const memberCategories: SportsTeam[] = groupedTeams.map((group) => {
     name: group.name,
     sport: sportName,
     description: group.description,
-    memberCount: categoryTeamCount,
-    subTeam: teamMembers,
+    member: teamMembers,
   }
 })
 
