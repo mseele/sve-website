@@ -28,8 +28,10 @@ function toAppointment(appointment: RawAppointment): Appointment {
 }
 
 export async function getAppointments(): Promise<Appointment[]> {
-  const appointments = await fetch(`${BACKEND_API}/calendar/appointments`).then(
-    (res): Promise<RawAppointment[]> => res.json(),
-  )
+  const response = await fetch(`${BACKEND_API}/calendar/appointments`)
+  if (!response.ok) {
+    throw new Error(`Failed to load appointments: ${response.status} ${response.statusText}`)
+  }
+  const appointments: RawAppointment[] = await response.json()
   return appointments.sort(bySortIndex).map(toAppointment)
 }
