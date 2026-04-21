@@ -11,9 +11,11 @@ import { formatCurrency, formatDuration } from '@/utils'
 import { BACKEND_API, PREVIEW } from 'astro:env/client'
 
 export async function loadEvents(type: EventType): Promise<Event[]> {
-  const events: RawEvent[] = await fetch(`${BACKEND_API}/events?type=${type}&beta=${PREVIEW}`).then(
-    (response) => response.json(),
-  )
+  const response = await fetch(`${BACKEND_API}/events?type=${type}&beta=${PREVIEW}`)
+  if (!response.ok) {
+    throw new Error(`Failed to load events: ${response.status} ${response.statusText}`)
+  }
+  const events: RawEvent[] = await response.json()
   return await Promise.all(
     events
       .sort((a, b) => a.sort_index - b.sort_index)
@@ -125,9 +127,11 @@ export async function loadEventsAvailability(
   }
 
   // Fetch availability from backend
-  const counters: RawEventCounter[] = await fetch(
-    `${BACKEND_API}/events/counter?beta=${PREVIEW}`,
-  ).then((response) => response.json())
+  const response = await fetch(`${BACKEND_API}/events/counter?beta=${PREVIEW}`)
+  if (!response.ok) {
+    throw new Error(`Failed to load event availability: ${response.status} ${response.statusText}`)
+  }
+  const counters: RawEventCounter[] = await response.json()
   processCounters(counters, callback)
 }
 
