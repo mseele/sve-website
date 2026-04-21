@@ -31,4 +31,9 @@
   :disabled {
     cursor: default;
   }
+
+  iframe {
+    border: none;
+    overflow: hidden;
+  }
 }
