@@ -60,24 +60,77 @@
 ### Tailwind v4 Theme Configuration
 
 ```css
-@theme {
-  --color-primary: oklch(0.47 0.18 15);
-  --color-primary-dark: oklch(0.38 0.18 15);
-  --color-primary-light: oklch(0.97 0.02 15);
-  --color-secondary: oklch(0.45 0.14 145);
-  --color-secondary-light: oklch(0.97 0.02 145);
-  --color-accent: oklch(0.75 0.1 85);
-  --color-background: oklch(0.98 0.002 60);
-  --color-surface: #ffffff;
-  --color-border: oklch(0.91 0.005 60);
-  --color-dark: oklch(0.18 0.01 60);
-  --color-darker: oklch(0.16 0.01 60);
+@import 'tailwindcss';
 
-  --font-sans: var(--font-dm-sans), 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif';
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Primary — Red (#C41E3A) */
+  --color-primary: #C41E3A;
+  --color-primary-dark: #991B3A;
+  --color-primary-light: #FFF1F2;
+
+  /* Secondary — Green (#047404) */
+  --color-secondary: #047404;
+
+  /* Accent — Gold from logo (#D7BD5E) */
+  --color-accent: #D7BD5E;
+
+  /* Neutrals — Warm stone palette */
+  --color-background: #FAFAF9;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #F5F5F4;
+  --color-border: #E7E5E4;
+  --color-border-subtle: #F5F5F4;
+
+  /* Semantic text colors */
+  --color-text-primary: #1C1917;
+  --color-text-secondary: #57534E;
+  --color-text-muted: #A8A29E;
+
+  /* Kept for compatibility */
+  --color-dark: #1C1917;
+  --color-darker: #292524;
+
+  --font-sans:
+    var(--font-dm-sans), 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont',
+    '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif';
+  --font-serif: 'ui-serif', 'Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif';
+  --font-mono:
+    'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"',
+    '"Courier New"', 'monospace';
 }
 ```
 
-> **Note:** The dark mode overrides for primary, secondary, accent, background, surface, border, and text colors are applied via custom Tailwind classes using `@custom-variant dark (&:where(.dark, .dark *))`. See `global.css` for full implementation.
+### Dark Mode Override Strategy
+
+In Tailwind v4 with `@custom-variant dark`, dark mode colors are overridden using utility classes in the HTML or component templates. Since Tailwind v4 doesn't support per-color dark variants in `@theme`, we use a combination approach:
+
+**1. Global overrides in `global.css`:**
+
+```css
+@layer base {
+  .dark {
+    --color-primary: #EF4444;
+    --color-primary-dark: #DC2626;
+    --color-primary-light: #450A0A;
+    --color-secondary: #22C55E;
+    --color-accent: #E8D68C;
+    --color-background: #1C1917;
+    --color-surface: #292524;
+    --color-surface-elevated: #44403C;
+    --color-border: #44403C;
+    --color-border-subtle: #57534E;
+    --color-text-primary: #FAFAF9;
+    --color-text-secondary: #A8A29E;
+    --color-text-muted: #78716C;
+  }
+}
+```
+
+**2. Component-level dark mode:** Use `dark:` prefix with Tailwind's built-in color classes for cases not covered by CSS custom properties (e.g., `dark:bg-stone-800`, `dark:text-white`, `dark:border-stone-700`).
+
+When both approaches could apply, prefer the CSS custom property (e.g., `bg-primary`) over the explicit Tailwind class (e.g., `bg-red-600`) — this ensures dark mode automatically picks up the override.
 
 ---
 
@@ -805,32 +858,117 @@ Same structure as Fitness but with red accent and no green gradient.
 
 ## 9. Mobile Menu Redesign
 
-Replace current checkbox-based mobile menu with a proper JS-driven approach:
+Replace current checkbox-based mobile menu with a proper JS-driven approach.
 
-**Trigger button:** Hamburger icon (three lines), transforms to X on open.
+### 9.1 Implementation
 
-**Overlay:**
-```
-fixed inset-0 z-50
-bg-white/95 dark:bg-stone-900/95 backdrop-blur-xl
-opacity-0 pointer-events-none
-transition-opacity duration-300
+**New approach:** Remove the `<input type="checkbox" id="toggle_nav">` hack. Add `data-menu-open` attribute to `<html>` element to toggle state.
+
+**Trigger button:** Hamburger icon (three `<div>` lines), transforms to X via JS:
+
+```typescript
+// In AppHeader's <script>
+const toggle = document.querySelector('[data-menu-toggle]')
+const html = document.documentElement
+
+toggle?.addEventListener('click', () => {
+  html.toggleAttribute('data-menu-open')
+})
+
+// Close on link click or backdrop click
+document.querySelectorAll('[data-menu-link]').forEach((link) => {
+  link.addEventListener('click', () => {
+    html.removeAttribute('data-menu-open')
+  })
+})
 ```
 
-When open:
-```
-opacity-100 pointer-events-auto
+**CSS in `<style>`:**
+
+```css
+@reference "../../styles/global.css";
+
+/* Prevent scroll when menu is open */
+[data-menu-open] {
+  overflow: hidden;
+}
+
+/* Hamburger → X animation */
+[data-menu-toggle] #line1 {
+  @apply transition duration-300;
+}
+[data-menu-toggle] #line2 {
+  @apply transition duration-300;
+}
+
+[data-menu-open] [data-menu-toggle] #line1 {
+  @apply translate-y-[6px] rotate-45;
+}
+[data-menu-open] [data-menu-toggle] #line2 {
+  @apply -translate-y-2 -rotate-45;
+}
+
+/* Overlay */
+[data-menu-overlay] {
+  @apply fixed inset-0 z-40 bg-white/95 dark:bg-stone-900/95 backdrop-blur-xl
+         opacity-0 pointer-events-none transition-opacity duration-300;
+}
+[data-menu-open] [data-menu-overlay] {
+  @apply opacity-100 pointer-events-auto;
+}
+
+/* Menu panel */
+[data-menu-panel] {
+  @apply invisible absolute top-full left-0 z-50 w-full
+         translate-y-1 scale-95 opacity-0
+         transition-all duration-300;
+}
+[data-menu-open] [data-menu-panel] {
+  @apply visible scale-100 opacity-100;
+}
 ```
 
-**Menu panel:**
-```
-flex flex-col h-full
-px-6 py-8
+### 9.2 Menu HTML Structure
+
+```astro
+<nav class="fixed top-0 inset-x-0 z-50 ...">
+  <Container>
+    <div class="flex items-center justify-between h-16 md:h-20">
+      <!-- Logo -->
+      <a href="/" ...>...</a>
+
+      <!-- Desktop links (hidden on mobile) -->
+      <div class="hidden lg:flex ...">...</div>
+
+      <!-- Actions: search, theme, hamburger -->
+      <div class="flex items-center gap-2">
+        <!-- Search -->
+        <!-- Theme toggle -->
+        <!-- Mobile menu toggle -->
+        <button data-menu-toggle aria-label="Menu" class="lg:hidden p-3">
+          <div id="line1" class="h-0.5 w-5 rounded bg-stone-900 dark:bg-stone-100"></div>
+          <div id="line2" class="mt-1.5 h-0.5 w-5 rounded bg-stone-900 dark:bg-stone-100"></div>
+        </button>
+      </div>
+    </div>
+  </Container>
+
+  <!-- Overlay -->
+  <div data-menu-overlay></div>
+
+  <!-- Menu panel -->
+  <div data-menu-panel class="...">
+    <Container>
+      <!-- Nav links -->
+      <!-- Theme toggle + social links -->
+    </Container>
+  </div>
+</nav>
 ```
 
-**Animation:** Menu content slides in from right or fades in. Close button in top-right.
+### 9.3 Desktop Nav
 
-**Body scroll:** `overflow-hidden` when menu is open.
+Same links visible on `lg:` breakpoint. Fixed position, backdrop-blur background. Active link gets `text-primary border-b-2 border-primary`.
 
 ---
 
