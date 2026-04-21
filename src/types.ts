@@ -192,3 +192,26 @@ export interface BookingResponse {
   message: string
   counter: RawEventCounter[]
 }
+
+export interface FamilyMember {
+  first_name: string
+  last_name: string
+  birthday: string
+}
+
+export interface MembershipApplication {
+  newsletter?: boolean
+  membership_type?: string
+  gender?: string
+  first_name?: string
+  last_name?: string
+  street?: string
+  zipcode?: string
+  city?: string
+  email?: string
+  phone?: string
+  birthday?: string
+  iban?: string
+  account_owner?: string
+  family_members?: FamilyMember[]
+}

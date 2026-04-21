@@ -1,3 +1,4 @@
+import type { MembershipApplication } from '@/types'
 import { BACKEND_API } from 'astro:env/client'
 
 export async function sendContactMessage(
@@ -52,7 +53,7 @@ function newsTypes(general: boolean, fitness: boolean, events: boolean) {
   return types
 }
 
-export async function membershipApplication(payload: any, token: string): Promise<boolean> {
+export async function membershipApplication(payload: MembershipApplication, token: string): Promise<boolean> {
   const response = await fetch(`${BACKEND_API}/membership/application`, {
     method: 'POST',
     body: JSON.stringify({ ...payload, token }),
