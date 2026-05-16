@@ -1,0 +1,18 @@
+---
+import Checkbox from './Checkbox.astro'
+
+interface Props {
+  id: string
+  name: string
+  class?: string
+}
+
+const { id, name, class: className } = Astro.props
+---
+
+<Checkbox
+  id={id}
+  name={name}
+  title="Ich ermächtige den SV Eutingen 1947 e.V., den Rechnungsbetrag per SEPA-Lastschrift von meinem Konto einzuziehen."
+  class={className}
+/>

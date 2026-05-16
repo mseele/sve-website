@@ -21,41 +21,41 @@
 
 ### Light Mode
 
-| Token | Hex | Tailwind | Usage |
-|-------|-----|----------|-------|
-| `primary` | `#C41E3A` | `bg-primary` | CTAs, active nav links, accent headings, links |
-| `primary-dark` | `#991B3A` | custom | Hover for primary buttons |
-| `primary-light` | `#FFF1F2` | `bg-primary-light` | Subtle primary backgrounds, badges |
-| `secondary` | `#047404` | `bg-secondary` | Success states, fitness sections, confirmations |
-| `secondary-light` | `#F0FDF4` | custom | Subtle secondary backgrounds |
-| `accent` | `#D7BD5E` | `bg-accent` | Gold from logo — badges, highlights, special callouts |
-| `background` | `#FAFAF9` | `bg-background` | Page background |
-| `surface` | `#FFFFFF` | `bg-surface` | Cards, elevated elements |
-| `surface-elevated` | `#F5F5F4` | custom | Hover states, secondary cards, code blocks |
-| `text-primary` | `#1C1917` | `text-primary-text` | Headings, main text |
-| `text-secondary` | `#57534E` | `text-secondary-text` | Body text, descriptions |
-| `text-muted` | `#A8A29E` | `text-muted-text` | Captions, labels, metadata |
-| `border` | `#E7E5E4` | `border-border` | Card borders, dividers |
-| `border-subtle` | `#F5F5F4` | custom | Subtle separators |
+| Token              | Hex       | Tailwind              | Usage                                                 |
+| ------------------ | --------- | --------------------- | ----------------------------------------------------- |
+| `primary`          | `#C41E3A` | `bg-primary`          | CTAs, active nav links, accent headings, links        |
+| `primary-dark`     | `#991B3A` | custom                | Hover for primary buttons                             |
+| `primary-light`    | `#FFF1F2` | `bg-primary-light`    | Subtle primary backgrounds, badges                    |
+| `secondary`        | `#047404` | `bg-secondary`        | Success states, fitness sections, confirmations       |
+| `secondary-light`  | `#F0FDF4` | custom                | Subtle secondary backgrounds                          |
+| `accent`           | `#D7BD5E` | `bg-accent`           | Gold from logo — badges, highlights, special callouts |
+| `background`       | `#FAFAF9` | `bg-background`       | Page background                                       |
+| `surface`          | `#FFFFFF` | `bg-surface`          | Cards, elevated elements                              |
+| `surface-elevated` | `#F5F5F4` | custom                | Hover states, secondary cards, code blocks            |
+| `text-primary`     | `#1C1917` | `text-primary-text`   | Headings, main text                                   |
+| `text-secondary`   | `#57534E` | `text-secondary-text` | Body text, descriptions                               |
+| `text-muted`       | `#A8A29E` | `text-muted-text`     | Captions, labels, metadata                            |
+| `border`           | `#E7E5E4` | `border-border`       | Card borders, dividers                                |
+| `border-subtle`    | `#F5F5F4` | custom                | Subtle separators                                     |
 
 ### Dark Mode
 
-| Token | Hex | Tailwind | Usage |
-|-------|-----|----------|-------|
-| `primary` | `#EF4444` | `dark:bg-primary` | CTAs, active states — brighter for contrast |
-| `primary-dark` | `#DC2626` | custom | Hover for primary buttons |
-| `primary-light` | `#450A0A` | custom | Subtle primary backgrounds |
-| `secondary` | `#22C55E` | `dark:bg-secondary` | Success states |
-| `secondary-light` | `#052E16` | custom | Subtle secondary backgrounds |
-| `accent` | `#E8D68C` | custom | Gold accents |
-| `background` | `#1C1917` | `dark:bg-background` | Page background |
-| `surface` | `#292524` | `dark:bg-surface` | Cards, elevated elements |
-| `surface-elevated` | `#44403C` | custom | Hover states, secondary cards |
-| `text-primary` | `#FAFAF9` | custom | Headings, main text |
-| `text-secondary` | `#A8A29E` | custom | Body text, descriptions |
-| `text-muted` | `#78716C` | custom | Captions, labels, metadata |
-| `border` | `#44403C` | custom | Card borders, dividers |
-| `border-subtle` | `#57534E` | custom | Subtle separators |
+| Token              | Hex       | Tailwind             | Usage                                       |
+| ------------------ | --------- | -------------------- | ------------------------------------------- |
+| `primary`          | `#EF4444` | `dark:bg-primary`    | CTAs, active states — brighter for contrast |
+| `primary-dark`     | `#DC2626` | custom               | Hover for primary buttons                   |
+| `primary-light`    | `#450A0A` | custom               | Subtle primary backgrounds                  |
+| `secondary`        | `#22C55E` | `dark:bg-secondary`  | Success states                              |
+| `secondary-light`  | `#052E16` | custom               | Subtle secondary backgrounds                |
+| `accent`           | `#E8D68C` | custom               | Gold accents                                |
+| `background`       | `#1C1917` | `dark:bg-background` | Page background                             |
+| `surface`          | `#292524` | `dark:bg-surface`    | Cards, elevated elements                    |
+| `surface-elevated` | `#44403C` | custom               | Hover states, secondary cards               |
+| `text-primary`     | `#FAFAF9` | custom               | Headings, main text                         |
+| `text-secondary`   | `#A8A29E` | custom               | Body text, descriptions                     |
+| `text-muted`       | `#78716C` | custom               | Captions, labels, metadata                  |
+| `border`           | `#44403C` | custom               | Card borders, dividers                      |
+| `border-subtle`    | `#57534E` | custom               | Subtle separators                           |
 
 ### Tailwind v4 Theme Configuration
 
@@ -66,30 +66,30 @@
 
 @theme {
   /* Primary — Red (#C41E3A) */
-  --color-primary: #C41E3A;
-  --color-primary-dark: #991B3A;
-  --color-primary-light: #FFF1F2;
+  --color-primary: #c41e3a;
+  --color-primary-dark: #991b3a;
+  --color-primary-light: #fff1f2;
 
   /* Secondary — Green (#047404) */
   --color-secondary: #047404;
 
   /* Accent — Gold from logo (#D7BD5E) */
-  --color-accent: #D7BD5E;
+  --color-accent: #d7bd5e;
 
   /* Neutrals — Warm stone palette */
-  --color-background: #FAFAF9;
-  --color-surface: #FFFFFF;
-  --color-surface-elevated: #F5F5F4;
-  --color-border: #E7E5E4;
-  --color-border-subtle: #F5F5F4;
+  --color-background: #fafaf9;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f5f5f4;
+  --color-border: #e7e5e4;
+  --color-border-subtle: #f5f5f4;
 
   /* Semantic text colors */
-  --color-text-primary: #1C1917;
-  --color-text-secondary: #57534E;
-  --color-text-muted: #A8A29E;
+  --color-text-primary: #1c1917;
+  --color-text-secondary: #57534e;
+  --color-text-muted: #a8a29e;
 
   /* Kept for compatibility */
-  --color-dark: #1C1917;
+  --color-dark: #1c1917;
   --color-darker: #292524;
 
   --font-sans:
@@ -111,19 +111,19 @@ In Tailwind v4 with `@custom-variant dark`, dark mode colors are overridden usin
 ```css
 @layer base {
   .dark {
-    --color-primary: #EF4444;
-    --color-primary-dark: #DC2626;
-    --color-primary-light: #450A0A;
-    --color-secondary: #22C55E;
-    --color-accent: #E8D68C;
-    --color-background: #1C1917;
+    --color-primary: #ef4444;
+    --color-primary-dark: #dc2626;
+    --color-primary-light: #450a0a;
+    --color-secondary: #22c55e;
+    --color-accent: #e8d68c;
+    --color-background: #1c1917;
     --color-surface: #292524;
-    --color-surface-elevated: #44403C;
-    --color-border: #44403C;
-    --color-border-subtle: #57534E;
-    --color-text-primary: #FAFAF9;
-    --color-text-secondary: #A8A29E;
-    --color-text-muted: #78716C;
+    --color-surface-elevated: #44403c;
+    --color-border: #44403c;
+    --color-border-subtle: #57534e;
+    --color-text-primary: #fafaf9;
+    --color-text-secondary: #a8a29e;
+    --color-text-muted: #78716c;
   }
 }
 ```
@@ -140,17 +140,17 @@ When both approaches could apply, prefer the CSS custom property (e.g., `bg-prim
 
 ### Scale
 
-| Level | Mobile | Tablet (md) | Desktop (lg) | Weight | Tracking | Line Height | Class |
-|-------|--------|------------|-------------|--------|----------|-------------|-------|
-| Display | 40px | 56px | 72px | 700 | -0.02em | 1.1 | `text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight` |
-| H1 | 32px | 40px | 48px | 700 | -0.01em | 1.2 | `text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight` |
-| H2 | 28px | 36px | 40px | 600 | -0.01em | 1.2 | `text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight` |
-| H3 | 22px | 24px | 28px | 600 | 0 | 1.3 | `text-xl md:text-2xl lg:text-3xl font-semibold` |
-| H4 | 18px | 18px | 20px | 600 | 0 | 1.4 | `text-lg lg:text-xl font-semibold` |
-| Body | 16px | 16px | 17px | 400 | 0 | 1.7 | `text-base lg:text-[17px] leading-relaxed` |
-| Body Large | 18px | 18px | 20px | 400 | 0 | 1.6 | `text-lg lg:text-xl leading-relaxed` |
-| Label | 12px | 12px | 13px | 600 | 0.05em | 1.4 | `text-xs md:text-[13px] font-semibold uppercase tracking-widest` |
-| Caption | 12px | 12px | 13px | 500 | 0 | 1.5 | `text-xs md:text-[13px] font-medium` |
+| Level      | Mobile | Tablet (md) | Desktop (lg) | Weight | Tracking | Line Height | Class                                                            |
+| ---------- | ------ | ----------- | ------------ | ------ | -------- | ----------- | ---------------------------------------------------------------- |
+| Display    | 40px   | 56px        | 72px         | 700    | -0.02em  | 1.1         | `text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight`      |
+| H1         | 32px   | 40px        | 48px         | 700    | -0.01em  | 1.2         | `text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight`      |
+| H2         | 28px   | 36px        | 40px         | 600    | -0.01em  | 1.2         | `text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight`  |
+| H3         | 22px   | 24px        | 28px         | 600    | 0        | 1.3         | `text-xl md:text-2xl lg:text-3xl font-semibold`                  |
+| H4         | 18px   | 18px        | 20px         | 600    | 0        | 1.4         | `text-lg lg:text-xl font-semibold`                               |
+| Body       | 16px   | 16px        | 17px         | 400    | 0        | 1.7         | `text-base lg:text-[17px] leading-relaxed`                       |
+| Body Large | 18px   | 18px        | 20px         | 400    | 0        | 1.6         | `text-lg lg:text-xl leading-relaxed`                             |
+| Label      | 12px   | 12px        | 13px         | 600    | 0.05em   | 1.4         | `text-xs md:text-[13px] font-semibold uppercase tracking-widest` |
+| Caption    | 12px   | 12px        | 13px         | 500    | 0        | 1.5         | `text-xs md:text-[13px] font-medium`                             |
 
 ### Section Header Pattern
 
@@ -213,12 +213,12 @@ gap-6 md:gap-8 lg:gap-10
 
 ## 5. Border Radius Scale
 
-| Name | Value | Usage |
-|------|-------|-------|
-| `rounded-xl` | 12px | Buttons, inputs, small cards |
-| `rounded-2xl` | 16px | Cards, content containers, image containers |
-| `rounded-3xl` | 24px | Hero sections, modals, major sections |
-| `rounded-full` | 9999px | Pills, badges, avatars, circular buttons |
+| Name           | Value  | Usage                                       |
+| -------------- | ------ | ------------------------------------------- |
+| `rounded-xl`   | 12px   | Buttons, inputs, small cards                |
+| `rounded-2xl`  | 16px   | Cards, content containers, image containers |
+| `rounded-3xl`  | 24px   | Hero sections, modals, major sections       |
+| `rounded-full` | 9999px | Pills, badges, avatars, circular buttons    |
 
 ---
 
@@ -236,11 +236,13 @@ transition-all duration-300
 ```
 
 **Layout:**
+
 - Logo (icon + "SV Eutingen" text) — left
 - Top links (Teamsport, Events, Fitness) — center, hidden on mobile
 - Actions (search icon, theme toggle, hamburger) — right
 
 **Mobile menu:**
+
 - Full overlay with `bg-white/95 dark:bg-stone-900/95 backdrop-blur-xl`
 - Animated slide-down entrance
 - All 7 nav links listed vertically
@@ -263,6 +265,7 @@ relative overflow-hidden
 ```
 
 **Text column:**
+
 ```
 pt-32 md:pt-40 lg:pt-48 pb-16 md:pb-24
 ```
@@ -273,10 +276,12 @@ pt-32 md:pt-40 lg:pt-48 pb-16 md:pb-24
 - CTAs: flex row, gap-4, primary + secondary buttons
 
 **Image column:**
+
 - `rounded-2xl overflow-hidden` on image container
 - No `scale-105` hover on hero images (too distracting at this size)
 
 **Background accent:** Subtle gradient from primary-light, visible on mobile only:
+
 ```
 bg-gradient-to-b from-primary-light via-transparent to-transparent
 opacity-50 md:hidden
@@ -296,11 +301,13 @@ hover:-translate-y-1 hover:shadow-lg hover:shadow-stone-200/50 dark:hover:shadow
 ```
 
 **Card content padding:**
+
 ```
 p-5 md:p-6
 ```
 
 **Card image:**
+
 - Container: `overflow-hidden rounded-t-2xl` (if image is at top)
 - Image: `w-full h-48 md:h-56 object-cover transition-transform duration-500 group-hover:scale-105`
 - Mobile image height: `h-48` (192px)
@@ -432,15 +439,16 @@ py-12 md:py-16
 
 Pages that use the HeaderSection component or similar sections need consistent background treatments:
 
-| Variant | Light Mode | Dark Mode | Usage |
-|---------|-----------|-----------|-------|
-| Default | `bg-background` | `bg-background` | Most pages |
-| Alternate | `bg-stone-50` | `bg-surface` | Alternating sections |
-| Accent | `bg-primary-light` | `bg-primary-light` | Highlighted sections, CTAs |
+| Variant   | Light Mode         | Dark Mode          | Usage                      |
+| --------- | ------------------ | ------------------ | -------------------------- |
+| Default   | `bg-background`    | `bg-background`    | Most pages                 |
+| Alternate | `bg-stone-50`      | `bg-surface`       | Alternating sections       |
+| Accent    | `bg-primary-light` | `bg-primary-light` | Highlighted sections, CTAs |
 
 **Gradient backgrounds (decorative, header sections only):**
 
 Replace the current blur-blob approach with subtle gradient accents:
+
 - Red variant: `bg-gradient-to-b from-primary-light/50 via-background to-background`
 - Green variant: `bg-gradient-to-b from-secondary-light/50 via-background to-background`
 - Neutral variant: `bg-gradient-to-b from-stone-100 via-background to-background`
@@ -472,11 +480,13 @@ border-y border-stone-200 dark:border-stone-700
 ```
 
 Question button:
+
 ```
 flex w-full items-center justify-between py-5 text-left text-stone-900 dark:text-white
 ```
 
 Answer container:
+
 ```
 overflow-hidden transition-all duration-300
 max-h-0 (closed) / max-h-[scrollHeight]px (open)
@@ -492,11 +502,11 @@ rounded-full px-3 py-1
 text-xs md:text-sm font-medium
 ```
 
-| Variant | Light | Dark |
-|---------|-------|------|
-| Primary | `bg-primary-light text-primary-dark` | `bg-primary/20 text-primary` |
-| Success | `bg-secondary-light text-secondary-dark` | `bg-secondary/20 text-secondary` |
-| Outlined | `border border-stone-300 text-stone-700 dark:border-stone-600 dark:text-stone-300` | |
+| Variant  | Light                                                                              | Dark                             |
+| -------- | ---------------------------------------------------------------------------------- | -------------------------------- |
+| Primary  | `bg-primary-light text-primary-dark`                                               | `bg-primary/20 text-primary`     |
+| Success  | `bg-secondary-light text-secondary-dark`                                           | `bg-secondary/20 text-secondary` |
+| Outlined | `border border-stone-300 text-stone-700 dark:border-stone-600 dark:text-stone-300` |                                  |
 
 ### 6.11 Image Gallery / Carousel
 
@@ -530,6 +540,7 @@ div.flex.items-start gap-4 py-4 border-b border-stone-100 dark:border-stone-700 
 Icon box: `flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-stone-200 dark:border-stone-700`
 
 Text content: `min-w-0`
+
 - Title: `text-lg font-semibold text-stone-700 dark:text-white`
 - Description: `text-stone-500 dark:text-stone-400`
 
@@ -554,7 +565,7 @@ export function initScrollAnimations() {
         }
       })
     },
-    { threshold: 0.2 }
+    { threshold: 0.2 },
   )
 
   document.querySelectorAll('[data-animate]').forEach((el) => {
@@ -569,7 +580,9 @@ export function initScrollAnimations() {
 [data-animate] {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 500ms ease-out, transform 500ms ease-out;
+  transition:
+    opacity 500ms ease-out,
+    transform 500ms ease-out;
 }
 
 [data-animate].animate-visible {
@@ -577,7 +590,7 @@ export function initScrollAnimations() {
   transform: translateY(0);
 }
 
-[data-animate="fade"] {
+[data-animate='fade'] {
   transform: none;
 }
 
@@ -593,22 +606,28 @@ export function initScrollAnimations() {
 **Stagger children:** Parent with `data-animate-stagger` applies increasing delays to children:
 
 ```css
-[data-animate-stagger] > :nth-child(1) { transition-delay: 0ms; }
-[data-animate-stagger] > :nth-child(2) { transition-delay: 100ms; }
-[data-animate-stagger] > :nth-child(3) { transition-delay: 200ms; }
+[data-animate-stagger] > :nth-child(1) {
+  transition-delay: 0ms;
+}
+[data-animate-stagger] > :nth-child(2) {
+  transition-delay: 100ms;
+}
+[data-animate-stagger] > :nth-child(3) {
+  transition-delay: 200ms;
+}
 /* up to 6 */
 ```
 
 ### 7.2 Hover Animations
 
-| Element | Property | From | To | Duration | Easing |
-|---------|----------|------|----|----------|--------|
-| Cards | `transform`, `box-shadow` | default, no shadow | `translateY(-4px)`, `shadow-lg` | 300ms | ease-out |
-| Cards image | `transform` | `scale(1)` | `scale(1.05)` | 500ms | ease-out |
-| Buttons (primary) | `transform`, `background` | default | `scale(1.02)`, darker bg | 200ms | ease-out |
-| Buttons (secondary) | `border-color`, `color` | default | `border-primary`, `text-primary` | 200ms | ease-out |
-| Links | `color` | `text-stone-600` | `text-primary` | 200ms | ease-out |
-| Nav links | `color` | `text-stone-600` | `text-primary` | 200ms | ease-out |
+| Element             | Property                  | From               | To                               | Duration | Easing   |
+| ------------------- | ------------------------- | ------------------ | -------------------------------- | -------- | -------- |
+| Cards               | `transform`, `box-shadow` | default, no shadow | `translateY(-4px)`, `shadow-lg`  | 300ms    | ease-out |
+| Cards image         | `transform`               | `scale(1)`         | `scale(1.05)`                    | 500ms    | ease-out |
+| Buttons (primary)   | `transform`, `background` | default            | `scale(1.02)`, darker bg         | 200ms    | ease-out |
+| Buttons (secondary) | `border-color`, `color`   | default            | `border-primary`, `text-primary` | 200ms    | ease-out |
+| Links               | `color`                   | `text-stone-600`   | `text-primary`                   | 200ms    | ease-out |
+| Nav links           | `color`                   | `text-stone-600`   | `text-primary`                   | 200ms    | ease-out |
 
 ### 7.3 Page Load Animation
 
@@ -618,8 +637,12 @@ body {
 }
 
 @keyframes fadeInBody {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 ```
 
@@ -1042,62 +1065,62 @@ Most components need updates. Key changes:
 
 ## 12. Files to Modify
 
-| File | Change Type |
-|------|------------|
-| `src/styles/global.css` | Major update — new colors, animations, utilities |
-| `src/layouts/Layout.astro` | Minor — update body classes |
-| `src/components/common/AppHeader.astro` | Rewrite — fixed nav, new mobile menu |
-| `src/components/common/AppFooter.astro` | Restyle — new colors, spacing |
-| `src/components/common/Container.astro` | Change `max-w-6xl` → `max-w-7xl` |
-| `src/components/common/Card.astro` | Restyle — new borders, hover |
-| `src/components/common/Faq.astro` | Restyle — new colors, animation |
-| `src/components/common/Faqs.astro` | Restyle — spacing, typography |
-| `src/components/common/ImageCarousel.astro` | Restyle — new navigation, dots |
-| `src/components/common/ImageDialog.astro` | Restyle — new padding, close button |
-| `src/components/common/ImageGallery.astro` | No change (wrapper) |
-| `src/components/common/MetaTags.astro` | No change |
-| `src/components/common/Notification.astro` | Restyle — new card style |
-| `src/components/common/Prose.astro` | Update typography classes |
-| `src/components/common/Search.astro` | Restyle — new colors, borders |
-| `src/components/blocks/HeroSection.astro` | Rewrite — new layout |
-| `src/components/blocks/Blog.astro` | Restyle — spacing, grid |
-| `src/components/blocks/BlogItem.astro` | Restyle — new card design |
-| `src/components/blocks/News.astro` | Restyle — new layout |
-| `src/components/blocks/NewsItem.astro` | Restyle — new card design |
-| `src/components/blocks/HeaderSection.astro` | Restyle — add label, new gradient |
-| `src/components/blocks/Event.astro` | Restyle — update all sections |
-| `src/components/blocks/Teams.astro` | Restyle — new card grid |
-| `src/components/blocks/ContactCard.astro` | Restyle — new card layout |
-| `src/components/blocks/NewsletterCard.astro` | Restyle — new form styling |
-| `src/components/blocks/PreBooking.astro` | Restyle — update loading state |
-| `src/components/blocks/HistoryItem.astro` | Restyle — update card |
-| `src/components/blocks/Nothing.astro` | Restyle — update layout |
-| `src/components/controls/Button.astro` | Rewrite — pill buttons |
-| `src/components/controls/Input.astro` | Restyle — new form styling |
-| `src/components/controls/Select.astro` | Restyle — new form styling |
-| `src/components/controls/Textarea.astro` | Restyle — new form styling |
-| `src/components/controls/Checkbox.astro` | Restyle — new checkbox colors |
-| `src/components/controls/Switch.astro` | Restyle — new switch colors |
-| `src/components/controls/SubmitButton.astro` | Restyle — update spinner |
-| `src/components/controls/ButtonSwitch.astro` | Restyle — update toggle |
-| `src/pages/index.astro` | Restyle — new section structure |
-| `src/pages/teamsport.astro` | Restyle — update layout |
-| `src/pages/fitness/index.astro` | Restyle — update layout |
-| `src/pages/events/index.astro` | Restyle — update layout |
-| `src/pages/fitness/[id].astro` | Restyle — inherited from Event |
-| `src/pages/events/[id].astro` | Restyle — inherited from Event |
-| `src/pages/vereinsportrait.astro` | Restyle — update sections |
-| `src/pages/gaststaette.astro` | Restyle — update sections |
-| `src/pages/partnerschaft.astro` | Restyle — update sections |
-| `src/pages/mitgliedschaft.astro` | Restyle — update form styling |
-| `src/pages/kontakt.astro` | Restyle — update layout |
-| `src/pages/termine.astro` | Restyle — update cards |
-| `src/pages/historie.astro` | Restyle — update timeline |
-| `src/pages/newsletter.astro` | Restyle — update layout |
-| `src/pages/404.astro` | Restyle — update styling |
-| `src/pages/impressum.astro` | Minor — typography |
-| `src/pages/datenschutz.astro` | Minor — typography |
-| `src/client/animations.ts` | New — scroll animation system |
+| File                                         | Change Type                                      |
+| -------------------------------------------- | ------------------------------------------------ |
+| `src/styles/global.css`                      | Major update — new colors, animations, utilities |
+| `src/layouts/Layout.astro`                   | Minor — update body classes                      |
+| `src/components/common/AppHeader.astro`      | Rewrite — fixed nav, new mobile menu             |
+| `src/components/common/AppFooter.astro`      | Restyle — new colors, spacing                    |
+| `src/components/common/Container.astro`      | Change `max-w-6xl` → `max-w-7xl`                 |
+| `src/components/common/Card.astro`           | Restyle — new borders, hover                     |
+| `src/components/common/Faq.astro`            | Restyle — new colors, animation                  |
+| `src/components/common/Faqs.astro`           | Restyle — spacing, typography                    |
+| `src/components/common/ImageCarousel.astro`  | Restyle — new navigation, dots                   |
+| `src/components/common/ImageDialog.astro`    | Restyle — new padding, close button              |
+| `src/components/common/ImageGallery.astro`   | No change (wrapper)                              |
+| `src/components/common/MetaTags.astro`       | No change                                        |
+| `src/components/common/Notification.astro`   | Restyle — new card style                         |
+| `src/components/common/Prose.astro`          | Update typography classes                        |
+| `src/components/common/Search.astro`         | Restyle — new colors, borders                    |
+| `src/components/blocks/HeroSection.astro`    | Rewrite — new layout                             |
+| `src/components/blocks/Blog.astro`           | Restyle — spacing, grid                          |
+| `src/components/blocks/BlogItem.astro`       | Restyle — new card design                        |
+| `src/components/blocks/News.astro`           | Restyle — new layout                             |
+| `src/components/blocks/NewsItem.astro`       | Restyle — new card design                        |
+| `src/components/blocks/HeaderSection.astro`  | Restyle — add label, new gradient                |
+| `src/components/blocks/Event.astro`          | Restyle — update all sections                    |
+| `src/components/blocks/Teams.astro`          | Restyle — new card grid                          |
+| `src/components/blocks/ContactCard.astro`    | Restyle — new card layout                        |
+| `src/components/blocks/NewsletterCard.astro` | Restyle — new form styling                       |
+| `src/components/blocks/PreBooking.astro`     | Restyle — update loading state                   |
+| `src/components/blocks/HistoryItem.astro`    | Restyle — update card                            |
+| `src/components/blocks/Nothing.astro`        | Restyle — update layout                          |
+| `src/components/controls/Button.astro`       | Rewrite — pill buttons                           |
+| `src/components/controls/Input.astro`        | Restyle — new form styling                       |
+| `src/components/controls/Select.astro`       | Restyle — new form styling                       |
+| `src/components/controls/Textarea.astro`     | Restyle — new form styling                       |
+| `src/components/controls/Checkbox.astro`     | Restyle — new checkbox colors                    |
+| `src/components/controls/Switch.astro`       | Restyle — new switch colors                      |
+| `src/components/controls/SubmitButton.astro` | Restyle — update spinner                         |
+| `src/components/controls/ButtonSwitch.astro` | Restyle — update toggle                          |
+| `src/pages/index.astro`                      | Restyle — new section structure                  |
+| `src/pages/teamsport.astro`                  | Restyle — update layout                          |
+| `src/pages/fitness/index.astro`              | Restyle — update layout                          |
+| `src/pages/events/index.astro`               | Restyle — update layout                          |
+| `src/pages/fitness/[id].astro`               | Restyle — inherited from Event                   |
+| `src/pages/events/[id].astro`                | Restyle — inherited from Event                   |
+| `src/pages/vereinsportrait.astro`            | Restyle — update sections                        |
+| `src/pages/gaststaette.astro`                | Restyle — update sections                        |
+| `src/pages/partnerschaft.astro`              | Restyle — update sections                        |
+| `src/pages/mitgliedschaft.astro`             | Restyle — update form styling                    |
+| `src/pages/kontakt.astro`                    | Restyle — update layout                          |
+| `src/pages/termine.astro`                    | Restyle — update cards                           |
+| `src/pages/historie.astro`                   | Restyle — update timeline                        |
+| `src/pages/newsletter.astro`                 | Restyle — update layout                          |
+| `src/pages/404.astro`                        | Restyle — update styling                         |
+| `src/pages/impressum.astro`                  | Minor — typography                               |
+| `src/pages/datenschutz.astro`                | Minor — typography                               |
+| `src/client/animations.ts`                   | New — scroll animation system                    |
 
 ---
 
