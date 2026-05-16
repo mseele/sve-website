@@ -144,7 +144,7 @@ details.push({
   id: 'dates',
   icon: 'mdi:calendar-month-outline',
   title: entry.data.dates.length === 1 ? 'Termin' : 'Termine',
-  label: entry.data.dates.length === 1 ? formatEventDate(entry.data.dates[0]) : `${entry.data.dates.length} Termine`,
+  label: entry.data.datesDisplay ? entry.data.datesDisplay : entry.data.dates.length === 1 ? formatEventDate(entry.data.dates[0]) : `${entry.data.dates.length} Termine`,
 })
 
 details.push({

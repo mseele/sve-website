@@ -138,6 +138,7 @@ export interface Event {
   description: string
   location: string
   dates: string[]
+  datesDisplay?: string
   duration: string
   priceMember: string
   priceNonMember: string

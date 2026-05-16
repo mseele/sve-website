@@ -74,6 +74,7 @@ const eventSchema = ({ image }: SchemaContext) =>
     description: z.string(),
     location: z.string(),
     dates: z.array(z.string()),
+    datesDisplay: z.string().optional(),
     duration: z.string(),
     priceMember: z.string(),
     priceNonMember: z.string(),

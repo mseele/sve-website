@@ -5,6 +5,7 @@ import type { RawAppointment } from './types'
 
 const DATE_PATTERN = 'd. MMMM yyyy'
 const LONG_DATE_PATTERN = 'eee, d. MMM yyyy'
+const COMPACT_DATE_PATTERN = 'eee, d. MMM'
 const TIME_PATTERN = 'H:mm'
 
 export function formatDate(date: Date) {
@@ -13,6 +14,10 @@ export function formatDate(date: Date) {
 
 export function formatDatetime(value: string): string {
   return `${formatInTimeZone(value, 'UTC', `${LONG_DATE_PATTERN}, ${TIME_PATTERN}`, { locale: de })} Uhr`
+}
+
+export function formatDateCompact(value: string): string {
+  return `${formatInTimeZone(value, 'UTC', `${COMPACT_DATE_PATTERN}, ${TIME_PATTERN}`, { locale: de })} Uhr`
 }
 
 export function formatDatespan(appointment: RawAppointment): string {
