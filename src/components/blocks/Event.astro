@@ -1,8 +1,10 @@
 ---
 import Input from '@/components/controls/Input.astro'
+import IbanInput from '@/components/controls/IbanInput.astro'
 import Container from '@/components/common/Container.astro'
 import Notification from '@/components/common/Notification.astro'
 import Checkbox from '@/components/controls/Checkbox.astro'
+import SepaMandate from '@/components/controls/SepaMandate.astro'
 import SubmitButton from '@/components/controls/SubmitButton.astro'
 import Textarea from '@/components/controls/Textarea.astro'
 import { Icon } from 'astro-icon/components'
@@ -10,7 +12,7 @@ import type { CollectionEntry } from 'astro:content'
 import type { Place, Offer, Event as SchemaEvent } from 'schema-dts'
 import HeroSection from './HeroSection.astro'
 import NewsletterCard from './NewsletterCard.astro'
-import { EventCustomFieldType, type MetaSEO } from '@/types'
+import { EventCustomFieldType, PaymentMethod, type MetaSEO } from '@/types'
 import { CAPTCHA_SITE_KEY } from 'astro:env/client'
 import Layout from '@/layouts/Layout.astro'
 import { organizationRef, postalAddress, schemaJsonLd } from '@/schema'
@@ -144,7 +146,7 @@ details.push({
   id: 'dates',
   icon: 'mdi:calendar-month-outline',
   title: entry.data.dates.length === 1 ? 'Termin' : 'Termine',
-  label: entry.data.dates.length === 1 ? formatEventDate(entry.data.dates[0]) : `${entry.data.dates.length} Termine`,
+  label: entry.data.datesDisplay ? entry.data.datesDisplay : entry.data.dates.length === 1 ? formatEventDate(entry.data.dates[0]) : `${entry.data.dates.length} Termine`,
 })
 
 details.push({
@@ -344,6 +346,14 @@ details.push({
                       }
                     })
                   }
+                  {
+                    entry.data.paymentMethod === PaymentMethod.SepaDirectDebit && (
+                      <IbanInput
+                        id="iban"
+                        class="md:col-span-2"
+                      />
+                    )
+                  }
                   <Textarea
                     id="comment"
                     name="comment"
@@ -366,6 +376,15 @@ details.push({
                     title="Ich stimme der Verarbeitung meiner personenbezogenen Daten zu"
                     class="md:col-span-2"
                   />
+                  {
+                    entry.data.paymentMethod === PaymentMethod.SepaDirectDebit && (
+                      <SepaMandate
+                        id="sepa_mandate"
+                        name="sepa_mandate"
+                        class="md:col-span-2"
+                      />
+                    )
+                  }
                   <div class="flex justify-center md:col-span-2">
                     <SubmitButton>
                       {
@@ -393,7 +412,7 @@ details.push({
 
 <script>
   import { bookEvent, loadEventAvailability } from '@/api/events'
-  import { checkRequiredInput, clearCustomValidityOnInput } from '@/client/forms'
+  import { checkRequiredInput, clearCustomValidityOnInput, validateIbanInput } from '@/client/forms'
   import { notify } from '@/client/notifications'
   import type { EventAvailability } from '@/types'
   import '@hcaptcha/vanilla-hcaptcha'
@@ -477,13 +496,16 @@ details.push({
       const email = form.querySelector<HTMLInputElement>('#email')
       clearCustomValidityOnInput(email)
 
+      const phone = form.querySelector<HTMLInputElement>('#phone')
+      clearCustomValidityOnInput(phone)
+
       const customFields = form.querySelectorAll<HTMLInputElement>('#customfield')
       customFields.forEach((field) => {
         clearCustomValidityOnInput(field)
       })
 
-      const phone = form.querySelector<HTMLInputElement>('#phone')
-      clearCustomValidityOnInput(phone)
+      const ibanInput = form.querySelector<HTMLInputElement>('#iban')
+      clearCustomValidityOnInput(ibanInput)
 
       const comment = form.querySelector<HTMLTextAreaElement>('#comment')
 
@@ -493,6 +515,9 @@ details.push({
 
       const consent = form.querySelector<HTMLInputElement>('#consent')
       consent?.addEventListener('input', () => consent.setCustomValidity(''))
+
+      const sepaMandate = form.querySelector<HTMLInputElement>('#sepa_mandate')
+      sepaMandate?.addEventListener('input', () => sepaMandate.setCustomValidity(''))
 
       form.addEventListener('submit', async (event) => {
         event.preventDefault()
@@ -527,11 +552,24 @@ details.push({
           }
         }
 
+        if (ibanInput && !validateIbanInput(ibanInput)) {
+          return false
+        }
+
         if (consent && !consent.checked) {
           consent.setCustomValidity(
             'Bitte stimme der Verarbeitung deiner personenbezogenen Daten zu.',
           )
           return consent.reportValidity()
+        }
+
+        if (ibanInput) {
+          if (sepaMandate && !sepaMandate.checked) {
+            sepaMandate.setCustomValidity(
+              'Bitte akzeptiere das SEPA-Lastschriftmandat.',
+            )
+            return sepaMandate.reportValidity()
+          }
         }
 
         const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]')
@@ -551,6 +589,7 @@ details.push({
               updates: newsletter?.checked,
               comments: comment?.value,
               custom_values: Array.from(customFields).map((field) => field.value),
+              iban: ibanInput?.value,
             },
             token,
             callback,
@@ -566,6 +605,8 @@ details.push({
             if (member) member.checked = false
             if (newsletter) newsletter.checked = false
             if (consent) consent.checked = false
+            if (ibanInput) ibanInput.value = ''
+            if (sepaMandate) sepaMandate.checked = false
             customFields.forEach((field) => {
               field.value = ''
             })

@@ -9,6 +9,8 @@ import {
 } from '@/types'
 import { formatCurrency, formatDuration } from '@/utils'
 import { BACKEND_API, PREVIEW } from 'astro:env/client'
+import { parseISO, format, getDay } from 'date-fns'
+import { de } from 'date-fns/locale'
 
 export async function loadEvents(type: EventType): Promise<Event[]> {
   const response = await fetch(`${BACKEND_API}/events?type=${type}&beta=${PREVIEW}`)
@@ -29,6 +31,7 @@ export async function loadEvents(type: EventType): Promise<Event[]> {
           description: event.description,
           location: event.location,
           dates: event.custom_date ? [event.custom_date] : event.dates,
+          datesDisplay: computeDatesDisplay(event.dates, event.custom_date),
           duration: durationPrefix(event.type) + formatDuration(event.duration_in_minutes),
           priceMember: formatCurrency(event.price_member),
           priceNonMember: formatCurrency(event.price_non_member),
@@ -40,6 +43,7 @@ export async function loadEvents(type: EventType): Promise<Event[]> {
             minValue: field.min_value || undefined,
             maxValue: field.max_value || undefined,
           })),
+          paymentMethod: event.payment_method,
         }
       }),
   )
@@ -51,6 +55,39 @@ function durationPrefix(type: EventType) {
       return 'Kurslänge: '
     case EventType.Events:
       return 'Eventlänge: ca. '
+  }
+}
+
+function computeDatesDisplay(dates: string[], customDate?: string | null): string | undefined {
+  if (customDate) {
+    return customDate
+  }
+  if (dates.length === 0) {
+    return undefined
+  }
+
+  try {
+    if (dates.length === 1) {
+      return format(parseISO(dates[0]), 'eee, d. MMM, H:mm', { locale: de }) + ' Uhr'
+    }
+
+    const first = parseISO(dates[0])
+    const firstDay = getDay(first)
+    const firstTime = format(first, 'H:mm')
+
+    const allSamePattern = dates.every((dateStr) => {
+      const d = parseISO(dateStr)
+      return getDay(d) === firstDay && format(d, 'H:mm') === firstTime
+    })
+
+    if (allSamePattern) {
+      const weekday = format(first, 'eee', { locale: de })
+      return `${weekday}, ${firstTime} Uhr (${dates.length} Termine)`
+    }
+
+    return `${format(first, 'd. MMM, H:mm', { locale: de })} Uhr (+${dates.length - 1} weitere)`
+  } catch {
+    return dates.length === 1 ? dates[0] : `${dates[0]} (+${dates.length - 1} weitere)`
   }
 }
 
@@ -182,6 +219,28 @@ export async function bookEvent(
 
 export async function prebooking(hash: string) {
   const response = await fetch(`${BACKEND_API}/events/prebooking/${hash}`)
+  if (response.ok) {
+    const data: BookingResponse = await response.json()
+    return {
+      success: data.success,
+      message: data.message,
+      requires_iban: data.requires_iban || false,
+    }
+  }
+  return {
+    success: false,
+    message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
+  }
+}
+
+export async function prebookWithIban(hash: string, iban: string) {
+  const response = await fetch(`${BACKEND_API}/events/prebooking/${hash}/iban`, {
+    method: 'POST',
+    body: JSON.stringify({ iban }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
   if (response.ok) {
     const data: BookingResponse = await response.json()
     return { success: data.success, message: data.message }

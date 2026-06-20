@@ -4,6 +4,7 @@ import Container from '@/components/common/Container.astro'
 import Button from '@/components/controls/Button.astro'
 import Select from '@/components/controls/Select.astro'
 import Input from '@/components/controls/Input.astro'
+import IbanInput from '@/components/controls/IbanInput.astro'
 import Layout from '@/layouts/Layout.astro'
 import type { MetaSEO } from '@/types'
 import { Icon } from 'astro-icon/components'
@@ -215,7 +216,7 @@ const meta: MetaSEO = {
             </div>
 
             <div id="payment" class="hidden gap-6 md:grid-cols-2 md:gap-10">
-              <Input id="iban" name="iban" label="IBAN" />
+              <IbanInput id="iban" name="iban" />
               <Input id="account_owner" name="account_owner" label="Kontoinhaber" />
               <Checkbox
                 class="md:col-span-2"
