@@ -115,6 +115,7 @@ export interface RawEvent {
   alt_email_address?: string | null
   external_operator: boolean
   custom_fields: RawEventCustomField[]
+  payment_method: PaymentMethod
 }
 
 export interface RawEventCustomField {
@@ -128,6 +129,11 @@ export interface RawEventCustomField {
 export enum EventCustomFieldType {
   Text = 'Text',
   Number = 'Number',
+}
+
+export enum PaymentMethod {
+  BankTransfer = 'BankTransfer',
+  SepaDirectDebit = 'SepaDirectDebit',
 }
 
 export interface Event {
@@ -145,6 +151,7 @@ export interface Event {
   altBookingButtonText?: string
   externalOperator: boolean
   customFields: EventCustomField[]
+  paymentMethod: PaymentMethod
 }
 
 export enum EventType {
@@ -186,12 +193,14 @@ export interface Booking {
   updates?: boolean
   comments?: string
   custom_values: string[]
+  iban?: string
 }
 
 export interface BookingResponse {
   success: boolean
   message: string
   counter: RawEventCounter[]
+  requires_iban?: boolean
 }
 
 export interface FamilyMember {

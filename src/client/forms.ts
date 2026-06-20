@@ -1,3 +1,5 @@
+import { isValidIBAN } from 'ibantools'
+
 /**
  * Attaches an event listener to clear the custom validity message
  * when the user inputs a value in the input field.
@@ -54,8 +56,8 @@ export function checkRequiredInput(
  * validity message and triggers the display of the validation error.
  *
  * @param {HTMLInputElement} select - The select field to validate.
- * @param {string} errorMessage - The error message to display if the input is empty.
- * @returns {boolean} - Returns `true` if the input is valid (not empty), otherwise `false`.
+ * @param {string} errorMessage - The error message to display if the select is empty.
+ * @returns {boolean} - Returns `true` if the select is valid (not empty), otherwise `false`.
  */
 export function checkRequiredSelect(
   select: HTMLSelectElement | null | undefined,
@@ -64,6 +66,25 @@ export function checkRequiredSelect(
   if (select?.value.trim() === '') {
     select.setCustomValidity(errorMessage)
     return select.reportValidity()
+  }
+  return true
+}
+
+/**
+ * Validates that the IBAN input is valid. If invalid, sets a custom validity message
+ * and triggers the display of the validation error.
+ *
+ * @param {HTMLInputElement} input - The IBAN input field to validate.
+ * @returns {boolean} - Returns `true` if the IBAN is valid or empty (handled by 'required'), otherwise `false`.
+ */
+export function validateIbanInput(input: HTMLInputElement | null | undefined): boolean {
+  if (!input?.value) {
+    input?.setCustomValidity('Bitte gib eine gültige IBAN ein.')
+    return input?.reportValidity() ?? false
+  }
+  if (!isValidIBAN(input.value.replace(/\s/g, '').toUpperCase())) {
+    input.setCustomValidity('Bitte gib eine gültige IBAN ein.')
+    return input.reportValidity()
   }
   return true
 }

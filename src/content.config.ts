@@ -90,6 +90,7 @@ const eventSchema = ({ image }: SchemaContext) =>
         }),
       )
       .default([]),
+    paymentMethod: z.enum(['BankTransfer', 'SepaDirectDebit']),
   })
 
 const fitness = defineCollection({

@@ -4,9 +4,9 @@ import {
   checkRequiredSelect,
   clearCustomValidityOnInput,
   clearCustomValidityOnSelect,
+  validateIbanInput,
 } from '@/client/forms'
 import { notify } from '@/client/notifications'
-import { isValidIBAN } from 'ibantools'
 import '@hcaptcha/vanilla-hcaptcha'
 import type { VanillaHCaptchaWebComponent } from '@hcaptcha/vanilla-hcaptcha'
 
@@ -183,12 +183,8 @@ export function init() {
 
         const approve_payment = current?.querySelector<HTMLInputElement>('#approve_payment')
 
-        if (!checkRequiredInput(iban, 'Bitte gib eine IBAN ein.')) {
+        if (!validateIbanInput(iban)) {
           return
-        }
-        if (iban && !isValidIBAN(iban.value.trim().replace(/\s/g, ''))) {
-          iban.setCustomValidity('Bitte gib eine gültige IBAN ein.')
-          return iban.reportValidity()
         }
 
         if (!checkRequiredInput(account_owner, 'Bitte gib einen Kontoinhaber ein.')) {

@@ -1,0 +1,56 @@
+---
+interface Props {
+  id: string
+  label?: string
+  value?: string
+  placeholder?: string
+  class?: string
+  required?: boolean
+  disabled?: boolean
+}
+
+const { id, label = 'IBAN', value, placeholder = 'DE89 3704 0044 0532 0130 00', class: className, required, disabled } = Astro.props
+---
+
+<div
+  class:list={[
+    'relative space-y-2.5 has-disabled:*:pointer-events-none has-disabled:*:opacity-50',
+    className,
+  ]}
+>
+  {
+    label && (
+      <label class="block text-gray-900 dark:text-white" for={id}>
+        {label}
+      </label>
+    )
+  }
+  <input
+    type="text"
+    inputmode="text"
+    autocomplete="iban"
+    id={id}
+    name="iban"
+    placeholder={placeholder}
+    value={value}
+    required={required}
+    disabled={disabled}
+    class="focus:outline-primary h-9 w-full rounded-xl border border-gray-300 bg-white px-3 text-sm text-gray-900 placeholder-gray-400 shadow-sm shadow-gray-950/5 -outline-offset-1 invalid:border-red-500 invalid:text-red-500 focus:outline-2 invalid:focus:outline-red-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:shadow-gray-950/30 dark:invalid:text-red-500 uppercase tracking-wider font-mono"
+    data-iban-validation
+  />
+
+<script>
+  import { clearCustomValidityOnInput, validateIbanInput } from '@/client/forms'
+
+  document.querySelectorAll<HTMLInputElement>('input[data-iban-validation]').forEach((input) => {
+    clearCustomValidityOnInput(input)
+
+    input.addEventListener('blur', () => {
+      if (!input.value.trim()) {
+        return
+      }
+      validateIbanInput(input)
+    })
+  })
+</script>
+</div>

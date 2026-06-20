@@ -43,6 +43,7 @@ export async function loadEvents(type: EventType): Promise<Event[]> {
             minValue: field.min_value || undefined,
             maxValue: field.max_value || undefined,
           })),
+          paymentMethod: event.payment_method,
         }
       }),
   )
@@ -218,6 +219,28 @@ export async function bookEvent(
 
 export async function prebooking(hash: string) {
   const response = await fetch(`${BACKEND_API}/events/prebooking/${hash}`)
+  if (response.ok) {
+    const data: BookingResponse = await response.json()
+    return {
+      success: data.success,
+      message: data.message,
+      requires_iban: data.requires_iban || false,
+    }
+  }
+  return {
+    success: false,
+    message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
+  }
+}
+
+export async function prebookWithIban(hash: string, iban: string) {
+  const response = await fetch(`${BACKEND_API}/events/prebooking/${hash}/iban`, {
+    method: 'POST',
+    body: JSON.stringify({ iban }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
   if (response.ok) {
     const data: BookingResponse = await response.json()
     return { success: data.success, message: data.message }

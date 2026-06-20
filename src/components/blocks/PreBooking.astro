@@ -1,7 +1,7 @@
 ---
-
+import IbanInput from '@/components/controls/IbanInput.astro'
+import SepaMandate from '@/components/controls/SepaMandate.astro'
 ---
-
 <dialog
   id="prebooking"
   class="backdrop:scrollbar-none backdrop:overflow-hidden backdrop:backdrop-blur-sm"
@@ -31,8 +31,38 @@
   </div>
 </dialog>
 
+<div
+  id="prebooking-iban-form"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-gray-800/70 backdrop-blur-sm"
+>
+  <form
+    class="w-full max-w-md rounded-3xl border border-gray-100 bg-white p-8 shadow-2xl shadow-gray-600/10 dark:border-gray-700 dark:bg-gray-800 dark:shadow-none"
+  >
+    <h3 class="text-xl font-bold text-gray-900 dark:text-white">IBAN erforderlich</h3>
+    <p class="mt-2 text-gray-600 dark:text-gray-300">
+      Für diese Veranstaltung erfolgt die Bezahlung per SEPA-Lastschrift. Bitte geben Sie daher Ihre IBAN an.
+    </p>
+    <div class="mt-6">
+      <IbanInput id="prebooking-iban" />
+    </div>
+    <div class="mt-4">
+      <SepaMandate id="prebooking-sepa-mandate" name="prebooking-sepa-mandate" />
+    </div>
+    <div class="mt-6 flex justify-end gap-3">
+      <button
+        id="prebooking-iban-submit"
+        type="submit"
+        class="rounded-lg bg-primary px-5 py-2.5 font-medium text-white hover:bg-primary/90"
+      >
+        Buchung abschließen
+      </button>
+    </div>
+  </form>
+</div>
+
 <script>
-  import { prebooking } from '@/api/events'
+  import { prebooking, prebookWithIban } from '@/api/events'
+  import { clearCustomValidityOnInput, validateIbanInput } from '@/client/forms'
   import { notify } from '@/client/notifications'
 
   document.addEventListener('DOMContentLoaded', async () => {
@@ -40,6 +70,8 @@
     const queryCode = new URLSearchParams(window.location.search).get(name)
     if (queryCode) {
       const dialog = document.querySelector<HTMLDialogElement>('#prebooking')
+      const ibanForm = document.querySelector<HTMLDivElement>('#prebooking-iban-form')
+
       if (dialog) {
         const newUrl = new URL(window.location.href)
         newUrl.searchParams.delete(name)
@@ -51,6 +83,59 @@
           const response = await prebooking(queryCode)
           if (response.success) {
             notify('Frühbuchung', response.message)
+          } else if (response.requires_iban) {
+            dialog.close()
+            if (ibanForm) {
+              ibanForm.classList.remove('hidden')
+              ibanForm.classList.add('grid')
+              const form = ibanForm.querySelector<HTMLFormElement>('form')
+              const ibanInput = form?.querySelector<HTMLInputElement>('#prebooking-iban')
+              const sepaMandate = form?.querySelector<HTMLInputElement>('#prebooking-sepa-mandate')
+              const submitButton = form?.querySelector<HTMLButtonElement>('#prebooking-iban-submit')
+              clearCustomValidityOnInput(ibanInput)
+              sepaMandate?.addEventListener('input', () => sepaMandate.setCustomValidity(''))
+
+              form?.addEventListener('submit', async (e) => {
+                e.preventDefault()
+
+                if (!validateIbanInput(ibanInput)) {
+                  return
+                }
+
+                if (sepaMandate && !sepaMandate.checked) {
+                  sepaMandate.setCustomValidity('Bitte akzeptiere das SEPA-Lastschriftmandat.')
+                  sepaMandate.reportValidity()
+                  return
+                }
+
+                if (submitButton) submitButton.disabled = true
+                if (dialog) dialog.showModal()
+                ibanForm.classList.add('hidden')
+                ibanForm.classList.remove('grid')
+
+                try {
+                  const response = await prebookWithIban(queryCode, ibanInput.value)
+                  if (response.success) {
+                    notify('Frühbuchung', response.message)
+                    ibanInput.value = ''
+                    sepaMandate.checked = false
+                  } else {
+                    notify('Frühbuchung', response.message, true)
+                  }
+                } catch (err) {
+                  console.error(err)
+                  notify(
+                    'Frühbuchung',
+                    'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
+                    true,
+                  )
+                } finally {
+                  if (submitButton) submitButton.disabled = false
+                  dialog?.close()
+                }
+              })
+            }
+            return
           } else {
             notify('Frühbuchung', response.message, true)
           }
@@ -65,13 +150,7 @@
           dialog.close()
         }
       }
-    }
+
+      }
   })
 </script>
-
-<!-- <style>
-  /* TailwindCSS doesn't directly support styling <dialog>, so custom positioning is applied here. */
-  dialog::backdrop {
-    background-color: rgba(31, 41, 55, 0.7); /* Matches the Tailwind gray-800 with opacity */
-  }
-</style> -->
