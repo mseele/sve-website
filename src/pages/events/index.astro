@@ -8,7 +8,9 @@ import type { MetaSEO } from '@/types'
 import { getCollection } from 'astro:content'
 import image from '@/assets/meta/events.jpg'
 
-const entries = await getCollection('events')
+const entries = (await getCollection('events')).sort(
+  (a, b) => a.data.sortIndex - b.data.sortIndex,
+)
 
 const meta: MetaSEO = {
   title: 'Events',

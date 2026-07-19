@@ -70,6 +70,7 @@ const eventSchema = ({ image }: SchemaContext) =>
     id: z.string(),
     name: z.string(),
     image: image(),
+    sortIndex: z.number(),
     shortDescription: z.string(),
     description: z.string(),
     location: z.string(),

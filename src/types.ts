@@ -140,6 +140,7 @@ export interface Event {
   id: string
   name: string
   image: string
+  sortIndex: number
   shortDescription: string
   description: string
   location: string
