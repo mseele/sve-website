@@ -114,11 +114,11 @@ import SepaMandate from '@/components/controls/SepaMandate.astro'
                 ibanForm.classList.remove('grid')
 
                 try {
-                  const response = await prebookWithIban(queryCode, ibanInput.value)
+                  const response = await prebookWithIban(queryCode, ibanInput!.value)
                   if (response.success) {
                     notify('Frühbuchung', response.message)
-                    ibanInput.value = ''
-                    sepaMandate.checked = false
+                    ibanInput!.value = ''
+                    sepaMandate!.checked = false
                   } else {
                     notify('Frühbuchung', response.message, true)
                   }

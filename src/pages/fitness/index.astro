@@ -8,7 +8,9 @@ import type { Faq, MetaSEO } from '@/types'
 import { getCollection } from 'astro:content'
 import image from '@/assets/meta/fitness.jpg'
 
-const entries = await getCollection('fitness')
+const entries = (await getCollection('fitness')).sort(
+  (a, b) => a.data.sortIndex - b.data.sortIndex,
+)
 
 const faqs: Faq[] = [
   {
