@@ -382,6 +382,9 @@ details.push({
                         id="sepa_mandate"
                         name="sepa_mandate"
                         class="md:col-span-2"
+                        creditor={entry.data.externalOperator
+                          ? 'Förderverein SV Eutingen 1947 e.V.'
+                          : undefined}
                       />
                     )
                   }
