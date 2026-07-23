@@ -1,0 +1,52 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "67faec82d6ed",
+  "session_id": "ses_071ba5502ffe4x0dv068yoCtvh",
+  "strategy": "manual-commit",
+  "created_at": "2026-07-23T09:32:09.91776Z",
+  "branch": "feature/tests",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/api/appointments.ts",
+    "tests/api/appointments.test.ts"
+  ],
+  "agent": "OpenCode",
+  "model": "",
+  "turn_id": "66d051de5891",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 202045,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 376064,
+    "output_tokens": 6509,
+    "api_call_count": 29
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-07-23T09:32:09.906288Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 4,
+    "human_modified": 3,
+    "human_removed": 0,
+    "total_committed": 4,
+    "total_lines_changed": 7,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 227,
+      "user_lines_removed": 2,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "src/api/appointments.ts": 2,
+        "tests/api/appointments.test.ts": 225
+      },
+      "user_removed_per_file": {
+        "src/api/appointments.ts": 2
+      }
+    }
+  ]
+}
