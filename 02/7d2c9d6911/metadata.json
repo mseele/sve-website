@@ -3,8 +3,10 @@
   "checkpoint_id": "027d2c9d6911",
   "strategy": "manual-commit",
   "branch": "feature/tests",
-  "checkpoints_count": 5,
+  "checkpoints_count": 3,
   "files_touched": [
+    "CONTEXT.md",
+    "docs/adr/0001-availability-state-predicate.md",
     "src/api/events.ts",
     "src/components/blocks/Event.astro",
     "src/components/blocks/Events.astro",
@@ -35,11 +37,11 @@
     }
   ],
   "token_usage": {
-    "input_tokens": 1049779,
+    "input_tokens": 91525,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 2539152,
-    "output_tokens": 44335,
-    "api_call_count": 76
+    "cache_read_tokens": 179714,
+    "output_tokens": 5523,
+    "api_call_count": 10
   },
   "combined_attribution": {
     "calculated_at": "2026-07-23T10:33:01.847986Z",
