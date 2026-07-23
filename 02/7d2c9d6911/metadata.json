@@ -3,12 +3,13 @@
   "checkpoint_id": "027d2c9d6911",
   "strategy": "manual-commit",
   "branch": "feature/tests",
-  "checkpoints_count": 2,
+  "checkpoints_count": 5,
   "files_touched": [
     "src/api/events.ts",
     "src/components/blocks/Event.astro",
     "src/components/blocks/Events.astro",
-    "src/types.ts"
+    "src/types.ts",
+    "tests/api/events.test.ts"
   ],
   "sessions": [
     {
@@ -24,13 +25,20 @@
       "compact_transcript": "/02/7d2c9d6911/1/transcript.jsonl",
       "content_hash": "/02/7d2c9d6911/1/content_hash.txt",
       "prompt": "/02/7d2c9d6911/1/prompt.txt"
+    },
+    {
+      "metadata": "/02/7d2c9d6911/2/metadata.json",
+      "transcript": "/02/7d2c9d6911/2/full.jsonl",
+      "compact_transcript": "/02/7d2c9d6911/2/transcript.jsonl",
+      "content_hash": "/02/7d2c9d6911/2/content_hash.txt",
+      "prompt": "/02/7d2c9d6911/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 90169,
+    "input_tokens": 1049779,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 31168,
-    "output_tokens": 4818,
-    "api_call_count": 8
+    "cache_read_tokens": 2539152,
+    "output_tokens": 44335,
+    "api_call_count": 76
   }
 }
