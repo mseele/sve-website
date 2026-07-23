@@ -1,0 +1,871 @@
+{
+  "info": {
+    "id": "ses_071b3ff41ffeK0e11nR69GthKk",
+    "slug": "playful-circuit",
+    "projectID": "68d450c05733c82192ed1f31a5e40cb2ae707f59",
+    "directory": "/Users/mseele/dev/sve/sve-website",
+    "path": "",
+    "parentID": "ses_071ba5502ffe4x0dv068yoCtvh",
+    "title": "Spec review (@general subagent)",
+    "agent": "general",
+    "model": {
+      "id": "glm-5.2",
+      "providerID": "opencode-go",
+      "variant": "default"
+    },
+    "version": "1.18.4",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0.10853048,
+    "tokens": {
+      "input": 66234,
+      "output": 2336,
+      "reasoning": 0,
+      "cache": {
+        "read": 21248,
+        "write": 0
+      }
+    },
+    "permission": [
+      {
+        "permission": "task",
+        "pattern": "*",
+        "action": "deny"
+      }
+    ],
+    "time": {
+      "created": 1784798773439,
+      "updated": 1784799062143
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1784798773448
+        },
+        "agent": "general",
+        "model": {
+          "providerID": "opencode-go",
+          "modelID": "glm-5.2"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_f8e4c00c7001Rp3P4uSfT91YYJ",
+        "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Review the uncommitted changes in /Users/mseele/dev/sve/sve-website against HEAD (a58eccd).\n\nDiff command: `git diff HEAD`\nCommit list: none yet (changes are working-tree only).\n\nThe originating spec is GitHub issue #399 in mseele/sve-website. Its body (verbatim):\n\n---\n## What to build\n\n`toAppointment` and `bySortIndex` currently sit un-exported inside the `getAppointments` fetch wrapper in `src/api/appointments.ts`. Export them (pure refactor, no behaviour change) so they're independently unit-testable with zero mocking.\n\nCover them with table-driven tests: single-day vs datetime variants (start_date_time present vs absent), missing-field fallbacks, title defaulting to '-', sort ordering by sort_index (ascending), the start/end ISO passthrough logic.\n\nIndependent of the EventAvailability decision — this file has no -1 sentinel and no availability logic.\n\n## Acceptance criteria\n\n- [ ] `toAppointment` and `bySortIndex` exported from `src/api/appointments.ts` (no behaviour change)\n- [ ] `tests/api/appointments.test.ts` covers both functions with edge-case table rows\n- [ ] Appointments page (`src/pages/termine.astro`) still renders correctly — verify via `bun run build`\n- [ ] All tests green, `bun run check` green\n---\n\nBrief: Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words. Do NOT propose code; just report.",
+          "id": "prt_f8e4c00cc001gE3pMg3eFOBm5W",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c00c7001Rp3P4uSfT91YYJ"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e4c00c7001Rp3P4uSfT91YYJ",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01548728,
+        "tokens": {
+          "total": 11068,
+          "input": 10894,
+          "output": 46,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784798773771,
+          "completed": 1784798796514
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e4c020b001y8DFi01UuGVmfH",
+        "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk"
+      },
+      "parts": [
+        {
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-start",
+          "id": "prt_f8e4c4a93001h7Ex6bDVBU33eo",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c020b001y8DFi01UuGVmfH"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me review the uncommitted changes against HEAD a58eccd.",
+          "time": {
+            "start": 1784798792346,
+            "end": 1784798796134
+          },
+          "id": "prt_f8e4c4a9a001Xvj1iJMbHJ4TKL",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c020b001y8DFi01UuGVmfH"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_0471",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git diff HEAD --stat",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "src/api/appointments.ts | 4 ++--\n 1 file changed, 2 insertions(+), 2 deletions(-)\n",
+            "metadata": {
+              "output": "src/api/appointments.ts | 4 ++--\n 1 file changed, 2 insertions(+), 2 deletions(-)\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git diff HEAD --stat",
+            "time": {
+              "start": 1784798796206,
+              "end": 1784798796215
+            }
+          },
+          "id": "prt_f8e4c5968001IdRAVzaq047yH6",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c020b001y8DFi01UuGVmfH"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11068,
+            "input": 10894,
+            "output": 46,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01548728,
+          "id": "prt_f8e4c59e9001x7S77CTTWWC75S",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c020b001y8DFi01UuGVmfH"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e4c00c7001Rp3P4uSfT91YYJ",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00365992,
+        "tokens": {
+          "total": 10382,
+          "input": 494,
+          "output": 96,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 9792
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784798796515,
+          "completed": 1784798803531
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e4c5ae3001vdy0wGb16IcvE8",
+        "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk"
+      },
+      "parts": [
+        {
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-start",
+          "id": "prt_f8e4c5fe6001FlOw5Gt7f7mJes",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c5ae3001vdy0wGb16IcvE8"
+        },
+        {
+          "type": "reasoning",
+          "text": "Need full diff and original spec. Let me also check if test file wascreated.",
+          "time": {
+            "start": 1784798797799,
+            "end": 1784798798731
+          },
+          "id": "prt_f8e4c5fe7001oZ7hCYERtxMiOS",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c5ae3001vdy0wGb16IcvE8"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_c99e",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git diff HEAD",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "src/api/appointments.ts | 4 ++--\n 1 file changed, 2 insertions(+), 2 deletions(-)\n\nChanges:\n\nsrc/api/appointments.ts\n  @@ -2,11 +2,11 @@ import { formatDatespan, formatTimespan } from '@/utils'\n  -function bySortIndex(a: RawAppointment, b: RawAppointment) {\n  +export function bySortIndex(a: RawAppointment, b: RawAppointment) {\n     return a.sort_index - b.sort_index\n   }\n   \n  -function toAppointment(appointment: RawAppointment): Appointment {\n  +export function toAppointment(appointment: RawAppointment): Appointment {\n     let startISO: string | undefined\n     let endISO: string | undefined\n     if (appointment.start_date_time) {\n  +2 -2\n",
+            "metadata": {
+              "output": "src/api/appointments.ts | 4 ++--\n 1 file changed, 2 insertions(+), 2 deletions(-)\n\nChanges:\n\nsrc/api/appointments.ts\n  @@ -2,11 +2,11 @@ import { formatDatespan, formatTimespan } from '@/utils'\n  -function bySortIndex(a: RawAppointment, b: RawAppointment) {\n  +export function bySortIndex(a: RawAppointment, b: RawAppointment) {\n     return a.sort_index - b.sort_index\n   }\n   \n  -function toAppointment(appointment: RawAppointment): Appointment {\n  +export function toAppointment(appointment: RawAppointment): Appointment {\n     let startISO: string | undefined\n     let endISO: string | undefined\n     if (appointment.start_date_time) {\n  +2 -2\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git diff HEAD",
+            "time": {
+              "start": 1784798798784,
+              "end": 1784798798786
+            }
+          },
+          "id": "prt_f8e4c638d001lH77Wf1JC5jrIs",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c5ae3001vdy0wGb16IcvE8"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_8adf",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk ls tests/api/ 2>/dev/null; rtk ls tests/ 2>/dev/null",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "appointments.test.ts  8.1K\napi/\nsetup.ts  211B\nutils.test.ts  7.1K\n",
+            "metadata": {
+              "output": "appointments.test.ts  8.1K\napi/\nsetup.ts  211B\nutils.test.ts  7.1K\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk ls tests/api/ 2>/dev/null; rtk ls tests/ 2>/dev/null",
+            "time": {
+              "start": 1784798803385,
+              "end": 1784798803387
+            }
+          },
+          "id": "prt_f8e4c758f001Z5qKVzqJz6Kmb0",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c5ae3001vdy0wGb16IcvE8"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10382,
+            "input": 494,
+            "output": 96,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 9792
+            }
+          },
+          "cost": 0.00365992,
+          "id": "prt_f8e4c75db001KIH8mzh5yFxDMd",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c5ae3001vdy0wGb16IcvE8"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e4c00c7001Rp3P4uSfT91YYJ",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01534768,
+        "tokens": {
+          "total": 10739,
+          "input": 10458,
+          "output": 153,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784798803533,
+          "completed": 1784798811353
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e4c764d0015sKpoeOD7dImIB",
+        "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk"
+      },
+      "parts": [
+        {
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-start",
+          "id": "prt_f8e4c8a81001fyPo9Qcpzixkdx",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c764d0015sKpoeOD7dImIB"
+        },
+        {
+          "type": "reasoning",
+          "text": "Wait — the diff stat only shows `src/api/appointments.ts` modified. But there's a `tests/api/appointments.test.ts` file present. Let me check git status — maybe the test file is untracked so it doesn't show in `git diff HEAD`. Let me check gitstatus.",
+          "time": {
+            "start": 1784798808712,
+            "end": 1784798810395
+          },
+          "id": "prt_f8e4c8a88001QrOAwXWSlvn3Ru",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c764d0015sKpoeOD7dImIB"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_2b38",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git status --porcelain",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": " M src/api/appointments.ts\n?? tests/api/",
+            "metadata": {
+              "output": " M src/api/appointments.ts\n?? tests/api/",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git status --porcelain",
+            "time": {
+              "start": 1784798810463,
+              "end": 1784798810466
+            }
+          },
+          "id": "prt_f8e4c911d001obTQ2J58yBnLkL",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c764d0015sKpoeOD7dImIB"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_0337",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git status --porcelain tests/api/appointments.test.ts; rtk git ls-files --error-unmatch tests/api/appointments.test.ts 2>&1",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "?? tests/api/appointments.test.tsFehler: Pfadspezifikation 'tests/api/appointments.test.ts' stimmt mit keinen Git bekannten Dateien überein\nDid you forget to 'git add'?\n",
+            "metadata": {
+              "output": "?? tests/api/appointments.test.tsFehler: Pfadspezifikation 'tests/api/appointments.test.ts' stimmt mit keinen Git bekannten Dateien überein\nDid you forget to 'git add'?\n",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "rtk git status --porcelain tests/api/appointments.test.ts; rtk git ls-files --error-unmatch tests/api/appointments.test.ts 2>&1",
+            "time": {
+              "start": 1784798811171,
+              "end": 1784798811174
+            }
+          },
+          "id": "prt_f8e4c93ee001A1Z9mZ6jGnwc1n",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c764d0015sKpoeOD7dImIB"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10739,
+            "input": 10458,
+            "output": 153,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01534768,
+          "id": "prt_f8e4c9469001d9YLn2VzC7FKcr",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c764d0015sKpoeOD7dImIB"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e4c00c7001Rp3P4uSfT91YYJ",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01519988,
+        "tokens": {
+          "total": 10852,
+          "input": 10673,
+          "output": 51,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784798811356,
+          "completed": 1784798827456
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e4c94dc001G7GeKg1iPzUzvy",
+        "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk"
+      },
+      "parts": [
+        {
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-start",
+          "id": "prt_f8e4cc346001i9eh3IcKRiN1jq",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c94dc001G7GeKg1iPzUzvy"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_0f30",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/api/appointments.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/api/appointments.test.ts</path>\n<type>file</type>\n<content>\n1: import { describe, expect, it } from 'vitest'\n2: import type { Appointment, RawAppointment } from '@/types'\n3: import { bySortIndex, toAppointment } from '@/api/appointments'\n4: \n5: const toNaiveIso = (year: number, month: number, day: number, hours = 0, minutes = 0) => {\n6:   const pad = (n: number) => String(n).padStart(2, '0')\n7:   const date = `${year}-${pad(month)}-${pad(day)}`\n8:   return hours === 0 && minutes === 0 ? date : `${date}T${pad(hours)}:${pad(minutes)}:00`\n9: }\n10: \n11: const raw = (fields: Partial<RawAppointment>): RawAppointment => ({\n12:   sort_index: 0,\n13:   ...fields,\n14: })\n15: \n16: describe('toAppointment', () => {\n17:   describe('date-only variant (start_date / end_date)', () => {\n18:     it('passes start_date / end_date through as startDateISO / endDateISO', () => {\n19:       const result = toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-18' }))\n20:       expect(result.startDateISO).toBe('2024-01-15')\n21:       expect(result.endDateISO).toBe('2024-01-18')\n22:     })\n23: \n24:     it('formats date and time for a single-day all-day appointment', () => {\n25:       const result = toAppointment(\n26:         raw({ start_date: '2024-01-15', end_date: '2024-01-15', title: 'Jahreshauptversammlung' }),\n27:       )\n28:       expect(result.date).toBe('Mo., 15. Jan. 2024')\n29:       expect(result.time).toBe('ganztägig')\n30:       expect(result.title).toBe('Jahreshauptversammlung')\n31:     })\n32: \n33:     it('formats a multi-day span', () => {\n34:       const result = toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-18' }))\n35:       expect(result.date).toBe('Mo., 15. Jan. 2024 - Do., 18. Jan. 2024')\n36:       expect(result.time).toBe('ganztägig')\n37:     })\n38:   })\n39: \n40:   describe('datetime variant (start_date_time / end_date_time)', () => {\n41:     it('passes start_date_time / end_date_time through as startDateISO / endDateISO', () => {\n42:       const result = toAppointment(\n43:         raw({\n44:           start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n45:           end_date_time: toNaiveIso(2024, 1, 15, 16, 45),\n46:         }),\n47:       )\n48:       expect(result.startDateISO).toBe(toNaiveIso(2024, 1, 15, 14, 30))\n49:       expect(result.endDateISO).toBe(toNaiveIso(2024, 1, 15, 16, 45))\n50:     })\n51: \n52:     it('formats same-calendar-day datetime range', () => {\n53:       const result = toAppointment(\n54:         raw({\n55:           start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n56:           end_date_time: toNaiveIso(2024, 1, 15, 16, 45),\n57:           title: 'Vorstandssitzung',\n58:         }),\n59:       )\n60:       expect(result.date).toBe('Mon, 15. Jan 2024')\n61:       expect(result.time).toBe('14:30 - 16:45 Uhr')\n62:       expect(result.title).toBe('Vorstandssitzung')\n63:     })\n64: \n65:     it('1-minute difference collapses date span to a single day (tracer branch)', () => {\n66:       const result = toAppointment(\n67:         raw({\n68:           start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n69:           end_date_time: toNaiveIso(2024, 1, 15, 14, 31),\n70:         }),\n71:       )\n72:       expect(result.date).toBe('Mon, 15. Jan 2024')\n73:       expect(result.time).toBe('14:30 - 14:31 Uhr')\n74:     })\n75: \n76:     it('cross-midnight datetime span renders both endpoints', () => {\n77:       const result = toAppointment(\n78:         raw({\n79:           start_date_time: toNaiveIso(2024, 1, 15, 23, 30),\n80:           end_date_time: toNaiveIso(2024, 1, 16, 0, 30),\n81:         }),\n82:       )\n83:       expect(result.date).toBe('Mon, 15. Jan 2024 - Tue, 16. Jan 2024')\n84:       expect(result.time).toBe('23:30 - 0:30 Uhr')\n85:     })\n86:   })\n87: \n88:   describe('ISO passthrough priority (datetime beats date)', () => {\n89:     it('uses start_date_time over start_date when both are present', () => {\n90:       const result = toAppointment(\n91:         raw({\n92:           start_date: '2024-01-15',\n93:           end_date: '2024-01-15',\n94:           start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n95:           end_date_time: toNaiveIso(2024, 1, 15, 16, 45),\n96:         }),\n97:       )\n98:       expect(result.startDateISO).toBe(toNaiveIso(2024, 1, 15, 14, 30))\n99:       expect(result.endDateISO).toBe(toNaiveIso(2024, 1, 15, 16, 45))\n100:     })\n101: \n102:     it('falls back to start_date when datetime fields are absent', () => {\n103:       const result = toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-18' }))\n104:       expect(result.startDateISO).toBe('2024-01-15')\n105:       expect(result.endDateISO).toBe('2024-01-18')\n106:     })\n107: \n108:     it('throws when neither date nor datetime range is present (date/time formatters run first)', () => {\n109:       expect(() => toAppointment(raw({ title: 'Lost' }))).toThrow(\n110:         'Appointment has no start or end date',\n111:       )\n112:     })\n113:   })\n114: \n115:   describe('field pass-through and fallbacks', () => {\n116:     it('defaults title to \"-\" when title is missing', () => {\n117:       expect(toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-15' })).title).toBe(\n118:         '-',\n119:       )\n120:     })\n121: \n122:     it('defaults title to \"-\" when title is the empty string', () => {\n123:       expect(\n124:         toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-15', title: '' })).title,\n125:       ).toBe('-')\n126:     })\n127: \n128:     it('passes description through when present', () => {\n129:       expect(\n130:         toAppointment(\n131:           raw({\n132:             start_date: '2024-01-15',\n133:             end_date: '2024-01-15',\n134:             description: 'Treffen im Clubhaus',\n135:           }),\n136:         ).description,\n137:       ).toBe('Treffen im Clubhaus')\n138:     })\n139: \n140:     it('passes link through when present', () => {\n141:       expect(\n142:         toAppointment(\n143:           raw({\n144:             start_date: '2024-01-15',\n145:             end_date: '2024-01-15',\n146:             link: 'https://example.org/event',\n147:           }),\n148:         ).link,\n149:       ).toBe('https://example.org/event')\n150:     })\n151: \n152:     it('leaves description and link undefined when absent', () => {\n153:       const result = toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-15' }))\n154:       expect(result.description).toBeUndefined()\n155:       expect(result.link).toBeUndefined()\n156:     })\n157:   })\n158: \n159:   describe('propagates formatter failure for appointment with no dates', () => {\n160:     it('throws when neither date nor datetime range is present', () => {\n161:       expect(() => toAppointment(raw({}))).toThrow('Appointment has no start or end date')\n162:     })\n163: \n164:     it('throws with only a start_date', () => {\n165:       expect(() => toAppointment(raw({ start_date: '2024-01-15' }))).toThrow(\n166:         'Appointment has no start or end date',\n167:       )\n168:     })\n169:   })\n170: \n171:   it('produces a full Appointment shape for a representative input', () => {\n172:     const result: Appointment = toAppointment(\n173:       raw({\n174:         sort_index: 3,\n175:         title: 'Pokalspiel',\n176:         description: 'Austragung im heimischen Stadion',\n177:         link: 'https://sve-eutingen.de/spiel',\n178:         start_date_time: toNaiveIso(2024, 5, 11, 15, 0),\n179:         end_date_time: toNaiveIso(2024, 5, 11, 16, 30),\n180:       }),\n181:     )\n182:     expect(result).toEqual({\n183:       date: 'Sat, 11. May 2024',\n184:       time: '15:00 - 16:30 Uhr',\n185:       title: 'Pokalspiel',\n186:       description: 'Austragung im heimischen Stadion',\n187:       link: 'https://sve-eutingen.de/spiel',\n188:       startDateISO: toNaiveIso(2024, 5, 11, 15, 0),\n189:       endDateISO: toNaiveIso(2024, 5, 11, 16, 30),\n190:     })\n191:   })\n192: })\n193: \n194: describe('bySortIndex', () => {\n195:   const cases: Array<[RawAppointment, RawAppointment, number]> = [\n196:     [raw({ sort_index: 1 }), raw({ sort_index: 2 }), -1],\n197:     [raw({ sort_index: 2 }), raw({ sort_index: 1 }), 1],\n198:     [raw({ sort_index: 5 }), raw({ sort_index: 5 }), 0],\n199:     [raw({ sort_index: 0 }), raw({ sort_index: 10 }), -10],\n200:     [raw({ sort_index: 10 }), raw({ sort_index: 0 }), 10],\n201:     [raw({ sort_index: -3 }), raw({ sort_index: -1 }), -2],\n202:     [raw({ sort_index: -1 }), raw({ sort_index: -3 }), 2],\n203:   ]\n204:   for (const [a, b, expected] of cases) {\n205:     it(`sort_index ${a.sort_index} vs ${b.sort_index} -> ${expected}`, () => {\n206:       expect(bySortIndex(a, b)).toBe(expected)\n207:     })\n208:   }\n209: \n210:   it('sorts an array of raw appointments ascending by sort_index', () => {\n211:     const items: RawAppointment[] = [\n212:       raw({ sort_index: 3, title: 'c' }),\n213:       raw({ sort_index: 1, title: 'a' }),\n214:       raw({ sort_index: 2, title: 'b' }),\n215:       raw({ sort_index: 0, title: 'root' }),\n216:     ]\n217:     expect([...items].sort(bySortIndex).map((i) => i.title)).toEqual(['root', 'a', 'b', 'c'])\n218:   })\n219: \n220:   it('is a stable comparator (equal sort_index returns 0)', () => {\n221:     const a = raw({ sort_index: 7, title: 'a' })\n222:     const b = raw({ sort_index: 7, title: 'b' })\n223:     expect(bySortIndex(a, b)).toBe(0)\n224:   })\n225: })\n\n(End of file - total 225 lines)\n</content>",
+            "metadata": {
+              "preview": "import { describe, expect, it } from 'vitest'\nimport type { Appointment, RawAppointment } from '@/types'\nimport { bySortIndex, toAppointment } from '@/api/appointments'\n\nconst toNaiveIso = (year: number, month: number, day: number, hours = 0, minutes = 0) => {\n  const pad = (n: number) => String(n).padStart(2, '0')\n  const date = `${year}-${pad(month)}-${pad(day)}`\n  return hours === 0 && minutes === 0 ? date : `${date}T${pad(hours)}:${pad(minutes)}:00`\n}\n\nconst raw = (fields: Partial<RawAppointment>): RawAppointment => ({\n  sort_index: 0,\n  ...fields,\n})\n\ndescribe('toAppointment', () => {\n  describe('date-only variant (start_date / end_date)', () => {\n    it('passes start_date / end_date through as startDateISO / endDateISO', () => {\n      const result = toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-18' }))\n      expect(result.startDateISO).toBe('2024-01-15')",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/api/appointments.test.ts",
+                "text": "import { describe, expect, it } from 'vitest'\nimport type { Appointment, RawAppointment } from '@/types'\nimport { bySortIndex, toAppointment } from '@/api/appointments'\n\nconst toNaiveIso = (year: number, month: number, day: number, hours = 0, minutes = 0) => {\n  const pad = (n: number) => String(n).padStart(2, '0')\n  const date = `${year}-${pad(month)}-${pad(day)}`\n  return hours === 0 && minutes === 0 ? date : `${date}T${pad(hours)}:${pad(minutes)}:00`\n}\n\nconst raw = (fields: Partial<RawAppointment>): RawAppointment => ({\n  sort_index: 0,\n  ...fields,\n})\n\ndescribe('toAppointment', () => {\n  describe('date-only variant (start_date / end_date)', () => {\n    it('passes start_date / end_date through as startDateISO / endDateISO', () => {\n      const result = toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-18' }))\n      expect(result.startDateISO).toBe('2024-01-15')\n      expect(result.endDateISO).toBe('2024-01-18')\n    })\n\n    it('formats date and time for a single-day all-day appointment', () => {\n      const result = toAppointment(\n        raw({ start_date: '2024-01-15', end_date: '2024-01-15', title: 'Jahreshauptversammlung' }),\n      )\n      expect(result.date).toBe('Mo., 15. Jan. 2024')\n      expect(result.time).toBe('ganztägig')\n      expect(result.title).toBe('Jahreshauptversammlung')\n    })\n\n    it('formats a multi-day span', () => {\n      const result = toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-18' }))\n      expect(result.date).toBe('Mo., 15. Jan. 2024 - Do., 18. Jan. 2024')\n      expect(result.time).toBe('ganztägig')\n    })\n  })\n\n  describe('datetime variant (start_date_time / end_date_time)', () => {\n    it('passes start_date_time / end_date_time through as startDateISO / endDateISO', () => {\n      const result = toAppointment(\n        raw({\n          start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n          end_date_time: toNaiveIso(2024, 1, 15, 16, 45),\n        }),\n      )\n      expect(result.startDateISO).toBe(toNaiveIso(2024, 1, 15, 14, 30))\n      expect(result.endDateISO).toBe(toNaiveIso(2024, 1, 15, 16, 45))\n    })\n\n    it('formats same-calendar-day datetime range', () => {\n      const result = toAppointment(\n        raw({\n          start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n          end_date_time: toNaiveIso(2024, 1, 15, 16, 45),\n          title: 'Vorstandssitzung',\n        }),\n      )\n      expect(result.date).toBe('Mon, 15. Jan 2024')\n      expect(result.time).toBe('14:30 - 16:45 Uhr')\n      expect(result.title).toBe('Vorstandssitzung')\n    })\n\n    it('1-minute difference collapses date span to a single day (tracer branch)', () => {\n      const result = toAppointment(\n        raw({\n          start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n          end_date_time: toNaiveIso(2024, 1, 15, 14, 31),\n        }),\n      )\n      expect(result.date).toBe('Mon, 15. Jan 2024')\n      expect(result.time).toBe('14:30 - 14:31 Uhr')\n    })\n\n    it('cross-midnight datetime span renders both endpoints', () => {\n      const result = toAppointment(\n        raw({\n          start_date_time: toNaiveIso(2024, 1, 15, 23, 30),\n          end_date_time: toNaiveIso(2024, 1, 16, 0, 30),\n        }),\n      )\n      expect(result.date).toBe('Mon, 15. Jan 2024 - Tue, 16. Jan 2024')\n      expect(result.time).toBe('23:30 - 0:30 Uhr')\n    })\n  })\n\n  describe('ISO passthrough priority (datetime beats date)', () => {\n    it('uses start_date_time over start_date when both are present', () => {\n      const result = toAppointment(\n        raw({\n          start_date: '2024-01-15',\n          end_date: '2024-01-15',\n          start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n          end_date_time: toNaiveIso(2024, 1, 15, 16, 45),\n        }),\n      )\n      expect(result.startDateISO).toBe(toNaiveIso(2024, 1, 15, 14, 30))\n      expect(result.endDateISO).toBe(toNaiveIso(2024, 1, 15, 16, 45))\n    })\n\n    it('falls back to start_date when datetime fields are absent', () => {\n      const result = toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-18' }))\n      expect(result.startDateISO).toBe('2024-01-15')\n      expect(result.endDateISO).toBe('2024-01-18')\n    })\n\n    it('throws when neither date nor datetime range is present (date/time formatters run first)', () => {\n      expect(() => toAppointment(raw({ title: 'Lost' }))).toThrow(\n        'Appointment has no start or end date',\n      )\n    })\n  })\n\n  describe('field pass-through and fallbacks', () => {\n    it('defaults title to \"-\" when title is missing', () => {\n      expect(toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-15' })).title).toBe(\n        '-',\n      )\n    })\n\n    it('defaults title to \"-\" when title is the empty string', () => {\n      expect(\n        toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-15', title: '' })).title,\n      ).toBe('-')\n    })\n\n    it('passes description through when present', () => {\n      expect(\n        toAppointment(\n          raw({\n            start_date: '2024-01-15',\n            end_date: '2024-01-15',\n            description: 'Treffen im Clubhaus',\n          }),\n        ).description,\n      ).toBe('Treffen im Clubhaus')\n    })\n\n    it('passes link through when present', () => {\n      expect(\n        toAppointment(\n          raw({\n            start_date: '2024-01-15',\n            end_date: '2024-01-15',\n            link: 'https://example.org/event',\n          }),\n        ).link,\n      ).toBe('https://example.org/event')\n    })\n\n    it('leaves description and link undefined when absent', () => {\n      const result = toAppointment(raw({ start_date: '2024-01-15', end_date: '2024-01-15' }))\n      expect(result.description).toBeUndefined()\n      expect(result.link).toBeUndefined()\n    })\n  })\n\n  describe('propagates formatter failure for appointment with no dates', () => {\n    it('throws when neither date nor datetime range is present', () => {\n      expect(() => toAppointment(raw({}))).toThrow('Appointment has no start or end date')\n    })\n\n    it('throws with only a start_date', () => {\n      expect(() => toAppointment(raw({ start_date: '2024-01-15' }))).toThrow(\n        'Appointment has no start or end date',\n      )\n    })\n  })\n\n  it('produces a full Appointment shape for a representative input', () => {\n    const result: Appointment = toAppointment(\n      raw({\n        sort_index: 3,\n        title: 'Pokalspiel',\n        description: 'Austragung im heimischen Stadion',\n        link: 'https://sve-eutingen.de/spiel',\n        start_date_time: toNaiveIso(2024, 5, 11, 15, 0),\n        end_date_time: toNaiveIso(2024, 5, 11, 16, 30),\n      }),\n    )\n    expect(result).toEqual({\n      date: 'Sat, 11. May 2024',\n      time: '15:00 - 16:30 Uhr',\n      title: 'Pokalspiel',\n      description: 'Austragung im heimischen Stadion',\n      link: 'https://sve-eutingen.de/spiel',\n      startDateISO: toNaiveIso(2024, 5, 11, 15, 0),\n      endDateISO: toNaiveIso(2024, 5, 11, 16, 30),\n    })\n  })\n})\n\ndescribe('bySortIndex', () => {\n  const cases: Array<[RawAppointment, RawAppointment, number]> = [\n    [raw({ sort_index: 1 }), raw({ sort_index: 2 }), -1],\n    [raw({ sort_index: 2 }), raw({ sort_index: 1 }), 1],\n    [raw({ sort_index: 5 }), raw({ sort_index: 5 }), 0],\n    [raw({ sort_index: 0 }), raw({ sort_index: 10 }), -10],\n    [raw({ sort_index: 10 }), raw({ sort_index: 0 }), 10],\n    [raw({ sort_index: -3 }), raw({ sort_index: -1 }), -2],\n    [raw({ sort_index: -1 }), raw({ sort_index: -3 }), 2],\n  ]\n  for (const [a, b, expected] of cases) {\n    it(`sort_index ${a.sort_index} vs ${b.sort_index} -> ${expected}`, () => {\n      expect(bySortIndex(a, b)).toBe(expected)\n    })\n  }\n\n  it('sorts an array of raw appointments ascending by sort_index', () => {\n    const items: RawAppointment[] = [\n      raw({ sort_index: 3, title: 'c' }),\n      raw({ sort_index: 1, title: 'a' }),\n      raw({ sort_index: 2, title: 'b' }),\n      raw({ sort_index: 0, title: 'root' }),\n    ]\n    expect([...items].sort(bySortIndex).map((i) => i.title)).toEqual(['root', 'a', 'b', 'c'])\n  })\n\n  it('is a stable comparator (equal sort_index returns 0)', () => {\n    const a = raw({ sort_index: 7, title: 'a' })\n    const b = raw({ sort_index: 7, title: 'b' })\n    expect(bySortIndex(a, b)).toBe(0)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 225,
+                "totalLines": 225,
+                "truncated": false
+              }
+            },
+            "title": "tests/api/appointments.test.ts",
+            "time": {
+              "start": 1784798827033,
+              "end": 1784798827038
+            }
+          },
+          "id": "prt_f8e4cd216001WXAc6uUoqk1wsg",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c94dc001G7GeKg1iPzUzvy"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_35e4",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/src/api/appointments.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/src/api/appointments.ts</path>\n<type>file</type>\n<content>\n1: import { formatDatespan, formatTimespan } from '@/utils'\n2: import type { RawAppointment, Appointment } from '@/types'\n3: import { BACKEND_API } from 'astro:env/client'\n4: \n5: export function bySortIndex(a: RawAppointment, b: RawAppointment) {\n6:   return a.sort_index - b.sort_index\n7: }\n8: \n9: export function toAppointment(appointment: RawAppointment): Appointment {\n10:   let startISO: string | undefined\n11:   let endISO: string | undefined\n12:   if (appointment.start_date_time) {\n13:     startISO = appointment.start_date_time\n14:     endISO = appointment.end_date_time\n15:   } else if (appointment.start_date) {\n16:     startISO = appointment.start_date\n17:     endISO = appointment.end_date\n18:   }\n19:   return {\n20:     date: formatDatespan(appointment),\n21:     time: formatTimespan(appointment),\n22:     title: appointment.title || '-',\n23:     description: appointment.description,\n24:     link: appointment.link,\n25:     startDateISO: startISO,\n26:     endDateISO: endISO,\n27:   }\n28: }\n29: \n30: export async function getAppointments(): Promise<Appointment[]> {\n31:   const response = await fetch(`${BACKEND_API}/calendar/appointments`)\n32:   if (!response.ok) {\n33:     throw new Error(`Failed to load appointments: ${response.status} ${response.statusText}`)\n34:   }\n35:   const appointments: RawAppointment[] = await response.json()\n36:   return appointments.sort(bySortIndex).map(toAppointment)\n37: }\n\n(End of file - total 37 lines)\n</content>",
+            "metadata": {
+              "preview": "import { formatDatespan, formatTimespan } from '@/utils'\nimport type { RawAppointment, Appointment } from '@/types'\nimport { BACKEND_API } from 'astro:env/client'\n\nexport function bySortIndex(a: RawAppointment, b: RawAppointment) {\n  return a.sort_index - b.sort_index\n}\n\nexport function toAppointment(appointment: RawAppointment): Appointment {\n  let startISO: string | undefined\n  let endISO: string | undefined\n  if (appointment.start_date_time) {\n    startISO = appointment.start_date_time\n    endISO = appointment.end_date_time\n  } else if (appointment.start_date) {\n    startISO = appointment.start_date\n    endISO = appointment.end_date\n  }\n  return {\n    date: formatDatespan(appointment),",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/src/api/appointments.ts",
+                "text": "import { formatDatespan, formatTimespan } from '@/utils'\nimport type { RawAppointment, Appointment } from '@/types'\nimport { BACKEND_API } from 'astro:env/client'\n\nexport function bySortIndex(a: RawAppointment, b: RawAppointment) {\n  return a.sort_index - b.sort_index\n}\n\nexport function toAppointment(appointment: RawAppointment): Appointment {\n  let startISO: string | undefined\n  let endISO: string | undefined\n  if (appointment.start_date_time) {\n    startISO = appointment.start_date_time\n    endISO = appointment.end_date_time\n  } else if (appointment.start_date) {\n    startISO = appointment.start_date\n    endISO = appointment.end_date\n  }\n  return {\n    date: formatDatespan(appointment),\n    time: formatTimespan(appointment),\n    title: appointment.title || '-',\n    description: appointment.description,\n    link: appointment.link,\n    startDateISO: startISO,\n    endDateISO: endISO,\n  }\n}\n\nexport async function getAppointments(): Promise<Appointment[]> {\n  const response = await fetch(`${BACKEND_API}/calendar/appointments`)\n  if (!response.ok) {\n    throw new Error(`Failed to load appointments: ${response.status} ${response.statusText}`)\n  }\n  const appointments: RawAppointment[] = await response.json()\n  return appointments.sort(bySortIndex).map(toAppointment)\n}",
+                "lineStart": 1,
+                "lineEnd": 37,
+                "totalLines": 37,
+                "truncated": false
+              }
+            },
+            "title": "src/api/appointments.ts",
+            "time": {
+              "start": 1784798827274,
+              "end": 1784798827279
+            }
+          },
+          "id": "prt_f8e4cd306001V8OfLw3p7Ve6tA",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c94dc001G7GeKg1iPzUzvy"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10852,
+            "input": 10673,
+            "output": 51,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01519988,
+          "id": "prt_f8e4cd3520014GU1dIIUNrZvcM",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4c94dc001G7GeKg1iPzUzvy"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e4c00c7001Rp3P4uSfT91YYJ",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.02090608,
+        "tokens": {
+          "total": 14495,
+          "input": 14114,
+          "output": 253,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784798827458,
+          "completed": 1784798856789
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e4cd3c2001RDpfq7budlqgED",
+        "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk"
+      },
+      "parts": [
+        {
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-start",
+          "id": "prt_f8e4cfe64001eWYUWdVXM5QsUI",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4cd3c2001RDpfq7budlqgED"
+        },
+        {
+          "type": "reasoning",
+          "text": "Now let me check the tests run and the build/check pass. The brief asks me to \"verify via bun run build\" but that's part of acceptance criteria — the review report should note if these weren't verified. Actually the brief says \"report... requirements that look implemented\". Let me check whether tests/build pass. But the brief is focused on diff vs spec. Let me run tests + check to assess.\n\nActually, the brief says: \"Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong.\"\n\nLet me verify what's actually passing — running tests would tell me. Let me do that. Also need to look at formatDatespan/formatTimespan behavior to judgetest correctness.",
+          "time": {
+            "start": 1784798838377,
+            "end": 1784798851877
+          },
+          "id": "prt_f8e4cfe69001uoF2ExcmYF0osw",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4cd3c2001RDpfq7budlqgED"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_0e11",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run test 2>&1 | tail -40; echo \"---EXIT $?---\"",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "$ vitest run\n11:27:34 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:11481) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:11482) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  2 passed (2)\n      Tests  64 passed (64)\n   Start at  11:27:34\n   Duration  2.29s (transform 79ms, setup 100ms, import 3.74s, tests 33ms, environment 430ms)\n\n---EXIT 0---\n",
+            "metadata": {
+              "output": "$ vitest run\n11:27:34 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:11481) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:11482) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  2 passed (2)\n      Tests  64 passed (64)\n   Start at  11:27:34\n   Duration  2.29s (transform 79ms, setup 100ms, import 3.74s, tests 33ms, environment 430ms)\n\n---EXIT 0---\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run test 2>&1 | tail -40; echo \"---EXIT $?---\"",
+            "time": {
+              "start": 1784798856687,
+              "end": 1784798856692
+            }
+          },
+          "id": "prt_f8e4d3327001xse1OnWpdJesDk",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4cd3c2001RDpfq7budlqgED"
+        },
+        {
+          "type": "tool",
+          "tool": "grep",
+          "callID": "call_51ed",
+          "state": {
+            "status": "completed",
+            "input": {
+              "pattern": "formatDatespan|formatTimespan",
+              "path": "/Users/mseele/dev/sve/sve-website/src/utils.ts"
+            },
+            "output": "Found 5 matches\n/Users/mseele/dev/sve/sve-website/src/utils.ts:\n  Line 23: export function formatDatespan(appointment: RawAppointment): string {\n\n  Line 44: export function formatTimespan(appointment: RawAppointment) {\n\n\n/Users/mseele/dev/sve/sve-website/src/api/appointments.ts:\n  Line 1: import { formatDatespan, formatTimespan } from '@/utils'\n\n  Line 20:     date: formatDatespan(appointment),\n\n  Line 21:     time: formatTimespan(appointment),\n",
+            "metadata": {
+              "matches": 5,
+              "truncated": false
+            },
+            "title": "formatDatespan|formatTimespan",
+            "time": {
+              "start": 1784798852286,
+              "end": 1784798852326
+            }
+          },
+          "id": "prt_f8e4d34bb001oTPYH9667pVsqs",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4cd3c2001RDpfq7budlqgED"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 14495,
+            "input": 14114,
+            "output": 253,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.02090608,
+          "id": "prt_f8e4d462b0010LIYy90hrmvUrd",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4cd3c2001RDpfq7budlqgED"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e4c00c7001Rp3P4uSfT91YYJ",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01045676,
+        "tokens": {
+          "total": 15280,
+          "input": 3999,
+          "output": 465,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 10816
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784798856794,
+          "completed": 1784798911527
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e4d465a001K2n9d92IDl7ozW",
+        "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk"
+      },
+      "parts": [
+        {
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-start",
+          "id": "prt_f8e4d4b97001ztE5opKbEXVSMH",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4d465a001K2n9d92IDl7ozW"
+        },
+        {
+          "type": "reasoning",
+          "text": "Tests pass. Now let me read formatDatespan/formatTimespan to check the test expectations are correct (not \"wrong\") — but actually, since tests pass, the implementation matches test expectations. The \"wrong\" category is about implementation looking wrong vs spec. Let me consider findings.\n\nSpec asks:\n1. Export toAppointment and bySortIndex — ✓ done (lines 5, 9).\n2. tests/api/appointments.test.ts covers both functions with edge-case table rows — ✓ file exists, 64 tests pass. Tests use `it()` individually for bySortIndex cases rather than a single table-driven `it.each`. Actually they use a `for` loop generating `it()` calls — that's table-driven style. OK. But the spec says \"table-driven tests\" — using `for...of` loop generating it() is fine.\n3. Appointments page still renders correctly — verify via `bun run build` — NOT RUN. I should check. Actually the brief asks ME to report; the criteria says verify via build. Let me run build. Actually, let me run `bun run build` to check, since the diff only changed export keywords (no behaviour change) build will pass. But the criteria requires verification. Let me run it.\n4. All tests green, `bun run check` green — tests green (verified). check? Let me run.\n\nLet me run both in parallel.\n\nAlso note: scope creep? The test file calls formatDatespan/formatTimespan indirectly (via toAppointment) — that's expected. No unasked behaviour in the diff itself. The diff is pure export change. \n\nWait — only modification is export keywords. The test file is untracked (new file) — that's expected per spec.\n\nLet me actually verify build + check pass since those are acceptancecriteria.",
+          "time": {
+            "start": 1784798858138,
+            "end": 1784798891790
+          },
+          "id": "prt_f8e4d4b9a001xuByAyj27Y7iAD",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4d465a001K2n9d92IDl7ozW"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_1632",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run check 2>&1 | tail -20; echo \"---CHECK EXIT $?---\"",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "\nResult (78 files): \n- 0 errors\n- 0 warnings\n- 2 hints\n\n11:28:28 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:11780) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:11781) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  2 passed (2)\n      Tests  64 passed (64)\n   Start at  11:28:28\n   Duration  2.00s (transform 60ms, setup 101ms, import 3.28s, tests 22ms, environment 385ms)\n\n---CHECK EXIT 0---\n",
+            "metadata": {
+              "output": "\nResult (78 files): \n- 0 errors\n- 0 warnings\n- 2 hints\n\n11:28:28 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:11780) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:11781) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  2 passed (2)\n      Tests  64 passed (64)\n   Start at  11:28:28\n   Duration  2.00s (transform 60ms, setup 101ms, import 3.28s, tests 22ms, environment 385ms)\n\n---CHECK EXIT 0---\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run check 2>&1 | tail -20; echo \"---CHECK EXIT $?---\"",
+            "time": {
+              "start": 1784798910588,
+              "end": 1784798910590
+            }
+          },
+          "id": "prt_f8e4dcf15001lHM5AuBPA6aAGM",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4d465a001K2n9d92IDl7ozW"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_d6c6",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run build 2>&1 | tail -15; echo \"---BUILD EXIT $?---\"",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "11:28:19   ├─ /index.html (+10ms) \n11:28:19 ✓ Completed in 983ms.\n\n11:28:19 [build] Rearranging server assets...\n11:28:19 [build] ✓ Completed in 2.59s.\n11:28:19 [@astrojs/netlify] Emitted _redirects\n11:28:19 [@astrojs/netlify] Bundling function ../../../build/entry.mjs\n11:28:20 [@astrojs/netlify] Generated SSR Function\n11:28:20 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`\n\u001b[32mastro-robots-txt:\u001b[0m `robots.txt` is created.\n\n11:28:20 [pagefind] Pagefind indexed 16 pages\n11:28:20 [pagefind] Pagefind wrote index to /Users/mseele/dev/sve/sve-website/dist/pagefind\n11:28:20 [build] Server built in 6.22s\n11:28:20 [build] Complete!\n---BUILD EXIT 0---\n",
+            "metadata": {
+              "output": "11:28:19   ├─ /index.html (+10ms) \n11:28:19 ✓ Completed in 983ms.\n\n11:28:19 [build] Rearranging server assets...\n11:28:19 [build] ✓ Completed in 2.59s.\n11:28:19 [@astrojs/netlify] Emitted _redirects\n11:28:19 [@astrojs/netlify] Bundling function ../../../build/entry.mjs\n11:28:20 [@astrojs/netlify] Generated SSR Function\n11:28:20 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`\n\u001b[32mastro-robots-txt:\u001b[0m `robots.txt` is created.\n\n11:28:20 [pagefind] Pagefind indexed 16 pages\n11:28:20 [pagefind] Pagefind wrote index to /Users/mseele/dev/sve/sve-website/dist/pagefind\n11:28:20 [build] Server built in 6.22s\n11:28:20 [build] Complete!\n---BUILD EXIT 0---\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run build 2>&1 | tail -15; echo \"---BUILD EXIT $?---\"",
+            "time": {
+              "start": 1784798900744,
+              "end": 1784798900753
+            }
+          },
+          "id": "prt_f8e4dd0e9001t5sFG54slq7gdW",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4d465a001K2n9d92IDl7ozW"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 15280,
+            "input": 3999,
+            "output": 465,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 10816
+            }
+          },
+          "cost": 0.01045676,
+          "id": "prt_f8e4e18b0001VyNQgbhpvbTteE",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4d465a001K2n9d92IDl7ozW"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e4c00c7001Rp3P4uSfT91YYJ",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.02747288,
+        "tokens": {
+          "total": 17002,
+          "input": 15602,
+          "output": 1272,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784798911532,
+          "completed": 1784799060741
+        },
+        "finish": "stop",
+        "id": "msg_f8e4e1c2c001EL501obHEZB9vc",
+        "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk"
+      },
+      "parts": [
+        {
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-start",
+          "id": "prt_f8e4e22b0001ufViQa5esqOFEe",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4e1c2c001EL501obHEZB9vc"
+        },
+        {
+          "type": "reasoning",
+          "text": "All checks pass. Now write the report.\n\nSpec acceptance criteria:\n- [ ] toAppointment and bySortIndex exported — DONE\n- [ ] tests/api/appointments.test.ts covers both with edge-case table rows — DONE\n- [ ] Appointments page renders correctly, verify via bun run build — DONE (build green)\n- [ ] All tests green, bun run check green — DONE\n\nFindings — (a) missing/partial:\n- The new test file `tests/api/appointments.test.ts` is untracked (not `git add`-ed). Spec criterion: \"`tests/api/appointments.test.ts` covers both functions\". Not staged. Technically present. Marginal — but `git diff HEAD` per the brief shows only the .ts change. Will note as a process gap not a content gap? The brief instructions say \"Quote the spec line for each finding.\" Let me note it.\n\n(b) scope creep:\n- None. The diff is pure (export keyword added). No behaviour change. Test file新增 is requested.\n\nActually wait — is the test file scope creep? No, spec explicitly asks for it.\n\n(c) implemented but looks wrong:\n- Tests pass and match implementation. The test for \"throws when neither date nor datetime range is present\" expects error 'Appointment has no start or end date' — this error comes from formatDatespan/formatTimespan (called before the startISO branch). The test label \"date/time formatters run first\" — accurate. Implementation fine.\n\n- The single-day datetime test expects `time` to be '14:30 - 16:45 Uhr' via formatTimespan. Verified tests pass.\n\nHonestly everything looks correct. Let me see if there's anything subtle.\n\nOne thing: spec says \"table-driven tests: single-day vs datetime variants... the start/end ISO passthrough logic.\" The test suite uses `describe` blocks with individual `it()` rather than `it.each(table)` but the bySortIndex section uses an array table iterated via for-loop generating it() — that IS table-driven. The toAppointment side uses individual its but with structured describe groupings. The spec says \"Cover them with table-driven tests\". The bySortIndex is genuinely table-driven. toAppointment side is more \"case-based\" but the spec phrasing might allow. Edge covers are present. Marginal.\n\nAnother subtle thing: spec says \"missing-field fallbacks\". Tests verify title defaulting to '-', description/link undefined when absent. ✓. But what about start_date_time present but end_date_time undefined? No test for \"datetime variant with missing end_date_time\" (asymmetric). Looking at lines 12-18: if start_date_time is truthy, endISO = end_date_time (could be undefined). Not tested. That's a \"missing-field fallback\" gap on the datetime side — partial coverage. Could note.\n\nSpec: \"the start/end ISO passthrough logic\" — tests cover datetime-full, date-full, datetime beats date, fallback to date, both absent throws. Missing: start_date_time present but end_date_time absent (asymmetric datetime). And start_date present but end_date absent → falls into the `else if start_date` branch, endISO = end_date (undefined); not tested as ISO passthrough, but the \"throws with only a start_date\" test triggers formatDatespan throw before reaching ISO, so it doesn't actually exercise ISO fallback. Marginally untested.\n\nLet me write the report now under 400 words.",
+          "time": {
+            "start": 1784798913203,
+            "end": 1784799033099
+          },
+          "id": "prt_f8e4e22b3001oyvaxyFva4C8Cn",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4e1c2c001EL501obHEZB9vc"
+        },
+        {
+          "type": "text",
+          "text": "## Review report — issue #399\n\nAll four acceptance criteria verified green: exports added (`src/api/appointments.ts:5`, `:9`), `tests/api/appointments.test.ts` present, `bun run build` exit 0, `bun run check` exit 0, `bun run test` 64/64 passing.\n\n### (a) Missing or partial\n\n- **\"`tests/api/appointments.test.ts` covers both functions with edge-case table rows\"** — partial. `git status` shows the test file as `?? tests/api/` (untracked); `git diff HEAD` therefore only surfaces the two `export` additions. The review brief diffed against HEAD, so the test artefact is invisible to that diff and not staged. Content exists; process gap.\n- **\"missing-field fallbacks\"** — partial on the datetime side. The ISO passthrough block (`src/api/appointments.ts:12-18`) assigns `endISO = appointment.end_date_time` whenever `start_date_time` is truthy; the asymmetric case — `start_date_time` present, `end_date_time` absent — has no table row and silently yields `endDateISO: undefined`. Only symmetric datetime inputs are covered (`tests/api/appointments.test.ts:42-50`). Likewise the `else if (start_date)` branch with `end_date` absent is asserted only via the `formatDatespan` throw path (`:164-168`), never as an ISO passthrough.\n\n### (b) Scope creep\n\nNone. The production diff is exactly the two `export` keyword additions spec'd as \"pure refactor, no behaviour change\"; `getAppointments`, the comparator arithmetic, and the field-mapping object are byte-identical to HEAD. The test file is what the spec explicitly requested, not creep.\n\n### (c) Implemented but looks wrong\n\n- **\"the start/end ISO passthrough logic\"** — implemented, but the throw-assertions in `tests/api/appointments.test.ts:108-112` and `:160-168` rely on `formatDatespan` throwing *before* the `startISO`/`endISO` branch runs. They therefore exercise the formatter's precondition, not the passthrough — the `let startISO`/`let endISO` declarations can remain `undefined` on the no-dates path and the test never inspects that, so \"passthrough logic\" for the both-absent case is asserted only indirectly. Not wrong behaviour, but the test name overstates what the row proves.\n- **Pending EventAvailability independence**: spec notes \"this file has no -1 sentinel and no availability logic\" — confirmed true in the diff; no drift introduced.",
+          "time": {
+            "start": 1784799033107,
+            "end": 1784799060638
+          },
+          "id": "prt_f8e4ff713001LYk6RkwwGG0EAr",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4e1c2c001EL501obHEZB9vc"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "439ff327c8c125b5715155b367664e6fe675e56f",
+          "type": "step-finish",
+          "tokens": {
+            "total": 17002,
+            "input": 15602,
+            "output": 1272,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.02747288,
+          "id": "prt_f8e5062dc001DN7sSRJs0PjrY0",
+          "sessionID": "ses_071b3ff41ffeK0e11nR69GthKk",
+          "messageID": "msg_f8e4e1c2c001EL501obHEZB9vc"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+Review the uncommitted changes in /Users/mseele/dev/sve/sve-website against HEAD (a58eccd).
+
+Diff command: `git diff HEAD`
+Commit list: none yet (changes are working-tree only).
+
+The originating spec is GitHub issue #399 in mseele/sve-website. Its body (verbatim):
+
+---
+## What to build
+
+`toAppointment` and `bySortIndex` currently sit un-exported inside the `getAppointments` fetch wrapper in `src/api/appointments.ts`. Export them (pure refactor, no behaviour change) so they're independently unit-testable with zero mocking.
+
+Cover them with table-driven tests: single-day vs datetime variants (start_date_time present vs absent), missing-field fallbacks, title defaulting to '-', sort ordering by sort_index (ascending), the start/end ISO passthrough logic.
+
+Independent of the EventAvailability decision — this file has no -1 sentinel and no availability logic.
+
+## Acceptance criteria
+
+- [ ] `toAppointment` and `bySortIndex` exported from `src/api/appointments.ts` (no behaviour change)
+- [ ] `tests/api/appointments.test.ts` covers both functions with edge-case table rows
+- [ ] Appointments page (`src/pages/termine.astro`) still renders correctly — verify via `bun run build`
+- [ ] All tests green, `bun run check` green
+---
+
+Brief: Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words. Do NOT propose code; just report.
