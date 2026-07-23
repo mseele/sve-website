@@ -1,1 +1,1 @@
-is the timezone stuff correct. we have a "special" setup that we get uct? values from the backend and want all in berlin time
+no, i want not to change the logic. understand how it works and make the tests work like that. sounds for me that we try not to work with timezones?

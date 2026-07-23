@@ -17,19 +17,19 @@
       "deletions": 0,
       "files": 0
     },
-    "cost": 1.5472949000000003,
+    "cost": 1.5884091400000002,
     "tokens": {
-      "input": 605214,
-      "output": 43672,
+      "input": 605509,
+      "output": 44280,
       "reasoning": 0,
       "cache": {
-        "read": 1953225,
+        "read": 2099479,
         "write": 0
       }
     },
     "time": {
       "created": 1784795736085,
-      "updated": 1784798016600
+      "updated": 1784798026105
     }
   },
   "messages": [
@@ -7739,21 +7739,24 @@
           "cwd": "/Users/mseele/dev/sve/sve-website",
           "root": "/Users/mseele/dev/sve/sve-website"
         },
-        "cost": 0,
+        "cost": 0.01956032,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 73288,
+          "input": 171,
+          "output": 75,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 73042
           }
         },
         "modelID": "glm-5.2",
         "providerID": "opencode-go",
         "time": {
-          "created": 1784798016593
+          "created": 1784798016593,
+          "completed": 1784798026098
         },
+        "finish": "tool-calls",
         "id": "msg_f8e407451001rvb0ODy1WJ7vAr",
         "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
       },
@@ -7781,21 +7784,116 @@
           "tool": "bash",
           "callID": "chatcmpl-tool-b164d4a25469aa3c",
           "state": {
-            "metadata": {
-              "output": "$ oxfmt\nFinished in 498ms on 205 files using 8 threads.\nok 1 file changed, 19 insertions(+), 13 deletions(-)\n"
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "rtk bun run format 2>&1 | tail -3 && rtk git add -A && rtk git commit --amend --no-edit 2>&1 | tail -5",
               "workdir": "/Users/mseele/dev/sve/sve-website"
             },
+            "output": "$ oxfmt\nFinished in 498ms on 205 files using 8 threads.\nok 1 file changed, 19 insertions(+), 13 deletions(-)\nok f66bc66\n",
+            "metadata": {
+              "output": "$ oxfmt\nFinished in 498ms on 205 files using 8 threads.\nok 1 file changed, 19 insertions(+), 13 deletions(-)\nok f66bc66\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run format 2>&1 | tail -3 && rtk git add -A && rtk git commit --amend --no-edit 2>&1 | tail -5",
             "time": {
-              "start": 1784798020811
+              "start": 1784798026020,
+              "end": 1784798026024
             }
           },
           "id": "prt_f8e407e91001NsQQS96XGvvC3P",
           "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
           "messageID": "msg_f8e407451001rvb0ODy1WJ7vAr"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5b59357af44b57926380fffed5d3ed7d128a6c84",
+          "type": "step-finish",
+          "tokens": {
+            "total": 73288,
+            "input": 171,
+            "output": 75,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 73042
+            }
+          },
+          "cost": 0.01956032,
+          "id": "prt_f8e40995000155Xh4EXisdFZV0",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e407451001rvb0ODy1WJ7vAr"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e3b8d06001W2Eb56VU7dm25g",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.02155392,
+        "tokens": {
+          "total": 73869,
+          "input": 124,
+          "output": 533,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 73212
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784798026103,
+          "completed": 1784798035960
+        },
+        "finish": "stop",
+        "id": "msg_f8e409977001DcHquolM5CC8b7",
+        "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
+      },
+      "parts": [
+        {
+          "snapshot": "5b59357af44b57926380fffed5d3ed7d128a6c84",
+          "type": "step-start",
+          "id": "prt_f8e40a9f2001kxHfLHwQFFQ7R6",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e409977001DcHquolM5CC8b7"
+        },
+        {
+          "type": "text",
+          "text": "Done. Summary of how the timezone non-handling actually works, and what I changed:\n\n## How it works (your hunch is right)\n\n**Appointments path** (`formatDatespan`/`formatTimespan`): pure wall-time pass-through. Backend `calendar.rs:172` calls `.naive_local()` and serializes `NaiveDateTime` → `\"2024-01-15T14:30:00\"` (**no offset**). Site does `parseISO` (interprets as local) + `format` (local) → wall time in = wall time out, on any machine. No TZ conversion anywhere. ✓\n\n**Events/Contentful path** (`formatDatetime`/`formatDateCompact`): backend `Vec<DateTime<Utc>>` serializes **with `Z`** → `\"2024-01-15T14:30:00Z\"`. Site hardcodes `formatInTimeZone(value, 'UTC', …)` → parses the instant, formats in UTC → stable on any machine. Not \"no TZ\" but a hardcoded UTC choice, not Berlin.\n\n**News path** (`formatDate(Date)`): bare `format(date, pattern)` → uses the runtime's local TZ. Production is Netlify UTC, so it shows the UTC-wall date.\n\nNeither path converts to Berlin. The system assumes the wall time it receives IS the display time.\n\n## What I fixed in the tests\n\nThe appointment datetime tests were using `toUtcIso` (Z-suffixed strings), but production sends **naive no-offset strings**. Under `TZ=UTC` the output coincidentally matched so tests passed, but the input shape was wrong. I:\n- Added `toNaiveIso` (no offset) and switched all `formatDatespan`/`formatTimespan` datetime tests to it — now faithful to the backend's `NaiveDateTime` serialization, and those tests are genuinely TZ-agnostic (pass on Berlin without any pin, proving the pass-through design).\n- Kept `toUtcIso` (Z) for `formatDatetime`/`formatDateCompact` — matches the `DateTime<Utc>` / Contentful path.\n- Kept `TZ=UTC` in `vitest.config.ts` — mirrors the Netlify production build runtime and makes `formatDate`/date-only `formatDatespan` deterministic (those genuinely depend on runtime TZ via bare `format`). `bun run check` gates the build, so tests must reflect the build env.\n\n37 tests pass, `bun run check` green, committed as `f66bc66`.",
+          "time": {
+            "start": 1784798030324,
+            "end": 1784798035886
+          },
+          "id": "prt_f8e40a9f4001evIvSXAHpYUaEx",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e409977001DcHquolM5CC8b7"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "5b59357af44b57926380fffed5d3ed7d128a6c84",
+          "type": "step-finish",
+          "tokens": {
+            "total": 73869,
+            "input": 124,
+            "output": 533,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 73212
+            }
+          },
+          "cost": 0.02155392,
+          "id": "prt_f8e40bfd3001hihu4wBKPSnXz8",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e409977001DcHquolM5CC8b7"
         }
       ]
     }
