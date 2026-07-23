@@ -17,19 +17,19 @@
       "deletions": 0,
       "files": 0
     },
-    "cost": 0.9080226600000001,
+    "cost": 0.9321841400000002,
     "tokens": {
-      "input": 509385,
-      "output": 17400,
+      "input": 509688,
+      "output": 17865,
       "reasoning": 0,
       "cache": {
-        "read": 455091,
+        "read": 538519,
         "write": 0
       }
     },
     "time": {
       "created": 1784795736085,
-      "updated": 1784797312353
+      "updated": 1784797320491
     }
   },
   "messages": [
@@ -69,7 +69,7 @@
             },
             {
               "file": "tests/setup.ts",
-              "patch": "Index: tests/setup.ts\n===================================================================\n--- tests/setup.ts\t\n+++ tests/setup.ts\t\n@@ -0,0 +1,7 @@\n+import { afterAll, beforeAll } from 'vitest'\n+import { setupServer } from 'msw/node'\n+\n+const server = setupServer()\n+\n+beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))\n+afterAll(() => server.close())\n\\ No newline at end of file\n",
+              "patch": "Index: tests/setup.ts\n===================================================================\n--- tests/setup.ts\t\n+++ tests/setup.ts\t\n@@ -0,0 +1,7 @@\n+import { afterAll, beforeAll } from 'vitest'\n+import { setupServer } from 'msw/node'\n+\n+const server = setupServer()\n+\n+beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))\n+afterAll(() => server.close())\n",
               "additions": 7,
               "deletions": 0,
               "status": "added"
@@ -4133,21 +4133,24 @@
           "cwd": "/Users/mseele/dev/sve/sve-website",
           "root": "/Users/mseele/dev/sve/sve-website"
         },
-        "cost": 0,
+        "cost": 0.01142374,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 41882,
+          "input": 171,
+          "output": 82,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 41629
           }
         },
         "modelID": "glm-5.2",
         "providerID": "opencode-go",
         "time": {
-          "created": 1784797312348
+          "created": 1784797312348,
+          "completed": 1784797320485
         },
+        "finish": "tool-calls",
         "id": "msg_f8e35b55c00106JtBEogXITot2",
         "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
       },
@@ -4175,21 +4178,126 @@
           "tool": "bash",
           "callID": "chatcmpl-tool-a6df41498b46c54e",
           "state": {
-            "metadata": {
-              "output": "$ oxfmt\nFinished in 459ms on 205 files using 8 threads.\nok 2 files changed, 13 insertions(+), 4 deletions(-)\n"
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "rtk bun run format 2>&1 | tail -3 && rtk git add -A && rtk git commit --amend --no-edit 2>&1 | tail -8",
               "workdir": "/Users/mseele/dev/sve/sve-website"
             },
+            "output": "$ oxfmt\nFinished in 459ms on 205 files using 8 threads.\nok 2 files changed, 13 insertions(+), 4 deletions(-)\nok 635ccd9\n",
+            "metadata": {
+              "output": "$ oxfmt\nFinished in 459ms on 205 files using 8 threads.\nok 2 files changed, 13 insertions(+), 4 deletions(-)\nok 635ccd9\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run format 2>&1 | tail -3 && rtk git add -A && rtk git commit --amend --no-edit 2>&1 | tail -8",
             "time": {
-              "start": 1784797315208
+              "start": 1784797320373,
+              "end": 1784797320378
             }
           },
           "id": "prt_f8e35bdf6001TvthoMjD52xtOe",
           "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
           "messageID": "msg_f8e35b55c00106JtBEogXITot2"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "13bd9d5e4fd496dc26bc7265e58b4d3a9424790a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 41882,
+            "input": 171,
+            "output": 82,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 41629
+            }
+          },
+          "cost": 0.01142374,
+          "id": "prt_f8e35d4f8001ArW97W31mWF1zF",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35b55c00106JtBEogXITot2"
+        },
+        {
+          "type": "patch",
+          "hash": "64f400c3c43773852dbf4bf20161297f5703a75e",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/setup.ts"
+          ],
+          "id": "prt_f8e35d5240019qWyWgntKUhBDJ",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35b55c00106JtBEogXITot2"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e1da82e001IdGPJbJBNRabtK",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01273774,
+        "tokens": {
+          "total": 42314,
+          "input": 132,
+          "output": 383,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 41799
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784797320488,
+          "completed": 1784797326061
+        },
+        "finish": "stop",
+        "id": "msg_f8e35d528001u9T10XSFOmISnw",
+        "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
+      },
+      "parts": [
+        {
+          "snapshot": "13bd9d5e4fd496dc26bc7265e58b4d3a9424790a",
+          "type": "step-start",
+          "id": "prt_f8e35dc38001PFfyprEtwopU4G",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35d528001u9T10XSFOmISnw"
+        },
+        {
+          "type": "text",
+          "text": "Done. Summary:\n\n## Code review — `#398`\n\n### Standards\nNo hard violations. Three judgement-call smells were flagged; addressed:\n- **Speculative Generality** in `tests/setup.ts` — dropped the unused `example.com` handler + `server` export; skeleton is now a bare `setupServer()` with `listen`/`close`.\n- *Duplicated Code* (5× table-test loop) and *Data Clumps* (`toUtcIso` positional args) — left as-is; idiomatic Vitest, marginal for test helpers.\n\n### Spec\nAll acceptance criteria met:\n- `vitest.config.ts` uses Astro `getViteConfig` (`@/` + `astro:env` resolve as in prod)\n- happy-dom env + MSW skeleton in `tests/setup.ts`\n- `bun run check` chains `vitest run` (tests gate the build)\n- `tests/utils.test.ts` covers every exported fn in `src/utils.ts` with edge-case rows\n\nTwo findings addressed:\n- Added a `formatTimespan` 1-minute-difference case (spec literally named that fn; the special branch actually lives in `formatDatespan` and is covered there).\n- Added a negative-value `formatCurrency` row.\n\nTwo findings noted but not acted on:\n- `formatDatespan`'s datetime branch omits `{ locale: de }` (`src/utils.ts:37-39`) — pre-existing implementation choice, out of scope for this test-harness issue; tests correctly assert actual behavior.\n- `.opencode/plugins/entire.ts` is auto-rewritten by the Entire checkpoint plugin on every commit (trailer `Entire-Checkpoint:`) — tooling artifact, not introduced scope.\n\nFinal: `bun run check` green, 37 tests passing, committed as `635ccd9`.",
+          "time": {
+            "start": 1784797322297,
+            "end": 1784797325989
+          },
+          "id": "prt_f8e35dc39001q6uDN4WK8l3AtL",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35d528001u9T10XSFOmISnw"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "13bd9d5e4fd496dc26bc7265e58b4d3a9424790a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 42314,
+            "input": 132,
+            "output": 383,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 41799
+            }
+          },
+          "cost": 0.01273774,
+          "id": "prt_f8e35eac8001NYQrJsd1jBaoVH",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35d528001u9T10XSFOmISnw"
         }
       ]
     }
