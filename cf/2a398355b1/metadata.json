@@ -24,14 +24,14 @@
       "transcript": "/cf/2a398355b1/1/full.jsonl",
       "compact_transcript": "/cf/2a398355b1/1/transcript.jsonl",
       "content_hash": "/cf/2a398355b1/1/content_hash.txt",
-      "prompt": "/cf/2a398355b1/1/prompt.txt"
+      "prompt": ""
     }
   ],
   "token_usage": {
-    "input_tokens": 156069,
+    "input_tokens": 133551,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 140275,
-    "output_tokens": 4600,
-    "api_call_count": 10
+    "cache_read_tokens": 137459,
+    "output_tokens": 3313,
+    "api_call_count": 8
   }
 }
