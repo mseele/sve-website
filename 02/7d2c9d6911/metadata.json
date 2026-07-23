@@ -3,7 +3,7 @@
   "checkpoint_id": "027d2c9d6911",
   "strategy": "manual-commit",
   "branch": "feature/tests",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "src/api/events.ts",
     "src/components/blocks/Event.astro",
@@ -17,13 +17,20 @@
       "compact_transcript": "/02/7d2c9d6911/0/transcript.jsonl",
       "content_hash": "/02/7d2c9d6911/0/content_hash.txt",
       "prompt": "/02/7d2c9d6911/0/prompt.txt"
+    },
+    {
+      "metadata": "/02/7d2c9d6911/1/metadata.json",
+      "transcript": "/02/7d2c9d6911/1/full.jsonl",
+      "compact_transcript": "/02/7d2c9d6911/1/transcript.jsonl",
+      "content_hash": "/02/7d2c9d6911/1/content_hash.txt",
+      "prompt": "/02/7d2c9d6911/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 46940,
+    "input_tokens": 90169,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 30848,
-    "output_tokens": 2913,
-    "api_call_count": 5
+    "cache_read_tokens": 31168,
+    "output_tokens": 4818,
+    "api_call_count": 8
   }
 }
