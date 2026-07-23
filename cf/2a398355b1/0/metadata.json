@@ -3,36 +3,39 @@
   "checkpoint_id": "cf2a398355b1",
   "session_id": "ses_071e257eaffeYttOk9Ktd8iL2M",
   "strategy": "manual-commit",
-  "created_at": "2026-07-23T09:01:59.910463Z",
+  "created_at": "2026-07-23T09:13:45.945733Z",
   "branch": "feature/tests",
-  "checkpoints_count": 1,
+  "checkpoints_count": 4,
   "files_touched": [
-    "tests/setup.ts",
-    "tests/utils.test.ts"
+    "tests/utils.test.ts",
+    "vitest.config.ts"
   ],
   "agent": "OpenCode",
-  "model": "",
-  "turn_id": "fb993d7e4eea",
-  "checkpoint_transcript_start": 30,
-  "transcript_lines_at_start": 30,
-  "compact_transcript_start": 30,
+  "model": "glm-5.2",
+  "turn_id": "b2f649d3f795",
+  "checkpoint_transcript_start": 39,
+  "transcript_lines_at_start": 39,
+  "compact_transcript_start": 39,
   "token_usage": {
-    "input_tokens": 133551,
+    "input_tokens": 95526,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 137459,
-    "output_tokens": 3313,
-    "api_call_count": 8
+    "cache_read_tokens": 1414706,
+    "output_tokens": 25807,
+    "api_call_count": 30
+  },
+  "session_metrics": {
+    "turn_count": 4
   },
   "initial_attribution": {
-    "calculated_at": "2026-07-23T09:01:59.892332Z",
-    "agent_lines": 13,
-    "agent_removed": 4,
-    "human_added": 67,
+    "calculated_at": "2026-07-23T09:13:45.908041Z",
+    "agent_lines": 19,
+    "agent_removed": 13,
+    "human_added": 61,
     "human_modified": 0,
     "human_removed": 0,
     "total_committed": 80,
-    "total_lines_changed": 130,
-    "agent_percentage": 13.076923076923078,
+    "total_lines_changed": 139,
+    "agent_percentage": 23.021582733812952,
     "metric_version": 2
   },
   "prompt_attributions": [
