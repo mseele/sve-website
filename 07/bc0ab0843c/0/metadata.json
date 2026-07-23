@@ -1,0 +1,41 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "07bc0ab0843c",
+  "session_id": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+  "strategy": "manual-commit",
+  "created_at": "2026-07-23T09:18:23.732203Z",
+  "branch": "feature/tests",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "bun.lockb",
+    "package.json",
+    "tests/setup.ts",
+    "tests/utils.test.ts",
+    "vitest.config.ts"
+  ],
+  "agent": "OpenCode",
+  "model": "",
+  "turn_id": "ed531326376b",
+  "checkpoint_transcript_start": 3,
+  "transcript_lines_at_start": 3,
+  "compact_transcript_start": 3,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-07-23T09:18:23.726879Z",
+    "agent_lines": 256,
+    "agent_removed": 2,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 256,
+    "total_lines_changed": 258,
+    "agent_percentage": 100,
+    "metric_version": 2
+  }
+}

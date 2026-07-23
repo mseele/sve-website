@@ -1,0 +1,387 @@
+{
+  "info": {
+    "id": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+    "slug": "swift-knight",
+    "projectID": "68d450c05733c82192ed1f31a5e40cb2ae707f59",
+    "directory": "/Users/mseele/dev/sve/sve-website",
+    "path": "",
+    "parentID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+    "title": "Standards review (@general subagent)",
+    "agent": "general",
+    "model": {
+      "id": "glm-5.2",
+      "providerID": "opencode-go",
+      "variant": "default"
+    },
+    "version": "1.18.4",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0.03792016,
+    "tokens": {
+      "input": 22518,
+      "output": 1287,
+      "reasoning": 0,
+      "cache": {
+        "read": 2816,
+        "write": 0
+      }
+    },
+    "permission": [
+      {
+        "permission": "task",
+        "pattern": "*",
+        "action": "deny"
+      }
+    ],
+    "time": {
+      "created": 1784797022026,
+      "updated": 1784797241320
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1784797022044
+        },
+        "agent": "general",
+        "model": {
+          "providerID": "opencode-go",
+          "modelID": "glm-5.2"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_f8e31475a001noibfipvAPuM3c",
+        "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "You are a code-standards reviewer. Review the diff between fixed point 9ac58360a20cefe86a272d67a6dad88ae87ea77e (HEAD~1) and HEAD in the repo at /Users/mseele/dev/sve/sve-website.\n\nDiff command: `git diff 9ac58360a20cefe86a272d67a6dad88ae87ea77e...HEAD` (three-dot, merge-base). Commits: `git log 9ac58360a20cefe86a272d67a6dad88ae87ea77e..HEAD --oneline` shows one commit \"test: stand up Vitest harness + cover utils (#398)\".\n\nRead the changed files directly with the Read tool. The change adds: `vitest.config.ts`, `tests/setup.ts`, `tests/utils.test.ts`, modifies `package.json`.\n\nStandards sources in this repo:\n- /Users/mseele/dev/sve/sve-website/AGENTS.md (coding guidelines: formatter oxfmt; semicolons false; single quotes; tab width 2; print width 100; trailing commas all; imports group external → @/ alias → relative, explicit extensions for Astro components; TS strict, explicit types, `interface` for objects `type` for unions, export types from src/types.ts, Zod for runtime validation; PascalCase components, camelCase TS files/vars, Props interface; Tailwind v4; early returns, optional chaining, descriptive errors).\n\nAlso always carry this smell baseline (Fowler code smells) — each is a labelled heuristic judgement call, never a hard violation; documented repo standard overrides:\n- Mysterious Name\n- Duplicated Code\n- Feature Envy\n- Data Clumps\n- Primitive Obsession\n- Repeated Switches\n- Shotgun Surgery\n- Divergent Change\n- Speculative Generality\n- Message Chains\n- Middle Man\n- Refused Bequest\n\nReport — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls. Skip anything tooling (oxlint, tsc, oxfmt) already enforces. Under 400 words. Be terse. Return only the report.",
+          "id": "prt_f8e314763001FDexECoh5NtzP1",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e31475a001noibfipvAPuM3c"
+        },
+        {
+          "type": "text",
+          "synthetic": true,
+          "text": "Called the Read tool with the following input: {\"filePath\":\"/\"}",
+          "id": "prt_f8e314763002zGma4b7lxsmElZ",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e31475a001noibfipvAPuM3c"
+        },
+        {
+          "type": "text",
+          "synthetic": true,
+          "text": "<path>/</path>\n<type>directory</type>\n<entries>\n.file\n.nofollow/\n.resolve/\n.vol/\n.VolumeIcon.icns\nApplications/\nbin/\ncores/\ndev/\netc/\nhome/\nLibrary/\nopt/\nprivate/\nsbin/\nSystem/\ntmp/\nUsers/\nusr/\nvar/\nVolumes/\n\n(21 entries)\n</entries>",
+          "id": "prt_f8e314763003EDEqUDINE3BplJ",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e31475a001noibfipvAPuM3c"
+        },
+        {
+          "type": "file",
+          "url": "file:///",
+          "filename": "/",
+          "mime": "application/x-directory",
+          "id": "prt_f8e314763004zkZg6QI9KMl7bD",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e31475a001noibfipvAPuM3c"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e31475a001noibfipvAPuM3c",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01605548,
+        "tokens": {
+          "total": 11356,
+          "input": 11127,
+          "output": 101,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784797022424,
+          "completed": 1784797040162
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e3148d8001i3bYLoYSsumVVm",
+        "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx"
+      },
+      "parts": [
+        {
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-start",
+          "id": "prt_f8e315ac1001TuqGz2zyrWEeZe",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e3148d8001i3bYLoYSsumVVm"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me read the changed files to review them.",
+          "time": {
+            "start": 1784797027010,
+            "end": 1784797039324
+          },
+          "id": "prt_f8e315ac2001fKcuQguLTiugB1",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e3148d8001i3bYLoYSsumVVm"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_34bc",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/vitest.config.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/vitest.config.ts</path>\n<type>file</type>\n<content>\n1: import { getViteConfig } from 'astro/config'\n2: import { defineConfig } from 'vitest/config'\n3: \n4: export default defineConfig(\n5:   getViteConfig({\n6:     test: {\n7:       environment: 'happy-dom',\n8:       env: { TZ: 'UTC' },\n9:       setupFiles: ['./tests/setup.ts'],\n10:       include: ['tests/**/*.test.ts'],\n11:     },\n12:   }),\n13: )\n\n(End of file - total 13 lines)\n</content>",
+            "metadata": {
+              "preview": "import { getViteConfig } from 'astro/config'\nimport { defineConfig } from 'vitest/config'\n\nexport default defineConfig(\n  getViteConfig({\n    test: {\n      environment: 'happy-dom',\n      env: { TZ: 'UTC' },\n      setupFiles: ['./tests/setup.ts'],\n      include: ['tests/**/*.test.ts'],\n    },\n  }),\n)",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/vitest.config.ts",
+                "text": "import { getViteConfig } from 'astro/config'\nimport { defineConfig } from 'vitest/config'\n\nexport default defineConfig(\n  getViteConfig({\n    test: {\n      environment: 'happy-dom',\n      env: { TZ: 'UTC' },\n      setupFiles: ['./tests/setup.ts'],\n      include: ['tests/**/*.test.ts'],\n    },\n  }),\n)",
+                "lineStart": 1,
+                "lineEnd": 13,
+                "totalLines": 13,
+                "truncated": false
+              }
+            },
+            "title": "vitest.config.ts",
+            "time": {
+              "start": 1784797039329,
+              "end": 1784797039332
+            }
+          },
+          "id": "prt_f8e318ade001uIiX2hYpDA2tQw",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e3148d8001i3bYLoYSsumVVm"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_8832",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/setup.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/setup.ts</path>\n<type>file</type>\n<content>\n1: import { afterAll, beforeAll } from 'vitest'\n2: import { http, HttpResponse } from 'msw'\n3: import { setupServer } from 'msw/node'\n4: \n5: export const server = setupServer(\n6:   http.get('https://example.com/*', () => new HttpResponse(null, { status: 200 })),\n7: )\n8: \n9: beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))\n10: afterAll(() => server.close())\n\n(End of file - total 10 lines)\n</content>",
+            "metadata": {
+              "preview": "import { afterAll, beforeAll } from 'vitest'\nimport { http, HttpResponse } from 'msw'\nimport { setupServer } from 'msw/node'\n\nexport const server = setupServer(\n  http.get('https://example.com/*', () => new HttpResponse(null, { status: 200 })),\n)\n\nbeforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))\nafterAll(() => server.close())",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/setup.ts",
+                "text": "import { afterAll, beforeAll } from 'vitest'\nimport { http, HttpResponse } from 'msw'\nimport { setupServer } from 'msw/node'\n\nexport const server = setupServer(\n  http.get('https://example.com/*', () => new HttpResponse(null, { status: 200 })),\n)\n\nbeforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))\nafterAll(() => server.close())",
+                "lineStart": 1,
+                "lineEnd": 10,
+                "totalLines": 10,
+                "truncated": false
+              }
+            },
+            "title": "tests/setup.ts",
+            "time": {
+              "start": 1784797039557,
+              "end": 1784797039563
+            }
+          },
+          "id": "prt_f8e318bc2001nEDfN5GcYDxx0O",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e3148d8001i3bYLoYSsumVVm"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_a513",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/utils.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/utils.test.ts</path>\n<type>file</type>\n<content>\n1: import { describe, expect, it } from 'vitest'\n2: import type { RawAppointment } from '@/types'\n3: import {\n4:   formatDate,\n5:   formatCurrency,\n6:   formatDateCompact,\n7:   formatDatespan,\n8:   formatDatetime,\n9:   formatDuration,\n10:   formatTimespan,\n11: } from '@/utils'\n12: \n13: const toUtcIso = (year: number, month: number, day: number, hours = 0, minutes = 0) =>\n14:   new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n15: \n16: const appointment = (fields: Partial<RawAppointment>): RawAppointment => ({\n17:   sort_index: 0,\n18:   ...fields,\n19: })\n20: \n21: const NBSP = '\\u00A0'\n22: \n23: describe('formatDate', () => {\n24:   const cases: Array<[Date, string]> = [\n25:     [new Date(Date.UTC(2024, 0, 15)), '15. Januar 2024'],\n26:     [new Date(Date.UTC(2024, 2, 9)), '9. März 2024'],\n27:     [new Date(Date.UTC(2024, 11, 1)), '1. Dezember 2024'],\n28:   ]\n29:   for (const [input, expected] of cases) {\n30:     it(`formats ${input.toISOString()} as ${expected}`, () => {\n31:       expect(formatDate(input)).toBe(expected)\n32:     })\n33:   }\n34: })\n35: \n36: describe('formatDatetime', () => {\n37:   const cases: Array<[string, string]> = [\n38:     [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan. 2024, 14:30 Uhr'],\n39:     [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März 2024, 9:05 Uhr'],\n40:     [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez. 2024, 23:59 Uhr'],\n41:   ]\n42:   for (const [input, expected] of cases) {\n43:     it(`formats ${input} as ${expected}`, () => {\n44:       expect(formatDatetime(input)).toBe(expected)\n45:     })\n46:   }\n47: })\n48: \n49: describe('formatDateCompact', () => {\n50:   const cases: Array<[string, string]> = [\n51:     [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan., 14:30 Uhr'],\n52:     [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März, 9:05 Uhr'],\n53:     [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez., 23:59 Uhr'],\n54:   ]\n55:   for (const [input, expected] of cases) {\n56:     it(`formats ${input} as ${expected}`, () => {\n57:       expect(formatDateCompact(input)).toBe(expected)\n58:     })\n59:   }\n60: })\n61: \n62: describe('formatDatespan', () => {\n63:   describe('date-only (start_date / end_date)', () => {\n64:     it('single day renders just the start in long form (German locale)', () => {\n65:       expect(\n66:         formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' })),\n67:       ).toBe('Mo., 15. Jan. 2024')\n68:     })\n69: \n70:     it('multi-day span renders both days joined with a dash (German locale)', () => {\n71:       expect(\n72:         formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-18' })),\n73:       ).toBe('Mo., 15. Jan. 2024 - Do., 18. Jan. 2024')\n74:     })\n75: \n76:     it('span across months and years (German locale)', () => {\n77:       expect(\n78:         formatDatespan(appointment({ start_date: '2024-12-30', end_date: '2025-01-02' })),\n79:       ).toBe('Mo., 30. Dez. 2024 - Do., 2. Jan. 2025')\n80:     })\n81:   })\n82: \n83:   describe('datetime-only (start_date_time / end_date_time)', () => {\n84:     it('same-calendar-day collapse renders only the start (default locale, no de)', () => {\n85:       expect(\n86:         formatDatespan(\n87:           appointment({\n88:             start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n89:             end_date_time: toUtcIso(2024, 1, 15, 16, 30),\n90:           }),\n91:         ),\n92:       ).toBe('Mon, 15. Jan 2024')\n93:     })\n94: \n95:     it('1-minute difference collapse renders only the start (tracer branch)', () => {\n96:       expect(\n97:         formatDatespan(\n98:           appointment({\n99:             start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n100:             end_date_time: toUtcIso(2024, 1, 15, 14, 31),\n101:           }),\n102:         ),\n103:       ).toBe('Mon, 15. Jan 2024')\n104:     })\n105: \n106:     it('cross-midnight span (different calendar days) renders both endpoints (default locale)', () => {\n107:       expect(\n108:         formatDatespan(\n109:           appointment({\n110:             start_date_time: toUtcIso(2024, 1, 15, 23, 30),\n111:             end_date_time: toUtcIso(2024, 1, 16, 0, 30),\n112:           }),\n113:         ),\n114:       ).toBe('Mon, 15. Jan 2024 - Tue, 16. Jan 2024')\n115:     })\n116: \n117:     it('multi-day datetime span renders both endpoints (default locale)', () => {\n118:       expect(\n119:         formatDatespan(\n120:           appointment({\n121:             start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n122:             end_date_time: toUtcIso(2024, 1, 18, 10, 0),\n123:           }),\n124:         ),\n125:       ).toBe('Mon, 15. Jan 2024 - Thu, 18. Jan 2024')\n126:     })\n127:   })\n128: \n129:   describe('no dates', () => {\n130:     it('throws when neither date nor datetime range is present', () => {\n131:       expect(() => formatDatespan(appointment({}))).toThrow('Appointment has no start or end date')\n132:     })\n133: \n134:     it('throws with only a start_date', () => {\n135:       expect(() => formatDatespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n136:         'Appointment has no start or end date',\n137:       )\n138:     })\n139: \n140:     it('throws with only a start_date_time', () => {\n141:       expect(() =>\n142:         formatDatespan(appointment({ start_date_time: toUtcIso(2024, 1, 15, 14, 30) })),\n143:       ).toThrow('Appointment has no start or end date')\n144:     })\n145:   })\n146: })\n147: \n148: describe('formatTimespan', () => {\n149:   it('returns ganztägig for all-day date range', () => {\n150:     expect(formatTimespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' }))).toBe(\n151:       'ganztägig',\n152:     )\n153:   })\n154: \n155:   it('formats datetime range as start - end Uhr', () => {\n156:     expect(\n157:       formatTimespan(\n158:         appointment({\n159:           start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n160:           end_date_time: toUtcIso(2024, 1, 15, 16, 45),\n161:         }),\n162:       ),\n163:     ).toBe('14:30 - 16:45 Uhr')\n164:   })\n165: \n166:   it('throws on empty appointment', () => {\n167:     expect(() => formatTimespan(appointment({}))).toThrow(\n168:       'Appointment has no start or end date time',\n169:     )\n170:   })\n171: \n172:   it('throws with only a start_date set', () => {\n173:     expect(() => formatTimespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n174:       'Appointment has no start or end date time',\n175:     )\n176:   })\n177: })\n178: \n179: describe('formatDuration', () => {\n180:   const cases: Array<[number, string]> = [\n181:     [0, ''],\n182:     [30, '30 Minuten'],\n183:     [60, '1 Stunde'],\n184:     [90, '1 Stunde und 30 Minuten'],\n185:     [120, '2 Stunden'],\n186:     [150, '2 Stunden und 30 Minuten'],\n187:     [180, '3 Stunden'],\n188:   ]\n189:   for (const [input, expected] of cases) {\n190:     it(`formats ${input} minutes as \"${expected}\"`, () => {\n191:       expect(formatDuration(input)).toBe(expected)\n192:     })\n193:   }\n194: })\n195: \n196: describe('formatCurrency', () => {\n197:   const cases: Array<[number, string]> = [\n198:     [0, `0,00${NBSP}€`],\n199:     [9.99, `9,99${NBSP}€`],\n200:     [1000, `1.000,00${NBSP}€`],\n201:     [1234.5, `1.234,50${NBSP}€`],\n202:   ]\n203:   for (const [input, expected] of cases) {\n204:     it(`formats ${input} as ${expected}`, () => {\n205:       expect(formatCurrency(input)).toBe(expected)\n206:     })\n207:   }\n208: \n209:   it('returns the original value when not coercible to a number', () => {\n210:     expect(formatCurrency('not-a-number' as unknown as number)).toBe('not-a-number')\n211:   })\n212: })\n\n(End of file - total 212 lines)\n</content>",
+            "metadata": {
+              "preview": "import { describe, expect, it } from 'vitest'\nimport type { RawAppointment } from '@/types'\nimport {\n  formatDate,\n  formatCurrency,\n  formatDateCompact,\n  formatDatespan,\n  formatDatetime,\n  formatDuration,\n  formatTimespan,\n} from '@/utils'\n\nconst toUtcIso = (year: number, month: number, day: number, hours = 0, minutes = 0) =>\n  new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n\nconst appointment = (fields: Partial<RawAppointment>): RawAppointment => ({\n  sort_index: 0,\n  ...fields,\n})\n",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/utils.test.ts",
+                "text": "import { describe, expect, it } from 'vitest'\nimport type { RawAppointment } from '@/types'\nimport {\n  formatDate,\n  formatCurrency,\n  formatDateCompact,\n  formatDatespan,\n  formatDatetime,\n  formatDuration,\n  formatTimespan,\n} from '@/utils'\n\nconst toUtcIso = (year: number, month: number, day: number, hours = 0, minutes = 0) =>\n  new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n\nconst appointment = (fields: Partial<RawAppointment>): RawAppointment => ({\n  sort_index: 0,\n  ...fields,\n})\n\nconst NBSP = '\\u00A0'\n\ndescribe('formatDate', () => {\n  const cases: Array<[Date, string]> = [\n    [new Date(Date.UTC(2024, 0, 15)), '15. Januar 2024'],\n    [new Date(Date.UTC(2024, 2, 9)), '9. März 2024'],\n    [new Date(Date.UTC(2024, 11, 1)), '1. Dezember 2024'],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input.toISOString()} as ${expected}`, () => {\n      expect(formatDate(input)).toBe(expected)\n    })\n  }\n})\n\ndescribe('formatDatetime', () => {\n  const cases: Array<[string, string]> = [\n    [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan. 2024, 14:30 Uhr'],\n    [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März 2024, 9:05 Uhr'],\n    [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez. 2024, 23:59 Uhr'],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input} as ${expected}`, () => {\n      expect(formatDatetime(input)).toBe(expected)\n    })\n  }\n})\n\ndescribe('formatDateCompact', () => {\n  const cases: Array<[string, string]> = [\n    [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan., 14:30 Uhr'],\n    [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März, 9:05 Uhr'],\n    [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez., 23:59 Uhr'],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input} as ${expected}`, () => {\n      expect(formatDateCompact(input)).toBe(expected)\n    })\n  }\n})\n\ndescribe('formatDatespan', () => {\n  describe('date-only (start_date / end_date)', () => {\n    it('single day renders just the start in long form (German locale)', () => {\n      expect(\n        formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' })),\n      ).toBe('Mo., 15. Jan. 2024')\n    })\n\n    it('multi-day span renders both days joined with a dash (German locale)', () => {\n      expect(\n        formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-18' })),\n      ).toBe('Mo., 15. Jan. 2024 - Do., 18. Jan. 2024')\n    })\n\n    it('span across months and years (German locale)', () => {\n      expect(\n        formatDatespan(appointment({ start_date: '2024-12-30', end_date: '2025-01-02' })),\n      ).toBe('Mo., 30. Dez. 2024 - Do., 2. Jan. 2025')\n    })\n  })\n\n  describe('datetime-only (start_date_time / end_date_time)', () => {\n    it('same-calendar-day collapse renders only the start (default locale, no de)', () => {\n      expect(\n        formatDatespan(\n          appointment({\n            start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n            end_date_time: toUtcIso(2024, 1, 15, 16, 30),\n          }),\n        ),\n      ).toBe('Mon, 15. Jan 2024')\n    })\n\n    it('1-minute difference collapse renders only the start (tracer branch)', () => {\n      expect(\n        formatDatespan(\n          appointment({\n            start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n            end_date_time: toUtcIso(2024, 1, 15, 14, 31),\n          }),\n        ),\n      ).toBe('Mon, 15. Jan 2024')\n    })\n\n    it('cross-midnight span (different calendar days) renders both endpoints (default locale)', () => {\n      expect(\n        formatDatespan(\n          appointment({\n            start_date_time: toUtcIso(2024, 1, 15, 23, 30),\n            end_date_time: toUtcIso(2024, 1, 16, 0, 30),\n          }),\n        ),\n      ).toBe('Mon, 15. Jan 2024 - Tue, 16. Jan 2024')\n    })\n\n    it('multi-day datetime span renders both endpoints (default locale)', () => {\n      expect(\n        formatDatespan(\n          appointment({\n            start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n            end_date_time: toUtcIso(2024, 1, 18, 10, 0),\n          }),\n        ),\n      ).toBe('Mon, 15. Jan 2024 - Thu, 18. Jan 2024')\n    })\n  })\n\n  describe('no dates', () => {\n    it('throws when neither date nor datetime range is present', () => {\n      expect(() => formatDatespan(appointment({}))).toThrow('Appointment has no start or end date')\n    })\n\n    it('throws with only a start_date', () => {\n      expect(() => formatDatespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n        'Appointment has no start or end date',\n      )\n    })\n\n    it('throws with only a start_date_time', () => {\n      expect(() =>\n        formatDatespan(appointment({ start_date_time: toUtcIso(2024, 1, 15, 14, 30) })),\n      ).toThrow('Appointment has no start or end date')\n    })\n  })\n})\n\ndescribe('formatTimespan', () => {\n  it('returns ganztägig for all-day date range', () => {\n    expect(formatTimespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' }))).toBe(\n      'ganztägig',\n    )\n  })\n\n  it('formats datetime range as start - end Uhr', () => {\n    expect(\n      formatTimespan(\n        appointment({\n          start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n          end_date_time: toUtcIso(2024, 1, 15, 16, 45),\n        }),\n      ),\n    ).toBe('14:30 - 16:45 Uhr')\n  })\n\n  it('throws on empty appointment', () => {\n    expect(() => formatTimespan(appointment({}))).toThrow(\n      'Appointment has no start or end date time',\n    )\n  })\n\n  it('throws with only a start_date set', () => {\n    expect(() => formatTimespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n      'Appointment has no start or end date time',\n    )\n  })\n})\n\ndescribe('formatDuration', () => {\n  const cases: Array<[number, string]> = [\n    [0, ''],\n    [30, '30 Minuten'],\n    [60, '1 Stunde'],\n    [90, '1 Stunde und 30 Minuten'],\n    [120, '2 Stunden'],\n    [150, '2 Stunden und 30 Minuten'],\n    [180, '3 Stunden'],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input} minutes as \"${expected}\"`, () => {\n      expect(formatDuration(input)).toBe(expected)\n    })\n  }\n})\n\ndescribe('formatCurrency', () => {\n  const cases: Array<[number, string]> = [\n    [0, `0,00${NBSP}€`],\n    [9.99, `9,99${NBSP}€`],\n    [1000, `1.000,00${NBSP}€`],\n    [1234.5, `1.234,50${NBSP}€`],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input} as ${expected}`, () => {\n      expect(formatCurrency(input)).toBe(expected)\n    })\n  }\n\n  it('returns the original value when not coercible to a number', () => {\n    expect(formatCurrency('not-a-number' as unknown as number)).toBe('not-a-number')\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 212,
+                "totalLines": 212,
+                "truncated": false
+              }
+            },
+            "title": "tests/utils.test.ts",
+            "time": {
+              "start": 1784797039791,
+              "end": 1784797039795
+            }
+          },
+          "id": "prt_f8e318cac001cDDVdWtftJc4Dl",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e3148d8001i3bYLoYSsumVVm"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_0eea",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/package.json"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/package.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"name\": \"sve-website\",\n3:   \"version\": \"5.0.0\",\n4:   \"private\": true,\n5:   \"description\": \"Website SV Eutingen\",\n6:   \"author\": \"mseele\",\n7:   \"type\": \"module\",\n8:   \"scripts\": {\n9:     \"dev\": \"astro dev\",\n10:     \"build\": \"astro build\",\n11:     \"check\": \"oxlint src/ && tsc --noEmit && astro check && vitest run\",\n12:     \"test\": \"vitest run\",\n13:     \"format\": \"oxfmt\"\n14:   },\n15:   \"dependencies\": {\n16:     \"@astro-community/astro-embed-youtube\": \"^0.5.10\",\n17:     \"@astrojs/check\": \"^0.9.9\",\n18:     \"@astrojs/netlify\": \"^8.1.2\",\n19:     \"@astrojs/sitemap\": \"^3.7.3\",\n20:     \"@astrojs/tailwind\": \"^6.0.2\",\n21:     \"@hcaptcha/vanilla-hcaptcha\": \"^1.1.4\",\n22:     \"@iconify-json/mdi\": \"^1.2.3\",\n23:     \"@pagefind/default-ui\": \"^1.5.2\",\n24:     \"@tailwindcss/typography\": \"^0.5.20\",\n25:     \"astro\": \"^7.1.3\",\n26:     \"astro-icon\": \"^1.1.5\",\n27:     \"astro-pagefind\": \"^2.0.1\",\n28:     \"astro-robots-txt\": \"^1.0.0\",\n29:     \"astro-seo\": \"^1.1.0\",\n30:     \"contentful\": \"^11.12.7\",\n31:     \"date-fns\": \"^4.4.0\",\n32:     \"date-fns-tz\": \"^3.2.0\",\n33:     \"ibantools\": \"^4.5.4\",\n34:     \"sharp\": \"^0.35.3\",\n35:     \"tailwind-scrollbar\": \"^4.0.2\",\n36:     \"tailwindcss\": \"^4.3.3\",\n37:     \"typescript\": \"^6.0.3\",\n38:     \"ulid\": \"^3.0.2\"\n39:   },\n40:   \"devDependencies\": {\n41:     \"@tailwindcss/vite\": \"^4.3.3\",\n42:     \"@types/bun\": \"^1.3.14\",\n43:     \"happy-dom\": \"^20.11.1\",\n44:     \"msw\": \"^2.15.0\",\n45:     \"oxfmt\": \"^0.60.0\",\n46:     \"oxlint\": \"^1.75.0\",\n47:     \"schema-dts\": \"^2.0.0\",\n48:     \"vitest\": \"^4.1.10\"\n49:   }\n50: }\n\n(End of file - total 50 lines)\n</content>",
+            "metadata": {
+              "preview": "{\n  \"name\": \"sve-website\",\n  \"version\": \"5.0.0\",\n  \"private\": true,\n  \"description\": \"Website SV Eutingen\",\n  \"author\": \"mseele\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"astro dev\",\n    \"build\": \"astro build\",\n    \"check\": \"oxlint src/ && tsc --noEmit && astro check && vitest run\",\n    \"test\": \"vitest run\",\n    \"format\": \"oxfmt\"\n  },\n  \"dependencies\": {\n    \"@astro-community/astro-embed-youtube\": \"^0.5.10\",\n    \"@astrojs/check\": \"^0.9.9\",\n    \"@astrojs/netlify\": \"^8.1.2\",\n    \"@astrojs/sitemap\": \"^3.7.3\",\n    \"@astrojs/tailwind\": \"^6.0.2\",",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/package.json",
+                "text": "{\n  \"name\": \"sve-website\",\n  \"version\": \"5.0.0\",\n  \"private\": true,\n  \"description\": \"Website SV Eutingen\",\n  \"author\": \"mseele\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"astro dev\",\n    \"build\": \"astro build\",\n    \"check\": \"oxlint src/ && tsc --noEmit && astro check && vitest run\",\n    \"test\": \"vitest run\",\n    \"format\": \"oxfmt\"\n  },\n  \"dependencies\": {\n    \"@astro-community/astro-embed-youtube\": \"^0.5.10\",\n    \"@astrojs/check\": \"^0.9.9\",\n    \"@astrojs/netlify\": \"^8.1.2\",\n    \"@astrojs/sitemap\": \"^3.7.3\",\n    \"@astrojs/tailwind\": \"^6.0.2\",\n    \"@hcaptcha/vanilla-hcaptcha\": \"^1.1.4\",\n    \"@iconify-json/mdi\": \"^1.2.3\",\n    \"@pagefind/default-ui\": \"^1.5.2\",\n    \"@tailwindcss/typography\": \"^0.5.20\",\n    \"astro\": \"^7.1.3\",\n    \"astro-icon\": \"^1.1.5\",\n    \"astro-pagefind\": \"^2.0.1\",\n    \"astro-robots-txt\": \"^1.0.0\",\n    \"astro-seo\": \"^1.1.0\",\n    \"contentful\": \"^11.12.7\",\n    \"date-fns\": \"^4.4.0\",\n    \"date-fns-tz\": \"^3.2.0\",\n    \"ibantools\": \"^4.5.4\",\n    \"sharp\": \"^0.35.3\",\n    \"tailwind-scrollbar\": \"^4.0.2\",\n    \"tailwindcss\": \"^4.3.3\",\n    \"typescript\": \"^6.0.3\",\n    \"ulid\": \"^3.0.2\"\n  },\n  \"devDependencies\": {\n    \"@tailwindcss/vite\": \"^4.3.3\",\n    \"@types/bun\": \"^1.3.14\",\n    \"happy-dom\": \"^20.11.1\",\n    \"msw\": \"^2.15.0\",\n    \"oxfmt\": \"^0.60.0\",\n    \"oxlint\": \"^1.75.0\",\n    \"schema-dts\": \"^2.0.0\",\n    \"vitest\": \"^4.1.10\"\n  }\n}",
+                "lineStart": 1,
+                "lineEnd": 50,
+                "totalLines": 50,
+                "truncated": false
+              }
+            },
+            "title": "package.json",
+            "time": {
+              "start": 1784797039994,
+              "end": 1784797040004
+            }
+          },
+          "id": "prt_f8e318d77001Ay8PovmskHUAOm",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e3148d8001i3bYLoYSsumVVm"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11356,
+            "input": 11127,
+            "output": 101,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01605548,
+          "id": "prt_f8e318e00001zSWCsRlHiRtsD5",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e3148d8001i3bYLoYSsumVVm"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e31475a001noibfipvAPuM3c",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.02186468,
+        "tokens": {
+          "total": 15265,
+          "input": 11391,
+          "output": 1186,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 2688
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784797040164,
+          "completed": 1784797240477
+        },
+        "finish": "stop",
+        "id": "msg_f8e318e24001QyhBLrOVodZG5n",
+        "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx"
+      },
+      "parts": [
+        {
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-start",
+          "id": "prt_f8e31bcc800127ovAIYSxid2zU",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e318e24001QyhBLrOVodZG5n"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me check the existing utils.ts to verify test expectations, and check the import grouping order in setup.ts and utils.test.ts against the AGENTS.md standard.\n\nActually, let me focus on documented standard violations. AGENTS.md says imports group: external libs → @/ aliases → relative. Let me check vitest.config.ts imports: `getViteConfig` from 'astro/config' (external), then `defineConfig` from 'vitest/config' (external). Both external — order alphabetically? Not specified. Fine.\n\nsetup.ts: `afterAll, beforeAll` from 'vitest', `http, HttpResponse` from 'msw', `setupServer` from 'msw/node'. All external. Order: vitest, msw, msw/node. Not alphabetical (vitest before msw). AGENTS.md doesn't specify alphabetical within group, just grouping. So fine.\n\nutils.test.ts: `describe, expect, it` from 'vitest' (external), then `RawAppointment` from '@/types' (@/ alias), then utils from '@/utils' (@/ alias). Correct grouping external → @/. Good.\n\nAGENTS.md: \"Use explicit extensions for Astro components\" — only for Astro components. TS imports don't need extensions. Fine.\n\nTS strict, explicit types — test helpers have explicit types. Good.\n\ninterface vs type: `RawAppointment` is imported as `type`. The test uses `Partial<RawAppointment>` and `Array<[Date, string]>` tuples. No new interfaces defined. Fine.\n\noxfmt enforces formatting. tsc/oxlint enforce. Skip those.\n\nSmells: Duplicated Code — the test file repeats the same `for (const [input, expected] of cases) { it(...) }` loop pattern 5 times across describe blocks (formatDate, formatDatetime, formatDateCompact, formatDuration, formatCurrency). That's a parameterizable helper opportunity — judgement call, common test idiom though.\n\nData Clumps: `toUtcIso(year, month, day, hours, minutes)` — five positional args with month 1-indexed while Date.UTC is 0-indexed. Slightly awkward but helper-local.\n\nSpeculative Generality: setup.ts registers an msw handler for `https://example.com/*` returning null 200 — no test references example.com. This looks like placeholder/speculative — unused handler. Smell: Speculative Generality / Dead code.\n\nAlso `server` is exported from setup.ts — exported but unused by tests (tests don't import server). The msw server runs as side effect via beforeAll. Export is speculative/unused.\n\nLet me verify nothing references example.com. Actually the bypass onUnhandledRequest means unhandled requests pass through. The example.com handler seems like a stub. Worth noting as speculative.\n\nLet me check there are no other violations. AGENTS.md \"export types from src/types.ts\" — RawAppointment is correctly imported from '@/types'. Good.\n\nAlright, brief report.",
+          "time": {
+            "start": 1784797052105,
+            "end": 1784797177423
+          },
+          "id": "prt_f8e31bcc9001kuYCmBz06uuaGJ",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e318e24001QyhBLrOVodZG5n"
+        },
+        {
+          "type": "text",
+          "text": "## Code-standards review — HEAD (commit \"test: stand up Vitest harness + cover utils (#398)\")\n\n### Hard violations of documented standards\nNone found. Import grouping (external → `@/` → relative), `type` import for `RawAppointment`, explicit parameter/return types on helpers, single quotes / no semicolons / tab-2 — all conform. oxfmt/tsc/oxlint enforce the rest.\n\n### Baseline smells (judgement calls)\n\n**Speculative Generality / Dead code — `tests/setup.ts:5-7`**\n```ts\nexport const server = setupServer(\n  http.get('https://example.com/*', () => new HttpResponse(null, { status: 200 })),\n)\n```\nNo test references `example.com`, and nothing imports `server` from the setup file (side effects via `beforeAll`/`afterAll` are what matter). The handler and the `export` both look like scaffolding for a future need, not driven by current tests. Either drop the handler (keep `setupServer()` empty with `onUnhandledRequest: 'bypass'`) or add the test that needs it.\n\n**Duplicated Code — `tests/utils.test.ts:29-33, 42-46, 55-59, 189-193, 203-207`**\nThe identical loop shape recurs 5×:\n```ts\nfor (const [input, expected] of cases) {\n  it(`formats ${input} as ${expected}`, () => {\n    expect(<fn>(input)).toBe(expected)\n  })\n}\n```\nA tiny `tableTest(name, fn, cases)` helper would collapse these. Common enough in Vitest that it reads as idiomatic, but it is the clearest smell in the diff.\n\n**Data Clumps — `tests/utils.test.ts:13-14`**\n```ts\nconst toUtcIso = (year, month, day, hours = 0, minutes = 0) =>\n  new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n```\nFive positional scalars with an off-by-one (`month - 1`) footgun every call site trusts. `{ year, month, day, ... }` object arg would be safer, though for a test-local helper that's marginal.\n\n### Notes\n- `package.json:11` correctly chains `vitest run` into `check` — consistent with repo script style.\n- No smells in `vitest.config.ts`; minimal and direct.\n- Verified no imports of `server` from `tests/setup.ts` across the test file — the export is only consumed by the side-effect wiring. Consider dropping it (`export` not required for `beforeAll`/`afterAll` to run).",
+          "time": {
+            "start": 1784797177427,
+            "end": 1784797240319
+          },
+          "id": "prt_f8e33a653001jIfEZBXVLZnZUq",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e318e24001QyhBLrOVodZG5n"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-finish",
+          "tokens": {
+            "total": 15265,
+            "input": 11391,
+            "output": 1186,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 2688
+            }
+          },
+          "cost": 0.02186468,
+          "id": "prt_f8e349c24001j1lLyxi4y3QgDl",
+          "sessionID": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+          "messageID": "msg_f8e318e24001QyhBLrOVodZG5n"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "07bc0ab0843c",
+  "strategy": "manual-commit",
+  "branch": "feature/tests",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "bun.lockb",
+    "package.json",
+    "tests/setup.ts",
+    "tests/utils.test.ts",
+    "vitest.config.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/07/bc0ab0843c/0/metadata.json",
+      "transcript": "/07/bc0ab0843c/0/full.jsonl",
+      "compact_transcript": "/07/bc0ab0843c/0/transcript.jsonl",
+      "content_hash": "/07/bc0ab0843c/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
