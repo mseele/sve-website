@@ -17,19 +17,19 @@
       "deletions": 0,
       "files": 0
     },
-    "cost": 0.4092792400000001,
+    "cost": 0.4269153200000001,
     "tokens": {
-      "input": 202045,
-      "output": 6509,
+      "input": 202195,
+      "output": 6907,
       "reasoning": 0,
       "cache": {
-        "read": 376064,
+        "read": 436352,
         "write": 0
       }
     },
     "time": {
       "created": 1784798358269,
-      "updated": 1784799124566
+      "updated": 1784799133704
     }
   },
   "messages": [
@@ -3082,21 +3082,24 @@
           "cwd": "/Users/mseele/dev/sve/sve-website",
           "root": "/Users/mseele/dev/sve/sve-website"
         },
-        "cost": 0,
+        "cost": 0.0082238,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 30235,
+          "input": 93,
+          "output": 62,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 30080
           }
         },
         "modelID": "glm-5.2",
         "providerID": "opencode-go",
         "time": {
-          "created": 1784799124564
+          "created": 1784799124564,
+          "completed": 1784799133695
         },
+        "finish": "tool-calls",
         "id": "msg_f8e515c5400136TcDD1whzUXuJ",
         "sessionID": "ses_071ba5502ffe4x0dv068yoCtvh"
       },
@@ -3113,21 +3116,116 @@
           "tool": "bash",
           "callID": "call_1581",
           "state": {
-            "metadata": {
-              "output": "ok 2 files changed, 233 insertions(+), 2 deletions(-)\n"
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "rtk git add src/api/appointments.ts tests/api/appointments.test.ts && rtk git commit -m \"test: export and cover appointments pure transforms (#399)\"",
               "workdir": "/Users/mseele/dev/sve/sve-website"
             },
+            "output": "ok 2 files changed, 233 insertions(+), 2 deletions(-)\nok a946661\n",
+            "metadata": {
+              "output": "ok 2 files changed, 233 insertions(+), 2 deletions(-)\nok a946661\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git add src/api/appointments.ts tests/api/appointments.test.ts && rtk git commit -m \"test: export and cover appointments pure transforms (#399)\"",
             "time": {
-              "start": 1784799126493
+              "start": 1784799133606,
+              "end": 1784799133615
             }
           },
           "id": "prt_f8e5163a8001FGvj7UWlj3R04m",
           "sessionID": "ses_071ba5502ffe4x0dv068yoCtvh",
           "messageID": "msg_f8e515c5400136TcDD1whzUXuJ"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "cf5dceac9dbcaadec87fcc2283eea4fd90e64281",
+          "type": "step-finish",
+          "tokens": {
+            "total": 30235,
+            "input": 93,
+            "output": 62,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 30080
+            }
+          },
+          "cost": 0.0082238,
+          "id": "prt_f8e517fd7001Fi781Q73WNEIeQ",
+          "sessionID": "ses_071ba5502ffe4x0dv068yoCtvh",
+          "messageID": "msg_f8e515c5400136TcDD1whzUXuJ"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e45ab19001vmm4uVLdszSb2s",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00941228,
+        "tokens": {
+          "total": 30601,
+          "input": 57,
+          "output": 336,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 30208
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784799133701,
+          "completed": 1784799141501
+        },
+        "finish": "stop",
+        "id": "msg_f8e5180050018oOPlJoeFN2frw",
+        "sessionID": "ses_071ba5502ffe4x0dv068yoCtvh"
+      },
+      "parts": [
+        {
+          "snapshot": "cf5dceac9dbcaadec87fcc2283eea4fd90e64281",
+          "type": "step-start",
+          "id": "prt_f8e51877f001A6UeV5xgt98k59",
+          "sessionID": "ses_071ba5502ffe4x0dv068yoCtvh",
+          "messageID": "msg_f8e5180050018oOPlJoeFN2frw"
+        },
+        {
+          "type": "text",
+          "text": "Done. Summary of #399:\n\n- `src/api/appointments.ts`: exported `bySortIndex` and `toAppointment` (pure refactor), added `: number` return type to `bySortIndex` per AGENTS.md.\n- `tests/api/appointments.test.ts`: 30 table-driven tests covering date-only/datetime variants, ISO passthrough priority, title `'-'` defaulting, description/link pass-through, formatter-failure throws, sort ordering, and asymmetric datetime input.\n- Review flagged the missing `: number` return type and a gap in asymmetric-datetime coverage — both addressed.\n\n`bun run check` green (65 tests), `bun run build` succeeded (`/termine/index.html` prerendered). Committed as `a946661` on `feature/tests`.\n\n## Standards\n\n- ✅ Hard violation (missing explicit return on `bySortIndex`) → fixed.\n- Judgement call: exporting implementation helpers as public API to enable testing — defensible trade-off, accepted.\n- Minor test-side duplication of `toNaiveIso` between `tests/utils.test.ts` and `tests/api/appointments.test.ts` — left for a future `tests/helpers.ts` extraction.\n\n## Spec\n\n- (b)/(c) flagged: formatter-throw tests in `appointments.test.ts` exercise `formatDatespan`'s precondition rather than the ISO passthrough directly — the both-absent case is covered indirectly because the formatter runs first. Not wrong; the row name now correctly reflects what it proves (\"throws when … present\"), and the new asymmetric row covers the same shape for `start_date_time`.",
+          "time": {
+            "start": 1784799136602,
+            "end": 1784799141409
+          },
+          "id": "prt_f8e518b5a001Q7q7Mt2YQRKzyj",
+          "sessionID": "ses_071ba5502ffe4x0dv068yoCtvh",
+          "messageID": "msg_f8e5180050018oOPlJoeFN2frw"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "cf5dceac9dbcaadec87fcc2283eea4fd90e64281",
+          "type": "step-finish",
+          "tokens": {
+            "total": 30601,
+            "input": 57,
+            "output": 336,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 30208
+            }
+          },
+          "cost": 0.00941228,
+          "id": "prt_f8e519e58001PYWAyaaUPpPGk6",
+          "sessionID": "ses_071ba5502ffe4x0dv068yoCtvh",
+          "messageID": "msg_f8e5180050018oOPlJoeFN2frw"
         }
       ]
     }
