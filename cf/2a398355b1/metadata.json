@@ -3,8 +3,9 @@
   "checkpoint_id": "cf2a398355b1",
   "strategy": "manual-commit",
   "branch": "feature/tests",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
+    "bun.lockb",
     "package.json",
     "tests/setup.ts",
     "tests/utils.test.ts",
@@ -17,13 +18,20 @@
       "compact_transcript": "/cf/2a398355b1/0/transcript.jsonl",
       "content_hash": "/cf/2a398355b1/0/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/cf/2a398355b1/1/metadata.json",
+      "transcript": "/cf/2a398355b1/1/full.jsonl",
+      "compact_transcript": "/cf/2a398355b1/1/transcript.jsonl",
+      "content_hash": "/cf/2a398355b1/1/content_hash.txt",
+      "prompt": "/cf/2a398355b1/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 375620,
+    "input_tokens": 398138,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 282944,
-    "output_tokens": 13891,
-    "api_call_count": 29
+    "cache_read_tokens": 285760,
+    "output_tokens": 15178,
+    "api_call_count": 31
   }
 }

@@ -1,0 +1,52 @@
+You are a code-standards reviewer. Review the diff between fixed point 9ac58360a20cefe86a272d67a6dad88ae87ea77e (HEAD~1) and HEAD in the repo at /Users/mseele/dev/sve/sve-website.
+
+Diff command: `git diff 9ac58360a20cefe86a272d67a6dad88ae87ea77e...HEAD` (three-dot, merge-base). Commits: `git log 9ac58360a20cefe86a272d67a6dad88ae87ea77e..HEAD --oneline` shows one commit "test: stand up Vitest harness + cover utils (#398)".
+
+Read the changed files directly with the Read tool. The change adds: `vitest.config.ts`, `tests/setup.ts`, `tests/utils.test.ts`, modifies `package.json`.
+
+Standards sources in this repo:
+- /Users/mseele/dev/sve/sve-website/AGENTS.md (coding guidelines: formatter oxfmt; semicolons false; single quotes; tab width 2; print width 100; trailing commas all; imports group external → @/ alias → relative, explicit extensions for Astro components; TS strict, explicit types, `interface` for objects `type` for unions, export types from src/types.ts, Zod for runtime validation; PascalCase components, camelCase TS files/vars, Props interface; Tailwind v4; early returns, optional chaining, descriptive errors).
+
+Also always carry this smell baseline (Fowler code smells) — each is a labelled heuristic judgement call, never a hard violation; documented repo standard overrides:
+- Mysterious Name
+- Duplicated Code
+- Feature Envy
+- Data Clumps
+- Primitive Obsession
+- Repeated Switches
+- Shotgun Surgery
+- Divergent Change
+- Speculative Generality
+- Message Chains
+- Middle Man
+- Refused Bequest
+
+Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls. Skip anything tooling (oxlint, tsc, oxfmt) already enforces. Under 400 words. Be terse. Return only the report.
+Called the Read tool with the following input: {"filePath":"/"}
+<path>/</path>
+<type>directory</type>
+<entries>
+.file
+.nofollow/
+.resolve/
+.vol/
+.VolumeIcon.icns
+Applications/
+bin/
+cores/
+dev/
+etc/
+home/
+Library/
+opt/
+private/
+sbin/
+System/
+tmp/
+Users/
+usr/
+var/
+Volumes/
+
+(21 entries)
+</entries>
