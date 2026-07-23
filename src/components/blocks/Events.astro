@@ -72,7 +72,7 @@ const { type, entries, nothing, newsletterDescription, faqs } = Astro.props as P
 </div>
 
 <script>
-  import { loadEventsAvailability } from '@/api/events'
+  import { AvailabilityState, availabilityState, loadEventsAvailability } from '@/api/events'
 
   loadEventsAvailability((data) => {
     const elements = document.querySelectorAll<HTMLParagraphElement>(
@@ -86,7 +86,9 @@ const { type, entries, nothing, newsletterDescription, faqs } = Astro.props as P
           element.textContent = availability.message
           element.setAttribute(
             'data-availability',
-            availability.availableSlots === 0 ? 'unavailable' : 'available',
+            availabilityState(availability) === AvailabilityState.FullyBooked
+              ? 'unavailable'
+              : 'available',
           )
         }
       }

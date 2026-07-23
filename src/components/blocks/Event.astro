@@ -414,7 +414,13 @@ details.push({
 </Layout>
 
 <script>
-  import { bookEvent, loadEventAvailability } from '@/api/events'
+  import {
+    AvailabilityState,
+    availabilityState,
+    bookEvent,
+    canSubscribe,
+    loadEventAvailability,
+  } from '@/api/events'
   import { checkRequiredInput, clearCustomValidityOnInput, validateIbanInput } from '@/client/forms'
   import { notify } from '@/client/notifications'
   import type { EventAvailability } from '@/types'
@@ -437,12 +443,13 @@ details.push({
         let description: string | undefined
         let button: string | undefined
 
-        if (availability.isWaitingList && availability.availableSlots > 0) {
+        const state = availabilityState(availability)
+        if (state === AvailabilityState.WaitingList) {
           title = 'Warteliste'
           description =
             'Leider sind schon alle Plätze belegt. Gerne kannst Du Dich auf die Warteliste setzen lassen. Wir benachrichtigen Dich, wenn Plätze frei werden.'
           button = 'Auf die Warteliste setzen'
-        } else if (availability.availableSlots === -1 || availability.availableSlots > 0) {
+        } else if (canSubscribe(availability)) {
           title = 'Anmeldung'
           button = 'Kostenpflichtig buchen'
         } else {
