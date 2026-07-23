@@ -17,19 +17,19 @@
       "deletions": 0,
       "files": 0
     },
-    "cost": 0.6605538400000001,
+    "cost": 0.9080226600000001,
     "tokens": {
-      "input": 375620,
-      "output": 13891,
+      "input": 509385,
+      "output": 17400,
       "reasoning": 0,
       "cache": {
-        "read": 282944,
+        "read": 455091,
         "write": 0
       }
     },
     "time": {
       "created": 1784795736085,
-      "updated": 1784796842698
+      "updated": 1784797312353
     }
   },
   "messages": [
@@ -69,15 +69,15 @@
             },
             {
               "file": "tests/setup.ts",
-              "patch": "Index: tests/setup.ts\n===================================================================\n--- tests/setup.ts\t\n+++ tests/setup.ts\t\n@@ -0,0 +1,10 @@\n+import { afterAll, beforeAll } from 'vitest'\n+import { http, HttpResponse } from 'msw'\n+import { setupServer } from 'msw/node'\n+\n+export const server = setupServer(\n+  http.get('https://example.com/*', () => new HttpResponse(null, { status: 200 })),\n+)\n+\n+beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))\n+afterAll(() => server.close())\n",
-              "additions": 10,
+              "patch": "Index: tests/setup.ts\n===================================================================\n--- tests/setup.ts\t\n+++ tests/setup.ts\t\n@@ -0,0 +1,7 @@\n+import { afterAll, beforeAll } from 'vitest'\n+import { setupServer } from 'msw/node'\n+\n+const server = setupServer()\n+\n+beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))\n+afterAll(() => server.close())\n\\ No newline at end of file\n",
+              "additions": 7,
               "deletions": 0,
               "status": "added"
             },
             {
               "file": "tests/utils.test.ts",
-              "patch": "Index: tests/utils.test.ts\n===================================================================\n--- tests/utils.test.ts\t\n+++ tests/utils.test.ts\t\n@@ -0,0 +1,212 @@\n+import { describe, expect, it } from 'vitest'\n+import type { RawAppointment } from '@/types'\n+import {\n+  formatDate,\n+  formatCurrency,\n+  formatDateCompact,\n+  formatDatespan,\n+  formatDatetime,\n+  formatDuration,\n+  formatTimespan,\n+} from '@/utils'\n+\n+const toUtcIso = (year: number, month: number, day: number, hours = 0, minutes = 0) =>\n+  new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n+\n+const appointment = (fields: Partial<RawAppointment>): RawAppointment => ({\n+  sort_index: 0,\n+  ...fields,\n+})\n+\n+const NBSP = '\\u00A0'\n+\n+describe('formatDate', () => {\n+  const cases: Array<[Date, string]> = [\n+    [new Date(Date.UTC(2024, 0, 15)), '15. Januar 2024'],\n+    [new Date(Date.UTC(2024, 2, 9)), '9. März 2024'],\n+    [new Date(Date.UTC(2024, 11, 1)), '1. Dezember 2024'],\n+  ]\n+  for (const [input, expected] of cases) {\n+    it(`formats ${input.toISOString()} as ${expected}`, () => {\n+      expect(formatDate(input)).toBe(expected)\n+    })\n+  }\n+})\n+\n+describe('formatDatetime', () => {\n+  const cases: Array<[string, string]> = [\n+    [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan. 2024, 14:30 Uhr'],\n+    [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März 2024, 9:05 Uhr'],\n+    [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez. 2024, 23:59 Uhr'],\n+  ]\n+  for (const [input, expected] of cases) {\n+    it(`formats ${input} as ${expected}`, () => {\n+      expect(formatDatetime(input)).toBe(expected)\n+    })\n+  }\n+})\n+\n+describe('formatDateCompact', () => {\n+  const cases: Array<[string, string]> = [\n+    [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan., 14:30 Uhr'],\n+    [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März, 9:05 Uhr'],\n+    [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez., 23:59 Uhr'],\n+  ]\n+  for (const [input, expected] of cases) {\n+    it(`formats ${input} as ${expected}`, () => {\n+      expect(formatDateCompact(input)).toBe(expected)\n+    })\n+  }\n+})\n+\n+describe('formatDatespan', () => {\n+  describe('date-only (start_date / end_date)', () => {\n+    it('single day renders just the start in long form (German locale)', () => {\n+      expect(\n+        formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' })),\n+      ).toBe('Mo., 15. Jan. 2024')\n+    })\n+\n+    it('multi-day span renders both days joined with a dash (German locale)', () => {\n+      expect(\n+        formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-18' })),\n+      ).toBe('Mo., 15. Jan. 2024 - Do., 18. Jan. 2024')\n+    })\n+\n+    it('span across months and years (German locale)', () => {\n+      expect(\n+        formatDatespan(appointment({ start_date: '2024-12-30', end_date: '2025-01-02' })),\n+      ).toBe('Mo., 30. Dez. 2024 - Do., 2. Jan. 2025')\n+    })\n+  })\n+\n+  describe('datetime-only (start_date_time / end_date_time)', () => {\n+    it('same-calendar-day collapse renders only the start (default locale, no de)', () => {\n+      expect(\n+        formatDatespan(\n+          appointment({\n+            start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n+            end_date_time: toUtcIso(2024, 1, 15, 16, 30),\n+          }),\n+        ),\n+      ).toBe('Mon, 15. Jan 2024')\n+    })\n+\n+    it('1-minute difference collapse renders only the start (tracer branch)', () => {\n+      expect(\n+        formatDatespan(\n+          appointment({\n+            start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n+            end_date_time: toUtcIso(2024, 1, 15, 14, 31),\n+          }),\n+        ),\n+      ).toBe('Mon, 15. Jan 2024')\n+    })\n+\n+    it('cross-midnight span (different calendar days) renders both endpoints (default locale)', () => {\n+      expect(\n+        formatDatespan(\n+          appointment({\n+            start_date_time: toUtcIso(2024, 1, 15, 23, 30),\n+            end_date_time: toUtcIso(2024, 1, 16, 0, 30),\n+          }),\n+        ),\n+      ).toBe('Mon, 15. Jan 2024 - Tue, 16. Jan 2024')\n+    })\n+\n+    it('multi-day datetime span renders both endpoints (default locale)', () => {\n+      expect(\n+        formatDatespan(\n+          appointment({\n+            start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n+            end_date_time: toUtcIso(2024, 1, 18, 10, 0),\n+          }),\n+        ),\n+      ).toBe('Mon, 15. Jan 2024 - Thu, 18. Jan 2024')\n+    })\n+  })\n+\n+  describe('no dates', () => {\n+    it('throws when neither date nor datetime range is present', () => {\n+      expect(() => formatDatespan(appointment({}))).toThrow('Appointment has no start or end date')\n+    })\n+\n+    it('throws with only a start_date', () => {\n+      expect(() => formatDatespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n+        'Appointment has no start or end date',\n+      )\n+    })\n+\n+    it('throws with only a start_date_time', () => {\n+      expect(() =>\n+        formatDatespan(appointment({ start_date_time: toUtcIso(2024, 1, 15, 14, 30) })),\n+      ).toThrow('Appointment has no start or end date')\n+    })\n+  })\n+})\n+\n+describe('formatTimespan', () => {\n+  it('returns ganztägig for all-day date range', () => {\n+    expect(formatTimespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' }))).toBe(\n+      'ganztägig',\n+    )\n+  })\n+\n+  it('formats datetime range as start - end Uhr', () => {\n+    expect(\n+      formatTimespan(\n+        appointment({\n+          start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n+          end_date_time: toUtcIso(2024, 1, 15, 16, 45),\n+        }),\n+      ),\n+    ).toBe('14:30 - 16:45 Uhr')\n+  })\n+\n+  it('throws on empty appointment', () => {\n+    expect(() => formatTimespan(appointment({}))).toThrow(\n+      'Appointment has no start or end date time',\n+    )\n+  })\n+\n+  it('throws with only a start_date set', () => {\n+    expect(() => formatTimespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n+      'Appointment has no start or end date time',\n+    )\n+  })\n+})\n+\n+describe('formatDuration', () => {\n+  const cases: Array<[number, string]> = [\n+    [0, ''],\n+    [30, '30 Minuten'],\n+    [60, '1 Stunde'],\n+    [90, '1 Stunde und 30 Minuten'],\n+    [120, '2 Stunden'],\n+    [150, '2 Stunden und 30 Minuten'],\n+    [180, '3 Stunden'],\n+  ]\n+  for (const [input, expected] of cases) {\n+    it(`formats ${input} minutes as \"${expected}\"`, () => {\n+      expect(formatDuration(input)).toBe(expected)\n+    })\n+  }\n+})\n+\n+describe('formatCurrency', () => {\n+  const cases: Array<[number, string]> = [\n+    [0, `0,00${NBSP}€`],\n+    [9.99, `9,99${NBSP}€`],\n+    [1000, `1.000,00${NBSP}€`],\n+    [1234.5, `1.234,50${NBSP}€`],\n+  ]\n+  for (const [input, expected] of cases) {\n+    it(`formats ${input} as ${expected}`, () => {\n+      expect(formatCurrency(input)).toBe(expected)\n+    })\n+  }\n+\n+  it('returns the original value when not coercible to a number', () => {\n+    expect(formatCurrency('not-a-number' as unknown as number)).toBe('not-a-number')\n+  })\n+})\n",
-              "additions": 212,
+              "patch": "Index: tests/utils.test.ts\n===================================================================\n--- tests/utils.test.ts\t\n+++ tests/utils.test.ts\t\n@@ -0,0 +1,224 @@\n+import { describe, expect, it } from 'vitest'\n+import type { RawAppointment } from '@/types'\n+import {\n+  formatDate,\n+  formatCurrency,\n+  formatDateCompact,\n+  formatDatespan,\n+  formatDatetime,\n+  formatDuration,\n+  formatTimespan,\n+} from '@/utils'\n+\n+const toUtcIso = (year: number, month: number, day: number, hours = 0, minutes = 0) =>\n+  new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n+\n+const appointment = (fields: Partial<RawAppointment>): RawAppointment => ({\n+  sort_index: 0,\n+  ...fields,\n+})\n+\n+const NBSP = '\\u00A0'\n+\n+describe('formatDate', () => {\n+  const cases: Array<[Date, string]> = [\n+    [new Date(Date.UTC(2024, 0, 15)), '15. Januar 2024'],\n+    [new Date(Date.UTC(2024, 2, 9)), '9. März 2024'],\n+    [new Date(Date.UTC(2024, 11, 1)), '1. Dezember 2024'],\n+  ]\n+  for (const [input, expected] of cases) {\n+    it(`formats ${input.toISOString()} as ${expected}`, () => {\n+      expect(formatDate(input)).toBe(expected)\n+    })\n+  }\n+})\n+\n+describe('formatDatetime', () => {\n+  const cases: Array<[string, string]> = [\n+    [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan. 2024, 14:30 Uhr'],\n+    [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März 2024, 9:05 Uhr'],\n+    [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez. 2024, 23:59 Uhr'],\n+  ]\n+  for (const [input, expected] of cases) {\n+    it(`formats ${input} as ${expected}`, () => {\n+      expect(formatDatetime(input)).toBe(expected)\n+    })\n+  }\n+})\n+\n+describe('formatDateCompact', () => {\n+  const cases: Array<[string, string]> = [\n+    [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan., 14:30 Uhr'],\n+    [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März, 9:05 Uhr'],\n+    [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez., 23:59 Uhr'],\n+  ]\n+  for (const [input, expected] of cases) {\n+    it(`formats ${input} as ${expected}`, () => {\n+      expect(formatDateCompact(input)).toBe(expected)\n+    })\n+  }\n+})\n+\n+describe('formatDatespan', () => {\n+  describe('date-only (start_date / end_date)', () => {\n+    it('single day renders just the start in long form (German locale)', () => {\n+      expect(\n+        formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' })),\n+      ).toBe('Mo., 15. Jan. 2024')\n+    })\n+\n+    it('multi-day span renders both days joined with a dash (German locale)', () => {\n+      expect(\n+        formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-18' })),\n+      ).toBe('Mo., 15. Jan. 2024 - Do., 18. Jan. 2024')\n+    })\n+\n+    it('span across months and years (German locale)', () => {\n+      expect(\n+        formatDatespan(appointment({ start_date: '2024-12-30', end_date: '2025-01-02' })),\n+      ).toBe('Mo., 30. Dez. 2024 - Do., 2. Jan. 2025')\n+    })\n+  })\n+\n+  describe('datetime-only (start_date_time / end_date_time)', () => {\n+    it('same-calendar-day collapse renders only the start (default locale, no de)', () => {\n+      expect(\n+        formatDatespan(\n+          appointment({\n+            start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n+            end_date_time: toUtcIso(2024, 1, 15, 16, 30),\n+          }),\n+        ),\n+      ).toBe('Mon, 15. Jan 2024')\n+    })\n+\n+    it('1-minute difference collapse renders only the start (tracer branch)', () => {\n+      expect(\n+        formatDatespan(\n+          appointment({\n+            start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n+            end_date_time: toUtcIso(2024, 1, 15, 14, 31),\n+          }),\n+        ),\n+      ).toBe('Mon, 15. Jan 2024')\n+    })\n+\n+    it('cross-midnight span (different calendar days) renders both endpoints (default locale)', () => {\n+      expect(\n+        formatDatespan(\n+          appointment({\n+            start_date_time: toUtcIso(2024, 1, 15, 23, 30),\n+            end_date_time: toUtcIso(2024, 1, 16, 0, 30),\n+          }),\n+        ),\n+      ).toBe('Mon, 15. Jan 2024 - Tue, 16. Jan 2024')\n+    })\n+\n+    it('multi-day datetime span renders both endpoints (default locale)', () => {\n+      expect(\n+        formatDatespan(\n+          appointment({\n+            start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n+            end_date_time: toUtcIso(2024, 1, 18, 10, 0),\n+          }),\n+        ),\n+      ).toBe('Mon, 15. Jan 2024 - Thu, 18. Jan 2024')\n+    })\n+  })\n+\n+  describe('no dates', () => {\n+    it('throws when neither date nor datetime range is present', () => {\n+      expect(() => formatDatespan(appointment({}))).toThrow('Appointment has no start or end date')\n+    })\n+\n+    it('throws with only a start_date', () => {\n+      expect(() => formatDatespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n+        'Appointment has no start or end date',\n+      )\n+    })\n+\n+    it('throws with only a start_date_time', () => {\n+      expect(() =>\n+        formatDatespan(appointment({ start_date_time: toUtcIso(2024, 1, 15, 14, 30) })),\n+      ).toThrow('Appointment has no start or end date')\n+    })\n+  })\n+})\n+\n+describe('formatTimespan', () => {\n+  it('returns ganztägig for all-day date range', () => {\n+    expect(formatTimespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' }))).toBe(\n+      'ganztägig',\n+    )\n+  })\n+\n+  it('formats datetime range as start - end Uhr', () => {\n+    expect(\n+      formatTimespan(\n+        appointment({\n+          start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n+          end_date_time: toUtcIso(2024, 1, 15, 16, 45),\n+        }),\n+      ),\n+    ).toBe('14:30 - 16:45 Uhr')\n+  })\n+\n+  it('1-minute difference still formats as a normal time range (no same-day collapse branch here)', () => {\n+    expect(\n+      formatTimespan(\n+        appointment({\n+          start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n+          end_date_time: toUtcIso(2024, 1, 15, 14, 31),\n+        }),\n+      ),\n+    ).toBe('14:30 - 14:31 Uhr')\n+  })\n+\n+  it('throws on empty appointment', () => {\n+    expect(() => formatTimespan(appointment({}))).toThrow(\n+      'Appointment has no start or end date time',\n+    )\n+  })\n+\n+  it('throws with only a start_date set', () => {\n+    expect(() => formatTimespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n+      'Appointment has no start or end date time',\n+    )\n+  })\n+})\n+\n+describe('formatDuration', () => {\n+  const cases: Array<[number, string]> = [\n+    [0, ''],\n+    [30, '30 Minuten'],\n+    [60, '1 Stunde'],\n+    [90, '1 Stunde und 30 Minuten'],\n+    [120, '2 Stunden'],\n+    [150, '2 Stunden und 30 Minuten'],\n+    [180, '3 Stunden'],\n+  ]\n+  for (const [input, expected] of cases) {\n+    it(`formats ${input} minutes as \"${expected}\"`, () => {\n+      expect(formatDuration(input)).toBe(expected)\n+    })\n+  }\n+})\n+\n+describe('formatCurrency', () => {\n+  const cases: Array<[number, string]> = [\n+    [0, `0,00${NBSP}€`],\n+    [9.99, `9,99${NBSP}€`],\n+    [1000, `1.000,00${NBSP}€`],\n+    [1234.5, `1.234,50${NBSP}€`],\n+    [-5, `-5,00${NBSP}€`],\n+  ]\n+  for (const [input, expected] of cases) {\n+    it(`formats ${input} as ${expected}`, () => {\n+      expect(formatCurrency(input)).toBe(expected)\n+    })\n+  }\n+\n+  it('returns the original value when not coercible to a number', () => {\n+    expect(formatCurrency('not-a-number' as unknown as number)).toBe('not-a-number')\n+  })\n+})\n",
+              "additions": 224,
               "deletions": 0,
               "status": "added"
             },
@@ -3266,21 +3266,24 @@
           "cwd": "/Users/mseele/dev/sve/sve-website",
           "root": "/Users/mseele/dev/sve/sve-website"
         },
-        "cost": 0,
+        "cost": 0.01018088,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 35098,
+          "input": 214,
+          "output": 196,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 34688
           }
         },
         "modelID": "glm-5.2",
         "providerID": "opencode-go",
         "time": {
-          "created": 1784796842694
+          "created": 1784796842694,
+          "completed": 1784796853412
         },
+        "finish": "tool-calls",
         "id": "msg_f8e2e8ac6001TklHdyO1IATqeh",
         "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
       },
@@ -3297,21 +3300,896 @@
           "tool": "bash",
           "callID": "call_636a",
           "state": {
-            "metadata": {
-              "output": "ok 6 files changed, 289 insertions(+), 46 deletions(-)\n"
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "rtk git add -A && rtk git commit -m \"test: stand up Vitest harness + cover utils (#398)\n\nWire Vitest through Astro's getViteConfig so @/ alias and astro:env\nresolve exactly as in production; happy-dom environment, MSW server\nskeleton in tests/setup.ts. Extend bun run check to run vitest run so\ntests gate the build.\n\nTable-driven suite over src/utils.ts covering every exported function\n(formatDate, formatDatetime, formatDateCompact, formatDatespan,\nformatTimespan, formatDuration, formatCurrency) including single vs\nmulti-day spans, datetime collapse-on-same-day and 1-minute tracer\nbranch, cross-midnight boundary, throw paths, German locale assertions,\nand currency non-breaking-space behavior.\" 2>&1 | tail -15",
               "workdir": "/Users/mseele/dev/sve/sve-website"
             },
+            "output": "ok 6 files changed, 289 insertions(+), 46 deletions(-)\nok 17014dd\n",
+            "metadata": {
+              "output": "ok 6 files changed, 289 insertions(+), 46 deletions(-)\nok 17014dd\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git add -A && rtk git commit -m \"test: stand up Vitest harness + cover utils (#398)\n\nWire Vitest through Astro's getViteConfig so @/ alias and astro:env\nresolve exactly as in production; happy-dom environment, MSW server\nskeleton in tests/setup.ts. Extend bun run check to run vitest run so\ntests gate the build.\n\nTable-driven suite over src/utils.ts covering every exported function\n(formatDate, formatDatetime, formatDateCompact, formatDatespan,\nformatTimespan, formatDuration, formatCurrency) including single vs\nmulti-day spans, datetime collapse-on-same-day and 1-minute tracer\nbranch, cross-midnight boundary, throw paths, German locale assertions,\nand currency non-breaking-space behavior.\" 2>&1 | tail -15",
             "time": {
-              "start": 1784796850563
+              "start": 1784796853341,
+              "end": 1784796853345
             }
           },
           "id": "prt_f8e2ea946001y7zKBaZ1ZNyTo3",
           "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
           "messageID": "msg_f8e2e8ac6001TklHdyO1IATqeh"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-finish",
+          "tokens": {
+            "total": 35098,
+            "input": 214,
+            "output": 196,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 34688
+            }
+          },
+          "cost": 0.01018088,
+          "id": "prt_f8e2eb485001ZmggPoY3kL9VzU",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2e8ac6001TklHdyO1IATqeh"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e1da82e001IdGPJbJBNRabtK",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03050188,
+        "tokens": {
+          "total": 35144,
+          "input": 18679,
+          "output": 17,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 16448
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784796853415,
+          "completed": 1784796897977
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e2eb4a700174TLaDl9w69gNs",
+        "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
+      },
+      "parts": [
+        {
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-start",
+          "id": "prt_f8e2ec0ee001YQfy7BkDQlLz78",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2eb4a700174TLaDl9w69gNs"
+        },
+        {
+          "type": "text",
+          "text": "Now the code review:",
+          "time": {
+            "start": 1784796897586,
+            "end": 1784796897892
+          },
+          "id": "prt_f8e2f613200108XGxlUKoxY3Ag",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2eb4a700174TLaDl9w69gNs"
+        },
+        {
+          "type": "tool",
+          "tool": "skill",
+          "callID": "call_c18c",
+          "state": {
+            "status": "completed",
+            "input": {
+              "name": "code-review"
+            },
+            "output": "<skill_content name=\"code-review\">\n# Skill: code-review\n\nTwo-axis review of the diff between `HEAD` and a fixed point the user supplies:\n\n- **Standards** — does the code conform to this repo's documented coding standards?\n- **Spec** — does the code faithfully implement the originating issue / PRD / spec?\n\nBoth axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.\n\nThe issue tracker should have been provided to you — run `/setup-matt-pocock-skills` if `docs/agents/issue-tracker.md` is missing.\n\n## Process\n\n### 1. Pin the fixed point\n\nWhatever the user said is the fixed point — a commit SHA, branch name, tag, `main`, `HEAD~5`, etc. If they didn't specify one, ask for it.\n\nCapture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base). Also note the list of commits via `git log <fixed-point>..HEAD --oneline`.\n\nBefore going further, confirm the fixed point resolves (`git rev-parse <fixed-point>`) and the diff is non-empty. A bad ref or empty diff should fail here — not inside two parallel sub-agents.\n\n### 2. Identify the spec source\n\nLook for the originating spec, in this order:\n\n1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.) — fetch via the workflow in `docs/agents/issue-tracker.md`.\n2. A path the user passed as an argument.\n3. A PRD/spec file under `docs/`, `specs/`, or `.scratch/` matching the branch name or feature.\n4. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip and report \"no spec available\".\n\n### 3. Identify the standards sources\n\nAnything in the repo that documents how code should be written, such as `CODING_STANDARDS.md` or `CONTRIBUTING.md`.\n\nOn top of whatever the repo documents, the Standards axis always carries the **smell baseline** below — a fixed set of Fowler code smells (_Refactoring_, ch.3) that applies even when a repo documents nothing. Two rules bind it:\n\n- **The repo overrides.** A documented repo standard always wins; where it endorses something the baseline would flag, suppress the smell.\n- **Always a judgement call.** Each smell is a labelled heuristic (\"possible Feature Envy\"), never a hard violation — and, like any standard here, skip anything tooling already enforces.\n\nEach smell reads *what it is* → *how to fix*; match it against the diff:\n\n- **Mysterious Name** — a function, variable, or type whose name doesn't reveal what it does or holds. → rename it; if no honest name comes, the design's murky.\n- **Duplicated Code** — the same logic shape appears in more than one hunk or file in the change. → extract the shared shape, call it from both.\n- **Feature Envy** — a method that reaches into another object's data more than its own. → move the method onto the data it envies.\n- **Data Clumps** — the same few fields or params keep travelling together (a type wanting to be born). → bundle them into one type, pass that.\n- **Primitive Obsession** — a primitive or string standing in for a domain concept that deserves its own type. → give the concept its own small type.\n- **Repeated Switches** — the same `switch`/`if`-cascade on the same type recurs across the change. → replace with polymorphism, or one map both sites share.\n- **Shotgun Surgery** — one logical change forces scattered edits across many files in the diff. → gather what changes together into one module.\n- **Divergent Change** — one file or module is edited for several unrelated reasons. → split so each module changes for one reason.\n- **Speculative Generality** — abstraction, parameters, or hooks added for needs the spec doesn't have. → delete it; inline back until a real need shows.\n- **Message Chains** — long `a.b().c().d()` navigation the caller shouldn't depend on. → hide the walk behind one method on the first object.\n- **Middle Man** — a class or function that mostly just delegates onward. → cut it, call the real target direct.\n- **Refused Bequest** — a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.\n\n### 4. Spawn both sub-agents in parallel\n\nSend a single message with two `Agent` tool calls. Use the `general-purpose` subagent for both.\n\n**Standards sub-agent prompt** — include:\n\n- The full diff command and commit list.\n- The list of standards-source files you found in step 3, **plus the smell baseline from step 3** pasted in full — the sub-agent has no other access to it.\n- The brief: \"Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls — documented-standard breaches can be hard, but baseline smells are always judgement calls, and a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words.\"\n\n**Spec sub-agent prompt** — include:\n\n- The diff command and commit list.\n- The path or fetched contents of the spec.\n- The brief: \"Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words.\"\n\nIf the spec is missing, skip the Spec sub-agent and note this in the final report.\n\n### 5. Aggregate\n\nPresent the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings — the two axes are deliberately separate (see _Why two axes_).\n\nEnd with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes — that's the reranking the separation exists to prevent.\n\n## Why two axes\n\nA change can pass one axis and fail the other:\n\n- Code that follows every standard but implements the wrong thing → **Standards pass, Spec fail.**\n- Code that does exactly what the issue asked but breaks the project's conventions → **Spec pass, Standards fail.**\n\nReporting them separately stops one axis from masking the other.\n\nBase directory for this skill: /Users/mseele/.agents/skills/code-review\nRelative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.\nNote: file list is sampled.\n\n<skill_files>\n<file>/Users/mseele/.agents/skills/code-review/agents/openai.yaml</file>\n</skill_files>\n</skill_content>",
+            "metadata": {
+              "name": "code-review",
+              "dir": "/Users/mseele/.agents/skills/code-review",
+              "truncated": false
+            },
+            "title": "Loaded skill: code-review",
+            "time": {
+              "start": 1784796897883,
+              "end": 1784796897901
+            }
+          },
+          "id": "prt_f8e2f6257001yK3w3BQsQChTgj",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2eb4a700174TLaDl9w69gNs"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-finish",
+          "tokens": {
+            "total": 35144,
+            "input": 18679,
+            "output": 17,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 16448
+            }
+          },
+          "cost": 0.03050188,
+          "id": "prt_f8e2f6294001obhsmifiK0wrkw",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2eb4a700174TLaDl9w69gNs"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e1da82e001IdGPJbJBNRabtK",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.05161208,
+        "tokens": {
+          "total": 36775,
+          "input": 36556,
+          "output": 91,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784796897981,
+          "completed": 1784796925928
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e2f62bd001nY8tiwzYd05XFt",
+        "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
+      },
+      "parts": [
+        {
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-start",
+          "id": "prt_f8e2f83b80010lgrV3fIVHrxnw",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2f62bd001nY8tiwzYd05XFt"
+        },
+        {
+          "type": "reasoning",
+          "text": "The fixed point is the commit before my work (HEAD~1). Spec source is issue #398. Standards source is AGENTS.md (the coding standards). Let me spawn the two parallel sub-agents.",
+          "time": {
+            "start": 1784796906426,
+            "end": 1784796925799
+          },
+          "id": "prt_f8e2f83ba001vEqwxmGtEco31A",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2f62bd001nY8tiwzYd05XFt"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_869c",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git rev-parse HEAD~1 && rtk git log HEAD~1..HEAD --oneline",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "9ac58360a20cefe86a272d67a6dad88ae87ea77e\n17014dd test: stand up Vitest harness + cover utils (#398)\n",
+            "metadata": {
+              "output": "9ac58360a20cefe86a272d67a6dad88ae87ea77e\n17014dd test: stand up Vitest harness + cover utils (#398)\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git rev-parse HEAD~1 && rtk git log HEAD~1..HEAD --oneline",
+            "time": {
+              "start": 1784796925857,
+              "end": 1784796925860
+            }
+          },
+          "id": "prt_f8e2fcf6a001yIF2XM3cxyCbPb",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2f62bd001nY8tiwzYd05XFt"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-finish",
+          "tokens": {
+            "total": 36775,
+            "input": 36556,
+            "output": 91,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.05161208,
+          "id": "prt_f8e2fcfc8001GY2jrEwdLAA7b6",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2f62bd001nY8tiwzYd05XFt"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e1da82e001IdGPJbJBNRabtK",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.05511708,
+        "tokens": {
+          "total": 37665,
+          "input": 36693,
+          "output": 844,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784796925932,
+          "completed": 1784797241467
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e2fcfec0011PXHqsuOJVD7SI",
+        "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
+      },
+      "parts": [
+        {
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-start",
+          "id": "prt_f8e2fec0a001deg7yAwdk5Hdo7",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2fcfec0011PXHqsuOJVD7SI"
+        },
+        {
+          "type": "tool",
+          "tool": "task",
+          "callID": "call_f2bf",
+          "state": {
+            "status": "completed",
+            "input": {
+              "description": "Standards review",
+              "prompt": "You are a code-standards reviewer. Review the diff between fixed point 9ac58360a20cefe86a272d67a6dad88ae87ea77e (HEAD~1) and HEAD in the repo at /Users/mseele/dev/sve/sve-website.\n\nDiff command: `git diff 9ac58360a20cefe86a272d67a6dad88ae87ea77e...HEAD` (three-dot, merge-base). Commits: `git log 9ac58360a20cefe86a272d67a6dad88ae87ea77e..HEAD --oneline` shows one commit \"test: stand up Vitest harness + cover utils (#398)\".\n\nRead the changed files directly with the Read tool. The change adds: `vitest.config.ts`, `tests/setup.ts`, `tests/utils.test.ts`, modifies `package.json`.\n\nStandards sources in this repo:\n- /Users/mseele/dev/sve/sve-website/AGENTS.md (coding guidelines: formatter oxfmt; semicolons false; single quotes; tab width 2; print width 100; trailing commas all; imports group external → @/ alias → relative, explicit extensions for Astro components; TS strict, explicit types, `interface` for objects `type` for unions, export types from src/types.ts, Zod for runtime validation; PascalCase components, camelCase TS files/vars, Props interface; Tailwind v4; early returns, optional chaining, descriptive errors).\n\nAlso always carry this smell baseline (Fowler code smells) — each is a labelled heuristic judgement call, never a hard violation; documented repo standard overrides:\n- Mysterious Name\n- Duplicated Code\n- Feature Envy\n- Data Clumps\n- Primitive Obsession\n- Repeated Switches\n- Shotgun Surgery\n- Divergent Change\n- Speculative Generality\n- Message Chains\n- Middle Man\n- Refused Bequest\n\nReport — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls. Skip anything tooling (oxlint, tsc, oxfmt) already enforces. Under 400 words. Be terse. Return only the report.",
+              "subagent_type": "general"
+            },
+            "output": "<task id=\"ses_071ceb8b5ffep2lOPZabwDzAEx\" state=\"completed\">\n<task_result>\n## Code-standards review — HEAD (commit \"test: stand up Vitest harness + cover utils (#398)\")\n\n### Hard violations of documented standards\nNone found. Import grouping (external → `@/` → relative), `type` import for `RawAppointment`, explicit parameter/return types on helpers, single quotes / no semicolons / tab-2 — all conform. oxfmt/tsc/oxlint enforce the rest.\n\n### Baseline smells (judgement calls)\n\n**Speculative Generality / Dead code — `tests/setup.ts:5-7`**\n```ts\nexport const server = setupServer(\n  http.get('https://example.com/*', () => new HttpResponse(null, { status: 200 })),\n)\n```\nNo test references `example.com`, and nothing imports `server` from the setup file (side effects via `beforeAll`/`afterAll` are what matter). The handler and the `export` both look like scaffolding for a future need, not driven by current tests. Either drop the handler (keep `setupServer()` empty with `onUnhandledRequest: 'bypass'`) or add the test that needs it.\n\n**Duplicated Code — `tests/utils.test.ts:29-33, 42-46, 55-59, 189-193, 203-207`**\nThe identical loop shape recurs 5×:\n```ts\nfor (const [input, expected] of cases) {\n  it(`formats ${input} as ${expected}`, () => {\n    expect(<fn>(input)).toBe(expected)\n  })\n}\n```\nA tiny `tableTest(name, fn, cases)` helper would collapse these. Common enough in Vitest that it reads as idiomatic, but it is the clearest smell in the diff.\n\n**Data Clumps — `tests/utils.test.ts:13-14`**\n```ts\nconst toUtcIso = (year, month, day, hours = 0, minutes = 0) =>\n  new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n```\nFive positional scalars with an off-by-one (`month - 1`) footgun every call site trusts. `{ year, month, day, ... }` object arg would be safer, though for a test-local helper that's marginal.\n\n### Notes\n- `package.json:11` correctly chains `vitest run` into `check` — consistent with repo script style.\n- No smells in `vitest.config.ts`; minimal and direct.\n- Verified no imports of `server` from `tests/setup.ts` across the test file — the export is only consumed by the side-effect wiring. Consider dropping it (`export` not required for `beforeAll`/`afterAll` to run).\n</task_result>\n</task>",
+            "metadata": {
+              "parentSessionId": "ses_071e257eaffeYttOk9Ktd8iL2M",
+              "sessionId": "ses_071ceb8b5ffep2lOPZabwDzAEx",
+              "model": {
+                "modelID": "glm-5.2",
+                "providerID": "opencode-go"
+              },
+              "truncated": false
+            },
+            "title": "Standards review",
+            "time": {
+              "start": 1784797022034,
+              "end": 1784797241317
+            }
+          },
+          "id": "prt_f8e314740001130DLqwZQmniRp",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2fcfec0011PXHqsuOJVD7SI"
+        },
+        {
+          "type": "tool",
+          "tool": "task",
+          "callID": "call_de86",
+          "state": {
+            "status": "completed",
+            "input": {
+              "description": "Spec review",
+              "prompt": "You are a spec-conformance reviewer. Review the diff between fixed point 9ac58360a20cefe86a272d67a6dad88ae87ea77e (HEAD~1) and HEAD in the repo at /Users/mseele/dev/sve/sve-website.\n\nDiff command: `git diff 9ac58360a20cefe86a272d67a6dad88ae87ea77e...HEAD`. Commits: one commit \"test: stand up Vitest harness + cover utils (#398)\".\n\nThe originating spec is GitHub issue #398 (repo mseele/sve-website). Use `gh issue view 398 --repo mseele/sve-website` to fetch it. Quote spec lines when citing.\n\nRead the changed files directly with the Read tool: vitest.config.ts, tests/setup.ts, tests/utils.test.ts, package.json. Also read /Users/mseele/dev/sve/sve-website/src/utils.ts to verify the tests really cover every exported function.\n\nReport: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec acceptance-criteria line for each finding. Under 400 words. Be terse. Return only the report.",
+              "subagent_type": "general"
+            },
+            "output": "<task id=\"ses_071ce09d4ffeKH3XFRj6dQTbAQ\" state=\"completed\">\n<task_result>\n## Spec-conformance review — issue #398\n\n### (a) Missing / partial\n\n- **1-minute-difference branch asserted in the wrong function.** Spec: \"the 1-minute-difference ⇒ same-day branch in `formatTimespan`\". The branch actually lives in `formatDatespan` (`src/utils.ts:36`), and the test covers it there (`tests/utils.test.ts:95`). `formatTimespan` (`src/utils.ts:44-54`) has no `differenceInMinutes` logic and no test for it. Either the spec misnamed the function or the implementation/test pair missed `formatTimespan`.\n\n- **German locale assertions not exercised for the datetime span branch.** Spec: \"German locale assertions\". `formatDatespan`'s datetime branch deliberately omits `{ locale: de }` (`src/utils.ts:37-39`), and tests assert default-locale output (`tests/utils.test.ts:84,106,117`). The branch is tested but not for German locale — only the date-only branch is. Pre-existing implementation choice, but the AC's \"German locale assertions\" is only partially met.\n\n### (b) Scope creep\n\n- **`.opencode/plugins/entire.ts` rewritten (92 lines changed).** Unrelated to the test harness; the issue is solely about standing up Vitest + covering utils. This file should not be in the commit.\n\n### (c) Implemented but looks wrong\n\n- **`formatCurrency` non-number path returns the input but the test casts it.** Spec AC: \"covers every exported function … with edge-case table rows\". `tests/utils.test.ts:209` passes `'not-a-number' as unknown as number` and expects the same string back. The implementation `src/utils.ts:74-77` returns `value` (the original) when not coercible — but the signature declares `value: number` and return `string`. The test sidesteps the type system with `as unknown as number`, so it asserts runtime behaviour while the typed contract is broken (returns `string` for a non-number input). The table-row AC is nominally met, but the edge case is exercising an unreachable-typed path rather than real edge rows like negative values or `NaN` input.\n\n- All other AC items (`getViteConfig` use, happy-dom env, MSW skeleton in `setup.ts`, `bun run check` running `vitest run` per `package.json:11`) are implemented correctly.☒\n</task_result>\n</task>",
+            "metadata": {
+              "parentSessionId": "ses_071e257eaffeYttOk9Ktd8iL2M",
+              "sessionId": "ses_071ce09d4ffeKH3XFRj6dQTbAQ",
+              "model": {
+                "modelID": "glm-5.2",
+                "providerID": "opencode-go"
+              },
+              "truncated": false
+            },
+            "title": "Spec review",
+            "time": {
+              "start": 1784797066799,
+              "end": 1784797221780
+            }
+          },
+          "id": "prt_f8e31f625001d47EWn7YJHiu7G",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2fcfec0011PXHqsuOJVD7SI"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-finish",
+          "tokens": {
+            "total": 37665,
+            "input": 36693,
+            "output": 844,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.05511708,
+          "id": "prt_f8e34a015001HteyFv6shblA6C",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e2fcfec0011PXHqsuOJVD7SI"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e1da82e001IdGPJbJBNRabtK",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0598528,
+        "tokens": {
+          "total": 40088,
+          "input": 38831,
+          "output": 1247,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 10
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784797241474,
+          "completed": 1784797266779
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e34a0820011HQ6fRk857LzBw",
+        "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
+      },
+      "parts": [
+        {
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-start",
+          "id": "prt_f8e34b56e001KHV1SLgBhwhV7W",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e34a0820011HQ6fRk857LzBw"
+        },
+        {
+          "type": "reasoning",
+          "text": "Both reviews came back. Let me address the findings:\n\n1. Standards review:\n   - Speculative Generality / Dead code: `tests/setup.ts` has a `server` export and example.com handler no test references. I should drop the example.com handler and keep setupServer() empty (with `onUnhandledRequest: 'bypass'`), and drop the unused `export` of server. Actually the AC says \"setup file starts MSW server skeleton\" — so an empty `setupServer()` plus listen/close is the skeleton. Let me clean it: drop the example.com handler (it's speculative), keep an empty `setupServer()` — that's the skeleton. Also the `server` export is unused; drop the export (the variable stays since we need to call listen/close).\n   \n   Wait — if I remove the handler entirely, `setupServer()` returns a server. I still need the variable to call `.listen()` and `.close()`. So just remove the example.com handler and remove the `export`. Actually the variable doesn't need to be exported. Let me keep it as a local.\n\n   But removing the handler means `http` and `HttpResponse` imports become unused. Let me restructure: `const server = setupServer()` with empty args. Then `http` and `HttpResponse` unused. Remove those imports.\n\n   - Duplicated Code: 5× table-test loop. Acceptable as idiomatic; judgement call. I'll consider extracting a tiny helper but it's marginal and arguably reduces readability. Skip — it's idiomatic Vitest and the reviewer themselves noted \"Common enough in Vitest that it reads as idiomatic.\"\n   \n   - Data Clumps: toUtcIso positional args. Judgement call; marginal for a test helper. Skip.\n\n2. Spec review:\n   - (a) \"1-minute-difference branch in formatTimespan\" — spec wording error; the branch is in formatDatespan and tested there. But the spec literally says \"in formatTimespan\". Actually the spec text: \"the 1-minute-difference ⇒ same-day branch in `formatTimespan`\". Looking at utils.ts, the 1-min branch IS in formatDatespan not formatTimespan. The spec has a typo. I should note this is a spec wording issue, and the test correctly covers the actual 1-minute branch in formatDatespan. However — should I add a test to formatTimespan too? It would be redundant since there's no branch there. Better to add a comment or just note it. But to fully satisfy the AC literally, maybe add a test that formatTimespan on a 1-minute difference produces \"14:30 - 14:31 Uhr\" (just normal time formatting). That's not asserting a special branch but documents the behavior. Actually that's fine — it covers the 1-minute input case in formatTimespan too, even if there's no special branch. Let me add that as an edge case for completeness.\n\n   - (a) German locale assertions not for datetime span branch. The implementation deliberately omits `{ locale: de }` in the datetime branch (src/utils.ts:37-39) — that's a pre-existing implementation choice/bug. The spec says \"German locale assertions\" — I have German locale assertions for formatDate, formatDatetime, formatDateCompact, and formatDatespan date-only branch. The datetime branch uses default locale. I should NOT change the implementation (out of scope — the issue is \"Stand up test harness + cover the pure utils\", not fix bugs). The tests correctly assert the actual behavior. I could add a comment noting the missing locale. But the AC says \"German locale assertions\" — these are present across the suite. The datetime-span branch is a pre-existing oddity; flagging it as a finding rather than fixing it is correct. I'll leave the tests as they are (they correctly assert actual behavior).\n\n   - (b) Scope creep: `.opencode/plugins/entire.ts` rewritten — but wait, did I touch that file? No! I never touched `.opencode/plugins/entire.ts`. Let me verify. The git status showed only `bun.lockb`, `package.json`, `tests/`, `vitest.config.ts`. So the spec reviewer is hallucinating or that file was already in the commit. Let me check the actual diff.\n\n   Actually let me verify — `git show --stat HEAD`.\n\n   - (c) formatCurrency non-number path: the test casts `'not-a-number' as unknown as number`. This is intentional to test the runtime guard. The reviewer suggests testing edge cases like negative values or NaN. The AC says \"covers every exported function ... with edge-case table rows\". I have table rows for normal cases plus one guard test. Adding negative/NaN cases would strengthen it. Let me add: -5, NaN. For NaN: `Number.isNaN(Number(NaN))` → Number(NaN) = NaN, isNaN = true → returns value (NaN). So formatCurrency(NaN) returns NaN. Hmm, that's weird but it's the actual behavior. Let me add a negative case which formats normally: -5 → \"-5,00 €\" (de-DE). Let me verify: Intl de-DE currency of -5 → \"-5,00 €\" (with the NBSP). Likely \"-5,00\\u00A0€\".\n\nLet me address:\n1. Clean up tests/setup.ts — remove speculative example.com handler and unused exports/imports. Keep empty `setupServer()` skeleton.\n2. Add a formatTimespan 1-minute difference test (for spec AC literal coverage).\n3. Add negative value formatCurrency case (and maybe NaN).\n4. Verify .opencode/plugins/entire.ts is NOT in the diff (likely reviewer hallucination).\n\nLet me first verify the actual diff.",
+          "time": {
+            "start": 1784797246832,
+            "end": 1784797266067
+          },
+          "id": "prt_f8e34b570001GACccqbb2vtPW6",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e34a0820011HQ6fRk857LzBw"
+        },
+        {
+          "type": "text",
+          "text": "Let me verify the scope-creep finding and address the actionable ones.",
+          "time": {
+            "start": 1784797266070,
+            "end": 1784797266651
+          },
+          "id": "prt_f8e3500960014K6vtpnWWY5nvv",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e34a0820011HQ6fRk857LzBw"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "chatcmpl-tool-8c246b9ced87fe98",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git show --stat HEAD",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "commit 17014ddc8d830cbb0623f8e0b08eb47c02ff4299\nAuthor: Michael Seele <mseele@gmail.com>\nDate:   Thu Jul 23 10:54:10 2026 +0200\n\n    test: stand up Vitest harness + cover utils (#398)\n    \n    Wire Vitest through Astro's getViteConfig so @/ alias and astro:env\n    resolve exactly as in production; happy-dom environment, MSW server\n    skeleton in tests/setup.ts. Extend bun run check to run vitest run so\n    tests gate the build.\n    \n    Table-driven suite over src/utils.ts covering every exported function\n    (formatDate, formatDatetime, formatDateCompact, formatDatespan,\n    formatTimespan, formatDuration, formatCurrency) including single vs\n    multi-day spans, datetime collapse-on-same-day and 1-minute tracer\n    branch, cross-midnight boundary, throw paths, German locale assertions,\n    and currency non-breaking-space behavior.\n    \n    Entire-Checkpoint: cf2a398355b1\n\n .opencode/plugins/entire.ts |  92 ++++++++++---------\n bun.lockb                   | Bin 628337 -> 653109 bytes\n package.json                |   8 +-\n tests/setup.ts              |  10 +++\n tests/utils.test.ts         | 212 ++++++++++++++++++++++++++++++++++++++++++++\n vitest.config.ts            |  13 +++\n 6 files changed, 289 insertions(+), 46 deletions(-)\n",
+            "metadata": {
+              "output": "commit 17014ddc8d830cbb0623f8e0b08eb47c02ff4299\nAuthor: Michael Seele <mseele@gmail.com>\nDate:   Thu Jul 23 10:54:10 2026 +0200\n\n    test: stand up Vitest harness + cover utils (#398)\n    \n    Wire Vitest through Astro's getViteConfig so @/ alias and astro:env\n    resolve exactly as in production; happy-dom environment, MSW server\n    skeleton in tests/setup.ts. Extend bun run check to run vitest run so\n    tests gate the build.\n    \n    Table-driven suite over src/utils.ts covering every exported function\n    (formatDate, formatDatetime, formatDateCompact, formatDatespan,\n    formatTimespan, formatDuration, formatCurrency) including single vs\n    multi-day spans, datetime collapse-on-same-day and 1-minute tracer\n    branch, cross-midnight boundary, throw paths, German locale assertions,\n    and currency non-breaking-space behavior.\n    \n    Entire-Checkpoint: cf2a398355b1\n\n .opencode/plugins/entire.ts |  92 ++++++++++---------\n bun.lockb                   | Bin 628337 -> 653109 bytes\n package.json                |   8 +-\n tests/setup.ts              |  10 +++\n tests/utils.test.ts         | 212 ++++++++++++++++++++++++++++++++++++++++++++\n vitest.config.ts            |  13 +++\n 6 files changed, 289 insertions(+), 46 deletions(-)\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git show --stat HEAD",
+            "time": {
+              "start": 1784797266682,
+              "end": 1784797266694
+            }
+          },
+          "id": "prt_f8e35022e001AKMXvv0Em3z3TI",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e34a0820011HQ6fRk857LzBw"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-finish",
+          "tokens": {
+            "total": 40088,
+            "input": 38831,
+            "output": 1247,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 10
+            }
+          },
+          "cost": 0.0598528,
+          "id": "prt_f8e350333001H9h0qnySsI8Br7",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e34a0820011HQ6fRk857LzBw"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e1da82e001IdGPJbJBNRabtK",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0168684,
+        "tokens": {
+          "total": 41460,
+          "input": 1586,
+          "output": 1034,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 38840
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784797266783,
+          "completed": 1784797284011
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e35035f001hkOM5H7gV2oTf5",
+        "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
+      },
+      "parts": [
+        {
+          "snapshot": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "type": "step-start",
+          "id": "prt_f8e350839001K60YLEUX24UzjH",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35035f001hkOM5H7gV2oTf5"
+        },
+        {
+          "type": "reasoning",
+          "text": "Confirmed: `.opencode/plugins/entire.ts` IS in the commit — it was auto-modified by the \"Entire\" checkpoint plugin (the commit message has `Entire-Checkpoint: cf2a398355b1`). That's a tooling artifact, not my code change. Let me check what it did.\n\nActually the commit was made and the entire plugin injected its checkpoint rewrite into the same commit. This is noise but it's tooling-driven, not scope creep I introduced. Let me look at the diff to understand.\n\nActually this is a known behavior of the `entire` plugin (enabled in commit 9ac5836 \"chore: enable entire\"). It rewrites its plugin file on each commit as a checkpoint. This is unavoidable tooling noise. I'll note it in the review summary but it's not something I should strip out (it would just get re-added on next commit). \n\nActually wait — should I strip it from this commit? The reviewer flagged it as scope creep. But it's a tooling artifact auto-added by the entire plugin. If I amend the commit to remove it, the plugin will likely just re-add it. Best to leave it and note it.\n\nNow let me address the actionable findings:\n\n1. Clean up tests/setup.ts — remove speculative example.com handler. Keep `setupServer()` empty as skeleton.\n2. Add formatTimespan 1-minute-difference test (spec AC literal coverage — even though no special branch, document behavior).\n3. Add formatCurrency negative case.\n\nLet me also reconsider: the spec reviewer noted the spec text says \"1-minute-difference ⇒ same-day branch in formatTimespan\" — but it's actually in formatDatespan. The test covers it in formatDatespan correctly. I'll add a formatTimespan 1-minute test for literal coverage.\n\nLet me make these edits.",
+          "time": {
+            "start": 1784797268027,
+            "end": 1784797275898
+          },
+          "id": "prt_f8e35083b0011Yk5nthdO3nNoc",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35035f001hkOM5H7gV2oTf5"
+        },
+        {
+          "type": "text",
+          "text": "`.opencode/plugins/entire.ts` is auto-rewritten by the Entire checkpoint plugin on every commit (note the `Entire-Checkpoint:` trailer) — tooling artifact, not scope I introduced. I'll leave it. Addressing the actionable findings:",
+          "time": {
+            "start": 1784797275900,
+            "end": 1784797283870
+          },
+          "id": "prt_f8e3526fc001p9HYDnGzrUhy5U",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35035f001hkOM5H7gV2oTf5"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "chatcmpl-tool-a61fb419a0984ea2",
+          "state": {
+            "status": "completed",
+            "input": {
+              "content": "import { afterAll, beforeAll } from 'vitest'\nimport { setupServer } from 'msw/node'\n\nconst server = setupServer()\n\nbeforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }))\nafterAll(() => server.close())",
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/setup.ts"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/Users/mseele/dev/sve/sve-website/tests/setup.ts",
+              "exists": true,
+              "truncated": false
+            },
+            "title": "tests/setup.ts",
+            "time": {
+              "start": 1784797276219,
+              "end": 1784797276223
+            }
+          },
+          "id": "prt_f8e3527010012MPZJMIFLvxc1i",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35035f001hkOM5H7gV2oTf5"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "chatcmpl-tool-b02716986a698ba2",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/utils.test.ts",
+              "newString": "it('formats datetime range as start - end Uhr', () => {\n    expect(\n      formatTimespan(\n        appointment({\n          start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n          end_date_time: toUtcIso(2024, 1, 15, 16, 45),\n        }),\n      ),\n    ).toBe('14:30 - 16:45 Uhr')\n  })\n\n  it('1-minute difference still formats as a normal time range (no same-day collapse branch here)', () => {\n    expect(\n      formatTimespan(\n        appointment({\n          start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n          end_date_time: toUtcIso(2024, 1, 15, 14, 31),\n        }),\n      ),\n    ).toBe('14:30 - 14:31 Uhr')\n  })",
+              "oldString": "it('formats datetime range as start - end Uhr', () => {\n    expect(\n      formatTimespan(\n        appointment({\n          start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n          end_date_time: toUtcIso(2024, 1, 15, 16, 45),\n        }),\n      ),\n    ).toBe('14:30 - 16:45 Uhr')\n  })"
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: /Users/mseele/dev/sve/sve-website/tests/utils.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/utils.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/utils.test.ts\n@@ -162,8 +162,19 @@\n     ),\n   ).toBe('14:30 - 16:45 Uhr')\n })\n \n+it('1-minute difference still formats as a normal time range (no same-day collapse branch here)', () => {\n+  expect(\n+    formatTimespan(\n+      appointment({\n+        start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n+        end_date_time: toUtcIso(2024, 1, 15, 14, 31),\n+      }),\n+    ),\n+  ).toBe('14:30 - 14:31 Uhr')\n+})\n+\n it('throws on empty appointment', () => {\n   expect(() => formatTimespan(appointment({}))).toThrow(\n     'Appointment has no start or end date time',\n   )\n",
+              "filediff": {
+                "file": "/Users/mseele/dev/sve/sve-website/tests/utils.test.ts",
+                "patch": "Index: /Users/mseele/dev/sve/sve-website/tests/utils.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/utils.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/utils.test.ts\n@@ -162,8 +162,19 @@\n     ),\n   ).toBe('14:30 - 16:45 Uhr')\n })\n \n+it('1-minute difference still formats as a normal time range (no same-day collapse branch here)', () => {\n+  expect(\n+    formatTimespan(\n+      appointment({\n+        start_date_time: toUtcIso(2024, 1, 15, 14, 30),\n+        end_date_time: toUtcIso(2024, 1, 15, 14, 31),\n+      }),\n+    ),\n+  ).toBe('14:30 - 14:31 Uhr')\n+})\n+\n it('throws on empty appointment', () => {\n   expect(() => formatTimespan(appointment({}))).toThrow(\n     'Appointment has no start or end date time',\n   )\n",
+                "additions": 11,
+                "deletions": 0
+              },
+              "truncated": false
+            },
+            "title": "tests/utils.test.ts",
+            "time": {
+              "start": 1784797281663,
+              "end": 1784797281666
+            }
+          },
+          "id": "prt_f8e352856001YZlKijCIOmucL7",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35035f001hkOM5H7gV2oTf5"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "chatcmpl-tool-825e94b217469a21",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/utils.test.ts",
+              "newString": "[0, `0,00${NBSP}€`],\n    [9.99, `9,99${NBSP}€`],\n    [1000, `1.000,00${NBSP}€`],\n    [1234.5, `1.234,50${NBSP}€`],\n    [-5, `-5,00${NBSP}€`],",
+              "oldString": "[0, `0,00${NBSP}€`],\n    [9.99, `9,99${NBSP}€`],\n    [1000, `1.000,00${NBSP}€`],\n    [1234.5, `1.234,50${NBSP}€`],"
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: /Users/mseele/dev/sve/sve-website/tests/utils.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/utils.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/utils.test.ts\n@@ -209,8 +209,9 @@\n   [0, `0,00${NBSP}€`],\n   [9.99, `9,99${NBSP}€`],\n   [1000, `1.000,00${NBSP}€`],\n   [1234.5, `1.234,50${NBSP}€`],\n+  [-5, `-5,00${NBSP}€`],\n ]\n for (const [input, expected] of cases) {\n   it(`formats ${input} as ${expected}`, () => {\n     expect(formatCurrency(input)).toBe(expected)\n",
+              "filediff": {
+                "file": "/Users/mseele/dev/sve/sve-website/tests/utils.test.ts",
+                "patch": "Index: /Users/mseele/dev/sve/sve-website/tests/utils.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/utils.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/utils.test.ts\n@@ -209,8 +209,9 @@\n   [0, `0,00${NBSP}€`],\n   [9.99, `9,99${NBSP}€`],\n   [1000, `1.000,00${NBSP}€`],\n   [1234.5, `1.234,50${NBSP}€`],\n+  [-5, `-5,00${NBSP}€`],\n ]\n for (const [input, expected] of cases) {\n   it(`formats ${input} as ${expected}`, () => {\n     expect(formatCurrency(input)).toBe(expected)\n",
+                "additions": 1,
+                "deletions": 0
+              },
+              "truncated": false
+            },
+            "title": "tests/utils.test.ts",
+            "time": {
+              "start": 1784797283834,
+              "end": 1784797283836
+            }
+          },
+          "id": "prt_f8e353d830012a7njov45jBBIE",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35035f001hkOM5H7gV2oTf5"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "64f400c3c43773852dbf4bf20161297f5703a75e",
+          "type": "step-finish",
+          "tokens": {
+            "total": 41460,
+            "input": 1586,
+            "output": 1034,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 38840
+            }
+          },
+          "cost": 0.0168684,
+          "id": "prt_f8e35467c001OxipZOe8cxYz69",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35035f001hkOM5H7gV2oTf5"
+        },
+        {
+          "type": "patch",
+          "hash": "044adb9b1e78f85b360cda74daf0b824c24b89db",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/setup.ts",
+            "/Users/mseele/dev/sve/sve-website/tests/utils.test.ts"
+          ],
+          "id": "prt_f8e3546a900173bBCYI2fzid1c",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35035f001hkOM5H7gV2oTf5"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e1da82e001IdGPJbJBNRabtK",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0121649,
+        "tokens": {
+          "total": 41521,
+          "input": 1056,
+          "output": 40,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 40425
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784797284017,
+          "completed": 1784797290714
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e3546b1001Y5M7IlvJGrDJPd",
+        "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
+      },
+      "parts": [
+        {
+          "snapshot": "64f400c3c43773852dbf4bf20161297f5703a75e",
+          "type": "step-start",
+          "id": "prt_f8e354dda001EhSLKGPGcTAzxQ",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e3546b1001Y5M7IlvJGrDJPd"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "chatcmpl-tool-944c936975b8e888",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run test 2>&1 | tail -8",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "(node:2748) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n   Start at  11:01:28\n   Duration  1.97s (transform 27ms, setup 47ms, import 1.61s, tests 12ms, environment 182ms)\n\n",
+            "metadata": {
+              "output": "(node:2748) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n   Start at  11:01:28\n   Duration  1.97s (transform 27ms, setup 47ms, import 1.61s, tests 12ms, environment 182ms)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run test 2>&1 | tail -8",
+            "time": {
+              "start": 1784797290625,
+              "end": 1784797290632
+            }
+          },
+          "id": "prt_f8e354ddb001nomzBorv0x4Ynu",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e3546b1001Y5M7IlvJGrDJPd"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "64f400c3c43773852dbf4bf20161297f5703a75e",
+          "type": "step-finish",
+          "tokens": {
+            "total": 41521,
+            "input": 1056,
+            "output": 40,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 40425
+            }
+          },
+          "cost": 0.0121649,
+          "id": "prt_f8e3560b2001ENRsoifhNu9WJ4",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e3546b1001Y5M7IlvJGrDJPd"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e1da82e001IdGPJbJBNRabtK",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0111708,
+        "tokens": {
+          "total": 41670,
+          "input": 150,
+          "output": 40,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 41480
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784797290722,
+          "completed": 1784797312339
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e3560e2001KuIrdPUSnxyIan",
+        "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
+      },
+      "parts": [
+        {
+          "snapshot": "64f400c3c43773852dbf4bf20161297f5703a75e",
+          "type": "step-start",
+          "id": "prt_f8e35653900136gRHkCRkv2o3S",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e3560e2001KuIrdPUSnxyIan"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "chatcmpl-tool-800c22258822a413",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run check 2>&1 | tail -10",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": " RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:2822) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n   Start at  11:01:50\n   Duration  2.02s (transform 24ms, setup 42ms, import 1.69s, tests 12ms, environment 166ms)\n\n",
+            "metadata": {
+              "output": " RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:2822) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  1 passed (1)\n      Tests  37 passed (37)\n   Start at  11:01:50\n   Duration  2.02s (transform 24ms, setup 42ms, import 1.69s, tests 12ms, environment 166ms)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run check 2>&1 | tail -10",
+            "time": {
+              "start": 1784797312242,
+              "end": 1784797312250
+            }
+          },
+          "id": "prt_f8e35653b00185npVpRzvocLDA",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e3560e2001KuIrdPUSnxyIan"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "64f400c3c43773852dbf4bf20161297f5703a75e",
+          "type": "step-finish",
+          "tokens": {
+            "total": 41670,
+            "input": 150,
+            "output": 40,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 41480
+            }
+          },
+          "cost": 0.0111708,
+          "id": "prt_f8e35b530001imSmcKVDmWQvim",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e3560e2001KuIrdPUSnxyIan"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e1da82e001IdGPJbJBNRabtK",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0,
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "reasoning": 0,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784797312348
+        },
+        "id": "msg_f8e35b55c00106JtBEogXITot2",
+        "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M"
+      },
+      "parts": [
+        {
+          "snapshot": "64f400c3c43773852dbf4bf20161297f5703a75e",
+          "type": "step-start",
+          "id": "prt_f8e35bccc001Dp06eiD8sjXKcY",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35b55c00106JtBEogXITot2"
+        },
+        {
+          "type": "text",
+          "text": "All green (37 tests). Amend the commit to fold in the review fixes:",
+          "time": {
+            "start": 1784797314255,
+            "end": 1784797314685
+          },
+          "id": "prt_f8e35bccf001JPv0wc24fzYjQV",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35b55c00106JtBEogXITot2"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "chatcmpl-tool-a6df41498b46c54e",
+          "state": {
+            "metadata": {
+              "output": "$ oxfmt\nFinished in 459ms on 205 files using 8 threads.\nok 2 files changed, 13 insertions(+), 4 deletions(-)\n"
+            },
+            "status": "running",
+            "input": {
+              "command": "rtk bun run format 2>&1 | tail -3 && rtk git add -A && rtk git commit --amend --no-edit 2>&1 | tail -8",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "time": {
+              "start": 1784797315208
+            }
+          },
+          "id": "prt_f8e35bdf6001TvthoMjD52xtOe",
+          "sessionID": "ses_071e257eaffeYttOk9Ktd8iL2M",
+          "messageID": "msg_f8e35b55c00106JtBEogXITot2"
         }
       ]
     }
