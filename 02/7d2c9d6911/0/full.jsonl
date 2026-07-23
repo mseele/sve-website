@@ -1,0 +1,623 @@
+{
+  "info": {
+    "id": "ses_0717df656ffeG15DZOGlukdVil",
+    "slug": "misty-tiger",
+    "projectID": "68d450c05733c82192ed1f31a5e40cb2ae707f59",
+    "directory": "/Users/mseele/dev/sve/sve-website",
+    "path": "",
+    "parentID": "ses_071adf50affeg6Sm0cwYlJ2wLb",
+    "title": "Spec review (@general subagent)",
+    "agent": "general",
+    "model": {
+      "id": "glm-5.2",
+      "providerID": "opencode-go",
+      "variant": "default"
+    },
+    "version": "1.18.4",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0.08655368000000001,
+    "tokens": {
+      "input": 46940,
+      "output": 2913,
+      "reasoning": 0,
+      "cache": {
+        "read": 30848,
+        "write": 0
+      }
+    },
+    "permission": [
+      {
+        "permission": "task",
+        "pattern": "*",
+        "action": "deny"
+      }
+    ],
+    "time": {
+      "created": 1784802314665,
+      "updated": 1784802371703
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1784802314670
+        },
+        "agent": "general",
+        "model": {
+          "providerID": "opencode-go",
+          "modelID": "glm-5.2"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_f8e8209ae001XKrn2ln46e88hm",
+        "sessionID": "ses_0717df656ffeG15DZOGlukdVil"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "You are a Spec reviewer. Run a spec-conformance review of the uncommitted working-tree changes in the repo at `/Users/mseele/dev/sve/sve-website` against the originating spec: GitHub issue #400 in `mseele/sve-website`.\n\nThe diff command to run yourself:\n```\ngit -C /Users/mseele/dev/sve/sve-website diff HEAD\n```\nAlso list untracked files:\n```\ngit -C /Users/mseele/dev/sve/sve-website status --porcelain\n```\nFor untracked files (`??` prefix), read them in full — they are part of the change. The untracked files in this change are: `CONTEXT.md`, `docs/adr/0001-availability-state-predicate.md`, `tests/api/events.test.ts`. Read each in full.\n\nThe spec (issue #400) text, verbatim:\n\n---\nTitle: Retype and test the EventAvailability contract end-to-end\n\nWhat to build:\nThis ticket resolves two open design questions and applies the answer — it is both a decision and its implementation.\n\nDecision 1 (B1 — overloaded field): The field `availableSlots` on `EventAvailability` does two domain jobs. When `isWaitingList` is false it means \"remaining subscriber slots\"; when true it means \"remaining waiting-list slots.\" Decide: is this a deliberate phase-switched capacity (keep the field, name and document the switch), or two conflated quantities (split into `remainingSubscriberSlots` + `remainingWaitingListSlots`)?\n\nDecision 2 (B2 — consumer sentinel decode): The `-1` contract spans four sites — `convertToEventAvailability` (write), `calculateAvailabilityMessage` (read), the `<script>` in `src/components/blocks/Event.astro` around the availability card (read `=== -1`), and `src/components/blocks/Events.astro` (read `=== 0`). The two `.astro` consumer sites are not exported TS and unit tests cannot reach them. Decide: extract the consumer decoders into exported pure predicates (e.g. `canSubscribe(av)`, `availabilityState(av)`), or accept that the `.astro` sites are only covered by the build + a later Playwright pass?\n\nRecord both decisions in `CONTEXT.md` as resolved domain terms, and create an ADR in `docs/adr/` if either qualifies (hard to reverse + surprising + real trade-off).\n\nThen apply the decisions: retype `EventAvailability` in `src/types.ts`, update `convertToEventAvailability` + `calculateAvailabilityMessage` in `src/api/events.ts`, and update the consumer sites in `Event.astro` and `Events.astro` so `bun run build` stays green. Add unit tests for the producer transform against the resolved shape — and, if B2-i is chosen, tests for the extracted `canSubscribe` / `availabilityState` predicates. The goal: the entire `-1` contract is unit-testable, and a future sentinel refactor (e.g. to `Infinity` or a `kind: 'unlimited'`) either moves all four sites together or fails a test.\n\nNote: under answer B (the domain owns `-1` as a real concept — \"Unlimited\"), the re-decode in `Event.astro:442` asking \"is this event unlimited?\" is legitimate. The question is only how it's expressed and whether it's testable.\n\nAcceptance criteria:\n- [ ] B1 decided and reflected in the `EventAvailability` type — overloaded field either named+documented or split\n- [ ] B2 decided — consumer decoders either extracted and exported, or explicitly left in the `.astro` scripts with the gap acknowledged\n- [ ] `CONTEXT.md` created at repo root with the resolved terms (EventAvailability, RawEventCounter, Unlimited-as-sentinel or however the decision lands)\n- [ ] ADR written if either decision qualifies as hard-to-reverse + surprising + real trade-off\n- [ ] All four `-1` sites updated consistently; `bun run build` and `bun run check` green\n- [ ] Unit tests cover `convertToEventAvailability` (and `calculateAvailabilityMessage`) against the new shape, plus any extracted predicate functions\n\nBlocked by: #398 (test harness must exist first)\n---\n\nBrief: Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words.\n\nReturn only your report, no preamble.",
+          "id": "prt_f8e8209b0001M8tzs9NtFbSJ8y",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e8209ae001XKrn2ln46e88hm"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e8209ae001XKrn2ln46e88hm",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01645568,
+        "tokens": {
+          "total": 11704,
+          "input": 11504,
+          "output": 72,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784802314874,
+          "completed": 1784802317311
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e820a7a001dD1nzcC87eO0OH",
+        "sessionID": "ses_0717df656ffeG15DZOGlukdVil"
+      },
+      "parts": [
+        {
+          "snapshot": "ada77cbe21f20deb549cfaccf703836c83196431",
+          "type": "step-start",
+          "id": "prt_f8e821164001MLLFVqN3UoKLOi",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e820a7a001dD1nzcC87eO0OH"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me gather the diff and untracked files, then read the spec-relevant files.",
+          "time": {
+            "start": 1784802316647,
+            "end": 1784802316866
+          },
+          "id": "prt_f8e8211670011209QLP8QEi2e7",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e820a7a001dD1nzcC87eO0OH"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_5b9c",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git -C /Users/mseele/dev/sve/sve-website diff HEAD"
+            },
+            "output": "...output truncated...\n\nFull output saved to: /Users/mseele/.local/share/opencode/tool-output/tool_f8e821289001eQSf21tls5OQPT\n\n 4 files changed, 103 insertions(+), 18 deletions(-)\n\nChanges:\n\nsrc/api/events.ts\n  @@ -12,6 +12,46 @@ import { BACKEND_API, PREVIEW } from 'astro:env/client'\n  +/**\n  + * Four-state phase machine derived from {@link EventAvailability}. Tests pin\n  + * every transition; consumer sites must branch on this enum rather than\n  + * re-decoding the `-1` / `0` sentinels themselves, so a future sentinel change\n  + * (e.g. to `Infinity` or a `kind: 'unlimited'` discriminated field) either\n  + * moves every site together or fails a test.\n  + *\n  + * Lives in `src/api/events.ts` (not `src/types.ts`) so the browser `<script>`\n  + * bundles that import it as a runtime value do not pull `@/types` — and with\n  + * it the side-effectful `zod` import — into the client bundle.\n  + */\n  +export enum AvailabilityState {\n  +  /** Subscriber phase, no capacity limit (`max_subscribers === -1`). Sentinel `-1`. */\n  +  Unlimited = 'unlimited',\n  +  /** Subscriber phase, slots remaining. */\n  +  Subscribing = 'subscribing',\n  +  /** Subscribers full; waiting-list phase open. */\n  +  WaitingList = 'waitingList',\n  +  /** Subscribers full and waiting-list full. Terminal. */\n  +  FullyBooked = 'fullyBooked',\n  +}\n  +\n  +/**\n  + * Canonical decode of the {@link EventAvailability} sentinel + phase switch\n  + * into a single {@link AvailabilityState}. This is the ONLY function that\n  + * should read `availableSlots === -1` or `availableSlots === 0`; everywhere\n  + * else derives through this predicate.\n  + */\n  +export function availabilityState(\n  +  av: Pick<EventAvailability, 'availableSlots' | 'isWaitingList'>,\n  +): AvailabilityState {\n  +  if (av.availableSlots === -1) {\n  +    return AvailabilityState.Unlimited\n  +  }\n  +  if (av.isWaitingList) {\n  +    return av.availableSlots > 0 ? AvailabilityState.WaitingList : AvailabilityState.FullyBooked\n  +  }\n  +  return av.availableSlots > 0 ? AvailabilityState.Subscribing : AvailabilityState.FullyBooked\n  +}\n  +\n   export async function loadEvents(type: EventType): Promise<Event[]> {\n     const response = await fetch(`${BACKEND_API}/events?type=${type}&beta=${PREVIEW}`)\n     if (!response.ok) {\n  @@ -92,7 +132,7 @@ function computeDatesDisplay(dates: string[], customDate?: string | null): strin\n  -function convertToEventAvailability(counter: RawEventCounter): EventAvailability {\n  +export function convertToEventAvailability(counter: RawEventCounter): EventAvailability {\n     const noLimit = counter.max_subscribers === -1\n     const noMoreSubscriptions = counter.subscribers >= counter.max_subscribers\n     const noMoreWaitingList = counter.waiting_list >= counter.max_waiting_list\n  @@ -114,19 +154,20 @@ function convertToEventAvailability(counter: RawEventCounter): EventAvailability\n  -function calculateAvailabilityMessage(availableSlots: number, isWaitingList: boolean): string {\n  -  if (availableSlots === -1) {\n  -    return 'Freie Plätze verfügbar'\n  -  }\n  -  if (isWaitingList && availableSlots > 0) {\n  -    return 'Warteliste ist geöffnet'\n  -  }\n  -  if (availableSlots === 1) {\n  -    return 'Noch 1 freier Platz'\n  -  } else if (availableSlots > 1) {\n  -    return `Noch ${availableSlots} freie Plätze`\n  +export function calculateAvailabilityMessage(\n  +  availableSlots: number,\n  +  isWaitingList: boolean,\n  +): string {\n  +  switch (availabilityState({ availableSlots, isWaitingList })) {\n  +    case AvailabilityState.Unlimited:\n  +      return 'Freie Plätze verfügbar'\n  +    case AvailabilityState.WaitingList:\n  +      return 'Warteliste ist geöffnet'\n  +    case AvailabilityState.Subscribing:\n  +      return availableSlots === 1 ? 'Noch 1 freier Platz' : `Noch ${availableSlots} freie Plätze`\n  +    case AvailabilityState.FullyBooked:\n  +      return 'Ausgebucht'\n     }\n  -  return 'Ausgebucht'\n   }\n   \n   export async function loadEventAvailability(\n  +54 -13\n\nsrc/components/blocks/Event.astro\n  @@ -414,7 +414,12 @@ details.push({\n  -  import { bookEvent, loadEventAvailability } from '@/api/events'\n  +  import {\n  +    AvailabilityState,\n  +    availabilityState,\n  +    bookEvent,\n  +    loadEventAvailability,\n  +  } from '@/api/events'\n     import { checkRequiredInput, clearCustomValidityOnInput, validateIbanInput } from '@/client/forms'\n     import { notify } from '@/client/notifications'\n     import type { EventAvailability } from '@/types'\n  @@ -437,12 +442,13 @@ details.push({\n  -        if (availability.isWaitingList && availability.availableSlots > 0) {\n  +        const state = availabilityState(availability)\n  +        if (state === AvailabilityState.WaitingList) {\n             title = 'Warteliste'\n             description =\n               'Leider sind schon alle Plätze belegt. Gerne kannst Du Dich auf die Warteliste setzen lassen. Wir benachrichtigen Dich, wenn Plätze frei werden.'\n             button = 'Auf die Warteliste setzen'\n  -        } else if (availability.availableSlots === -1 || availability.availableSlots > 0) {\n  +        } else if (state === AvailabilityState.Unlimited || state === AvailabilityState.Subscribing) {\n             title = 'Anmeldung'\n             button = 'Kostenpflichtig buchen'\n           } else {\n  +9 -3\n\nsrc/components/blocks/Events.astro\n  @@ -72,7 +72,7 @@ const { type, entries, nothing, newsletterDescription, faqs } = Astro.props as P\n  -  import { loadEventsAvailability } from '@/api/events'\n  +  import { AvailabilityState, availabilityState, loadEventsAvailability } from '@/api/events'\n   \n     loadEventsAvailability((data) => {\n       const elements = document.querySelectorAll<HTMLParagraphElement>(\n  @@ -86,7 +86,9 @@ const { type, entries, nothing, newsletterDescription, faqs } = Astro.props as P\n  -            availability.availableSlots === 0 ? 'unavailable' : 'available',\n  +            availabilityState(availability) === AvailabilityState.FullyBooked\n  +              ? 'unavailable'\n  +              : 'available',\n             )\n           }\n         }\n  +4 -2\n\nsrc/types.ts\n  @@ -176,9 +176,45 @@ export interface RawEventCounter {\n  +/**\n  + * Booking availability for an event, derived from {@link RawEventCounter}.\n  + *\n  + * The pair (`availableSlots`, `isWaitingList`) encodes a four-state phase machine;\n  + * `availableSlots` is a *phase-switched* quantity — it counts whichever kind of\n  + * slot is currently bookable, never both at once. The booking flow depletes\n  + * subscriber slots first; only when subscribers are full does the waiting-list\n  + * phase begin, at which point `availableSlots` switches to counting waiting-list\n  + * slots. Splitting the field would advertise two independent quantities that\n  + * are in fact mutually exclusive — so we keep one phase-switched number and\n  + * document the switch here.\n  + *\n  + * Decode the sentinel through `availabilityState(av)` (see `src/api/events.ts`);\n  + * do not compare `availableSlots` to `-1` or `0` directly at consumer sites.\n  + */\n   export interface EventAvailability {\n  +  /**\n  +   * Remaining bookable slots in the CURRENT booking phase.\n  +   *\n  +   * - When `isWaitingList` is `false` (subscriber phase): remaining subscriber\n  +   *   slots, OR the sentinel `-1` meaning the event is **Unlimited**\n  +   *   (`max_subscribers === -1` on the backend — a real domain concept, not a\n  +   *   leaked implementation detail).\n  +   * - When `isWaitingList` is `true` (waiting-list phase, subscribers full):\n  +   *   remaining waiting-list slots (always `>= 0`; the sentinel never appears\n  +   *   in this phase).\n  +   *\n  +   * `0` means the current phase is exhausted — for the waiting-list phase that\n  +   * is the **FullyBooked** state; the subscriber phase never emits `0` (the\n  +   * producer flips to the waiting-list phase instead).\n  +   */\n     availableSlots: number\n  +  /**\n  +   * `true` once the subscriber phase is exhausted — `availableSlots` then\n  +   * counts waiting-list slots rather than subscriber slots. Always `false` for\n  +   * Unlimited events.\n  +   */\n     isWaitingList: boolean\n  +  /** Pre-formatted German display message derived from the phase + slot count. */\n     message: string\n   }\n   \n  +36 -0\n",
+            "metadata": {
+              "output": "src/api/events.ts                  | 67 ++++++++++++++++++++++++++++++--------\n src/components/blocks/Event.astro  | 12 +++++--\n src/components/blocks/Events.astro |  6 ++--\n src/types.ts                       | 36 ++++++++++++++++++++\n 4 files changed, 103 insertions(+), 18 deletions(-)\n\nChanges:\n\nsrc/api/events.ts\n  @@ -12,6 +12,46 @@ import { BACKEND_API, PREVIEW } from 'astro:env/client'\n  +/**\n  + * Four-state phase machine derived from {@link EventAvailability}. Tests pin\n  + * every transition; consumer sites must branch on this enum rather than\n  + * re-decoding the `-1` / `0` sentinels themselves, so a future sentinel change\n  + * (e.g. to `Infinity` or a `kind: 'unlimited'` discriminated field) either\n  + * moves every site together or fails a test.\n  + *\n  + * Lives in `src/api/events.ts` (not `src/types.ts`) so the browser `<script>`\n  + * bundles that import it as a runtime value do not pull `@/types` — and with\n  + * it the side-effectful `zod` import — into the client bundle.\n  + */\n  +export enum AvailabilityState {\n  +  /** Subscriber phase, no capacity limit (`max_subscribers === -1`). Sentinel `-1`. */\n  +  Unlimited = 'unlimited',\n  +  /** Subscriber phase, slots remaining. */\n  +  Subscribing = 'subscribing',\n  +  /** Subscribers full; waiting-list phase open. */\n  +  WaitingList = 'waitingList',\n  +  /** Subscribers full and waiting-list full. Terminal. */\n  +  FullyBooked = 'fullyBooked',\n  +}\n  +\n  +/**\n  + * Canonical decode of the {@link EventAvailability} sentinel + phase switch\n  + * into a single {@link AvailabilityState}. This is the ONLY function that\n  + * should read `availableSlots === -1` or `availableSlots === 0`; everywhere\n  + * else derives through this predicate.\n  + */\n  +export function availabilityState(\n  +  av: Pick<EventAvailability, 'availableSlots' | 'isWaitingList'>,\n  +): AvailabilityState {\n  +  if (av.availableSlots === -1) {\n  +    return AvailabilityState.Unlimited\n  +  }\n  +  if (av.isWaitingList) {\n  +    return av.availableSlots > 0 ? AvailabilityState.WaitingList : AvailabilityState.FullyBooked\n  +  }\n  +  return av.availableSlots > 0 ? AvailabilityState.Subscribing : AvailabilityState.FullyBooked\n  +}\n  +\n   export async function loadEvents(type: EventType): Promise<Event[]> {\n     const response = await fetch(`${BACKEND_API}/events?type=${type}&beta=${PREVIEW}`)\n     if (!response.ok) {\n  @@ -92,7 +132,7 @@ function computeDatesDisplay(dates: string[], customDate?: string | null): strin\n  -function convertToEventAvailability(counter: RawEventCounter): EventAvailability {\n  +export function convertToEventAvailability(counter: RawEventCounter): EventAvailability {\n     const noLimit = counter.max_subscribers === -1\n     const noMoreSubscriptions = counter.subscribers >= counter.max_subscribers\n     const noMoreWaitingList = counter.waiting_list >= counter.max_waiting_list\n  @@ -114,19 +154,20 @@ function convertToEventAvailability(counter: RawEventCounter): EventAvailability\n  -function calculateAvailabilityMessage(availableSlots: number, isWaitingList: boolean): string {\n  -  if (availableSlots === -1) {\n  -    return 'Freie Plätze verfügbar'\n  -  }\n  -  if (isWaitingList && availableSlots > 0) {\n  -    return 'Warteliste ist geöffnet'\n  -  }\n  -  if (availableSlots === 1) {\n  -    return 'Noch 1 freier Platz'\n  -  } else if (availableSlots > 1) {\n  -    return `Noch ${availableSlots} freie Plätze`\n  +export function calculateAvailabilityMessage(\n  +  availableSlots: number,\n  +  isWaitingList: boolean,\n  +): string {\n  +  switch (availabilityState({ availableSlots, isWaitingList })) {\n  +    case AvailabilityState.Unlimited:\n  +      return 'Freie Plätze verfügbar'\n  +    case AvailabilityState.WaitingList:\n  +      return 'Warteliste ist geöffnet'\n  +    case AvailabilityState.Subscribing:\n  +      return availableSlots === 1 ? 'Noch 1 freier Platz' : `Noch ${availableSlots} freie Plätze`\n  +    case AvailabilityState.FullyBooked:\n  +      return 'Ausgebucht'\n     }\n  -  return 'Ausgebucht'\n   }\n   \n   export async function loadEventAvailability(\n  +54 -13\n\nsrc/components/blocks/Event.astro\n  @@ -414,7 +414,12 @@ details.push({\n  -  import { bookEvent, loadEventAvailability } from '@/api/events'\n  +  import {\n  +    AvailabilityState,\n  +    availabilityState,\n  +    bookEvent,\n  +    loadEventAvailability,\n  +  } from '@/api/events'\n     import { checkRequiredInput, clearCustomValidityOnInput, validateIbanInput } from '@/client/forms'\n     import { notify } from '@/client/notifications'\n     import type { EventAvailability } from '@/types'\n  @@ -437,12 +442,13 @@ details.push({\n  -        if (availability.isWaitingList && availability.availableSlots > 0) {\n  +        const state = availabilityState(availability)\n  +        if (state === AvailabilityState.WaitingList) {\n             title = 'Warteliste'\n             description =\n               'Leider sind schon alle Plätze belegt. Gerne kannst Du Dich auf die Warteliste setzen lassen. Wir benachrichtigen Dich, wenn Plätze frei werden.'\n             button = 'Auf die Warteliste setzen'\n  -        } else if (availability.availableSlots === -1 || availability.availableSlots > 0) {\n  +        } else if (state === AvailabilityState.Unlimited || state === AvailabilityState.Subscribing) {\n             title = 'Anmeldung'\n             button = 'Kostenpflichtig buchen'\n           } else {\n  +9 -3\n\nsrc/components/blocks/Events.astro\n  @@ -72,7 +72,7 @@ const { type, entries, nothing, newsletterDescription, faqs } = Astro.props as P\n  -  import { loadEventsAvailability } from '@/api/events'\n  +  import { AvailabilityState, availabilityState, loadEventsAvailability } from '@/api/events'\n   \n     loadEventsAvailability((data) => {\n       const elements = document.querySelectorAll<HTMLParagraphElement>(\n  @@ -86,7 +86,9 @@ const { type, entries, nothing, newsletterDescription, faqs } = Astro.props as P\n  -            availability.availableSlots === 0 ? 'unavailable' : 'available',\n  +            availabilityState(availability) === AvailabilityState.FullyBooked\n  +              ? 'unavailable'\n  +              : 'available',\n             )\n           }\n         }\n  +4 -2\n\nsrc/types.ts\n  @@ -176,9 +176,45 @@ export interface RawEventCounter {\n  +/**\n  + * Booking availability for an event, derived from {@link RawEventCounter}.\n  + *\n  + * The pair (`availableSlots`, `isWaitingList`) encodes a four-state phase machine;\n  + * `availableSlots` is a *phase-switched* quantity — it counts whichever kind of\n  + * slot is currently bookable, never both at once. The booking flow depletes\n  + * subscriber slots first; only when subscribers are full does the waiting-list\n  + * phase begin, at which point `availableSlots` switches to counting waiting-list\n  + * slots. Splitting the field would advertise two independent quantities that\n  + * are in fact mutually exclusive — so we keep one phase-switched number and\n  + * document the switch here.\n  + *\n  + * Decode the sentinel through `availabilityState(av)` (see `src/api/events.ts`);\n  + * do not compare `availableSlots` to `-1` or `0` directly at consumer sites.\n  + */\n   export interface EventAvailability {\n  +  /**\n  +   * Remaining bookable slots in the CURRENT booking phase.\n  +   *\n  +   * - When `isWaitingList` is `false` (subscriber phase): remaining subscriber\n  +   *   slots, OR the sentinel `-1` meaning the event is **Unlimited**\n  +   *   (`max_subscribers === -1` on the backend — a real domain concept, not a\n  +   *   leaked implementation detail).\n  +   * - When `isWaitingList` is `true` (waiting-list phase, subscribers full):\n  +   *   remaining waiting-list slots (always `>= 0`; the sentinel never appears\n  +   *   in this phase).\n  +   *\n  +   * `0` means the current phase is exhausted — for the waiting-list phase that\n  +   * is the **FullyBooked** state; the subscriber phase never emits `0` (the\n  +   * producer flips to the waiting-list phase instead).\n  +   */\n     availableSlots: number\n  +  /**\n  +   * `true` once the subscriber phase is exhausted — `availableSlots` then\n  +   * counts waiting-list slots rather than subscriber slots. Always `false` for\n  +   * Unlimited events.\n  +   */\n     isWaitingList: boolean\n  +  /** Pre-formatted German display message derived from the phase + slot count. */\n     message: string\n   }\n   \n  +36 -0\n",
+              "exit": 0,
+              "truncated": true,
+              "outputPath": "/Users/mseele/.local/share/opencode/tool-output/tool_f8e821289001eQSf21tls5OQPT"
+            },
+            "title": "rtk git -C /Users/mseele/dev/sve/sve-website diff HEAD",
+            "time": {
+              "start": 1784802316938,
+              "end": 1784802316941
+            }
+          },
+          "id": "prt_f8e821244001E41JkSc5R4kJ2h",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e820a7a001dD1nzcC87eO0OH"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_0c13",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git -C /Users/mseele/dev/sve/sve-website status --porcelain"
+            },
+            "output": " M src/api/events.ts\n M src/components/blocks/Event.astro\n M src/components/blocks/Events.astro\n M src/types.ts\n?? CONTEXT.md\n?? docs/adr/\n?? tests/api/events.test.ts",
+            "metadata": {
+              "output": " M src/api/events.ts\n M src/components/blocks/Event.astro\n M src/components/blocks/Events.astro\n M src/types.ts\n?? CONTEXT.md\n?? docs/adr/\n?? tests/api/events.test.ts",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git -C /Users/mseele/dev/sve/sve-website status --porcelain",
+            "time": {
+              "start": 1784802317191,
+              "end": 1784802317193
+            }
+          },
+          "id": "prt_f8e821358001hXhrRbovDyAcX2",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e820a7a001dD1nzcC87eO0OH"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "ada77cbe21f20deb549cfaccf703836c83196431",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11704,
+            "input": 11504,
+            "output": 72,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01645568,
+          "id": "prt_f8e8213b70012PqKBo6VMn5b2K",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e820a7a001dD1nzcC87eO0OH"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e8209ae001XKrn2ln46e88hm",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01851788,
+        "tokens": {
+          "total": 13162,
+          "input": 12955,
+          "output": 79,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784802317313,
+          "completed": 1784802334949
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e821401001n9UuTw87JPEC20",
+        "sessionID": "ses_0717df656ffeG15DZOGlukdVil"
+      },
+      "parts": [
+        {
+          "snapshot": "ada77cbe21f20deb549cfaccf703836c83196431",
+          "type": "step-start",
+          "id": "prt_f8e822037001pTmpw1dzUKMEPF",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e821401001n9UuTw87JPEC20"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_7e07",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/CONTEXT.md"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/CONTEXT.md</path>\n<type>file</type>\n<content>\n1: # CONTEXT — SV Eutingen Website\n2: \n3: Single-context repo. Domain terms resolved by the engineering skills live here; cross-cutting decisions that are hard to reverse + surprising + real trade-off live in `docs/adr/`.\n4: \n5: ## Booking availability\n6: \n7: ### `EventAvailability`\n8: \n9: Derived client-side from a backend `RawEventCounter`. Encodes a four-state booking phase machine through the pair (`availableSlots`, `isWaitingList`):\n10: \n11: - **`Unlimited`** — event has no capacity limit (`max_subscribers === -1`).\n12: - **`Subscribing`** — subscriber phase open, slots remaining.\n13: - **`WaitingList`** — subscribers full, waiting-list phase open.\n14: - **`FullyBooked`** — subscribers and waiting-list both full. Terminal.\n15: \n16: The field `availableSlots` is a **phase-switched** quantity: it counts whichever kind of slot is currently bookable — subscriber slots in the `Subscribing` / `Unlimited` phases, waiting-list slots in the `WaitingList` phase, and `0` in `FullyBooked`. It is _not_ two independent quantities; the two phases are mutually exclusive (the booking flow depletes subscribers first, then flips to the waiting list). Splitting it into `remainingSubscriberSlots` + `remainingWaitingListSlots` was considered and rejected — see ADR-0001.\n17: \n18: **`-1` sentinel** is a real domain concept (\"Unlimited\"), not a leaked implementation detail. Decode it only through `availabilityState(av)` in `src/api/events.ts`; never compare `availableSlots === -1` or `=== 0` at consumer sites.\n19: \n20: ### `RawEventCounter`\n21: \n22: Raw counter payload from the backend. `max_subscribers === -1` signals an unlimited event; all other fields are non-negative integers. Producer transform `convertToEventAvailability(counter) → EventAvailability` is the single writer of the sentinel.\n23: \n24: ### Producer / reader contract for the sentinel\n25: \n26: | Site                         | Role                                          | Location                             |\n27: | ---------------------------- | --------------------------------------------- | ------------------------------------ |\n28: | `convertToEventAvailability` | **Write** the sentinel                        | `src/api/events.ts`                  |\n29: | `availabilityState`          | **Canonical read** of the sentinel + phase    | `src/api/events.ts`                  |\n30: | `<script>` in `Event.astro`  | Consumer; branches on `availabilityState(av)` | `src/components/blocks/Event.astro`  |\n31: | `<script>` in `Events.astro` | Consumer; branches on `availabilityState(av)` | `src/components/blocks/Events.astro` |\n32: \n33: A future sentinel refactor (e.g. to `Infinity` or a `kind: 'unlimited'` discriminated field) must move all four sites together — `tests/api/events.test.ts` pins the contract.\n\n(End of file - total 33 lines)\n</content>",
+            "metadata": {
+              "preview": "# CONTEXT — SV Eutingen Website\n\nSingle-context repo. Domain terms resolved by the engineering skills live here; cross-cutting decisions that are hard to reverse + surprising + real trade-off live in `docs/adr/`.\n\n## Booking availability\n\n### `EventAvailability`\n\nDerived client-side from a backend `RawEventCounter`. Encodes a four-state booking phase machine through the pair (`availableSlots`, `isWaitingList`):\n\n- **`Unlimited`** — event has no capacity limit (`max_subscribers === -1`).\n- **`Subscribing`** — subscriber phase open, slots remaining.\n- **`WaitingList`** — subscribers full, waiting-list phase open.\n- **`FullyBooked`** — subscribers and waiting-list both full. Terminal.\n\nThe field `availableSlots` is a **phase-switched** quantity: it counts whichever kind of slot is currently bookable — subscriber slots in the `Subscribing` / `Unlimited` phases, waiting-list slots in the `WaitingList` phase, and `0` in `FullyBooked`. It is _not_ two independent quantities; the two phases are mutually exclusive (the booking flow depletes subscribers first, then flips to the waiting list). Splitting it into `remainingSubscriberSlots` + `remainingWaitingListSlots` was considered and rejected — see ADR-0001.\n\n**`-1` sentinel** is a real domain concept (\"Unlimited\"), not a leaked implementation detail. Decode it only through `availabilityState(av)` in `src/api/events.ts`; never compare `availableSlots === -1` or `=== 0` at consumer sites.\n\n### `RawEventCounter`",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/CONTEXT.md",
+                "text": "# CONTEXT — SV Eutingen Website\n\nSingle-context repo. Domain terms resolved by the engineering skills live here; cross-cutting decisions that are hard to reverse + surprising + real trade-off live in `docs/adr/`.\n\n## Booking availability\n\n### `EventAvailability`\n\nDerived client-side from a backend `RawEventCounter`. Encodes a four-state booking phase machine through the pair (`availableSlots`, `isWaitingList`):\n\n- **`Unlimited`** — event has no capacity limit (`max_subscribers === -1`).\n- **`Subscribing`** — subscriber phase open, slots remaining.\n- **`WaitingList`** — subscribers full, waiting-list phase open.\n- **`FullyBooked`** — subscribers and waiting-list both full. Terminal.\n\nThe field `availableSlots` is a **phase-switched** quantity: it counts whichever kind of slot is currently bookable — subscriber slots in the `Subscribing` / `Unlimited` phases, waiting-list slots in the `WaitingList` phase, and `0` in `FullyBooked`. It is _not_ two independent quantities; the two phases are mutually exclusive (the booking flow depletes subscribers first, then flips to the waiting list). Splitting it into `remainingSubscriberSlots` + `remainingWaitingListSlots` was considered and rejected — see ADR-0001.\n\n**`-1` sentinel** is a real domain concept (\"Unlimited\"), not a leaked implementation detail. Decode it only through `availabilityState(av)` in `src/api/events.ts`; never compare `availableSlots === -1` or `=== 0` at consumer sites.\n\n### `RawEventCounter`\n\nRaw counter payload from the backend. `max_subscribers === -1` signals an unlimited event; all other fields are non-negative integers. Producer transform `convertToEventAvailability(counter) → EventAvailability` is the single writer of the sentinel.\n\n### Producer / reader contract for the sentinel\n\n| Site                         | Role                                          | Location                             |\n| ---------------------------- | --------------------------------------------- | ------------------------------------ |\n| `convertToEventAvailability` | **Write** the sentinel                        | `src/api/events.ts`                  |\n| `availabilityState`          | **Canonical read** of the sentinel + phase    | `src/api/events.ts`                  |\n| `<script>` in `Event.astro`  | Consumer; branches on `availabilityState(av)` | `src/components/blocks/Event.astro`  |\n| `<script>` in `Events.astro` | Consumer; branches on `availabilityState(av)` | `src/components/blocks/Events.astro` |\n\nA future sentinel refactor (e.g. to `Infinity` or a `kind: 'unlimited'` discriminated field) must move all four sites together — `tests/api/events.test.ts` pins the contract.",
+                "lineStart": 1,
+                "lineEnd": 33,
+                "totalLines": 33,
+                "truncated": false
+              }
+            },
+            "title": "CONTEXT.md",
+            "time": {
+              "start": 1784802334157,
+              "end": 1784802334161
+            }
+          },
+          "id": "prt_f8e8255cb001PEp1lZBkx9WABa",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e821401001n9UuTw87JPEC20"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_5074",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/docs/adr/0001-availability-state-predicate.md"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/docs/adr/0001-availability-state-predicate.md</path>\n<type>file</type>\n<content>\n1: # ADR-0001: Keep `availableSlots` as one phase-switched field; export an `availabilityState` predicate in `src/api/events.ts`\n2: \n3: Date: 2026-07-23\n4: Status: Accepted\n5: Resolves: Issue #400 (decisions B1 and B2-i)\n6: Touches: `src/types.ts`, `src/api/events.ts`, `src/components/blocks/Event.astro`, `src/components/blocks/Events.astro`, `tests/api/events.test.ts`, `CONTEXT.md`\n7: \n8: ## Context\n9: \n10: `EventAvailability.availableSlots` carries two domain jobs depending on `isWaitingList`:\n11: \n12: - when `isWaitingList === false` — remaining **subscriber** slots (or `-1` for an unlimited event),\n13: - when `isWaitingList === true` — remaining **waiting-list** slots (always `>= 0`).\n14: \n15: Issue #400 asked us to decide between (a) keeping the overloaded field, named + documented, or (b) splitting it into `remainingSubscriberSlots` + `remainingWaitingListSlots`.\n16: \n17: The `-1` contract spans four sites:\n18: \n19: 1. `convertToEventAvailability` (write) — `src/api/events.ts`,\n20: 2. `calculateAvailabilityMessage` (read) — `src/api/events.ts`,\n21: 3. the `<script>` in `Event.astro` (read `=== -1`) — not exported TS, unreachable by unit tests,\n22: 4. the `<script>` in `Events.astro` (read `=== 0`) — not exported TS, unreachable by unit tests.\n23: \n24: Sites 3 and 4 re-decode the sentinel independently of the producer, with no test seam. Issue #400 asked us to decide between (i) extracting the consumer decoders into exported pure predicates with tests, and (ii) leaving the decoders in the `.astro` scripts and accepting a test gap.\n25: \n26: ## Decisions\n27: \n28: 1. **B1 — keep `availableSlots` as one phase-switched field, documented in the type.**\n29: 2. **B2-i — extract the sentinel + phase decode into an exported pure predicate `availabilityState(av): AvailabilityState`.** Both `.astro` consumer sites call the predicate; they never read `-1`/`0` directly. `calculateAvailabilityMessage` is rewritten to go through the same predicate.\n30: \n31: ### Placement: `AvailabilityState` + `availabilityState` in `src/api/events.ts`, not `src/types.ts`\n32: \n33: This is the surprising half of the decision. The natural home for a shared type-and-value is `src/types.ts`, but here it would silently increase the browser bundle:\n34: \n35: - `src/types.ts` imports `z` from `zod` at the top (the `phoneNumberObject` / `personObject` schemas are runtime values). Importing a runtime _value_ (enum) from `@/types` into the browser `<script>` bundles in `Event.astro` / `Events.astro` would pull the `zod` dependency into the client bundle for two script tags.\n36: - `src/api/events` is _already_ in the browser bundle (the `<script>` tags import `bookEvent`, `loadEventsAvailability` from it). Colocating `AvailabilityState` + `availabilityState` there adds zero bytes to the client.\n37: \n38: Trade-off: a future reader looking for \"the shape of availability\" must read `src/types.ts` (interface + phase-switch doc) **and** `src/api/events.ts` (predicate + enum). The placement is by bundle side-effect, not by conceptual ownership.\n39: \n40: ## Reversibility\n41: \n42: B1 is reversible — a future split (or rename) is a local refactor now that the consumer sites go through the predicate and `tests/api/events.test.ts` pins every transition.\n43: \n44: B2-i is reversible in code (move the enum, update imports) but the bundle-size regression is _invisible_ — there is no test that fails when `zod` quietly lands in the client bundle. Reverse this decision only after a deliberate bundle-size audit.\n45: \n46: ## Consequences\n47: \n48: - The `-1` contract has exactly one writer (`convertToEventAvailability`) and one canonical reader (`availabilityState`); both are unit-tested. The two `.astro` sites no longer read the sentinel directly.\n49: - A future sentinel refactor (e.g. to `Infinity` or a `kind: 'unlimited'` discriminated field) either moves all four sites together or fails a test.\n50: - `AvailabilityState` is deliberately _not_ in `src/types.ts`. Document this in `CONTEXT.md` and reference this ADR, so the placement is a deliberate choice rather than an accident.\n51: \n52: ## Alternatives considered\n53: \n54: - **B1-split:** `remainingSubscriberSlots` + `remainingWaitingListSlots`. Rejected — the two phases are mutually exclusive; exposing two fields would advertise two independent quantities where one is always `0` whenever the other is non-zero. Misleading to consumers and harder to keep consistent across the four contract sites.\n55: - **B2-ii:** leave the decoders inline in the `.astro` scripts, accept the test gap. Rejected — the four-site `-1` contract is the kind of implicit coupling that silently breaks during a sentinel refactor. Symmetry across the sites only survives if the decode is in one place.\n56: \n57: ## Open questions\n58: \n59: - If `src/types.ts` ever drops its `zod` import (e.g. schemas move elsewhere), revisit colocating `AvailabilityState` back into `@/types` for conceptual ownership.\n\n(End of file - total 59 lines)\n</content>",
+            "metadata": {
+              "preview": "# ADR-0001: Keep `availableSlots` as one phase-switched field; export an `availabilityState` predicate in `src/api/events.ts`\n\nDate: 2026-07-23\nStatus: Accepted\nResolves: Issue #400 (decisions B1 and B2-i)\nTouches: `src/types.ts`, `src/api/events.ts`, `src/components/blocks/Event.astro`, `src/components/blocks/Events.astro`, `tests/api/events.test.ts`, `CONTEXT.md`\n\n## Context\n\n`EventAvailability.availableSlots` carries two domain jobs depending on `isWaitingList`:\n\n- when `isWaitingList === false` — remaining **subscriber** slots (or `-1` for an unlimited event),\n- when `isWaitingList === true` — remaining **waiting-list** slots (always `>= 0`).\n\nIssue #400 asked us to decide between (a) keeping the overloaded field, named + documented, or (b) splitting it into `remainingSubscriberSlots` + `remainingWaitingListSlots`.\n\nThe `-1` contract spans four sites:\n\n1. `convertToEventAvailability` (write) — `src/api/events.ts`,\n2. `calculateAvailabilityMessage` (read) — `src/api/events.ts`,",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/docs/adr/0001-availability-state-predicate.md",
+                "text": "# ADR-0001: Keep `availableSlots` as one phase-switched field; export an `availabilityState` predicate in `src/api/events.ts`\n\nDate: 2026-07-23\nStatus: Accepted\nResolves: Issue #400 (decisions B1 and B2-i)\nTouches: `src/types.ts`, `src/api/events.ts`, `src/components/blocks/Event.astro`, `src/components/blocks/Events.astro`, `tests/api/events.test.ts`, `CONTEXT.md`\n\n## Context\n\n`EventAvailability.availableSlots` carries two domain jobs depending on `isWaitingList`:\n\n- when `isWaitingList === false` — remaining **subscriber** slots (or `-1` for an unlimited event),\n- when `isWaitingList === true` — remaining **waiting-list** slots (always `>= 0`).\n\nIssue #400 asked us to decide between (a) keeping the overloaded field, named + documented, or (b) splitting it into `remainingSubscriberSlots` + `remainingWaitingListSlots`.\n\nThe `-1` contract spans four sites:\n\n1. `convertToEventAvailability` (write) — `src/api/events.ts`,\n2. `calculateAvailabilityMessage` (read) — `src/api/events.ts`,\n3. the `<script>` in `Event.astro` (read `=== -1`) — not exported TS, unreachable by unit tests,\n4. the `<script>` in `Events.astro` (read `=== 0`) — not exported TS, unreachable by unit tests.\n\nSites 3 and 4 re-decode the sentinel independently of the producer, with no test seam. Issue #400 asked us to decide between (i) extracting the consumer decoders into exported pure predicates with tests, and (ii) leaving the decoders in the `.astro` scripts and accepting a test gap.\n\n## Decisions\n\n1. **B1 — keep `availableSlots` as one phase-switched field, documented in the type.**\n2. **B2-i — extract the sentinel + phase decode into an exported pure predicate `availabilityState(av): AvailabilityState`.** Both `.astro` consumer sites call the predicate; they never read `-1`/`0` directly. `calculateAvailabilityMessage` is rewritten to go through the same predicate.\n\n### Placement: `AvailabilityState` + `availabilityState` in `src/api/events.ts`, not `src/types.ts`\n\nThis is the surprising half of the decision. The natural home for a shared type-and-value is `src/types.ts`, but here it would silently increase the browser bundle:\n\n- `src/types.ts` imports `z` from `zod` at the top (the `phoneNumberObject` / `personObject` schemas are runtime values). Importing a runtime _value_ (enum) from `@/types` into the browser `<script>` bundles in `Event.astro` / `Events.astro` would pull the `zod` dependency into the client bundle for two script tags.\n- `src/api/events` is _already_ in the browser bundle (the `<script>` tags import `bookEvent`, `loadEventsAvailability` from it). Colocating `AvailabilityState` + `availabilityState` there adds zero bytes to the client.\n\nTrade-off: a future reader looking for \"the shape of availability\" must read `src/types.ts` (interface + phase-switch doc) **and** `src/api/events.ts` (predicate + enum). The placement is by bundle side-effect, not by conceptual ownership.\n\n## Reversibility\n\nB1 is reversible — a future split (or rename) is a local refactor now that the consumer sites go through the predicate and `tests/api/events.test.ts` pins every transition.\n\nB2-i is reversible in code (move the enum, update imports) but the bundle-size regression is _invisible_ — there is no test that fails when `zod` quietly lands in the client bundle. Reverse this decision only after a deliberate bundle-size audit.\n\n## Consequences\n\n- The `-1` contract has exactly one writer (`convertToEventAvailability`) and one canonical reader (`availabilityState`); both are unit-tested. The two `.astro` sites no longer read the sentinel directly.\n- A future sentinel refactor (e.g. to `Infinity` or a `kind: 'unlimited'` discriminated field) either moves all four sites together or fails a test.\n- `AvailabilityState` is deliberately _not_ in `src/types.ts`. Document this in `CONTEXT.md` and reference this ADR, so the placement is a deliberate choice rather than an accident.\n\n## Alternatives considered\n\n- **B1-split:** `remainingSubscriberSlots` + `remainingWaitingListSlots`. Rejected — the two phases are mutually exclusive; exposing two fields would advertise two independent quantities where one is always `0` whenever the other is non-zero. Misleading to consumers and harder to keep consistent across the four contract sites.\n- **B2-ii:** leave the decoders inline in the `.astro` scripts, accept the test gap. Rejected — the four-site `-1` contract is the kind of implicit coupling that silently breaks during a sentinel refactor. Symmetry across the sites only survives if the decode is in one place.\n\n## Open questions\n\n- If `src/types.ts` ever drops its `zod` import (e.g. schemas move elsewhere), revisit colocating `AvailabilityState` back into `@/types` for conceptual ownership.",
+                "lineStart": 1,
+                "lineEnd": 59,
+                "totalLines": 59,
+                "truncated": false
+              }
+            },
+            "title": "docs/adr/0001-availability-state-predicate.md",
+            "time": {
+              "start": 1784802334475,
+              "end": 1784802334479
+            }
+          },
+          "id": "prt_f8e825709001r3E87ZB1FCdZlT",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e821401001n9UuTw87JPEC20"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_9900",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/api/events.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/api/events.test.ts</path>\n<type>file</type>\n<content>\n1: import { describe, expect, it } from 'vitest'\n2: import {\n3:   AvailabilityState,\n4:   availabilityState,\n5:   calculateAvailabilityMessage,\n6:   convertToEventAvailability,\n7: } from '@/api/events'\n8: import type { RawEventCounter } from '@/types'\n9: \n10: const counter = (fields: Partial<RawEventCounter>): RawEventCounter => ({\n11:   id: 'evt-1',\n12:   max_subscribers: 10,\n13:   subscribers: 0,\n14:   waiting_list: 0,\n15:   max_waiting_list: 5,\n16:   ...fields,\n17: })\n18: \n19: describe('convertToEventAvailability — producer sentinel + phase switch', () => {\n20:   const cases: Array<{\n21:     name: string\n22:     input: RawEventCounter\n23:     expectedSlots: number\n24:     expectedWaitingList: boolean\n25:     expectedState: AvailabilityState\n26:     expectedMessage: string\n27:   }> = [\n28:     {\n29:       name: 'Unlimited event (max_subscribers === -1): sentinel -1, subscriber phase',\n30:       input: counter({ max_subscribers: -1, subscribers: 999 }),\n31:       expectedSlots: -1,\n32:       expectedWaitingList: false,\n33:       expectedState: AvailabilityState.Unlimited,\n34:       expectedMessage: 'Freie Plätze verfügbar',\n35:     },\n36:     {\n37:       name: 'Subscribers open, many slots remaining',\n38:       input: counter({ max_subscribers: 10, subscribers: 2 }),\n39:       expectedSlots: 8,\n40:       expectedWaitingList: false,\n41:       expectedState: AvailabilityState.Subscribing,\n42:       expectedMessage: 'Noch 8 freie Plätze',\n43:     },\n44:     {\n45:       name: 'Subscribers open, exactly one slot remaining (singular message)',\n46:       input: counter({ max_subscribers: 10, subscribers: 9 }),\n47:       expectedSlots: 1,\n48:       expectedWaitingList: false,\n49:       expectedState: AvailabilityState.Subscribing,\n50:       expectedMessage: 'Noch 1 freier Platz',\n51:     },\n52:     {\n53:       name: 'Subscribers full, waiting-list open: phase switches, isWaitingList true',\n54:       input: counter({\n55:         max_subscribers: 10,\n56:         subscribers: 10,\n57:         max_waiting_list: 5,\n58:         waiting_list: 1,\n59:       }),\n60:       expectedSlots: 4,\n61:       expectedWaitingList: true,\n62:       expectedState: AvailabilityState.WaitingList,\n63:       expectedMessage: 'Warteliste ist geöffnet',\n64:     },\n65:     {\n66:       name: 'Subscribers and waiting-list full: 0 + isWaitingList true (FullyBooked)',\n67:       input: counter({\n68:         max_subscribers: 10,\n69:         subscribers: 10,\n70:         max_waiting_list: 5,\n71:         waiting_list: 5,\n72:       }),\n73:       expectedSlots: 0,\n74:       expectedWaitingList: true,\n75:       expectedState: AvailabilityState.FullyBooked,\n76:       expectedMessage: 'Ausgebucht',\n77:     },\n78:     {\n79:       name: 'Unlimited event ignores the waiting-list phase entirely',\n80:       input: counter({\n81:         max_subscribers: -1,\n82:         subscribers: 999,\n83:         max_waiting_list: 0,\n84:         waiting_list: 0,\n85:       }),\n86:       expectedSlots: -1,\n87:       expectedWaitingList: false,\n88:       expectedState: AvailabilityState.Unlimited,\n89:       expectedMessage: 'Freie Plätze verfügbar',\n90:     },\n91:     {\n92:       name: 'Subscribers exactly at capacity but waiting-list open does NOT underflow below zero',\n93:       input: counter({\n94:         max_subscribers: 10,\n95:         subscribers: 12,\n96:         max_waiting_list: 3,\n97:         waiting_list: 0,\n98:       }),\n99:       expectedSlots: 3,\n100:       expectedWaitingList: true,\n101:       expectedState: AvailabilityState.WaitingList,\n102:       expectedMessage: 'Warteliste ist geöffnet',\n103:     },\n104:     {\n105:       name: 'Negative phantom: subscribers exceed cap and waiting-list exceeds cap clamps to 0',\n106:       input: counter({\n107:         max_subscribers: 10,\n108:         subscribers: 15,\n109:         max_waiting_list: 4,\n110:         waiting_list: 9,\n111:       }),\n112:       expectedSlots: 0,\n113:       expectedWaitingList: true,\n114:       expectedState: AvailabilityState.FullyBooked,\n115:       expectedMessage: 'Ausgebucht',\n116:     },\n117:   ]\n118: \n119:   for (const c of cases) {\n120:     it(c.name, () => {\n121:       const av = convertToEventAvailability(c.input)\n122:       expect(av.availableSlots).toBe(c.expectedSlots)\n123:       expect(av.isWaitingList).toBe(c.expectedWaitingList)\n124:       expect(av.message).toBe(c.expectedMessage)\n125:       expect(availabilityState(av)).toBe(c.expectedState)\n126:     })\n127:   }\n128: })\n129: \n130: describe('availabilityState — sentinel + phase decode (the one canonical read site)', () => {\n131:   const cases: Array<{\n132:     name: string\n133:     slots: number\n134:     waiting: boolean\n135:     expected: AvailabilityState\n136:   }> = [\n137:     {\n138:       name: 'sentinel -1 ⇒ Unlimited regardless of isWaitingList (well-formed input)',\n139:       slots: -1,\n140:       waiting: false,\n141:       expected: AvailabilityState.Unlimited,\n142:     },\n143:     {\n144:       name: 'subscriber phase, slots remaining ⇒ Subscribing',\n145:       slots: 5,\n146:       waiting: false,\n147:       expected: AvailabilityState.Subscribing,\n148:     },\n149:     {\n150:       name: 'subscriber phase, exactly one slot ⇒ Subscribing',\n151:       slots: 1,\n152:       waiting: false,\n153:       expected: AvailabilityState.Subscribing,\n154:     },\n155:     {\n156:       name: 'waiting-list phase, slots remaining ⇒ WaitingList',\n157:       slots: 3,\n158:       waiting: true,\n159:       expected: AvailabilityState.WaitingList,\n160:     },\n161:     {\n162:       name: 'waiting-list phase, exactly one slot ⇒ WaitingList',\n163:       slots: 1,\n164:       waiting: true,\n165:       expected: AvailabilityState.WaitingList,\n166:     },\n167:     {\n168:       name: 'waiting-list phase, zero slots ⇒ FullyBooked',\n169:       slots: 0,\n170:       waiting: true,\n171:       expected: AvailabilityState.FullyBooked,\n172:     },\n173:     {\n174:       name: 'subscriber phase, zero slots ⇒ FullyBooked (unreachable in producer but defensive)',\n175:       slots: 0,\n176:       waiting: false,\n177:       expected: AvailabilityState.FullyBooked,\n178:     },\n179:   ]\n180: \n181:   for (const c of cases) {\n182:     it(c.name, () => {\n183:       expect(availabilityState({ availableSlots: c.slots, isWaitingList: c.waiting })).toBe(\n184:         c.expected,\n185:       )\n186:     })\n187:   }\n188: })\n189: \n190: describe('calculateAvailabilityMessage — message derives through the state predicate', () => {\n191:   const cases: Array<[number, boolean, string]> = [\n192:     [-1, false, 'Freie Plätze verfügbar'],\n193:     [5, false, 'Noch 5 freie Plätze'],\n194:     [1, false, 'Noch 1 freier Platz'],\n195:     [3, true, 'Warteliste ist geöffnet'],\n196:     [1, true, 'Warteliste ist geöffnet'],\n197:     [0, true, 'Ausgebucht'],\n198:     [0, false, 'Ausgebucht'],\n199:   ]\n200: \n201:   for (const [slots, waiting, expected] of cases) {\n202:     it(`slots=${slots}, isWaitingList=${waiting} ⇒ \"${expected}\"`, () => {\n203:       expect(calculateAvailabilityMessage(slots, waiting)).toBe(expected)\n204:     })\n205:   }\n206: })\n207: \n208: describe('-1 contract — the sentinel appears only in producer + predicate, never in messages', () => {\n209:   it('Unlimited never produces a \"Noch N\" or \"Ausgebucht\" message', () => {\n210:     expect(calculateAvailabilityMessage(-1, false)).toBe('Freie Plätze verfügbar')\n211:     expect(calculateAvailabilityMessage(-1, true)).toBe('Freie Plätze verfügbar')\n212:   })\n213: \n214:   it('the predicate is the only function reading === -1 besides the producer', () => {\n215:     const src = availabilityState.toString()\n216:     expect(src).toContain('=== -1')\n217:   })\n218: })\n\n(End of file - total 218 lines)\n</content>",
+            "metadata": {
+              "preview": "import { describe, expect, it } from 'vitest'\nimport {\n  AvailabilityState,\n  availabilityState,\n  calculateAvailabilityMessage,\n  convertToEventAvailability,\n} from '@/api/events'\nimport type { RawEventCounter } from '@/types'\n\nconst counter = (fields: Partial<RawEventCounter>): RawEventCounter => ({\n  id: 'evt-1',\n  max_subscribers: 10,\n  subscribers: 0,\n  waiting_list: 0,\n  max_waiting_list: 5,\n  ...fields,\n})\n\ndescribe('convertToEventAvailability — producer sentinel + phase switch', () => {\n  const cases: Array<{",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/api/events.test.ts",
+                "text": "import { describe, expect, it } from 'vitest'\nimport {\n  AvailabilityState,\n  availabilityState,\n  calculateAvailabilityMessage,\n  convertToEventAvailability,\n} from '@/api/events'\nimport type { RawEventCounter } from '@/types'\n\nconst counter = (fields: Partial<RawEventCounter>): RawEventCounter => ({\n  id: 'evt-1',\n  max_subscribers: 10,\n  subscribers: 0,\n  waiting_list: 0,\n  max_waiting_list: 5,\n  ...fields,\n})\n\ndescribe('convertToEventAvailability — producer sentinel + phase switch', () => {\n  const cases: Array<{\n    name: string\n    input: RawEventCounter\n    expectedSlots: number\n    expectedWaitingList: boolean\n    expectedState: AvailabilityState\n    expectedMessage: string\n  }> = [\n    {\n      name: 'Unlimited event (max_subscribers === -1): sentinel -1, subscriber phase',\n      input: counter({ max_subscribers: -1, subscribers: 999 }),\n      expectedSlots: -1,\n      expectedWaitingList: false,\n      expectedState: AvailabilityState.Unlimited,\n      expectedMessage: 'Freie Plätze verfügbar',\n    },\n    {\n      name: 'Subscribers open, many slots remaining',\n      input: counter({ max_subscribers: 10, subscribers: 2 }),\n      expectedSlots: 8,\n      expectedWaitingList: false,\n      expectedState: AvailabilityState.Subscribing,\n      expectedMessage: 'Noch 8 freie Plätze',\n    },\n    {\n      name: 'Subscribers open, exactly one slot remaining (singular message)',\n      input: counter({ max_subscribers: 10, subscribers: 9 }),\n      expectedSlots: 1,\n      expectedWaitingList: false,\n      expectedState: AvailabilityState.Subscribing,\n      expectedMessage: 'Noch 1 freier Platz',\n    },\n    {\n      name: 'Subscribers full, waiting-list open: phase switches, isWaitingList true',\n      input: counter({\n        max_subscribers: 10,\n        subscribers: 10,\n        max_waiting_list: 5,\n        waiting_list: 1,\n      }),\n      expectedSlots: 4,\n      expectedWaitingList: true,\n      expectedState: AvailabilityState.WaitingList,\n      expectedMessage: 'Warteliste ist geöffnet',\n    },\n    {\n      name: 'Subscribers and waiting-list full: 0 + isWaitingList true (FullyBooked)',\n      input: counter({\n        max_subscribers: 10,\n        subscribers: 10,\n        max_waiting_list: 5,\n        waiting_list: 5,\n      }),\n      expectedSlots: 0,\n      expectedWaitingList: true,\n      expectedState: AvailabilityState.FullyBooked,\n      expectedMessage: 'Ausgebucht',\n    },\n    {\n      name: 'Unlimited event ignores the waiting-list phase entirely',\n      input: counter({\n        max_subscribers: -1,\n        subscribers: 999,\n        max_waiting_list: 0,\n        waiting_list: 0,\n      }),\n      expectedSlots: -1,\n      expectedWaitingList: false,\n      expectedState: AvailabilityState.Unlimited,\n      expectedMessage: 'Freie Plätze verfügbar',\n    },\n    {\n      name: 'Subscribers exactly at capacity but waiting-list open does NOT underflow below zero',\n      input: counter({\n        max_subscribers: 10,\n        subscribers: 12,\n        max_waiting_list: 3,\n        waiting_list: 0,\n      }),\n      expectedSlots: 3,\n      expectedWaitingList: true,\n      expectedState: AvailabilityState.WaitingList,\n      expectedMessage: 'Warteliste ist geöffnet',\n    },\n    {\n      name: 'Negative phantom: subscribers exceed cap and waiting-list exceeds cap clamps to 0',\n      input: counter({\n        max_subscribers: 10,\n        subscribers: 15,\n        max_waiting_list: 4,\n        waiting_list: 9,\n      }),\n      expectedSlots: 0,\n      expectedWaitingList: true,\n      expectedState: AvailabilityState.FullyBooked,\n      expectedMessage: 'Ausgebucht',\n    },\n  ]\n\n  for (const c of cases) {\n    it(c.name, () => {\n      const av = convertToEventAvailability(c.input)\n      expect(av.availableSlots).toBe(c.expectedSlots)\n      expect(av.isWaitingList).toBe(c.expectedWaitingList)\n      expect(av.message).toBe(c.expectedMessage)\n      expect(availabilityState(av)).toBe(c.expectedState)\n    })\n  }\n})\n\ndescribe('availabilityState — sentinel + phase decode (the one canonical read site)', () => {\n  const cases: Array<{\n    name: string\n    slots: number\n    waiting: boolean\n    expected: AvailabilityState\n  }> = [\n    {\n      name: 'sentinel -1 ⇒ Unlimited regardless of isWaitingList (well-formed input)',\n      slots: -1,\n      waiting: false,\n      expected: AvailabilityState.Unlimited,\n    },\n    {\n      name: 'subscriber phase, slots remaining ⇒ Subscribing',\n      slots: 5,\n      waiting: false,\n      expected: AvailabilityState.Subscribing,\n    },\n    {\n      name: 'subscriber phase, exactly one slot ⇒ Subscribing',\n      slots: 1,\n      waiting: false,\n      expected: AvailabilityState.Subscribing,\n    },\n    {\n      name: 'waiting-list phase, slots remaining ⇒ WaitingList',\n      slots: 3,\n      waiting: true,\n      expected: AvailabilityState.WaitingList,\n    },\n    {\n      name: 'waiting-list phase, exactly one slot ⇒ WaitingList',\n      slots: 1,\n      waiting: true,\n      expected: AvailabilityState.WaitingList,\n    },\n    {\n      name: 'waiting-list phase, zero slots ⇒ FullyBooked',\n      slots: 0,\n      waiting: true,\n      expected: AvailabilityState.FullyBooked,\n    },\n    {\n      name: 'subscriber phase, zero slots ⇒ FullyBooked (unreachable in producer but defensive)',\n      slots: 0,\n      waiting: false,\n      expected: AvailabilityState.FullyBooked,\n    },\n  ]\n\n  for (const c of cases) {\n    it(c.name, () => {\n      expect(availabilityState({ availableSlots: c.slots, isWaitingList: c.waiting })).toBe(\n        c.expected,\n      )\n    })\n  }\n})\n\ndescribe('calculateAvailabilityMessage — message derives through the state predicate', () => {\n  const cases: Array<[number, boolean, string]> = [\n    [-1, false, 'Freie Plätze verfügbar'],\n    [5, false, 'Noch 5 freie Plätze'],\n    [1, false, 'Noch 1 freier Platz'],\n    [3, true, 'Warteliste ist geöffnet'],\n    [1, true, 'Warteliste ist geöffnet'],\n    [0, true, 'Ausgebucht'],\n    [0, false, 'Ausgebucht'],\n  ]\n\n  for (const [slots, waiting, expected] of cases) {\n    it(`slots=${slots}, isWaitingList=${waiting} ⇒ \"${expected}\"`, () => {\n      expect(calculateAvailabilityMessage(slots, waiting)).toBe(expected)\n    })\n  }\n})\n\ndescribe('-1 contract — the sentinel appears only in producer + predicate, never in messages', () => {\n  it('Unlimited never produces a \"Noch N\" or \"Ausgebucht\" message', () => {\n    expect(calculateAvailabilityMessage(-1, false)).toBe('Freie Plätze verfügbar')\n    expect(calculateAvailabilityMessage(-1, true)).toBe('Freie Plätze verfügbar')\n  })\n\n  it('the predicate is the only function reading === -1 besides the producer', () => {\n    const src = availabilityState.toString()\n    expect(src).toContain('=== -1')\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 218,
+                "totalLines": 218,
+                "truncated": false
+              }
+            },
+            "title": "tests/api/events.test.ts",
+            "time": {
+              "start": 1784802334709,
+              "end": 1784802334712
+            }
+          },
+          "id": "prt_f8e8257f3001oLX4Jv6HCwt2HL",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e821401001n9UuTw87JPEC20"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "ada77cbe21f20deb549cfaccf703836c83196431",
+          "type": "step-finish",
+          "tokens": {
+            "total": 13162,
+            "input": 12955,
+            "output": 79,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01851788,
+          "id": "prt_f8e82586e001QFbh1bMXOY6GT3",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e821401001n9UuTw87JPEC20"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e8209ae001XKrn2ln46e88hm",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0097976,
+        "tokens": {
+          "total": 17446,
+          "input": 4216,
+          "output": 110,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 13120
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784802334952,
+          "completed": 1784802337875
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e8258e8001nEsXWQ71rLPgCC",
+        "sessionID": "ses_0717df656ffeG15DZOGlukdVil"
+      },
+      "parts": [
+        {
+          "snapshot": "ada77cbe21f20deb549cfaccf703836c83196431",
+          "type": "step-start",
+          "id": "prt_f8e825dce001ePf9fr2NOj0mWq",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e8258e8001nEsXWQ71rLPgCC"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me verify build/check status and check whether tests actually run (vitest harness). The spec says blocked by #398 (test harness must exist first). Let me check if there's a vitest config and runthe tests.",
+          "time": {
+            "start": 1784802336208,
+            "end": 1784802337722
+          },
+          "id": "prt_f8e825dd0001Zjv5ccX4GYSEKM",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e8258e8001nEsXWQ71rLPgCC"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_856a",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk ls tests/ vitest.config.* 2>/dev/null; rtk cat package.json | grep -E '\"(test|vitest|check|build)\"'",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "api/\nvitest.config.ts  302B\nsetup.ts  211B\nutils.test.ts  7.1K\n    \"build\": \"astro build\",\n    \"check\": \"oxlint src/ && tsc --noEmit && astro check && vitest run\",\n    \"test\": \"vitest run\",\n    \"vitest\": \"^4.1.10\"\n",
+            "metadata": {
+              "output": "api/\nvitest.config.ts  302B\nsetup.ts  211B\nutils.test.ts  7.1K\n    \"build\": \"astro build\",\n    \"check\": \"oxlint src/ && tsc --noEmit && astro check && vitest run\",\n    \"test\": \"vitest run\",\n    \"vitest\": \"^4.1.10\"\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk ls tests/ vitest.config.* 2>/dev/null; rtk cat package.json | grep -E '\"(test|vitest|check|build)\"'",
+            "time": {
+              "start": 1784802337778,
+              "end": 1784802337780
+            }
+          },
+          "id": "prt_f8e8263bb001QNEzY5gcR5kzLl",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e8258e8001nEsXWQ71rLPgCC"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "ada77cbe21f20deb549cfaccf703836c83196431",
+          "type": "step-finish",
+          "tokens": {
+            "total": 17446,
+            "input": 4216,
+            "output": 110,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 13120
+            }
+          },
+          "cost": 0.0097976,
+          "id": "prt_f8e82641b001zAD2hF1PNIOKTz",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e8258e8001nEsXWQ71rLPgCC"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e8209ae001XKrn2ln46e88hm",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00497944,
+        "tokens": {
+          "total": 17579,
+          "input": 188,
+          "output": 47,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 17344
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784802337878,
+          "completed": 1784802371695
+        },
+        "finish": "tool-calls",
+        "id": "msg_f8e8264560017P5P7ohgGWbId0",
+        "sessionID": "ses_0717df656ffeG15DZOGlukdVil"
+      },
+      "parts": [
+        {
+          "snapshot": "ada77cbe21f20deb549cfaccf703836c83196431",
+          "type": "step-start",
+          "id": "prt_f8e827638001vYuooZWNz0vEH3",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e8264560017P5P7ohgGWbId0"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_14ca",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run check 2>&1 | tail -40",
+              "timeout": 180000,
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "12:25:57 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n12:25:57 [vite] Re-optimizing dependencies because vite config has changed\n12:25:59 [content] Syncing content\n12:25:59 [content] Synced content\n12:25:59 [types] Generated 2.39s\n12:25:59 [check] Getting diagnostics for Astro files in /Users/mseele/dev/sve/sve-website...\n\u001b[96msrc/components/common/ImageCarousel.astro\u001b[0m:\u001b[93m107\u001b[0m:\u001b[93m23\u001b[0m - \u001b[93mwarning\u001b[0m\u001b[90m ts(2570): \u001b[0mCould not find name 'indexId'. Did you mean 'index'?\n\n\u001b[7m107\u001b[0m       if (eventId === indexId) {\n\u001b[7m   \u001b[0m \u001b[93m                      ~~~~~~~\u001b[0m\n\u001b[96msrc/components/common/ImageCarousel.astro\u001b[0m:\u001b[93m103\u001b[0m:\u001b[93m9\u001b[0m - \u001b[93mwarning\u001b[0m\u001b[90m astro(4000): \u001b[0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.\n\nSee docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.\n\nAdd the `is:inline` directive explicitly to silence this hint.\n\n\u001b[7m103\u001b[0m <script define:vars={{ id, indexId }}>\n\u001b[7m   \u001b[0m \u001b[93m        ~~~~~~~~~~~\u001b[0m\n\nResult (79 files): \n- 0 errors\n- 0 warnings\n- 2 hints\n\n12:26:09 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:23500) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:23499) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:23498) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  3 passed (3)\n      Tests  89 passed (89)\n   Start at  12:26:09\n   Duration  2.40s (transform 124ms, setup 143ms, import 6.00s, tests 29ms, environment 625ms)\n\n",
+            "metadata": {
+              "output": "12:25:57 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n12:25:57 [vite] Re-optimizing dependencies because vite config has changed\n12:25:59 [content] Syncing content\n12:25:59 [content] Synced content\n12:25:59 [types] Generated 2.39s\n12:25:59 [check] Getting diagnostics for Astro files in /Users/mseele/dev/sve/sve-website...\n\u001b[96msrc/components/common/ImageCarousel.astro\u001b[0m:\u001b[93m107\u001b[0m:\u001b[93m23\u001b[0m - \u001b[93mwarning\u001b[0m\u001b[90m ts(2570): \u001b[0mCould not find name 'indexId'. Did you mean 'index'?\n\n\u001b[7m107\u001b[0m       if (eventId === indexId) {\n\u001b[7m   \u001b[0m \u001b[93m                      ~~~~~~~\u001b[0m\n\u001b[96msrc/components/common/ImageCarousel.astro\u001b[0m:\u001b[93m103\u001b[0m:\u001b[93m9\u001b[0m - \u001b[93mwarning\u001b[0m\u001b[90m astro(4000): \u001b[0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.\n\nSee docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.\n\nAdd the `is:inline` directive explicitly to silence this hint.\n\n\u001b[7m103\u001b[0m <script define:vars={{ id, indexId }}>\n\u001b[7m   \u001b[0m \u001b[93m        ~~~~~~~~~~~\u001b[0m\n\nResult (79 files): \n- 0 errors\n- 0 warnings\n- 2 hints\n\n12:26:09 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:23500) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:23499) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:23498) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  3 passed (3)\n      Tests  89 passed (89)\n   Start at  12:26:09\n   Duration  2.40s (transform 124ms, setup 143ms, import 6.00s, tests 29ms, environment 625ms)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run check 2>&1 | tail -40",
+            "time": {
+              "start": 1784802371578,
+              "end": 1784802371589
+            }
+          },
+          "id": "prt_f8e829d78001vN0UIClLiJhJqi",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e8264560017P5P7ohgGWbId0"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "ada77cbe21f20deb549cfaccf703836c83196431",
+          "type": "step-finish",
+          "tokens": {
+            "total": 17579,
+            "input": 188,
+            "output": 47,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 17344
+            }
+          },
+          "cost": 0.00497944,
+          "id": "prt_f8e82e8490018Vc015xmeVO1fT",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e8264560017P5P7ohgGWbId0"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f8e8209ae001XKrn2ln46e88hm",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03680308,
+        "tokens": {
+          "total": 20810,
+          "input": 18077,
+          "output": 2605,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1784802371700,
+          "completed": 1784802465858
+        },
+        "finish": "stop",
+        "id": "msg_f8e82e8740014PFZDvCO8KMRze",
+        "sessionID": "ses_0717df656ffeG15DZOGlukdVil"
+      },
+      "parts": [
+        {
+          "snapshot": "ada77cbe21f20deb549cfaccf703836c83196431",
+          "type": "step-start",
+          "id": "prt_f8e82f03d001Y1yqpOeo7K04uJ",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e82e8740014PFZDvCO8KMRze"
+        },
+        {
+          "type": "reasoning",
+          "text": "Everything green. Now let me write the report. Let me check the spec acceptance criteria carefully against what was done.\n\nAcceptance criteria:\n- B1 decided and reflected in EventAvailability type — DONE (phase-switched, documented)\n- B2 decided (extracted/exported OR left with gap acknowledged) — DONE (B2-i extracted)\n- CONTEXT.md created with resolved terms (EventAvailability, RawEventCounter, Unlimited-as-sentinel) — DONE\n- ADR written if qualifies — DONE (ADR-0001)\n- All four -1 sites updated consistently; build/check green — DONE\n- Unit tests cover convertToEventAvailability (and calculateAvailabilityMessage) against new shape, plus extracted predicates — DONE\n\nNow look for issues:\n\n(a) Missing/partial:\n- The spec says \"update the consumer sites in Event.astro and Events.astro so bun run build stays green.\" Both updated. Fine.\n- The spec acceptance: \"Unit tests cover convertToEventAvailability (and calculateAvailabilityMessage) against the new shape, plus any extracted predicate functions.\" Tests cover all three. Good.\n- CONTEXT.md should contain \"EventAvailability, RawEventCounter, Unlimited-as-sentinel or however the decision lands\". CONTEXT has all three. Good.\n\nNow potential issues:\n\n(c) Implementation looks wrong:\n- `calculateAvailabilityMessage` is now exported but still takes `(availableSlots, isWaitingList)` raw numbers rather than an `EventAvailability` or `AvailabilityState`. The spec note: \"the entire -1 contract is unit-testable\". The function reads `availableSlots === 1` directly for the singular message — that's a re-decode of sorts but not the -1 sentinel. Actually `availabilityState` handles === -1, and the Subscribing case in calculateAvailabilityMessage still checks `availableSlots === 1` for singular form. That's fine since it's after the state is Subscribing, slots >= 0.\n\n- The test \"the predicate is the only function reading === -1 besides the producer\" asserts `availabilityState.toString()` contains `=== -1`. But `calculateAvailabilityMessage` no longer reads === -1 (it goes through availabilityState). However `convertToEventAvailability` reads `counter.max_subscribers === -1` (the producer). The test only checks the predicate contains === -1, which is weak. But it's not wrong per spec.\n\n- Potential scope creep: `AvailabilityState` enum placed in `src/api/events.ts` rather than `src/types.ts` with bundle-size justification. This is a placement decision documented in ADR. The spec didn't ask for placement; it asked to \"retype EventAvailability in src/types.ts\". The enum in events.ts is reasonable but arguably the spec said \"retype EventAvailability in src/types.ts\" — the interface IS in types.ts with full docs. The enum/predicate is a new module-level addition. Not scope creep exactly, B2-i required extracted predicates somewhere.\n\n- The spec said \"exported pure predicates (e.g. canSubscribe(av), availabilityState(av))\". The implementer chose `availabilityState(av)` returning an enum, plus `AvailabilityState` enum. `canSubscribe` was an example; not required. Both consumer sites use `availabilityState` + enum branching. Fine.\n\n- One concern: `Event.astro` still imports `type { EventAvailability } from '@/types'` but also imports `availabilityState` from `@/api/events`. The consumer now branches on `state === AvailabilityState.WaitingList` etc. Good — no direct === -1 or === 0.\n\nLet me check if there's direct sentinel read remaining in Event.astro or Events.astro. From diff, Event.astro replaced the === -1 check with state enum. Events.astro replaced === 0 with FullyBooked. Good.\n\n(b) Scope creep:\n- The \"Negative phantom\" / underflow tests (subscribers exceed cap) — these test producer behavior beyond the spec's ask. The spec says \"tests for the producer transform against the resolved shape\". Edge cases are fine, not really creep.\n- Added `availabilityState` defensive case for `slots: 0, waiting: false` marked \"unreachable in producer but defensive\". Minor — sensible.\n- ADR discussing bundle placement of enum in events.ts vs types.ts — the spec says \"create an ADR if either qualifies (hard to reverse + surprising + real trade-off)\". The ADR covers B1 + B2-i. The bundle placement is a sub-decision. Not really creep, it's part of the decision rationale.\n\n(a) Missing/partial — let me look harder:\n- The spec note: \"under answer B ... the re-decode in Event.astro:442 asking 'is this event unlimited?' is legitimate.\" The implementation removes the direct \"is this unlimited\" question and replaces with `state === AvailabilityState.Unlimited`. That's exactly what B2-i asks. Fine.\n- Acceptance: \"All four -1 sites updated consistently\". Let me verify the four sites: convertToEventAvailability (write), calculateAvailabilityMessage (read), Event.astro script, Events.astro script. All four now go through or write consistently. But the spec says \"the entire -1 contract ... a future sentinel refactor (e.g. to Infinity or a kind: 'unlimited') either moves all four sites together or fails a test.\" Tests pin convertToEventAvailability and availabilityState and calculateAvailabilityMessage. But the .astro sites are not unit-tested (they can't be). The predicate is tested. So a refactor moving the sentinel would need to update `availabilityState` (tested) and `convertToEventAvailability` (tested); the .astro sites use the predicate so they don't need changes. This satisfies the goal. Good.\n\n- One real gap: The test \"the predicate is the only function reading === -1 besides the producer\" only asserts `availabilityState.toString().toContain('=== -1')`. It does NOT assert that no OTHER exported function reads === -1. So if someone re-introduces === -1 in calculateAvailabilityMessage, the test still passes. This is a weak guardrail relative to the spec goal \"either moves all four sites together or fails a test\". But the .astro sites can't be tested anyway. This is a partial implementation of the goal — the test guard is weak.\n\nLet me also check: does `calculateAvailabilityMessage` still take raw `availableSlots: number`? Yes. This means a consumer could call it with -1 directly. But the function internally calls availabilityState, so it's fine. However, the signature still leaks the sentinel concept (passing -1 in). Minor.\n\nLet me check whether there's a `canSubscribe` predicate — the spec example mentioned `canSubscribe(av), availabilityState(av)`. Only availabilityState was extracted. canSubscribe not provided. The Event.astro site does `state === AvailabilityState.Unlimited || state === AvailabilityState.Subscribing` inline rather than a `canSubscribe` predicate. The spec said \"e.g.\" so it's optional. But arguably a `canSubscribe` predicate would consolidate that branch. Minor/partial — not a hard miss.\n\nNow the report. Under 400 words.\n\nLet me find concrete spec quotes for findings.\n\nFinding (a) missing/partial:\n1. `canSubscribe` predicate not extracted — Event.astro still inlines `state === Unlimited || state === Subscribing`. Spec: \"extract the consumer decoders into exported pure predicates (e.g. canSubscribe(av), availabilityState(av))\". This is partial — only one of the two example predicates extracted. Though \"e.g.\" makes it optional, the \"Anmeldung\" branch in Event.astro is still a re-decode (composing two states). Minor.\n\n2. Guard test is weak: spec goal \"a future sentinel refactor ... either moves all four sites together or fails a test.\" The test at line 214-217 only asserts `availabilityState` itself contains `=== -1`; it does not assert that no other exported function reads the sentinel. So re-introducing `-1` in `calculateAvailabilityMessage` wouldn't fail a test. Partial guardrail.\n\n(c) wrong:\n3. `calculateAvailabilityMessage` signature still accepts raw `availableSlots: number` including the `-1` sentinel. The spec decision B2-i centralizes decode in `availabilityState`, but the message function still exposes the sentinel in its public signature — a consumer could call `calculateAvailabilityMessage(-1, ...)` directly. Not wrong per se but leaks the sentinel contract the spec wanted centralized.\n\nActually that's not really \"wrong\". Let me think about real correctness issues.\n\nIs there any behaviour that looks actually wrong?\n\nLet me reconsider the defensive case `slots: 0, waiting: false ⇒ FullyBooked`. The producer never emits this (it flips to waiting list). But the predicate decodes it as FullyBooked. The CONTEXT/types doc says \"the subscriber phase never emits 0 (the producer flips to the waiting-list phase instead).\" But if subscribers==max_subscribers with max_waiting_list==0, the producer sets isWaitingList and availableSlots=0 (waiting-list exhausted). So slots=0, waiting=true=FullyBooked. Correct. The defensive case is fine.\n\nIs `calculateAvailabilityMessage(-1, true)` returning 'Freie Plätze verfügbar' correct? availabilityState({-1, true}) returns Unlimited (since === -1 short-circuits regardless of isWaitingList). So message = 'Freie Plätze verfügbar'. The test asserts this (line 211). But this is a contradictory input (an unlimited event with isWaitingList true can't happen). The predicate silently treats it as Unlimited. Not wrong but hides invalid input. Minor.\n\nLet me finalize. I'll keep the report tight.",
+          "time": {
+            "start": 1784802373694,
+            "end": 1784802435809
+          },
+          "id": "prt_f8e82f03e001zZ5ly7QkaN2vgC",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e82e8740014PFZDvCO8KMRze"
+        },
+        {
+          "type": "text",
+          "text": "## Spec-conformance review — issue #400\n\n**Verdict:** all acceptance criteria met; build + check + 89 tests green. Three findings, all minor.\n\n### (a) Missing or partial\n\n1. **`canSubscribe` predicate not extracted.** Spec: *\"extract the consumer decoders into exported pure predicates (e.g. `canSubscribe(av)`, `availabilityState(av)`)\"*. Only `availabilityState` was extracted. `Event.astro:445` still composes the \"can the user subscribe\" branch inline as `state === AvailabilityState.Unlimited || state === AvailabilityState.Subscribing` — a two-state re-decode that is exactly the kind of consumer logic the spec offered a predicate for. The `e.g.` softens it to partial, not missing, but the composition is now duplicated knowledge (\"Unlimited and Subscribing are both bookable\") with no test seam.\n\n2. **Sentinel-leak guard test is weak.** Spec goal: *\"a future sentinel refactor … either moves all four sites together or fails a test.\"* The guard test at `tests/api/events.test.ts:214-217` only asserts `availabilityState.toString().contains('=== -1')` — i.e. the predicate *does* read the sentinel. It does **not** assert that no *other* exported function reads `=== -1`. Re-introducing `availableSlots === -1` inside `calculateAvailabilityMessage` (which still takes raw `availableSlots: number`) would pass the suite. The four-site invariant is pinned only by convention, not by a negative test.\n\n### (b) Scope creep\n\nNone material. The `AvailabilityState` enum placement in `src/api/events.ts` (with the bundle-size rationale) is a sub-decision, not extra work; it is documented in ADR-0001 and flagged in CONTEXT.md as the spec requested. The defensive `slots:0, waiting:false ⇒ FullyBooked` case and the over-cap underflow tests are edge-case coverage of the producer, within *\"tests for the producer transform against the resolved shape.\"*\n\n### (c) Implemented but looks wrong\n\n3. **`calculateAvailabilityMessage` public signature still leaks the sentinel.** Spec B2-i centres decode in `availabilityState`; the message function is now rewrite-through-predicate internally, but its exported signature is `calculateAvailabilityMessage(availableSlots: number, isWaitingList: boolean)`, so callers can still pass `-1` directly. Combined with finding 2, the sentinel contract is one exported function away from being re-decoded at a consumer with no failing test. `calculateAvailabilityMessage(state: AvailabilityState)` (or accepting `EventAvailability`) would close that seam and make \"the predicate is the only thing that sees `-1`\" actually true.",
+          "time": {
+            "start": 1784802435816,
+            "end": 1784802465724
+          },
+          "id": "prt_f8e83e2e8001tqgTG4E7GssTGE",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e82e8740014PFZDvCO8KMRze"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "ada77cbe21f20deb549cfaccf703836c83196431",
+          "type": "step-finish",
+          "tokens": {
+            "total": 20810,
+            "input": 18077,
+            "output": 2605,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.03680308,
+          "id": "prt_f8e845810001rbX6ZwEw45Lu3O",
+          "sessionID": "ses_0717df656ffeG15DZOGlukdVil",
+          "messageID": "msg_f8e82e8740014PFZDvCO8KMRze"
+        }
+      ]
+    }
+  ]
+}

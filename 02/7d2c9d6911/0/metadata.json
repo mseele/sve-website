@@ -1,0 +1,65 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "027d2c9d6911",
+  "session_id": "ses_0717df656ffeG15DZOGlukdVil",
+  "strategy": "manual-commit",
+  "created_at": "2026-07-23T10:32:53.056174Z",
+  "branch": "feature/tests",
+  "checkpoints_count": 1,
+  "save_step_count": 1,
+  "files_touched": [
+    "src/api/events.ts",
+    "src/components/blocks/Event.astro",
+    "src/components/blocks/Events.astro",
+    "src/types.ts"
+  ],
+  "agent": "OpenCode",
+  "model": "glm-5.2",
+  "turn_id": "6760262f9247",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 46940,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 30848,
+    "output_tokens": 2913,
+    "api_call_count": 5
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-07-23T10:32:53.045935Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 60,
+    "human_modified": 25,
+    "human_removed": 0,
+    "total_committed": 60,
+    "total_lines_changed": 85,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 413,
+      "user_lines_removed": 18,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "CONTEXT.md": 33,
+        "docs/adr/0001-availability-state-predicate.md": 59,
+        "src/api/events.ts": 54,
+        "src/components/blocks/Event.astro": 9,
+        "src/components/blocks/Events.astro": 4,
+        "src/types.ts": 36,
+        "tests/api/events.test.ts": 218
+      },
+      "user_removed_per_file": {
+        "src/api/events.ts": 13,
+        "src/components/blocks/Event.astro": 3,
+        "src/components/blocks/Events.astro": 2
+      }
+    }
+  ]
+}

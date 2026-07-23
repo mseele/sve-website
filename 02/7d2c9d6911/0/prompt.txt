@@ -1,0 +1,44 @@
+You are a Spec reviewer. Run a spec-conformance review of the uncommitted working-tree changes in the repo at `/Users/mseele/dev/sve/sve-website` against the originating spec: GitHub issue #400 in `mseele/sve-website`.
+
+The diff command to run yourself:
+```
+git -C /Users/mseele/dev/sve/sve-website diff HEAD
+```
+Also list untracked files:
+```
+git -C /Users/mseele/dev/sve/sve-website status --porcelain
+```
+For untracked files (`??` prefix), read them in full — they are part of the change. The untracked files in this change are: `CONTEXT.md`, `docs/adr/0001-availability-state-predicate.md`, `tests/api/events.test.ts`. Read each in full.
+
+The spec (issue #400) text, verbatim:
+
+---
+Title: Retype and test the EventAvailability contract end-to-end
+
+What to build:
+This ticket resolves two open design questions and applies the answer — it is both a decision and its implementation.
+
+Decision 1 (B1 — overloaded field): The field `availableSlots` on `EventAvailability` does two domain jobs. When `isWaitingList` is false it means "remaining subscriber slots"; when true it means "remaining waiting-list slots." Decide: is this a deliberate phase-switched capacity (keep the field, name and document the switch), or two conflated quantities (split into `remainingSubscriberSlots` + `remainingWaitingListSlots`)?
+
+Decision 2 (B2 — consumer sentinel decode): The `-1` contract spans four sites — `convertToEventAvailability` (write), `calculateAvailabilityMessage` (read), the `<script>` in `src/components/blocks/Event.astro` around the availability card (read `=== -1`), and `src/components/blocks/Events.astro` (read `=== 0`). The two `.astro` consumer sites are not exported TS and unit tests cannot reach them. Decide: extract the consumer decoders into exported pure predicates (e.g. `canSubscribe(av)`, `availabilityState(av)`), or accept that the `.astro` sites are only covered by the build + a later Playwright pass?
+
+Record both decisions in `CONTEXT.md` as resolved domain terms, and create an ADR in `docs/adr/` if either qualifies (hard to reverse + surprising + real trade-off).
+
+Then apply the decisions: retype `EventAvailability` in `src/types.ts`, update `convertToEventAvailability` + `calculateAvailabilityMessage` in `src/api/events.ts`, and update the consumer sites in `Event.astro` and `Events.astro` so `bun run build` stays green. Add unit tests for the producer transform against the resolved shape — and, if B2-i is chosen, tests for the extracted `canSubscribe` / `availabilityState` predicates. The goal: the entire `-1` contract is unit-testable, and a future sentinel refactor (e.g. to `Infinity` or a `kind: 'unlimited'`) either moves all four sites together or fails a test.
+
+Note: under answer B (the domain owns `-1` as a real concept — "Unlimited"), the re-decode in `Event.astro:442` asking "is this event unlimited?" is legitimate. The question is only how it's expressed and whether it's testable.
+
+Acceptance criteria:
+- [ ] B1 decided and reflected in the `EventAvailability` type — overloaded field either named+documented or split
+- [ ] B2 decided — consumer decoders either extracted and exported, or explicitly left in the `.astro` scripts with the gap acknowledged
+- [ ] `CONTEXT.md` created at repo root with the resolved terms (EventAvailability, RawEventCounter, Unlimited-as-sentinel or however the decision lands)
+- [ ] ADR written if either decision qualifies as hard-to-reverse + surprising + real trade-off
+- [ ] All four `-1` sites updated consistently; `bun run build` and `bun run check` green
+- [ ] Unit tests cover `convertToEventAvailability` (and `calculateAvailabilityMessage`) against the new shape, plus any extracted predicate functions
+
+Blocked by: #398 (test harness must exist first)
+---
+
+Brief: Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words.
+
+Return only your report, no preamble.
