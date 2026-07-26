@@ -3,9 +3,14 @@
   "checkpoint_id": "e9e9aad0210d",
   "strategy": "manual-commit",
   "branch": "feature/tests",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
-    "src/content.config.ts"
+    "src/content-schemas.ts",
+    "src/content.config.ts",
+    "tests/api/contentful.test.ts",
+    "tests/content-schemas.test.ts",
+    "tests/fixtures/contentful/sponsor.json",
+    "tests/fixtures/contentful/team.json"
   ],
   "sessions": [
     {
@@ -21,13 +26,20 @@
       "compact_transcript": "/e9/e9aad0210d/1/transcript.jsonl",
       "content_hash": "/e9/e9aad0210d/1/content_hash.txt",
       "prompt": "/e9/e9aad0210d/1/prompt.txt"
+    },
+    {
+      "metadata": "/e9/e9aad0210d/2/metadata.json",
+      "transcript": "/e9/e9aad0210d/2/full.jsonl",
+      "compact_transcript": "/e9/e9aad0210d/2/transcript.jsonl",
+      "content_hash": "/e9/e9aad0210d/2/content_hash.txt",
+      "prompt": ""
     }
   ],
   "token_usage": {
-    "input_tokens": 47881,
+    "input_tokens": 267215,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 116096,
-    "output_tokens": 5599,
-    "api_call_count": 10
+    "cache_read_tokens": 3415936,
+    "output_tokens": 45348,
+    "api_call_count": 72
   }
 }
