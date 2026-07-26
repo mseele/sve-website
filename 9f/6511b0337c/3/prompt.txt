@@ -1,0 +1,19 @@
+Run a Standards-axis code review of the work in commit 7665df9 (issue #402).
+
+The diff command is:
+  git diff 7665df9~1...7665df9
+
+That's the single commit: "test: cover client form validators (#402)". One new file `tests/client/forms.test.ts` (346 insertions); no production code changes.
+
+Repo coding standards sources to consult:
+- /Users/mseele/dev/sve/sve-website/AGENTS.md (the canonical repo standards — semicolons off, single quotes, tab width 2, print width 100, trailing commas all; `@/` alias for src imports; strict TS with explicit param/return types; `interface` for objects `type` for unions; PascalCase components, camelCase TS files; Astro/Astro.check; early returns, Zod validation, optional chaining for nullish values)
+- /Users/mseele/dev/sve/sve-website/tests/utils.test.ts and /Users/mseele/dev/sve/sve-website/tests/api/forms-fetch.test.ts as the established test style in this repo
+
+Baseline smells (Fowler, _Refactoring_ ch.3) — always judgement calls, never hard violations:
+- Mysterious Name, Duplicated Code, Feature Envy, Data Clumps, Primitive Obsession, Repeated Switches, Shotgun Surgery, Divergent Change, Speculative Generality, Message Chains, Middle Man, Refused Bequest.
+
+Repo standards override the baseline. Skip anything tooling (oxlint, oxfmt, tsc, astro check, vitest) already enforces.
+
+Report — per file/hunk where relevant — (a) every place the diff violates a documented standard (cite the standard: file + rule); and (b) any baseline smell you spot (name it and quote the hunk). Distinguish hard violations from judgement calls. Under 400 words.
+
+Return only the report text. Do not write any files or run any tests.

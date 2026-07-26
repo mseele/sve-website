@@ -1,0 +1,523 @@
+{
+  "info": {
+    "id": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+    "slug": "proud-rocket",
+    "projectID": "68d450c05733c82192ed1f31a5e40cb2ae707f59",
+    "directory": "/Users/mseele/dev/sve/sve-website",
+    "path": "",
+    "parentID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+    "title": "Standards review of #402 (@general subagent)",
+    "agent": "general",
+    "model": {
+      "id": "glm-5.2",
+      "providerID": "opencode-go",
+      "variant": "default"
+    },
+    "version": "1.18.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0.04849256,
+    "tokens": {
+      "input": 20364,
+      "output": 1917,
+      "reasoning": 0,
+      "cache": {
+        "read": 44416,
+        "write": 0
+      }
+    },
+    "permission": [
+      {
+        "permission": "task",
+        "pattern": "*",
+        "action": "deny"
+      }
+    ],
+    "time": {
+      "created": 1785083741146,
+      "updated": 1785083778339
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1785083741154
+        },
+        "agent": "general",
+        "model": {
+          "providerID": "opencode-go",
+          "modelID": "glm-5.2"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_f9f4843e1001kI8a93vvOu5GQz",
+        "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Run a Standards-axis code review of the work in commit 7665df9 (issue #402).\n\nThe diff command is:\n  git diff 7665df9~1...7665df9\n\nThat's the single commit: \"test: cover client form validators (#402)\". One new file `tests/client/forms.test.ts` (346 insertions); no production code changes.\n\nRepo coding standards sources to consult:\n- /Users/mseele/dev/sve/sve-website/AGENTS.md (the canonical repo standards — semicolons off, single quotes, tab width 2, print width 100, trailing commas all; `@/` alias for src imports; strict TS with explicit param/return types; `interface` for objects `type` for unions; PascalCase components, camelCase TS files; Astro/Astro.check; early returns, Zod validation, optional chaining for nullish values)\n- /Users/mseele/dev/sve/sve-website/tests/utils.test.ts and /Users/mseele/dev/sve/sve-website/tests/api/forms-fetch.test.ts as the established test style in this repo\n\nBaseline smells (Fowler, _Refactoring_ ch.3) — always judgement calls, never hard violations:\n- Mysterious Name, Duplicated Code, Feature Envy, Data Clumps, Primitive Obsession, Repeated Switches, Shotgun Surgery, Divergent Change, Speculative Generality, Message Chains, Middle Man, Refused Bequest.\n\nRepo standards override the baseline. Skip anything tooling (oxlint, oxfmt, tsc, astro check, vitest) already enforces.\n\nReport — per file/hunk where relevant — (a) every place the diff violates a documented standard (cite the standard: file + rule); and (b) any baseline smell you spot (name it and quote the hunk). Distinguish hard violations from judgement calls. Under 400 words.\n\nReturn only the report text. Do not write any files or run any tests.",
+          "id": "prt_f9f4843e4001NjEOWXACxc9rUZ",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f4843e1001kI8a93vvOu5GQz"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f4843e1001kI8a93vvOu5GQz",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01582488,
+        "tokens": {
+          "total": 11187,
+          "input": 10956,
+          "output": 103,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083741367,
+          "completed": 1785083743850
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4844b7001Pf38zc2iKQ1bRl",
+        "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f484b7d001GxZtBxAXAN9yPf",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f4844b7001Pf38zc2iKQ1bRl"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me gather the diff and the canonical sources to do the standardsreview.",
+          "time": {
+            "start": 1785083743103,
+            "end": 1785083743523
+          },
+          "id": "prt_f9f484b7f001lLjhs8HFBi7x13",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f4844b7001Pf38zc2iKQ1bRl"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_a002",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git -C /Users/mseele/dev/sve/sve-website diff 7665df9~1...7665df9"
+            },
+            "output": "tests/client/forms.test.ts | 346 +++++++++++++++++++++++++++++++++++++++++++++\n 1 file changed, 346 insertions(+)\n\nChanges:\n\ntests/client/forms.test.ts\n  @@ -0,0 +1,346 @@\n  +import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\n  +import {\n  +  checkRequiredInput,\n  +  checkRequiredSelect,\n  +  clearCustomValidityOnInput,\n  +  clearCustomValidityOnSelect,\n  +  validateIbanInput,\n  +} from '@/client/forms'\n  +\n  +const VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\n  +const MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n  +\n  +const validitySpies = () => {\n  +  const setInput = vi.fn()\n  +  const reportInput = vi.fn(() => false)\n  +  const setSelect = vi.fn()\n  +  const reportSelect = vi.fn(() => false)\n  +  const setTextarea = vi.fn()\n  +  const reportTextarea = vi.fn(() => false)\n  +  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', {\n  +    configurable: true,\n  +    value: setInput,\n  +  })\n  +  Object.defineProperty(HTMLInputElement.prototype, 'reportValidity', {\n  +    configurable: true,\n  +    value: reportInput,\n  +  })\n  +  Object.defineProperty(HTMLSelectElement.prototype, 'setCustomValidity', {\n  +    configurable: true,\n  +    value: setSelect,\n  +  })\n  +  Object.defineProperty(HTMLSelectElement.prototype, 'reportValidity', {\n  +    configurable: true,\n  +    value: reportSelect,\n  +  })\n  +  Object.defineProperty(HTMLTextAreaElement.prototype, 'setCustomValidity', {\n  +    configurable: true,\n  +    value: setTextarea,\n  +  })\n  +  Object.defineProperty(HTMLTextAreaElement.prototype, 'reportValidity', {\n  +    configurable: true,\n  +    value: reportTextarea,\n  +  })\n  +  return { setInput, reportInput, setSelect, reportSelect, setTextarea, reportTextarea }\n  +}\n  +\n  +describe('checkRequiredInput', () => {\n  +  let spies: ReturnType<typeof validitySpies>\n  +\n  +  beforeEach(() => {\n  +    spies = validitySpies()\n  +  })\n  +\n  +  afterEach(() => {\n  +    vi.restoreAllMocks()\n  +  })\n  +\n  +  it('returns true and does not touch validity when the input has a non-empty value', () => {\n  +    const input = document.createElement('input')\n  +    input.value = 'Max Mustermann'\n  +\n  +    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n  +    expect(spies.setInput).not.toHaveBeenCalled()\n  +    expect(spies.reportInput).not.toHaveBeenCalled()\n  +  })\n  +\n  +  it('treats whitespace-only values as empty: sets the message, reports validity, returns false', () => {\n  +    const input = document.createElement('input')\n  +    input.value = '   '\n  +\n  +    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(false)\n  +    expect(spies.setInput).toHaveBeenCalledWith('Pflichtfeld')\n  +    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  +  })\n  +\n  +  it('sets the custom validity message and calls reportValidity when the input is empty', () => {\n  +    const input = document.createElement('input')\n  +\n  +    expect(checkRequiredInput(input, 'Bitte Namen angeben')).toBe(false)\n  +    expect(spies.setInput).toHaveBeenCalledWith('Bitte Namen angeben')\n  +    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  +  })\n  +\n  +  it('works for HTMLTextAreaElement and propagates the error message', () => {\n  +    const textarea = document.createElement('textarea')\n  +\n  +    expect(checkRequiredInput(textarea, 'Bitte Nachricht angeben')).toBe(false)\n  +    expect(spies.setTextarea).toHaveBeenCalledWith('Bitte Nachricht angeben')\n  +    expect(spies.reportTextarea).toHaveBeenCalledTimes(1)\n  +  })\n  +\n  +  it('returns true for null input without touching the prototype', () => {\n  +    expect(checkRequiredInput(null, 'Pflichtfeld')).toBe(true)\n  +    expect(spies.setInput).not.toHaveBeenCalled()\n  +    expect(spies.reportInput).not.toHaveBeenCalled()\n  +  })\n  +\n  +  it('returns true for undefined input without touching the prototype', () => {\n  +    expect(checkRequiredInput(undefined, 'Pflichtfeld')).toBe(true)\n  +    expect(spies.setInput).not.toHaveBeenCalled()\n  ... (246 lines truncated)\n  +346 -0\n[full diff: rtk git diff --no-compact]\n",
+            "metadata": {
+              "output": "tests/client/forms.test.ts | 346 +++++++++++++++++++++++++++++++++++++++++++++\n 1 file changed, 346 insertions(+)\n\nChanges:\n\ntests/client/forms.test.ts\n  @@ -0,0 +1,346 @@\n  +import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\n  +import {\n  +  checkRequiredInput,\n  +  checkRequiredSelect,\n  +  clearCustomValidityOnInput,\n  +  clearCustomValidityOnSelect,\n  +  validateIbanInput,\n  +} from '@/client/forms'\n  +\n  +const VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\n  +const MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n  +\n  +const validitySpies = () => {\n  +  const setInput = vi.fn()\n  +  const reportInput = vi.fn(() => false)\n  +  const setSelect = vi.fn()\n  +  const reportSelect = vi.fn(() => false)\n  +  const setTextarea = vi.fn()\n  +  const reportTextarea = vi.fn(() => false)\n  +  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', {\n  +    configurable: true,\n  +    value: setInput,\n  +  })\n  +  Object.defineProperty(HTMLInputElement.prototype, 'reportValidity', {\n  +    configurable: true,\n  +    value: reportInput,\n  +  })\n  +  Object.defineProperty(HTMLSelectElement.prototype, 'setCustomValidity', {\n  +    configurable: true,\n  +    value: setSelect,\n  +  })\n  +  Object.defineProperty(HTMLSelectElement.prototype, 'reportValidity', {\n  +    configurable: true,\n  +    value: reportSelect,\n  +  })\n  +  Object.defineProperty(HTMLTextAreaElement.prototype, 'setCustomValidity', {\n  +    configurable: true,\n  +    value: setTextarea,\n  +  })\n  +  Object.defineProperty(HTMLTextAreaElement.prototype, 'reportValidity', {\n  +    configurable: true,\n  +    value: reportTextarea,\n  +  })\n  +  return { setInput, reportInput, setSelect, reportSelect, setTextarea, reportTextarea }\n  +}\n  +\n  +describe('checkRequiredInput', () => {\n  +  let spies: ReturnType<typeof validitySpies>\n  +\n  +  beforeEach(() => {\n  +    spies = validitySpies()\n  +  })\n  +\n  +  afterEach(() => {\n  +    vi.restoreAllMocks()\n  +  })\n  +\n  +  it('returns true and does not touch validity when the input has a non-empty value', () => {\n  +    const input = document.createElement('input')\n  +    input.value = 'Max Mustermann'\n  +\n  +    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n  +    expect(spies.setInput).not.toHaveBeenCalled()\n  +    expect(spies.reportInput).not.toHaveBeenCalled()\n  +  })\n  +\n  +  it('treats whitespace-only values as empty: sets the message, reports validity, returns false', () => {\n  +    const input = document.createElement('input')\n  +    input.value = '   '\n  +\n  +    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(false)\n  +    expect(spies.setInput).toHaveBeenCalledWith('Pflichtfeld')\n  +    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  +  })\n  +\n  +  it('sets the custom validity message and calls reportValidity when the input is empty', () => {\n  +    const input = document.createElement('input')\n  +\n  +    expect(checkRequiredInput(input, 'Bitte Namen angeben')).toBe(false)\n  +    expect(spies.setInput).toHaveBeenCalledWith('Bitte Namen angeben')\n  +    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  +  })\n  +\n  +  it('works for HTMLTextAreaElement and propagates the error message', () => {\n  +    const textarea = document.createElement('textarea')\n  +\n  +    expect(checkRequiredInput(textarea, 'Bitte Nachricht angeben')).toBe(false)\n  +    expect(spies.setTextarea).toHaveBeenCalledWith('Bitte Nachricht angeben')\n  +    expect(spies.reportTextarea).toHaveBeenCalledTimes(1)\n  +  })\n  +\n  +  it('returns true for null input without touching the prototype', () => {\n  +    expect(checkRequiredInput(null, 'Pflichtfeld')).toBe(true)\n  +    expect(spies.setInput).not.toHaveBeenCalled()\n  +    expect(spies.reportInput).not.toHaveBeenCalled()\n  +  })\n  +\n  +  it('returns true for undefined input without touching the prototype', () => {\n  +    expect(checkRequiredInput(undefined, 'Pflichtfeld')).toBe(true)\n  +    expect(spies.setInput).not.toHaveBeenCalled()\n  ... (246 lines truncated)\n  +346 -0\n[full diff: rtk git diff --no-compact]\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git -C /Users/mseele/dev/sve/sve-website diff 7665df9~1...7665df9",
+            "time": {
+              "start": 1785083743584,
+              "end": 1785083743587
+            }
+          },
+          "id": "prt_f9f484d24001d2AVVCScFv54i0",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f4844b7001Pf38zc2iKQ1bRl"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_fef8",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/utils.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/utils.test.ts</path>\n<type>file</type>\n<content>\n1: import { describe, expect, it } from 'vitest'\n2: import type { RawAppointment } from '@/types'\n3: import {\n4:   formatDate,\n5:   formatCurrency,\n6:   formatDateCompact,\n7:   formatDatespan,\n8:   formatDatetime,\n9:   formatDuration,\n10:   formatTimespan,\n11: } from '@/utils'\n12: \n13: const toUtcIso = (year: number, month: number, day: number, hours = 0, minutes = 0) =>\n14:   new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n15: \n16: const toNaiveIso = (year: number, month: number, day: number, hours = 0, minutes = 0) => {\n17:   const pad = (n: number) => String(n).padStart(2, '0')\n18:   const date = `${year}-${pad(month)}-${pad(day)}`\n19:   return hours === 0 && minutes === 0 ? date : `${date}T${pad(hours)}:${pad(minutes)}:00`\n20: }\n21: \n22: const appointment = (fields: Partial<RawAppointment>): RawAppointment => ({\n23:   sort_index: 0,\n24:   ...fields,\n25: })\n26: \n27: const NBSP = '\\u00A0'\n28: \n29: describe('formatDate', () => {\n30:   const cases: Array<[Date, string]> = [\n31:     [new Date(Date.UTC(2024, 0, 15)), '15. Januar 2024'],\n32:     [new Date(Date.UTC(2024, 2, 9)), '9. März 2024'],\n33:     [new Date(Date.UTC(2024, 11, 1)), '1. Dezember 2024'],\n34:   ]\n35:   for (const [input, expected] of cases) {\n36:     it(`formats ${input.toISOString()} as ${expected}`, () => {\n37:       expect(formatDate(input)).toBe(expected)\n38:     })\n39:   }\n40: })\n41: \n42: describe('formatDatetime', () => {\n43:   const cases: Array<[string, string]> = [\n44:     [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan. 2024, 14:30 Uhr'],\n45:     [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März 2024, 9:05 Uhr'],\n46:     [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez. 2024, 23:59 Uhr'],\n47:   ]\n48:   for (const [input, expected] of cases) {\n49:     it(`formats ${input} as ${expected}`, () => {\n50:       expect(formatDatetime(input)).toBe(expected)\n51:     })\n52:   }\n53: })\n54: \n55: describe('formatDateCompact', () => {\n56:   const cases: Array<[string, string]> = [\n57:     [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan., 14:30 Uhr'],\n58:     [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März, 9:05 Uhr'],\n59:     [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez., 23:59 Uhr'],\n60:   ]\n61:   for (const [input, expected] of cases) {\n62:     it(`formats ${input} as ${expected}`, () => {\n63:       expect(formatDateCompact(input)).toBe(expected)\n64:     })\n65:   }\n66: })\n67: \n68: describe('formatDatespan', () => {\n69:   describe('date-only (start_date / end_date)', () => {\n70:     it('single day renders just the start in long form (German locale)', () => {\n71:       expect(\n72:         formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' })),\n73:       ).toBe('Mo., 15. Jan. 2024')\n74:     })\n75: \n76:     it('multi-day span renders both days joined with a dash (German locale)', () => {\n77:       expect(\n78:         formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-18' })),\n79:       ).toBe('Mo., 15. Jan. 2024 - Do., 18. Jan. 2024')\n80:     })\n81: \n82:     it('span across months and years (German locale)', () => {\n83:       expect(\n84:         formatDatespan(appointment({ start_date: '2024-12-30', end_date: '2025-01-02' })),\n85:       ).toBe('Mo., 30. Dez. 2024 - Do., 2. Jan. 2025')\n86:     })\n87:   })\n88: \n89:   describe('datetime-only (start_date_time / end_date_time)', () => {\n90:     it('same-calendar-day collapse renders only the start (default locale, no de)', () => {\n91:       expect(\n92:         formatDatespan(\n93:           appointment({\n94:             start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n95:             end_date_time: toNaiveIso(2024, 1, 15, 16, 30),\n96:           }),\n97:         ),\n98:       ).toBe('Mon, 15. Jan 2024')\n99:     })\n100: \n101:     it('1-minute difference collapse renders only the start (tracer branch)', () => {\n102:       expect(\n103:         formatDatespan(\n104:           appointment({\n105:             start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n106:             end_date_time: toNaiveIso(2024, 1, 15, 14, 31),\n107:           }),\n108:         ),\n109:       ).toBe('Mon, 15. Jan 2024')\n110:     })\n111: \n112:     it('cross-midnight span (different calendar days) renders both endpoints (default locale)', () => {\n113:       expect(\n114:         formatDatespan(\n115:           appointment({\n116:             start_date_time: toNaiveIso(2024, 1, 15, 23, 30),\n117:             end_date_time: toNaiveIso(2024, 1, 16, 0, 30),\n118:           }),\n119:         ),\n120:       ).toBe('Mon, 15. Jan 2024 - Tue, 16. Jan 2024')\n121:     })\n122: \n123:     it('multi-day datetime span renders both endpoints (default locale)', () => {\n124:       expect(\n125:         formatDatespan(\n126:           appointment({\n127:             start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n128:             end_date_time: toNaiveIso(2024, 1, 18, 10, 0),\n129:           }),\n130:         ),\n131:       ).toBe('Mon, 15. Jan 2024 - Thu, 18. Jan 2024')\n132:     })\n133:   })\n134: \n135:   describe('no dates', () => {\n136:     it('throws when neither date nor datetime range is present', () => {\n137:       expect(() => formatDatespan(appointment({}))).toThrow('Appointment has no start or end date')\n138:     })\n139: \n140:     it('throws with only a start_date', () => {\n141:       expect(() => formatDatespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n142:         'Appointment has no start or end date',\n143:       )\n144:     })\n145: \n146:     it('throws with only a start_date_time', () => {\n147:       expect(() =>\n148:         formatDatespan(appointment({ start_date_time: toNaiveIso(2024, 1, 15, 14, 30) })),\n149:       ).toThrow('Appointment has no start or end date')\n150:     })\n151:   })\n152: })\n153: \n154: describe('formatTimespan', () => {\n155:   it('returns ganztägig for all-day date range', () => {\n156:     expect(formatTimespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' }))).toBe(\n157:       'ganztägig',\n158:     )\n159:   })\n160: \n161:   it('formats datetime range as start - end Uhr', () => {\n162:     expect(\n163:       formatTimespan(\n164:         appointment({\n165:           start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n166:           end_date_time: toNaiveIso(2024, 1, 15, 16, 45),\n167:         }),\n168:       ),\n169:     ).toBe('14:30 - 16:45 Uhr')\n170:   })\n171: \n172:   it('1-minute difference still formats as a normal time range (no same-day collapse branch here)', () => {\n173:     expect(\n174:       formatTimespan(\n175:         appointment({\n176:           start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n177:           end_date_time: toNaiveIso(2024, 1, 15, 14, 31),\n178:         }),\n179:       ),\n180:     ).toBe('14:30 - 14:31 Uhr')\n181:   })\n182: \n183:   it('throws on empty appointment', () => {\n184:     expect(() => formatTimespan(appointment({}))).toThrow(\n185:       'Appointment has no start or end date time',\n186:     )\n187:   })\n188: \n189:   it('throws with only a start_date set', () => {\n190:     expect(() => formatTimespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n191:       'Appointment has no start or end date time',\n192:     )\n193:   })\n194: })\n195: \n196: describe('formatDuration', () => {\n197:   const cases: Array<[number, string]> = [\n198:     [0, ''],\n199:     [30, '30 Minuten'],\n200:     [60, '1 Stunde'],\n201:     [90, '1 Stunde und 30 Minuten'],\n202:     [120, '2 Stunden'],\n203:     [150, '2 Stunden und 30 Minuten'],\n204:     [180, '3 Stunden'],\n205:   ]\n206:   for (const [input, expected] of cases) {\n207:     it(`formats ${input} minutes as \"${expected}\"`, () => {\n208:       expect(formatDuration(input)).toBe(expected)\n209:     })\n210:   }\n211: })\n212: \n213: describe('formatCurrency', () => {\n214:   const cases: Array<[number, string]> = [\n215:     [0, `0,00${NBSP}€`],\n216:     [9.99, `9,99${NBSP}€`],\n217:     [1000, `1.000,00${NBSP}€`],\n218:     [1234.5, `1.234,50${NBSP}€`],\n219:     [-5, `-5,00${NBSP}€`],\n220:   ]\n221:   for (const [input, expected] of cases) {\n222:     it(`formats ${input} as ${expected}`, () => {\n223:       expect(formatCurrency(input)).toBe(expected)\n224:     })\n225:   }\n226: \n227:   it('returns the original value when not coercible to a number', () => {\n228:     expect(formatCurrency('not-a-number' as unknown as number)).toBe('not-a-number')\n229:   })\n230: })\n\n(End of file - total 230 lines)\n</content>",
+            "metadata": {
+              "preview": "import { describe, expect, it } from 'vitest'\nimport type { RawAppointment } from '@/types'\nimport {\n  formatDate,\n  formatCurrency,\n  formatDateCompact,\n  formatDatespan,\n  formatDatetime,\n  formatDuration,\n  formatTimespan,\n} from '@/utils'\n\nconst toUtcIso = (year: number, month: number, day: number, hours = 0, minutes = 0) =>\n  new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n\nconst toNaiveIso = (year: number, month: number, day: number, hours = 0, minutes = 0) => {\n  const pad = (n: number) => String(n).padStart(2, '0')\n  const date = `${year}-${pad(month)}-${pad(day)}`\n  return hours === 0 && minutes === 0 ? date : `${date}T${pad(hours)}:${pad(minutes)}:00`\n}",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/utils.test.ts",
+                "text": "import { describe, expect, it } from 'vitest'\nimport type { RawAppointment } from '@/types'\nimport {\n  formatDate,\n  formatCurrency,\n  formatDateCompact,\n  formatDatespan,\n  formatDatetime,\n  formatDuration,\n  formatTimespan,\n} from '@/utils'\n\nconst toUtcIso = (year: number, month: number, day: number, hours = 0, minutes = 0) =>\n  new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n\nconst toNaiveIso = (year: number, month: number, day: number, hours = 0, minutes = 0) => {\n  const pad = (n: number) => String(n).padStart(2, '0')\n  const date = `${year}-${pad(month)}-${pad(day)}`\n  return hours === 0 && minutes === 0 ? date : `${date}T${pad(hours)}:${pad(minutes)}:00`\n}\n\nconst appointment = (fields: Partial<RawAppointment>): RawAppointment => ({\n  sort_index: 0,\n  ...fields,\n})\n\nconst NBSP = '\\u00A0'\n\ndescribe('formatDate', () => {\n  const cases: Array<[Date, string]> = [\n    [new Date(Date.UTC(2024, 0, 15)), '15. Januar 2024'],\n    [new Date(Date.UTC(2024, 2, 9)), '9. März 2024'],\n    [new Date(Date.UTC(2024, 11, 1)), '1. Dezember 2024'],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input.toISOString()} as ${expected}`, () => {\n      expect(formatDate(input)).toBe(expected)\n    })\n  }\n})\n\ndescribe('formatDatetime', () => {\n  const cases: Array<[string, string]> = [\n    [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan. 2024, 14:30 Uhr'],\n    [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März 2024, 9:05 Uhr'],\n    [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez. 2024, 23:59 Uhr'],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input} as ${expected}`, () => {\n      expect(formatDatetime(input)).toBe(expected)\n    })\n  }\n})\n\ndescribe('formatDateCompact', () => {\n  const cases: Array<[string, string]> = [\n    [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan., 14:30 Uhr'],\n    [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März, 9:05 Uhr'],\n    [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez., 23:59 Uhr'],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input} as ${expected}`, () => {\n      expect(formatDateCompact(input)).toBe(expected)\n    })\n  }\n})\n\ndescribe('formatDatespan', () => {\n  describe('date-only (start_date / end_date)', () => {\n    it('single day renders just the start in long form (German locale)', () => {\n      expect(\n        formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' })),\n      ).toBe('Mo., 15. Jan. 2024')\n    })\n\n    it('multi-day span renders both days joined with a dash (German locale)', () => {\n      expect(\n        formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-18' })),\n      ).toBe('Mo., 15. Jan. 2024 - Do., 18. Jan. 2024')\n    })\n\n    it('span across months and years (German locale)', () => {\n      expect(\n        formatDatespan(appointment({ start_date: '2024-12-30', end_date: '2025-01-02' })),\n      ).toBe('Mo., 30. Dez. 2024 - Do., 2. Jan. 2025')\n    })\n  })\n\n  describe('datetime-only (start_date_time / end_date_time)', () => {\n    it('same-calendar-day collapse renders only the start (default locale, no de)', () => {\n      expect(\n        formatDatespan(\n          appointment({\n            start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n            end_date_time: toNaiveIso(2024, 1, 15, 16, 30),\n          }),\n        ),\n      ).toBe('Mon, 15. Jan 2024')\n    })\n\n    it('1-minute difference collapse renders only the start (tracer branch)', () => {\n      expect(\n        formatDatespan(\n          appointment({\n            start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n            end_date_time: toNaiveIso(2024, 1, 15, 14, 31),\n          }),\n        ),\n      ).toBe('Mon, 15. Jan 2024')\n    })\n\n    it('cross-midnight span (different calendar days) renders both endpoints (default locale)', () => {\n      expect(\n        formatDatespan(\n          appointment({\n            start_date_time: toNaiveIso(2024, 1, 15, 23, 30),\n            end_date_time: toNaiveIso(2024, 1, 16, 0, 30),\n          }),\n        ),\n      ).toBe('Mon, 15. Jan 2024 - Tue, 16. Jan 2024')\n    })\n\n    it('multi-day datetime span renders both endpoints (default locale)', () => {\n      expect(\n        formatDatespan(\n          appointment({\n            start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n            end_date_time: toNaiveIso(2024, 1, 18, 10, 0),\n          }),\n        ),\n      ).toBe('Mon, 15. Jan 2024 - Thu, 18. Jan 2024')\n    })\n  })\n\n  describe('no dates', () => {\n    it('throws when neither date nor datetime range is present', () => {\n      expect(() => formatDatespan(appointment({}))).toThrow('Appointment has no start or end date')\n    })\n\n    it('throws with only a start_date', () => {\n      expect(() => formatDatespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n        'Appointment has no start or end date',\n      )\n    })\n\n    it('throws with only a start_date_time', () => {\n      expect(() =>\n        formatDatespan(appointment({ start_date_time: toNaiveIso(2024, 1, 15, 14, 30) })),\n      ).toThrow('Appointment has no start or end date')\n    })\n  })\n})\n\ndescribe('formatTimespan', () => {\n  it('returns ganztägig for all-day date range', () => {\n    expect(formatTimespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' }))).toBe(\n      'ganztägig',\n    )\n  })\n\n  it('formats datetime range as start - end Uhr', () => {\n    expect(\n      formatTimespan(\n        appointment({\n          start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n          end_date_time: toNaiveIso(2024, 1, 15, 16, 45),\n        }),\n      ),\n    ).toBe('14:30 - 16:45 Uhr')\n  })\n\n  it('1-minute difference still formats as a normal time range (no same-day collapse branch here)', () => {\n    expect(\n      formatTimespan(\n        appointment({\n          start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n          end_date_time: toNaiveIso(2024, 1, 15, 14, 31),\n        }),\n      ),\n    ).toBe('14:30 - 14:31 Uhr')\n  })\n\n  it('throws on empty appointment', () => {\n    expect(() => formatTimespan(appointment({}))).toThrow(\n      'Appointment has no start or end date time',\n    )\n  })\n\n  it('throws with only a start_date set', () => {\n    expect(() => formatTimespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n      'Appointment has no start or end date time',\n    )\n  })\n})\n\ndescribe('formatDuration', () => {\n  const cases: Array<[number, string]> = [\n    [0, ''],\n    [30, '30 Minuten'],\n    [60, '1 Stunde'],\n    [90, '1 Stunde und 30 Minuten'],\n    [120, '2 Stunden'],\n    [150, '2 Stunden und 30 Minuten'],\n    [180, '3 Stunden'],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input} minutes as \"${expected}\"`, () => {\n      expect(formatDuration(input)).toBe(expected)\n    })\n  }\n})\n\ndescribe('formatCurrency', () => {\n  const cases: Array<[number, string]> = [\n    [0, `0,00${NBSP}€`],\n    [9.99, `9,99${NBSP}€`],\n    [1000, `1.000,00${NBSP}€`],\n    [1234.5, `1.234,50${NBSP}€`],\n    [-5, `-5,00${NBSP}€`],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input} as ${expected}`, () => {\n      expect(formatCurrency(input)).toBe(expected)\n    })\n  }\n\n  it('returns the original value when not coercible to a number', () => {\n    expect(formatCurrency('not-a-number' as unknown as number)).toBe('not-a-number')\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 230,
+                "totalLines": 230,
+                "truncated": false
+              }
+            },
+            "title": "tests/utils.test.ts",
+            "time": {
+              "start": 1785083743582,
+              "end": 1785083743600
+            }
+          },
+          "id": "prt_f9f484d5b0015is9oCKKYQNxyB",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f4844b7001Pf38zc2iKQ1bRl"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_068c",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/api/forms-fetch.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/api/forms-fetch.test.ts</path>\n<type>file</type>\n<content>\n1: import { describe, expect, it } from 'vitest'\n2: import { http, HttpResponse } from 'msw'\n3: import { manageSubscription, sendContactMessage } from '@/api/forms'\n4: import { server } from '../mocks/server'\n5: import {\n6:   CONTACT_MESSAGE_URL,\n7:   NEWS_SUBSCRIBE_URL,\n8:   NEWS_UNSUBSCRIBE_URL,\n9: } from '../mocks/handlers/forms'\n10: \n11: describe('sendContactMessage — mutating POST contact route', () => {\n12:   it('asserts request shape: URL, POST, Content-Type application/json, body shape {type, to, name, email, phone, message, token}', async () => {\n13:     let capturedMethod: string | undefined = undefined\n14:     let capturedContentType: string | null = null\n15:     let capturedUrl: string | undefined = undefined\n16:     let capturedBody: any = undefined\n17:     server.use(\n18:       http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n19:         capturedMethod = request.method\n20:         capturedContentType = request.headers.get('Content-Type')\n21:         capturedUrl = request.url\n22:         capturedBody = await request.json()\n23:         return HttpResponse.json({ success: true, message: 'sent' })\n24:       }),\n25:     )\n26: \n27:     const response = await sendContactMessage(\n28:       'vorstand@sv-eutingen.de',\n29:       '  Max Mustermann  ',\n30:       '  max@example.org  ',\n31:       ' 0176 1234567 ',\n32:       '  Hallo Welt  ',\n33:       'captcha-token',\n34:     )\n35: \n36:     expect(response.ok).toBe(true)\n37:     expect(capturedMethod).toBe('POST')\n38:     expect(new URL(capturedUrl!).pathname).toBe('/api/contact/message')\n39:     expect(capturedContentType).toBe('application/json')\n40:     expect(capturedBody).toEqual({\n41:       type: 'General',\n42:       to: 'vorstand@sv-eutingen.de',\n43:       name: 'Max Mustermann',\n44:       email: 'max@example.org',\n45:       phone: '0176 1234567',\n46:       message: 'Hallo Welt',\n47:       token: 'captcha-token',\n48:     })\n49:   })\n50: \n51:   it('omits phone (sets it undefined) when the caller passes `undefined`', async () => {\n52:     let capturedBody: any\n53:     server.use(\n54:       http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n55:         capturedBody = await request.json()\n56:         return HttpResponse.json({ success: true })\n57:       }),\n58:     )\n59: \n60:     await sendContactMessage('recip', 'Max', 'max@example.org', undefined, 'msg', 'tok')\n61: \n62:     expect(capturedBody).toEqual({\n63:       type: 'General',\n64:       to: 'recip',\n65:       name: 'Max',\n66:       email: 'max@example.org',\n67:       phone: undefined,\n68:       message: 'msg',\n69:       token: 'tok',\n70:     })\n71:   })\n72: \n73:   it('returns the raw 2xx Response (caller proceeds with response.ok)', async () => {\n74:     server.use(http.post(CONTACT_MESSAGE_URL, () => HttpResponse.json({ success: true })))\n75: \n76:     const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n77:     expect(response.ok).toBe(true)\n78:     expect(response.status).toBe(200)\n79:   })\n80: \n81:   it('failure path: returns the raw non-2xx Response without throwing', async () => {\n82:     server.use(\n83:       http.post(CONTACT_MESSAGE_URL, () =>\n84:         HttpResponse.json({ message: 'invalid' }, { status: 422 }),\n85:       ),\n86:     )\n87: \n88:     const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n89:     expect(response.ok).toBe(false)\n90:     expect(response.status).toBe(422)\n91:   })\n92: \n93:   it('failure path: 500 also surfaces as raw Response', async () => {\n94:     server.use(http.post(CONTACT_MESSAGE_URL, () => HttpResponse.json({}, { status: 500 })))\n95:     const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n96:     expect(response.ok).toBe(false)\n97:     expect(response.status).toBe(500)\n98:   })\n99: })\n100: \n101: describe('manageSubscription — mutating POST news route', () => {\n102:   it('asserts request shape for subscribe=true: URL, POST, Content-Type, body {email, types, token}', async () => {\n103:     let capturedMethod: string | undefined = undefined\n104:     let capturedContentType: string | null = null\n105:     let capturedUrl: string | undefined = undefined\n106:     let capturedBody: any = undefined\n107:     server.use(\n108:       http.post(NEWS_SUBSCRIBE_URL, async ({ request }) => {\n109:         capturedMethod = request.method\n110:         capturedContentType = request.headers.get('Content-Type')\n111:         capturedUrl = request.url\n112:         capturedBody = await request.json()\n113:         return HttpResponse.json({ success: true })\n114:       }),\n115:     )\n116: \n117:     const response = await manageSubscription(\n118:       true,\n119:       'subscriber@example.org',\n120:       true,\n121:       false,\n122:       true,\n123:       'token-7',\n124:     )\n125: \n126:     expect(response.ok).toBe(true)\n127:     expect(capturedMethod).toBe('POST')\n128:     expect(capturedContentType).toBe('application/json')\n129:     expect(new URL(capturedUrl!).pathname).toBe('/api/news/subscribe')\n130:     expect(capturedBody).toEqual({\n131:       email: 'subscriber@example.org',\n132:       types: ['General', 'Events'],\n133:       token: 'token-7',\n134:     })\n135:   })\n136: \n137:   it('asserts request shape for subscribe=false: POST /news/unsubscribe', async () => {\n138:     let capturedUrl: string | undefined = undefined\n139:     let capturedBody: any\n140:     server.use(\n141:       http.post(NEWS_UNSUBSCRIBE_URL, async ({ request }) => {\n142:         capturedUrl = request.url\n143:         capturedBody = await request.json()\n144:         return HttpResponse.json({ success: true })\n145:       }),\n146:     )\n147: \n148:     const response = await manageSubscription(\n149:       false,\n150:       'unsub@example.org',\n151:       true,\n152:       true,\n153:       true,\n154:       'token-9',\n155:     )\n156: \n157:     expect(response.ok).toBe(true)\n158:     expect(new URL(capturedUrl!).pathname).toBe('/api/news/unsubscribe')\n159:     expect(capturedBody).toEqual({\n160:       email: 'unsub@example.org',\n161:       types: ['General', 'Fitness', 'Events'],\n162:       token: 'token-9',\n163:     })\n164:   })\n165: \n166:   it('emits an empty `types` array when no category is selected', async () => {\n167:     let capturedBody: any\n168:     server.use(\n169:       http.post(NEWS_SUBSCRIBE_URL, async ({ request }) => {\n170:         capturedBody = await request.json()\n171:         return HttpResponse.json({ success: true })\n172:       }),\n173:     )\n174: \n175:     await manageSubscription(true, 'e@example.org', false, false, false, 'tok')\n176:     expect(capturedBody).toEqual({ email: 'e@example.org', types: [], token: 'tok' })\n177:   })\n178: \n179:   it('returns the raw 2xx Response', async () => {\n180:     server.use(http.post(NEWS_SUBSCRIBE_URL, () => HttpResponse.json({ success: true })))\n181:     const response = await manageSubscription(true, 'e', true, false, false, 'tok')\n182:     expect(response.ok).toBe(true)\n183:     expect(response.status).toBe(200)\n184:   })\n185: \n186:   it('failure path: returns the raw 4xx Response without throwing (subscribe path)', async () => {\n187:     server.use(\n188:       http.post(NEWS_SUBSCRIBE_URL, () => HttpResponse.json({ message: 'bad' }, { status: 400 })),\n189:     )\n190:     const response = await manageSubscription(true, 'e', true, false, false, 'tok')\n191:     expect(response.ok).toBe(false)\n192:     expect(response.status).toBe(400)\n193:   })\n194: \n195:   it('failure path: returns the raw 5xx Response without throwing (unsubscribe path)', async () => {\n196:     server.use(http.post(NEWS_UNSUBSCRIBE_URL, () => HttpResponse.json({}, { status: 503 })))\n197:     const response = await manageSubscription(false, 'e', true, false, false, 'tok')\n198:     expect(response.ok).toBe(false)\n199:     expect(response.status).toBe(503)\n200:   })\n201: })\n\n(End of file - total 201 lines)\n</content>",
+            "metadata": {
+              "preview": "import { describe, expect, it } from 'vitest'\nimport { http, HttpResponse } from 'msw'\nimport { manageSubscription, sendContactMessage } from '@/api/forms'\nimport { server } from '../mocks/server'\nimport {\n  CONTACT_MESSAGE_URL,\n  NEWS_SUBSCRIBE_URL,\n  NEWS_UNSUBSCRIBE_URL,\n} from '../mocks/handlers/forms'\n\ndescribe('sendContactMessage — mutating POST contact route', () => {\n  it('asserts request shape: URL, POST, Content-Type application/json, body shape {type, to, name, email, phone, message, token}', async () => {\n    let capturedMethod: string | undefined = undefined\n    let capturedContentType: string | null = null\n    let capturedUrl: string | undefined = undefined\n    let capturedBody: any = undefined\n    server.use(\n      http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n        capturedMethod = request.method\n        capturedContentType = request.headers.get('Content-Type')",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/api/forms-fetch.test.ts",
+                "text": "import { describe, expect, it } from 'vitest'\nimport { http, HttpResponse } from 'msw'\nimport { manageSubscription, sendContactMessage } from '@/api/forms'\nimport { server } from '../mocks/server'\nimport {\n  CONTACT_MESSAGE_URL,\n  NEWS_SUBSCRIBE_URL,\n  NEWS_UNSUBSCRIBE_URL,\n} from '../mocks/handlers/forms'\n\ndescribe('sendContactMessage — mutating POST contact route', () => {\n  it('asserts request shape: URL, POST, Content-Type application/json, body shape {type, to, name, email, phone, message, token}', async () => {\n    let capturedMethod: string | undefined = undefined\n    let capturedContentType: string | null = null\n    let capturedUrl: string | undefined = undefined\n    let capturedBody: any = undefined\n    server.use(\n      http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n        capturedMethod = request.method\n        capturedContentType = request.headers.get('Content-Type')\n        capturedUrl = request.url\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true, message: 'sent' })\n      }),\n    )\n\n    const response = await sendContactMessage(\n      'vorstand@sv-eutingen.de',\n      '  Max Mustermann  ',\n      '  max@example.org  ',\n      ' 0176 1234567 ',\n      '  Hallo Welt  ',\n      'captcha-token',\n    )\n\n    expect(response.ok).toBe(true)\n    expect(capturedMethod).toBe('POST')\n    expect(new URL(capturedUrl!).pathname).toBe('/api/contact/message')\n    expect(capturedContentType).toBe('application/json')\n    expect(capturedBody).toEqual({\n      type: 'General',\n      to: 'vorstand@sv-eutingen.de',\n      name: 'Max Mustermann',\n      email: 'max@example.org',\n      phone: '0176 1234567',\n      message: 'Hallo Welt',\n      token: 'captcha-token',\n    })\n  })\n\n  it('omits phone (sets it undefined) when the caller passes `undefined`', async () => {\n    let capturedBody: any\n    server.use(\n      http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true })\n      }),\n    )\n\n    await sendContactMessage('recip', 'Max', 'max@example.org', undefined, 'msg', 'tok')\n\n    expect(capturedBody).toEqual({\n      type: 'General',\n      to: 'recip',\n      name: 'Max',\n      email: 'max@example.org',\n      phone: undefined,\n      message: 'msg',\n      token: 'tok',\n    })\n  })\n\n  it('returns the raw 2xx Response (caller proceeds with response.ok)', async () => {\n    server.use(http.post(CONTACT_MESSAGE_URL, () => HttpResponse.json({ success: true })))\n\n    const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n    expect(response.ok).toBe(true)\n    expect(response.status).toBe(200)\n  })\n\n  it('failure path: returns the raw non-2xx Response without throwing', async () => {\n    server.use(\n      http.post(CONTACT_MESSAGE_URL, () =>\n        HttpResponse.json({ message: 'invalid' }, { status: 422 }),\n      ),\n    )\n\n    const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n    expect(response.ok).toBe(false)\n    expect(response.status).toBe(422)\n  })\n\n  it('failure path: 500 also surfaces as raw Response', async () => {\n    server.use(http.post(CONTACT_MESSAGE_URL, () => HttpResponse.json({}, { status: 500 })))\n    const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n    expect(response.ok).toBe(false)\n    expect(response.status).toBe(500)\n  })\n})\n\ndescribe('manageSubscription — mutating POST news route', () => {\n  it('asserts request shape for subscribe=true: URL, POST, Content-Type, body {email, types, token}', async () => {\n    let capturedMethod: string | undefined = undefined\n    let capturedContentType: string | null = null\n    let capturedUrl: string | undefined = undefined\n    let capturedBody: any = undefined\n    server.use(\n      http.post(NEWS_SUBSCRIBE_URL, async ({ request }) => {\n        capturedMethod = request.method\n        capturedContentType = request.headers.get('Content-Type')\n        capturedUrl = request.url\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true })\n      }),\n    )\n\n    const response = await manageSubscription(\n      true,\n      'subscriber@example.org',\n      true,\n      false,\n      true,\n      'token-7',\n    )\n\n    expect(response.ok).toBe(true)\n    expect(capturedMethod).toBe('POST')\n    expect(capturedContentType).toBe('application/json')\n    expect(new URL(capturedUrl!).pathname).toBe('/api/news/subscribe')\n    expect(capturedBody).toEqual({\n      email: 'subscriber@example.org',\n      types: ['General', 'Events'],\n      token: 'token-7',\n    })\n  })\n\n  it('asserts request shape for subscribe=false: POST /news/unsubscribe', async () => {\n    let capturedUrl: string | undefined = undefined\n    let capturedBody: any\n    server.use(\n      http.post(NEWS_UNSUBSCRIBE_URL, async ({ request }) => {\n        capturedUrl = request.url\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true })\n      }),\n    )\n\n    const response = await manageSubscription(\n      false,\n      'unsub@example.org',\n      true,\n      true,\n      true,\n      'token-9',\n    )\n\n    expect(response.ok).toBe(true)\n    expect(new URL(capturedUrl!).pathname).toBe('/api/news/unsubscribe')\n    expect(capturedBody).toEqual({\n      email: 'unsub@example.org',\n      types: ['General', 'Fitness', 'Events'],\n      token: 'token-9',\n    })\n  })\n\n  it('emits an empty `types` array when no category is selected', async () => {\n    let capturedBody: any\n    server.use(\n      http.post(NEWS_SUBSCRIBE_URL, async ({ request }) => {\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true })\n      }),\n    )\n\n    await manageSubscription(true, 'e@example.org', false, false, false, 'tok')\n    expect(capturedBody).toEqual({ email: 'e@example.org', types: [], token: 'tok' })\n  })\n\n  it('returns the raw 2xx Response', async () => {\n    server.use(http.post(NEWS_SUBSCRIBE_URL, () => HttpResponse.json({ success: true })))\n    const response = await manageSubscription(true, 'e', true, false, false, 'tok')\n    expect(response.ok).toBe(true)\n    expect(response.status).toBe(200)\n  })\n\n  it('failure path: returns the raw 4xx Response without throwing (subscribe path)', async () => {\n    server.use(\n      http.post(NEWS_SUBSCRIBE_URL, () => HttpResponse.json({ message: 'bad' }, { status: 400 })),\n    )\n    const response = await manageSubscription(true, 'e', true, false, false, 'tok')\n    expect(response.ok).toBe(false)\n    expect(response.status).toBe(400)\n  })\n\n  it('failure path: returns the raw 5xx Response without throwing (unsubscribe path)', async () => {\n    server.use(http.post(NEWS_UNSUBSCRIBE_URL, () => HttpResponse.json({}, { status: 503 })))\n    const response = await manageSubscription(false, 'e', true, false, false, 'tok')\n    expect(response.ok).toBe(false)\n    expect(response.status).toBe(503)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 201,
+                "totalLines": 201,
+                "truncated": false
+              }
+            },
+            "title": "tests/api/forms-fetch.test.ts",
+            "time": {
+              "start": 1785083743717,
+              "end": 1785083743723
+            }
+          },
+          "id": "prt_f9f484de2001DNO8xR1sY2KHFt",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f4844b7001Pf38zc2iKQ1bRl"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11187,
+            "input": 10956,
+            "output": 103,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01582488,
+          "id": "prt_f9f484e420010v1pJUX3StBF5W",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f4844b7001Pf38zc2iKQ1bRl"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f4843e1001kI8a93vvOu5GQz",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01224292,
+        "tokens": {
+          "total": 16517,
+          "input": 6631,
+          "output": 94,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 9792
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083743853,
+          "completed": 1785083746578
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f484e6d0012lEQnLYldDGV15",
+        "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f485407001xuLUSUWjNvKtom",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f484e6d0012lEQnLYldDGV15"
+        },
+        {
+          "type": "reasoning",
+          "text": "Need full diff (truncated). Let me get the full file content from the commit.",
+          "time": {
+            "start": 1785083745288,
+            "end": 1785083745888
+          },
+          "id": "prt_f9f485408001Z2QY9DThRixsdY",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f484e6d0012lEQnLYldDGV15"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_fe0d",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git -C /Users/mseele/dev/sve/sve-website show --no-patch --format=%H 7665df9 >/dev/null && rtk git -C /Users/mseele/dev/sve/sve-website show 7665df9:tests/client/forms.test.ts"
+            },
+            "output": "...output truncated...\n\nFull output saved to: /Users/mseele/.local/share/opencode/tool-output/tool_f9f4857cd0010E9H1Nin8RjlMg\n\n  it('returns true for null select without touching the prototype', () => {\n    expect(checkRequiredSelect(null, 'Pflichtfeld')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('returns true for undefined select without touching the prototype', () => {\n    expect(checkRequiredSelect(undefined, 'Pflichtfeld')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('validateIbanInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('accepts a syntactically valid IBAN and returns true without touching validity', () => {\n    const input = document.createElement('input')\n    input.value = VALID_IBAN\n\n    expect(validateIbanInput(input)).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('accepts a valid IBAN written without spaces', () => {\n    const input = document.createElement('input')\n    input.value = VALID_IBAN.replace(/\\s/g, '')\n\n    expect(validateIbanInput(input)).toBe(true)\n  })\n\n  it('accepts a valid IBAN regardless of letter case', () => {\n    const input = document.createElement('input')\n    input.value = 'de89 3704 0044 0532 0130 00'\n\n    expect(validateIbanInput(input)).toBe(true)\n  })\n\n  it('sets a custom validity message and returns false for an invalid IBAN', () => {\n    const input = document.createElement('input')\n    input.value = MALFORMED_IBAN\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('rejects a non-IBAN string of random characters', () => {\n    const input = document.createElement('input')\n    input.value = 'not-an-iban'\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalled()\n  })\n\n  it('treats an empty input as invalid: sets the message, reports, returns false', () => {\n    const input = document.createElement('input')\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('returns false and does not touch validity for null input', () => {\n    expect(validateIbanInput(null)).toBe(false)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('returns false and does not touch validity for undefined input', () => {\n    expect(validateIbanInput(undefined)).toBe(false)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('clearCustomValidityOnInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('clears the custom validity when the user types a non-empty value', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    input.value = 'Max'\n    input.dispatchEvent(new Event('input'))\n\n    expect(spies.setInput).toHaveBeenCalledWith('')\n  })\n\n  it('does not clear the validity when the value trims to empty', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    input.value = '   '\n    input.dispatchEvent(new Event('input'))\n\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n\n  it('works for HTMLTextAreaElement: clears once a value is typed', () => {\n    const textarea = document.createElement('textarea')\n    clearCustomValidityOnInput(textarea)\n\n    textarea.value = 'Hello'\n    textarea.dispatchEvent(new Event('input'))\n\n    expect(spies.setTextarea).toHaveBeenCalledWith('')\n  })\n\n  it('no-ops before any input event is dispatched', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows null input (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnInput(null)).not.toThrow()\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows undefined input (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnInput(undefined)).not.toThrow()\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('clearCustomValidityOnSelect', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('clears the custom validity when the user selects a non-empty value', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = 'general'\n    select.append(option)\n\n    clearCustomValidityOnSelect(select)\n\n    select.value = 'general'\n    select.dispatchEvent(new Event('change'))\n\n    expect(spies.setSelect).toHaveBeenCalledWith('')\n  })\n\n  it('does not clear the validity when the selected value trims to empty', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = '   '\n    select.append(option)\n\n    clearCustomValidityOnSelect(select)\n\n    select.value = '   '\n    select.dispatchEvent(new Event('change'))\n\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('no-ops before any change event is dispatched', () => {\n    const select = document.createElement('select')\n    clearCustomValidityOnSelect(select)\n\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows null select (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnSelect(null)).not.toThrow()\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows undefined select (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnSelect(undefined)).not.toThrow()\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n})\n",
+            "metadata": {
+              "output": "import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\nimport {\n  checkRequiredInput,\n  checkRequiredSelect,\n  clearCustomValidityOnInput,\n  clearCustomValidityOnSelect,\n  validateIbanInput,\n} from '@/client/forms'\n\nconst VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\nconst MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n\nconst validitySpies = () => {\n  const setInput = vi.fn()\n  const reportInput = vi.fn(() => false)\n  const setSelect = vi.fn()\n  const reportSelect = vi.fn(() => false)\n  const setTextarea = vi.fn()\n  const reportTextarea = vi.fn(() => false)\n  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', {\n    configurable: true,\n    value: setInput,\n  })\n  Object.defineProperty(HTMLInputElement.prototype, 'reportValidity', {\n    configurable: true,\n    value: reportInput,\n  })\n  Object.defineProperty(HTMLSelectElement.prototype, 'setCustomValidity', {\n    configurable: true,\n    value: setSelect,\n  })\n  Object.defineProperty(HTMLSelectElement.prototype, 'reportValidity', {\n    configurable: true,\n    value: reportSelect,\n  })\n  Object.defineProperty(HTMLTextAreaElement.prototype, 'setCustomValidity', {\n    configurable: true,\n    value: setTextarea,\n  })\n  Object.defineProperty(HTMLTextAreaElement.prototype, 'reportValidity', {\n    configurable: true,\n    value: reportTextarea,\n  })\n  return { setInput, reportInput, setSelect, reportSelect, setTextarea, reportTextarea }\n}\n\ndescribe('checkRequiredInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('returns true and does not touch validity when the input has a non-empty value', () => {\n    const input = document.createElement('input')\n    input.value = 'Max Mustermann'\n\n    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('treats whitespace-only values as empty: sets the message, reports validity, returns false', () => {\n    const input = document.createElement('input')\n    input.value = '   '\n\n    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Pflichtfeld')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('sets the custom validity message and calls reportValidity when the input is empty', () => {\n    const input = document.createElement('input')\n\n    expect(checkRequiredInput(input, 'Bitte Namen angeben')).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte Namen angeben')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('works for HTMLTextAreaElement and propagates the error message', () => {\n    const textarea = document.createElement('textarea')\n\n    expect(checkRequiredInput(textarea, 'Bitte Nachricht angeben')).toBe(false)\n    expect(spies.setTextarea).toHaveBeenCalledWith('Bitte Nachricht angeben')\n    expect(spies.reportTextarea).toHaveBeenCalledTimes(1)\n  })\n\n  it('returns true for null input without touching the prototype', () => {\n    expect(checkRequiredInput(null, 'Pflichtfeld')).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('returns true for undefined input without touching the prototype', () => {\n    expect(checkRequiredInput(undefined, 'Pflichtfeld')).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('checkRequiredSelect', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('returns true and does not touch validity when a value is selected', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = 'general'\n    select.append(option)\n    select.value = 'general'\n\n    expect(checkRequiredSelect(select, 'Bitte auswählen')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n    expect(spies.reportSelect).not.toHaveBeenCalled()\n  })\n\n  it('sets the custom validity message and reports validity for an empty value', () => {\n    const select = document.createElement('select')\n\n    expect(checkRequiredSelect(select, 'Bitte Auswahl treffen')).toBe(false)\n    expect(spies.setSelect).toHaveBeenCalledWith('Bitte Auswahl treffen')\n    expect(spies.reportSelect).toHaveBeenCalledTimes(1)\n  })\n\n  it('treats a whitespace-only option value as empty', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = '   '\n    select.append(option)\n    select.value = '   '\n\n    expect(checkRequiredSelect(select, 'Pflichtfeld')).toBe(false)\n    expect(spies.setSelect).toHaveBeenCalledWith('Pflichtfeld')\n    expect(spies.reportSelect).toHaveBeenCalled()\n  })\n\n  it('returns true for null select without touching the prototype', () => {\n    expect(checkRequiredSelect(null, 'Pflichtfeld')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('returns true for undefined select without touching the prototype', () => {\n    expect(checkRequiredSelect(undefined, 'Pflichtfeld')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('validateIbanInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('accepts a syntactically valid IBAN and returns true without touching validity', () => {\n    const input = document.createElement('input')\n    input.value = VALID_IBAN\n\n    expect(validateIbanInput(input)).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('accepts a valid IBAN written without spaces', () => {\n    const input = document.createElement('input')\n    input.value = VALID_IBAN.replace(/\\s/g, '')\n\n    expect(validateIbanInput(input)).toBe(true)\n  })\n\n  it('accepts a valid IBAN regardless of letter case', () => {\n    const input = document.createElement('input')\n    input.value = 'de89 3704 0044 0532 0130 00'\n\n    expect(validateIbanInput(input)).toBe(true)\n  })\n\n  it('sets a custom validity message and returns false for an invalid IBAN', () => {\n    const input = document.createElement('input')\n    input.value = MALFORMED_IBAN\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('rejects a non-IBAN string of random characters', () => {\n    const input = document.createElement('input')\n    input.value = 'not-an-iban'\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalled()\n  })\n\n  it('treats an empty input as invalid: sets the message, reports, returns false', () => {\n    const input = document.createElement('input')\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('returns false and does not touch validity for null input', () => {\n    expect(validateIbanInput(null)).toBe(false)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('returns false and does not touch validity for undefined input', () => {\n    expect(validateIbanInput(undefined)).toBe(false)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('clearCustomValidityOnInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('clears the custom validity when the user types a non-empty value', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    input.value = 'Max'\n    input.dispatchEvent(new Event('input'))\n\n    expect(spies.setInput).toHaveBeenCalledWith('')\n  })\n\n  it('does not clear the validity when the value trims to empty', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    input.value = '   '\n    input.dispatchEvent(new Event('input'))\n\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n\n  it('works for HTMLTextAreaElement: clears once a value is typed', () => {\n    const textarea = document.createElement('textarea')\n    clearCustomValidityOnInput(textarea)\n\n    textarea.value = 'Hello'\n    textarea.dispatchEvent(new Event('input'))\n\n    expect(spies.setTextarea).toHaveBeenCalledWith('')\n  })\n\n  it('no-ops before any input event is dispatched', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows null input (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnInput(null)).not.toThrow()\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows undefined input (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnInput(undefined)).not.toThrow()\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('clearCustomValidityOnSelect', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('clears the custom validity when the user selects a non-empty value', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = 'general'\n    select.append(option)\n\n    clearCustomValidityOnSelect(select)\n\n    select.value = 'general'\n    select.dispatchEvent(new Event('change'))\n\n    expect(spies.setSelect).toHaveBeenCalledWith('')\n  })\n\n  it('does not clear the validity when the selected value trims to empty', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = '   '\n    select.append(option)\n\n    clearCustomValidityOnSelect(select)\n\n    select.value = '   '\n    select.dispatchEvent(new Event('change'))\n\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('no-ops before any change event is dispatched', () => {\n    const select = document.createElement('select')\n    clearCustomValidityOnSelect(select)\n\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows null select (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnSelect(null)).not.toThrow()\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows undefined select (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnSelect(undefined)).not.toThrow()\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n})\n",
+              "exit": 0,
+              "truncated": true,
+              "outputPath": "/Users/mseele/.local/share/opencode/tool-output/tool_f9f4857cd0010E9H1Nin8RjlMg"
+            },
+            "title": "rtk git -C /Users/mseele/dev/sve/sve-website show --no-patch --format=%H 7665df9 >/dev/null && rtk git -C /Users/mseele/dev/sve/sve-website show 7665df9:tests/client/forms.test.ts",
+            "time": {
+              "start": 1785083745904,
+              "end": 1785083746272
+            }
+          },
+          "id": "prt_f9f4856610011LjQNAoN3RNLMC",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f484e6d0012lEQnLYldDGV15"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 16517,
+            "input": 6631,
+            "output": 94,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 9792
+            }
+          },
+          "cost": 0.01224292,
+          "id": "prt_f9f48585a001pETKwT5vuwZtOV",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f484e6d0012lEQnLYldDGV15"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f4843e1001kI8a93vvOu5GQz",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00660712,
+        "tokens": {
+          "total": 18032,
+          "input": 1458,
+          "output": 62,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 16512
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083746580,
+          "completed": 1785083754578
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f485914001oWt2AF0ru7deTV",
+        "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f487447001f1RsK3owwxBMUH",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f485914001oWt2AF0ru7deTV"
+        },
+        {
+          "type": "reasoning",
+          "text": "I have the full file content (with truncation in the middle). Let me read the remaining section to be sure.",
+          "time": {
+            "start": 1785083753545,
+            "end": 1785083754356
+          },
+          "id": "prt_f9f487449001SfUVx5h80cbzzE",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f485914001oWt2AF0ru7deTV"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_99b9",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+              "offset": 120,
+              "limit": 120
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts</path>\n<type>file</type>\n<content>\n120:     select.append(option)\n121:     select.value = 'general'\n122: \n123:     expect(checkRequiredSelect(select, 'Bitte auswählen')).toBe(true)\n124:     expect(spies.setSelect).not.toHaveBeenCalled()\n125:     expect(spies.reportSelect).not.toHaveBeenCalled()\n126:   })\n127: \n128:   it('sets the custom validity message and reports validity for an empty value', () => {\n129:     const select = document.createElement('select')\n130: \n131:     expect(checkRequiredSelect(select, 'Bitte Auswahl treffen')).toBe(false)\n132:     expect(spies.setSelect).toHaveBeenCalledWith('Bitte Auswahl treffen')\n133:     expect(spies.reportSelect).toHaveBeenCalledTimes(1)\n134:   })\n135: \n136:   it('treats a whitespace-only option value as empty', () => {\n137:     const select = document.createElement('select')\n138:     const option = document.createElement('option')\n139:     option.value = '   '\n140:     select.append(option)\n141:     select.value = '   '\n142: \n143:     expect(checkRequiredSelect(select, 'Pflichtfeld')).toBe(false)\n144:     expect(spies.setSelect).toHaveBeenCalledWith('Pflichtfeld')\n145:     expect(spies.reportSelect).toHaveBeenCalled()\n146:   })\n147: \n148:   it('returns true for null select without touching the prototype', () => {\n149:     expect(checkRequiredSelect(null, 'Pflichtfeld')).toBe(true)\n150:     expect(spies.setSelect).not.toHaveBeenCalled()\n151:   })\n152: \n153:   it('returns true for undefined select without touching the prototype', () => {\n154:     expect(checkRequiredSelect(undefined, 'Pflichtfeld')).toBe(true)\n155:     expect(spies.setSelect).not.toHaveBeenCalled()\n156:   })\n157: })\n158: \n159: describe('validateIbanInput', () => {\n160:   let spies: ReturnType<typeof validitySpies>\n161: \n162:   beforeEach(() => {\n163:     spies = validitySpies()\n164:   })\n165: \n166:   afterEach(() => {\n167:     vi.restoreAllMocks()\n168:   })\n169: \n170:   it('accepts a syntactically valid IBAN and returns true without touching validity', () => {\n171:     const input = document.createElement('input')\n172:     input.value = VALID_IBAN\n173: \n174:     expect(validateIbanInput(input)).toBe(true)\n175:     expect(spies.setInput).not.toHaveBeenCalled()\n176:     expect(spies.reportInput).not.toHaveBeenCalled()\n177:   })\n178: \n179:   it('accepts a valid IBAN written without spaces', () => {\n180:     const input = document.createElement('input')\n181:     input.value = VALID_IBAN.replace(/\\s/g, '')\n182: \n183:     expect(validateIbanInput(input)).toBe(true)\n184:   })\n185: \n186:   it('accepts a valid IBAN regardless of letter case', () => {\n187:     const input = document.createElement('input')\n188:     input.value = 'de89 3704 0044 0532 0130 00'\n189: \n190:     expect(validateIbanInput(input)).toBe(true)\n191:   })\n192: \n193:   it('sets a custom validity message and returns false for an invalid IBAN', () => {\n194:     const input = document.createElement('input')\n195:     input.value = MALFORMED_IBAN\n196: \n197:     expect(validateIbanInput(input)).toBe(false)\n198:     expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n199:     expect(spies.reportInput).toHaveBeenCalledTimes(1)\n200:   })\n201: \n202:   it('rejects a non-IBAN string of random characters', () => {\n203:     const input = document.createElement('input')\n204:     input.value = 'not-an-iban'\n205: \n206:     expect(validateIbanInput(input)).toBe(false)\n207:     expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n208:     expect(spies.reportInput).toHaveBeenCalled()\n209:   })\n210: \n211:   it('treats an empty input as invalid: sets the message, reports, returns false', () => {\n212:     const input = document.createElement('input')\n213: \n214:     expect(validateIbanInput(input)).toBe(false)\n215:     expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n216:     expect(spies.reportInput).toHaveBeenCalledTimes(1)\n217:   })\n218: \n219:   it('returns false and does not touch validity for null input', () => {\n220:     expect(validateIbanInput(null)).toBe(false)\n221:     expect(spies.setInput).not.toHaveBeenCalled()\n222:     expect(spies.reportInput).not.toHaveBeenCalled()\n223:   })\n224: \n225:   it('returns false and does not touch validity for undefined input', () => {\n226:     expect(validateIbanInput(undefined)).toBe(false)\n227:     expect(spies.setInput).not.toHaveBeenCalled()\n228:     expect(spies.reportInput).not.toHaveBeenCalled()\n229:   })\n230: })\n231: \n232: describe('clearCustomValidityOnInput', () => {\n233:   let spies: ReturnType<typeof validitySpies>\n234: \n235:   beforeEach(() => {\n236:     spies = validitySpies()\n237:   })\n238: \n239:   afterEach(() => {\n\n(Showing lines 120-239 of 346. Use offset=240 to continue.)\n</content>",
+            "metadata": {
+              "preview": "    select.append(option)\n    select.value = 'general'\n\n    expect(checkRequiredSelect(select, 'Bitte auswählen')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n    expect(spies.reportSelect).not.toHaveBeenCalled()\n  })\n\n  it('sets the custom validity message and reports validity for an empty value', () => {\n    const select = document.createElement('select')\n\n    expect(checkRequiredSelect(select, 'Bitte Auswahl treffen')).toBe(false)\n    expect(spies.setSelect).toHaveBeenCalledWith('Bitte Auswahl treffen')\n    expect(spies.reportSelect).toHaveBeenCalledTimes(1)\n  })\n\n  it('treats a whitespace-only option value as empty', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = '   '",
+              "truncated": true,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+                "text": "    select.append(option)\n    select.value = 'general'\n\n    expect(checkRequiredSelect(select, 'Bitte auswählen')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n    expect(spies.reportSelect).not.toHaveBeenCalled()\n  })\n\n  it('sets the custom validity message and reports validity for an empty value', () => {\n    const select = document.createElement('select')\n\n    expect(checkRequiredSelect(select, 'Bitte Auswahl treffen')).toBe(false)\n    expect(spies.setSelect).toHaveBeenCalledWith('Bitte Auswahl treffen')\n    expect(spies.reportSelect).toHaveBeenCalledTimes(1)\n  })\n\n  it('treats a whitespace-only option value as empty', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = '   '\n    select.append(option)\n    select.value = '   '\n\n    expect(checkRequiredSelect(select, 'Pflichtfeld')).toBe(false)\n    expect(spies.setSelect).toHaveBeenCalledWith('Pflichtfeld')\n    expect(spies.reportSelect).toHaveBeenCalled()\n  })\n\n  it('returns true for null select without touching the prototype', () => {\n    expect(checkRequiredSelect(null, 'Pflichtfeld')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('returns true for undefined select without touching the prototype', () => {\n    expect(checkRequiredSelect(undefined, 'Pflichtfeld')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('validateIbanInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('accepts a syntactically valid IBAN and returns true without touching validity', () => {\n    const input = document.createElement('input')\n    input.value = VALID_IBAN\n\n    expect(validateIbanInput(input)).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('accepts a valid IBAN written without spaces', () => {\n    const input = document.createElement('input')\n    input.value = VALID_IBAN.replace(/\\s/g, '')\n\n    expect(validateIbanInput(input)).toBe(true)\n  })\n\n  it('accepts a valid IBAN regardless of letter case', () => {\n    const input = document.createElement('input')\n    input.value = 'de89 3704 0044 0532 0130 00'\n\n    expect(validateIbanInput(input)).toBe(true)\n  })\n\n  it('sets a custom validity message and returns false for an invalid IBAN', () => {\n    const input = document.createElement('input')\n    input.value = MALFORMED_IBAN\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('rejects a non-IBAN string of random characters', () => {\n    const input = document.createElement('input')\n    input.value = 'not-an-iban'\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalled()\n  })\n\n  it('treats an empty input as invalid: sets the message, reports, returns false', () => {\n    const input = document.createElement('input')\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('returns false and does not touch validity for null input', () => {\n    expect(validateIbanInput(null)).toBe(false)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('returns false and does not touch validity for undefined input', () => {\n    expect(validateIbanInput(undefined)).toBe(false)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('clearCustomValidityOnInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {",
+                "lineStart": 120,
+                "lineEnd": 239,
+                "totalLines": 346,
+                "truncated": true
+              }
+            },
+            "title": "tests/client/forms.test.ts",
+            "time": {
+              "start": 1785083754359,
+              "end": 1785083754373
+            }
+          },
+          "id": "prt_f9f487775001RZWDtppiZTXIRL",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f485914001oWt2AF0ru7deTV"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 18032,
+            "input": 1458,
+            "output": 62,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 16512
+            }
+          },
+          "cost": 0.00660712,
+          "id": "prt_f9f4877d7001S2u2oY2SHC42St",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f485914001oWt2AF0ru7deTV"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f4843e1001kI8a93vvOu5GQz",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01381764,
+        "tokens": {
+          "total": 20961,
+          "input": 1319,
+          "output": 1658,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 17984
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083754581,
+          "completed": 1785083777221
+        },
+        "finish": "stop",
+        "id": "msg_f9f487855001iw7j2hyvLNLYHa",
+        "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f487db7001Lf7ehtw1DEknYB",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f487855001iw7j2hyvLNLYHa"
+        },
+        {
+          "type": "reasoning",
+          "text": "I have enough. The file is one big block. Now compare against standards.\n\nCanonical standards from AGENTS.md:\n- semicolons off, single quotes, tab width 2, print width 100, trailing commas all → oxfmt enforces. Skip.\n- `@/` alias for src imports → the file uses `@/client/forms` ✓\n- strict TS, explicit param/return types → check helpers: `validitySpies` has no return type annotation (uses `ReturnType<typeof...>` consumer side). AGENTS says \"Explicit types for parameters and returns\". This is a judgement call for test files; the existing utils.test.ts uses arrow helpers with no annotations either (e.g. `toUtcIso`, `appointment`). So consistent with repo test style.\n- `interface` for objects, `type` for unions/aliases → no interfaces declared here; uses tuple types `Array<[Date, string]>` in utils.test.ts. The new file doesn't declare interfaces/types. Fine.\n- PascalCase components, camelCase TS files → forms.test.ts camelCase ✓\n- early returns, Zod validation, optional chaining → not really applicable here; tests use direct expects.\n- Imports: Group external → `@/` aliases → relative. The file groups vitest (external), then `@/client/forms` (alias). ✓. Established test files use the same pattern.\n\nNow compare style vs existing tests:\n- `tests/utils.test.ts` uses table-driven `for (const [input, expected] of cases)` pattern. The new file uses one `it` per scenario, no table-driven. AGENTS.md doesn't mandate table-driven. Consistent with forms-fetch.test.ts which is also one-it-per scenario.\n- `forms-fetch.test.ts` uses `let capturedBody: any` (any). New file uses typed spies via `vi.fn()` with no `any`. Good.\n- Forms-fetch uses `import { server } from '../mocks/server'` (relative). New file has no relative imports.\n- Both existing files do `import { describe, expect, it } from 'vitest'`. New file imports `afterEach, beforeEach, describe, expect, it, vi`. Pattern matches.\n\nSmells (Fowler):\n- Duplicated Code: validitySpies defines six nearly-identical `Object.defineProperty` blocks differing only by prototype + suffix. Could be data-driven. 6-block duplication is a judgement-call smell. Quote hunk.\n- Duplicated Code: per describe block the `let spies / beforeEach / afterEach` triple is repeated verbatim 4 times. Could be a shared setup helper. Judgement call.\n- Data Clumps: the spies object returned has paired set/report for each of three element kinds; passes around `setInput`/`reportInput` pairs repeatedly. Mild.\n- Repeated Switches: none really.\n- Primitive Obsession: passing element + string message repeatedly; fine for tests.\n- Mysterious Name: `validitySpies` is fine. `VALID_IBAN`/`MALFORMED_IBAN` good.\n- Message Chains: none.\n- Shotgun Surgery: adding a new element kind would require edits in validitySpies AND every test that touches the spies object. Mild divergent change. Judgement.\n- Speculative Generality: `returns true for null input`/`undefined input` separate tests — the production early-return path is one branch; separate tests are fine, not over-engineered.\n\nHard violations: I don't see any hard deviations. `@/` alias used. Naming consistent. Import grouping matches forms-fetch style (external then alias). return type annotations omittable in test helpers consistent with repo (utils.test.ts `toUtcIso`, `appointment` also un-annotated).\n\nOne possible nit: AGENTS says \"Use Zod for runtime validation\" — tests don't need that, N/A.\n\nAnother: AGENTS says \"optional chaining for nullish values\". The new tests don't use optional chaining because tests assert direct values. N/A.\n\nLet me check: AGENTS says \"Export types from src/types.ts\". No types exported here. Fine.\n\nCould there be a real hard violation? The `validitySpies` function modifies `HTMLInputElement.prototype` etc. — relying on `vi.restoreAllMocks()` won't undo `Object.defineProperty` since these aren't vi mocks. `configurable: true` lets the next `beforeEach` re-define. But леп심not a standards violation; correctness concern out of scope for standards review.\n\nLet me write the report under 400 words.\n\nActually one more thought: the existing test style in `forms-fetch.test.ts` uses `capturedBody: any` with lowercase `any`. Type strictness would disallow `any` but the existing test uses it. The new file avoids `any` entirely - better, not a violation.\n\nFormat-wise, report.",
+          "time": {
+            "start": 1785083755961,
+            "end": 1785083771951
+          },
+          "id": "prt_f9f487db9001DhfC0dKqY10ie6",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f487855001iw7j2hyvLNLYHa"
+        },
+        {
+          "type": "text",
+          "text": "## Standards-axis review — commit 7665df9 (forms.test.ts, issue #402)\n\n### Hard violations\nNone. Imports use `@/` alias (`@/client/forms`) — matches AGENTS.md \"Use `@/` alias for `src/` imports\". Grouping (external `vitest` → `@/` alias) matches the established style in `tests/api/forms-fetch.test.ts:1-3`. File name camelCase,个股 matches `tests/utils.test.ts` convention. No interfaces/types declared, so `interface`-vs-`type` rule is moot. `oxfmt`/`tsc`/`vitest` concerns skipped per instructions.\n\n### Judgement calls vs. documented standards\n- **Explicit param/return types** (AGENTS.md → \"Explicit types for parameters and returns\"). `validitySpies()` (forms.test.ts:16) declares no return type; consumers use `ReturnType<typeof validitySpies>`. Consistent with repo test style — `tests/utils.test.ts:13-25` (`toUtcIso`, `appointment`) omits annotations on arrow helpers too. Not a violation; flag only if tightening test-file conventions repo-wide.\n\n### Baseline smells (Fowler)\n- **Duplicated Code** (judgement): `validitySpies` repeats six `Object.defineProperty` blocks differing only by prototype + name suffix:\n  ```ts\n  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', { configurable: true, value: setInput })\n  Object.defineProperty(HTMLInputElement.prototype, 'reportValidity',   { configurable: true, value: reportInput })\n  // …same shape for HTMLSelectElement, HTMLTextAreaElement\n  ```\n  A `[['Input', HTMLInputElement], ['Select', …], …]` loop would collapse the body sixfold and remove the Shotgun-Surgery risk of adding a 3rd prototype touching six sites.\n- **Duplicated Code** (judgement): the `let spies / beforeEach / afterEach` triple is repeated verbatim across all four `describe` blocks (lines 49-55, 113-119, 160-168, 235-…). A shared module-level `beforeEach`/`afterEach` would dedupe — but isolation per block is arguably intentional and matches the one-`describe`-one-suite rhythm of `forms-fetch.test.ts`.\n- **Data Clumps** (mild): `{ setInput, reportInput }`, `{ setSelect, reportSelect }`, `{ setTextarea, reportTextarea }` always travel together; only the pair as a unit is ever asserted. Extracting a small `ElementSpy = { set: Mock; report: Mock }` per element kind would sharpen intent, but the test-only cost is low.\n- **No Mysterious Name, Feature Envy, Message Chains, Middle Man, Refused Bequest, Repeated Switches, Speculative Generality, Divergent Change** of note.\n\n### Net\nTooling-clean and standards-conformant. Two Duplicated-Code judgement calls in `validitySpies` worth a future tidy, neither blocking.",
+          "time": {
+            "start": 1785083771958,
+            "end": 1785083776882
+          },
+          "id": "prt_f9f48bc36001lFIVOdb2PDMMQb",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f487855001iw7j2hyvLNLYHa"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 20961,
+            "input": 1319,
+            "output": 1658,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 17984
+            }
+          },
+          "cost": 0.01381764,
+          "id": "prt_f9f48cfb7001aXSeVfl8olgo21",
+          "sessionID": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+          "messageID": "msg_f9f487855001iw7j2hyvLNLYHa"
+        }
+      ]
+    }
+  ]
+}

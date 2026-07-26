@@ -1,0 +1,47 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "9f6511b0337c",
+  "session_id": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+  "strategy": "manual-commit",
+  "created_at": "2026-07-26T16:39:21.520734Z",
+  "branch": "feature/tests",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "tests/client/forms.test.ts"
+  ],
+  "agent": "OpenCode",
+  "model": "glm-5.2",
+  "turn_id": "74ee42093bec",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 20364,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 44416,
+    "output_tokens": 1917,
+    "api_call_count": 4
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-07-26T16:39:21.511497Z",
+    "agent_lines": 138,
+    "agent_removed": 127,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 138,
+    "total_lines_changed": 265,
+    "agent_percentage": 100,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    }
+  ]
+}
