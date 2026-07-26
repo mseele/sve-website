@@ -3,7 +3,7 @@
   "checkpoint_id": "9f6511b0337c",
   "strategy": "manual-commit",
   "branch": "feature/tests",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "tests/client/forms.test.ts"
   ],
@@ -13,6 +13,13 @@
       "transcript": "/9f/6511b0337c/0/full.jsonl",
       "compact_transcript": "/9f/6511b0337c/0/transcript.jsonl",
       "content_hash": "/9f/6511b0337c/0/content_hash.txt",
+      "prompt": ""
+    },
+    {
+      "metadata": "/9f/6511b0337c/1/metadata.json",
+      "transcript": "/9f/6511b0337c/1/full.jsonl",
+      "compact_transcript": "/9f/6511b0337c/1/transcript.jsonl",
+      "content_hash": "/9f/6511b0337c/1/content_hash.txt",
       "prompt": ""
     }
   ],
