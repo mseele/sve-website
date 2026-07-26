@@ -1,0 +1,33 @@
+You are doing a SPEC-only review of uncommitted changes on the current branch of `/Users/mseele/dev/sve/sve-website`.
+
+Fixed point: `HEAD` (commit `ebdf045`).
+Inspect the diff with `git diff HEAD` plus these NEW files (Read them in full):
+- /Users/mseele/dev/sve/sve-website/src/content-schemas.ts
+- /Users/mseele/dev/sve/sve-website/tests/content-schemas.test.ts
+- /Users/mseele/dev/sve/sve-website/tests/api/contentful.test.ts
+- /Users/mseele/dev/sve/sve-website/tests/fixtures/contentful/team.json
+- /Users/mseele/dev/sve/sve-website/tests/fixtures/contentful/sponsor.json
+And the MODIFIED file (Read in full):
+- /Users/mseele/dev/sve/sve-website/src/content.config.ts
+
+The spec is GitHub issue #403 (repo `mseele/sve-website`). Fetch the spec text with:
+`gh issue view 403 --repo mseele/sve-website`
+
+Issue title and canonical description (so you don't have to depend on the network):
+"Issue #403: Contentful Zod schema contract tests"
+
+> `src/content.config.ts` parses Contentful payloads via Zod schemas. This is the contract test that protects the loader against a CMS shape change.
+>
+> Capture sample Contentful payloads as fixtures under `tests/fixtures/contentful/` (one per content type — team, sponsor, etc.), then write tests that feed each fixture into the relevant Zod schema and assert parse-succeed (happy path) and parse-fail (mutated fixture — drop a required field, change a type — and assert the parse rejects it).
+>
+> For `src/api/contentful.ts`, `vi.mock('contentful')` the `createClient` and assert the loader calls `getEntries` with the right content types and the field mappings (`mapCategory`, sponsor/team shaping) produce the expected domain objects. Both branches of the `import.meta.env.DEV ? preview : delivery` toggle covered via `vi.stubEnv`.
+
+Acceptance criteria:
+- `tests/fixtures/contentful/` holds JSON fixtures per Contentful content type
+- Zod schema parse-succeed tests for each fixture
+- Zod schema parse-fail tests (mutated fixtures) for each content type
+- `tests/api/contentful.test.ts` mocks `createClient`, asserts `getEntries` calls and field mapping
+- DEV-mode and delivery-mode branches both covered
+- All tests green, `bun run check` green
+
+Brief: Report (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Keep under 400 words. Be terse and concrete.

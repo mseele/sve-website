@@ -1,0 +1,709 @@
+{
+  "info": {
+    "id": "ses_060a980daffejHWQdInb4ClVss",
+    "slug": "gentle-orchid",
+    "projectID": "68d450c05733c82192ed1f31a5e40cb2ae707f59",
+    "directory": "/Users/mseele/dev/sve/sve-website",
+    "path": "",
+    "parentID": "ses_060b3ac3effePZ9IXXfpKFOjgd",
+    "title": "Spec review of #403 diff (@general subagent)",
+    "agent": "general",
+    "model": {
+      "id": "glm-5.2",
+      "providerID": "opencode-go",
+      "variant": "default"
+    },
+    "version": "1.18.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0.051257040000000004,
+    "tokens": {
+      "input": 20236,
+      "output": 2465,
+      "reasoning": 0,
+      "cache": {
+        "read": 46464,
+        "write": 0
+      }
+    },
+    "permission": [
+      {
+        "permission": "task",
+        "pattern": "*",
+        "action": "deny"
+      }
+    ],
+    "time": {
+      "created": 1785084673829,
+      "updated": 1785084700948
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1785084673834
+        },
+        "agent": "general",
+        "model": {
+          "providerID": "opencode-go",
+          "modelID": "glm-5.2"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_f9f567f2a001Aw6t6UrhjicLuW",
+        "sessionID": "ses_060a980daffejHWQdInb4ClVss"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "You are doing a SPEC-only review of uncommitted changes on the current branch of `/Users/mseele/dev/sve/sve-website`.\n\nFixed point: `HEAD` (commit `ebdf045`).\nInspect the diff with `git diff HEAD` plus these NEW files (Read them in full):\n- /Users/mseele/dev/sve/sve-website/src/content-schemas.ts\n- /Users/mseele/dev/sve/sve-website/tests/content-schemas.test.ts\n- /Users/mseele/dev/sve/sve-website/tests/api/contentful.test.ts\n- /Users/mseele/dev/sve/sve-website/tests/fixtures/contentful/team.json\n- /Users/mseele/dev/sve/sve-website/tests/fixtures/contentful/sponsor.json\nAnd the MODIFIED file (Read in full):\n- /Users/mseele/dev/sve/sve-website/src/content.config.ts\n\nThe spec is GitHub issue #403 (repo `mseele/sve-website`). Fetch the spec text with:\n`gh issue view 403 --repo mseele/sve-website`\n\nIssue title and canonical description (so you don't have to depend on the network):\n\"Issue #403: Contentful Zod schema contract tests\"\n\n> `src/content.config.ts` parses Contentful payloads via Zod schemas. This is the contract test that protects the loader against a CMS shape change.\n>\n> Capture sample Contentful payloads as fixtures under `tests/fixtures/contentful/` (one per content type — team, sponsor, etc.), then write tests that feed each fixture into the relevant Zod schema and assert parse-succeed (happy path) and parse-fail (mutated fixture — drop a required field, change a type — and assert the parse rejects it).\n>\n> For `src/api/contentful.ts`, `vi.mock('contentful')` the `createClient` and assert the loader calls `getEntries` with the right content types and the field mappings (`mapCategory`, sponsor/team shaping) produce the expected domain objects. Both branches of the `import.meta.env.DEV ? preview : delivery` toggle covered via `vi.stubEnv`.\n\nAcceptance criteria:\n- `tests/fixtures/contentful/` holds JSON fixtures per Contentful content type\n- Zod schema parse-succeed tests for each fixture\n- Zod schema parse-fail tests (mutated fixtures) for each content type\n- `tests/api/contentful.test.ts` mocks `createClient`, asserts `getEntries` calls and field mapping\n- DEV-mode and delivery-mode branches both covered\n- All tests green, `bun run check` green\n\nBrief: Report (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Keep under 400 words. Be terse and concrete.",
+          "id": "prt_f9f567f2c0014DEvYPFMRccFxL",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f567f2a001Aw6t6UrhjicLuW"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f567f2a001Aw6t6UrhjicLuW",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01669048,
+        "tokens": {
+          "total": 11516,
+          "input": 11150,
+          "output": 238,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785084674060,
+          "completed": 1785084677511
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f56800c001d7VKsmDA093Wyc",
+        "sessionID": "ses_060a980daffejHWQdInb4ClVss"
+      },
+      "parts": [
+        {
+          "snapshot": "30ffe5d5c4200b7e63a4f2b1d09791a92cc3e6cc",
+          "type": "step-start",
+          "id": "prt_f9f5684e9001XiD96jXQr3qlDV",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f56800c001d7VKsmDA093Wyc"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me gather the diff and read the new files plus the modified file, and fetch the spec.",
+          "time": {
+            "start": 1785084675307,
+            "end": 1785084675577
+          },
+          "id": "prt_f9f5684eb001aLYvw64usuLdBi",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f56800c001d7VKsmDA093Wyc"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_36d6",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git diff HEAD",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "src/content.config.ts | 27 ++++-----------------------\n 1 file changed, 4 insertions(+), 23 deletions(-)\n\nChanges:\n\nsrc/content.config.ts\n  @@ -1,38 +1,19 @@\n  -import { EventType, personObject } from '@/types'\n  +import { EventType } from '@/types'\n   import { glob } from 'astro/loaders'\n   import { defineCollection, type SchemaContext } from 'astro:content'\n   import { z } from 'astro/zod'\n  +import { sponsorSchema, teamSchema } from '@/content-schemas'\n   \n   const teams = defineCollection({\n     loader: loadTeams,\n  -  schema: () =>\n  -    z.object({\n  -      id: z.string(),\n  -      name: z.string(),\n  -      league: z.string().optional(),\n  -      category: z.object({\n  -        id: z.string(),\n  -        name: z.string(),\n  -        description: z.string(),\n  -        isYouthGroup: z.boolean(),\n  -        sortOrder: z.number(),\n  -      }),\n  -      sortOrder: z.number(),\n  -      coach: personObject.optional(),\n  -      contact: personObject.optional(),\n  -      teamID: z.string().optional(),\n  -    }),\n  +  schema: teamSchema,\n   })\n   \n   const sponsoring = defineCollection({\n     loader: loadSponsors,\n  -  schema: () =>\n  -    z.object({\n  -      name: z.string(),\n  -      groupBy: z.string(),\n  -    }),\n  +  schema: sponsorSchema,\n   })\n   \n   const news = defineCollection({\n  +4 -23\n",
+            "metadata": {
+              "output": "src/content.config.ts | 27 ++++-----------------------\n 1 file changed, 4 insertions(+), 23 deletions(-)\n\nChanges:\n\nsrc/content.config.ts\n  @@ -1,38 +1,19 @@\n  -import { EventType, personObject } from '@/types'\n  +import { EventType } from '@/types'\n   import { glob } from 'astro/loaders'\n   import { defineCollection, type SchemaContext } from 'astro:content'\n   import { z } from 'astro/zod'\n  +import { sponsorSchema, teamSchema } from '@/content-schemas'\n   \n   const teams = defineCollection({\n     loader: loadTeams,\n  -  schema: () =>\n  -    z.object({\n  -      id: z.string(),\n  -      name: z.string(),\n  -      league: z.string().optional(),\n  -      category: z.object({\n  -        id: z.string(),\n  -        name: z.string(),\n  -        description: z.string(),\n  -        isYouthGroup: z.boolean(),\n  -        sortOrder: z.number(),\n  -      }),\n  -      sortOrder: z.number(),\n  -      coach: personObject.optional(),\n  -      contact: personObject.optional(),\n  -      teamID: z.string().optional(),\n  -    }),\n  +  schema: teamSchema,\n   })\n   \n   const sponsoring = defineCollection({\n     loader: loadSponsors,\n  -  schema: () =>\n  -    z.object({\n  -      name: z.string(),\n  -      groupBy: z.string(),\n  -    }),\n  +  schema: sponsorSchema,\n   })\n   \n   const news = defineCollection({\n  +4 -23\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git diff HEAD",
+            "time": {
+              "start": 1785084675631,
+              "end": 1785084675635
+            }
+          },
+          "id": "prt_f9f5685fb0015Ccb4Chd2fWbva",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f56800c001d7VKsmDA093Wyc"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_4dd1",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/src/content-schemas.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/src/content-schemas.ts</path>\n<type>file</type>\n<content>\n1: import { personObject } from '@/types'\n2: import { z } from 'astro/zod'\n3: \n4: /**\n5:  * Zod contract for the domain object produced by `loadTeams` (`src/api/contentful.ts`).\n6:  *\n7:  * Lives outside `src/content.config.ts` so the contract test can import the\n8:  * schema without dragging in the `astro:content` / `astro:env/server` runtime —\n9:  * those modules are server-only and throw under the happy-dom test environment.\n10:  *\n11:  * `src/content.config.ts` re-uses this factory to keep a single source of\n12:  * truth between production collection validation and the schema contract tests\n13:  * under `tests/content-schemas.test.ts`.\n14:  */\n15: export const teamSchema = () =>\n16:   z.object({\n17:     id: z.string(),\n18:     name: z.string(),\n19:     league: z.string().optional(),\n20:     category: z.object({\n21:       id: z.string(),\n22:       name: z.string(),\n23:       description: z.string(),\n24:       isYouthGroup: z.boolean(),\n25:       sortOrder: z.number(),\n26:     }),\n27:     sortOrder: z.number(),\n28:     coach: personObject.optional(),\n29:     contact: personObject.optional(),\n30:     teamID: z.string().optional(),\n31:   })\n32: \n33: /**\n34:  * Zod contract for the domain object produced by `loadSponsors`\n35:  * (`src/api/contentful.ts`). See {@link teamSchema} for the rationale of\n36:  * living outside `src/content.config.ts`.\n37:  */\n38: export const sponsorSchema = () =>\n39:   z.object({\n40:     name: z.string(),\n41:     groupBy: z.string(),\n42:   })\n\n(End of file - total 42 lines)\n</content>",
+            "metadata": {
+              "preview": "import { personObject } from '@/types'\nimport { z } from 'astro/zod'\n\n/**\n * Zod contract for the domain object produced by `loadTeams` (`src/api/contentful.ts`).\n *\n * Lives outside `src/content.config.ts` so the contract test can import the\n * schema without dragging in the `astro:content` / `astro:env/server` runtime —\n * those modules are server-only and throw under the happy-dom test environment.\n *\n * `src/content.config.ts` re-uses this factory to keep a single source of\n * truth between production collection validation and the schema contract tests\n * under `tests/content-schemas.test.ts`.\n */\nexport const teamSchema = () =>\n  z.object({\n    id: z.string(),\n    name: z.string(),\n    league: z.string().optional(),\n    category: z.object({",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/src/content-schemas.ts",
+                "text": "import { personObject } from '@/types'\nimport { z } from 'astro/zod'\n\n/**\n * Zod contract for the domain object produced by `loadTeams` (`src/api/contentful.ts`).\n *\n * Lives outside `src/content.config.ts` so the contract test can import the\n * schema without dragging in the `astro:content` / `astro:env/server` runtime —\n * those modules are server-only and throw under the happy-dom test environment.\n *\n * `src/content.config.ts` re-uses this factory to keep a single source of\n * truth between production collection validation and the schema contract tests\n * under `tests/content-schemas.test.ts`.\n */\nexport const teamSchema = () =>\n  z.object({\n    id: z.string(),\n    name: z.string(),\n    league: z.string().optional(),\n    category: z.object({\n      id: z.string(),\n      name: z.string(),\n      description: z.string(),\n      isYouthGroup: z.boolean(),\n      sortOrder: z.number(),\n    }),\n    sortOrder: z.number(),\n    coach: personObject.optional(),\n    contact: personObject.optional(),\n    teamID: z.string().optional(),\n  })\n\n/**\n * Zod contract for the domain object produced by `loadSponsors`\n * (`src/api/contentful.ts`). See {@link teamSchema} for the rationale of\n * living outside `src/content.config.ts`.\n */\nexport const sponsorSchema = () =>\n  z.object({\n    name: z.string(),\n    groupBy: z.string(),\n  })",
+                "lineStart": 1,
+                "lineEnd": 42,
+                "totalLines": 42,
+                "truncated": false
+              }
+            },
+            "title": "src/content-schemas.ts",
+            "time": {
+              "start": 1785084675727,
+              "end": 1785084675730
+            }
+          },
+          "id": "prt_f9f56868d001E1sA8L4XV3L7M7",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f56800c001d7VKsmDA093Wyc"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_5940",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/content-schemas.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/content-schemas.test.ts</path>\n<type>file</type>\n<content>\n1: import { describe, expect, it } from 'vitest'\n2: import { sponsorSchema, teamSchema } from '@/content-schemas'\n3: import teamFixture from './fixtures/contentful/team.json'\n4: import sponsorFixture from './fixtures/contentful/sponsor.json'\n5: \n6: // Pin the schemas against the canonical fixtures under `tests/fixtures/contentful/`.\n7: // Two halves per content type:\n8: //  - parse-succeed: the happy-path fixture validates.\n9: //  - parse-fail: a mutated copy (missing required field, wrong type) must be rejected.\n10: \n11: describe('teamSchema — Contentful team contract', () => {\n12:   it('parses the happy-path team fixture', () => {\n13:     const parsed = teamSchema().parse(teamFixture)\n14:     expect(parsed).toEqual(teamFixture)\n15:   })\n16: \n17:   it('accepts a team with all optional fields omitted (league, coach, contact, teamID)', () => {\n18:     const minimal = {\n19:       id: 'team-2',\n20:       name: 'Herren II',\n21:       category: {\n22:         id: 'cat-1',\n23:         name: 'Herren',\n24:         description: 'Seniorenmannschaften',\n25:         isYouthGroup: false,\n26:         sortOrder: 1,\n27:       },\n28:       sortOrder: 1.2,\n29:     }\n30:     expect(() => teamSchema().parse(minimal)).not.toThrow()\n31:   })\n32: \n33:   describe('rejects mutated fixtures (parse-fail)', () => {\n34:     it('rejects a missing required `id`', () => {\n35:       const bad = structuredClone(teamFixture)\n36:       delete (bad as Partial<typeof teamFixture>).id\n37:       expect(() => teamSchema().parse(bad)).toThrow()\n38:     })\n39: \n40:     it('rejects a missing required `name`', () => {\n41:       const bad = structuredClone(teamFixture)\n42:       delete (bad as Partial<typeof teamFixture>).name\n43:       expect(() => teamSchema().parse(bad)).toThrow()\n44:     })\n45: \n46:     it('rejects a missing required `category`', () => {\n47:       const bad = structuredClone(teamFixture)\n48:       delete (bad as Partial<typeof teamFixture>).category\n49:       expect(() => teamSchema().parse(bad)).toThrow()\n50:     })\n51: \n52:     it('rejects when `category` is missing a required sub-field (`sortOrder`)', () => {\n53:       const bad = structuredClone(teamFixture)\n54:       delete (bad.category as { sortOrder?: unknown }).sortOrder\n55:       expect(() => teamSchema().parse(bad)).toThrow()\n56:     })\n57: \n58:     it('rejects a wrong type for `sortOrder` (string instead of number)', () => {\n59:       const bad = structuredClone(teamFixture)\n60:       ;(bad as { sortOrder: unknown }).sortOrder = '1.1'\n61:       expect(() => teamSchema().parse(bad)).toThrow()\n62:     })\n63: \n64:     it('rejects a wrong type for `category.isYouthGroup` (string instead of boolean)', () => {\n65:       const bad = structuredClone(teamFixture)\n66:       ;(bad.category as { isYouthGroup: unknown }).isYouthGroup = 'no'\n67:       expect(() => teamSchema().parse(bad)).toThrow()\n68:     })\n69: \n70:     it('rejects a malformed `coach.mobile` (missing `raw`)', () => {\n71:       const bad = structuredClone(teamFixture)\n72:       const coach = bad.coach!\n73:       delete (coach.mobile as { raw?: unknown }).raw\n74:       expect(() => teamSchema().parse(bad)).toThrow()\n75:     })\n76: \n77:     it('rejects a wrong type for `coach.mobile.formatted` (number instead of string)', () => {\n78:       const bad = structuredClone(teamFixture)\n79:       ;(bad.coach!.mobile as { formatted: unknown }).formatted = 42\n80:       expect(() => teamSchema().parse(bad)).toThrow()\n81:     })\n82:   })\n83: })\n84: \n85: describe('sponsorSchema — Contentful sponsor contract', () => {\n86:   it('parses the happy-path sponsor fixture', () => {\n87:     const parsed = sponsorSchema().parse(sponsorFixture)\n88:     expect(parsed).toEqual(sponsorFixture)\n89:   })\n90: \n91:   describe('rejects mutated fixtures (parse-fail)', () => {\n92:     it('rejects a missing required `name`', () => {\n93:       const bad = structuredClone(sponsorFixture)\n94:       delete (bad as Partial<typeof sponsorFixture>).name\n95:       expect(() => sponsorSchema().parse(bad)).toThrow()\n96:     })\n97: \n98:     it('rejects a missing required `groupBy`', () => {\n99:       const bad = structuredClone(sponsorFixture)\n100:       delete (bad as Partial<typeof sponsorFixture>).groupBy\n101:       expect(() => sponsorSchema().parse(bad)).toThrow()\n102:     })\n103: \n104:     it('rejects a wrong type for `groupBy` (number instead of string)', () => {\n105:       const bad = structuredClone(sponsorFixture)\n106:       ;(bad as { groupBy: unknown }).groupBy = 42\n107:       expect(() => sponsorSchema().parse(bad)).toThrow()\n108:     })\n109:   })\n110: })\n\n(End of file - total 110 lines)\n</content>",
+            "metadata": {
+              "preview": "import { describe, expect, it } from 'vitest'\nimport { sponsorSchema, teamSchema } from '@/content-schemas'\nimport teamFixture from './fixtures/contentful/team.json'\nimport sponsorFixture from './fixtures/contentful/sponsor.json'\n\n// Pin the schemas against the canonical fixtures under `tests/fixtures/contentful/`.\n// Two halves per content type:\n//  - parse-succeed: the happy-path fixture validates.\n//  - parse-fail: a mutated copy (missing required field, wrong type) must be rejected.\n\ndescribe('teamSchema — Contentful team contract', () => {\n  it('parses the happy-path team fixture', () => {\n    const parsed = teamSchema().parse(teamFixture)\n    expect(parsed).toEqual(teamFixture)\n  })\n\n  it('accepts a team with all optional fields omitted (league, coach, contact, teamID)', () => {\n    const minimal = {\n      id: 'team-2',\n      name: 'Herren II',",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/content-schemas.test.ts",
+                "text": "import { describe, expect, it } from 'vitest'\nimport { sponsorSchema, teamSchema } from '@/content-schemas'\nimport teamFixture from './fixtures/contentful/team.json'\nimport sponsorFixture from './fixtures/contentful/sponsor.json'\n\n// Pin the schemas against the canonical fixtures under `tests/fixtures/contentful/`.\n// Two halves per content type:\n//  - parse-succeed: the happy-path fixture validates.\n//  - parse-fail: a mutated copy (missing required field, wrong type) must be rejected.\n\ndescribe('teamSchema — Contentful team contract', () => {\n  it('parses the happy-path team fixture', () => {\n    const parsed = teamSchema().parse(teamFixture)\n    expect(parsed).toEqual(teamFixture)\n  })\n\n  it('accepts a team with all optional fields omitted (league, coach, contact, teamID)', () => {\n    const minimal = {\n      id: 'team-2',\n      name: 'Herren II',\n      category: {\n        id: 'cat-1',\n        name: 'Herren',\n        description: 'Seniorenmannschaften',\n        isYouthGroup: false,\n        sortOrder: 1,\n      },\n      sortOrder: 1.2,\n    }\n    expect(() => teamSchema().parse(minimal)).not.toThrow()\n  })\n\n  describe('rejects mutated fixtures (parse-fail)', () => {\n    it('rejects a missing required `id`', () => {\n      const bad = structuredClone(teamFixture)\n      delete (bad as Partial<typeof teamFixture>).id\n      expect(() => teamSchema().parse(bad)).toThrow()\n    })\n\n    it('rejects a missing required `name`', () => {\n      const bad = structuredClone(teamFixture)\n      delete (bad as Partial<typeof teamFixture>).name\n      expect(() => teamSchema().parse(bad)).toThrow()\n    })\n\n    it('rejects a missing required `category`', () => {\n      const bad = structuredClone(teamFixture)\n      delete (bad as Partial<typeof teamFixture>).category\n      expect(() => teamSchema().parse(bad)).toThrow()\n    })\n\n    it('rejects when `category` is missing a required sub-field (`sortOrder`)', () => {\n      const bad = structuredClone(teamFixture)\n      delete (bad.category as { sortOrder?: unknown }).sortOrder\n      expect(() => teamSchema().parse(bad)).toThrow()\n    })\n\n    it('rejects a wrong type for `sortOrder` (string instead of number)', () => {\n      const bad = structuredClone(teamFixture)\n      ;(bad as { sortOrder: unknown }).sortOrder = '1.1'\n      expect(() => teamSchema().parse(bad)).toThrow()\n    })\n\n    it('rejects a wrong type for `category.isYouthGroup` (string instead of boolean)', () => {\n      const bad = structuredClone(teamFixture)\n      ;(bad.category as { isYouthGroup: unknown }).isYouthGroup = 'no'\n      expect(() => teamSchema().parse(bad)).toThrow()\n    })\n\n    it('rejects a malformed `coach.mobile` (missing `raw`)', () => {\n      const bad = structuredClone(teamFixture)\n      const coach = bad.coach!\n      delete (coach.mobile as { raw?: unknown }).raw\n      expect(() => teamSchema().parse(bad)).toThrow()\n    })\n\n    it('rejects a wrong type for `coach.mobile.formatted` (number instead of string)', () => {\n      const bad = structuredClone(teamFixture)\n      ;(bad.coach!.mobile as { formatted: unknown }).formatted = 42\n      expect(() => teamSchema().parse(bad)).toThrow()\n    })\n  })\n})\n\ndescribe('sponsorSchema — Contentful sponsor contract', () => {\n  it('parses the happy-path sponsor fixture', () => {\n    const parsed = sponsorSchema().parse(sponsorFixture)\n    expect(parsed).toEqual(sponsorFixture)\n  })\n\n  describe('rejects mutated fixtures (parse-fail)', () => {\n    it('rejects a missing required `name`', () => {\n      const bad = structuredClone(sponsorFixture)\n      delete (bad as Partial<typeof sponsorFixture>).name\n      expect(() => sponsorSchema().parse(bad)).toThrow()\n    })\n\n    it('rejects a missing required `groupBy`', () => {\n      const bad = structuredClone(sponsorFixture)\n      delete (bad as Partial<typeof sponsorFixture>).groupBy\n      expect(() => sponsorSchema().parse(bad)).toThrow()\n    })\n\n    it('rejects a wrong type for `groupBy` (number instead of string)', () => {\n      const bad = structuredClone(sponsorFixture)\n      ;(bad as { groupBy: unknown }).groupBy = 42\n      expect(() => sponsorSchema().parse(bad)).toThrow()\n    })\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 110,
+                "totalLines": 110,
+                "truncated": false
+              }
+            },
+            "title": "tests/content-schemas.test.ts",
+            "time": {
+              "start": 1785084675828,
+              "end": 1785084675832
+            }
+          },
+          "id": "prt_f9f5686f2001syb3nbCj1r9Ph9",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f56800c001d7VKsmDA093Wyc"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_7920",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/api/contentful.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/api/contentful.test.ts</path>\n<type>file</type>\n<content>\n1: import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\n2: \n3: // ─── Module mocks (hoisted) ───────────────────────────────────────────\n4: //\n5: // `src/api/contentful.ts` builds the Contentful client once at module-import\n6: // time, reading `import.meta.env.DEV` and three server-only tokens from\n7: // `astro:env/server`. The hoisted mocks below let the test layer:\n8: //   1. capture the `createClient` configuration per branch (DEV vs delivery),\n9: //   2. stub the getEntries response to feed raw entry fixtures, and\n10: //   3. satisfy the server-only guard on `astro:env/server` under happy-dom.\n11: \n12: vi.mock('contentful', () => ({\n13:   createClient: vi.fn(),\n14: }))\n15: \n16: vi.mock('astro:env/server', () => ({\n17:   CONTENTFUL_SPACE_ID: 'space-id',\n18:   CONTENTFUL_DELIVERY_TOKEN: 'delivery-token',\n19:   CONTENTFUL_PREVIEW_TOKEN: 'preview-token',\n20: }))\n21: \n22: import { createClient } from 'contentful'\n23: import teamFixture from '../fixtures/contentful/team.json'\n24: import sponsorFixture from '../fixtures/contentful/sponsor.json'\n25: \n26: // ─── Raw Contentful entry fixtures ────────────────────────────────────\n27: //\n28: // Shape matches what the Contentful JS SDK returns from `getEntries` after\n29: // `include: 2` link resolution. The domain object the loader produces must\n30: // deep-equal the matching JSON in `tests/fixtures/contentful/` for every\n31: // field the schema contract pins (see the note on `coach.mobile.id` below —\n32: // the loader emits `id` on phone numbers; ` phoneNumberObject` deliberately\n33: // omits it, so the schema-contract fixture has no `id` and Zod's default\n34: // strip behaviour discards the loader surplus silently).\n35: \n36: const rawTeamEntry = {\n37:   sys: { id: 'team-1' },\n38:   fields: {\n39:     name: 'Herren I',\n40:     league: 'Bezirksliga',\n41:     category: {\n42:       sys: { id: 'cat-1' },\n43:       fields: {\n44:         name: 'Herren',\n45:         description: 'Seniorenmannschaften',\n46:         isYouthGroup: false,\n47:         sortOrder: 1,\n48:       },\n49:     },\n50:     sortOrder: 1,\n51:     coach: {\n52:       sys: { id: 'person-1' },\n53:       fields: {\n54:         name: 'Max Mustermann',\n55:         position: {\n56:           sys: { id: 'position-trainer' },\n57:           fields: { name: 'Trainer' },\n58:         },\n59:         email: 'max@example.org',\n60:         mobile: {\n61:           sys: { id: 'phone-coach-mobile' },\n62:           fields: { formatted: '+49 176 12345678', raw: '+4917612345678' },\n63:         },\n64:         phone: {\n65:           sys: { id: 'phone-coach-fixed' },\n66:           fields: { formatted: '+49 7459 1204', raw: '+4974591204' },\n67:         },\n68:       },\n69:     },\n70:     contact: {\n71:       sys: { id: 'person-2' },\n72:       fields: {\n73:         name: 'Anna Schmidt',\n74:         position: {\n75:           sys: { id: 'position-contact' },\n76:           fields: { name: 'Kontakt' },\n77:         },\n78:         email: 'anna@example.org',\n79:       },\n80:     },\n81:     teamID: 'team-id-12345',\n82:   },\n83: }\n84: \n85: const rawSponsorEntry = {\n86:   sys: { id: 'sponsor-1' },\n87:   fields: {\n88:     name: 'Coca Cola GmbH',\n89:     groupBy: 'Hauptsponsor',\n90:   },\n91: }\n92: \n93: // ─── Helpers ──────────────────────────────────────────────────────────\n94: \n95: type AnyClient = ReturnType<typeof createClient>\n96: \n97: /**\n98:  * Install a stub Contentful client whose `getEntries` resolves with `items`.\n99:  * The mock is shared across all `await import('@/api/contentful')` calls,\n100:  * so each test re-installs a fresh stub via this helper.\n101:  */\n102: const installClient = (items: unknown[]) => {\n103:   const getEntries = vi.fn().mockResolvedValue({ items, total: items.length })\n104:   vi.mocked(createClient).mockReturnValue({ getEntries } as unknown as AnyClient)\n105:   return getEntries\n106: }\n107: \n108: const reimportContentful = async () => {\n109:   vi.resetModules()\n110:   return await import('@/api/contentful')\n111: }\n112: \n113: // ─── Test lifecycle ────────────────────────────────────────────────────\n114: \n115: beforeEach(() => {\n116:   vi.clearAllMocks()\n117: })\n118: \n119: afterEach(() => {\n120:   vi.unstubAllEnvs()\n121:   vi.resetModules()\n122: })\n123: \n124: // ─── Tests ────────────────────────────────────────────────────────────\n125: \n126: describe('loadTeams — getEntries shape and field mapping', () => {\n127:   it('calls getEntries with { content_type: \"team\", include: 2 }', async () => {\n128:     const getEntries = installClient([rawTeamEntry])\n129:     const { loadTeams } = await reimportContentful()\n130:     await loadTeams()\n131:     expect(getEntries).toHaveBeenCalledTimes(1)\n132:     expect(getEntries).toHaveBeenCalledWith({ content_type: 'team', include: 2 })\n133:   })\n134: \n135:   it('maps a raw team entry to the canonical team domain shape pinned by the fixture', async () => {\n136:     installClient([rawTeamEntry])\n137:     const { loadTeams } = await reimportContentful()\n138:     const teams = await loadTeams()\n139:     expect(teams).toHaveLength(1)\n140:     // The fixture is the schema-validated shape (coach.mobile.id is silently\n141:     // stripped by `phoneNumberObject`); the loader output also includes\n142:     // `id` on phone numbers, so we assert the schema-pinned fields against\n143:     // the fixture and the loader-only surplus (`coach.mobile.id`) separately.\n144:     const [team] = teams\n145:     expect(team.id).toBe(teamFixture.id)\n146:     expect(team.name).toBe(teamFixture.name)\n147:     expect(team.league).toBe(teamFixture.league)\n148:     expect(team.category).toEqual(teamFixture.category)\n149:     expect(team.sortOrder).toBe(teamFixture.sortOrder)\n150:     expect(team.teamID).toBe(teamFixture.teamID)\n151:     expect(team.coach!.id).toBe(teamFixture.coach!.id)\n152:     expect(team.coach!.name).toBe(teamFixture.coach!.name)\n153:     expect(team.coach!.position).toBe(teamFixture.coach!.position)\n154:     expect(team.coach!.email).toBe(teamFixture.coach!.email)\n155:     // Loader surplus that the schema strips — pin explicitly so the contract\n156:     // mismatch (loader emits `id`, schema drops it) is visible in the test layer.\n157:     expect(team.coach!.mobile).toEqual({\n158:       id: 'phone-coach-mobile',\n159:       formatted: teamFixture.coach!.mobile!.formatted,\n160:       raw: teamFixture.coach!.mobile!.raw,\n161:     })\n162:     expect(team.coach!.phone).toEqual({\n163:       id: 'phone-coach-fixed',\n164:       formatted: teamFixture.coach!.phone!.formatted,\n165:       raw: teamFixture.coach!.phone!.raw,\n166:     })\n167:     expect(team.contact!.id).toBe(teamFixture.contact!.id)\n168:     expect(team.contact!.position).toBe(teamFixture.contact!.position)\n169:     expect(team.contact!.email).toBe(teamFixture.contact!.email)\n170:   })\n171: \n172:   it('computes team sortOrder as `${category.sortOrder}.${team.sortOrder}`', async () => {\n173:     installClient([\n174:       {\n175:         sys: { id: 'team-x' },\n176:         fields: {\n177:           name: 'U17',\n178:           category: {\n179:             sys: { id: 'cat-youth' },\n180:             fields: { name: 'Jugend', description: 'd', isYouthGroup: true, sortOrder: 3 },\n181:           },\n182:           sortOrder: 7,\n183:         },\n184:       },\n185:     ])\n186:     const { loadTeams } = await reimportContentful()\n187:     const teams = await loadTeams()\n188:     expect(teams[0].sortOrder).toBe(3.7)\n189:   })\n190: \n191:   it('reads `position` from the linked position entry name (mapCategory, mapPerson)', async () => {\n192:     installClient([rawTeamEntry])\n193:     const { loadTeams } = await reimportContentful()\n194:     const teams = await loadTeams()\n195:     expect(teams[0].category).toEqual({\n196:       id: 'cat-1',\n197:       name: 'Herren',\n198:       description: 'Seniorenmannschaften',\n199:       isYouthGroup: false,\n200:       sortOrder: 1,\n201:     })\n202:     expect(teams[0].coach!.position).toBe('Trainer')\n203:     expect(teams[0].contact!.position).toBe('Kontakt')\n204:   })\n205: \n206:   it('omits coach / contact when the links are absent on the raw entry', async () => {\n207:     installClient([\n208:       {\n209:         sys: { id: 'team-bare' },\n210:         fields: {\n211:           name: 'Bare Team',\n212:           category: {\n213:             sys: { id: 'cat-bare' },\n214:             fields: { name: 'Bare', description: 'd', isYouthGroup: false, sortOrder: 0 },\n215:           },\n216:           sortOrder: 0,\n217:         },\n218:       },\n219:     ])\n220:     const { loadTeams } = await reimportContentful()\n221:     const teams = await loadTeams()\n222:     expect(teams[0].coach).toBeUndefined()\n223:     expect(teams[0].contact).toBeUndefined()\n224:     expect(teams[0].league).toBeUndefined()\n225:     expect(teams[0].teamID).toBeUndefined()\n226:   })\n227: })\n228: \n229: describe('loadSponsors — getEntries shape and groupBy mapping', () => {\n230:   it('calls getEntries with { content_type: \"sponsor\" }', async () => {\n231:     const getEntries = installClient([rawSponsorEntry])\n232:     const { loadSponsors } = await reimportContentful()\n233:     await loadSponsors()\n234:     expect(getEntries).toHaveBeenCalledTimes(1)\n235:     expect(getEntries).toHaveBeenCalledWith({ content_type: 'sponsor' })\n236:   })\n237: \n238:   it('maps a raw sponsor entry (groupBy present) to the canonical sponsor shape', async () => {\n239:     installClient([rawSponsorEntry])\n240:     const { loadSponsors } = await reimportContentful()\n241:     const sponsors = await loadSponsors()\n242:     expect(sponsors).toHaveLength(1)\n243:     expect(sponsors[0]).toEqual({ id: 'sponsor-1', ...sponsorFixture })\n244:   })\n245: \n246:   it('falls back `groupBy` to `name` when the raw groupBy is empty', async () => {\n247:     installClient([\n248:       {\n249:         sys: { id: 'sponsor-2' },\n250:         fields: { name: 'Audi AG', groupBy: '' },\n251:       },\n252:     ])\n253:     const { loadSponsors } = await reimportContentful()\n254:     const sponsors = await loadSponsors()\n255:     expect(sponsors[0]).toEqual({ id: 'sponsor-2', name: 'Audi AG', groupBy: 'Audi AG' })\n256:   })\n257: \n258:   it('falls back `groupBy` to `name` when the raw groupBy is missing', async () => {\n259:     installClient([\n260:       {\n261:         sys: { id: 'sponsor-3' },\n262:         fields: { name: 'Audi AG' },\n263:       },\n264:     ])\n265:     const { loadSponsors } = await reimportContentful()\n266:     const sponsors = await loadSponsors()\n267:     expect(sponsors[0].groupBy).toBe('Audi AG')\n268:   })\n269: })\n270: \n271: describe('createClient — DEV / delivery branch via vi.stubEnv', () => {\n272:   // NOTE: vi.stubEnv is widened to `boolean` for `DEV`/`PROD`/`SSR`, and the\n273:   // ternary `import.meta.env.DEV ? preview : delivery` flips on actual\n274:   // boolean truthiness — passing string 'false' would still be truthy.\n275: \n276:   it('uses the PREVIEW token + preview host when DEV is truthy', async () => {\n277:     vi.stubEnv('DEV', true)\n278:     installClient([])\n279:     await reimportContentful()\n280:     expect(createClient).toHaveBeenCalledWith({\n281:       space: 'space-id',\n282:       accessToken: 'preview-token',\n283:       host: 'preview.contentful.com',\n284:     })\n285:   })\n286: \n287:   it('uses the DELIVERY token + cdn host when DEV is falsy', async () => {\n288:     vi.stubEnv('DEV', false)\n289:     installClient([])\n290:     await reimportContentful()\n291:     expect(createClient).toHaveBeenCalledWith({\n292:       space: 'space-id',\n293:       accessToken: 'delivery-token',\n294:       host: 'cdn.contentful.com',\n295:     })\n296:   })\n297: })\n\n(End of file - total 297 lines)\n</content>",
+            "metadata": {
+              "preview": "import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\n\n// ─── Module mocks (hoisted) ───────────────────────────────────────────\n//\n// `src/api/contentful.ts` builds the Contentful client once at module-import\n// time, reading `import.meta.env.DEV` and three server-only tokens from\n// `astro:env/server`. The hoisted mocks below let the test layer:\n//   1. capture the `createClient` configuration per branch (DEV vs delivery),\n//   2. stub the getEntries response to feed raw entry fixtures, and\n//   3. satisfy the server-only guard on `astro:env/server` under happy-dom.\n\nvi.mock('contentful', () => ({\n  createClient: vi.fn(),\n}))\n\nvi.mock('astro:env/server', () => ({\n  CONTENTFUL_SPACE_ID: 'space-id',\n  CONTENTFUL_DELIVERY_TOKEN: 'delivery-token',\n  CONTENTFUL_PREVIEW_TOKEN: 'preview-token',\n}))",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/api/contentful.test.ts",
+                "text": "import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\n\n// ─── Module mocks (hoisted) ───────────────────────────────────────────\n//\n// `src/api/contentful.ts` builds the Contentful client once at module-import\n// time, reading `import.meta.env.DEV` and three server-only tokens from\n// `astro:env/server`. The hoisted mocks below let the test layer:\n//   1. capture the `createClient` configuration per branch (DEV vs delivery),\n//   2. stub the getEntries response to feed raw entry fixtures, and\n//   3. satisfy the server-only guard on `astro:env/server` under happy-dom.\n\nvi.mock('contentful', () => ({\n  createClient: vi.fn(),\n}))\n\nvi.mock('astro:env/server', () => ({\n  CONTENTFUL_SPACE_ID: 'space-id',\n  CONTENTFUL_DELIVERY_TOKEN: 'delivery-token',\n  CONTENTFUL_PREVIEW_TOKEN: 'preview-token',\n}))\n\nimport { createClient } from 'contentful'\nimport teamFixture from '../fixtures/contentful/team.json'\nimport sponsorFixture from '../fixtures/contentful/sponsor.json'\n\n// ─── Raw Contentful entry fixtures ────────────────────────────────────\n//\n// Shape matches what the Contentful JS SDK returns from `getEntries` after\n// `include: 2` link resolution. The domain object the loader produces must\n// deep-equal the matching JSON in `tests/fixtures/contentful/` for every\n// field the schema contract pins (see the note on `coach.mobile.id` below —\n// the loader emits `id` on phone numbers; ` phoneNumberObject` deliberately\n// omits it, so the schema-contract fixture has no `id` and Zod's default\n// strip behaviour discards the loader surplus silently).\n\nconst rawTeamEntry = {\n  sys: { id: 'team-1' },\n  fields: {\n    name: 'Herren I',\n    league: 'Bezirksliga',\n    category: {\n      sys: { id: 'cat-1' },\n      fields: {\n        name: 'Herren',\n        description: 'Seniorenmannschaften',\n        isYouthGroup: false,\n        sortOrder: 1,\n      },\n    },\n    sortOrder: 1,\n    coach: {\n      sys: { id: 'person-1' },\n      fields: {\n        name: 'Max Mustermann',\n        position: {\n          sys: { id: 'position-trainer' },\n          fields: { name: 'Trainer' },\n        },\n        email: 'max@example.org',\n        mobile: {\n          sys: { id: 'phone-coach-mobile' },\n          fields: { formatted: '+49 176 12345678', raw: '+4917612345678' },\n        },\n        phone: {\n          sys: { id: 'phone-coach-fixed' },\n          fields: { formatted: '+49 7459 1204', raw: '+4974591204' },\n        },\n      },\n    },\n    contact: {\n      sys: { id: 'person-2' },\n      fields: {\n        name: 'Anna Schmidt',\n        position: {\n          sys: { id: 'position-contact' },\n          fields: { name: 'Kontakt' },\n        },\n        email: 'anna@example.org',\n      },\n    },\n    teamID: 'team-id-12345',\n  },\n}\n\nconst rawSponsorEntry = {\n  sys: { id: 'sponsor-1' },\n  fields: {\n    name: 'Coca Cola GmbH',\n    groupBy: 'Hauptsponsor',\n  },\n}\n\n// ─── Helpers ──────────────────────────────────────────────────────────\n\ntype AnyClient = ReturnType<typeof createClient>\n\n/**\n * Install a stub Contentful client whose `getEntries` resolves with `items`.\n * The mock is shared across all `await import('@/api/contentful')` calls,\n * so each test re-installs a fresh stub via this helper.\n */\nconst installClient = (items: unknown[]) => {\n  const getEntries = vi.fn().mockResolvedValue({ items, total: items.length })\n  vi.mocked(createClient).mockReturnValue({ getEntries } as unknown as AnyClient)\n  return getEntries\n}\n\nconst reimportContentful = async () => {\n  vi.resetModules()\n  return await import('@/api/contentful')\n}\n\n// ─── Test lifecycle ────────────────────────────────────────────────────\n\nbeforeEach(() => {\n  vi.clearAllMocks()\n})\n\nafterEach(() => {\n  vi.unstubAllEnvs()\n  vi.resetModules()\n})\n\n// ─── Tests ────────────────────────────────────────────────────────────\n\ndescribe('loadTeams — getEntries shape and field mapping', () => {\n  it('calls getEntries with { content_type: \"team\", include: 2 }', async () => {\n    const getEntries = installClient([rawTeamEntry])\n    const { loadTeams } = await reimportContentful()\n    await loadTeams()\n    expect(getEntries).toHaveBeenCalledTimes(1)\n    expect(getEntries).toHaveBeenCalledWith({ content_type: 'team', include: 2 })\n  })\n\n  it('maps a raw team entry to the canonical team domain shape pinned by the fixture', async () => {\n    installClient([rawTeamEntry])\n    const { loadTeams } = await reimportContentful()\n    const teams = await loadTeams()\n    expect(teams).toHaveLength(1)\n    // The fixture is the schema-validated shape (coach.mobile.id is silently\n    // stripped by `phoneNumberObject`); the loader output also includes\n    // `id` on phone numbers, so we assert the schema-pinned fields against\n    // the fixture and the loader-only surplus (`coach.mobile.id`) separately.\n    const [team] = teams\n    expect(team.id).toBe(teamFixture.id)\n    expect(team.name).toBe(teamFixture.name)\n    expect(team.league).toBe(teamFixture.league)\n    expect(team.category).toEqual(teamFixture.category)\n    expect(team.sortOrder).toBe(teamFixture.sortOrder)\n    expect(team.teamID).toBe(teamFixture.teamID)\n    expect(team.coach!.id).toBe(teamFixture.coach!.id)\n    expect(team.coach!.name).toBe(teamFixture.coach!.name)\n    expect(team.coach!.position).toBe(teamFixture.coach!.position)\n    expect(team.coach!.email).toBe(teamFixture.coach!.email)\n    // Loader surplus that the schema strips — pin explicitly so the contract\n    // mismatch (loader emits `id`, schema drops it) is visible in the test layer.\n    expect(team.coach!.mobile).toEqual({\n      id: 'phone-coach-mobile',\n      formatted: teamFixture.coach!.mobile!.formatted,\n      raw: teamFixture.coach!.mobile!.raw,\n    })\n    expect(team.coach!.phone).toEqual({\n      id: 'phone-coach-fixed',\n      formatted: teamFixture.coach!.phone!.formatted,\n      raw: teamFixture.coach!.phone!.raw,\n    })\n    expect(team.contact!.id).toBe(teamFixture.contact!.id)\n    expect(team.contact!.position).toBe(teamFixture.contact!.position)\n    expect(team.contact!.email).toBe(teamFixture.contact!.email)\n  })\n\n  it('computes team sortOrder as `${category.sortOrder}.${team.sortOrder}`', async () => {\n    installClient([\n      {\n        sys: { id: 'team-x' },\n        fields: {\n          name: 'U17',\n          category: {\n            sys: { id: 'cat-youth' },\n            fields: { name: 'Jugend', description: 'd', isYouthGroup: true, sortOrder: 3 },\n          },\n          sortOrder: 7,\n        },\n      },\n    ])\n    const { loadTeams } = await reimportContentful()\n    const teams = await loadTeams()\n    expect(teams[0].sortOrder).toBe(3.7)\n  })\n\n  it('reads `position` from the linked position entry name (mapCategory, mapPerson)', async () => {\n    installClient([rawTeamEntry])\n    const { loadTeams } = await reimportContentful()\n    const teams = await loadTeams()\n    expect(teams[0].category).toEqual({\n      id: 'cat-1',\n      name: 'Herren',\n      description: 'Seniorenmannschaften',\n      isYouthGroup: false,\n      sortOrder: 1,\n    })\n    expect(teams[0].coach!.position).toBe('Trainer')\n    expect(teams[0].contact!.position).toBe('Kontakt')\n  })\n\n  it('omits coach / contact when the links are absent on the raw entry', async () => {\n    installClient([\n      {\n        sys: { id: 'team-bare' },\n        fields: {\n          name: 'Bare Team',\n          category: {\n            sys: { id: 'cat-bare' },\n            fields: { name: 'Bare', description: 'd', isYouthGroup: false, sortOrder: 0 },\n          },\n          sortOrder: 0,\n        },\n      },\n    ])\n    const { loadTeams } = await reimportContentful()\n    const teams = await loadTeams()\n    expect(teams[0].coach).toBeUndefined()\n    expect(teams[0].contact).toBeUndefined()\n    expect(teams[0].league).toBeUndefined()\n    expect(teams[0].teamID).toBeUndefined()\n  })\n})\n\ndescribe('loadSponsors — getEntries shape and groupBy mapping', () => {\n  it('calls getEntries with { content_type: \"sponsor\" }', async () => {\n    const getEntries = installClient([rawSponsorEntry])\n    const { loadSponsors } = await reimportContentful()\n    await loadSponsors()\n    expect(getEntries).toHaveBeenCalledTimes(1)\n    expect(getEntries).toHaveBeenCalledWith({ content_type: 'sponsor' })\n  })\n\n  it('maps a raw sponsor entry (groupBy present) to the canonical sponsor shape', async () => {\n    installClient([rawSponsorEntry])\n    const { loadSponsors } = await reimportContentful()\n    const sponsors = await loadSponsors()\n    expect(sponsors).toHaveLength(1)\n    expect(sponsors[0]).toEqual({ id: 'sponsor-1', ...sponsorFixture })\n  })\n\n  it('falls back `groupBy` to `name` when the raw groupBy is empty', async () => {\n    installClient([\n      {\n        sys: { id: 'sponsor-2' },\n        fields: { name: 'Audi AG', groupBy: '' },\n      },\n    ])\n    const { loadSponsors } = await reimportContentful()\n    const sponsors = await loadSponsors()\n    expect(sponsors[0]).toEqual({ id: 'sponsor-2', name: 'Audi AG', groupBy: 'Audi AG' })\n  })\n\n  it('falls back `groupBy` to `name` when the raw groupBy is missing', async () => {\n    installClient([\n      {\n        sys: { id: 'sponsor-3' },\n        fields: { name: 'Audi AG' },\n      },\n    ])\n    const { loadSponsors } = await reimportContentful()\n    const sponsors = await loadSponsors()\n    expect(sponsors[0].groupBy).toBe('Audi AG')\n  })\n})\n\ndescribe('createClient — DEV / delivery branch via vi.stubEnv', () => {\n  // NOTE: vi.stubEnv is widened to `boolean` for `DEV`/`PROD`/`SSR`, and the\n  // ternary `import.meta.env.DEV ? preview : delivery` flips on actual\n  // boolean truthiness — passing string 'false' would still be truthy.\n\n  it('uses the PREVIEW token + preview host when DEV is truthy', async () => {\n    vi.stubEnv('DEV', true)\n    installClient([])\n    await reimportContentful()\n    expect(createClient).toHaveBeenCalledWith({\n      space: 'space-id',\n      accessToken: 'preview-token',\n      host: 'preview.contentful.com',\n    })\n  })\n\n  it('uses the DELIVERY token + cdn host when DEV is falsy', async () => {\n    vi.stubEnv('DEV', false)\n    installClient([])\n    await reimportContentful()\n    expect(createClient).toHaveBeenCalledWith({\n      space: 'space-id',\n      accessToken: 'delivery-token',\n      host: 'cdn.contentful.com',\n    })\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 297,
+                "totalLines": 297,
+                "truncated": false
+              }
+            },
+            "title": "tests/api/contentful.test.ts",
+            "time": {
+              "start": 1785084675946,
+              "end": 1785084675952
+            }
+          },
+          "id": "prt_f9f568767001119yoS7FYGGuG9",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f56800c001d7VKsmDA093Wyc"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_5466",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/fixtures/contentful/team.json"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/fixtures/contentful/team.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"id\": \"team-1\",\n3:   \"name\": \"Herren I\",\n4:   \"league\": \"Bezirksliga\",\n5:   \"category\": {\n6:     \"id\": \"cat-1\",\n7:     \"name\": \"Herren\",\n8:     \"description\": \"Seniorenmannschaften\",\n9:     \"isYouthGroup\": false,\n10:     \"sortOrder\": 1\n11:   },\n12:   \"sortOrder\": 1.1,\n13:   \"coach\": {\n14:     \"id\": \"person-1\",\n15:     \"name\": \"Max Mustermann\",\n16:     \"position\": \"Trainer\",\n17:     \"email\": \"max@example.org\",\n18:     \"mobile\": {\n19:       \"formatted\": \"+49 176 12345678\",\n20:       \"raw\": \"+4917612345678\"\n21:     },\n22:     \"phone\": {\n23:       \"formatted\": \"+49 7459 1204\",\n24:       \"raw\": \"+4974591204\"\n25:     }\n26:   },\n27:   \"contact\": {\n28:     \"id\": \"person-2\",\n29:     \"name\": \"Anna Schmidt\",\n30:     \"position\": \"Kontakt\",\n31:     \"email\": \"anna@example.org\"\n32:   },\n33:   \"teamID\": \"team-id-12345\"\n34: }\n\n(End of file - total 34 lines)\n</content>",
+            "metadata": {
+              "preview": "{\n  \"id\": \"team-1\",\n  \"name\": \"Herren I\",\n  \"league\": \"Bezirksliga\",\n  \"category\": {\n    \"id\": \"cat-1\",\n    \"name\": \"Herren\",\n    \"description\": \"Seniorenmannschaften\",\n    \"isYouthGroup\": false,\n    \"sortOrder\": 1\n  },\n  \"sortOrder\": 1.1,\n  \"coach\": {\n    \"id\": \"person-1\",\n    \"name\": \"Max Mustermann\",\n    \"position\": \"Trainer\",\n    \"email\": \"max@example.org\",\n    \"mobile\": {\n      \"formatted\": \"+49 176 12345678\",\n      \"raw\": \"+4917612345678\"",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/fixtures/contentful/team.json",
+                "text": "{\n  \"id\": \"team-1\",\n  \"name\": \"Herren I\",\n  \"league\": \"Bezirksliga\",\n  \"category\": {\n    \"id\": \"cat-1\",\n    \"name\": \"Herren\",\n    \"description\": \"Seniorenmannschaften\",\n    \"isYouthGroup\": false,\n    \"sortOrder\": 1\n  },\n  \"sortOrder\": 1.1,\n  \"coach\": {\n    \"id\": \"person-1\",\n    \"name\": \"Max Mustermann\",\n    \"position\": \"Trainer\",\n    \"email\": \"max@example.org\",\n    \"mobile\": {\n      \"formatted\": \"+49 176 12345678\",\n      \"raw\": \"+4917612345678\"\n    },\n    \"phone\": {\n      \"formatted\": \"+49 7459 1204\",\n      \"raw\": \"+4974591204\"\n    }\n  },\n  \"contact\": {\n    \"id\": \"person-2\",\n    \"name\": \"Anna Schmidt\",\n    \"position\": \"Kontakt\",\n    \"email\": \"anna@example.org\"\n  },\n  \"teamID\": \"team-id-12345\"\n}",
+                "lineStart": 1,
+                "lineEnd": 34,
+                "totalLines": 34,
+                "truncated": false
+              }
+            },
+            "title": "tests/fixtures/contentful/team.json",
+            "time": {
+              "start": 1785084676064,
+              "end": 1785084676067
+            }
+          },
+          "id": "prt_f9f5687dd001uO2geeShsLg1Gn",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f56800c001d7VKsmDA093Wyc"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_ba59",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/fixtures/contentful/sponsor.json"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/fixtures/contentful/sponsor.json</path>\n<type>file</type>\n<content>\n1: {\n2:   \"name\": \"Coca Cola GmbH\",\n3:   \"groupBy\": \"Hauptsponsor\"\n4: }\n\n(End of file - total 4 lines)\n</content>",
+            "metadata": {
+              "preview": "{\n  \"name\": \"Coca Cola GmbH\",\n  \"groupBy\": \"Hauptsponsor\"\n}",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/fixtures/contentful/sponsor.json",
+                "text": "{\n  \"name\": \"Coca Cola GmbH\",\n  \"groupBy\": \"Hauptsponsor\"\n}",
+                "lineStart": 1,
+                "lineEnd": 4,
+                "totalLines": 4,
+                "truncated": false
+              }
+            },
+            "title": "tests/fixtures/contentful/sponsor.json",
+            "time": {
+              "start": 1785084676253,
+              "end": 1785084676256
+            }
+          },
+          "id": "prt_f9f568899001sL3F4CAvXfMo5t",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f56800c001d7VKsmDA093Wyc"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_1a59",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/src/content.config.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/src/content.config.ts</path>\n<type>file</type>\n<content>\n1: import { loadSponsors, loadTeams } from '@/api/contentful'\n2: import { loadEvents } from '@/api/events'\n3: import { EventType } from '@/types'\n4: import { glob } from 'astro/loaders'\n5: import { defineCollection, type SchemaContext } from 'astro:content'\n6: import { z } from 'astro/zod'\n7: import { sponsorSchema, teamSchema } from '@/content-schemas'\n8: \n9: const teams = defineCollection({\n10:   loader: loadTeams,\n11:   schema: teamSchema,\n12: })\n13: \n14: const sponsoring = defineCollection({\n15:   loader: loadSponsors,\n16:   schema: sponsorSchema,\n17: })\n18: \n19: const news = defineCollection({\n20:   loader: glob({ pattern: '**/*.md', base: './src/data/news' }),\n21:   schema: ({ image }) =>\n22:     z.object({\n23:       date: z.date(),\n24:       title: z.string(),\n25:       imageLight: image(),\n26:       imageDark: image(),\n27:       download: z.string().optional(),\n28:     }),\n29: })\n30: \n31: const history = defineCollection({\n32:   loader: glob({ pattern: '**/*.md', base: './src/data/history' }),\n33:   schema: ({ image }) =>\n34:     z.object({\n35:       date: z.string(),\n36:       tags: z.string().array().optional(),\n37:       images: z\n38:         .array(\n39:           z.object({\n40:             light: image(),\n41:             dark: image(),\n42:             alt: z.string(),\n43:           }),\n44:         )\n45:         .optional(),\n46:     }),\n47: })\n48: \n49: const eventSchema = ({ image }: SchemaContext) =>\n50:   z.object({\n51:     id: z.string(),\n52:     name: z.string(),\n53:     image: image(),\n54:     sortIndex: z.number(),\n55:     shortDescription: z.string(),\n56:     description: z.string(),\n57:     location: z.string(),\n58:     dates: z.array(z.string()),\n59:     datesDisplay: z.string().optional(),\n60:     duration: z.string(),\n61:     priceMember: z.string(),\n62:     priceNonMember: z.string(),\n63:     altBookingButtonText: z.string().optional(),\n64:     externalOperator: z.boolean(),\n65:     customFields: z\n66:       .array(\n67:         z.object({\n68:           name: z.string(),\n69:           type: z.enum(['Text', 'Number']),\n70:           minValue: z.number().optional(),\n71:           maxValue: z.number().optional(),\n72:         }),\n73:       )\n74:       .default([]),\n75:     paymentMethod: z.enum(['BankTransfer', 'SepaDirectDebit']),\n76:   })\n77: \n78: const fitness = defineCollection({\n79:   loader: async () => await loadEvents(EventType.Fitness),\n80:   schema: eventSchema,\n81: })\n82: \n83: const events = defineCollection({\n84:   loader: async () => await loadEvents(EventType.Events),\n85:   schema: eventSchema,\n86: })\n87: \n88: export const collections = {\n89:   news,\n90:   history,\n91:   fitness,\n92:   events,\n93:   sponsoring,\n94:   teams,\n95: }\n\n(End of file - total 95 lines)\n</content>",
+            "metadata": {
+              "preview": "import { loadSponsors, loadTeams } from '@/api/contentful'\nimport { loadEvents } from '@/api/events'\nimport { EventType } from '@/types'\nimport { glob } from 'astro/loaders'\nimport { defineCollection, type SchemaContext } from 'astro:content'\nimport { z } from 'astro/zod'\nimport { sponsorSchema, teamSchema } from '@/content-schemas'\n\nconst teams = defineCollection({\n  loader: loadTeams,\n  schema: teamSchema,\n})\n\nconst sponsoring = defineCollection({\n  loader: loadSponsors,\n  schema: sponsorSchema,\n})\n\nconst news = defineCollection({\n  loader: glob({ pattern: '**/*.md', base: './src/data/news' }),",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/src/content.config.ts",
+                "text": "import { loadSponsors, loadTeams } from '@/api/contentful'\nimport { loadEvents } from '@/api/events'\nimport { EventType } from '@/types'\nimport { glob } from 'astro/loaders'\nimport { defineCollection, type SchemaContext } from 'astro:content'\nimport { z } from 'astro/zod'\nimport { sponsorSchema, teamSchema } from '@/content-schemas'\n\nconst teams = defineCollection({\n  loader: loadTeams,\n  schema: teamSchema,\n})\n\nconst sponsoring = defineCollection({\n  loader: loadSponsors,\n  schema: sponsorSchema,\n})\n\nconst news = defineCollection({\n  loader: glob({ pattern: '**/*.md', base: './src/data/news' }),\n  schema: ({ image }) =>\n    z.object({\n      date: z.date(),\n      title: z.string(),\n      imageLight: image(),\n      imageDark: image(),\n      download: z.string().optional(),\n    }),\n})\n\nconst history = defineCollection({\n  loader: glob({ pattern: '**/*.md', base: './src/data/history' }),\n  schema: ({ image }) =>\n    z.object({\n      date: z.string(),\n      tags: z.string().array().optional(),\n      images: z\n        .array(\n          z.object({\n            light: image(),\n            dark: image(),\n            alt: z.string(),\n          }),\n        )\n        .optional(),\n    }),\n})\n\nconst eventSchema = ({ image }: SchemaContext) =>\n  z.object({\n    id: z.string(),\n    name: z.string(),\n    image: image(),\n    sortIndex: z.number(),\n    shortDescription: z.string(),\n    description: z.string(),\n    location: z.string(),\n    dates: z.array(z.string()),\n    datesDisplay: z.string().optional(),\n    duration: z.string(),\n    priceMember: z.string(),\n    priceNonMember: z.string(),\n    altBookingButtonText: z.string().optional(),\n    externalOperator: z.boolean(),\n    customFields: z\n      .array(\n        z.object({\n          name: z.string(),\n          type: z.enum(['Text', 'Number']),\n          minValue: z.number().optional(),\n          maxValue: z.number().optional(),\n        }),\n      )\n      .default([]),\n    paymentMethod: z.enum(['BankTransfer', 'SepaDirectDebit']),\n  })\n\nconst fitness = defineCollection({\n  loader: async () => await loadEvents(EventType.Fitness),\n  schema: eventSchema,\n})\n\nconst events = defineCollection({\n  loader: async () => await loadEvents(EventType.Events),\n  schema: eventSchema,\n})\n\nexport const collections = {\n  news,\n  history,\n  fitness,\n  events,\n  sponsoring,\n  teams,\n}",
+                "lineStart": 1,
+                "lineEnd": 95,
+                "totalLines": 95,
+                "truncated": false
+              }
+            },
+            "title": "src/content.config.ts",
+            "time": {
+              "start": 1785084676309,
+              "end": 1785084676312
+            }
+          },
+          "id": "prt_f9f5688d300156TFIPn9M69Om0",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f56800c001d7VKsmDA093Wyc"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_1ee2",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk gh issue view 403 --repo mseele/sve-website",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "[open] Issue #403: Contentful Zod schema contract tests\n  Author: @mseele\n  Status: OPEN\n  URL: https://github.com/mseele/sve-website/issues/403\n\n  Description:\n    ## What to build\n    \n    `src/content.config.ts` parses Contentful payloads via Zod schemas. This is the contract test that protects the loader against a CMS shape change.\n    \n    Capture sample Contentful payloads as fixtures under `tests/fixtures/contentful/` (one per content type — team, sponsor, etc.), then write tests that feed each fixture into the relevant Zod schema and assert parse-succeed (happy path) and parse-fail (mutated fixture — drop a required field, change a type — and assert the parse rejects it).\n    \n    For `src/api/contentful.ts`, `vi.mock('contentful')` the `createClient` and assert the loader calls `getEntries` with the right content types and the field mappings (`mapCategory`, sponsor/team shaping) produce the expected domain objects. Both branches of the `import.meta.env.DEV ? preview : delivery` toggle covered via `vi.stubEnv`.\n    \n    ## Acceptance criteria\n    \n    - [ ] `tests/fixtures/contentful/` holds JSON fixtures per Contentful content type\n    - [ ] Zod schema parse-succeed tests for each fixture\n    - [ ] Zod schema parse-fail tests (mutated fixtures) for each content type\n    - [ ] `tests/api/contentful.test.ts` mocks `createClient`, asserts `getEntries` calls and field mapping\n    - [ ] DEV-mode and delivery-mode branches both covered\n    - [ ] All tests green, `bun run check` green\n    \n    ## Blocked by\n    \n    - #398 (harness)\n",
+            "metadata": {
+              "output": "[open] Issue #403: Contentful Zod schema contract tests\n  Author: @mseele\n  Status: OPEN\n  URL: https://github.com/mseele/sve-website/issues/403\n\n  Description:\n    ## What to build\n    \n    `src/content.config.ts` parses Contentful payloads via Zod schemas. This is the contract test that protects the loader against a CMS shape change.\n    \n    Capture sample Contentful payloads as fixtures under `tests/fixtures/contentful/` (one per content type — team, sponsor, etc.), then write tests that feed each fixture into the relevant Zod schema and assert parse-succeed (happy path) and parse-fail (mutated fixture — drop a required field, change a type — and assert the parse rejects it).\n    \n    For `src/api/contentful.ts`, `vi.mock('contentful')` the `createClient` and assert the loader calls `getEntries` with the right content types and the field mappings (`mapCategory`, sponsor/team shaping) produce the expected domain objects. Both branches of the `import.meta.env.DEV ? preview : delivery` toggle covered via `vi.stubEnv`.\n    \n    ## Acceptance criteria\n    \n    - [ ] `tests/fixtures/contentful/` holds JSON fixtures per Contentful content type\n    - [ ] Zod schema parse-succeed tests for each fixture\n    - [ ] Zod schema parse-fail tests (mutated fixtures) for each content type\n    - [ ] `tests/api/contentful.test.ts` mocks `createClient`, asserts `getEntries` calls and field mapping\n    - [ ] DEV-mode and delivery-mode branches both covered\n    - [ ] All tests green, `bun run check` green\n    \n    ## Blocked by\n    \n    - #398 (harness)\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk gh issue view 403 --repo mseele/sve-website",
+            "time": {
+              "start": 1785084677152,
+              "end": 1785084677154
+            }
+          },
+          "id": "prt_f9f56899e001axrA5gxAYTFsCg",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f56800c001d7VKsmDA093Wyc"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "30ffe5d5c4200b7e63a4f2b1d09791a92cc3e6cc",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11516,
+            "input": 11150,
+            "output": 238,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01669048,
+          "id": "prt_f9f568d11001nYdhRZDjUlRXdE",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f56800c001d7VKsmDA093Wyc"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f567f2a001Aw6t6UrhjicLuW",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01419472,
+        "tokens": {
+          "total": 17894,
+          "input": 8000,
+          "output": 102,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 9792
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785084677513,
+          "completed": 1785084679570
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f568d89001DIh19EduLQgKAb",
+        "sessionID": "ses_060a980daffejHWQdInb4ClVss"
+      },
+      "parts": [
+        {
+          "snapshot": "30ffe5d5c4200b7e63a4f2b1d09791a92cc3e6cc",
+          "type": "step-start",
+          "id": "prt_f9f569147001RgkFZ26Wzq7Trt",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f568d89001DIh19EduLQgKAb"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me check the actual contentful.ts to verify the implementations match what tests assert. Particularly mapCategory and the DEV ternary, and whether sponsor \"id\" is included.",
+          "time": {
+            "start": 1785084678472,
+            "end": 1785084678917
+          },
+          "id": "prt_f9f569148001nVBO7cMFM32M1a",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f568d89001DIh19EduLQgKAb"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_ca09",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/src/api/contentful.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/src/api/contentful.ts</path>\n<type>file</type>\n<content>\n1: import { createClient } from 'contentful'\n2: import {\n3:   CONTENTFUL_SPACE_ID,\n4:   CONTENTFUL_DELIVERY_TOKEN,\n5:   CONTENTFUL_PREVIEW_TOKEN,\n6: } from 'astro:env/server'\n7: \n8: const contentfulClient = createClient({\n9:   space: CONTENTFUL_SPACE_ID,\n10:   accessToken: import.meta.env.DEV ? CONTENTFUL_PREVIEW_TOKEN : CONTENTFUL_DELIVERY_TOKEN,\n11:   host: import.meta.env.DEV ? 'preview.contentful.com' : 'cdn.contentful.com',\n12: })\n13: \n14: export async function loadTeams() {\n15:   const entries = await contentfulClient.getEntries({ content_type: 'team', include: 2 })\n16:   return entries.items.map((item) => ({\n17:     id: item.sys.id,\n18:     name: item.fields.name as string,\n19:     league: item.fields.league as undefined | string,\n20:     category: mapCategory(item.fields.category),\n21:     sortOrder: parseFloat(\n22:       `${(item.fields.category as any).fields.sortOrder}.${item.fields.sortOrder}`,\n23:     ),\n24:     coach: mapPerson(item.fields.coach),\n25:     contact: mapPerson(item.fields.contact),\n26:     teamID: item.fields.teamID as undefined | string,\n27:   }))\n28: }\n29: \n30: function mapCategory(item: any) {\n31:   if (!item) {\n32:     return undefined\n33:   }\n34:   return {\n35:     id: item.sys.id,\n36:     name: item.fields.name as string,\n37:     description: item.fields.description as string,\n38:     sortOrder: item.fields.sortOrder as number,\n39:     isYouthGroup: item.fields.isYouthGroup as boolean,\n40:   }\n41: }\n42: \n43: function mapPerson(item: any) {\n44:   if (!item) {\n45:     return undefined\n46:   }\n47:   return {\n48:     id: item.sys.id,\n49:     name: item.fields.name as string,\n50:     position: item.fields.position.fields.name as string,\n51:     email: item.fields.email as undefined | string,\n52:     mobile: mapPhoneNumber(item.fields.mobile),\n53:     phone: mapPhoneNumber(item.fields.phone),\n54:   }\n55: }\n56: \n57: function mapPhoneNumber(item: any) {\n58:   if (!item) {\n59:     return undefined\n60:   }\n61:   return {\n62:     id: item.sys.id,\n63:     formatted: item.fields.formatted as string,\n64:     raw: item.fields.raw as string,\n65:   }\n66: }\n67: \n68: export async function loadSponsors() {\n69:   const entries = await contentfulClient.getEntries({ content_type: 'sponsor' })\n70:   return entries.items.map((item) => ({\n71:     id: item.sys.id,\n72:     name: item.fields.name as string,\n73:     groupBy: (item.fields.groupBy as string) || (item.fields.name as string),\n74:   }))\n75: }\n\n(End of file - total 75 lines)\n</content>",
+            "metadata": {
+              "preview": "import { createClient } from 'contentful'\nimport {\n  CONTENTFUL_SPACE_ID,\n  CONTENTFUL_DELIVERY_TOKEN,\n  CONTENTFUL_PREVIEW_TOKEN,\n} from 'astro:env/server'\n\nconst contentfulClient = createClient({\n  space: CONTENTFUL_SPACE_ID,\n  accessToken: import.meta.env.DEV ? CONTENTFUL_PREVIEW_TOKEN : CONTENTFUL_DELIVERY_TOKEN,\n  host: import.meta.env.DEV ? 'preview.contentful.com' : 'cdn.contentful.com',\n})\n\nexport async function loadTeams() {\n  const entries = await contentfulClient.getEntries({ content_type: 'team', include: 2 })\n  return entries.items.map((item) => ({\n    id: item.sys.id,\n    name: item.fields.name as string,\n    league: item.fields.league as undefined | string,\n    category: mapCategory(item.fields.category),",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/src/api/contentful.ts",
+                "text": "import { createClient } from 'contentful'\nimport {\n  CONTENTFUL_SPACE_ID,\n  CONTENTFUL_DELIVERY_TOKEN,\n  CONTENTFUL_PREVIEW_TOKEN,\n} from 'astro:env/server'\n\nconst contentfulClient = createClient({\n  space: CONTENTFUL_SPACE_ID,\n  accessToken: import.meta.env.DEV ? CONTENTFUL_PREVIEW_TOKEN : CONTENTFUL_DELIVERY_TOKEN,\n  host: import.meta.env.DEV ? 'preview.contentful.com' : 'cdn.contentful.com',\n})\n\nexport async function loadTeams() {\n  const entries = await contentfulClient.getEntries({ content_type: 'team', include: 2 })\n  return entries.items.map((item) => ({\n    id: item.sys.id,\n    name: item.fields.name as string,\n    league: item.fields.league as undefined | string,\n    category: mapCategory(item.fields.category),\n    sortOrder: parseFloat(\n      `${(item.fields.category as any).fields.sortOrder}.${item.fields.sortOrder}`,\n    ),\n    coach: mapPerson(item.fields.coach),\n    contact: mapPerson(item.fields.contact),\n    teamID: item.fields.teamID as undefined | string,\n  }))\n}\n\nfunction mapCategory(item: any) {\n  if (!item) {\n    return undefined\n  }\n  return {\n    id: item.sys.id,\n    name: item.fields.name as string,\n    description: item.fields.description as string,\n    sortOrder: item.fields.sortOrder as number,\n    isYouthGroup: item.fields.isYouthGroup as boolean,\n  }\n}\n\nfunction mapPerson(item: any) {\n  if (!item) {\n    return undefined\n  }\n  return {\n    id: item.sys.id,\n    name: item.fields.name as string,\n    position: item.fields.position.fields.name as string,\n    email: item.fields.email as undefined | string,\n    mobile: mapPhoneNumber(item.fields.mobile),\n    phone: mapPhoneNumber(item.fields.phone),\n  }\n}\n\nfunction mapPhoneNumber(item: any) {\n  if (!item) {\n    return undefined\n  }\n  return {\n    id: item.sys.id,\n    formatted: item.fields.formatted as string,\n    raw: item.fields.raw as string,\n  }\n}\n\nexport async function loadSponsors() {\n  const entries = await contentfulClient.getEntries({ content_type: 'sponsor' })\n  return entries.items.map((item) => ({\n    id: item.sys.id,\n    name: item.fields.name as string,\n    groupBy: (item.fields.groupBy as string) || (item.fields.name as string),\n  }))\n}",
+                "lineStart": 1,
+                "lineEnd": 75,
+                "totalLines": 75,
+                "truncated": false
+              }
+            },
+            "title": "src/api/contentful.ts",
+            "time": {
+              "start": 1785084678923,
+              "end": 1785084678934
+            }
+          },
+          "id": "prt_f9f5693080015vcxdVpiesDthP",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f568d89001DIh19EduLQgKAb"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_7544",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk grep -n \"personObject\\|phoneNumberObject\" src/types.ts",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "44:export const phoneNumberObject = z.object({\n48:export type PhoneNumber = z.infer<typeof phoneNumberObject>\n50:export const personObject = z.object({\n55:  mobile: phoneNumberObject.optional(),\n56:  phone: phoneNumberObject.optional(),\n58:export type Person = z.infer<typeof personObject>\n",
+            "metadata": {
+              "output": "44:export const phoneNumberObject = z.object({\n48:export type PhoneNumber = z.infer<typeof phoneNumberObject>\n50:export const personObject = z.object({\n55:  mobile: phoneNumberObject.optional(),\n56:  phone: phoneNumberObject.optional(),\n58:export type Person = z.infer<typeof personObject>\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk grep -n \"personObject\\|phoneNumberObject\" src/types.ts",
+            "time": {
+              "start": 1785084679439,
+              "end": 1785084679443
+            }
+          },
+          "id": "prt_f9f5694e2001zCs6Li0GEX2rdH",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f568d89001DIh19EduLQgKAb"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "30ffe5d5c4200b7e63a4f2b1d09791a92cc3e6cc",
+          "type": "step-finish",
+          "tokens": {
+            "total": 17894,
+            "input": 8000,
+            "output": 102,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 9792
+            }
+          },
+          "cost": 0.01419472,
+          "id": "prt_f9f569545001KnW7nlO6Rv5CQK",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f568d89001DIh19EduLQgKAb"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f567f2a001Aw6t6UrhjicLuW",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00595876,
+        "tokens": {
+          "total": 18719,
+          "input": 827,
+          "output": 36,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 17856
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785084679575,
+          "completed": 1785084680745
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f569597001LRmCOVgOuKrpHT",
+        "sessionID": "ses_060a980daffejHWQdInb4ClVss"
+      },
+      "parts": [
+        {
+          "snapshot": "30ffe5d5c4200b7e63a4f2b1d09791a92cc3e6cc",
+          "type": "step-start",
+          "id": "prt_f9f5698fe001fC2Ai0r2v75QI1",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f569597001LRmCOVgOuKrpHT"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_3e81",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/src/types.ts",
+              "offset": 40,
+              "limit": 25
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/src/types.ts</path>\n<type>file</type>\n<content>\n40:   contact?: Person\n41:   teamID?: string\n42: }\n43: \n44: export const phoneNumberObject = z.object({\n45:   formatted: z.string(),\n46:   raw: z.string(),\n47: })\n48: export type PhoneNumber = z.infer<typeof phoneNumberObject>\n49: \n50: export const personObject = z.object({\n51:   id: z.string(),\n52:   name: z.string(),\n53:   position: z.string(),\n54:   email: z.string().optional(),\n55:   mobile: phoneNumberObject.optional(),\n56:   phone: phoneNumberObject.optional(),\n57: })\n58: export type Person = z.infer<typeof personObject>\n59: \n60: export interface Sponsor {\n61:   name: string\n62:   groupBy: string\n63: }\n64: \n\n(Showing lines 40-64 of 264. Use offset=65 to continue.)\n</content>",
+            "metadata": {
+              "preview": "  contact?: Person\n  teamID?: string\n}\n\nexport const phoneNumberObject = z.object({\n  formatted: z.string(),\n  raw: z.string(),\n})\nexport type PhoneNumber = z.infer<typeof phoneNumberObject>\n\nexport const personObject = z.object({\n  id: z.string(),\n  name: z.string(),\n  position: z.string(),\n  email: z.string().optional(),\n  mobile: phoneNumberObject.optional(),\n  phone: phoneNumberObject.optional(),\n})\nexport type Person = z.infer<typeof personObject>\n",
+              "truncated": true,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/src/types.ts",
+                "text": "  contact?: Person\n  teamID?: string\n}\n\nexport const phoneNumberObject = z.object({\n  formatted: z.string(),\n  raw: z.string(),\n})\nexport type PhoneNumber = z.infer<typeof phoneNumberObject>\n\nexport const personObject = z.object({\n  id: z.string(),\n  name: z.string(),\n  position: z.string(),\n  email: z.string().optional(),\n  mobile: phoneNumberObject.optional(),\n  phone: phoneNumberObject.optional(),\n})\nexport type Person = z.infer<typeof personObject>\n\nexport interface Sponsor {\n  name: string\n  groupBy: string\n}\n",
+                "lineStart": 40,
+                "lineEnd": 64,
+                "totalLines": 264,
+                "truncated": true
+              }
+            },
+            "title": "src/types.ts",
+            "time": {
+              "start": 1785084680615,
+              "end": 1785084680624
+            }
+          },
+          "id": "prt_f9f5699a4001Pt50KkBka6BJxP",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f569597001LRmCOVgOuKrpHT"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "30ffe5d5c4200b7e63a4f2b1d09791a92cc3e6cc",
+          "type": "step-finish",
+          "tokens": {
+            "total": 18719,
+            "input": 827,
+            "output": 36,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 17856
+            }
+          },
+          "cost": 0.00595876,
+          "id": "prt_f9f569a04001FqDJw4m2w74fPM",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f569597001LRmCOVgOuKrpHT"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f567f2a001Aw6t6UrhjicLuW",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01441308,
+        "tokens": {
+          "total": 21036,
+          "input": 259,
+          "output": 2089,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 18688
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785084680748,
+          "completed": 1785084699825
+        },
+        "finish": "stop",
+        "id": "msg_f9f569a2c001WroYX4LXKCg77I",
+        "sessionID": "ses_060a980daffejHWQdInb4ClVss"
+      },
+      "parts": [
+        {
+          "snapshot": "30ffe5d5c4200b7e63a4f2b1d09791a92cc3e6cc",
+          "type": "step-start",
+          "id": "prt_f9f569d8a001lszR987pB6RKcU",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f569a2c001WroYX4LXKCg77I"
+        },
+        {
+          "type": "reasoning",
+          "text": "Now I have everything. Let me write the spec review.\n\nSpec acceptance criteria checklist:\n1. fixtures per content type — team, sponsor: only TWO content types covered. Spec says \"one per content type — team, sponsor, etc.\" The repo also has `news`, `history`, `events`, `fitness` collections but those come from glob/loadEvents, not Contentful. Only team and sponsor come from Contentful. So fixture coverage OK — only Contentful content types are team and sponsor.\n\nWait, but spec mentions \"etc.\" which implies other Contentful content types if any. Let me check if there are other Contentful content types. Looking at contentful.ts, only team and sponsor are loaded. Other collections (news, history) use glob loader for markdown. events/fitness use loadEvents from api/events (not contentful). So team/sponsor are the only Contentful content types. OK.\n\n2. parse-succeed for each fixture — yes for team and sponsor.\n3. parse-fail mutated fixtures for each — yes for team and sponsor.\n4. contentful.test.ts mocks createClient, asserts getEntries calls and field mapping — yes.\n5. DEV-mode and delivery-mode branches both covered — yes.\n6. All tests green, bun run check green — can't verify without running. Let me check.\n\nNow findings:\n\n(a) Missing/partial:\n- Spec: \"assert the loader ... field mappings (`mapCategory`, sponsor/team shaping) produce the expected domain objects.\" mapCategory IS tested implicitly via category assertions. mapPerson, mapPhoneNumber are also tested. Sponsor shaping tested. team shaping tested. Looks complete.\n- Spec acceptance: \"All tests green, `bun run check` green\" — not verified in diff, but can run.\n- The schema-contract test pins `coach.mobile.id` mismatch silently — the comment notes the loader emits `id` on phone numbers but `phoneNumberObject` schema drops it. This is a contract divergence: the loader produces an `id` field that the Zod schema strips. This is a real bug potentially — the loader emits a field the schema discards. The test documents it but doesn't fix it. Spec wants the contract to protect against shape change — but here the contract and the loader disagree on shape.\n\n(b) Scope creep:\n- `src/content-schemas.ts` extracted to a new file. This is necessary (test can't import astro:content runtime). Reasonable refactor, not really creep — it's a structural change to enable testing. Spec didn't ask for it but it's justified.\n- The `computes sortOrder as category.sortOrder.team.sortOrder` test (3.7), the `omits coach/contact` test, the sponsor `groupBy` fallback tests — these test loader behaviour beyond strict \"field mapping produce expected domain objects\". But spec does ask field mappings produce expected domain objects, so these are in-scope. The fallback tests probably are scope creep (spec didn't mention fallback behaviour). But mild.\n- The minimal-team parse test (parse-succeed with all optional omitted) — beyond strictly \"feed each fixture, parse-succeed\". Mild addition.\n- DEV/delivery test asserts the `host` field too — beyond just token; but spec says \"both branches... covered\". Fine.\n- `mapCategory` is mentioned explicitly. Tested. Good.\n\n(c) Implemented but wrong:\n- The phone-number `id` divergence: schema (`phoneNumberObject`) drops `id`, but loader emits `id`. The schema contract test fixture omits `id` strictly to make `parse-succeed` pass; the contentful.test.ts then separately asserts the loader emits `id` (\"loader surplus\"). This means the schema contract does NOT actually pin the loader's true output shape — the contract silently allows the loader to emit `id` on phone numbers without validation. This violates \"the contract test that protects the loader against a CMS shape change\" — a CMS-shape change that dropped `sys.id` on a phone link would NOT be caught because the schema doesn't require `id`. Either the schema should require `id` (matching loader output) or the loader should drop `id` (matching schema). Currently the two are out of sync, papered over by test comments.\n- Also the sponsor schema (`sponsorSchema`) does NOT include `id`, but the loader's `loadSponsors` emits `id: item.sys.id`. Same divergence. The sponsor parse-succeed fixture omits `id`, and the contentful.test.ts asserts `expect(sponsors[0]).toEqual({ id: 'sponsor-1', ...sponsorFixture })` — explicitly adding `id` because the schema strips it. Same pattern: loader emits `id`, schema drops it.\n- Team schema also omits `id` at the top? No wait — teamSchema has `id: z.string()` (line 17). So team top-level `id` IS pinned. But sponsor top-level `id` is NOT in `sponsorSchema` (lines 38-41). That's inconsistent: team pins id, sponsor doesn't. The `Sponsor` interface in types.ts also omits `id`. So technically the loader's sponsor output `{id, name, groupBy}` does not match the declared `Sponsor` type `{name, groupBy}` — likely a pre-existing issue, but the new contract test cements that divergence rather than fixing it.\n- `vi.stubEnv('DEV', true)` — Vitest's stubEnv for `DEV` is typically typed as string. The test comment acknowledges \"vi.stubEnv is widened to `boolean`\". Passing `true` (boolean) — depending on Vitest version, stubEnv may coerce to string and `'false'` would be truthy. The comment acknowledges this. But the actual code in contentful.ts is `import.meta.env.DEV ? ...`. If `vi.stubEnv('DEV', true)` actually stores boolean true, fine. If it coerces to string 'true', still truthy. For the false branch, passing `false` — if coerced to string 'false', that's STILL truthy, breaking the false branch test. The test would pass falsely only if Vitest stores actual boolean. Need to verify but the comment shows the author is aware. This is a potential wrong-implementation risk: the DEV=falsy test might not actually exercise the delivery branch if stubEnv stringifies. Actually, Vitest's `vi.stubEnv` stores values as-is in `import.meta.env` but Astro/Vite env is usually string-coerced. Hmm. This is a real concern.\n\nLet me verify quickly by running check / tests if possible.\n\nActually I shouldn't run tests as the review is spec-only, and report should be under 400 words. Let me note as a concern.\n\nLet me draft the report briefly.",
+          "time": {
+            "start": 1785084681612,
+            "end": 1785084693886
+          },
+          "id": "prt_f9f569d8c001r11G8ZXk0XbsYa",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f569a2c001WroYX4LXKCg77I"
+        },
+        {
+          "type": "text",
+          "text": "## SPEC review — issue #403\n\n### (a) Missing or partial\n- **Phone-number `id` not pinned by the contract.** Spec: *\"the contract test that protects the loader against a CMS shape change.\"* `mapPhoneNumber` (`src/api/contentful.ts:62`) emits `id: item.sys.id`, but `phoneNumberObject` (`src/types.ts:44-47`) and `teamSchema` omit `id`. The team parse-succeed fixture deliberately drops `coach.mobile.id`, and `contentful.test.ts:155-166` asserts the \"loader surplus\" separately. A CMS change that dropped `sys.id` on a phone link would NOT be caught — the contract is weaker than the loader.\n- **Sponsor `id` not pinned by the contract.** Same divergence. `loadSponsors` emits `id` (`contentful.ts:71`), `sponsorSchema` and `Sponsor` type omit it; the test re-adds it inline (`contentful.test.ts:243`). Inconsistent with `teamSchema`, which DOES pin top-level `id`.\n- **\"All tests green, `bun run check` green\"** — not demonstrable from the diff alone; not run here.\n\n### (b) Scope creep\n- **New `src/content-schemas.ts` extraction.** Not asked for, but justified (test cannot import `astro:content`/`astro:env/server` under happy-dom). The diff to `content.config.ts` is purely mechanical relocation — fine.\n- **Loader behaviour tests beyond \"field mapping produce expected domain objects\":** the `groupBy` fallback tests (`contentful.test.ts:246-268`) and the bare-team omission test (`:206-226`) test loader branch logic the spec never mentioned. Mild creep, harmless.\n- **`sortOrder` is parsed as a float** (`contentful.ts:21-23`, `${cat.sortOrder}.${team.sortOrder}` → `parseFloat`). The team fixture pins `sortOrder: 1.1` and a test asserts `3.7`. Spec never asked for the composition behaviour; it's pre-existing loader logic pinned for the first time — defensible as \"team shaping\", but it is a new contract surface.\n\n### (c) Implemented but looks wrong\n- **`vi.stubEnv('DEV', true/false)` may not flip the ternary.** Spec: *\"Both branches of the `import.meta.env.DEV ? preview : delivery` toggle covered via `vi.stubEnv`.\"* The test's own comment (`contentful.test.ts:272-274`) warns that `stubEnv` widens to string and `'false'` would still be truthy. If Vitest/Vite stringifies the value, the DEV=false test (`:287`) silently exercises the DEV branch and still passes — a false green on a required acceptance criterion. The author should `vi.stubEnv('DEV', '' )` or use `mock.module` on `import.meta.env`. Worth verifying against the actual Vitest version.\n- **Schema vs loader shape drift** (see (a)) means the contract test green path does not actually assert the loader's real output shape end-to-end; it asserts a subset. The spec's intent — a single contract protecting both — is only partially met.",
+          "time": {
+            "start": 1785084693888,
+            "end": 1785084699637
+          },
+          "id": "prt_f9f56cd80001eJ7V3jiWsuok3u",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f569a2c001WroYX4LXKCg77I"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "30ffe5d5c4200b7e63a4f2b1d09791a92cc3e6cc",
+          "type": "step-finish",
+          "tokens": {
+            "total": 21036,
+            "input": 259,
+            "output": 2089,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 18688
+            }
+          },
+          "cost": 0.01441308,
+          "id": "prt_f9f56e42700110C0V8v13lAuqo",
+          "sessionID": "ses_060a980daffejHWQdInb4ClVss",
+          "messageID": "msg_f9f569a2c001WroYX4LXKCg77I"
+        }
+      ]
+    }
+  ]
+}
