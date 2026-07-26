@@ -17,19 +17,19 @@
       "deletions": 0,
       "files": 0
     },
-    "cost": 1.3399216,
+    "cost": 1.4389724000000002,
     "tokens": {
-      "input": 219334,
-      "output": 39749,
+      "input": 219876,
+      "output": 40891,
       "reasoning": 0,
       "cache": {
-        "read": 3299840,
+        "read": 3658560,
         "write": 0
       }
     },
     "time": {
       "created": 1785084007362,
-      "updated": 1785084775186
+      "updated": 1785084801688
     }
   },
   "messages": [
@@ -7280,21 +7280,24 @@
           "cwd": "/Users/mseele/dev/sve/sve-website",
           "root": "/Users/mseele/dev/sve/sve-website"
         },
-        "cost": 0,
+        "cost": 0.0246568,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 89690,
+          "input": 120,
+          "output": 290,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 89280
           }
         },
         "modelID": "glm-5.2",
         "providerID": "opencode-go",
         "time": {
-          "created": 1785084775183
+          "created": 1785084775183,
+          "completed": 1785084795112
         },
+        "finish": "tool-calls",
         "id": "msg_f9f580b0f001MHyRuIBkopUvZC",
         "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd"
       },
@@ -7322,20 +7325,366 @@
           "tool": "bash",
           "callID": "call_3b33",
           "state": {
-            "metadata": {
-              "output": ""
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "rtk cd /Users/mseele/dev/sve/sve-website && rtk git commit -m \"test: cover Contentful Zod schema contracts + loader mapping (#403)\""
             },
+            "output": "ok 2592531\n",
+            "metadata": {
+              "output": "ok 2592531\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk cd /Users/mseele/dev/sve/sve-website && rtk git commit -m \"test: cover Contentful Zod schema contracts + loader mapping (#403)\"",
             "time": {
-              "start": 1785084780467
+              "start": 1785084794993,
+              "end": 1785084795006
             }
           },
           "id": "prt_f9f581fa5001FQ9t0pywKujGvN",
           "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd",
           "messageID": "msg_f9f580b0f001MHyRuIBkopUvZC"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "3fcb3dc42a3b143afc981afef30f6345276189c3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 89690,
+            "input": 120,
+            "output": 290,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 89280
+            }
+          },
+          "cost": 0.0246568,
+          "id": "prt_f9f5858b2001DX1uVJaeb6ZQ85",
+          "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd",
+          "messageID": "msg_f9f580b0f001MHyRuIBkopUvZC"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f4c53d2001H6mExYw51H5bXi",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.02354184,
+        "tokens": {
+          "total": 89742,
+          "input": 38,
+          "output": 40,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 89664
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785084795132,
+          "completed": 1785084797615
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f5858fc001SYPOfAybfqbosI",
+        "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd"
+      },
+      "parts": [
+        {
+          "snapshot": "3fcb3dc42a3b143afc981afef30f6345276189c3",
+          "type": "step-start",
+          "id": "prt_f9f586094001L4a5T2lgMAKbfw",
+          "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd",
+          "messageID": "msg_f9f5858fc001SYPOfAybfqbosI"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_ef3c",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk cd /Users/mseele/dev/sve/sve-website && rtk git log --oneline -3 && rtk git status"
+            },
+            "output": "2592531 test: cover Contentful Zod schema contracts + loader mapping (#403)\nebdf045 test: cover client form validators (#402)\ne860333 test: cover src/api fetch wrappers with MSW handlers (#401)\n* feature/tests\nclean — nothing to commit\n",
+            "metadata": {
+              "output": "2592531 test: cover Contentful Zod schema contracts + loader mapping (#403)\nebdf045 test: cover client form validators (#402)\ne860333 test: cover src/api fetch wrappers with MSW handlers (#401)\n* feature/tests\nclean — nothing to commit\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk cd /Users/mseele/dev/sve/sve-website && rtk git log --oneline -3 && rtk git status",
+            "time": {
+              "start": 1785084797516,
+              "end": 1785084797524
+            }
+          },
+          "id": "prt_f9f5861df001KR52jGH2tJuDHy",
+          "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd",
+          "messageID": "msg_f9f5858fc001SYPOfAybfqbosI"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "3fcb3dc42a3b143afc981afef30f6345276189c3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 89742,
+            "input": 38,
+            "output": 40,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 89664
+            }
+          },
+          "cost": 0.02354184,
+          "id": "prt_f9f586278001mg5z40RKB85ynZ",
+          "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd",
+          "messageID": "msg_f9f5858fc001SYPOfAybfqbosI"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f4c53d2001H6mExYw51H5bXi",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.02452648,
+        "tokens": {
+          "total": 90056,
+          "input": 82,
+          "output": 246,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 89728
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785084797621,
+          "completed": 1785084801677
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f5862b5001YbA52FYpMGrpYn",
+        "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd"
+      },
+      "parts": [
+        {
+          "snapshot": "3fcb3dc42a3b143afc981afef30f6345276189c3",
+          "type": "step-start",
+          "id": "prt_f9f5869e4001bXhk735Zw9bbTp",
+          "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd",
+          "messageID": "msg_f9f5862b5001YbA52FYpMGrpYn"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_f9bf",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "Refactor src/content.config.ts to export teamSchema + sponsorSchema factories",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Create JSON fixtures under tests/fixtures/contentful/ (team, sponsor)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Schema contract tests (parse-succeed + parse-fail) for team and sponsor",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "tests/api/contentful.test.ts: mock createClient, assert getEntries + field mapping",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "DEV-mode and delivery-mode branch coverage via vi.stubEnv + resetModules",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run vitest + bun run check, ensure all green",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run /code-review on the branch",
+                  "status": "completed",
+                  "priority": "medium"
+                },
+                {
+                  "content": "Commit to current branch",
+                  "status": "completed",
+                  "priority": "medium"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"Refactor src/content.config.ts to export teamSchema + sponsorSchema factories\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Create JSON fixtures under tests/fixtures/contentful/ (team, sponsor)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Schema contract tests (parse-succeed + parse-fail) for team and sponsor\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"tests/api/contentful.test.ts: mock createClient, assert getEntries + field mapping\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"DEV-mode and delivery-mode branch coverage via vi.stubEnv + resetModules\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Run vitest + bun run check, ensure all green\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Run /code-review on the branch\",\n    \"status\": \"completed\",\n    \"priority\": \"medium\"\n  },\n  {\n    \"content\": \"Commit to current branch\",\n    \"status\": \"completed\",\n    \"priority\": \"medium\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "Refactor src/content.config.ts to export teamSchema + sponsorSchema factories",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Create JSON fixtures under tests/fixtures/contentful/ (team, sponsor)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Schema contract tests (parse-succeed + parse-fail) for team and sponsor",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "tests/api/contentful.test.ts: mock createClient, assert getEntries + field mapping",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "DEV-mode and delivery-mode branch coverage via vi.stubEnv + resetModules",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run vitest + bun run check, ensure all green",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run /code-review on the branch",
+                  "status": "completed",
+                  "priority": "medium"
+                },
+                {
+                  "content": "Commit to current branch",
+                  "status": "completed",
+                  "priority": "medium"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "0 todos",
+            "time": {
+              "start": 1785084801561,
+              "end": 1785084801562
+            }
+          },
+          "id": "prt_f9f587213001W0G1rBdkmPLPcm",
+          "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd",
+          "messageID": "msg_f9f5862b5001YbA52FYpMGrpYn"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "3fcb3dc42a3b143afc981afef30f6345276189c3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 90056,
+            "input": 82,
+            "output": 246,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 89728
+            }
+          },
+          "cost": 0.02452648,
+          "id": "prt_f9f58725f001HrvKmbb8rhh39B",
+          "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd",
+          "messageID": "msg_f9f5862b5001YbA52FYpMGrpYn"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f4c53d2001H6mExYw51H5bXi",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.02632568,
+        "tokens": {
+          "total": 90916,
+          "input": 302,
+          "output": 566,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 90048
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785084801686,
+          "completed": 1785084810559
+        },
+        "finish": "stop",
+        "id": "msg_f9f587296001iKAKSZclrNlZfa",
+        "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd"
+      },
+      "parts": [
+        {
+          "snapshot": "3fcb3dc42a3b143afc981afef30f6345276189c3",
+          "type": "step-start",
+          "id": "prt_f9f587838001C1D9R64DoP02AZ",
+          "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd",
+          "messageID": "msg_f9f587296001iKAKSZclrNlZfa"
+        },
+        {
+          "type": "text",
+          "text": "Done. Locked in commit `2592531` on `feature/tests`.\n\n## What landed\n\n- **`src/content-schemas.ts`** (new) — extracts `teamSchema()` + `sponsorSchema()` from `content.config.ts` so the contract tests can import the Zod factories without dragging in `astro:content` (server-only, throws under happy-dom). Single source of truth for production collection validation + the contract tests.\n- **`src/content.config.ts`** — re-uses those factories; pure mechanical relocation.\n- **`tests/fixtures/contentful/{team,sponsor}.json`** — JSON payloads per content type.\n- **`tests/content-schemas.test.ts`** — parse-succeed + parse-fail (mutated fixture: drop required field, change type) for team + sponsor (14 tests).\n- **`tests/api/contentful.test.ts`** — `vi.mock('contentful')` + `vi.mock('astro:env/server')`, asserts `getEntries` content_type, field mapping for `mapCategory` / `mapPerson` / sponsor `groupBy` fallback, and DEV/delivery branches via `vi.stubEnv('DEV', true/false)` + `vi.resetModules` (11 tests).\n\nTotal: **201 tests green**, `bun run check` green (oxlint + tsc + astro check + vitest).\n\n## Code-review summary\n\n### Standards\n- **Hard fixes applied**: import grouping (external libs → `@/` aliases → relative) in both `content-schemas.ts` and `content.config.ts`.\n- Judgement calls left as-is: pre-existing convention of inferred Zod return types (matches `types.ts`); shallow `structuredClone → delete → expect throw` duplication is more readable than a `it.each` table given the heterogeneous mutations; test-side message chains on optional fields are acceptable.\n- No Feature Envy / Repeated Switches / Shotgun Surgery / etc.\n\n### Spec\n- All AC met.\n- Sub-agent flagged a \"false-green\" risk on the DEV=false branch — verified empirically: `vi.stubEnv('DEV', false)` (boolean, the typed overload) does flip `import.meta.env.DEV` to `false` and the assertion checks the actual `delivery-token` / `cdn.contentful.com` value, so no false green.\n- Noted but out of scope: schema/loader shape drift on `coach.mobile.id` (loader emits `id`, `phoneNumberObject` strips it) and `Sponsor.id` (loader emits, `sponsorSchema` strips). The contract pins the schema-validated shape; a CMS-side removal would still surface as one of the team-loader assertions. Shrinking that gap is a separate, loader-side change.",
+          "time": {
+            "start": 1785084803147,
+            "end": 1785084810468
+          },
+          "id": "prt_f9f58784b001rBc1lzst4P1qoB",
+          "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd",
+          "messageID": "msg_f9f587296001iKAKSZclrNlZfa"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "3fcb3dc42a3b143afc981afef30f6345276189c3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 90916,
+            "input": 302,
+            "output": 566,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 90048
+            }
+          },
+          "cost": 0.02632568,
+          "id": "prt_f9f58951a0011pWQ85NbZcjGz0",
+          "sessionID": "ses_060b3ac3effePZ9IXXfpKFOjgd",
+          "messageID": "msg_f9f587296001iKAKSZclrNlZfa"
         }
       ]
     }
