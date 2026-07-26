@@ -1,0 +1,1727 @@
+{
+  "info": {
+    "id": "ses_060b9cb11ffeQVrXDgto5qk01R",
+    "slug": "lucky-planet",
+    "projectID": "68d450c05733c82192ed1f31a5e40cb2ae707f59",
+    "directory": "/Users/mseele/dev/sve/sve-website",
+    "path": "",
+    "title": "Implement from spec/tickets with TDD",
+    "agent": "build",
+    "model": {
+      "id": "glm-5.2",
+      "providerID": "opencode-go"
+    },
+    "version": "1.18.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0.1228586,
+    "tokens": {
+      "input": 27771,
+      "output": 4148,
+      "reasoning": 0,
+      "cache": {
+        "read": 252800,
+        "write": 0
+      }
+    },
+    "time": {
+      "created": 1785083606254,
+      "updated": 1785083719481
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1785083606282
+        },
+        "agent": "build",
+        "model": {
+          "providerID": "opencode-go",
+          "modelID": "glm-5.2"
+        },
+        "summary": {
+          "diffs": [
+            {
+              "file": "tests/client/forms.test.ts",
+              "patch": "Index: tests/client/forms.test.ts\n===================================================================\n--- tests/client/forms.test.ts\t\n+++ tests/client/forms.test.ts\t\n@@ -0,0 +1,346 @@\n+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\n+import {\n+  checkRequiredInput,\n+  checkRequiredSelect,\n+  clearCustomValidityOnInput,\n+  clearCustomValidityOnSelect,\n+  validateIbanInput,\n+} from '@/client/forms'\n+\n+const VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\n+const MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n+\n+const validitySpies = () => {\n+  const setInput = vi.fn()\n+  const reportInput = vi.fn(() => false)\n+  const setSelect = vi.fn()\n+  const reportSelect = vi.fn(() => false)\n+  const setTextarea = vi.fn()\n+  const reportTextarea = vi.fn(() => false)\n+  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', {\n+    configurable: true,\n+    value: setInput,\n+  })\n+  Object.defineProperty(HTMLInputElement.prototype, 'reportValidity', {\n+    configurable: true,\n+    value: reportInput,\n+  })\n+  Object.defineProperty(HTMLSelectElement.prototype, 'setCustomValidity', {\n+    configurable: true,\n+    value: setSelect,\n+  })\n+  Object.defineProperty(HTMLSelectElement.prototype, 'reportValidity', {\n+    configurable: true,\n+    value: reportSelect,\n+  })\n+  Object.defineProperty(HTMLTextAreaElement.prototype, 'setCustomValidity', {\n+    configurable: true,\n+    value: setTextarea,\n+  })\n+  Object.defineProperty(HTMLTextAreaElement.prototype, 'reportValidity', {\n+    configurable: true,\n+    value: reportTextarea,\n+  })\n+  return { setInput, reportInput, setSelect, reportSelect, setTextarea, reportTextarea }\n+}\n+\n+describe('checkRequiredInput', () => {\n+  let spies: ReturnType<typeof validitySpies>\n+\n+  beforeEach(() => {\n+    spies = validitySpies()\n+  })\n+\n+  afterEach(() => {\n+    vi.restoreAllMocks()\n+  })\n+\n+  it('returns true and does not touch validity when the input has a non-empty value', () => {\n+    const input = document.createElement('input')\n+    input.value = 'Max Mustermann'\n+\n+    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+    expect(spies.reportInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('treats whitespace-only values as empty: sets the message, reports validity, returns false', () => {\n+    const input = document.createElement('input')\n+    input.value = '   '\n+\n+    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(false)\n+    expect(spies.setInput).toHaveBeenCalledWith('Pflichtfeld')\n+    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('sets the custom validity message and calls reportValidity when the input is empty', () => {\n+    const input = document.createElement('input')\n+\n+    expect(checkRequiredInput(input, 'Bitte Namen angeben')).toBe(false)\n+    expect(spies.setInput).toHaveBeenCalledWith('Bitte Namen angeben')\n+    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('works for HTMLTextAreaElement and propagates the error message', () => {\n+    const textarea = document.createElement('textarea')\n+\n+    expect(checkRequiredInput(textarea, 'Bitte Nachricht angeben')).toBe(false)\n+    expect(spies.setTextarea).toHaveBeenCalledWith('Bitte Nachricht angeben')\n+    expect(spies.reportTextarea).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('returns true for null input without touching the prototype', () => {\n+    expect(checkRequiredInput(null, 'Pflichtfeld')).toBe(true)\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+    expect(spies.reportInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('returns true for undefined input without touching the prototype', () => {\n+    expect(checkRequiredInput(undefined, 'Pflichtfeld')).toBe(true)\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+    expect(spies.reportInput).not.toHaveBeenCalled()\n+  })\n+})\n+\n+describe('checkRequiredSelect', () => {\n+  let spies: ReturnType<typeof validitySpies>\n+\n+  beforeEach(() => {\n+    spies = validitySpies()\n+  })\n+\n+  afterEach(() => {\n+    vi.restoreAllMocks()\n+  })\n+\n+  it('returns true and does not touch validity when a value is selected', () => {\n+    const select = document.createElement('select')\n+    const option = document.createElement('option')\n+    option.value = 'general'\n+    select.append(option)\n+    select.value = 'general'\n+\n+    expect(checkRequiredSelect(select, 'Bitte auswählen')).toBe(true)\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+    expect(spies.reportSelect).not.toHaveBeenCalled()\n+  })\n+\n+  it('sets the custom validity message and reports validity for an empty value', () => {\n+    const select = document.createElement('select')\n+\n+    expect(checkRequiredSelect(select, 'Bitte Auswahl treffen')).toBe(false)\n+    expect(spies.setSelect).toHaveBeenCalledWith('Bitte Auswahl treffen')\n+    expect(spies.reportSelect).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('treats a whitespace-only option value as empty', () => {\n+    const select = document.createElement('select')\n+    const option = document.createElement('option')\n+    option.value = '   '\n+    select.append(option)\n+    select.value = '   '\n+\n+    expect(checkRequiredSelect(select, 'Pflichtfeld')).toBe(false)\n+    expect(spies.setSelect).toHaveBeenCalledWith('Pflichtfeld')\n+    expect(spies.reportSelect).toHaveBeenCalled()\n+  })\n+\n+  it('returns true for null select without touching the prototype', () => {\n+    expect(checkRequiredSelect(null, 'Pflichtfeld')).toBe(true)\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+  })\n+\n+  it('returns true for undefined select without touching the prototype', () => {\n+    expect(checkRequiredSelect(undefined, 'Pflichtfeld')).toBe(true)\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+  })\n+})\n+\n+describe('validateIbanInput', () => {\n+  let spies: ReturnType<typeof validitySpies>\n+\n+  beforeEach(() => {\n+    spies = validitySpies()\n+  })\n+\n+  afterEach(() => {\n+    vi.restoreAllMocks()\n+  })\n+\n+  it('accepts a syntactically valid IBAN and returns true without touching validity', () => {\n+    const input = document.createElement('input')\n+    input.value = VALID_IBAN\n+\n+    expect(validateIbanInput(input)).toBe(true)\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+    expect(spies.reportInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('accepts a valid IBAN written without spaces', () => {\n+    const input = document.createElement('input')\n+    input.value = VALID_IBAN.replace(/\\s/g, '')\n+\n+    expect(validateIbanInput(input)).toBe(true)\n+  })\n+\n+  it('accepts a valid IBAN regardless of letter case', () => {\n+    const input = document.createElement('input')\n+    input.value = 'de89 3704 0044 0532 0130 00'\n+\n+    expect(validateIbanInput(input)).toBe(true)\n+  })\n+\n+  it('sets a custom validity message and returns false for an invalid IBAN', () => {\n+    const input = document.createElement('input')\n+    input.value = MALFORMED_IBAN\n+\n+    expect(validateIbanInput(input)).toBe(false)\n+    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n+    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('rejects a non-IBAN string of random characters', () => {\n+    const input = document.createElement('input')\n+    input.value = 'not-an-iban'\n+\n+    expect(validateIbanInput(input)).toBe(false)\n+    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n+    expect(spies.reportInput).toHaveBeenCalled()\n+  })\n+\n+  it('treats an empty input as invalid: sets the message, reports, returns false', () => {\n+    const input = document.createElement('input')\n+\n+    expect(validateIbanInput(input)).toBe(false)\n+    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n+    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('returns false and does not touch validity for null input', () => {\n+    expect(validateIbanInput(null)).toBe(false)\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+    expect(spies.reportInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('returns false and does not touch validity for undefined input', () => {\n+    expect(validateIbanInput(undefined)).toBe(false)\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+    expect(spies.reportInput).not.toHaveBeenCalled()\n+  })\n+})\n+\n+describe('clearCustomValidityOnInput', () => {\n+  let spies: ReturnType<typeof validitySpies>\n+\n+  beforeEach(() => {\n+    spies = validitySpies()\n+  })\n+\n+  afterEach(() => {\n+    vi.restoreAllMocks()\n+  })\n+\n+  it('clears the custom validity when the user types a non-empty value', () => {\n+    const input = document.createElement('input')\n+    clearCustomValidityOnInput(input)\n+\n+    input.value = 'Max'\n+    input.dispatchEvent(new Event('input'))\n+\n+    expect(spies.setInput).toHaveBeenCalledWith('')\n+  })\n+\n+  it('does not clear the validity when the value trims to empty', () => {\n+    const input = document.createElement('input')\n+    clearCustomValidityOnInput(input)\n+\n+    input.value = '   '\n+    input.dispatchEvent(new Event('input'))\n+\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('works for HTMLTextAreaElement: clears once a value is typed', () => {\n+    const textarea = document.createElement('textarea')\n+    clearCustomValidityOnInput(textarea)\n+\n+    textarea.value = 'Hello'\n+    textarea.dispatchEvent(new Event('input'))\n+\n+    expect(spies.setTextarea).toHaveBeenCalledWith('')\n+  })\n+\n+  it('no-ops before any input event is dispatched', () => {\n+    const input = document.createElement('input')\n+    clearCustomValidityOnInput(input)\n+\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('silently swallows null input (no listener is attached)', () => {\n+    expect(() => clearCustomValidityOnInput(null)).not.toThrow()\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('silently swallows undefined input (no listener is attached)', () => {\n+    expect(() => clearCustomValidityOnInput(undefined)).not.toThrow()\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+  })\n+})\n+\n+describe('clearCustomValidityOnSelect', () => {\n+  let spies: ReturnType<typeof validitySpies>\n+\n+  beforeEach(() => {\n+    spies = validitySpies()\n+  })\n+\n+  afterEach(() => {\n+    vi.restoreAllMocks()\n+  })\n+\n+  it('clears the custom validity when the user selects a non-empty value', () => {\n+    const select = document.createElement('select')\n+    const option = document.createElement('option')\n+    option.value = 'general'\n+    select.append(option)\n+\n+    clearCustomValidityOnSelect(select)\n+\n+    select.value = 'general'\n+    select.dispatchEvent(new Event('change'))\n+\n+    expect(spies.setSelect).toHaveBeenCalledWith('')\n+  })\n+\n+  it('does not clear the validity when the selected value trims to empty', () => {\n+    const select = document.createElement('select')\n+    const option = document.createElement('option')\n+    option.value = '   '\n+    select.append(option)\n+\n+    clearCustomValidityOnSelect(select)\n+\n+    select.value = '   '\n+    select.dispatchEvent(new Event('change'))\n+\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+  })\n+\n+  it('no-ops before any change event is dispatched', () => {\n+    const select = document.createElement('select')\n+    clearCustomValidityOnSelect(select)\n+\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+  })\n+\n+  it('silently swallows null select (no listener is attached)', () => {\n+    expect(() => clearCustomValidityOnSelect(null)).not.toThrow()\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+  })\n+\n+  it('silently swallows undefined select (no listener is attached)', () => {\n+    expect(() => clearCustomValidityOnSelect(undefined)).not.toThrow()\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+  })\n+})\n",
+              "additions": 346,
+              "deletions": 0,
+              "status": "added"
+            }
+          ]
+        },
+        "id": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Implement the work described by the user in the spec or tickets.\n\nUse /tdd where possible, at pre-agreed seams.\n\nRun typechecking regularly, single test files regularly, and the full test suite once at the end.\n\nOnce done, use /code-review to review the work.\n\nCommit your work to the current branch.\n\n\nBase directory for this skill: /Users/mseele/.claude/skills/implement\nRelative paths in this skill (e.g., scripts/, references/) are relative to this base directory.\n\n#402",
+          "id": "prt_f9f46350b001Vx3rPnAIR2Wt0h",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46350a001zdyJnEg8olWFGc"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00791664,
+        "tokens": {
+          "total": 11877,
+          "input": 4094,
+          "output": 39,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 7744
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083606538,
+          "completed": 1785083610060
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f46360a001HatMQC6ZQDqx90",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f464044001brUQzCd2pz5Xpb",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46360a001HatMQC6ZQDqx90"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me load the implement skill and look at issue #402.",
+          "time": {
+            "start": 1785083609163,
+            "end": 1785083609166
+          },
+          "id": "prt_f9f46404b001SvAvufFkZnLFz3",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46360a001HatMQC6ZQDqx90"
+        },
+        {
+          "type": "tool",
+          "tool": "skill",
+          "callID": "call_5bdf",
+          "state": {
+            "status": "completed",
+            "input": {
+              "name": "implement"
+            },
+            "output": "<skill_content name=\"implement\">\n# Skill: implement\n\nImplement the work described by the user in the spec or tickets.\n\nUse /tdd where possible, at pre-agreed seams.\n\nRun typechecking regularly, single test files regularly, and the full test suite once at the end.\n\nOnce done, use /code-review to review the work.\n\nCommit your work to the current branch.\n\nBase directory for this skill: /Users/mseele/.claude/skills/implement\nRelative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.\nNote: file list is sampled.\n\n<skill_files>\n<file>/Users/mseele/.claude/skills/implement/agents/openai.yaml</file>\n</skill_files>\n</skill_content>",
+            "metadata": {
+              "name": "implement",
+              "dir": "/Users/mseele/.claude/skills/implement",
+              "truncated": false
+            },
+            "title": "Loaded skill: implement",
+            "time": {
+              "start": 1785083609182,
+              "end": 1785083609217
+            }
+          },
+          "id": "prt_f9f464051001bb1er6F7cDcpAx",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46360a001HatMQC6ZQDqx90"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_fe13",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk gh issue view 402"
+            },
+            "output": "none of the git remotes configured for this repository point to a known GitHub host. To tell gh about a new GitHub host, please use `gh auth login`\n",
+            "metadata": {
+              "output": "none of the git remotes configured for this repository point to a known GitHub host. To tell gh about a new GitHub host, please use `gh auth login`\n",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "rtk gh issue view 402",
+            "time": {
+              "start": 1785083609963,
+              "end": 1785083609974
+            }
+          },
+          "id": "prt_f9f46427d001M70FBvRhIkfmPI",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46360a001HatMQC6ZQDqx90"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11877,
+            "input": 4094,
+            "output": 39,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 7744
+            }
+          },
+          "cost": 0.00791664,
+          "id": "prt_f9f46439b001RhVrhiKc8GsCbq",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46360a001HatMQC6ZQDqx90"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0035056,
+        "tokens": {
+          "total": 12098,
+          "input": 236,
+          "output": 22,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 11840
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083610062,
+          "completed": 1785083633501
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4643ce001hgS11j29SHeBJ8",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f469dc1001ryuqarDNPutbg7",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4643ce001hgS11j29SHeBJ8"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_dfda",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "git remote -v && rtk read package.json | head -50"
+            },
+            "output": "origin\tentire://aws-eu-central-1.entire.io/gh/mseele/sve-website (fetch)\norigin\tentire://aws-eu-central-1.entire.io/gh/mseele/sve-website (push)\n{\n  \"name\": \"sve-website\",\n  \"version\": \"5.0.0\",\n  \"private\": true,\n  \"description\": \"Website SV Eutingen\",\n  \"author\": \"mseele\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"astro dev\",\n    \"build\": \"astro build\",\n    \"check\": \"oxlint src/ && tsc --noEmit && astro check && vitest run\",\n    \"test\": \"vitest run\",\n    \"format\": \"oxfmt\"\n  },\n  \"dependencies\": {\n    \"@astro-community/astro-embed-youtube\": \"^0.5.10\",\n    \"@astrojs/check\": \"^0.9.9\",\n    \"@astrojs/netlify\": \"^8.1.2\",\n    \"@astrojs/sitemap\": \"^3.7.3\",\n    \"@astrojs/tailwind\": \"^6.0.2\",\n    \"@hcaptcha/vanilla-hcaptcha\": \"^1.1.4\",\n    \"@iconify-json/mdi\": \"^1.2.3\",\n    \"@pagefind/default-ui\": \"^1.5.2\",\n    \"@tailwindcss/typography\": \"^0.5.20\",\n    \"astro\": \"^7.1.3\",\n    \"astro-icon\": \"^1.1.5\",\n    \"astro-pagefind\": \"^2.0.1\",\n    \"astro-robots-txt\": \"^1.0.0\",\n    \"astro-seo\": \"^1.1.0\",\n    \"contentful\": \"^11.12.7\",\n    \"date-fns\": \"^4.4.0\",\n    \"date-fns-tz\": \"^3.2.0\",\n    \"ibantools\": \"^4.5.4\",\n    \"sharp\": \"^0.35.3\",\n    \"tailwind-scrollbar\": \"^4.0.2\",\n    \"tailwindcss\": \"^4.3.3\",\n    \"typescript\": \"^6.0.3\",\n    \"ulid\": \"^3.0.2\"\n  },\n  \"devDependencies\": {\n    \"@tailwindcss/vite\": \"^4.3.3\",\n    \"@types/bun\": \"^1.3.14\",\n    \"happy-dom\": \"^20.11.1\",\n    \"msw\": \"^2.15.0\",\n    \"oxfmt\": \"^0.60.0\",\n    \"oxlint\": \"^1.75.0\",\n    \"schema-dts\": \"^2.0.0\",\n    \"vitest\": \"^4.1.10\"\n  }\n}\n",
+            "metadata": {
+              "output": "origin\tentire://aws-eu-central-1.entire.io/gh/mseele/sve-website (fetch)\norigin\tentire://aws-eu-central-1.entire.io/gh/mseele/sve-website (push)\n{\n  \"name\": \"sve-website\",\n  \"version\": \"5.0.0\",\n  \"private\": true,\n  \"description\": \"Website SV Eutingen\",\n  \"author\": \"mseele\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"astro dev\",\n    \"build\": \"astro build\",\n    \"check\": \"oxlint src/ && tsc --noEmit && astro check && vitest run\",\n    \"test\": \"vitest run\",\n    \"format\": \"oxfmt\"\n  },\n  \"dependencies\": {\n    \"@astro-community/astro-embed-youtube\": \"^0.5.10\",\n    \"@astrojs/check\": \"^0.9.9\",\n    \"@astrojs/netlify\": \"^8.1.2\",\n    \"@astrojs/sitemap\": \"^3.7.3\",\n    \"@astrojs/tailwind\": \"^6.0.2\",\n    \"@hcaptcha/vanilla-hcaptcha\": \"^1.1.4\",\n    \"@iconify-json/mdi\": \"^1.2.3\",\n    \"@pagefind/default-ui\": \"^1.5.2\",\n    \"@tailwindcss/typography\": \"^0.5.20\",\n    \"astro\": \"^7.1.3\",\n    \"astro-icon\": \"^1.1.5\",\n    \"astro-pagefind\": \"^2.0.1\",\n    \"astro-robots-txt\": \"^1.0.0\",\n    \"astro-seo\": \"^1.1.0\",\n    \"contentful\": \"^11.12.7\",\n    \"date-fns\": \"^4.4.0\",\n    \"date-fns-tz\": \"^3.2.0\",\n    \"ibantools\": \"^4.5.4\",\n    \"sharp\": \"^0.35.3\",\n    \"tailwind-scrollbar\": \"^4.0.2\",\n    \"tailwindcss\": \"^4.3.3\",\n    \"typescript\": \"^6.0.3\",\n    \"ulid\": \"^3.0.2\"\n  },\n  \"devDependencies\": {\n    \"@tailwindcss/vite\": \"^4.3.3\",\n    \"@types/bun\": \"^1.3.14\",\n    \"happy-dom\": \"^20.11.1\",\n    \"msw\": \"^2.15.0\",\n    \"oxfmt\": \"^0.60.0\",\n    \"oxlint\": \"^1.75.0\",\n    \"schema-dts\": \"^2.0.0\",\n    \"vitest\": \"^4.1.10\"\n  }\n}\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "git remote -v && rtk read package.json | head -50",
+            "time": {
+              "start": 1785083633391,
+              "end": 1785083633400
+            }
+          },
+          "id": "prt_f9f469eab001jvoiOyclNHH44C",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4643ce001hgS11j29SHeBJ8"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 12098,
+            "input": 236,
+            "output": 22,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 11840
+            }
+          },
+          "cost": 0.0035056,
+          "id": "prt_f9f469f35001Z2m9N0QWafpVuc",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4643ce001hgS11j29SHeBJ8"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01789648,
+        "tokens": {
+          "total": 12761,
+          "input": 12574,
+          "output": 59,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083633504,
+          "completed": 1785083635937
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f469f6000195mkPLHS5kXF79",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f46a5f4001qmGRFtIlN5kM0B",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f469f6000195mkPLHS5kXF79"
+        },
+        {
+          "type": "reasoning",
+          "text": "GH not configured. Let me check git remotes - it's an entire.git remote. Let me check if there's a way to access the issue. Let me check current branch and status.",
+          "time": {
+            "start": 1785083635190,
+            "end": 1785083635771
+          },
+          "id": "prt_f9f46a5f6001tYBoUQfXADinq6",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f469f6000195mkPLHS5kXF79"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_fe64",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git status && rtk git log --oneline -10"
+            },
+            "output": "* feature/tests\nclean — nothing to commit\ne860333 test: cover src/api fetch wrappers with MSW handlers (#401)\n053b743 feat: retype and test the EventAvailability contract end-to-end (#400)\nb35403e test: export and cover appointments pure transforms (#399)\n1defceb test: stand up Vitest harness + cover utils\n76cd2f7 fix: update layout and styling for Leitbild section in vereinsportrait page\nfcd7ad9 feat: add link to Satzung document in vereinsportrait page\n98450aa chore: enable entire\n11c3a9d fix: remove unnecessary name attribute from IbanInput component\na441a7c chore: bump dependencies\na50354c fix: update SEPA mandate creditor handling in Event and SepaMandate components\n",
+            "metadata": {
+              "output": "* feature/tests\nclean — nothing to commit\ne860333 test: cover src/api fetch wrappers with MSW handlers (#401)\n053b743 feat: retype and test the EventAvailability contract end-to-end (#400)\nb35403e test: export and cover appointments pure transforms (#399)\n1defceb test: stand up Vitest harness + cover utils\n76cd2f7 fix: update layout and styling for Leitbild section in vereinsportrait page\nfcd7ad9 feat: add link to Satzung document in vereinsportrait page\n98450aa chore: enable entire\n11c3a9d fix: remove unnecessary name attribute from IbanInput component\na441a7c chore: bump dependencies\na50354c fix: update SEPA mandate creditor handling in Event and SepaMandate components\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git status && rtk git log --oneline -10",
+            "time": {
+              "start": 1785083635856,
+              "end": 1785083635859
+            }
+          },
+          "id": "prt_f9f46a83e001812eAPowDWauKc",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f469f6000195mkPLHS5kXF79"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 12761,
+            "input": 12574,
+            "output": 59,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01789648,
+          "id": "prt_f9f46a8b90017iobNeVcSloyg2",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f469f6000195mkPLHS5kXF79"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00468332,
+        "tokens": {
+          "total": 13012,
+          "input": 919,
+          "output": 61,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 12032
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083635939,
+          "completed": 1785083638852
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f46a8e3001RtaxfvmgHVOUn0",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f46acf5001zdaEesXyX6fOZr",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46a8e3001RtaxfvmgHVOUn0"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_7a49",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk gh issue view 402 --repo mseele/sve-website 2>&1 | head -40; echo \"---\"; rtk gh issue list --repo mseele/sve-website 2>&1 | head -20"
+            },
+            "output": "[open] Issue #402: Cover the client form validators\n  Author: @mseele\n  Status: OPEN\n  URL: https://github.com/mseele/sve-website/issues/402\n\n  Description:\n    ## What to build\n    \n    `src/client/forms.ts` exports pure-ish validators that take `HTMLInputElement | null | undefined`: `checkRequiredInput`, `checkRequiredSelect`, `validateIbanInput`, plus the `clearCustomValidityOnInput` / `clearCustomValidityOnSelect` listeners. They're nearly unit-testable as-is — the inputs are dependency-injected.\n    \n    Set up happy-dom with a stub for `reportValidity` / `setCustomValidity` (happy-dom returns false silently — assert the calls, not the returns), then cover: empty input triggers `reportValidity` and returns false; valid IBAN passes (`isValidIBAN` from `ibantools` is the real check — test our wrapper around it, not the lib); invalid IBAN sets a custom validity and returns false; `clearCustomValidity*` actually clears the message once a value is typed.\n    \n    Independent of the EventAvailability work — this file has no availability logic.\n    \n    ## Acceptance criteria\n    \n    - [ ] happy-dom test environment provides working `HTMLInputElement` / `HTMLSelectElement` / `HTMLTextAreaElement`\n    - [ ] `reportValidity` / `setCustomValidity` stubbed on the element prototypes and asserted as called\n    - [ ] `tests/client/forms.test.ts` covers every exported function in `src/client/forms.ts`\n    - [ ] IBAN validation tests cover empty, valid, and invalid inputs\n    - [ ] All tests green, `bun run check` green\n    \n    ## Blocked by\n    \n    - #398 (harness)\n---\nIssues\n  [open] #405 Playwright E2E for critical journeys (backend mocked)\n  [open] #404 Container API component render tests\n  [open] #403 Contentful Zod schema contract tests\n  [open] #402 Cover the client form validators\n  [open] #401 Cover the API fetch wrappers behind MSW\n  [open] #400 Retype and test the EventAvailability contract end-to-end\n  [open] #399 Export and cover the appointments pure transforms\n  [open] #398 Stand up test harness + cover the pure utils\n  [open] #306 Teams benötigen flexible Zusatzfelder\n  [open] #201 Startseite mit Content befüllen\n  [open] #186 Sponsoring-Partner erweitern\n  [open] #86 Think about bugsnag integration\n  [open] #50 Kontakt erweitern\n  [open] #28 [Kontaktformular] Confirmation Email an User\n  [open] #26 Kunstrasen-Vermietung optimieren\n  [open] #24 Fast Switch zwischen einzelnen Events\n",
+            "metadata": {
+              "output": "[open] Issue #402: Cover the client form validators\n  Author: @mseele\n  Status: OPEN\n  URL: https://github.com/mseele/sve-website/issues/402\n\n  Description:\n    ## What to build\n    \n    `src/client/forms.ts` exports pure-ish validators that take `HTMLInputElement | null | undefined`: `checkRequiredInput`, `checkRequiredSelect`, `validateIbanInput`, plus the `clearCustomValidityOnInput` / `clearCustomValidityOnSelect` listeners. They're nearly unit-testable as-is — the inputs are dependency-injected.\n    \n    Set up happy-dom with a stub for `reportValidity` / `setCustomValidity` (happy-dom returns false silently — assert the calls, not the returns), then cover: empty input triggers `reportValidity` and returns false; valid IBAN passes (`isValidIBAN` from `ibantools` is the real check — test our wrapper around it, not the lib); invalid IBAN sets a custom validity and returns false; `clearCustomValidity*` actually clears the message once a value is typed.\n    \n    Independent of the EventAvailability work — this file has no availability logic.\n    \n    ## Acceptance criteria\n    \n    - [ ] happy-dom test environment provides working `HTMLInputElement` / `HTMLSelectElement` / `HTMLTextAreaElement`\n    - [ ] `reportValidity` / `setCustomValidity` stubbed on the element prototypes and asserted as called\n    - [ ] `tests/client/forms.test.ts` covers every exported function in `src/client/forms.ts`\n    - [ ] IBAN validation tests cover empty, valid, and invalid inputs\n    - [ ] All tests green, `bun run check` green\n    \n    ## Blocked by\n    \n    - #398 (harness)\n---\nIssues\n  [open] #405 Playwright E2E for critical journeys (backend mocked)\n  [open] #404 Container API component render tests\n  [open] #403 Contentful Zod schema contract tests\n  [open] #402 Cover the client form validators\n  [open] #401 Cover the API fetch wrappers behind MSW\n  [open] #400 Retype and test the EventAvailability contract end-to-end\n  [open] #399 Export and cover the appointments pure transforms\n  [open] #398 Stand up test harness + cover the pure utils\n  [open] #306 Teams benötigen flexible Zusatzfelder\n  [open] #201 Startseite mit Content befüllen\n  [open] #186 Sponsoring-Partner erweitern\n  [open] #86 Think about bugsnag integration\n  [open] #50 Kontakt erweitern\n  [open] #28 [Kontaktformular] Confirmation Email an User\n  [open] #26 Kunstrasen-Vermietung optimieren\n  [open] #24 Fast Switch zwischen einzelnen Events\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk gh issue view 402 --repo mseele/sve-website 2>&1 | head -40; echo \"---\"; rtk gh issue list --repo mseele/sve-website 2>&1 | head -20",
+            "time": {
+              "start": 1785083638766,
+              "end": 1785083638770
+            }
+          },
+          "id": "prt_f9f46af74001bIAWVKGBycs26L",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46a8e3001RtaxfvmgHVOUn0"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 13012,
+            "input": 919,
+            "output": 61,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 12032
+            }
+          },
+          "cost": 0.00468332,
+          "id": "prt_f9f46b41b001FsRPEH0N0SJssj",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46a8e3001RtaxfvmgHVOUn0"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00466252,
+        "tokens": {
+          "total": 13721,
+          "input": 641,
+          "output": 88,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 12992
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083638853,
+          "completed": 1785083640731
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f46b445001FRNwryUSMVZpd0",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f46b861001sl1r5PpAObcoFn",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46b445001FRNwryUSMVZpd0"
+        },
+        {
+          "type": "reasoning",
+          "text": "Issue #402 is about covering client form validators. Let me look at the current state of `src/client/forms.ts` and the existing test harness.",
+          "time": {
+            "start": 1785083639907,
+            "end": 1785083640320
+          },
+          "id": "prt_f9f46b8630018PV7RWhcgXQAD3",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46b445001FRNwryUSMVZpd0"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_7455",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/src/client/forms.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/src/client/forms.ts</path>\n<type>file</type>\n<content>\n1: import { isValidIBAN } from 'ibantools'\n2: \n3: /**\n4:  * Attaches an event listener to clear the custom validity message\n5:  * when the user inputs a value in the input field.\n6:  *\n7:  * @param input - The input field to attach the event listener to\n8:  */\n9: export function clearCustomValidityOnInput(\n10:   input: HTMLInputElement | HTMLTextAreaElement | null | undefined,\n11: ): void {\n12:   input?.addEventListener('input', () => {\n13:     if (input.value.trim().length > 0) {\n14:       // Clear any custom validation messages\n15:       input.setCustomValidity('')\n16:     }\n17:   })\n18: }\n19: \n20: /**\n21:  * Attaches an event listener to clear the custom validity message\n22:  * when the user selects a value in the select field.\n23:  *\n24:  * @param select - The select field to attach the event listener to\n25:  */\n26: export function clearCustomValidityOnSelect(select: HTMLSelectElement | null | undefined): void {\n27:   select?.addEventListener('change', () => {\n28:     if (select.value.trim().length > 0) {\n29:       // Clear any custom validation messages\n30:       select.setCustomValidity('')\n31:     }\n32:   })\n33: }\n34: \n35: /**\n36:  * Validates that the input field is not empty. If the input is empty, sets a custom\n37:  * validity message and triggers the display of the validation error.\n38:  *\n39:  * @param {HTMLInputElement} input - The input field to validate.\n40:  * @param {string} errorMessage - The error message to display if the input is empty.\n41:  * @returns {boolean} - Returns `true` if the input is valid (not empty), otherwise `false`.\n42:  */\n43: export function checkRequiredInput(\n44:   input: HTMLInputElement | HTMLTextAreaElement | null | undefined,\n45:   errorMessage: string,\n46: ): boolean {\n47:   if (input?.value.trim() === '') {\n48:     input.setCustomValidity(errorMessage)\n49:     return input.reportValidity()\n50:   }\n51:   return true\n52: }\n53: \n54: /**\n55:  * Validates that the select field is not empty. If the select is empty, sets a custom\n56:  * validity message and triggers the display of the validation error.\n57:  *\n58:  * @param {HTMLInputElement} select - The select field to validate.\n59:  * @param {string} errorMessage - The error message to display if the select is empty.\n60:  * @returns {boolean} - Returns `true` if the select is valid (not empty), otherwise `false`.\n61:  */\n62: export function checkRequiredSelect(\n63:   select: HTMLSelectElement | null | undefined,\n64:   errorMessage: string,\n65: ): boolean {\n66:   if (select?.value.trim() === '') {\n67:     select.setCustomValidity(errorMessage)\n68:     return select.reportValidity()\n69:   }\n70:   return true\n71: }\n72: \n73: /**\n74:  * Validates that the IBAN input is valid. If invalid, sets a custom validity message\n75:  * and triggers the display of the validation error.\n76:  *\n77:  * @param {HTMLInputElement} input - The IBAN input field to validate.\n78:  * @returns {boolean} - Returns `true` if the IBAN is valid or empty (handled by 'required'), otherwise `false`.\n79:  */\n80: export function validateIbanInput(input: HTMLInputElement | null | undefined): boolean {\n81:   if (!input?.value) {\n82:     input?.setCustomValidity('Bitte gib eine gültige IBAN ein.')\n83:     return input?.reportValidity() ?? false\n84:   }\n85:   if (!isValidIBAN(input.value.replace(/\\s/g, '').toUpperCase())) {\n86:     input.setCustomValidity('Bitte gib eine gültige IBAN ein.')\n87:     return input.reportValidity()\n88:   }\n89:   return true\n90: }\n\n(End of file - total 90 lines)\n</content>",
+            "metadata": {
+              "preview": "import { isValidIBAN } from 'ibantools'\n\n/**\n * Attaches an event listener to clear the custom validity message\n * when the user inputs a value in the input field.\n *\n * @param input - The input field to attach the event listener to\n */\nexport function clearCustomValidityOnInput(\n  input: HTMLInputElement | HTMLTextAreaElement | null | undefined,\n): void {\n  input?.addEventListener('input', () => {\n    if (input.value.trim().length > 0) {\n      // Clear any custom validation messages\n      input.setCustomValidity('')\n    }\n  })\n}\n\n/**",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/src/client/forms.ts",
+                "text": "import { isValidIBAN } from 'ibantools'\n\n/**\n * Attaches an event listener to clear the custom validity message\n * when the user inputs a value in the input field.\n *\n * @param input - The input field to attach the event listener to\n */\nexport function clearCustomValidityOnInput(\n  input: HTMLInputElement | HTMLTextAreaElement | null | undefined,\n): void {\n  input?.addEventListener('input', () => {\n    if (input.value.trim().length > 0) {\n      // Clear any custom validation messages\n      input.setCustomValidity('')\n    }\n  })\n}\n\n/**\n * Attaches an event listener to clear the custom validity message\n * when the user selects a value in the select field.\n *\n * @param select - The select field to attach the event listener to\n */\nexport function clearCustomValidityOnSelect(select: HTMLSelectElement | null | undefined): void {\n  select?.addEventListener('change', () => {\n    if (select.value.trim().length > 0) {\n      // Clear any custom validation messages\n      select.setCustomValidity('')\n    }\n  })\n}\n\n/**\n * Validates that the input field is not empty. If the input is empty, sets a custom\n * validity message and triggers the display of the validation error.\n *\n * @param {HTMLInputElement} input - The input field to validate.\n * @param {string} errorMessage - The error message to display if the input is empty.\n * @returns {boolean} - Returns `true` if the input is valid (not empty), otherwise `false`.\n */\nexport function checkRequiredInput(\n  input: HTMLInputElement | HTMLTextAreaElement | null | undefined,\n  errorMessage: string,\n): boolean {\n  if (input?.value.trim() === '') {\n    input.setCustomValidity(errorMessage)\n    return input.reportValidity()\n  }\n  return true\n}\n\n/**\n * Validates that the select field is not empty. If the select is empty, sets a custom\n * validity message and triggers the display of the validation error.\n *\n * @param {HTMLInputElement} select - The select field to validate.\n * @param {string} errorMessage - The error message to display if the select is empty.\n * @returns {boolean} - Returns `true` if the select is valid (not empty), otherwise `false`.\n */\nexport function checkRequiredSelect(\n  select: HTMLSelectElement | null | undefined,\n  errorMessage: string,\n): boolean {\n  if (select?.value.trim() === '') {\n    select.setCustomValidity(errorMessage)\n    return select.reportValidity()\n  }\n  return true\n}\n\n/**\n * Validates that the IBAN input is valid. If invalid, sets a custom validity message\n * and triggers the display of the validation error.\n *\n * @param {HTMLInputElement} input - The IBAN input field to validate.\n * @returns {boolean} - Returns `true` if the IBAN is valid or empty (handled by 'required'), otherwise `false`.\n */\nexport function validateIbanInput(input: HTMLInputElement | null | undefined): boolean {\n  if (!input?.value) {\n    input?.setCustomValidity('Bitte gib eine gültige IBAN ein.')\n    return input?.reportValidity() ?? false\n  }\n  if (!isValidIBAN(input.value.replace(/\\s/g, '').toUpperCase())) {\n    input.setCustomValidity('Bitte gib eine gültige IBAN ein.')\n    return input.reportValidity()\n  }\n  return true\n}",
+                "lineStart": 1,
+                "lineEnd": 90,
+                "totalLines": 90,
+                "truncated": false
+              }
+            },
+            "title": "src/client/forms.ts",
+            "time": {
+              "start": 1785083640324,
+              "end": 1785083640329
+            }
+          },
+          "id": "prt_f9f46ba02001RTv9BJJV74TCd0",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46b445001FRNwryUSMVZpd0"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_e6ef",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk ls tests/ 2>&1; echo \"---\"; rtk ls vitest.config.* 2>&1"
+            },
+            "output": "api/\nmocks/\nsetup.ts  232B\nutils.test.ts  7.1K\n---\nvitest.config.ts  302B\n",
+            "metadata": {
+              "output": "api/\nmocks/\nsetup.ts  232B\nutils.test.ts  7.1K\n---\nvitest.config.ts  302B\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk ls tests/ 2>&1; echo \"---\"; rtk ls vitest.config.* 2>&1",
+            "time": {
+              "start": 1785083640663,
+              "end": 1785083640665
+            }
+          },
+          "id": "prt_f9f46bb270011d1EBNIw72px0E",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46b445001FRNwryUSMVZpd0"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 13721,
+            "input": 641,
+            "output": 88,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 12992
+            }
+          },
+          "cost": 0.00466252,
+          "id": "prt_f9f46bb790017GthdMMGEuDeLu",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46b445001FRNwryUSMVZpd0"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00530676,
+        "tokens": {
+          "total": 14793,
+          "input": 1027,
+          "output": 70,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 13696
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083640733,
+          "completed": 1785083642414
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f46bb9d001BtYoNLahD8VFfu",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f46bfd0001SR7xDH3kWUUQk1",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46bb9d001BtYoNLahD8VFfu"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_326e",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/setup.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/setup.ts</path>\n<type>file</type>\n<content>\n1: import { afterAll, afterEach, beforeAll } from 'vitest'\n2: import { server } from './mocks/server'\n3: \n4: beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))\n5: afterEach(() => server.resetHandlers())\n6: afterAll(() => server.close())\n\n(End of file - total 6 lines)\n</content>",
+            "metadata": {
+              "preview": "import { afterAll, afterEach, beforeAll } from 'vitest'\nimport { server } from './mocks/server'\n\nbeforeAll(() => server.listen({ onUnhandledRequest: 'error' }))\nafterEach(() => server.resetHandlers())\nafterAll(() => server.close())",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/setup.ts",
+                "text": "import { afterAll, afterEach, beforeAll } from 'vitest'\nimport { server } from './mocks/server'\n\nbeforeAll(() => server.listen({ onUnhandledRequest: 'error' }))\nafterEach(() => server.resetHandlers())\nafterAll(() => server.close())",
+                "lineStart": 1,
+                "lineEnd": 6,
+                "totalLines": 6,
+                "truncated": false
+              }
+            },
+            "title": "tests/setup.ts",
+            "time": {
+              "start": 1785083642003,
+              "end": 1785083642007
+            }
+          },
+          "id": "prt_f9f46c090001XV8nA812mL81oM",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46bb9d001BtYoNLahD8VFfu"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_b057",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/vitest.config.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/vitest.config.ts</path>\n<type>file</type>\n<content>\n1: import { getViteConfig } from 'astro/config'\n2: import { defineConfig } from 'vitest/config'\n3: \n4: export default defineConfig(\n5:   getViteConfig({\n6:     test: {\n7:       environment: 'happy-dom',\n8:       env: { TZ: 'UTC' },\n9:       setupFiles: ['./tests/setup.ts'],\n10:       include: ['tests/**/*.test.ts'],\n11:     },\n12:   }),\n13: )\n\n(End of file - total 13 lines)\n</content>",
+            "metadata": {
+              "preview": "import { getViteConfig } from 'astro/config'\nimport { defineConfig } from 'vitest/config'\n\nexport default defineConfig(\n  getViteConfig({\n    test: {\n      environment: 'happy-dom',\n      env: { TZ: 'UTC' },\n      setupFiles: ['./tests/setup.ts'],\n      include: ['tests/**/*.test.ts'],\n    },\n  }),\n)",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/vitest.config.ts",
+                "text": "import { getViteConfig } from 'astro/config'\nimport { defineConfig } from 'vitest/config'\n\nexport default defineConfig(\n  getViteConfig({\n    test: {\n      environment: 'happy-dom',\n      env: { TZ: 'UTC' },\n      setupFiles: ['./tests/setup.ts'],\n      include: ['tests/**/*.test.ts'],\n    },\n  }),\n)",
+                "lineStart": 1,
+                "lineEnd": 13,
+                "totalLines": 13,
+                "truncated": false
+              }
+            },
+            "title": "vitest.config.ts",
+            "time": {
+              "start": 1785083642108,
+              "end": 1785083642112
+            }
+          },
+          "id": "prt_f9f46c0fa001SFsoCfGEH6Ymw1",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46bb9d001BtYoNLahD8VFfu"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_c9f8",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/utils.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/utils.test.ts</path>\n<type>file</type>\n<content>\n1: import { describe, expect, it } from 'vitest'\n2: import type { RawAppointment } from '@/types'\n3: import {\n4:   formatDate,\n5:   formatCurrency,\n6:   formatDateCompact,\n7:   formatDatespan,\n8:   formatDatetime,\n9:   formatDuration,\n10:   formatTimespan,\n11: } from '@/utils'\n12: \n13: const toUtcIso = (year: number, month: number, day: number, hours = 0, minutes = 0) =>\n14:   new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n15: \n16: const toNaiveIso = (year: number, month: number, day: number, hours = 0, minutes = 0) => {\n17:   const pad = (n: number) => String(n).padStart(2, '0')\n18:   const date = `${year}-${pad(month)}-${pad(day)}`\n19:   return hours === 0 && minutes === 0 ? date : `${date}T${pad(hours)}:${pad(minutes)}:00`\n20: }\n21: \n22: const appointment = (fields: Partial<RawAppointment>): RawAppointment => ({\n23:   sort_index: 0,\n24:   ...fields,\n25: })\n26: \n27: const NBSP = '\\u00A0'\n28: \n29: describe('formatDate', () => {\n30:   const cases: Array<[Date, string]> = [\n31:     [new Date(Date.UTC(2024, 0, 15)), '15. Januar 2024'],\n32:     [new Date(Date.UTC(2024, 2, 9)), '9. März 2024'],\n33:     [new Date(Date.UTC(2024, 11, 1)), '1. Dezember 2024'],\n34:   ]\n35:   for (const [input, expected] of cases) {\n36:     it(`formats ${input.toISOString()} as ${expected}`, () => {\n37:       expect(formatDate(input)).toBe(expected)\n38:     })\n39:   }\n40: })\n41: \n42: describe('formatDatetime', () => {\n43:   const cases: Array<[string, string]> = [\n44:     [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan. 2024, 14:30 Uhr'],\n45:     [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März 2024, 9:05 Uhr'],\n46:     [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez. 2024, 23:59 Uhr'],\n47:   ]\n48:   for (const [input, expected] of cases) {\n49:     it(`formats ${input} as ${expected}`, () => {\n50:       expect(formatDatetime(input)).toBe(expected)\n51:     })\n52:   }\n53: })\n54: \n55: describe('formatDateCompact', () => {\n56:   const cases: Array<[string, string]> = [\n57:     [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan., 14:30 Uhr'],\n58:     [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März, 9:05 Uhr'],\n59:     [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez., 23:59 Uhr'],\n60:   ]\n61:   for (const [input, expected] of cases) {\n62:     it(`formats ${input} as ${expected}`, () => {\n63:       expect(formatDateCompact(input)).toBe(expected)\n64:     })\n65:   }\n66: })\n67: \n68: describe('formatDatespan', () => {\n69:   describe('date-only (start_date / end_date)', () => {\n70:     it('single day renders just the start in long form (German locale)', () => {\n71:       expect(\n72:         formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' })),\n73:       ).toBe('Mo., 15. Jan. 2024')\n74:     })\n75: \n76:     it('multi-day span renders both days joined with a dash (German locale)', () => {\n77:       expect(\n78:         formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-18' })),\n79:       ).toBe('Mo., 15. Jan. 2024 - Do., 18. Jan. 2024')\n80:     })\n81: \n82:     it('span across months and years (German locale)', () => {\n83:       expect(\n84:         formatDatespan(appointment({ start_date: '2024-12-30', end_date: '2025-01-02' })),\n85:       ).toBe('Mo., 30. Dez. 2024 - Do., 2. Jan. 2025')\n86:     })\n87:   })\n88: \n89:   describe('datetime-only (start_date_time / end_date_time)', () => {\n90:     it('same-calendar-day collapse renders only the start (default locale, no de)', () => {\n91:       expect(\n92:         formatDatespan(\n93:           appointment({\n94:             start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n95:             end_date_time: toNaiveIso(2024, 1, 15, 16, 30),\n96:           }),\n97:         ),\n98:       ).toBe('Mon, 15. Jan 2024')\n99:     })\n100: \n101:     it('1-minute difference collapse renders only the start (tracer branch)', () => {\n102:       expect(\n103:         formatDatespan(\n104:           appointment({\n105:             start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n106:             end_date_time: toNaiveIso(2024, 1, 15, 14, 31),\n107:           }),\n108:         ),\n109:       ).toBe('Mon, 15. Jan 2024')\n110:     })\n111: \n112:     it('cross-midnight span (different calendar days) renders both endpoints (default locale)', () => {\n113:       expect(\n114:         formatDatespan(\n115:           appointment({\n116:             start_date_time: toNaiveIso(2024, 1, 15, 23, 30),\n117:             end_date_time: toNaiveIso(2024, 1, 16, 0, 30),\n118:           }),\n119:         ),\n120:       ).toBe('Mon, 15. Jan 2024 - Tue, 16. Jan 2024')\n121:     })\n122: \n123:     it('multi-day datetime span renders both endpoints (default locale)', () => {\n124:       expect(\n125:         formatDatespan(\n126:           appointment({\n127:             start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n128:             end_date_time: toNaiveIso(2024, 1, 18, 10, 0),\n129:           }),\n130:         ),\n131:       ).toBe('Mon, 15. Jan 2024 - Thu, 18. Jan 2024')\n132:     })\n133:   })\n134: \n135:   describe('no dates', () => {\n136:     it('throws when neither date nor datetime range is present', () => {\n137:       expect(() => formatDatespan(appointment({}))).toThrow('Appointment has no start or end date')\n138:     })\n139: \n140:     it('throws with only a start_date', () => {\n141:       expect(() => formatDatespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n142:         'Appointment has no start or end date',\n143:       )\n144:     })\n145: \n146:     it('throws with only a start_date_time', () => {\n147:       expect(() =>\n148:         formatDatespan(appointment({ start_date_time: toNaiveIso(2024, 1, 15, 14, 30) })),\n149:       ).toThrow('Appointment has no start or end date')\n150:     })\n151:   })\n152: })\n153: \n154: describe('formatTimespan', () => {\n155:   it('returns ganztägig for all-day date range', () => {\n156:     expect(formatTimespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' }))).toBe(\n157:       'ganztägig',\n158:     )\n159:   })\n160: \n161:   it('formats datetime range as start - end Uhr', () => {\n162:     expect(\n163:       formatTimespan(\n164:         appointment({\n165:           start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n166:           end_date_time: toNaiveIso(2024, 1, 15, 16, 45),\n167:         }),\n168:       ),\n169:     ).toBe('14:30 - 16:45 Uhr')\n170:   })\n171: \n172:   it('1-minute difference still formats as a normal time range (no same-day collapse branch here)', () => {\n173:     expect(\n174:       formatTimespan(\n175:         appointment({\n176:           start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n177:           end_date_time: toNaiveIso(2024, 1, 15, 14, 31),\n178:         }),\n179:       ),\n180:     ).toBe('14:30 - 14:31 Uhr')\n181:   })\n182: \n183:   it('throws on empty appointment', () => {\n184:     expect(() => formatTimespan(appointment({}))).toThrow(\n185:       'Appointment has no start or end date time',\n186:     )\n187:   })\n188: \n189:   it('throws with only a start_date set', () => {\n190:     expect(() => formatTimespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n191:       'Appointment has no start or end date time',\n192:     )\n193:   })\n194: })\n195: \n196: describe('formatDuration', () => {\n197:   const cases: Array<[number, string]> = [\n198:     [0, ''],\n199:     [30, '30 Minuten'],\n200:     [60, '1 Stunde'],\n201:     [90, '1 Stunde und 30 Minuten'],\n202:     [120, '2 Stunden'],\n203:     [150, '2 Stunden und 30 Minuten'],\n204:     [180, '3 Stunden'],\n205:   ]\n206:   for (const [input, expected] of cases) {\n207:     it(`formats ${input} minutes as \"${expected}\"`, () => {\n208:       expect(formatDuration(input)).toBe(expected)\n209:     })\n210:   }\n211: })\n212: \n213: describe('formatCurrency', () => {\n214:   const cases: Array<[number, string]> = [\n215:     [0, `0,00${NBSP}€`],\n216:     [9.99, `9,99${NBSP}€`],\n217:     [1000, `1.000,00${NBSP}€`],\n218:     [1234.5, `1.234,50${NBSP}€`],\n219:     [-5, `-5,00${NBSP}€`],\n220:   ]\n221:   for (const [input, expected] of cases) {\n222:     it(`formats ${input} as ${expected}`, () => {\n223:       expect(formatCurrency(input)).toBe(expected)\n224:     })\n225:   }\n226: \n227:   it('returns the original value when not coercible to a number', () => {\n228:     expect(formatCurrency('not-a-number' as unknown as number)).toBe('not-a-number')\n229:   })\n230: })\n\n(End of file - total 230 lines)\n</content>",
+            "metadata": {
+              "preview": "import { describe, expect, it } from 'vitest'\nimport type { RawAppointment } from '@/types'\nimport {\n  formatDate,\n  formatCurrency,\n  formatDateCompact,\n  formatDatespan,\n  formatDatetime,\n  formatDuration,\n  formatTimespan,\n} from '@/utils'\n\nconst toUtcIso = (year: number, month: number, day: number, hours = 0, minutes = 0) =>\n  new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n\nconst toNaiveIso = (year: number, month: number, day: number, hours = 0, minutes = 0) => {\n  const pad = (n: number) => String(n).padStart(2, '0')\n  const date = `${year}-${pad(month)}-${pad(day)}`\n  return hours === 0 && minutes === 0 ? date : `${date}T${pad(hours)}:${pad(minutes)}:00`\n}",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/utils.test.ts",
+                "text": "import { describe, expect, it } from 'vitest'\nimport type { RawAppointment } from '@/types'\nimport {\n  formatDate,\n  formatCurrency,\n  formatDateCompact,\n  formatDatespan,\n  formatDatetime,\n  formatDuration,\n  formatTimespan,\n} from '@/utils'\n\nconst toUtcIso = (year: number, month: number, day: number, hours = 0, minutes = 0) =>\n  new Date(Date.UTC(year, month - 1, day, hours, minutes)).toISOString()\n\nconst toNaiveIso = (year: number, month: number, day: number, hours = 0, minutes = 0) => {\n  const pad = (n: number) => String(n).padStart(2, '0')\n  const date = `${year}-${pad(month)}-${pad(day)}`\n  return hours === 0 && minutes === 0 ? date : `${date}T${pad(hours)}:${pad(minutes)}:00`\n}\n\nconst appointment = (fields: Partial<RawAppointment>): RawAppointment => ({\n  sort_index: 0,\n  ...fields,\n})\n\nconst NBSP = '\\u00A0'\n\ndescribe('formatDate', () => {\n  const cases: Array<[Date, string]> = [\n    [new Date(Date.UTC(2024, 0, 15)), '15. Januar 2024'],\n    [new Date(Date.UTC(2024, 2, 9)), '9. März 2024'],\n    [new Date(Date.UTC(2024, 11, 1)), '1. Dezember 2024'],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input.toISOString()} as ${expected}`, () => {\n      expect(formatDate(input)).toBe(expected)\n    })\n  }\n})\n\ndescribe('formatDatetime', () => {\n  const cases: Array<[string, string]> = [\n    [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan. 2024, 14:30 Uhr'],\n    [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März 2024, 9:05 Uhr'],\n    [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez. 2024, 23:59 Uhr'],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input} as ${expected}`, () => {\n      expect(formatDatetime(input)).toBe(expected)\n    })\n  }\n})\n\ndescribe('formatDateCompact', () => {\n  const cases: Array<[string, string]> = [\n    [toUtcIso(2024, 1, 15, 14, 30), 'Mo., 15. Jan., 14:30 Uhr'],\n    [toUtcIso(2024, 3, 9, 9, 5), 'Sa., 9. März, 9:05 Uhr'],\n    [toUtcIso(2024, 12, 31, 23, 59), 'Di., 31. Dez., 23:59 Uhr'],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input} as ${expected}`, () => {\n      expect(formatDateCompact(input)).toBe(expected)\n    })\n  }\n})\n\ndescribe('formatDatespan', () => {\n  describe('date-only (start_date / end_date)', () => {\n    it('single day renders just the start in long form (German locale)', () => {\n      expect(\n        formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' })),\n      ).toBe('Mo., 15. Jan. 2024')\n    })\n\n    it('multi-day span renders both days joined with a dash (German locale)', () => {\n      expect(\n        formatDatespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-18' })),\n      ).toBe('Mo., 15. Jan. 2024 - Do., 18. Jan. 2024')\n    })\n\n    it('span across months and years (German locale)', () => {\n      expect(\n        formatDatespan(appointment({ start_date: '2024-12-30', end_date: '2025-01-02' })),\n      ).toBe('Mo., 30. Dez. 2024 - Do., 2. Jan. 2025')\n    })\n  })\n\n  describe('datetime-only (start_date_time / end_date_time)', () => {\n    it('same-calendar-day collapse renders only the start (default locale, no de)', () => {\n      expect(\n        formatDatespan(\n          appointment({\n            start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n            end_date_time: toNaiveIso(2024, 1, 15, 16, 30),\n          }),\n        ),\n      ).toBe('Mon, 15. Jan 2024')\n    })\n\n    it('1-minute difference collapse renders only the start (tracer branch)', () => {\n      expect(\n        formatDatespan(\n          appointment({\n            start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n            end_date_time: toNaiveIso(2024, 1, 15, 14, 31),\n          }),\n        ),\n      ).toBe('Mon, 15. Jan 2024')\n    })\n\n    it('cross-midnight span (different calendar days) renders both endpoints (default locale)', () => {\n      expect(\n        formatDatespan(\n          appointment({\n            start_date_time: toNaiveIso(2024, 1, 15, 23, 30),\n            end_date_time: toNaiveIso(2024, 1, 16, 0, 30),\n          }),\n        ),\n      ).toBe('Mon, 15. Jan 2024 - Tue, 16. Jan 2024')\n    })\n\n    it('multi-day datetime span renders both endpoints (default locale)', () => {\n      expect(\n        formatDatespan(\n          appointment({\n            start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n            end_date_time: toNaiveIso(2024, 1, 18, 10, 0),\n          }),\n        ),\n      ).toBe('Mon, 15. Jan 2024 - Thu, 18. Jan 2024')\n    })\n  })\n\n  describe('no dates', () => {\n    it('throws when neither date nor datetime range is present', () => {\n      expect(() => formatDatespan(appointment({}))).toThrow('Appointment has no start or end date')\n    })\n\n    it('throws with only a start_date', () => {\n      expect(() => formatDatespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n        'Appointment has no start or end date',\n      )\n    })\n\n    it('throws with only a start_date_time', () => {\n      expect(() =>\n        formatDatespan(appointment({ start_date_time: toNaiveIso(2024, 1, 15, 14, 30) })),\n      ).toThrow('Appointment has no start or end date')\n    })\n  })\n})\n\ndescribe('formatTimespan', () => {\n  it('returns ganztägig for all-day date range', () => {\n    expect(formatTimespan(appointment({ start_date: '2024-01-15', end_date: '2024-01-15' }))).toBe(\n      'ganztägig',\n    )\n  })\n\n  it('formats datetime range as start - end Uhr', () => {\n    expect(\n      formatTimespan(\n        appointment({\n          start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n          end_date_time: toNaiveIso(2024, 1, 15, 16, 45),\n        }),\n      ),\n    ).toBe('14:30 - 16:45 Uhr')\n  })\n\n  it('1-minute difference still formats as a normal time range (no same-day collapse branch here)', () => {\n    expect(\n      formatTimespan(\n        appointment({\n          start_date_time: toNaiveIso(2024, 1, 15, 14, 30),\n          end_date_time: toNaiveIso(2024, 1, 15, 14, 31),\n        }),\n      ),\n    ).toBe('14:30 - 14:31 Uhr')\n  })\n\n  it('throws on empty appointment', () => {\n    expect(() => formatTimespan(appointment({}))).toThrow(\n      'Appointment has no start or end date time',\n    )\n  })\n\n  it('throws with only a start_date set', () => {\n    expect(() => formatTimespan(appointment({ start_date: '2024-01-15' }))).toThrow(\n      'Appointment has no start or end date time',\n    )\n  })\n})\n\ndescribe('formatDuration', () => {\n  const cases: Array<[number, string]> = [\n    [0, ''],\n    [30, '30 Minuten'],\n    [60, '1 Stunde'],\n    [90, '1 Stunde und 30 Minuten'],\n    [120, '2 Stunden'],\n    [150, '2 Stunden und 30 Minuten'],\n    [180, '3 Stunden'],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input} minutes as \"${expected}\"`, () => {\n      expect(formatDuration(input)).toBe(expected)\n    })\n  }\n})\n\ndescribe('formatCurrency', () => {\n  const cases: Array<[number, string]> = [\n    [0, `0,00${NBSP}€`],\n    [9.99, `9,99${NBSP}€`],\n    [1000, `1.000,00${NBSP}€`],\n    [1234.5, `1.234,50${NBSP}€`],\n    [-5, `-5,00${NBSP}€`],\n  ]\n  for (const [input, expected] of cases) {\n    it(`formats ${input} as ${expected}`, () => {\n      expect(formatCurrency(input)).toBe(expected)\n    })\n  }\n\n  it('returns the original value when not coercible to a number', () => {\n    expect(formatCurrency('not-a-number' as unknown as number)).toBe('not-a-number')\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 230,
+                "totalLines": 230,
+                "truncated": false
+              }
+            },
+            "title": "tests/utils.test.ts",
+            "time": {
+              "start": 1785083642337,
+              "end": 1785083642341
+            }
+          },
+          "id": "prt_f9f46c1de001dFh67qBLeThF3X",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46bb9d001BtYoNLahD8VFfu"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 14793,
+            "input": 1027,
+            "output": 70,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 13696
+            }
+          },
+          "cost": 0.00530676,
+          "id": "prt_f9f46c20a001k1QvHnMaATfVA4",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46bb9d001BtYoNLahD8VFfu"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00848104,
+        "tokens": {
+          "total": 17942,
+          "input": 3086,
+          "output": 72,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 14784
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083642416,
+          "completed": 1785083644810
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f46c23000102AyW9FU1RIDzQ",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f46c721001PInggIaekRILYG",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46c23000102AyW9FU1RIDzQ"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me look at the existing tests/mocks and tests/api to understand the established patterns. Also check the test for forms-related contracts (appointments) for style.",
+          "time": {
+            "start": 1785083643683,
+            "end": 1785083644623
+          },
+          "id": "prt_f9f46c723001dkuKDz113158o7",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46c23000102AyW9FU1RIDzQ"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_453f",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk ls tests/mocks/ tests/api/ 2>&1; echo \"---\"; rtk find tests -type f 2>&1"
+            },
+            "output": "handlers/\nappointments-fetch.test.ts  2.0K\nappointments.test.ts  8.3K\nevents-fetch.test.ts  17.2K\nevents.test.ts  9.0K\nforms-fetch.test.ts  6.8K\nbackend.ts  47B\nserver.ts  287B\n---\n12F 4D:\n\n./ setup.ts utils.test.ts\napi/ appointments-fetch.test.ts appointments.test.ts events-fetch.test.ts events.test.ts forms-fetch.test.ts\nmocks/ backend.ts server.ts\nmocks/handlers/ calendar.ts events.ts forms.ts\n",
+            "metadata": {
+              "output": "handlers/\nappointments-fetch.test.ts  2.0K\nappointments.test.ts  8.3K\nevents-fetch.test.ts  17.2K\nevents.test.ts  9.0K\nforms-fetch.test.ts  6.8K\nbackend.ts  47B\nserver.ts  287B\n---\n12F 4D:\n\n./ setup.ts utils.test.ts\napi/ appointments-fetch.test.ts appointments.test.ts events-fetch.test.ts events.test.ts forms-fetch.test.ts\nmocks/ backend.ts server.ts\nmocks/handlers/ calendar.ts events.ts forms.ts\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk ls tests/mocks/ tests/api/ 2>&1; echo \"---\"; rtk find tests -type f 2>&1",
+            "time": {
+              "start": 1785083644667,
+              "end": 1785083644674
+            }
+          },
+          "id": "prt_f9f46cad1001StSTGTjGOXWBw5",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46c23000102AyW9FU1RIDzQ"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 17942,
+            "input": 3086,
+            "output": 72,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 14784
+            }
+          },
+          "cost": 0.00848104,
+          "id": "prt_f9f46cb22001UrNpcdL0Jh1sPi",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46c23000102AyW9FU1RIDzQ"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0051124,
+        "tokens": {
+          "total": 18128,
+          "input": 154,
+          "output": 54,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 17920
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083644812,
+          "completed": 1785083646497
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f46cb8c001YwNa100UbO2Wg2",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f46d039001NOHBty48yoKxx5",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46cb8c001YwNa100UbO2Wg2"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_9a17",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/api/forms-fetch.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/api/forms-fetch.test.ts</path>\n<type>file</type>\n<content>\n1: import { describe, expect, it } from 'vitest'\n2: import { http, HttpResponse } from 'msw'\n3: import { manageSubscription, sendContactMessage } from '@/api/forms'\n4: import { server } from '../mocks/server'\n5: import {\n6:   CONTACT_MESSAGE_URL,\n7:   NEWS_SUBSCRIBE_URL,\n8:   NEWS_UNSUBSCRIBE_URL,\n9: } from '../mocks/handlers/forms'\n10: \n11: describe('sendContactMessage — mutating POST contact route', () => {\n12:   it('asserts request shape: URL, POST, Content-Type application/json, body shape {type, to, name, email, phone, message, token}', async () => {\n13:     let capturedMethod: string | undefined = undefined\n14:     let capturedContentType: string | null = null\n15:     let capturedUrl: string | undefined = undefined\n16:     let capturedBody: any = undefined\n17:     server.use(\n18:       http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n19:         capturedMethod = request.method\n20:         capturedContentType = request.headers.get('Content-Type')\n21:         capturedUrl = request.url\n22:         capturedBody = await request.json()\n23:         return HttpResponse.json({ success: true, message: 'sent' })\n24:       }),\n25:     )\n26: \n27:     const response = await sendContactMessage(\n28:       'vorstand@sv-eutingen.de',\n29:       '  Max Mustermann  ',\n30:       '  max@example.org  ',\n31:       ' 0176 1234567 ',\n32:       '  Hallo Welt  ',\n33:       'captcha-token',\n34:     )\n35: \n36:     expect(response.ok).toBe(true)\n37:     expect(capturedMethod).toBe('POST')\n38:     expect(new URL(capturedUrl!).pathname).toBe('/api/contact/message')\n39:     expect(capturedContentType).toBe('application/json')\n40:     expect(capturedBody).toEqual({\n41:       type: 'General',\n42:       to: 'vorstand@sv-eutingen.de',\n43:       name: 'Max Mustermann',\n44:       email: 'max@example.org',\n45:       phone: '0176 1234567',\n46:       message: 'Hallo Welt',\n47:       token: 'captcha-token',\n48:     })\n49:   })\n50: \n51:   it('omits phone (sets it undefined) when the caller passes `undefined`', async () => {\n52:     let capturedBody: any\n53:     server.use(\n54:       http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n55:         capturedBody = await request.json()\n56:         return HttpResponse.json({ success: true })\n57:       }),\n58:     )\n59: \n60:     await sendContactMessage('recip', 'Max', 'max@example.org', undefined, 'msg', 'tok')\n61: \n62:     expect(capturedBody).toEqual({\n63:       type: 'General',\n64:       to: 'recip',\n65:       name: 'Max',\n66:       email: 'max@example.org',\n67:       phone: undefined,\n68:       message: 'msg',\n69:       token: 'tok',\n70:     })\n71:   })\n72: \n73:   it('returns the raw 2xx Response (caller proceeds with response.ok)', async () => {\n74:     server.use(http.post(CONTACT_MESSAGE_URL, () => HttpResponse.json({ success: true })))\n75: \n76:     const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n77:     expect(response.ok).toBe(true)\n78:     expect(response.status).toBe(200)\n79:   })\n80: \n81:   it('failure path: returns the raw non-2xx Response without throwing', async () => {\n82:     server.use(\n83:       http.post(CONTACT_MESSAGE_URL, () =>\n84:         HttpResponse.json({ message: 'invalid' }, { status: 422 }),\n85:       ),\n86:     )\n87: \n88:     const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n89:     expect(response.ok).toBe(false)\n90:     expect(response.status).toBe(422)\n91:   })\n92: \n93:   it('failure path: 500 also surfaces as raw Response', async () => {\n94:     server.use(http.post(CONTACT_MESSAGE_URL, () => HttpResponse.json({}, { status: 500 })))\n95:     const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n96:     expect(response.ok).toBe(false)\n97:     expect(response.status).toBe(500)\n98:   })\n99: })\n100: \n101: describe('manageSubscription — mutating POST news route', () => {\n102:   it('asserts request shape for subscribe=true: URL, POST, Content-Type, body {email, types, token}', async () => {\n103:     let capturedMethod: string | undefined = undefined\n104:     let capturedContentType: string | null = null\n105:     let capturedUrl: string | undefined = undefined\n106:     let capturedBody: any = undefined\n107:     server.use(\n108:       http.post(NEWS_SUBSCRIBE_URL, async ({ request }) => {\n109:         capturedMethod = request.method\n110:         capturedContentType = request.headers.get('Content-Type')\n111:         capturedUrl = request.url\n112:         capturedBody = await request.json()\n113:         return HttpResponse.json({ success: true })\n114:       }),\n115:     )\n116: \n117:     const response = await manageSubscription(\n118:       true,\n119:       'subscriber@example.org',\n120:       true,\n121:       false,\n122:       true,\n123:       'token-7',\n124:     )\n125: \n126:     expect(response.ok).toBe(true)\n127:     expect(capturedMethod).toBe('POST')\n128:     expect(capturedContentType).toBe('application/json')\n129:     expect(new URL(capturedUrl!).pathname).toBe('/api/news/subscribe')\n130:     expect(capturedBody).toEqual({\n131:       email: 'subscriber@example.org',\n132:       types: ['General', 'Events'],\n133:       token: 'token-7',\n134:     })\n135:   })\n136: \n137:   it('asserts request shape for subscribe=false: POST /news/unsubscribe', async () => {\n138:     let capturedUrl: string | undefined = undefined\n139:     let capturedBody: any\n140:     server.use(\n141:       http.post(NEWS_UNSUBSCRIBE_URL, async ({ request }) => {\n142:         capturedUrl = request.url\n143:         capturedBody = await request.json()\n144:         return HttpResponse.json({ success: true })\n145:       }),\n146:     )\n147: \n148:     const response = await manageSubscription(\n149:       false,\n150:       'unsub@example.org',\n151:       true,\n152:       true,\n153:       true,\n154:       'token-9',\n155:     )\n156: \n157:     expect(response.ok).toBe(true)\n158:     expect(new URL(capturedUrl!).pathname).toBe('/api/news/unsubscribe')\n159:     expect(capturedBody).toEqual({\n160:       email: 'unsub@example.org',\n161:       types: ['General', 'Fitness', 'Events'],\n162:       token: 'token-9',\n163:     })\n164:   })\n165: \n166:   it('emits an empty `types` array when no category is selected', async () => {\n167:     let capturedBody: any\n168:     server.use(\n169:       http.post(NEWS_SUBSCRIBE_URL, async ({ request }) => {\n170:         capturedBody = await request.json()\n171:         return HttpResponse.json({ success: true })\n172:       }),\n173:     )\n174: \n175:     await manageSubscription(true, 'e@example.org', false, false, false, 'tok')\n176:     expect(capturedBody).toEqual({ email: 'e@example.org', types: [], token: 'tok' })\n177:   })\n178: \n179:   it('returns the raw 2xx Response', async () => {\n180:     server.use(http.post(NEWS_SUBSCRIBE_URL, () => HttpResponse.json({ success: true })))\n181:     const response = await manageSubscription(true, 'e', true, false, false, 'tok')\n182:     expect(response.ok).toBe(true)\n183:     expect(response.status).toBe(200)\n184:   })\n185: \n186:   it('failure path: returns the raw 4xx Response without throwing (subscribe path)', async () => {\n187:     server.use(\n188:       http.post(NEWS_SUBSCRIBE_URL, () => HttpResponse.json({ message: 'bad' }, { status: 400 })),\n189:     )\n190:     const response = await manageSubscription(true, 'e', true, false, false, 'tok')\n191:     expect(response.ok).toBe(false)\n192:     expect(response.status).toBe(400)\n193:   })\n194: \n195:   it('failure path: returns the raw 5xx Response without throwing (unsubscribe path)', async () => {\n196:     server.use(http.post(NEWS_UNSUBSCRIBE_URL, () => HttpResponse.json({}, { status: 503 })))\n197:     const response = await manageSubscription(false, 'e', true, false, false, 'tok')\n198:     expect(response.ok).toBe(false)\n199:     expect(response.status).toBe(503)\n200:   })\n201: })\n\n(End of file - total 201 lines)\n</content>",
+            "metadata": {
+              "preview": "import { describe, expect, it } from 'vitest'\nimport { http, HttpResponse } from 'msw'\nimport { manageSubscription, sendContactMessage } from '@/api/forms'\nimport { server } from '../mocks/server'\nimport {\n  CONTACT_MESSAGE_URL,\n  NEWS_SUBSCRIBE_URL,\n  NEWS_UNSUBSCRIBE_URL,\n} from '../mocks/handlers/forms'\n\ndescribe('sendContactMessage — mutating POST contact route', () => {\n  it('asserts request shape: URL, POST, Content-Type application/json, body shape {type, to, name, email, phone, message, token}', async () => {\n    let capturedMethod: string | undefined = undefined\n    let capturedContentType: string | null = null\n    let capturedUrl: string | undefined = undefined\n    let capturedBody: any = undefined\n    server.use(\n      http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n        capturedMethod = request.method\n        capturedContentType = request.headers.get('Content-Type')",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/api/forms-fetch.test.ts",
+                "text": "import { describe, expect, it } from 'vitest'\nimport { http, HttpResponse } from 'msw'\nimport { manageSubscription, sendContactMessage } from '@/api/forms'\nimport { server } from '../mocks/server'\nimport {\n  CONTACT_MESSAGE_URL,\n  NEWS_SUBSCRIBE_URL,\n  NEWS_UNSUBSCRIBE_URL,\n} from '../mocks/handlers/forms'\n\ndescribe('sendContactMessage — mutating POST contact route', () => {\n  it('asserts request shape: URL, POST, Content-Type application/json, body shape {type, to, name, email, phone, message, token}', async () => {\n    let capturedMethod: string | undefined = undefined\n    let capturedContentType: string | null = null\n    let capturedUrl: string | undefined = undefined\n    let capturedBody: any = undefined\n    server.use(\n      http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n        capturedMethod = request.method\n        capturedContentType = request.headers.get('Content-Type')\n        capturedUrl = request.url\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true, message: 'sent' })\n      }),\n    )\n\n    const response = await sendContactMessage(\n      'vorstand@sv-eutingen.de',\n      '  Max Mustermann  ',\n      '  max@example.org  ',\n      ' 0176 1234567 ',\n      '  Hallo Welt  ',\n      'captcha-token',\n    )\n\n    expect(response.ok).toBe(true)\n    expect(capturedMethod).toBe('POST')\n    expect(new URL(capturedUrl!).pathname).toBe('/api/contact/message')\n    expect(capturedContentType).toBe('application/json')\n    expect(capturedBody).toEqual({\n      type: 'General',\n      to: 'vorstand@sv-eutingen.de',\n      name: 'Max Mustermann',\n      email: 'max@example.org',\n      phone: '0176 1234567',\n      message: 'Hallo Welt',\n      token: 'captcha-token',\n    })\n  })\n\n  it('omits phone (sets it undefined) when the caller passes `undefined`', async () => {\n    let capturedBody: any\n    server.use(\n      http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true })\n      }),\n    )\n\n    await sendContactMessage('recip', 'Max', 'max@example.org', undefined, 'msg', 'tok')\n\n    expect(capturedBody).toEqual({\n      type: 'General',\n      to: 'recip',\n      name: 'Max',\n      email: 'max@example.org',\n      phone: undefined,\n      message: 'msg',\n      token: 'tok',\n    })\n  })\n\n  it('returns the raw 2xx Response (caller proceeds with response.ok)', async () => {\n    server.use(http.post(CONTACT_MESSAGE_URL, () => HttpResponse.json({ success: true })))\n\n    const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n    expect(response.ok).toBe(true)\n    expect(response.status).toBe(200)\n  })\n\n  it('failure path: returns the raw non-2xx Response without throwing', async () => {\n    server.use(\n      http.post(CONTACT_MESSAGE_URL, () =>\n        HttpResponse.json({ message: 'invalid' }, { status: 422 }),\n      ),\n    )\n\n    const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n    expect(response.ok).toBe(false)\n    expect(response.status).toBe(422)\n  })\n\n  it('failure path: 500 also surfaces as raw Response', async () => {\n    server.use(http.post(CONTACT_MESSAGE_URL, () => HttpResponse.json({}, { status: 500 })))\n    const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n    expect(response.ok).toBe(false)\n    expect(response.status).toBe(500)\n  })\n})\n\ndescribe('manageSubscription — mutating POST news route', () => {\n  it('asserts request shape for subscribe=true: URL, POST, Content-Type, body {email, types, token}', async () => {\n    let capturedMethod: string | undefined = undefined\n    let capturedContentType: string | null = null\n    let capturedUrl: string | undefined = undefined\n    let capturedBody: any = undefined\n    server.use(\n      http.post(NEWS_SUBSCRIBE_URL, async ({ request }) => {\n        capturedMethod = request.method\n        capturedContentType = request.headers.get('Content-Type')\n        capturedUrl = request.url\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true })\n      }),\n    )\n\n    const response = await manageSubscription(\n      true,\n      'subscriber@example.org',\n      true,\n      false,\n      true,\n      'token-7',\n    )\n\n    expect(response.ok).toBe(true)\n    expect(capturedMethod).toBe('POST')\n    expect(capturedContentType).toBe('application/json')\n    expect(new URL(capturedUrl!).pathname).toBe('/api/news/subscribe')\n    expect(capturedBody).toEqual({\n      email: 'subscriber@example.org',\n      types: ['General', 'Events'],\n      token: 'token-7',\n    })\n  })\n\n  it('asserts request shape for subscribe=false: POST /news/unsubscribe', async () => {\n    let capturedUrl: string | undefined = undefined\n    let capturedBody: any\n    server.use(\n      http.post(NEWS_UNSUBSCRIBE_URL, async ({ request }) => {\n        capturedUrl = request.url\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true })\n      }),\n    )\n\n    const response = await manageSubscription(\n      false,\n      'unsub@example.org',\n      true,\n      true,\n      true,\n      'token-9',\n    )\n\n    expect(response.ok).toBe(true)\n    expect(new URL(capturedUrl!).pathname).toBe('/api/news/unsubscribe')\n    expect(capturedBody).toEqual({\n      email: 'unsub@example.org',\n      types: ['General', 'Fitness', 'Events'],\n      token: 'token-9',\n    })\n  })\n\n  it('emits an empty `types` array when no category is selected', async () => {\n    let capturedBody: any\n    server.use(\n      http.post(NEWS_SUBSCRIBE_URL, async ({ request }) => {\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true })\n      }),\n    )\n\n    await manageSubscription(true, 'e@example.org', false, false, false, 'tok')\n    expect(capturedBody).toEqual({ email: 'e@example.org', types: [], token: 'tok' })\n  })\n\n  it('returns the raw 2xx Response', async () => {\n    server.use(http.post(NEWS_SUBSCRIBE_URL, () => HttpResponse.json({ success: true })))\n    const response = await manageSubscription(true, 'e', true, false, false, 'tok')\n    expect(response.ok).toBe(true)\n    expect(response.status).toBe(200)\n  })\n\n  it('failure path: returns the raw 4xx Response without throwing (subscribe path)', async () => {\n    server.use(\n      http.post(NEWS_SUBSCRIBE_URL, () => HttpResponse.json({ message: 'bad' }, { status: 400 })),\n    )\n    const response = await manageSubscription(true, 'e', true, false, false, 'tok')\n    expect(response.ok).toBe(false)\n    expect(response.status).toBe(400)\n  })\n\n  it('failure path: returns the raw 5xx Response without throwing (unsubscribe path)', async () => {\n    server.use(http.post(NEWS_UNSUBSCRIBE_URL, () => HttpResponse.json({}, { status: 503 })))\n    const response = await manageSubscription(false, 'e', true, false, false, 'tok')\n    expect(response.ok).toBe(false)\n    expect(response.status).toBe(503)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 201,
+                "totalLines": 201,
+                "truncated": false
+              }
+            },
+            "title": "tests/api/forms-fetch.test.ts",
+            "time": {
+              "start": 1785083646198,
+              "end": 1785083646201
+            }
+          },
+          "id": "prt_f9f46d0f30018tYu0aPpApnGsU",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46cb8c001YwNa100UbO2Wg2"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_d1d6",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/mocks/handlers/forms.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/mocks/handlers/forms.ts</path>\n<type>file</type>\n<content>\n1: import { http, HttpResponse } from 'msw'\n2: import { BACKEND_API } from '../backend'\n3: \n4: export const CONTACT_MESSAGE_URL = `${BACKEND_API}/contact/message`\n5: export const NEWS_SUBSCRIBE_URL = `${BACKEND_API}/news/subscribe`\n6: export const NEWS_UNSUBSCRIBE_URL = `${BACKEND_API}/news/unsubscribe`\n7: \n8: export const formsSuccessResponse = { success: true, message: 'OK' }\n9: \n10: export const formsHandlers = [\n11:   http.post(`${CONTACT_MESSAGE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n12:   http.post(`${NEWS_SUBSCRIBE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n13:   http.post(`${NEWS_UNSUBSCRIBE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n14: ]\n\n(End of file - total 14 lines)\n</content>",
+            "metadata": {
+              "preview": "import { http, HttpResponse } from 'msw'\nimport { BACKEND_API } from '../backend'\n\nexport const CONTACT_MESSAGE_URL = `${BACKEND_API}/contact/message`\nexport const NEWS_SUBSCRIBE_URL = `${BACKEND_API}/news/subscribe`\nexport const NEWS_UNSUBSCRIBE_URL = `${BACKEND_API}/news/unsubscribe`\n\nexport const formsSuccessResponse = { success: true, message: 'OK' }\n\nexport const formsHandlers = [\n  http.post(`${CONTACT_MESSAGE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n  http.post(`${NEWS_SUBSCRIBE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n  http.post(`${NEWS_UNSUBSCRIBE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n]",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/mocks/handlers/forms.ts",
+                "text": "import { http, HttpResponse } from 'msw'\nimport { BACKEND_API } from '../backend'\n\nexport const CONTACT_MESSAGE_URL = `${BACKEND_API}/contact/message`\nexport const NEWS_SUBSCRIBE_URL = `${BACKEND_API}/news/subscribe`\nexport const NEWS_UNSUBSCRIBE_URL = `${BACKEND_API}/news/unsubscribe`\n\nexport const formsSuccessResponse = { success: true, message: 'OK' }\n\nexport const formsHandlers = [\n  http.post(`${CONTACT_MESSAGE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n  http.post(`${NEWS_SUBSCRIBE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n  http.post(`${NEWS_UNSUBSCRIBE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n]",
+                "lineStart": 1,
+                "lineEnd": 14,
+                "totalLines": 14,
+                "truncated": false
+              }
+            },
+            "title": "tests/mocks/handlers/forms.ts",
+            "time": {
+              "start": 1785083646387,
+              "end": 1785083646391
+            }
+          },
+          "id": "prt_f9f46d1b1001tbBvACS2g8Xp1K",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46cb8c001YwNa100UbO2Wg2"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 18128,
+            "input": 154,
+            "output": 54,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 17920
+            }
+          },
+          "cost": 0.0051124,
+          "id": "prt_f9f46d1fa0018nGC1C0MZisu85",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46cb8c001YwNa100UbO2Wg2"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01157952,
+        "tokens": {
+          "total": 21303,
+          "input": 2390,
+          "output": 801,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 18112
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083646499,
+          "completed": 1785083657626
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f46d223001mO0yJG9Ce374jE",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f46d65a001tYRUkLLRbPiaiF",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46d223001mO0yJG9Ce374jE"
+        },
+        {
+          "type": "reasoning",
+          "text": "Good. Let me verify happy-dom supports `setCustomValidity`/`reportValidity`. Per the issue, happy-dom returns false silently — assert the calls, not the returns. Let me write the test file. The validators access `input.value` — happy-dom should support these. Let me write tests using vi.spyOn on the prototype to capture calls.\n\nLet me check the forms.ts once more for behavior of `validateIbanInput`:\n- empty input: `input?.value` is falsy → `setCustomValidity('Bitte...')`, `reportValidity()` → returns false (since `?? false`)\n- invalid IBAN: `setCustomValidity`, `reportValidity`, returns `reportValidity()` (false)\n- valid IBAN: returns true\n\nFor checkRequiredInput:\n- empty input (`?.value.trim() === ''`): setCustomValidity + reportValidity + return reportValidity()\n- non-empty: returns true\n- null/undefined input: `input?.value.trim()=== ''` → `undefined?.value.trim()` → undefined, so not '' → returns true. Hmm wait: `undefined?.value` is `undefined`, then `.trim()` would throw. Actually no: `input?.value.trim()` — the optional chaining short circuits entire expression. Let me re-read: `input?.value.trim() === ''` — if input is null/undefined, the `input?.value` part short-circuits to undefined, but `.trim()` follows... Actually with optional chaining `input?.value.trim()` — the optional chaining only applies to `input`, so `input?.value` returns undefined, then `.trim()` is called on undefined → TypeError. Hmm wait, no. Actually `input?.value.trim()` — the optional `?.` propagates the short-circuit through the rest of the expression chain until the next logical termination. According to MDN: \"Optional chaining short-circerts the rest of the expression\". Wait actually no: `a?.b.c` - if a is null/undefined, the entire `a?.b.c` becomes undefined (short-circuits the rest of the property accesses in that chain). Let me verify... Actually from MDN: \"Optional chaining short-circerts: when a?.b evaluates to undefined, the operand chain ceases evaluation\". Yes - so `input?.value.trim()` if input null returns undefined (the rest isn't evaluated). Good. So both null-check pass-through returns true.\n\nSame for checkRequiredSelect.\n\nFor clearCustomValidityOnInput/OnSelect: attaches listener; on 'input' event with value.trim().length > 0 → calls setCustomValidity('').\n\nNow write tests. happy-dom may or may not implement `setCustomValidity`/`reportValidity`. The issue says stub on prototypes. Let me add to setup.ts or per-test spies. Spec says \"happy-dom test environment provides working HTMLInputElement...\" + \"reportValidity / setCustomValidity stubbed on the element prototypes and asserted as called\".\n\nI'll add spies on prototypes. Could do this within the test file via beforeEach. Let me write the test file directly.\n\nActually `setCustomValidity` may exist on happy-dom. Let me check what's available — but I'll just spy on them and override if needed. Using `vi.spyOn(HTMLInputElement.prototype, 'setCustomValidity')` works if method exists. If not, need to define it. Let me check by writing a quick test... or just `Object.defineProperty` to set stubs.\n\nSimpler: in beforeEach, assign stubs to the prototypes with vi.fn() and a cleanup. Let me write the test file.",
+          "time": {
+            "start": 1785083647580,
+            "end": 1785083657417
+          },
+          "id": "prt_f9f46d65c00151ZgaTMI45Qk4i",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46d223001mO0yJG9Ce374jE"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_be60",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk find . -path ./node_modules -prune -o -name '*.mjs' -print 2>&1 | head; echo \"---tsconfig---\"; rtk read tsconfig.json 2>&1"
+            },
+            "output": "rtk: rtk find does not support compound predicates or actions (e.g. -not, -exec). Use `find` directly.\n---tsconfig---\n{\n  \"extends\": \"astro/tsconfigs/strict\",\n  \"compilerOptions\": {\n    \"strictNullChecks\": true,\n    \"strict\": true,\n    \"paths\": {\n      \"@/*\": [\"./src/*\"]\n    }\n  }\n}\n",
+            "metadata": {
+              "output": "rtk: rtk find does not support compound predicates or actions (e.g. -not, -exec). Use `find` directly.\n---tsconfig---\n{\n  \"extends\": \"astro/tsconfigs/strict\",\n  \"compilerOptions\": {\n    \"strictNullChecks\": true,\n    \"strict\": true,\n    \"paths\": {\n      \"@/*\": [\"./src/*\"]\n    }\n  }\n}\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk find . -path ./node_modules -prune -o -name '*.mjs' -print 2>&1 | head; echo \"---tsconfig---\"; rtk read tsconfig.json 2>&1",
+            "time": {
+              "start": 1785083657498,
+              "end": 1785083657507
+            }
+          },
+          "id": "prt_f9f46fccd001XkisnEAzdRLhsJ",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46d223001mO0yJG9Ce374jE"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 21303,
+            "input": 2390,
+            "output": 801,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 18112
+            }
+          },
+          "cost": 0.01157952,
+          "id": "prt_f9f46fd72001kKPofRxY7lIvcR",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46d223001mO0yJG9Ce374jE"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01737588,
+        "tokens": {
+          "total": 24039,
+          "input": 143,
+          "output": 2648,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 21248
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083657628,
+          "completed": 1785083682608
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f46fd9c001e1BLZeM0gKURxg",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f470427001zXjcHhEj40fqK1",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46fd9c001e1BLZeM0gKURxg"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me write the test file now. I'll use `Object.defineProperty` to install stubs on prototypes since we want them asserted as called.\n\nActually, a cleaner approach: define the methods on the prototypes if not present, and use vi.fn() so we can assert calls. Let me check if happy-dom has `setCustomValidity`. Just install them defensively.\n\nLet me write the tests.",
+          "time": {
+            "start": 1785083659304,
+            "end": 1785083682374
+          },
+          "id": "prt_f9f470428001fHCWxKafdMHZ4b",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46fd9c001e1BLZeM0gKURxg"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_3995",
+          "state": {
+            "status": "completed",
+            "input": {
+              "content": "import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\nimport {\n  checkRequiredInput,\n  checkRequiredSelect,\n  clearCustomValidityOnInput,\n  clearCustomValidityOnSelect,\n  validateIbanInput,\n} from '@/client/forms'\n\nconst VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\nconst MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n\nconst validitySpies = () => {\n  const setInput = vi.fn()\n  const reportInput = vi.fn(() => false)\n  const setSelect = vi.fn()\n  const reportSelect = vi.fn(() => false)\n  const setTextarea = vi.fn()\n  const reportTextarea = vi.fn(() => false)\n  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', {\n    configurable: true,\n    value: setInput,\n  })\n  Object.defineProperty(HTMLInputElement.prototype, 'reportValidity', {\n    configurable: true,\n    value: reportInput,\n  })\n  Object.defineProperty(HTMLSelectElement.prototype, 'setCustomValidity', {\n    configurable: true,\n    value: setSelect,\n  })\n  Object.defineProperty(HTMLSelectElement.prototype, 'reportValidity', {\n    configurable: true,\n    value: reportSelect,\n  })\n  Object.defineProperty(HTMLTextAreaElement.prototype, 'setCustomValidity', {\n    configurable: true,\n    value: setTextarea,\n  })\n  Object.defineProperty(HTMLTextAreaElement.prototype, 'reportValidity', {\n    configurable: true,\n    value: reportTextarea,\n  })\n  return { setInput, reportInput, setSelect, reportSelect, setTextarea, reportTextarea }\n}\n\ndescribe('checkRequiredInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('returns true and does not touch validity when the input has a non-empty value', () => {\n    const input = document.createElement('input')\n    input.value = 'Max Mustermann'\n\n    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('treats whitespace-only values as empty: sets the message, reports validity, returns false', () => {\n    const input = document.createElement('input')\n    input.value = '   '\n\n    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Pflichtfeld')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('sets the custom validity message and calls reportValidity when the input is empty', () => {\n    const input = document.createElement('input')\n\n    expect(checkRequiredInput(input, 'Bitte Namen angeben')).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte Namen angeben')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('works for HTMLTextAreaElement and propagates the error message', () => {\n    const textarea = document.createElement('textarea')\n\n    expect(checkRequiredInput(textarea, 'Bitte Nachricht angeben')).toBe(false)\n    expect(spies.setTextarea).toHaveBeenCalledWith('Bitte Nachricht angeben')\n    expect(spies.reportTextarea).toHaveBeenCalledTimes(1)\n  })\n\n  it('returns true for null input without touching the prototype', () => {\n    expect(checkRequiredInput(null, 'Pflichtfeld')).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('returns true for undefined input without touching the prototype', () => {\n    expect(checkRequiredInput(undefined, 'Pflichtfeld')).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('checkRequiredSelect', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('returns true and does not touch validity when a value is selected', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = 'general'\n    select.append(option)\n    select.value = 'general'\n\n    expect(checkRequiredSelect(select, 'Bitte auswählen')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n    expect(spies.reportSelect).not.toHaveBeenCalled()\n  })\n\n  it('sets the custom validity message and reports validity for an empty value', () => {\n    const select = document.createElement('select')\n\n    expect(checkRequiredSelect(select, 'Bitte Auswahl treffen')).toBe(false)\n    expect(spies.setSelect).toHaveBeenCalledWith('Bitte Auswahl treffen')\n    expect(spies.reportSelect).toHaveBeenCalledTimes(1)\n  })\n\n  it('treats a whitespace-only option value as empty', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = '   '\n    select.append(option)\n    select.value = '   '\n\n    expect(checkRequiredSelect(select, 'Pflichtfeld')).toBe(false)\n    expect(spies.setSelect).toHaveBeenCalledWith('Pflichtfeld')\n    expect(spies.reportSelect).toHaveBeenCalled()\n  })\n\n  it('returns true for null select without touching the prototype', () => {\n    expect(checkRequiredSelect(null, 'Pflichtfeld')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('returns true for undefined select without touching the prototype', () => {\n    expect(checkRequiredSelect(undefined, 'Pflichtfeld')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('validateIbanInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('accepts a syntactically valid IBAN and returns true without touching validity', () => {\n    const input = document.createElement('input')\n    input.value = VALID_IBAN\n\n    expect(validateIbanInput(input)).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('accepts a valid IBAN written without spaces', () => {\n    const input = document.createElement('input')\n    input.value = VALID_IBAN.replace(/\\s/g, '')\n\n    expect(validateIbanInput(input)).toBe(true)\n  })\n\n  it('accepts a valid IBAN regardless of letter case', () => {\n    const input = document.createElement('input')\n    input.value = 'de89 3704 0044 0532 0130 00'\n\n    expect(validateIbanInput(input)).toBe(true)\n  })\n\n  it('sets a custom validity message and returns false for an invalid IBAN', () => {\n    const input = document.createElement('input')\n    input.value = MALFORMED_IBAN\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('rejects a non-IBAN string of random characters', () => {\n    const input = document.createElement('input')\n    input.value = 'not-an-iban'\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalled()\n  })\n\n  it('treats an empty input as invalid: sets the message, reports, returns false', () => {\n    const input = document.createElement('input')\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('returns false and does not touch validity for null input', () => {\n    expect(validateIbanInput(null)).toBe(false)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('returns false and does not touch validity for undefined input', () => {\n    expect(validateIbanInput(undefined)).toBe(false)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('clearCustomValidityOnInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('clears the custom validity when the user types a non-empty value', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    input.value = 'Max'\n    input.dispatchEvent(new Event('input'))\n\n    expect(spies.setInput).toHaveBeenCalledWith('')\n  })\n\n  it('does not clear the validity when the value trims to empty', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    input.value = '   '\n    input.dispatchEvent(new Event('input'))\n\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n\n  it('works for HTMLTextAreaElement: clears once a value is typed', () => {\n    const textarea = document.createElement('textarea')\n    clearCustomValidityOnInput(textarea)\n\n    textarea.value = 'Hello'\n    textarea.dispatchEvent(new Event('input'))\n\n    expect(spies.setTextarea).toHaveBeenCalledWith('')\n  })\n\n  it('no-ops before any input event is dispatched', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows null input (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnInput(null)).not.toThrow()\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows undefined input (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnInput(undefined)).not.toThrow()\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('clearCustomValidityOnSelect', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('clears the custom validity when the user selects a non-empty value', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = 'general'\n    select.append(option)\n\n    clearCustomValidityOnSelect(select)\n\n    select.value = 'general'\n    select.dispatchEvent(new Event('change'))\n\n    expect(spies.setSelect).toHaveBeenCalledWith('')\n  })\n\n  it('does not clear the validity when the selected value trims to empty', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = '   '\n    select.append(option)\n\n    clearCustomValidityOnSelect(select)\n\n    select.value = '   '\n    select.dispatchEvent(new Event('change'))\n\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('no-ops before any change event is dispatched', () => {\n    const select = document.createElement('select')\n    clearCustomValidityOnSelect(select)\n\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows null select (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnSelect(null)).not.toThrow()\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows undefined select (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnSelect(undefined)).not.toThrow()\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n})",
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+              "exists": false,
+              "truncated": false
+            },
+            "title": "tests/client/forms.test.ts",
+            "time": {
+              "start": 1785083682392,
+              "end": 1785083682404
+            }
+          },
+          "id": "prt_f9f475e50001ffEYUsgx1oSNL8",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46fd9c001e1BLZeM0gKURxg"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "2f871f6d888e45e14ddb7e40c5fc148ea63ace1a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 24039,
+            "input": 143,
+            "output": 2648,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 21248
+            }
+          },
+          "cost": 0.01737588,
+          "id": "prt_f9f475ef70018W7eFDRxqlHDve",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46fd9c001e1BLZeM0gKURxg"
+        },
+        {
+          "type": "patch",
+          "hash": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts"
+          ],
+          "id": "prt_f9f475f2e001eqVNOZDE7lUwD0",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f46fd9c001e1BLZeM0gKURxg"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0065624,
+        "tokens": {
+          "total": 24106,
+          "input": 48,
+          "output": 58,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 24000
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083682613,
+          "completed": 1785083687658
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f475f35001Ck33ZJqL38gh1W",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "2f871f6d888e45e14ddb7e40c5fc148ea63ace1a",
+          "type": "step-start",
+          "id": "prt_f9f4763aa001jPluAjx9bo0hV9",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f475f35001Ck33ZJqL38gh1W"
+        },
+        {
+          "type": "reasoning",
+          "text": "Need to create the `tests/client/` directory. Did the write create it? Yes write creates dirs. Now run the test forthis file.",
+          "time": {
+            "start": 1785083683757,
+            "end": 1785083684282
+          },
+          "id": "prt_f9f4763ad00122kVs9hGAhZgI7",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f475f35001Ck33ZJqL38gh1W"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_cf20",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run test tests/client/forms.test.ts 2>&1 | tail -60"
+            },
+            "output": "$ vitest run tests/client/forms.test.ts\n18:34:46 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:65996) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  1 passed (1)\n      Tests  30 passed (30)\n   Start at  18:34:47\n   Duration  498ms (transform 33ms, setup 125ms, import 15ms, tests 14ms, environment 220ms)\n\n",
+            "metadata": {
+              "output": "$ vitest run tests/client/forms.test.ts\n18:34:46 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:65996) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  1 passed (1)\n      Tests  30 passed (30)\n   Start at  18:34:47\n   Duration  498ms (transform 33ms, setup 125ms, import 15ms, tests 14ms, environment 220ms)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run test tests/client/forms.test.ts 2>&1 | tail -60",
+            "time": {
+              "start": 1785083687563,
+              "end": 1785083687572
+            }
+          },
+          "id": "prt_f9f4765bb001zcalrg95Nl258w",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f475f35001Ck33ZJqL38gh1W"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "2f871f6d888e45e14ddb7e40c5fc148ea63ace1a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 24106,
+            "input": 48,
+            "output": 58,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 24000
+            }
+          },
+          "cost": 0.0065624,
+          "id": "prt_f9f4772c300141weiAHm35Lsa2",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f475f35001Ck33ZJqL38gh1W"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00669364,
+        "tokens": {
+          "total": 24299,
+          "input": 199,
+          "output": 36,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 24064
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083687663,
+          "completed": 1785083710534
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4772ef001jHFXbYFpKqObWu",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "2f871f6d888e45e14ddb7e40c5fc148ea63ace1a",
+          "type": "step-start",
+          "id": "prt_f9f47794b001YlAr2efrJUTIBm",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4772ef001jHFXbYFpKqObWu"
+        },
+        {
+          "type": "text",
+          "text": "All 30 tests pass. Run the full type check now.",
+          "time": {
+            "start": 1785083689293,
+            "end": 1785083689388
+          },
+          "id": "prt_f9f47794d001WIgyl3qFIG6UHd",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4772ef001jHFXbYFpKqObWu"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_1cd4",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run check 2>&1 | tail -40"
+            },
+            "output": "\u001b[7m107\u001b[0m       if (eventId === indexId) {\n\u001b[7m   \u001b[0m \u001b[93m                      ~~~~~~~\u001b[0m\n\u001b[96msrc/components/common/ImageCarousel.astro\u001b[0m:\u001b[93m103\u001b[0m:\u001b[93m9\u001b[0m - \u001b[93mwarning\u001b[0m\u001b[90m astro(4000): \u001b[0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.\n\nSee docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.\n\nAdd the `is:inline` directive explicitly to silence this hint.\n\n\u001b[7m103\u001b[0m <script define:vars={{ id, indexId }}>\n\u001b[7m   \u001b[0m \u001b[93m        ~~~~~~~~~~~\u001b[0m\n\nResult (88 files): \n- 0 errors\n- 0 warnings\n- 2 hints\n\n18:35:06 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:66147) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66151) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66150) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66148) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66152) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66149) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66153) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  7 passed (7)\n      Tests  173 passed (173)\n   Start at  18:35:06\n   Duration  3.64s (transform 955ms, setup 1.14s, import 13.90s, tests 290ms, environment 2.08s)\n\n",
+            "metadata": {
+              "output": "\u001b[7m107\u001b[0m       if (eventId === indexId) {\n\u001b[7m   \u001b[0m \u001b[93m                      ~~~~~~~\u001b[0m\n\u001b[96msrc/components/common/ImageCarousel.astro\u001b[0m:\u001b[93m103\u001b[0m:\u001b[93m9\u001b[0m - \u001b[93mwarning\u001b[0m\u001b[90m astro(4000): \u001b[0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.\n\nSee docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.\n\nAdd the `is:inline` directive explicitly to silence this hint.\n\n\u001b[7m103\u001b[0m <script define:vars={{ id, indexId }}>\n\u001b[7m   \u001b[0m \u001b[93m        ~~~~~~~~~~~\u001b[0m\n\nResult (88 files): \n- 0 errors\n- 0 warnings\n- 2 hints\n\n18:35:06 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:66147) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66151) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66150) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66148) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66152) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66149) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:66153) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  7 passed (7)\n      Tests  173 passed (173)\n   Start at  18:35:06\n   Duration  3.64s (transform 955ms, setup 1.14s, import 13.90s, tests 290ms, environment 2.08s)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run check 2>&1 | tail -40",
+            "time": {
+              "start": 1785083710428,
+              "end": 1785083710437
+            }
+          },
+          "id": "prt_f9f47794f001Fo4TpMoBeRVr5x",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4772ef001jHFXbYFpKqObWu"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "2f871f6d888e45e14ddb7e40c5fc148ea63ace1a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 24299,
+            "input": 199,
+            "output": 36,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 24064
+            }
+          },
+          "cost": 0.00669364,
+          "id": "prt_f9f47cc1b001frDL59uNM9MBy3",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4772ef001jHFXbYFpKqObWu"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00748416,
+        "tokens": {
+          "total": 24975,
+          "input": 662,
+          "output": 57,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 24256
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083710539,
+          "completed": 1785083716039
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f47cc4b001jADoWwvCNd2SL5",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "2f871f6d888e45e14ddb7e40c5fc148ea63ace1a",
+          "type": "step-start",
+          "id": "prt_f9f47ddb9001YCqvJ2I3w0bIAL",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47cc4b001jADoWwvCNd2SL5"
+        },
+        {
+          "type": "text",
+          "text": "All green: 7 files, 173 tests. Format then code-review.",
+          "time": {
+            "start": 1785083715035,
+            "end": 1785083715744
+          },
+          "id": "prt_f9f47dddb00137BDhZILULXBXT",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47cc4b001jADoWwvCNd2SL5"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_89ed",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run format tests/client/forms.test.ts src/client/forms.ts 2>&1 | tail -5; rtk git status 2>&1"
+            },
+            "output": "$ oxfmt tests/client/forms.test.ts src/client/forms.ts\nFinished in 29ms on 2 files using 8 threads.\n* feature/tests\n?? tests/client/\n",
+            "metadata": {
+              "output": "$ oxfmt tests/client/forms.test.ts src/client/forms.ts\nFinished in 29ms on 2 files using 8 threads.\n* feature/tests\n?? tests/client/\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run format tests/client/forms.test.ts src/client/forms.ts 2>&1 | tail -5; rtk git status 2>&1",
+            "time": {
+              "start": 1785083715917,
+              "end": 1785083715921
+            }
+          },
+          "id": "prt_f9f47e0950010UlLlrkcaOkRGJ",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47cc4b001jADoWwvCNd2SL5"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 24975,
+            "input": 662,
+            "output": 57,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 24256
+            }
+          },
+          "cost": 0.00748416,
+          "id": "prt_f9f47e195001AnIz8P7SdjFY7B",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47cc4b001jADoWwvCNd2SL5"
+        },
+        {
+          "type": "patch",
+          "hash": "2f871f6d888e45e14ddb7e40c5fc148ea63ace1a",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts"
+          ],
+          "id": "prt_f9f47e1c6001QVGIWp3w7lQPXm",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47cc4b001jADoWwvCNd2SL5"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0066194,
+        "tokens": {
+          "total": 25027,
+          "input": 55,
+          "output": 12,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 24960
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083716041,
+          "completed": 1785083717469
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f47e1c9001RCh2oMjm7dwmgj",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f47e6bc001P8qlD3l2Erzp2e",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47e1c9001RCh2oMjm7dwmgj"
+        },
+        {
+          "type": "tool",
+          "tool": "skill",
+          "callID": "call_e997",
+          "state": {
+            "status": "completed",
+            "input": {
+              "name": "code-review"
+            },
+            "output": "<skill_content name=\"code-review\">\n# Skill: code-review\n\nTwo-axis review of the diff between `HEAD` and a fixed point the user supplies:\n\n- **Standards** — does the code conform to this repo's documented coding standards?\n- **Spec** — does the code faithfully implement the originating issue / PRD / spec?\n\nBoth axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.\n\nThe issue tracker should have been provided to you — run `/setup-matt-pocock-skills` if `docs/agents/issue-tracker.md` is missing.\n\n## Process\n\n### 1. Pin the fixed point\n\nWhatever the user said is the fixed point — a commit SHA, branch name, tag, `main`, `HEAD~5`, etc. If they didn't specify one, ask for it.\n\nCapture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base). Also note the list of commits via `git log <fixed-point>..HEAD --oneline`.\n\nBefore going further, confirm the fixed point resolves (`git rev-parse <fixed-point>`) and the diff is non-empty. A bad ref or empty diff should fail here — not inside two parallel sub-agents.\n\n### 2. Identify the spec source\n\nLook for the originating spec, in this order:\n\n1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.) — fetch via the workflow in `docs/agents/issue-tracker.md`.\n2. A path the user passed as an argument.\n3. A PRD/spec file under `docs/`, `specs/`, or `.scratch/` matching the branch name or feature.\n4. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip and report \"no spec available\".\n\n### 3. Identify the standards sources\n\nAnything in the repo that documents how code should be written, such as `CODING_STANDARDS.md` or `CONTRIBUTING.md`.\n\nOn top of whatever the repo documents, the Standards axis always carries the **smell baseline** below — a fixed set of Fowler code smells (_Refactoring_, ch.3) that applies even when a repo documents nothing. Two rules bind it:\n\n- **The repo overrides.** A documented repo standard always wins; where it endorses something the baseline would flag, suppress the smell.\n- **Always a judgement call.** Each smell is a labelled heuristic (\"possible Feature Envy\"), never a hard violation — and, like any standard here, skip anything tooling already enforces.\n\nEach smell reads *what it is* → *how to fix*; match it against the diff:\n\n- **Mysterious Name** — a function, variable, or type whose name doesn't reveal what it does or holds. → rename it; if no honest name comes, the design's murky.\n- **Duplicated Code** — the same logic shape appears in more than one hunk or file in the change. → extract the shared shape, call it from both.\n- **Feature Envy** — a method that reaches into another object's data more than its own. → move the method onto the data it envies.\n- **Data Clumps** — the same few fields or params keep travelling together (a type wanting to be born). → bundle them into one type, pass that.\n- **Primitive Obsession** — a primitive or string standing in for a domain concept that deserves its own type. → give the concept its own small type.\n- **Repeated Switches** — the same `switch`/`if`-cascade on the same type recurs across the change. → replace with polymorphism, or one map both sites share.\n- **Shotgun Surgery** — one logical change forces scattered edits across many files in the diff. → gather what changes together into one module.\n- **Divergent Change** — one file or module is edited for several unrelated reasons. → split so each module changes for one reason.\n- **Speculative Generality** — abstraction, parameters, or hooks added for needs the spec doesn't have. → delete it; inline back until a real need shows.\n- **Message Chains** — long `a.b().c().d()` navigation the caller shouldn't depend on. → hide the walk behind one method on the first object.\n- **Middle Man** — a class or function that mostly just delegates onward. → cut it, call the real target direct.\n- **Refused Bequest** — a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.\n\n### 4. Spawn both sub-agents in parallel\n\nSend a single message with two `Agent` tool calls. Use the `general-purpose` subagent for both.\n\n**Standards sub-agent prompt** — include:\n\n- The full diff command and commit list.\n- The list of standards-source files you found in step 3, **plus the smell baseline from step 3** pasted in full — the sub-agent has no other access to it.\n- The brief: \"Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls — documented-standard breaches can be hard, but baseline smells are always judgement calls, and a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words.\"\n\n**Spec sub-agent prompt** — include:\n\n- The diff command and commit list.\n- The path or fetched contents of the spec.\n- The brief: \"Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words.\"\n\nIf the spec is missing, skip the Spec sub-agent and note this in the final report.\n\n### 5. Aggregate\n\nPresent the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings — the two axes are deliberately separate (see _Why two axes_).\n\nEnd with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes — that's the reranking the separation exists to prevent.\n\n## Why two axes\n\nA change can pass one axis and fail the other:\n\n- Code that follows every standard but implements the wrong thing → **Standards pass, Spec fail.**\n- Code that does exactly what the issue asked but breaks the project's conventions → **Spec pass, Standards fail.**\n\nReporting them separately stops one axis from masking the other.\n\nBase directory for this skill: /Users/mseele/.agents/skills/code-review\nRelative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.\nNote: file list is sampled.\n\n<skill_files>\n<file>/Users/mseele/.agents/skills/code-review/agents/openai.yaml</file>\n</skill_files>\n</skill_content>",
+            "metadata": {
+              "name": "code-review",
+              "dir": "/Users/mseele/.agents/skills/code-review",
+              "truncated": false
+            },
+            "title": "Loaded skill: code-review",
+            "time": {
+              "start": 1785083717353,
+              "end": 1785083717373
+            }
+          },
+          "id": "prt_f9f47e6e6001zV1K1UFcsR9e06",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47e1c9001RCh2oMjm7dwmgj"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 25027,
+            "input": 55,
+            "output": 12,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 24960
+            }
+          },
+          "cost": 0.0066194,
+          "id": "prt_f9f47e739001IYmXalk2q3BsUN",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47e1c9001RCh2oMjm7dwmgj"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00897884,
+        "tokens": {
+          "total": 26638,
+          "input": 1543,
+          "output": 71,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 25024
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083717471,
+          "completed": 1785083719477
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f47e75f001h6J700zCf2Wh9p",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f47ebce001Am8nB33UG6E7yg",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47e75f001h6J700zCf2Wh9p"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_5fa3",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git rev-parse HEAD~1 && git rev-parse main 2>&1 | head -2; echo \"---\"; rtk git log --oneline feature/tests..HEAD 2>&1; echo \"---branch base---\"; rtk git log --oneline -1 main 2>&1"
+            },
+            "output": "053b74348736bbe0b33152943d028f170be1cf51\nc32a1b9d5b1e5630adc3bcde99a0a314661585ce\n---\n\n---branch base---\nc32a1b9 Merge pull request #397 from mseele/next\n",
+            "metadata": {
+              "output": "053b74348736bbe0b33152943d028f170be1cf51\nc32a1b9d5b1e5630adc3bcde99a0a314661585ce\n---\n\n---branch base---\nc32a1b9 Merge pull request #397 from mseele/next\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git rev-parse HEAD~1 && git rev-parse main 2>&1 | head -2; echo \"---\"; rtk git log --oneline feature/tests..HEAD 2>&1; echo \"---branch base---\"; rtk git log --oneline -1 main 2>&1",
+            "time": {
+              "start": 1785083719362,
+              "end": 1785083719364
+            }
+          },
+          "id": "prt_f9f47ee6b001JWNCqABI5YfYo7",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47e75f001h6J700zCf2Wh9p"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 26638,
+            "input": 1543,
+            "output": 71,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 25024
+            }
+          },
+          "cost": 0.00897884,
+          "id": "prt_f9f47ef0d001myYcNNoWxjRkcW",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47e75f001h6J700zCf2Wh9p"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0,
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "reasoning": 0,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083719479
+        },
+        "id": "msg_f9f47ef370015DOZvk15bfP9o7",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f47f515001mGi4i5BavgP7RE",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47ef370015DOZvk15bfP9o7"
+        },
+        {
+          "type": "reasoning",
+          "text": "Need to commit first before doing code-review of the diff against main. Actually the skill says diff between HEAD and a fixed point. Let me commit my work first, then do code-review. Actually I should commit before review so review sees the work. Let me commit now then review.",
+          "time": {
+            "start": 1785083720983,
+            "end": 1785083721324
+          },
+          "id": "prt_f9f47f517001chGCycXcFtcx9s",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47ef370015DOZvk15bfP9o7"
+        },
+        {
+          "type": "text",
+          "text": "Let me commit the work, then run the code review.",
+          "time": {
+            "start": 1785083721326,
+            "end": 1785083721859
+          },
+          "id": "prt_f9f47f66e001obsNaxP34Fakmr",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47ef370015DOZvk15bfP9o7"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_43e0",
+          "state": {
+            "metadata": {
+              "output": "ok 1 file changed, 346 insertions(+)\n"
+            },
+            "status": "running",
+            "input": {
+              "command": "rtk git add tests/client/ && rtk git commit -m \"test: cover client form validators (#402)\" 2>&1 | tail -10"
+            },
+            "time": {
+              "start": 1785083721872
+            }
+          },
+          "id": "prt_f9f47f85f0016LlZWgCZBvGNjr",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47ef370015DOZvk15bfP9o7"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "9f6511b0337c",
+  "strategy": "manual-commit",
+  "branch": "feature/tests",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "tests/client/forms.test.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/9f/6511b0337c/0/metadata.json",
+      "transcript": "/9f/6511b0337c/0/full.jsonl",
+      "compact_transcript": "/9f/6511b0337c/0/transcript.jsonl",
+      "content_hash": "/9f/6511b0337c/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 27771,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 252800,
+    "output_tokens": 4148,
+    "api_call_count": 16
+  }
+}
