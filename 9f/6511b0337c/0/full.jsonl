@@ -17,19 +17,19 @@
       "deletions": 0,
       "files": 0
     },
-    "cost": 0.1228586,
+    "cost": 0.27434495999999997,
     "tokens": {
-      "input": 27771,
-      "output": 4148,
+      "input": 34084,
+      "output": 12822,
       "reasoning": 0,
       "cache": {
-        "read": 252800,
+        "read": 654656,
         "write": 0
       }
     },
     "time": {
       "created": 1785083606254,
-      "updated": 1785083719481
+      "updated": 1785083954628
     }
   },
   "messages": [
@@ -48,8 +48,8 @@
           "diffs": [
             {
               "file": "tests/client/forms.test.ts",
-              "patch": "Index: tests/client/forms.test.ts\n===================================================================\n--- tests/client/forms.test.ts\t\n+++ tests/client/forms.test.ts\t\n@@ -0,0 +1,346 @@\n+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\n+import {\n+  checkRequiredInput,\n+  checkRequiredSelect,\n+  clearCustomValidityOnInput,\n+  clearCustomValidityOnSelect,\n+  validateIbanInput,\n+} from '@/client/forms'\n+\n+const VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\n+const MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n+\n+const validitySpies = () => {\n+  const setInput = vi.fn()\n+  const reportInput = vi.fn(() => false)\n+  const setSelect = vi.fn()\n+  const reportSelect = vi.fn(() => false)\n+  const setTextarea = vi.fn()\n+  const reportTextarea = vi.fn(() => false)\n+  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', {\n+    configurable: true,\n+    value: setInput,\n+  })\n+  Object.defineProperty(HTMLInputElement.prototype, 'reportValidity', {\n+    configurable: true,\n+    value: reportInput,\n+  })\n+  Object.defineProperty(HTMLSelectElement.prototype, 'setCustomValidity', {\n+    configurable: true,\n+    value: setSelect,\n+  })\n+  Object.defineProperty(HTMLSelectElement.prototype, 'reportValidity', {\n+    configurable: true,\n+    value: reportSelect,\n+  })\n+  Object.defineProperty(HTMLTextAreaElement.prototype, 'setCustomValidity', {\n+    configurable: true,\n+    value: setTextarea,\n+  })\n+  Object.defineProperty(HTMLTextAreaElement.prototype, 'reportValidity', {\n+    configurable: true,\n+    value: reportTextarea,\n+  })\n+  return { setInput, reportInput, setSelect, reportSelect, setTextarea, reportTextarea }\n+}\n+\n+describe('checkRequiredInput', () => {\n+  let spies: ReturnType<typeof validitySpies>\n+\n+  beforeEach(() => {\n+    spies = validitySpies()\n+  })\n+\n+  afterEach(() => {\n+    vi.restoreAllMocks()\n+  })\n+\n+  it('returns true and does not touch validity when the input has a non-empty value', () => {\n+    const input = document.createElement('input')\n+    input.value = 'Max Mustermann'\n+\n+    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+    expect(spies.reportInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('treats whitespace-only values as empty: sets the message, reports validity, returns false', () => {\n+    const input = document.createElement('input')\n+    input.value = '   '\n+\n+    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(false)\n+    expect(spies.setInput).toHaveBeenCalledWith('Pflichtfeld')\n+    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('sets the custom validity message and calls reportValidity when the input is empty', () => {\n+    const input = document.createElement('input')\n+\n+    expect(checkRequiredInput(input, 'Bitte Namen angeben')).toBe(false)\n+    expect(spies.setInput).toHaveBeenCalledWith('Bitte Namen angeben')\n+    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('works for HTMLTextAreaElement and propagates the error message', () => {\n+    const textarea = document.createElement('textarea')\n+\n+    expect(checkRequiredInput(textarea, 'Bitte Nachricht angeben')).toBe(false)\n+    expect(spies.setTextarea).toHaveBeenCalledWith('Bitte Nachricht angeben')\n+    expect(spies.reportTextarea).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('returns true for null input without touching the prototype', () => {\n+    expect(checkRequiredInput(null, 'Pflichtfeld')).toBe(true)\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+    expect(spies.reportInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('returns true for undefined input without touching the prototype', () => {\n+    expect(checkRequiredInput(undefined, 'Pflichtfeld')).toBe(true)\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+    expect(spies.reportInput).not.toHaveBeenCalled()\n+  })\n+})\n+\n+describe('checkRequiredSelect', () => {\n+  let spies: ReturnType<typeof validitySpies>\n+\n+  beforeEach(() => {\n+    spies = validitySpies()\n+  })\n+\n+  afterEach(() => {\n+    vi.restoreAllMocks()\n+  })\n+\n+  it('returns true and does not touch validity when a value is selected', () => {\n+    const select = document.createElement('select')\n+    const option = document.createElement('option')\n+    option.value = 'general'\n+    select.append(option)\n+    select.value = 'general'\n+\n+    expect(checkRequiredSelect(select, 'Bitte auswählen')).toBe(true)\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+    expect(spies.reportSelect).not.toHaveBeenCalled()\n+  })\n+\n+  it('sets the custom validity message and reports validity for an empty value', () => {\n+    const select = document.createElement('select')\n+\n+    expect(checkRequiredSelect(select, 'Bitte Auswahl treffen')).toBe(false)\n+    expect(spies.setSelect).toHaveBeenCalledWith('Bitte Auswahl treffen')\n+    expect(spies.reportSelect).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('treats a whitespace-only option value as empty', () => {\n+    const select = document.createElement('select')\n+    const option = document.createElement('option')\n+    option.value = '   '\n+    select.append(option)\n+    select.value = '   '\n+\n+    expect(checkRequiredSelect(select, 'Pflichtfeld')).toBe(false)\n+    expect(spies.setSelect).toHaveBeenCalledWith('Pflichtfeld')\n+    expect(spies.reportSelect).toHaveBeenCalled()\n+  })\n+\n+  it('returns true for null select without touching the prototype', () => {\n+    expect(checkRequiredSelect(null, 'Pflichtfeld')).toBe(true)\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+  })\n+\n+  it('returns true for undefined select without touching the prototype', () => {\n+    expect(checkRequiredSelect(undefined, 'Pflichtfeld')).toBe(true)\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+  })\n+})\n+\n+describe('validateIbanInput', () => {\n+  let spies: ReturnType<typeof validitySpies>\n+\n+  beforeEach(() => {\n+    spies = validitySpies()\n+  })\n+\n+  afterEach(() => {\n+    vi.restoreAllMocks()\n+  })\n+\n+  it('accepts a syntactically valid IBAN and returns true without touching validity', () => {\n+    const input = document.createElement('input')\n+    input.value = VALID_IBAN\n+\n+    expect(validateIbanInput(input)).toBe(true)\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+    expect(spies.reportInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('accepts a valid IBAN written without spaces', () => {\n+    const input = document.createElement('input')\n+    input.value = VALID_IBAN.replace(/\\s/g, '')\n+\n+    expect(validateIbanInput(input)).toBe(true)\n+  })\n+\n+  it('accepts a valid IBAN regardless of letter case', () => {\n+    const input = document.createElement('input')\n+    input.value = 'de89 3704 0044 0532 0130 00'\n+\n+    expect(validateIbanInput(input)).toBe(true)\n+  })\n+\n+  it('sets a custom validity message and returns false for an invalid IBAN', () => {\n+    const input = document.createElement('input')\n+    input.value = MALFORMED_IBAN\n+\n+    expect(validateIbanInput(input)).toBe(false)\n+    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n+    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('rejects a non-IBAN string of random characters', () => {\n+    const input = document.createElement('input')\n+    input.value = 'not-an-iban'\n+\n+    expect(validateIbanInput(input)).toBe(false)\n+    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n+    expect(spies.reportInput).toHaveBeenCalled()\n+  })\n+\n+  it('treats an empty input as invalid: sets the message, reports, returns false', () => {\n+    const input = document.createElement('input')\n+\n+    expect(validateIbanInput(input)).toBe(false)\n+    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n+    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('returns false and does not touch validity for null input', () => {\n+    expect(validateIbanInput(null)).toBe(false)\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+    expect(spies.reportInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('returns false and does not touch validity for undefined input', () => {\n+    expect(validateIbanInput(undefined)).toBe(false)\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+    expect(spies.reportInput).not.toHaveBeenCalled()\n+  })\n+})\n+\n+describe('clearCustomValidityOnInput', () => {\n+  let spies: ReturnType<typeof validitySpies>\n+\n+  beforeEach(() => {\n+    spies = validitySpies()\n+  })\n+\n+  afterEach(() => {\n+    vi.restoreAllMocks()\n+  })\n+\n+  it('clears the custom validity when the user types a non-empty value', () => {\n+    const input = document.createElement('input')\n+    clearCustomValidityOnInput(input)\n+\n+    input.value = 'Max'\n+    input.dispatchEvent(new Event('input'))\n+\n+    expect(spies.setInput).toHaveBeenCalledWith('')\n+  })\n+\n+  it('does not clear the validity when the value trims to empty', () => {\n+    const input = document.createElement('input')\n+    clearCustomValidityOnInput(input)\n+\n+    input.value = '   '\n+    input.dispatchEvent(new Event('input'))\n+\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('works for HTMLTextAreaElement: clears once a value is typed', () => {\n+    const textarea = document.createElement('textarea')\n+    clearCustomValidityOnInput(textarea)\n+\n+    textarea.value = 'Hello'\n+    textarea.dispatchEvent(new Event('input'))\n+\n+    expect(spies.setTextarea).toHaveBeenCalledWith('')\n+  })\n+\n+  it('no-ops before any input event is dispatched', () => {\n+    const input = document.createElement('input')\n+    clearCustomValidityOnInput(input)\n+\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('silently swallows null input (no listener is attached)', () => {\n+    expect(() => clearCustomValidityOnInput(null)).not.toThrow()\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+  })\n+\n+  it('silently swallows undefined input (no listener is attached)', () => {\n+    expect(() => clearCustomValidityOnInput(undefined)).not.toThrow()\n+    expect(spies.setInput).not.toHaveBeenCalled()\n+  })\n+})\n+\n+describe('clearCustomValidityOnSelect', () => {\n+  let spies: ReturnType<typeof validitySpies>\n+\n+  beforeEach(() => {\n+    spies = validitySpies()\n+  })\n+\n+  afterEach(() => {\n+    vi.restoreAllMocks()\n+  })\n+\n+  it('clears the custom validity when the user selects a non-empty value', () => {\n+    const select = document.createElement('select')\n+    const option = document.createElement('option')\n+    option.value = 'general'\n+    select.append(option)\n+\n+    clearCustomValidityOnSelect(select)\n+\n+    select.value = 'general'\n+    select.dispatchEvent(new Event('change'))\n+\n+    expect(spies.setSelect).toHaveBeenCalledWith('')\n+  })\n+\n+  it('does not clear the validity when the selected value trims to empty', () => {\n+    const select = document.createElement('select')\n+    const option = document.createElement('option')\n+    option.value = '   '\n+    select.append(option)\n+\n+    clearCustomValidityOnSelect(select)\n+\n+    select.value = '   '\n+    select.dispatchEvent(new Event('change'))\n+\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+  })\n+\n+  it('no-ops before any change event is dispatched', () => {\n+    const select = document.createElement('select')\n+    clearCustomValidityOnSelect(select)\n+\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+  })\n+\n+  it('silently swallows null select (no listener is attached)', () => {\n+    expect(() => clearCustomValidityOnSelect(null)).not.toThrow()\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+  })\n+\n+  it('silently swallows undefined select (no listener is attached)', () => {\n+    expect(() => clearCustomValidityOnSelect(undefined)).not.toThrow()\n+    expect(spies.setSelect).not.toHaveBeenCalled()\n+  })\n+})\n",
-              "additions": 346,
+              "patch": "Index: tests/client/forms.test.ts\n===================================================================\n--- tests/client/forms.test.ts\t\n+++ tests/client/forms.test.ts\t\n@@ -0,0 +1,357 @@\n+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\n+import {\n+  checkRequiredInput,\n+  checkRequiredSelect,\n+  clearCustomValidityOnInput,\n+  clearCustomValidityOnSelect,\n+  validateIbanInput,\n+} from '@/client/forms'\n+\n+const VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\n+const MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n+const IBAN_ERROR = 'Bitte gib eine gültige IBAN ein.'\n+\n+type Kind = 'Input' | 'Select' | 'Textarea'\n+// deno-style \"constructor whose prototype we index for a string-keyed property\"\n+type AnyPrototypeCtor = { prototype: any }\n+\n+const PROTO: Record<Kind, AnyPrototypeCtor> = {\n+  Input: HTMLInputElement,\n+  Select: HTMLSelectElement,\n+  Textarea: HTMLTextAreaElement,\n+}\n+\n+type ValidityMock = ReturnType<typeof vi.fn>\n+\n+interface Stubs {\n+  set: Record<Kind, ValidityMock>\n+  report: Record<Kind, ValidityMock>\n+  restore: () => void\n+}\n+\n+function stubValidity(): Stubs {\n+  const set: Record<Kind, ValidityMock> = {\n+    Input: vi.fn(),\n+    Select: vi.fn(),\n+    Textarea: vi.fn(),\n+  }\n+  const report: Record<Kind, ValidityMock> = {\n+    Input: vi.fn(() => false),\n+    Select: vi.fn(() => false),\n+    Textarea: vi.fn(() => false),\n+  }\n+  const originals = (Object.keys(PROTO) as Kind[]).map((kind) => ({\n+    kind,\n+    setDesc: Object.getOwnPropertyDescriptor(PROTO[kind].prototype, 'setCustomValidity'),\n+    reportDesc: Object.getOwnPropertyDescriptor(PROTO[kind].prototype, 'reportValidity'),\n+  }))\n+  for (const kind of Object.keys(PROTO) as Kind[]) {\n+    Object.defineProperty(PROTO[kind].prototype, 'setCustomValidity', {\n+      configurable: true,\n+      value: set[kind],\n+    })\n+    Object.defineProperty(PROTO[kind].prototype, 'reportValidity', {\n+      configurable: true,\n+      value: report[kind],\n+    })\n+  }\n+  return {\n+    set,\n+    report,\n+    restore: () => {\n+      for (const { kind, setDesc, reportDesc } of originals) {\n+        const proto = PROTO[kind].prototype as any\n+        if (setDesc) Object.defineProperty(proto, 'setCustomValidity', setDesc)\n+        else delete proto.setCustomValidity\n+        if (reportDesc) Object.defineProperty(proto, 'reportValidity', reportDesc)\n+        else delete proto.reportValidity\n+      }\n+    },\n+  }\n+}\n+\n+let stubs: Stubs\n+\n+beforeEach(() => {\n+  stubs = stubValidity()\n+})\n+\n+afterEach(() => {\n+  stubs.restore()\n+  vi.clearAllMocks()\n+})\n+\n+describe('checkRequiredInput', () => {\n+  it('returns true without touching validity when the input has a non-empty value', () => {\n+    const input = document.createElement('input')\n+    input.value = 'Max Mustermann'\n+\n+    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n+    expect(stubs.set.Input).not.toHaveBeenCalled()\n+    expect(stubs.report.Input).not.toHaveBeenCalled()\n+  })\n+\n+  it('treats a whitespace-only value as empty', () => {\n+    const input = document.createElement('input')\n+    input.value = '   '\n+\n+    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(false)\n+    expect(stubs.set.Input).toHaveBeenCalledWith('Pflichtfeld')\n+    expect(stubs.report.Input).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('sets the custom validity message and calls reportValidity when the input is empty', () => {\n+    const input = document.createElement('input')\n+\n+    expect(checkRequiredInput(input, 'Bitte Namen angeben')).toBe(false)\n+    expect(stubs.set.Input).toHaveBeenCalledWith('Bitte Namen angeben')\n+    expect(stubs.report.Input).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('propagates reportValidity return: returns true when reportValidity returns true', () => {\n+    stubs.report.Input.mockReturnValue(true)\n+    const input = document.createElement('input')\n+    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n+    expect(stubs.report.Input).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('works for HTMLTextAreaElement and propagates the error message', () => {\n+    const textarea = document.createElement('textarea')\n+\n+    expect(checkRequiredInput(textarea, 'Bitte Nachricht angeben')).toBe(false)\n+    expect(stubs.set.Textarea).toHaveBeenCalledWith('Bitte Nachricht angeben')\n+    expect(stubs.report.Textarea).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('returns true for null input without touching the prototype', () => {\n+    expect(checkRequiredInput(null, 'Pflichtfeld')).toBe(true)\n+    expect(stubs.set.Input).not.toHaveBeenCalled()\n+    expect(stubs.report.Input).not.toHaveBeenCalled()\n+  })\n+\n+  it('returns true for undefined input without touching the prototype', () => {\n+    expect(checkRequiredInput(undefined, 'Pflichtfeld')).toBe(true)\n+    expect(stubs.set.Input).not.toHaveBeenCalled()\n+    expect(stubs.report.Input).not.toHaveBeenCalled()\n+  })\n+})\n+\n+describe('checkRequiredSelect', () => {\n+  it('returns true without touching validity when a value is selected', () => {\n+    const select = document.createElement('select')\n+    const option = document.createElement('option')\n+    option.value = 'general'\n+    select.append(option)\n+    select.value = 'general'\n+\n+    expect(checkRequiredSelect(select, 'Bitte auswählen')).toBe(true)\n+    expect(stubs.set.Select).not.toHaveBeenCalled()\n+    expect(stubs.report.Select).not.toHaveBeenCalled()\n+  })\n+\n+  it('sets the custom validity message and reports validity for an empty value', () => {\n+    const select = document.createElement('select')\n+\n+    expect(checkRequiredSelect(select, 'Bitte Auswahl treffen')).toBe(false)\n+    expect(stubs.set.Select).toHaveBeenCalledWith('Bitte Auswahl treffen')\n+    expect(stubs.report.Select).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('treats a whitespace-only option value as empty', () => {\n+    const select = document.createElement('select')\n+    const option = document.createElement('option')\n+    option.value = '   '\n+    select.append(option)\n+    select.value = '   '\n+\n+    expect(checkRequiredSelect(select, 'Pflichtfeld')).toBe(false)\n+    expect(stubs.set.Select).toHaveBeenCalledWith('Pflichtfeld')\n+    expect(stubs.report.Select).toHaveBeenCalled()\n+  })\n+\n+  it('propagates reportValidity return: returns true when reportValidity returns true', () => {\n+    stubs.report.Select.mockReturnValue(true)\n+    const select = document.createElement('select')\n+    expect(checkRequiredSelect(select, 'Pflichtfeld')).toBe(true)\n+    expect(stubs.report.Select).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('returns true for null select without touching the prototype', () => {\n+    expect(checkRequiredSelect(null, 'Pflichtfeld')).toBe(true)\n+    expect(stubs.set.Select).not.toHaveBeenCalled()\n+  })\n+\n+  it('returns true for undefined select without touching the prototype', () => {\n+    expect(checkRequiredSelect(undefined, 'Pflichtfeld')).toBe(true)\n+    expect(stubs.set.Select).not.toHaveBeenCalled()\n+  })\n+})\n+\n+describe('validateIbanInput', () => {\n+  it('accepts a syntactically valid IBAN and returns true without touching validity', () => {\n+    const input = document.createElement('input')\n+    input.value = VALID_IBAN\n+\n+    expect(validateIbanInput(input)).toBe(true)\n+    expect(stubs.set.Input).not.toHaveBeenCalled()\n+    expect(stubs.report.Input).not.toHaveBeenCalled()\n+  })\n+\n+  it('accepts a valid IBAN written without spaces', () => {\n+    const input = document.createElement('input')\n+    input.value = VALID_IBAN.replace(/\\s/g, '')\n+\n+    expect(validateIbanInput(input)).toBe(true)\n+  })\n+\n+  it('accepts a valid IBAN regardless of letter case', () => {\n+    const input = document.createElement('input')\n+    input.value = 'de89 3704 0044 0532 0130 00'\n+\n+    expect(validateIbanInput(input)).toBe(true)\n+  })\n+\n+  it('sets the custom validity message and reports for an invalid IBAN', () => {\n+    const input = document.createElement('input')\n+    input.value = MALFORMED_IBAN\n+\n+    expect(validateIbanInput(input)).toBe(false)\n+    expect(stubs.set.Input).toHaveBeenCalledWith(IBAN_ERROR)\n+    expect(stubs.report.Input).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('rejects a non-IBAN string of random characters', () => {\n+    const input = document.createElement('input')\n+    input.value = 'not-an-iban'\n+\n+    expect(validateIbanInput(input)).toBe(false)\n+    expect(stubs.set.Input).toHaveBeenCalledWith(IBAN_ERROR)\n+    expect(stubs.report.Input).toHaveBeenCalled()\n+  })\n+\n+  it('propagates reportValidity return on invalid IBAN', () => {\n+    stubs.report.Input.mockReturnValue(true)\n+    const input = document.createElement('input')\n+    input.value = MALFORMED_IBAN\n+\n+    expect(validateIbanInput(input)).toBe(true)\n+    expect(stubs.set.Input).toHaveBeenCalledWith(IBAN_ERROR)\n+    expect(stubs.report.Input).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('treats an empty input as invalid: sets the message, reports, returns false', () => {\n+    const input = document.createElement('input')\n+\n+    expect(validateIbanInput(input)).toBe(false)\n+    expect(stubs.set.Input).toHaveBeenCalledWith(IBAN_ERROR)\n+    expect(stubs.report.Input).toHaveBeenCalledTimes(1)\n+  })\n+\n+  it('returns false and does not touch validity for null input', () => {\n+    expect(validateIbanInput(null)).toBe(false)\n+    expect(stubs.set.Input).not.toHaveBeenCalled()\n+    expect(stubs.report.Input).not.toHaveBeenCalled()\n+  })\n+\n+  it('returns false and does not touch validity for undefined input', () => {\n+    expect(validateIbanInput(undefined)).toBe(false)\n+    expect(stubs.set.Input).not.toHaveBeenCalled()\n+    expect(stubs.report.Input).not.toHaveBeenCalled()\n+  })\n+})\n+\n+describe('clearCustomValidityOnInput', () => {\n+  it('clears the custom validity when the user types a non-empty value', () => {\n+    const input = document.createElement('input')\n+    clearCustomValidityOnInput(input)\n+\n+    input.value = 'Max'\n+    input.dispatchEvent(new Event('input'))\n+\n+    expect(stubs.set.Input).toHaveBeenCalledWith('')\n+  })\n+\n+  it('does not clear the validity when the value trims to empty', () => {\n+    const input = document.createElement('input')\n+    clearCustomValidityOnInput(input)\n+\n+    input.value = '   '\n+    input.dispatchEvent(new Event('input'))\n+\n+    expect(stubs.set.Input).not.toHaveBeenCalled()\n+  })\n+\n+  it('works for HTMLTextAreaElement: clears once a value is typed', () => {\n+    const textarea = document.createElement('textarea')\n+    clearCustomValidityOnInput(textarea)\n+\n+    textarea.value = 'Hello'\n+    textarea.dispatchEvent(new Event('input'))\n+\n+    expect(stubs.set.Textarea).toHaveBeenCalledWith('')\n+  })\n+\n+  it('no-ops before any input event is dispatched', () => {\n+    const input = document.createElement('input')\n+    clearCustomValidityOnInput(input)\n+\n+    expect(stubs.set.Input).not.toHaveBeenCalled()\n+  })\n+\n+  it('silently swallows null input (no listener is attached)', () => {\n+    expect(() => clearCustomValidityOnInput(null)).not.toThrow()\n+    expect(stubs.set.Input).not.toHaveBeenCalled()\n+  })\n+\n+  it('silently swallows undefined input (no listener is attached)', () => {\n+    expect(() => clearCustomValidityOnInput(undefined)).not.toThrow()\n+    expect(stubs.set.Input).not.toHaveBeenCalled()\n+  })\n+})\n+\n+describe('clearCustomValidityOnSelect', () => {\n+  it('clears the custom validity when the user selects a non-empty value', () => {\n+    const select = document.createElement('select')\n+    const option = document.createElement('option')\n+    option.value = 'general'\n+    select.append(option)\n+\n+    clearCustomValidityOnSelect(select)\n+\n+    select.value = 'general'\n+    select.dispatchEvent(new Event('change'))\n+\n+    expect(stubs.set.Select).toHaveBeenCalledWith('')\n+  })\n+\n+  it('does not clear the validity when the selected value trims to empty', () => {\n+    const select = document.createElement('select')\n+    const option = document.createElement('option')\n+    option.value = '   '\n+    select.append(option)\n+\n+    clearCustomValidityOnSelect(select)\n+\n+    select.value = '   '\n+    select.dispatchEvent(new Event('change'))\n+\n+    expect(stubs.set.Select).not.toHaveBeenCalled()\n+  })\n+\n+  it('no-ops before any change event is dispatched', () => {\n+    const select = document.createElement('select')\n+    clearCustomValidityOnSelect(select)\n+\n+    expect(stubs.set.Select).not.toHaveBeenCalled()\n+  })\n+\n+  it('silently swallows null select (no listener is attached)', () => {\n+    expect(() => clearCustomValidityOnSelect(null)).not.toThrow()\n+    expect(stubs.set.Select).not.toHaveBeenCalled()\n+  })\n+\n+  it('silently swallows undefined select (no listener is attached)', () => {\n+    expect(() => clearCustomValidityOnSelect(undefined)).not.toThrow()\n+    expect(stubs.set.Select).not.toHaveBeenCalled()\n+  })\n+})\n",
+              "additions": 357,
               "deletions": 0,
               "status": "added"
             }
@@ -1653,21 +1653,24 @@
           "cwd": "/Users/mseele/dev/sve/sve-website",
           "root": "/Users/mseele/dev/sve/sve-website"
         },
-        "cost": 0,
+        "cost": 0.00755224,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 26834,
+          "input": 98,
+          "output": 112,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 26624
           }
         },
         "modelID": "glm-5.2",
         "providerID": "opencode-go",
         "time": {
-          "created": 1785083719479
+          "created": 1785083719479,
+          "completed": 1785083732194
         },
+        "finish": "tool-calls",
         "id": "msg_f9f47ef370015DOZvk15bfP9o7",
         "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
       },
@@ -1706,20 +1709,1238 @@
           "tool": "bash",
           "callID": "call_43e0",
           "state": {
-            "metadata": {
-              "output": "ok 1 file changed, 346 insertions(+)\n"
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "rtk git add tests/client/ && rtk git commit -m \"test: cover client form validators (#402)\" 2>&1 | tail -10"
             },
+            "output": "ok 1 file changed, 346 insertions(+)\nok 7665df9\n",
+            "metadata": {
+              "output": "ok 1 file changed, 346 insertions(+)\nok 7665df9\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git add tests/client/ && rtk git commit -m \"test: cover client form validators (#402)\" 2>&1 | tail -10",
             "time": {
-              "start": 1785083721872
+              "start": 1785083732083,
+              "end": 1785083732103
             }
           },
           "id": "prt_f9f47f85f0016LlZWgCZBvGNjr",
           "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
           "messageID": "msg_f9f47ef370015DOZvk15bfP9o7"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 26834,
+            "input": 98,
+            "output": 112,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 26624
+            }
+          },
+          "cost": 0.00755224,
+          "id": "prt_f9f4820bb0018BGez0qVgcE66b",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f47ef370015DOZvk15bfP9o7"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00724356,
+        "tokens": {
+          "total": 26907,
+          "input": 43,
+          "output": 48,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 26816
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083732201,
+          "completed": 1785083734023
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4820e9001ZQN5cTsz0WCjeQ",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f4825c3001ra8nkZ80f0LW3N",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4820e9001ZQN5cTsz0WCjeQ"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_64c1",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git diff main...HEAD --stat 2>&1 | tail -20; echo \"---commits---\"; rtk git log main..HEAD --oneline 2>&1"
+            },
+            "output": " src/pages/events/index.astro                       |    4 +-\n src/pages/fitness/index.astro                      |    4 +-\n src/pages/mitgliedschaft.astro                     |    2 +-\n src/pages/vereinsportrait.astro                    |   32 +-\n src/types.ts                                       |   37 +\n tests/api/appointments-fetch.test.ts               |   58 +\n tests/api/appointments.test.ts                     |  231 ++++\n tests/api/events-fetch.test.ts                     |  486 +++++++++\n tests/api/events.test.ts                           |  278 +++++\n tests/api/forms-fetch.test.ts                      |  201 ++++\n tests/client/forms.test.ts                         |  346 ++++++\n tests/mocks/backend.ts                             |    1 +\n tests/mocks/handlers/calendar.ts                   |   26 +\n tests/mocks/handlers/events.ts                     |   77 ++\n tests/mocks/handlers/forms.ts                      |   14 +\n tests/mocks/server.ts                              |    6 +\n tests/setup.ts                                     |    6 +\n tests/utils.test.ts                                |  230 ++++\n vitest.config.ts                                   |   13 +\n 40 files changed, 2681 insertions(+), 1247 deletions(-)\n---commits---\n7665df9 test: cover client form validators (#402)\ne860333 test: cover src/api fetch wrappers with MSW handlers (#401)\n053b743 feat: retype and test the EventAvailability contract end-to-end (#400)\nb35403e test: export and cover appointments pure transforms (#399)\n1defceb test: stand up Vitest harness + cover utils\n76cd2f7 fix: update layout and styling for Leitbild section in vereinsportrai...\nfcd7ad9 feat: add link to Satzung document in vereinsportrait page\n98450aa chore: enable entire\n11c3a9d fix: remove unnecessary name attribute from IbanInput component\na441a7c chore: bump dependencies\na50354c fix: update SEPA mandate creditor handling in Event and SepaMandate c...\n674ff64 fix: re-add sort index\n7f76acd chore: bump dependencies\n2af1ec3 chore: bump dependencies\ne3a1c00 chore: add domain documentation and issue tracker guidelines\n",
+            "metadata": {
+              "output": " src/pages/events/index.astro                       |    4 +-\n src/pages/fitness/index.astro                      |    4 +-\n src/pages/mitgliedschaft.astro                     |    2 +-\n src/pages/vereinsportrait.astro                    |   32 +-\n src/types.ts                                       |   37 +\n tests/api/appointments-fetch.test.ts               |   58 +\n tests/api/appointments.test.ts                     |  231 ++++\n tests/api/events-fetch.test.ts                     |  486 +++++++++\n tests/api/events.test.ts                           |  278 +++++\n tests/api/forms-fetch.test.ts                      |  201 ++++\n tests/client/forms.test.ts                         |  346 ++++++\n tests/mocks/backend.ts                             |    1 +\n tests/mocks/handlers/calendar.ts                   |   26 +\n tests/mocks/handlers/events.ts                     |   77 ++\n tests/mocks/handlers/forms.ts                      |   14 +\n tests/mocks/server.ts                              |    6 +\n tests/setup.ts                                     |    6 +\n tests/utils.test.ts                                |  230 ++++\n vitest.config.ts                                   |   13 +\n 40 files changed, 2681 insertions(+), 1247 deletions(-)\n---commits---\n7665df9 test: cover client form validators (#402)\ne860333 test: cover src/api fetch wrappers with MSW handlers (#401)\n053b743 feat: retype and test the EventAvailability contract end-to-end (#400)\nb35403e test: export and cover appointments pure transforms (#399)\n1defceb test: stand up Vitest harness + cover utils\n76cd2f7 fix: update layout and styling for Leitbild section in vereinsportrai...\nfcd7ad9 feat: add link to Satzung document in vereinsportrait page\n98450aa chore: enable entire\n11c3a9d fix: remove unnecessary name attribute from IbanInput component\na441a7c chore: bump dependencies\na50354c fix: update SEPA mandate creditor handling in Event and SepaMandate c...\n674ff64 fix: re-add sort index\n7f76acd chore: bump dependencies\n2af1ec3 chore: bump dependencies\ne3a1c00 chore: add domain documentation and issue tracker guidelines\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git diff main...HEAD --stat 2>&1 | tail -20; echo \"---commits---\"; rtk git log main..HEAD --oneline 2>&1",
+            "time": {
+              "start": 1785083733921,
+              "end": 1785083733932
+            }
+          },
+          "id": "prt_f9f48275e001XzAdxqZXY5TMgl",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4820e9001ZQN5cTsz0WCjeQ"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 26907,
+            "input": 43,
+            "output": 48,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 26816
+            }
+          },
+          "cost": 0.00724356,
+          "id": "prt_f9f4827e1001NpSUnbyVS7EiMQ",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4820e9001ZQN5cTsz0WCjeQ"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.012449,
+        "tokens": {
+          "total": 28483,
+          "input": 531,
+          "output": 1072,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 26880
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083734026,
+          "completed": 1785083813666
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f48280a001op7XsdjX3RvyfC",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f482c5e001yMC5xQjunsABOa",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f48280a001op7XsdjX3RvyfC"
+        },
+        {
+          "type": "reasoning",
+          "text": "For the code-review of just my own work (this issue #402), the fixed point should be HEAD~1 (the previous commit), not main. The user asked to review \"the work\" — this issue #402 specifically. Let me use HEAD~1 as the fixed point.",
+          "time": {
+            "start": 1785083735136,
+            "end": 1785083736184
+          },
+          "id": "prt_f9f482c60001QzfytTIlESOZq5",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f48280a001op7XsdjX3RvyfC"
+        },
+        {
+          "type": "text",
+          "text": "I'll run code-review for this issue's commit specifically (fixed point = HEAD~1, HEAD~1..HEAD is just my #402 commit).",
+          "time": {
+            "start": 1785083736185,
+            "end": 1785083746227
+          },
+          "id": "prt_f9f483079001lhjckaA1LtkgYM",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f48280a001op7XsdjX3RvyfC"
+        },
+        {
+          "type": "tool",
+          "tool": "task",
+          "callID": "call_2eff",
+          "state": {
+            "status": "completed",
+            "input": {
+              "description": "Standards review of #402",
+              "prompt": "Run a Standards-axis code review of the work in commit 7665df9 (issue #402).\n\nThe diff command is:\n  git diff 7665df9~1...7665df9\n\nThat's the single commit: \"test: cover client form validators (#402)\". One new file `tests/client/forms.test.ts` (346 insertions); no production code changes.\n\nRepo coding standards sources to consult:\n- /Users/mseele/dev/sve/sve-website/AGENTS.md (the canonical repo standards — semicolons off, single quotes, tab width 2, print width 100, trailing commas all; `@/` alias for src imports; strict TS with explicit param/return types; `interface` for objects `type` for unions; PascalCase components, camelCase TS files; Astro/Astro.check; early returns, Zod validation, optional chaining for nullish values)\n- /Users/mseele/dev/sve/sve-website/tests/utils.test.ts and /Users/mseele/dev/sve/sve-website/tests/api/forms-fetch.test.ts as the established test style in this repo\n\nBaseline smells (Fowler, _Refactoring_ ch.3) — always judgement calls, never hard violations:\n- Mysterious Name, Duplicated Code, Feature Envy, Data Clumps, Primitive Obsession, Repeated Switches, Shotgun Surgery, Divergent Change, Speculative Generality, Message Chains, Middle Man, Refused Bequest.\n\nRepo standards override the baseline. Skip anything tooling (oxlint, oxfmt, tsc, astro check, vitest) already enforces.\n\nReport — per file/hunk where relevant — (a) every place the diff violates a documented standard (cite the standard: file + rule); and (b) any baseline smell you spot (name it and quote the hunk). Distinguish hard violations from judgement calls. Under 400 words.\n\nReturn only the report text. Do not write any files or run any tests.",
+              "subagent_type": "general"
+            },
+            "output": "<task id=\"ses_060b7bc25ffeS1GnGQSDcZU9kJ\" state=\"completed\">\n<task_result>\n## Standards-axis review — commit 7665df9 (forms.test.ts, issue #402)\n\n### Hard violations\nNone. Imports use `@/` alias (`@/client/forms`) — matches AGENTS.md \"Use `@/` alias for `src/` imports\". Grouping (external `vitest` → `@/` alias) matches the established style in `tests/api/forms-fetch.test.ts:1-3`. File name camelCase,个股 matches `tests/utils.test.ts` convention. No interfaces/types declared, so `interface`-vs-`type` rule is moot. `oxfmt`/`tsc`/`vitest` concerns skipped per instructions.\n\n### Judgement calls vs. documented standards\n- **Explicit param/return types** (AGENTS.md → \"Explicit types for parameters and returns\"). `validitySpies()` (forms.test.ts:16) declares no return type; consumers use `ReturnType<typeof validitySpies>`. Consistent with repo test style — `tests/utils.test.ts:13-25` (`toUtcIso`, `appointment`) omits annotations on arrow helpers too. Not a violation; flag only if tightening test-file conventions repo-wide.\n\n### Baseline smells (Fowler)\n- **Duplicated Code** (judgement): `validitySpies` repeats six `Object.defineProperty` blocks differing only by prototype + name suffix:\n  ```ts\n  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', { configurable: true, value: setInput })\n  Object.defineProperty(HTMLInputElement.prototype, 'reportValidity',   { configurable: true, value: reportInput })\n  // …same shape for HTMLSelectElement, HTMLTextAreaElement\n  ```\n  A `[['Input', HTMLInputElement], ['Select', …], …]` loop would collapse the body sixfold and remove the Shotgun-Surgery risk of adding a 3rd prototype touching six sites.\n- **Duplicated Code** (judgement): the `let spies / beforeEach / afterEach` triple is repeated verbatim across all four `describe` blocks (lines 49-55, 113-119, 160-168, 235-…). A shared module-level `beforeEach`/`afterEach` would dedupe — but isolation per block is arguably intentional and matches the one-`describe`-one-suite rhythm of `forms-fetch.test.ts`.\n- **Data Clumps** (mild): `{ setInput, reportInput }`, `{ setSelect, reportSelect }`, `{ setTextarea, reportTextarea }` always travel together; only the pair as a unit is ever asserted. Extracting a small `ElementSpy = { set: Mock; report: Mock }` per element kind would sharpen intent, but the test-only cost is low.\n- **No Mysterious Name, Feature Envy, Message Chains, Middle Man, Refused Bequest, Repeated Switches, Speculative Generality, Divergent Change** of note.\n\n### Net\nTooling-clean and standards-conformant. Two Duplicated-Code judgement calls in `validitySpies` worth a future tidy, neither blocking.\n</task_result>\n</task>",
+            "metadata": {
+              "parentSessionId": "ses_060b9cb11ffeQVrXDgto5qk01R",
+              "sessionId": "ses_060b7bc25ffeS1GnGQSDcZU9kJ",
+              "model": {
+                "modelID": "glm-5.2",
+                "providerID": "opencode-go"
+              },
+              "truncated": false
+            },
+            "title": "Standards review of #402",
+            "time": {
+              "start": 1785083741150,
+              "end": 1785083778333
+            }
+          },
+          "id": "prt_f9f4843d4001fFOidwjs0uMxvX",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f48280a001op7XsdjX3RvyfC"
+        },
+        {
+          "type": "tool",
+          "tool": "task",
+          "callID": "call_e145",
+          "state": {
+            "status": "completed",
+            "input": {
+              "description": "Spec review of #402",
+              "prompt": "Run a Spec-axis code review of commit 7665df9 against issue #402.\n\nDiff command:\n  git diff 7665df9~1...7665df9\n\nRepo root: /Users/mseele/dev/sve/sve-website\nFile under review: tests/client/forms.test.ts (new file, 346 lines).\n\nThe originating spec is GitHub issue #402 (mseele/sve-website):\n\n---\n## What to build\n\n`src/client/forms.ts` exports pure-ish validators that take `HTMLInputElement | null | undefined`: `checkRequiredInput`, `checkRequiredSelect`, `validateIbanInput`, plus the `clearCustomValidityOnInput` / `clearCustomValidityOnSelect` listeners. They're nearly unit-testable as-is — the inputs are dependency-injected.\n\nSet up happy-dom with a stub for `reportValidity` / `setCustomValidity` (happy-dom returns false silently — assert the calls, not the returns), then cover: empty input triggers `reportValidity` and returns false; valid IBAN passes (`isValidIBAN` from `ibantools` is the real check — test our wrapper around it, not the lib); invalid IBAN sets a custom validity and returns false; `clearCustomValidity*` actually clears the message once a value is typed.\n\nIndependent of the EventAvailability work — this file has no availability logic.\n\n## Acceptance criteria\n\n- [ ] happy-dom test environment provides working `HTMLInputElement` / `HTMLSelectElement` / `HTMLTextAreaElement`\n- [ ] `reportValidity` / `setCustomValidity` stubbed on the element prototypes and asserted as called\n- [ ] `tests/client/forms.test.ts` covers every exported function in `src/client/forms.ts`\n- [ ] IBAN validation tests cover empty, valid, and invalid inputs\n- [ ] All tests green, `bun run check` green\n---\n\nNote the spec also says IBAN invalid-message wording. The actual wording used in src/client/forms.ts is 'Bitte gib eine gültige IBAN ein.' — check the test asserts the actual message.\n\nReport:\n(a) requirements the spec asked for that are missing or partial;\n(b) behaviour in the diff that wasn't asked for (scope creep);\n(c) requirements that look implemented but where the implementation looks wrong.\nQuote the spec line for each finding. Under 400 words.\n\nReturn only the report text. Do not write files or run tests.",
+              "subagent_type": "general"
+            },
+            "output": "<task id=\"ses_060b7a979ffeEWyMNhS4WSiq3t\" state=\"completed\">\n<task_result>\n## Spec-axis review — commit 7665df9 vs issue #402\n\n### (a) Spec requirements missing or partial\n\nNone missing. All acceptance criteria are addressed in-file:\n- Prototypes stubbed (`HTMLInputElement`/`HTMLSelectElement`/`HTMLTextAreaElement`) and asserted as called (lines 20–44, 63, 80, 88, 145, 199).\n- Every exported function in `src/client/forms.ts` has a `describe` — `checkRequiredInput`, `checkRequiredSelect`, `validateIbanInput`, `clearCustomValidityOnInput`, `clearCustomValidityOnSelect`.\n- IBAN empty / valid / invalid all covered (lines 170–217).\n- IBAN invalid-message wording matches the actual `forms.ts` string `'Bitte gib eine gültige IBAN ein.'` (lines 198, 207, 215) — satisfies the spec's wording note.\n- \"No availability logic\" — none present.\n\n`bun run check` / tests-green cannot be verified from the diff alone.\n\n### (b) Scope creep (behaviour not asked for)\n\n- Whitespace-only `checkRequiredInput` / `checkRequiredSelect` cases (lines 67–74, 136–146). Spec only asked \"empty input triggers `reportValidity` and returns false\"; whitespace-trim semantics are an extra contract assertion.\n- IBAN no-spaces and lower-case variants (lines 179–191). Spec line: \"valid IBAN passes (`isValidIBAN` … is the real check — test our wrapper around it, not the lib)\" — one valid case suffices; two extra casing variants are gold-plating.\n- null/undefined cases for every function (e.g. 92–102, 148–156, 219–229, 280–288, 337–345). Spec mentions the nullable signature but never asks null-behaviour assertions.\n\nReasonable coverage extensions, but beyond what #402 enumerates.\n\n### (c) Implemented but looks wrong\n\n- Spec line: \"`reportValidity` / `setCustomValidity` stubbed on the element prototypes and asserted as called\". The stubs are installed via `Object.defineProperty(..., { configurable: true, value: vi.fn() })` (lines 20–43), but cleanup is `vi.restoreAllMocks()` (lines 55, 113, 167, 240, 299). `restoreAllMocks` only reverses `vi.spyOn`; it does **not** delete `Object.defineProperty` overrides. The configurable descriptors persist on the global prototypes for the remainder of the vitest worker, leaking dead spies into any other test file that touches these elements. Original descriptors are never saved/restored — should delete the props in `afterEach` (they're configurable) or stash and re-define the originals.\n- Spec line: \"happy-dom returns false silently — assert the calls, not the returns\". The stubs are declared `vi.fn(() => false)` (lines 15, 17, 19) and the failure-path tests assert `.toBe(false)` (lines 71, 131, 197, 214). Those return assertions are circular — they verify the stub's own return, not the validator's logic — which is exactly the false-confidence the spec warned against.\n</task_result>\n</task>",
+            "metadata": {
+              "parentSessionId": "ses_060b9cb11ffeQVrXDgto5qk01R",
+              "sessionId": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+              "model": {
+                "modelID": "glm-5.2",
+                "providerID": "opencode-go"
+              },
+              "truncated": false
+            },
+            "title": "Spec review of #402",
+            "time": {
+              "start": 1785083745929,
+              "end": 1785083813445
+            }
+          },
+          "id": "prt_f9f4856820011PpudN2rNZXEi0",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f48280a001op7XsdjX3RvyfC"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 28483,
+            "input": 531,
+            "output": 1072,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 26880
+            }
+          },
+          "cost": 0.012449,
+          "id": "prt_f9f495e83001MFCAHLb1moxLES",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f48280a001op7XsdjX3RvyfC"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.035993,
+        "tokens": {
+          "total": 35953,
+          "input": 1431,
+          "output": 6042,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 28480
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083813677,
+          "completed": 1785083889765
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f495f2d001K3Mf2TuZ7dRKqV",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f4965b7001EDpZ7mHDOupuQO",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f495f2d001K3Mf2TuZ7dRKqV"
+        },
+        {
+          "type": "reasoning",
+          "text": "The Spec sub-agent raised two real issues worth fixing: (1) `Object.defineProperty` overrides aren't cleaned up — they leak to other test files for the worker's lifetime. (2) Return-value assertions are circular.\n\nLet me verify the cleanup concern. `vi.restoreAllMocks` only undoes `vi.spyOn` and `vi.fn` mocks created via `vi.mock`. Defining a property on the prototype persists in the worker process. Other test files run in the same worker (vitest uses worker pool, but each test file gets its own module registry, and tests run in same window context?). Actually happy-dom environment is fresh per test file in vitest. But the global `HTMLInputElement` from happy-dom — is it per-file or per-worker? Different test files in the same worker share the same DOM globals in happy-dom? Actually vitest creates a fresh environment per test file by default. But to be safe and idiomatic, I should clean up by deleting the properties.\n\nLet me fix both issues:\n1. Replace `afterEach(() => vi.restoreAllMocks())` with `afterEach(() => { delete properties })` or save originals and restore.\n2. The spec says \"assert the calls, not the returns\" — I should drop the `.toBe(false)` assertions on validator return for paths where reportValidity is involved... actually wait, the spec says \"empty input triggers `reportValidity` and returns false\". So it wants the \"returns false\" assertion too. Hmm. Let me reread.\n\nSpec: \"empty input triggers `reportValidity` and returns false; valid IBAN passes (...); invalid IBAN sets a custom validity and returns false;\"\n\nSo return values ARE part of spec. But also: \"happy-dom returns false silently — assert the calls, not the returns\". \n\nThe tension: \"assert the calls, not the returns\" is about how to test validity behavior — because happy-dom returns false silently when invalid. So in a real browser, reportValidity() returns false when invalid. happy-dom always returns false. The spec is saying don't trust the return value as a signal — assert the call happened.\n\nBut the validators return `reportValidity()` (input.reportValidity()) — so the value that flows back to the caller IS the browser's reportValidity result. So testing return value IS meaningful semantically but in happy-dom always false.\n\nThe reviewer's concern is that the stub is `vi.fn(() => false)` — so any path that calls reportValidity will return false. We're asserting `.toBe(false)` on those, which only verifies the stub. To make the test meaningful about the validator's wiring, we should perhaps test with reportValidity returning true and verify the validator still passes false through etc.\n\nHmm — but actually the validators just `return input.reportValidity()`. So whatever reportValidity returns, validator returns. We could parameterize: configure reportValidity to return true, then check that an empty-input case returns true (proving validator wires through reportValidity's return).\n\nThe reviewer's \"circular\" concern: since we hard-code reportValidity → false, all the \"returns false\" assertions just verify the stub. To meaningfully verify the validator returns `reportValidity()`, we could test wiring: change reportValidity to return true in one test and verify the validator returns true even though input is empty (proving wiring through).\n\nThat's a stronger test. Let me make that adjustment. Actually, for the empty-input case, the validator does `return input.reportValidity()`. If reportValidity returns true, validator returns true. If false, returns false. The current tests assert `.toBe(false)` which only proves the stub.\n\nBetter test: when reportValidity returns false, validator returns false; when reportValidity returns true (valid in browser), validator returns true. This proves wiring.\n\nActually that's over-engineering. The simplest meaningful assertion: verify the validator's return path. I think a reasonable interpretation: assert return false on report paths is fine since we're testing the validator's return contract — but to make it meaningful we should configure reportValidity to return true for those stubs and verify return true. Hmm.\n\nLet me re-read the spec acceptance criteria: \"happy-dom returns false silently — assert the calls, not the returns\". The spec is telling me not to lean on return values for behavior — assert the calls (setCustomValidity called with message, reportValidity called).\n\nI'll keep return assertions but verify wiring more meaningfully. Simpler approach: change reportValidity stub default to return `true` (the \"passes\" case from browser's perspective). Then the tests that check `.toBe(false)` need rethinking.\n\nActually the cleanest fix: don't assert return values where they'd be circular. Just assert the calls were made with expected args. But the spec line \"returns false\" is a contract assertion. The reviewer recommends we shouldn't assert the stub's return.\n\nCompromise: I'll set reportValidity to return `true` and verify that on invalid/empty branches, the validators return `true` (proving they propagate reportValidity's return — not hardcoded false). And verify happy path `validateIbanInput` returns `true` (that's the validator's own `return true`, not the stub). And `checkRequiredInput` for valid input returns `true`. That way return-assertions prove wiring, not just stub behavior.\n\nWait but for empty-input checkRequiredInput, the validator returns `input.reportValidity()`. If reportValidity returns true (stub setting), validator returns true. The test asserts return — that proves wiring. Good.\n\nFor valid IBAN, validator returns `true` (own constant) — fine.\n\nFor invalid IBAN, validator returns `input.reportValidity()`. If stub returns true, validator returns true. Test asserts → true. Hmm.\n\nBut then the test name says \"returns false for invalid IBAN\" — which would no longer hold. We'd need to rename or restructure.\n\nActually I think the simplest fix that addresses the reviewer concern: parameterize the reportValidity return so different tests see different returns. For example, default reportValidity returns false (simulating invalid in browser). For one test, swap to return true and verify validator wires through.\n\nActually let me just keep the assertions minimal — assert calls, and assert returns only on the non-report paths (valid input → return true, valid IBAN → return true, null → return true/false from own logic). Drop return assertions on report paths OR keep but understand the limitation.\n\nHmm, I think I'm overthinking. Let me make two factual fixes:\n\n1. **Cleanup**: Actually save nothing, just put the stubs on the prototype once, and have `afterEach` delete the properties. Or better, install once in `beforeAll` and clean up in `afterAll`. Or simplest: define the properties in `beforeEach` and delete in `afterEach` using `delete`.\n\nLet me check: do other existing test files need these methods intact? Only this test file touches `setCustomValidity`/`reportValidity`. So leak only matters if another test file uses these methods. None does currently. But to be safe & correct, I'll clean up.\n\nBetter approach: define stubs as instance methods via prototype assignment, save originals first, restore originals in `afterEach`. Since happy-dom's original (if any) is `undefined`/no-op, I can just save them.\n\nLet me refactor the helpers to save & restore properly:\n\n```ts\nconst ELEMENT_KINDS = [\n  { ctor: HTMLInputElement, spy: () => ... },\n  ...\n]\n```\n\nActually simpler: save original descriptors, restore in afterEach.\n\nLet me restructure:\n\n```ts\ntype ElementKind = 'Input' | 'Select' | 'Textarea'\nconst PROTO_CTOR = { Input: HTMLInputElement, Select: HTMLSelectElement, Textarea: HTMLTextAreaElement } as const\n\nfunction installValidityStubs() {\n  const original = new Map<PropertyKey, PropertyDescriptor | undefined>()\n  const spies = { setInput: vi.fn(), reportInput: vi.fn(() => false), ... }\n  const defs = [\n    [HTMLInputElement.prototype, 'setCustomValidity', spies.setInput],\n    [HTMLInputElement.prototype, 'reportValidity', spies.reportInput],\n    ...\n  ]\n  for (const [proto, key, fn] of defs) {\n    original.set(proto, Object.getOwnPropertyDescriptor(proto, key))\n    Object.defineProperty(proto, key, { configurable: true, value: fn })\n  }\n  return {\n    spies,\n    restore: () => { for each, restore original or delete }\n  }\n}\n```\n\nThat's a bit involved. Let me write a helper function returning spies + restore, called in beforeEach; afterEach calls restore and vi.clearAllMocks.\n\nSimpler: store originals in a module-scoped Map. Let me write a single helper.\n\n```ts\nconst PROTOS = [\n  { name: 'Input', ctor: HTMLInputElement, setKey: 'setCustomValidity', reportKey: 'reportValidity' },\n  ...\n]\n```\n\nLet me think about the reviewer's return-assertion concern more crisply. The concern: if I stub reportValidity = `() => false` and assert the validator returns false, I'm testing the stub, not the validator logic. The validator's actual behavior is:\n- empty input: `return input.reportValidity()` (i.e., propagates)\n- valid input: `return true` (its own constant)\n\nTo assert \"validator returns false on invalid IBAN\" meaningfully, I'd need reportValidity to return false (since validator propagates). But asserting return false after configuring stub to return false = circular.\n\nBetter: assert \"validator propagates reportValidity's return\". So set reportValidity to false in one test (return false asserted), set to true in another test (return true asserted). That proves propagation without circularity.\n\nActually that's the right fix. Let me write one test per branch verifying propagation:\n\n```ts\nit('returns whatever reportValidity returns on empty input (wiring)', () => {\n  const input = document.createElement('input')\n  spies.reportInput.mockReturnValue(true)\n  expect(checkRequiredInput(input, 'msg')).toBe(true)\n  spies.reportInput.mockReturnValue(false)\n  expect(checkRequiredInput(input, 'msg')).toBe(false)\n})\n```\n\nThat's a meaningful wiring test. Other tests just assert calls.\n\nOK let me redesign the file. I want to keep coverage tight, address both review findings, keep noise low. Let me rewrite the file cleanly.\n\nLet me write a fresh version:\n\n```ts\nimport { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\nimport {\n  checkRequiredInput,\n  checkRequiredSelect,\n  clearCustomValidityOnInput,\n  clearCustomValidityOnSelect,\n  validateIbanInput,\n} from '@/client/forms'\n\n// Element kinds we install validity stubs onto. Each kind carries its prototype\n// document factory, plus a paired set of spies (set / report).\ninterface ValidityStubs {\n  set: { Input: vi.Mock; Select: vi.Mock; Textarea: vi.Mock }\n  report: { Input: vi.Mock; Select: vi.Mock; Textarea: vi.Mock }\n  restore: () => void\n}\n\nconst STUB_KINDS = [\n  { name: 'Input', ctor: HTMLInputElement },\n  { name: 'Select', ctor: HTMLSelectElement },\n  { name: 'Textarea', ctor: HTMLTextAreaElement },\n] as const\n\nfunction stubValidity(): ValidityStubs {\n  const set = {\n    Input: vi.fn(),\n    Select: vi.fn(),\n    Textarea: vi.fn(),\n  }\n  const report = {\n    Input: vi.fn(() => false),\n    Select: vi.fn(() => false),\n    Textarea: vi.fn(() => false),\n  }\n  const originals = STUB_KINDS.map(({ ctor }) => ({\n    ctor,\n    setDesc: Object.getOwnPropertyDescriptor(ctor.prototype, 'setCustomValidity'),\n    reportDesc: Object.getOwnPropertyDescriptor(ctor.prototype, 'reportValidity'),\n  }))\n\n  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', { configurable: true, value: set.Input })\n  Object.defineProperty(HTMLInputElement.prototype, 'reportValidity', { configurable: true, value: report.Input })\n  Object.defineProperty(HTMLSelectElement.prototype, 'setCustomValidity', { configurable: true, value: set.Select })\n  Object.defineProperty(HTMLSelectElement.prototype, 'reportValidity', { configurable: true, value: report.Select })\n  Object.defineProperty(HTMLTextAreaElement.prototype, 'setCustomValidity', { configurable: true, value: setTextarea })\n  Object.defineProperty(HTMLTextAreaElement.prototype, 'reportValidity', { configurable: true, value: report.Textarea })\n\n  return {\n    set,\n    report,\n    restore: () => {\n      for (const { ctor, setDesc, reportDesc } of originals) {\n        if (setDesc) Object.defineProperty(ctor.prototype, 'setCustomValidity', setDesc)\n        else delete ctor.prototype.setCustomValidity\n        if (reportDesc) Object.defineProperty(ctor.prototype, 'reportValidity', reportDesc)\n        else delete ctor.prototype.reportValidity\n      }\n    },\n  }\n}\n```\n\nActually I realize the simpler approach is to set the spies as `beforeEach` install + `afterEach` restore. Within each describe, I have one beforeEach and one afterEach. But the helper is now stateful. Let me have one shared describe-level setup with a module-scoped ref.\n\nLet me restructure to have a single top-level `beforeEach`/`afterEach`. But then test files with multiple describes... actually let me just do one `beforeEach`/`afterEach` at top-level and have each test use the shared `spies`. That eliminates the deduplication concern too.\n\nLet me write the new file:\n\n```ts\nimport { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\n\nVALID_IBAN = 'DE89 3704 0044 0532 0130 00'\nMALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n\nelement kinds = Input/Select/Textarea\n\ninterface Stubs: set per kind, report per kind\nlet spies: Stubs\nlet restore: () => void\n\nbeforeEach install\nafterEach restore + clearAllMocks + reset clearing mock implementations (clearAllMocks)\n```\n\nOK let me just write it.\n\nFor the return-value concern: I'll add:\n- For empty input branch: test that validator's return equals reportValidity's return — by changing mockReturnValue between true/false, assert propagation.\n- For valid input (non-empty): assert true.\n- For null/undefined: assert the documented behavior (true for required checks, false for Iban).\n\nFor valid IBAN: assert true (own constant).\nFor invalid IBAN: assert propagation (test reportValue true → validator true; reportValue false → validator false).\n\nThat's stronger. Let me write.\n\nActually the spec says \"empty input triggers `reportValidity` and returns false\". So it does want return false asserted. But reviewer correctly notes that's circular when stub is hard-coded false. To honor spec + fix circularity: assert propagation — when reportValidity returns false, validator returns false. That literally tests \"returns false\" AND tests wiring.\n\nLet me write the file now. Finalversion.",
+          "time": {
+            "start": 1785083815352,
+            "end": 1785083859582
+          },
+          "id": "prt_f9f4965b8001ZLztHXwOu6IAkt",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f495f2d001K3Mf2TuZ7dRKqV"
+        },
+        {
+          "type": "text",
+          "text": "The Spec review surfaced two real issues worth fixing:\n1. `Object.defineProperty` overrides leak across test files (workers may share prototypes) — `vi.restoreAllMocks()` doesn't undo `defineProperty`.\n2. `vi.fn(() => false)` then asserting `.toBe(false)` is circular — only verifies the stub, not the validator's wiring.\n\nLet me fix both.",
+          "time": {
+            "start": 1785083859590,
+            "end": 1785083889634
+          },
+          "id": "prt_f9f4a1285001PvFqvmBJyQsiES",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f495f2d001K3Mf2TuZ7dRKqV"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_38c9",
+          "state": {
+            "status": "completed",
+            "input": {
+              "content": "import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\nimport {\n  checkRequiredInput,\n  checkRequiredSelect,\n  clearCustomValidityOnInput,\n  clearCustomValidityOnSelect,\n  validateIbanInput,\n} from '@/client/forms'\n\nconst VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\nconst MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\nconst IBAN_ERROR = 'Bitte gib eine gültige IBAN ein.'\n\ntype Kind = 'Input' | 'Select' | 'Textarea'\n\nconst PROTO: Record<Kind, typeof HTMLInputElement> = {\n  Input: HTMLInputElement,\n  Select: HTMLSelectElement,\n  Textarea: HTMLTextAreaElement,\n}\n\ninterface Stubs {\n  set: Record<Kind, vi.Mock>\n  report: Record<Kind, vi.Mock>\n  restore: () => void\n}\n\nfunction stubValidity(): Stubs {\n  const set: Record<Kind, vi.Mock> = {\n    Input: vi.fn(),\n    Select: vi.fn(),\n    Textarea: vi.fn(),\n  }\n  const report: Record<Kind, vi.Mock> = {\n    Input: vi.fn(() => false),\n    Select: vi.fn(() => false),\n    Textarea: vi.fn(() => false),\n  }\n  const originals = (Object.keys(PROTO) as Kind[]).map((kind) => ({\n    kind,\n    setDesc: Object.getOwnPropertyDescriptor(PROTO[kind].prototype, 'setCustomValidity'),\n    reportDesc: Object.getOwnPropertyDescriptor(PROTO[kind].prototype, 'reportValidity'),\n  }))\n  for (const kind of Object.keys(PROTO) as Kind[]) {\n    Object.defineProperty(PROTO[kind].prototype, 'setCustomValidity', {\n      configurable: true,\n      value: set[kind],\n    })\n    Object.defineProperty(PROTO[kind].prototype, 'reportValidity', {\n      configurable: true,\n      value: report[kind],\n    })\n  }\n  return {\n    set,\n    report,\n    restore: () => {\n      for (const { kind, setDesc, reportDesc } of originals) {\n        const proto = PROTO[kind].prototype\n        if (setDesc) Object.defineProperty(proto, 'setCustomValidity', setDesc)\n        else delete proto.setCustomValidity\n        if (reportDesc) Object.defineProperty(proto, 'reportValidity', reportDesc)\n        else delete proto.reportValidity\n      }\n    },\n  }\n}\n\nlet stubs: Stubs\n\nbeforeEach(() => {\n  stubs = stubValidity()\n})\n\nafterEach(() => {\n  stubs.restore()\n  vi.clearAllMocks()\n})\n\ndescribe('checkRequiredInput', () => {\n  it('returns true without touching validity when the input has a non-empty value', () => {\n    const input = document.createElement('input')\n    input.value = 'Max Mustermann'\n\n    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n    expect(stubs.set.Input).not.toHaveBeenCalled()\n    expect(stubs.report.Input).not.toHaveBeenCalled()\n  })\n\n  it('treats a whitespace-only value as empty', () => {\n    const input = document.createElement('input')\n    input.value = '   '\n\n    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(false)\n    expect(stubs.set.Input).toHaveBeenCalledWith('Pflichtfeld')\n    expect(stubs.report.Input).toHaveBeenCalledTimes(1)\n  })\n\n  it('sets the custom validity message and calls reportValidity when the input is empty', () => {\n    const input = document.createElement('input')\n\n    expect(checkRequiredInput(input, 'Bitte Namen angeben')).toBe(false)\n    expect(stubs.set.Input).toHaveBeenCalledWith('Bitte Namen angeben')\n    expect(stubs.report.Input).toHaveBeenCalledTimes(1)\n  })\n\n  it('propagates reportValidity return: returns true when reportValidity returns true', () => {\n    stubs.report.Input.mockReturnValue(true)\n    const input = document.createElement('input')\n    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n    expect(stubs.report.Input).toHaveBeenCalledTimes(1)\n  })\n\n  it('works for HTMLTextAreaElement and propagates the error message', () => {\n    const textarea = document.createElement('textarea')\n\n    expect(checkRequiredInput(textarea, 'Bitte Nachricht angeben')).toBe(false)\n    expect(stubs.set.Textarea).toHaveBeenCalledWith('Bitte Nachricht angeben')\n    expect(stubs.report.Textarea).toHaveBeenCalledTimes(1)\n  })\n\n  it('returns true for null input without touching the prototype', () => {\n    expect(checkRequiredInput(null, 'Pflichtfeld')).toBe(true)\n    expect(stubs.set.Input).not.toHaveBeenCalled()\n    expect(stubs.report.Input).not.toHaveBeenCalled()\n  })\n\n  it('returns true for undefined input without touching the prototype', () => {\n    expect(checkRequiredInput(undefined, 'Pflichtfeld')).toBe(true)\n    expect(stubs.set.Input).not.toHaveBeenCalled()\n    expect(stubs.report.Input).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('checkRequiredSelect', () => {\n  it('returns true without touching validity when a value is selected', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = 'general'\n    select.append(option)\n    select.value = 'general'\n\n    expect(checkRequiredSelect(select, 'Bitte auswählen')).toBe(true)\n    expect(stubs.set.Select).not.toHaveBeenCalled()\n    expect(stubs.report.Select).not.toHaveBeenCalled()\n  })\n\n  it('sets the custom validity message and reports validity for an empty value', () => {\n    const select = document.createElement('select')\n\n    expect(checkRequiredSelect(select, 'Bitte Auswahl treffen')).toBe(false)\n    expect(stubs.set.Select).toHaveBeenCalledWith('Bitte Auswahl treffen')\n    expect(stubs.report.Select).toHaveBeenCalledTimes(1)\n  })\n\n  it('treats a whitespace-only option value as empty', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = '   '\n    select.append(option)\n    select.value = '   '\n\n    expect(checkRequiredSelect(select, 'Pflichtfeld')).toBe(false)\n    expect(stubs.set.Select).toHaveBeenCalledWith('Pflichtfeld')\n    expect(stubs.report.Select).toHaveBeenCalled()\n  })\n\n  it('propagates reportValidity return: returns true when reportValidity returns true', () => {\n    stubs.report.Select.mockReturnValue(true)\n    const select = document.createElement('select')\n    expect(checkRequiredSelect(select, 'Pflichtfeld')).toBe(true)\n    expect(stubs.report.Select).toHaveBeenCalledTimes(1)\n  })\n\n  it('returns true for null select without touching the prototype', () => {\n    expect(checkRequiredSelect(null, 'Pflichtfeld')).toBe(true)\n    expect(stubs.set.Select).not.toHaveBeenCalled()\n  })\n\n  it('returns true for undefined select without touching the prototype', () => {\n    expect(checkRequiredSelect(undefined, 'Pflichtfeld')).toBe(true)\n    expect(stubs.set.Select).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('validateIbanInput', () => {\n  it('accepts a syntactically valid IBAN and returns true without touching validity', () => {\n    const input = document.createElement('input')\n    input.value = VALID_IBAN\n\n    expect(validateIbanInput(input)).toBe(true)\n    expect(stubs.set.Input).not.toHaveBeenCalled()\n    expect(stubs.report.Input).not.toHaveBeenCalled()\n  })\n\n  it('accepts a valid IBAN written without spaces', () => {\n    const input = document.createElement('input')\n    input.value = VALID_IBAN.replace(/\\s/g, '')\n\n    expect(validateIbanInput(input)).toBe(true)\n  })\n\n  it('accepts a valid IBAN regardless of letter case', () => {\n    const input = document.createElement('input')\n    input.value = 'de89 3704 0044 0532 0130 00'\n\n    expect(validateIbanInput(input)).toBe(true)\n  })\n\n  it('sets the custom validity message and reports for an invalid IBAN', () => {\n    const input = document.createElement('input')\n    input.value = MALFORMED_IBAN\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(stubs.set.Input).toHaveBeenCalledWith(IBAN_ERROR)\n    expect(stubs.report.Input).toHaveBeenCalledTimes(1)\n  })\n\n  it('rejects a non-IBAN string of random characters', () => {\n    const input = document.createElement('input')\n    input.value = 'not-an-iban'\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(stubs.set.Input).toHaveBeenCalledWith(IBAN_ERROR)\n    expect(stubs.report.Input).toHaveBeenCalled()\n  })\n\n  it('propagates reportValidity return on invalid IBAN', () => {\n    stubs.report.Input.mockReturnValue(true)\n    const input = document.createElement('input')\n    input.value = MALFORMED_IBAN\n\n    expect(validateIbanInput(input)).toBe(true)\n    expect(stubs.set.Input).toHaveBeenCalledWith(IBAN_ERROR)\n    expect(stubs.report.Input).toHaveBeenCalledTimes(1)\n  })\n\n  it('treats an empty input as invalid: sets the message, reports, returns false', () => {\n    const input = document.createElement('input')\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(stubs.set.Input).toHaveBeenCalledWith(IBAN_ERROR)\n    expect(stubs.report.Input).toHaveBeenCalledTimes(1)\n  })\n\n  it('returns false and does not touch validity for null input', () => {\n    expect(validateIbanInput(null)).toBe(false)\n    expect(stubs.set.Input).not.toHaveBeenCalled()\n    expect(stubs.report.Input).not.toHaveBeenCalled()\n  })\n\n  it('returns false and does not touch validity for undefined input', () => {\n    expect(validateIbanInput(undefined)).toBe(false)\n    expect(stubs.set.Input).not.toHaveBeenCalled()\n    expect(stubs.report.Input).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('clearCustomValidityOnInput', () => {\n  it('clears the custom validity when the user types a non-empty value', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    input.value = 'Max'\n    input.dispatchEvent(new Event('input'))\n\n    expect(stubs.set.Input).toHaveBeenCalledWith('')\n  })\n\n  it('does not clear the validity when the value trims to empty', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    input.value = '   '\n    input.dispatchEvent(new Event('input'))\n\n    expect(stubs.set.Input).not.toHaveBeenCalled()\n  })\n\n  it('works for HTMLTextAreaElement: clears once a value is typed', () => {\n    const textarea = document.createElement('textarea')\n    clearCustomValidityOnInput(textarea)\n\n    textarea.value = 'Hello'\n    textarea.dispatchEvent(new Event('input'))\n\n    expect(stubs.set.Textarea).toHaveBeenCalledWith('')\n  })\n\n  it('no-ops before any input event is dispatched', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    expect(stubs.set.Input).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows null input (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnInput(null)).not.toThrow()\n    expect(stubs.set.Input).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows undefined input (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnInput(undefined)).not.toThrow()\n    expect(stubs.set.Input).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('clearCustomValidityOnSelect', () => {\n  it('clears the custom validity when the user selects a non-empty value', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = 'general'\n    select.append(option)\n\n    clearCustomValidityOnSelect(select)\n\n    select.value = 'general'\n    select.dispatchEvent(new Event('change'))\n\n    expect(stubs.set.Select).toHaveBeenCalledWith('')\n  })\n\n  it('does not clear the validity when the selected value trims to empty', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = '   '\n    select.append(option)\n\n    clearCustomValidityOnSelect(select)\n\n    select.value = '   '\n    select.dispatchEvent(new Event('change'))\n\n    expect(stubs.set.Select).not.toHaveBeenCalled()\n  })\n\n  it('no-ops before any change event is dispatched', () => {\n    const select = document.createElement('select')\n    clearCustomValidityOnSelect(select)\n\n    expect(stubs.set.Select).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows null select (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnSelect(null)).not.toThrow()\n    expect(stubs.set.Select).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows undefined select (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnSelect(undefined)).not.toThrow()\n    expect(stubs.set.Select).not.toHaveBeenCalled()\n  })\n})",
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+              "exists": true,
+              "truncated": false
+            },
+            "title": "tests/client/forms.test.ts",
+            "time": {
+              "start": 1785083889557,
+              "end": 1785083889576
+            }
+          },
+          "id": "prt_f9f4a878c001v3BCKyKvhDDcTm",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f495f2d001K3Mf2TuZ7dRKqV"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "c5df9c37238f44756f9914fc67f1a8f8aa21994a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 35953,
+            "input": 1431,
+            "output": 6042,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 28480
+            }
+          },
+          "cost": 0.035993,
+          "id": "prt_f9f4a8833001YdoL358umP76h1",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f495f2d001K3Mf2TuZ7dRKqV"
+        },
+        {
+          "type": "patch",
+          "hash": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts"
+          ],
+          "id": "prt_f9f4a88630012WQhuZwne8YIKv",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f495f2d001K3Mf2TuZ7dRKqV"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01290624,
+        "tokens": {
+          "total": 36009,
+          "input": 2938,
+          "output": 47,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 33024
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083889772,
+          "completed": 1785083894838
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4a886c001XiEcQ38JMldlMt",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "c5df9c37238f44756f9914fc67f1a8f8aa21994a",
+          "type": "step-start",
+          "id": "prt_f9f4a8dc8001phkltMe5OivLXR",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4a886c001XiEcQ38JMldlMt"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_56e5",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run format tests/client/forms.test.ts 2>&1 | tail -3 && rtk bun run test tests/client/forms.test.ts 2>&1 | tail -12"
+            },
+            "output": "$ oxfmt tests/client/forms.test.ts\nFinished in 26ms on 1 files using 8 threads.\n18:38:14 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:68496) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  1 passed (1)\n      Tests  33 passed (33)\n   Start at  18:38:14\n   Duration  461ms (transform 33ms, setup 111ms, import 15ms, tests 14ms, environment 192ms)\n\n",
+            "metadata": {
+              "output": "$ oxfmt tests/client/forms.test.ts\nFinished in 26ms on 1 files using 8 threads.\n18:38:14 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:68496) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  1 passed (1)\n      Tests  33 passed (33)\n   Start at  18:38:14\n   Duration  461ms (transform 33ms, setup 111ms, import 15ms, tests 14ms, environment 192ms)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run format tests/client/forms.test.ts 2>&1 | tail -3 && rtk bun run test tests/client/forms.test.ts 2>&1 | tail -12",
+            "time": {
+              "start": 1785083894714,
+              "end": 1785083894718
+            }
+          },
+          "id": "prt_f9f4a8f6c001li6digNpb2hdcV",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4a886c001XiEcQ38JMldlMt"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "96f3e51a9dfb0dc22c0fdca4bc33853c30e634d1",
+          "type": "step-finish",
+          "tokens": {
+            "total": 36009,
+            "input": 2938,
+            "output": 47,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 33024
+            }
+          },
+          "cost": 0.01290624,
+          "id": "prt_f9f4a9c0b001yS8AT72xnbj5Qa",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4a886c001XiEcQ38JMldlMt"
+        },
+        {
+          "type": "patch",
+          "hash": "c5df9c37238f44756f9914fc67f1a8f8aa21994a",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts"
+          ],
+          "id": "prt_f9f4a9c34001HGVJsT4m1P53O0",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4a886c001XiEcQ38JMldlMt"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00974968,
+        "tokens": {
+          "total": 36203,
+          "input": 212,
+          "output": 23,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 35968
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083894843,
+          "completed": 1785083901279
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4a9c3b001f7MaxHnLjDLGj4",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "96f3e51a9dfb0dc22c0fdca4bc33853c30e634d1",
+          "type": "step-start",
+          "id": "prt_f9f4aa951001BXDKOVlGOn2TzI",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4a9c3b001f7MaxHnLjDLGj4"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_ce3c",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run check 2>&1 | tail -10"
+            },
+            "output": "    Type 'HTMLSelectElement' is missing the following properties from type 'HTMLInputElement': accept, align, alt, capture, and 38 more.\ntests/client/forms.test.ts(19,3): error TS2322: Type '{ new (): HTMLTextAreaElement; prototype: HTMLTextAreaElement; }' is not assignable to type '{ new (): HTMLInputElement; prototype: HTMLInputElement; }'.\n  Types of property 'prototype' are incompatible.\n    Type 'HTMLTextAreaElement' is missing the following properties from type 'HTMLInputElement': accept, align, alt, capture, and 29 more.\ntests/client/forms.test.ts(23,21): error TS2503: Cannot find namespace 'vi'.\ntests/client/forms.test.ts(24,24): error TS2503: Cannot find namespace 'vi'.\ntests/client/forms.test.ts(29,27): error TS2503: Cannot find namespace 'vi'.\ntests/client/forms.test.ts(34,30): error TS2503: Cannot find namespace 'vi'.\ntests/client/forms.test.ts(61,21): error TS2790: The operand of a 'delete' operator must be optional.\ntests/client/forms.test.ts(63,21): error TS2790: The operand of a 'delete' operator must be optional.\n",
+            "metadata": {
+              "output": "    Type 'HTMLSelectElement' is missing the following properties from type 'HTMLInputElement': accept, align, alt, capture, and 38 more.\ntests/client/forms.test.ts(19,3): error TS2322: Type '{ new (): HTMLTextAreaElement; prototype: HTMLTextAreaElement; }' is not assignable to type '{ new (): HTMLInputElement; prototype: HTMLInputElement; }'.\n  Types of property 'prototype' are incompatible.\n    Type 'HTMLTextAreaElement' is missing the following properties from type 'HTMLInputElement': accept, align, alt, capture, and 29 more.\ntests/client/forms.test.ts(23,21): error TS2503: Cannot find namespace 'vi'.\ntests/client/forms.test.ts(24,24): error TS2503: Cannot find namespace 'vi'.\ntests/client/forms.test.ts(29,27): error TS2503: Cannot find namespace 'vi'.\ntests/client/forms.test.ts(34,30): error TS2503: Cannot find namespace 'vi'.\ntests/client/forms.test.ts(61,21): error TS2790: The operand of a 'delete' operator must be optional.\ntests/client/forms.test.ts(63,21): error TS2790: The operand of a 'delete' operator must be optional.\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run check 2>&1 | tail -10",
+            "time": {
+              "start": 1785083901193,
+              "end": 1785083901199
+            }
+          },
+          "id": "prt_f9f4aaa0b001iOkQfF9WSOk0EI",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4a9c3b001f7MaxHnLjDLGj4"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "96f3e51a9dfb0dc22c0fdca4bc33853c30e634d1",
+          "type": "step-finish",
+          "tokens": {
+            "total": 36203,
+            "input": 212,
+            "output": 23,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 35968
+            }
+          },
+          "cost": 0.00974968,
+          "id": "prt_f9f4ab539001CUCNBOyEVoL82p",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4a9c3b001f7MaxHnLjDLGj4"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0135992,
+        "tokens": {
+          "total": 37324,
+          "input": 308,
+          "output": 856,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 36160
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083901287,
+          "completed": 1785083915937
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4ab567001FH1LU0LfNFx3e4",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "96f3e51a9dfb0dc22c0fdca4bc33853c30e634d1",
+          "type": "step-start",
+          "id": "prt_f9f4ab9f2001d8qbCmBsknIfrH",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4ab567001FH1LU0LfNFx3e4"
+        },
+        {
+          "type": "reasoning",
+          "text": "Two TS issues:\n1. `PROTO` Record<Kind, typeof HTMLInputElement> — HTMLSelectElement/HTMLTextAreaElement aren't assignable to HTMLInputElement ctor. Use a broader type: `Record<Kind, { prototype: HTMLElement }>` or use constructor abstract. Let me use `Record<Kind, { new (): HTMLElement; prototype: any }>` or simpler - type as `typeof HTMLInputElement | typeof HTMLSelectElement | typeof HTMLTextAreaElement`. Cleaner: use `Record<Kind, abstract new (...args: any[]) => HTMLElement>` — actually for accessing `.prototype` only, the simplest: `const PROTO: Record<Kind, { prototype: HTMLElement }>` — but HTMLElement lacks setCustomValidity. We access `proto.setCustomValidity` only via Object.getOwnPropertyDescriptor and Object.defineProperty on a string key. So we just need an object with .prototype — type it as `Record<Kind, { prototype: unknown }>`. But defineProperty needs the prototype object typed as `any` for the indexing.\n\nLet me just use `Record<Kind, Function>` or `as any` casts. Simplest: make PROTO an object literal with explicit casts.\n\n2. `vi` namespace not imported. Need to import `vi` — already imported vi from 'vitest', but `vi.Mock` type needs `import { vi } from 'vitest'` which is done. Wait the error says \"Cannot find namespace 'vi'\". The `vi.fn` is imported as a value, but `vi.Mock` requires `vi` as a type/namespace which is `vitest`'s `vi` namespace import. Looking at the existing test files — `forms-fetch.test.ts` uses `describe, expect, it, vi` from 'vitest', same approach. But that test doesn't use `vi.Mock` type annotations. The `vi` namespace for types comes from vitest/globals types in tsconfig maybe.\n\nSimplest fix: avoid `vi.Mock` type. Use `ReturnType<typeof vi.fn>` or just `() => void`. Let me use `import type { Mock } from 'vitest'`. Vitest exports `Mock` type. Let me check... Actually vitest exports `Mock` type. Let me use `Mock`.\n\nActually I can use `vi.fn` returns type that we can use `ReturnType<typeof vi.fn>`. Let me define:\n\n```ts\ntype ValidityMock = ReturnType<typeof vi.fn>\nset: Record<Kind, ValidityMock>\n```\n\nThat avoids namespace lookup. Let me fix.\n\n3. `delete proto.setCustomValidity` — operand must be optional. Since via PropertyKey indexing, TS complains. Cast to `any` or use `(proto as any).setCustomValidity = undefined` then delete? Simplest cast `proto as any`.\n\nLet me make these fixes:\n\n- Use `any` casts where needed\n- Replace `vi.Mock` with `ReturnType<typeof vi.fn>`\n- Use `(proto as any)` for delete operations",
+          "time": {
+            "start": 1785083902453,
+            "end": 1785083915791
+          },
+          "id": "prt_f9f4ab9f5001eab5MWcrf60aNt",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4ab567001FH1LU0LfNFx3e4"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_5c2b",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+              "oldString": "type Kind = 'Input' | 'Select' | 'Textarea'\n\nconst PROTO: Record<Kind, typeof HTMLInputElement> = {\n  Input: HTMLInputElement,\n  Select: HTMLSelectElement,\n  Textarea: HTMLTextAreaElement,\n}\n\ninterface Stubs {\n  set: Record<Kind, vi.Mock>\n  report: Record<Kind, vi.Mock>\n  restore: () => void\n}",
+              "newString": "type Kind = 'Input' | 'Select' | 'Textarea'\n// deno-style \"constructor whose prototype we index for a string-keyed property\"\ntype AnyPrototypeCtor = { prototype: any }\n\nconst PROTO: Record<Kind, AnyPrototypeCtor> = {\n  Input: HTMLInputElement,\n  Select: HTMLSelectElement,\n  Textarea: HTMLTextAreaElement,\n}\n\ntype ValidityMock = ReturnType<typeof vi.fn>\n\ninterface Stubs {\n  set: Record<Kind, ValidityMock>\n  report: Record<Kind, ValidityMock>\n  restore: () => void\n}"
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n@@ -11,18 +11,22 @@\n const MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n const IBAN_ERROR = 'Bitte gib eine gültige IBAN ein.'\n \n type Kind = 'Input' | 'Select' | 'Textarea'\n+// deno-style \"constructor whose prototype we index for a string-keyed property\"\n+type AnyPrototypeCtor = { prototype: any }\n \n-const PROTO: Record<Kind, typeof HTMLInputElement> = {\n+const PROTO: Record<Kind, AnyPrototypeCtor> = {\n   Input: HTMLInputElement,\n   Select: HTMLSelectElement,\n   Textarea: HTMLTextAreaElement,\n }\n \n+type ValidityMock = ReturnType<typeof vi.fn>\n+\n interface Stubs {\n-  set: Record<Kind, vi.Mock>\n-  report: Record<Kind, vi.Mock>\n+  set: Record<Kind, ValidityMock>\n+  report: Record<Kind, ValidityMock>\n   restore: () => void\n }\n \n function stubValidity(): Stubs {\n",
+              "filediff": {
+                "file": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+                "patch": "Index: /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n@@ -11,18 +11,22 @@\n const MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n const IBAN_ERROR = 'Bitte gib eine gültige IBAN ein.'\n \n type Kind = 'Input' | 'Select' | 'Textarea'\n+// deno-style \"constructor whose prototype we index for a string-keyed property\"\n+type AnyPrototypeCtor = { prototype: any }\n \n-const PROTO: Record<Kind, typeof HTMLInputElement> = {\n+const PROTO: Record<Kind, AnyPrototypeCtor> = {\n   Input: HTMLInputElement,\n   Select: HTMLSelectElement,\n   Textarea: HTMLTextAreaElement,\n }\n \n+type ValidityMock = ReturnType<typeof vi.fn>\n+\n interface Stubs {\n-  set: Record<Kind, vi.Mock>\n-  report: Record<Kind, vi.Mock>\n+  set: Record<Kind, ValidityMock>\n+  report: Record<Kind, ValidityMock>\n   restore: () => void\n }\n \n function stubValidity(): Stubs {\n",
+                "additions": 7,
+                "deletions": 3
+              },
+              "truncated": false
+            },
+            "title": "tests/client/forms.test.ts",
+            "time": {
+              "start": 1785083915801,
+              "end": 1785083915805
+            }
+          },
+          "id": "prt_f9f4aee11001dQmhUqNf55212P",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4ab567001FH1LU0LfNFx3e4"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "951724c49686d5c0c0ab3da0292853dc714734cb",
+          "type": "step-finish",
+          "tokens": {
+            "total": 37324,
+            "input": 308,
+            "output": 856,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 36160
+            }
+          },
+          "cost": 0.0135992,
+          "id": "prt_f9f4aee76001RnVihXtkfQrVhZ",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4ab567001FH1LU0LfNFx3e4"
+        },
+        {
+          "type": "patch",
+          "hash": "96f3e51a9dfb0dc22c0fdca4bc33853c30e634d1",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts"
+          ],
+          "id": "prt_f9f4aeea0001jOqIqW1v6O9Rm4",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4ab567001FH1LU0LfNFx3e4"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01060912,
+        "tokens": {
+          "total": 37532,
+          "input": 20,
+          "output": 200,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 37312
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083915941,
+          "completed": 1785083918762
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4aeea5001PmID6YoQpNMls7",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "951724c49686d5c0c0ab3da0292853dc714734cb",
+          "type": "step-start",
+          "id": "prt_f9f4af3c60010Py0gtuOVseDjL",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4aeea5001PmID6YoQpNMls7"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_3333",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+              "oldString": "for (const { kind, setDesc, reportDesc } of originals) {\n        const proto = PROTO[kind].prototype\n        if (setDesc) Object.defineProperty(proto, 'setCustomValidity', setDesc)\n        else delete proto.setCustomValidity\n        if (reportDesc) Object.defineProperty(proto, 'reportValidity', reportDesc)\n        else delete proto.reportValidity\n      }",
+              "newString": "for (const { kind, setDesc, reportDesc } of originals) {\n        const proto = PROTO[kind].prototype as any\n        if (setDesc) Object.defineProperty(proto, 'setCustomValidity', setDesc)\n        else delete proto.setCustomValidity\n        if (reportDesc) Object.defineProperty(proto, 'reportValidity', reportDesc)\n        else delete proto.reportValidity\n      }"
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n@@ -59,9 +59,9 @@\n set,\n report,\n restore: () => {\n   for (const { kind, setDesc, reportDesc } of originals) {\n-    const proto = PROTO[kind].prototype\n+    const proto = PROTO[kind].prototype as any\n     if (setDesc) Object.defineProperty(proto, 'setCustomValidity', setDesc)\n     else delete proto.setCustomValidity\n     if (reportDesc) Object.defineProperty(proto, 'reportValidity', reportDesc)\n     else delete proto.reportValidity\n",
+              "filediff": {
+                "file": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+                "patch": "Index: /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n@@ -59,9 +59,9 @@\n set,\n report,\n restore: () => {\n   for (const { kind, setDesc, reportDesc } of originals) {\n-    const proto = PROTO[kind].prototype\n+    const proto = PROTO[kind].prototype as any\n     if (setDesc) Object.defineProperty(proto, 'setCustomValidity', setDesc)\n     else delete proto.setCustomValidity\n     if (reportDesc) Object.defineProperty(proto, 'reportValidity', reportDesc)\n     else delete proto.reportValidity\n",
+                "additions": 1,
+                "deletions": 1
+              },
+              "truncated": false
+            },
+            "title": "tests/client/forms.test.ts",
+            "time": {
+              "start": 1785083918644,
+              "end": 1785083918646
+            }
+          },
+          "id": "prt_f9f4af92d001x31hqfbG1N7tJO",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4aeea5001PmID6YoQpNMls7"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "2950f3defd21a36e5cdc326170583c3beae90d8a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 37532,
+            "input": 20,
+            "output": 200,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 37312
+            }
+          },
+          "cost": 0.01060912,
+          "id": "prt_f9f4af97f001y5eG9JUaBYz9xw",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4aeea5001PmID6YoQpNMls7"
+        },
+        {
+          "type": "patch",
+          "hash": "951724c49686d5c0c0ab3da0292853dc714734cb",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts"
+          ],
+          "id": "prt_f9f4af9a8001j9G35HYzGuMSCz",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4aeea5001PmID6YoQpNMls7"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01020232,
+        "tokens": {
+          "total": 37580,
+          "input": 226,
+          "output": 42,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 37312
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083918768,
+          "completed": 1785083923849
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4af9b0001xgyDR1BWpOa5OZ",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "2950f3defd21a36e5cdc326170583c3beae90d8a",
+          "type": "step-start",
+          "id": "prt_f9f4aff4d001kOCgKsYyBGOIsl",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4af9b0001xgyDR1BWpOa5OZ"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_e103",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run format tests/client/forms.test.ts 2>&1 | tail -2 && rtk bun run check 2>&1 | tail -15"
+            },
+            "output": "$ oxfmt tests/client/forms.test.ts\nFinished in 22ms on 1 files using 8 threads.\n$ oxlint src/ && tsc --noEmit && astro check && vitest run\ntests/client/forms.test.ts(33,27): error TS2503: Cannot find namespace 'vi'.\ntests/client/forms.test.ts(38,30): error TS2503: Cannot find namespace 'vi'.\n",
+            "metadata": {
+              "output": "$ oxfmt tests/client/forms.test.ts\nFinished in 22ms on 1 files using 8 threads.\n$ oxlint src/ && tsc --noEmit && astro check && vitest run\ntests/client/forms.test.ts(33,27): error TS2503: Cannot find namespace 'vi'.\ntests/client/forms.test.ts(38,30): error TS2503: Cannot find namespace 'vi'.\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run format tests/client/forms.test.ts 2>&1 | tail -2 && rtk bun run check 2>&1 | tail -15",
+            "time": {
+              "start": 1785083923772,
+              "end": 1785083923777
+            }
+          },
+          "id": "prt_f9f4b021c001n2xaVdvcSjiqXj",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4af9b0001xgyDR1BWpOa5OZ"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "2950f3defd21a36e5cdc326170583c3beae90d8a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 37580,
+            "input": 226,
+            "output": 42,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 37312
+            }
+          },
+          "cost": 0.01020232,
+          "id": "prt_f9f4b0d630018F2BRu87zZPW2j",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4af9b0001xgyDR1BWpOa5OZ"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01015688,
+        "tokens": {
+          "total": 37726,
+          "input": 102,
+          "output": 56,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 37568
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083923856,
+          "completed": 1785083926051
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4b0d90001XLxJgQ7pN1a7bW",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "2950f3defd21a36e5cdc326170583c3beae90d8a",
+          "type": "step-start",
+          "id": "prt_f9f4b1212001cFIS0szUU4Tube",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b0d90001XLxJgQ7pN1a7bW"
+        },
+        {
+          "type": "reasoning",
+          "text": "`vi.Mock` referenced somewhere on lines 33, 38. Let me look.",
+          "time": {
+            "start": 1785083925011,
+            "end": 1785083925824
+          },
+          "id": "prt_f9f4b1213001kWVWm2dYqwb1FJ",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b0d90001XLxJgQ7pN1a7bW"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_13c8",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+              "offset": 28,
+              "limit": 20
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts</path>\n<type>file</type>\n<content>\n28:   report: Record<Kind, ValidityMock>\n29:   restore: () => void\n30: }\n31: \n32: function stubValidity(): Stubs {\n33:   const set: Record<Kind, vi.Mock> = {\n34:     Input: vi.fn(),\n35:     Select: vi.fn(),\n36:     Textarea: vi.fn(),\n37:   }\n38:   const report: Record<Kind, vi.Mock> = {\n39:     Input: vi.fn(() => false),\n40:     Select: vi.fn(() => false),\n41:     Textarea: vi.fn(() => false),\n42:   }\n43:   const originals = (Object.keys(PROTO) as Kind[]).map((kind) => ({\n44:     kind,\n45:     setDesc: Object.getOwnPropertyDescriptor(PROTO[kind].prototype, 'setCustomValidity'),\n46:     reportDesc: Object.getOwnPropertyDescriptor(PROTO[kind].prototype, 'reportValidity'),\n47:   }))\n\n(Showing lines 28-47 of 357. Use offset=48 to continue.)\n</content>",
+            "metadata": {
+              "preview": "  report: Record<Kind, ValidityMock>\n  restore: () => void\n}\n\nfunction stubValidity(): Stubs {\n  const set: Record<Kind, vi.Mock> = {\n    Input: vi.fn(),\n    Select: vi.fn(),\n    Textarea: vi.fn(),\n  }\n  const report: Record<Kind, vi.Mock> = {\n    Input: vi.fn(() => false),\n    Select: vi.fn(() => false),\n    Textarea: vi.fn(() => false),\n  }\n  const originals = (Object.keys(PROTO) as Kind[]).map((kind) => ({\n    kind,\n    setDesc: Object.getOwnPropertyDescriptor(PROTO[kind].prototype, 'setCustomValidity'),\n    reportDesc: Object.getOwnPropertyDescriptor(PROTO[kind].prototype, 'reportValidity'),\n  }))",
+              "truncated": true,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+                "text": "  report: Record<Kind, ValidityMock>\n  restore: () => void\n}\n\nfunction stubValidity(): Stubs {\n  const set: Record<Kind, vi.Mock> = {\n    Input: vi.fn(),\n    Select: vi.fn(),\n    Textarea: vi.fn(),\n  }\n  const report: Record<Kind, vi.Mock> = {\n    Input: vi.fn(() => false),\n    Select: vi.fn(() => false),\n    Textarea: vi.fn(() => false),\n  }\n  const originals = (Object.keys(PROTO) as Kind[]).map((kind) => ({\n    kind,\n    setDesc: Object.getOwnPropertyDescriptor(PROTO[kind].prototype, 'setCustomValidity'),\n    reportDesc: Object.getOwnPropertyDescriptor(PROTO[kind].prototype, 'reportValidity'),\n  }))",
+                "lineStart": 28,
+                "lineEnd": 47,
+                "totalLines": 357,
+                "truncated": true
+              }
+            },
+            "title": "tests/client/forms.test.ts",
+            "time": {
+              "start": 1785083925829,
+              "end": 1785083925833
+            }
+          },
+          "id": "prt_f9f4b1542001Thxa4XSk0rUDmg",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b0d90001XLxJgQ7pN1a7bW"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "2950f3defd21a36e5cdc326170583c3beae90d8a",
+          "type": "step-finish",
+          "tokens": {
+            "total": 37726,
+            "input": 102,
+            "output": 56,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 37568
+            }
+          },
+          "cost": 0.01015688,
+          "id": "prt_f9f4b15fc001iGGFaHd3CYMoxd",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b0d90001XLxJgQ7pN1a7bW"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01079936,
+        "tokens": {
+          "total": 38122,
+          "input": 292,
+          "output": 134,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 37696
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083926054,
+          "completed": 1785083928949
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4b16260010J9vyCbMJAi69D",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "2950f3defd21a36e5cdc326170583c3beae90d8a",
+          "type": "step-start",
+          "id": "prt_f9f4b1cd7001ZAwUv4G2z2Ksch",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b16260010J9vyCbMJAi69D"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_54d3",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+              "oldString": "const set: Record<Kind, vi.Mock> = {\n    Input: vi.fn(),\n    Select: vi.fn(),\n    Textarea: vi.fn(),\n  }\n  const report: Record<Kind, vi.Mock> = {",
+              "newString": "const set: Record<Kind, ValidityMock> = {\n    Input: vi.fn(),\n    Select: vi.fn(),\n    Textarea: vi.fn(),\n  }\n  const report: Record<Kind, ValidityMock> = {"
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n@@ -29,14 +29,14 @@\n   restore: () => void\n }\n \n function stubValidity(): Stubs {\n-  const set: Record<Kind, vi.Mock> = {\n+  const set: Record<Kind, ValidityMock> = {\n     Input: vi.fn(),\n     Select: vi.fn(),\n     Textarea: vi.fn(),\n   }\n-  const report: Record<Kind, vi.Mock> = {\n+  const report: Record<Kind, ValidityMock> = {\n     Input: vi.fn(() => false),\n     Select: vi.fn(() => false),\n     Textarea: vi.fn(() => false),\n   }\n",
+              "filediff": {
+                "file": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+                "patch": "Index: /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts\n@@ -29,14 +29,14 @@\n   restore: () => void\n }\n \n function stubValidity(): Stubs {\n-  const set: Record<Kind, vi.Mock> = {\n+  const set: Record<Kind, ValidityMock> = {\n     Input: vi.fn(),\n     Select: vi.fn(),\n     Textarea: vi.fn(),\n   }\n-  const report: Record<Kind, vi.Mock> = {\n+  const report: Record<Kind, ValidityMock> = {\n     Input: vi.fn(() => false),\n     Select: vi.fn(() => false),\n     Textarea: vi.fn(() => false),\n   }\n",
+                "additions": 2,
+                "deletions": 2
+              },
+              "truncated": false
+            },
+            "title": "tests/client/forms.test.ts",
+            "time": {
+              "start": 1785083928780,
+              "end": 1785083928784
+            }
+          },
+          "id": "prt_f9f4b20c3001TAYx4tzE30BB1B",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b16260010J9vyCbMJAi69D"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "f719cb6a18c4a5d873b2adc9013928d9538586a2",
+          "type": "step-finish",
+          "tokens": {
+            "total": 38122,
+            "input": 292,
+            "output": 134,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 37696
+            }
+          },
+          "cost": 0.01079936,
+          "id": "prt_f9f4b2149001dlzNX1oNy0XAGO",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b16260010J9vyCbMJAi69D"
+        },
+        {
+          "type": "patch",
+          "hash": "2950f3defd21a36e5cdc326170583c3beae90d8a",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts"
+          ],
+          "id": "prt_f9f4b2174001r9xCFSzJL70ubG",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b16260010J9vyCbMJAi69D"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01022576,
+        "tokens": {
+          "total": 38170,
+          "input": 112,
+          "output": 42,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 38016
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083928952,
+          "completed": 1785083954606
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4b2178001Hh2gal7cmljWMn",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "f719cb6a18c4a5d873b2adc9013928d9538586a2",
+          "type": "step-start",
+          "id": "prt_f9f4b27d60011MyPLnROMSUu4S",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b2178001Hh2gal7cmljWMn"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_5dc7",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run format tests/client/forms.test.ts 2>&1 | tail -2 && rtk bun run check 2>&1 | tail -20"
+            },
+            "output": "$ oxfmt tests/client/forms.test.ts\nFinished in 31ms on 1 files using 8 threads.\n(node:68983) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68980) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68985) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68979) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68981) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68982) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68984) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  7 passed (7)\n      Tests  176 passed (176)\n   Start at  18:39:10\n   Duration  3.95s (transform 615ms, setup 1.25s, import 15.55s, tests 352ms, environment 2.07s)\n\n",
+            "metadata": {
+              "output": "$ oxfmt tests/client/forms.test.ts\nFinished in 31ms on 1 files using 8 threads.\n(node:68983) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68980) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68985) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68979) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68981) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68982) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:68984) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  7 passed (7)\n      Tests  176 passed (176)\n   Start at  18:39:10\n   Duration  3.95s (transform 615ms, setup 1.25s, import 15.55s, tests 352ms, environment 2.07s)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run format tests/client/forms.test.ts 2>&1 | tail -2 && rtk bun run check 2>&1 | tail -20",
+            "time": {
+              "start": 1785083954472,
+              "end": 1785083954486
+            }
+          },
+          "id": "prt_f9f4b2a6b001AUngbZwXaKehN7",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b2178001Hh2gal7cmljWMn"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "f719cb6a18c4a5d873b2adc9013928d9538586a2",
+          "type": "step-finish",
+          "tokens": {
+            "total": 38170,
+            "input": 112,
+            "output": 42,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 38016
+            }
+          },
+          "cost": 0.01022576,
+          "id": "prt_f9f4b8581001TQyWVsRYt4fVGQ",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b2178001Hh2gal7cmljWMn"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f46350a001zdyJnEg8olWFGc",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0,
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "reasoning": 0,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083954617
+        },
+        "id": "msg_f9f4b85b9001arp14u72T6MtNh",
+        "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R"
+      },
+      "parts": [
+        {
+          "snapshot": "f719cb6a18c4a5d873b2adc9013928d9538586a2",
+          "type": "step-start",
+          "id": "prt_f9f4b8aa3001p3J2j1dWqisZlJ",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b85b9001arp14u72T6MtNh"
+        },
+        {
+          "type": "text",
+          "text": "All green: 7 files, 176 tests. Amend the commit to fold inthe fixes.",
+          "time": {
+            "start": 1785083955898,
+            "end": 1785083956437
+          },
+          "id": "prt_f9f4b8aba0011V5BfMPKDN6AtN",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b85b9001arp14u72T6MtNh"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_f135",
+          "state": {
+            "metadata": {
+              "output": "ok 1 file changed, 138 insertions(+), 127 deletions(-)\n"
+            },
+            "status": "running",
+            "input": {
+              "command": "rtk git add tests/client/forms.test.ts && rtk git commit --amend --no-edit 2>&1 | tail -5 && rtk git log --oneline -3"
+            },
+            "time": {
+              "start": 1785083956445
+            }
+          },
+          "id": "prt_f9f4b8ca7001rjnh18T4y6sqXl",
+          "sessionID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+          "messageID": "msg_f9f4b85b9001arp14u72T6MtNh"
         }
       ]
     }
