@@ -1,0 +1,78 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "362d6ab6f10f",
+  "session_id": "ses_060e58a7cffeKGFGlKz8W6VEbd",
+  "strategy": "manual-commit",
+  "created_at": "2026-07-26T16:02:18.36567Z",
+  "branch": "next",
+  "checkpoints_count": 7,
+  "save_step_count": 4,
+  "files_touched": [
+    "src/markdown/leitbild.md",
+    "src/pages/vereinsportrait.astro"
+  ],
+  "agent": "OpenCode",
+  "model": "glm-5.2",
+  "turn_id": "89c00bacab21",
+  "checkpoint_transcript_start": 13,
+  "transcript_lines_at_start": 13,
+  "compact_transcript_start": 13,
+  "token_usage": {
+    "input_tokens": 253048,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 1032896,
+    "output_tokens": 22878,
+    "api_call_count": 37
+  },
+  "session_metrics": {
+    "turn_count": 9
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-07-26T16:02:18.336493Z",
+    "agent_lines": 18,
+    "agent_removed": 2,
+    "human_added": 0,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 19,
+    "total_lines_changed": 21,
+    "agent_percentage": 95.23809523809523,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 106,
+      "agent_lines_removed": 5
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 80,
+      "agent_lines_removed": 4
+    },
+    {
+      "checkpoint_number": 4,
+      "user_lines_added": 1,
+      "user_lines_removed": 1,
+      "agent_lines_added": 80,
+      "agent_lines_removed": 4,
+      "user_added_per_file": {
+        "src/markdown/leitbild.md": 1
+      },
+      "user_removed_per_file": {
+        "src/markdown/leitbild.md": 1
+      }
+    }
+  ]
+}

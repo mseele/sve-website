@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "362d6ab6f10f",
+  "strategy": "manual-commit",
+  "branch": "next",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "src/markdown/leitbild.md",
+    "src/pages/vereinsportrait.astro"
+  ],
+  "sessions": [
+    {
+      "metadata": "/36/2d6ab6f10f/0/metadata.json",
+      "transcript": "/36/2d6ab6f10f/0/full.jsonl",
+      "compact_transcript": "/36/2d6ab6f10f/0/transcript.jsonl",
+      "content_hash": "/36/2d6ab6f10f/0/content_hash.txt",
+      "prompt": "/36/2d6ab6f10f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 253048,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 1032896,
+    "output_tokens": 22878,
+    "api_call_count": 37
+  }
+}
