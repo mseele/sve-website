@@ -1,0 +1,34 @@
+You are doing a STANDARDS-only review of uncommitted changes on the current branch of the repo at `/Users/mseele/dev/sve/sve-website`.
+
+Fixed point: `HEAD` (commit `ebdf045 test: cover client form validators (#402)`).
+The diff to review contains uncommitted changes (modified files + untracked files). Inspect with:
+
+- `git diff HEAD` in that repo, which shows modified tracked files only.
+- The full diff including untracked new files: also read these files in full using the Read tool:
+  - /Users/mseele/dev/sve/sve-website/src/content-schemas.ts (new)
+  - /Users/mseele/dev/sve/sve-website/tests/content-schemas.test.ts (new)
+  - /Users/mseele/dev/sve/sve-website/tests/api/contentful.test.ts (new)
+  - /Users/mseele/dev/sve/sve-website/tests/fixtures/contentful/team.json (new)
+  - /Users/mseele/dev/sve/sve-website/tests/fixtures/contentful/sponsor.json (new)
+- /Users/mseele/dev/sve/sve-website/src/content.config.ts (modified — view full file)
+
+Standards sources to apply:
+- /Users/mseele/dev/sve/sve-website/AGENTS.md — repo coding guidelines (formatter oxfmt: no semicolons, single quotes, tab width 2, print width 100, trailing commas all; strict TS; interface for objects, type for unions; type Props; `@/` alias for src imports; early returns & Zod validation; PascalCase .astro, camelCase TS; etc.).
+- The repo does have a formatter (`bun run format` via `oxfmt`) and `bun run check` runs oxlint + tsc + astro check + vitest. Tooling is already passing; do not flag anything tooling enforces.
+
+Plus the smell baseline — a fixed set of Fowler code smells from _Refactoring_ ch.3. Each is a labelled judgement-call heuristic, never a hard violation. The repo's documented standards override the baseline. Match against the diff:
+
+- Mysterious Name — a function, variable, or type whose name doesn't reveal what it does or holds.
+- Duplicated Code — same logic shape appears in more than one hunk or file in the change.
+- Feature Envy — a method that reaches into another object's data more than its own.
+- Data Clumps — the same few fields or params keep travelling together.
+- Primitive Obsession — a primitive or string standing in for a domain concept.
+- Repeated Switches — same switch / if-cascade on the same type recurs.
+- Shotgun Surgery — one logical change forces scattered edits across many files.
+- Divergent Change — one file changed for several unrelated reasons.
+- Speculative Generality — abstraction/params added for needs the spec doesn't have.
+- Message Chains — long a.b().c().d() navigation.
+- Middle Man — a class/function that mostly just delegates onward.
+- Refused Bequest — subclass that ignores most of what it inherits.
+
+Brief: Report — per file/hunk where relevant — (a) every place the diff violates a documented standard (cite the standard file + the rule); and (b) any baseline smell you spot (name it + quote the hunk). Distinguish hard violations from judgement calls. Skip anything tooling enforces. Keep under 400 words. Be terse and concrete. Do not suggest code changes; just report findings.
