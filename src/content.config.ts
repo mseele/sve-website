@@ -1,38 +1,19 @@
-import { loadSponsors, loadTeams } from '@/api/contentful'
-import { loadEvents } from '@/api/events'
-import { EventType, personObject } from '@/types'
 import { glob } from 'astro/loaders'
 import { defineCollection, type SchemaContext } from 'astro:content'
 import { z } from 'astro/zod'
+import { loadSponsors, loadTeams } from '@/api/contentful'
+import { loadEvents } from '@/api/events'
+import { EventType } from '@/types'
+import { sponsorSchema, teamSchema } from '@/content-schemas'
 
 const teams = defineCollection({
   loader: loadTeams,
-  schema: () =>
-    z.object({
-      id: z.string(),
-      name: z.string(),
-      league: z.string().optional(),
-      category: z.object({
-        id: z.string(),
-        name: z.string(),
-        description: z.string(),
-        isYouthGroup: z.boolean(),
-        sortOrder: z.number(),
-      }),
-      sortOrder: z.number(),
-      coach: personObject.optional(),
-      contact: personObject.optional(),
-      teamID: z.string().optional(),
-    }),
+  schema: teamSchema,
 })
 
 const sponsoring = defineCollection({
   loader: loadSponsors,
-  schema: () =>
-    z.object({
-      name: z.string(),
-      groupBy: z.string(),
-    }),
+  schema: sponsorSchema,
 })
 
 const news = defineCollection({
