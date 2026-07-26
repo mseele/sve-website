@@ -27,7 +27,7 @@
       "transcript": "/9f/6511b0337c/2/full.jsonl",
       "compact_transcript": "/9f/6511b0337c/2/transcript.jsonl",
       "content_hash": "/9f/6511b0337c/2/content_hash.txt",
-      "prompt": "/9f/6511b0337c/2/prompt.txt"
+      "prompt": ""
     },
     {
       "metadata": "/9f/6511b0337c/3/metadata.json",
@@ -38,10 +38,10 @@
     }
   ],
   "token_usage": {
-    "input_tokens": 43809,
+    "input_tokens": 26579,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 458112,
-    "output_tokens": 14323,
-    "api_call_count": 20
+    "cache_read_tokens": 419648,
+    "output_tokens": 10479,
+    "api_call_count": 16
   }
 }
