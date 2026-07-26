@@ -17,19 +17,19 @@
       "deletions": 0,
       "files": 0
     },
-    "cost": 2.2613048399999998,
+    "cost": 2.37271972,
     "tokens": {
-      "input": 379259,
-      "output": 51266,
+      "input": 381501,
+      "output": 52079,
       "reasoning": 0,
       "cache": {
-        "read": 5787584,
+        "read": 6190272,
         "write": 0
       }
     },
     "time": {
       "created": 1785081870981,
-      "updated": 1785083240483
+      "updated": 1785083300090
     }
   },
   "messages": [
@@ -10829,21 +10829,24 @@
           "cwd": "/Users/mseele/dev/sve/sve-website",
           "root": "/Users/mseele/dev/sve/sve-website"
         },
-        "cost": 0,
+        "cost": 0.02659556,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 100939,
+          "input": 163,
+          "output": 40,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 100736
           }
         },
         "modelID": "glm-5.2",
         "providerID": "opencode-go",
         "time": {
-          "created": 1785083240481
+          "created": 1785083240481,
+          "completed": 1785083252491
         },
+        "finish": "tool-calls",
         "id": "msg_f9f40a021001glBGrONoi9Usrv",
         "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx"
       },
@@ -10860,20 +10863,356 @@
           "tool": "bash",
           "callID": "call_4e5e",
           "state": {
-            "metadata": {
-              "output": ""
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "rtk git commit -m \"test: cover src/api fetch wrappers with MSW handlers (#401)\" 2>&1 | tail -10"
             },
+            "output": "ok 490a9f3\n",
+            "metadata": {
+              "output": "ok 490a9f3\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git commit -m \"test: cover src/api fetch wrappers with MSW handlers (#401)\" 2>&1 | tail -10",
             "time": {
-              "start": 1785083242840
+              "start": 1785083252387,
+              "end": 1785083252398
             }
           },
           "id": "prt_f9f40a948001Q21KPrgxOisnbM",
           "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx",
           "messageID": "msg_f9f40a021001glBGrONoi9Usrv"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 100939,
+            "input": 163,
+            "output": 40,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 100736
+            }
+          },
+          "cost": 0.02659556,
+          "id": "prt_f9f40cee3001aBVzye5ldzF823",
+          "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx",
+          "messageID": "msg_f9f40a021001glBGrONoi9Usrv"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f2bbaa9001cIpE14cxP72kYI",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0279988,
+        "tokens": {
+          "total": 100979,
+          "input": 1432,
+          "output": 27,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 99520
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083252510,
+          "completed": 1785083254617
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f40cf1e001QmNjAXYwRF6eGc",
+        "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f40d5db0010i4qt50ZFJMruK",
+          "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx",
+          "messageID": "msg_f9f40cf1e001QmNjAXYwRF6eGc"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_604c",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git log --oneline -3 && rtk git show --stat HEAD"
+            },
+            "output": "490a9f3 test: cover src/api fetch wrappers with MSW handlers (#401)\n053b743 feat: retype and test the EventAvailability contract end-to-end (#400)\nb35403e test: export and cover appointments pure transforms (#399)\ncommit 490a9f37309eac379f5e8b8a0a1e6e90458e2cf6\nAuthor: Michael Seele <mseele@gmail.com>\nDate:   Sun Jul 26 18:27:22 2026 +0200\n\n    test: cover src/api fetch wrappers with MSW handlers (#401)\n    \n    Entire-Checkpoint: eccc86d1d843\n\n tests/api/appointments-fetch.test.ts |  58 +++++\n tests/api/events-fetch.test.ts       | 486 +++++++++++++++++++++++++++++++++++\n tests/api/forms-fetch.test.ts        | 201 +++++++++++++++\n tests/mocks/backend.ts               |   1 +\n tests/mocks/handlers/calendar.ts     |  26 ++\n tests/mocks/handlers/events.ts       |  77 ++++++\n tests/mocks/handlers/forms.ts        |  14 +\n tests/mocks/server.ts                |   6 +\n tests/setup.ts                       |   9 +-\n 9 files changed, 873 insertions(+), 5 deletions(-)\n",
+            "metadata": {
+              "output": "490a9f3 test: cover src/api fetch wrappers with MSW handlers (#401)\n053b743 feat: retype and test the EventAvailability contract end-to-end (#400)\nb35403e test: export and cover appointments pure transforms (#399)\ncommit 490a9f37309eac379f5e8b8a0a1e6e90458e2cf6\nAuthor: Michael Seele <mseele@gmail.com>\nDate:   Sun Jul 26 18:27:22 2026 +0200\n\n    test: cover src/api fetch wrappers with MSW handlers (#401)\n    \n    Entire-Checkpoint: eccc86d1d843\n\n tests/api/appointments-fetch.test.ts |  58 +++++\n tests/api/events-fetch.test.ts       | 486 +++++++++++++++++++++++++++++++++++\n tests/api/forms-fetch.test.ts        | 201 +++++++++++++++\n tests/mocks/backend.ts               |   1 +\n tests/mocks/handlers/calendar.ts     |  26 ++\n tests/mocks/handlers/events.ts       |  77 ++++++\n tests/mocks/handlers/forms.ts        |  14 +\n tests/mocks/server.ts                |   6 +\n tests/setup.ts                       |   9 +-\n 9 files changed, 873 insertions(+), 5 deletions(-)\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git log --oneline -3 && rtk git show --stat HEAD",
+            "time": {
+              "start": 1785083254470,
+              "end": 1785083254473
+            }
+          },
+          "id": "prt_f9f40d693001EBSF99nnW4dccK",
+          "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx",
+          "messageID": "msg_f9f40cf1e001QmNjAXYwRF6eGc"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 100979,
+            "input": 1432,
+            "output": 27,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 99520
+            }
+          },
+          "cost": 0.0279988,
+          "id": "prt_f9f40d739001b1htTGrTCtR3iJ",
+          "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx",
+          "messageID": "msg_f9f40cf1e001QmNjAXYwRF6eGc"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f2bbaa9001cIpE14cxP72kYI",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.02779468,
+        "tokens": {
+          "total": 101519,
+          "input": 349,
+          "output": 242,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 100928
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083254624,
+          "completed": 1785083300067
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f40d760001aCRUwfxqihKVGy",
+        "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f4182ad001HS4LzwArGjQ39v",
+          "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx",
+          "messageID": "msg_f9f40d760001aCRUwfxqihKVGy"
+        },
+        {
+          "type": "tool",
+          "tool": "todowrite",
+          "callID": "call_d37f",
+          "state": {
+            "status": "completed",
+            "input": {
+              "todos": [
+                {
+                  "content": "Create tests/mocks/handlers/{calendar,events,forms}.ts + backend.ts + server.ts",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Update tests/setup.ts (start/reset/close, unhandled=error)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "tests/api/appointments-fetch.test.ts — getAppointments success/failure",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "tests/api/events-fetch.test.ts — loadEvents PREVIEW both branches, loadEventAvailability, loadEventsAvailability cache paths, bookEvent, prebooking, prebookWithIban",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "tests/api/forms-fetch.test.ts — sendContactMessage, manageSubscription, asserts request shape",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run bun run check until green",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "code-review and commit",
+                  "status": "completed",
+                  "priority": "medium"
+                }
+              ]
+            },
+            "output": "[\n  {\n    \"content\": \"Create tests/mocks/handlers/{calendar,events,forms}.ts + backend.ts + server.ts\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Update tests/setup.ts (start/reset/close, unhandled=error)\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"tests/api/appointments-fetch.test.ts — getAppointments success/failure\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"tests/api/events-fetch.test.ts — loadEvents PREVIEW both branches, loadEventAvailability, loadEventsAvailability cache paths, bookEvent, prebooking, prebookWithIban\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"tests/api/forms-fetch.test.ts — sendContactMessage, manageSubscription, asserts request shape\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"Run bun run check until green\",\n    \"status\": \"completed\",\n    \"priority\": \"high\"\n  },\n  {\n    \"content\": \"code-review and commit\",\n    \"status\": \"completed\",\n    \"priority\": \"medium\"\n  }\n]",
+            "metadata": {
+              "todos": [
+                {
+                  "content": "Create tests/mocks/handlers/{calendar,events,forms}.ts + backend.ts + server.ts",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Update tests/setup.ts (start/reset/close, unhandled=error)",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "tests/api/appointments-fetch.test.ts — getAppointments success/failure",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "tests/api/events-fetch.test.ts — loadEvents PREVIEW both branches, loadEventAvailability, loadEventsAvailability cache paths, bookEvent, prebooking, prebookWithIban",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "tests/api/forms-fetch.test.ts — sendContactMessage, manageSubscription, asserts request shape",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "Run bun run check until green",
+                  "status": "completed",
+                  "priority": "high"
+                },
+                {
+                  "content": "code-review and commit",
+                  "status": "completed",
+                  "priority": "medium"
+                }
+              ],
+              "truncated": false
+            },
+            "title": "0 todos",
+            "time": {
+              "start": 1785083299850,
+              "end": 1785083299854
+            }
+          },
+          "id": "prt_f9f4187fc001qcyY1ifZ2FI7AS",
+          "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx",
+          "messageID": "msg_f9f40d760001aCRUwfxqihKVGy"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 101519,
+            "input": 349,
+            "output": 242,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 100928
+            }
+          },
+          "cost": 0.02779468,
+          "id": "prt_f9f4188c1001FjqDfgNCAfatpK",
+          "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx",
+          "messageID": "msg_f9f40d760001aCRUwfxqihKVGy"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f2bbaa9001cIpE14cxP72kYI",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.02902584,
+        "tokens": {
+          "total": 102306,
+          "input": 298,
+          "output": 504,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 101504
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083300085,
+          "completed": 1785083309155
+        },
+        "finish": "stop",
+        "id": "msg_f9f4188f5001oIRddsWyocPH3M",
+        "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx"
+      },
+      "parts": [
+        {
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-start",
+          "id": "prt_f9f419251001YchRskmu2GQBwL",
+          "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx",
+          "messageID": "msg_f9f4188f5001oIRddsWyocPH3M"
+        },
+        {
+          "type": "text",
+          "text": "#401 done, committed to `feature/tests` as `490a9f3`.\n\n## Summary\n\n**Shared MSW infrastructure** (`tests/mocks/`):\n- `backend.ts` re-exports `BACKEND_API` from `astro:env/client` — handlers always match the URLs wrappers fetch.\n- `handlers/{calendar,events,forms}.ts` — one success-fixed module per backend route group, each exporting URL constants, fixtures, and a default handler array.\n- `server.ts` aggregates handlers; `tests/setup.ts` wires `listen({ onUnhandledRequest: 'error' })` + `afterEach(resetHandlers)`.\n\n**Test files** (143 tests total, all green; `bun run check` exit 0):\n- `appointments-fetch.test.ts` — `getAppointments` happy/empty/404/500 + request-shape (GET URL).\n- `events-fetch.test.ts` — `loadEvents` (mapping + sort + filter + custom_date + 500), PREVIEW `beta=false|true` via `vi.mock('astro:env/client')` + `vi.stubEnv`; `loadEventsAvailability` cache miss/hit/stale/corrupt/throw + `beta` param; `loadEventAvailability` success/missing-id/cached + failure path (swallows the production fire-and-forget unhandled rejection); `bookEvent`, `prebooking`, `prebookWithIban` assert **URL + method + Content-Type + body** + success/failure paths.\n- `forms-fetch.test.ts` — `sendContactMessage`, `manageSubscription` (both subscribe/unsubscribe paths) assert request shape; success + 4xx/5xx pass-through.\n\n## Code-review fixes applied\n\nPer the parallel review's findings:\n- Stripped all comments from test + handler files (AGENTS.md \"DO NOT ADD COMMENTS\").\n- Replaced hardcoded `BACKEND_API` with a re-export from `astro:env/client`.\n- Removed out-of-scope `MEMBERSHIP_APPLICATION_*` handler + the duplicative \"no-leak\" `getAppointments` test.\n- Added URL assertion to `bookEvent` and `prebookWithIban` request-shape tests (spec requirement).\n- Added a `loadEventAvailability` failure-path test (spec requirement) that captures the wrapper's fire-and-forget rejection via a temporarily reinstalled `unhandledRejection` listener.",
+          "time": {
+            "start": 1785083302483,
+            "end": 1785083309074
+          },
+          "id": "prt_f9f419253001bVAVhnx2HBme4G",
+          "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx",
+          "messageID": "msg_f9f4188f5001oIRddsWyocPH3M"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "98aa22885f18022fc94dd919a78cfa525cc81918",
+          "type": "step-finish",
+          "tokens": {
+            "total": 102306,
+            "input": 298,
+            "output": 504,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 101504
+            }
+          },
+          "cost": 0.02902584,
+          "id": "prt_f9f41ac3e001oWjz33ywUxMdWE",
+          "sessionID": "ses_060d4457bffeeLBEkUo1O6TMPx",
+          "messageID": "msg_f9f4188f5001oIRddsWyocPH3M"
         }
       ]
     }
