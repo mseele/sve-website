@@ -3,67 +3,46 @@
   "checkpoint_id": "eccc86d1d843",
   "session_id": "ses_060c4a784ffeyHxfv7XFj4cq0h",
   "strategy": "manual-commit",
-  "created_at": "2026-07-26T16:27:24.28679Z",
+  "created_at": "2026-07-26T16:33:17.778438Z",
   "branch": "feature/tests",
   "checkpoints_count": 1,
-  "save_step_count": 1,
   "files_touched": [
+    "tests/api/appointments-fetch.test.ts",
+    "tests/api/events-fetch.test.ts",
+    "tests/api/forms-fetch.test.ts",
+    "tests/mocks/backend.ts",
+    "tests/mocks/handlers/calendar.ts",
+    "tests/mocks/handlers/events.ts",
+    "tests/mocks/handlers/forms.ts",
+    "tests/mocks/server.ts",
     "tests/setup.ts"
   ],
   "agent": "OpenCode",
   "model": "glm-5.2",
   "turn_id": "da7cea51e7da",
-  "compact_transcript_start": 0,
+  "checkpoint_transcript_start": 12,
+  "transcript_lines_at_start": 12,
+  "compact_transcript_start": 12,
   "token_usage": {
-    "input_tokens": 37259,
+    "input_tokens": 0,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 154880,
-    "output_tokens": 4748,
-    "api_call_count": 11
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
   },
   "session_metrics": {
     "turn_count": 1
   },
   "initial_attribution": {
-    "calculated_at": "2026-07-26T16:27:24.275115Z",
+    "calculated_at": "2026-07-26T16:33:17.765546Z",
     "agent_lines": 0,
     "agent_removed": 0,
     "human_added": 0,
     "human_modified": 0,
-    "human_removed": 5,
+    "human_removed": 0,
     "total_committed": 0,
-    "total_lines_changed": 5,
+    "total_lines_changed": 0,
     "agent_percentage": 0,
     "metric_version": 2
-  },
-  "prompt_attributions": [
-    {
-      "checkpoint_number": 1,
-      "user_lines_added": 919,
-      "user_lines_removed": 5,
-      "agent_lines_added": 0,
-      "agent_lines_removed": 0,
-      "user_added_per_file": {
-        "tests/api/appointments-fetch.test.ts": 70,
-        "tests/api/events-fetch.test.ts": 480,
-        "tests/api/forms-fetch.test.ts": 199,
-        "tests/mocks/backend.ts": 13,
-        "tests/mocks/handlers/calendar.ts": 42,
-        "tests/mocks/handlers/events.ts": 83,
-        "tests/mocks/handlers/forms.ts": 16,
-        "tests/mocks/server.ts": 12,
-        "tests/setup.ts": 4
-      },
-      "user_removed_per_file": {
-        "tests/setup.ts": 5
-      }
-    },
-    {
-      "checkpoint_number": 2,
-      "user_lines_added": 0,
-      "user_lines_removed": 0,
-      "agent_lines_added": 919,
-      "agent_lines_removed": 5
-    }
-  ]
+  }
 }
