@@ -1,0 +1,29 @@
+You are reviewing the working-tree changes to `sve-website` (Astro + Tailwind + Vitest + MSW) against the originating spec — issue #401 in the GitHub repo `mseele/sve-website`. Nothing is committed yet — review the diff between the working tree and `HEAD`.
+
+**Diff command:** `git diff HEAD` (plus `git status --short` to see untracked files: `tests/api/appointments-fetch.test.ts`, `tests/api/events-fetch.test.ts`, `tests/api/forms-fetch.test.ts`, `tests/mocks/backend.ts`, `tests/mocks/server.ts`, `tests/mocks/handlers/calendar.ts`, `tests/mocks/handlers/events.ts`, `tests/mocks/handlers/forms.ts`).
+
+**Spec (issue #401)**:
+
+Title: Cover the API fetch wrappers behind MSW
+
+Description:
+> Cover every backend `fetch` wrapper with MSW-intercepted network — the entire Vitest suite is fully backend-mocked (B-fi), and Playwright E2E later reuses these handlers. Establish shared MSW handler modules, one per backend route group (`tests/mocks/handlers/calendar.ts`, `…/events.ts`, `…/forms.ts`), reused across the suite.
+>
+> Cover: `getAppointments` (src/api/appointments.ts), `loadEvents`, `loadEventAvailability`, `loadEventsAvailability` (incl. the sessionStorage cache path — happy-dom must provide a working `sessionStorage`), `bookEvent`, `prebooking`, `prebookWithIban` (src/api/events.ts), `sendContactMessage`, `manageSubscription` (src/api/forms.ts).
+>
+> For mutating routes (`bookEvent`, `prebookWithIban`, `sendContactMessage`, `manageSubscription`) assert the **request shape** (URL, method, body JSON, Content-Type header) — not just response mapping. That's where the real bugs hide.
+>
+> For `loadEvents`'s `PREVIEW` / `import.meta.env.DEV` branch, stub the env var per-test with `vi.stubEnv` and cover both paths.
+
+Acceptance criteria:
+- [ ] `tests/mocks/handlers/` contains one handler module per backend route group
+- [ ] `tests/mocks/server.ts` starts the MSW node server once in the setup file
+- [ ] Every `fetch` wrapper in `src/api/*` has at least one success- and one failure-path test
+- [ ] Mutating routes assert request shape (URL, method, body, headers)
+- [ ] `loadEventsAvailability` sessionStorage cache path covered under happy-dom
+- [ ] `loadEvents` PREVIEW/DEV branch both covered
+- [ ] All tests green, `bun run check` green
+
+Blocked by: #398 (harness), #399 (`getAppointments` depends on `toAppointment` being exported), #400 (`loadEvents` and friends operate on `EventAvailability`).
+
+**Brief:** Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words.

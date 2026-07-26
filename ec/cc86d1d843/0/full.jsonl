@@ -1,0 +1,1086 @@
+{
+  "info": {
+    "id": "ses_060c494bbffeCDRb73xLSt3qJn",
+    "slug": "quiet-orchid",
+    "projectID": "68d450c05733c82192ed1f31a5e40cb2ae707f59",
+    "directory": "/Users/mseele/dev/sve/sve-website",
+    "path": "",
+    "parentID": "ses_060d4457bffeeLBEkUo1O6TMPx",
+    "title": "Spec review (@general subagent)",
+    "agent": "general",
+    "model": {
+      "id": "glm-5.2",
+      "providerID": "opencode-go",
+      "variant": "default"
+    },
+    "version": "1.18.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0.10852316000000001,
+    "tokens": {
+      "input": 55351,
+      "output": 3199,
+      "reasoning": 0,
+      "cache": {
+        "read": 65216,
+        "write": 0
+      }
+    },
+    "permission": [
+      {
+        "permission": "task",
+        "pattern": "*",
+        "action": "deny"
+      }
+    ],
+    "time": {
+      "created": 1785082899268,
+      "updated": 1785082954651
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1785082899296
+        },
+        "agent": "general",
+        "model": {
+          "providerID": "opencode-go",
+          "modelID": "glm-5.2"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_f9f3b6b5f001v85Mu25pX5ajxS",
+        "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "You are reviewing the working-tree changes to `sve-website` (Astro + Tailwind + Vitest + MSW) against the originating spec — issue #401 in the GitHub repo `mseele/sve-website`. Nothing is committed yet — review the diff between the working tree and `HEAD`.\n\n**Diff command:** `git diff HEAD` (plus `git status --short` to see untracked files: `tests/api/appointments-fetch.test.ts`, `tests/api/events-fetch.test.ts`, `tests/api/forms-fetch.test.ts`, `tests/mocks/backend.ts`, `tests/mocks/server.ts`, `tests/mocks/handlers/calendar.ts`, `tests/mocks/handlers/events.ts`, `tests/mocks/handlers/forms.ts`).\n\n**Spec (issue #401)**:\n\nTitle: Cover the API fetch wrappers behind MSW\n\nDescription:\n> Cover every backend `fetch` wrapper with MSW-intercepted network — the entire Vitest suite is fully backend-mocked (B-fi), and Playwright E2E later reuses these handlers. Establish shared MSW handler modules, one per backend route group (`tests/mocks/handlers/calendar.ts`, `…/events.ts`, `…/forms.ts`), reused across the suite.\n>\n> Cover: `getAppointments` (src/api/appointments.ts), `loadEvents`, `loadEventAvailability`, `loadEventsAvailability` (incl. the sessionStorage cache path — happy-dom must provide a working `sessionStorage`), `bookEvent`, `prebooking`, `prebookWithIban` (src/api/events.ts), `sendContactMessage`, `manageSubscription` (src/api/forms.ts).\n>\n> For mutating routes (`bookEvent`, `prebookWithIban`, `sendContactMessage`, `manageSubscription`) assert the **request shape** (URL, method, body JSON, Content-Type header) — not just response mapping. That's where the real bugs hide.\n>\n> For `loadEvents`'s `PREVIEW` / `import.meta.env.DEV` branch, stub the env var per-test with `vi.stubEnv` and cover both paths.\n\nAcceptance criteria:\n- [ ] `tests/mocks/handlers/` contains one handler module per backend route group\n- [ ] `tests/mocks/server.ts` starts the MSW node server once in the setup file\n- [ ] Every `fetch` wrapper in `src/api/*` has at least one success- and one failure-path test\n- [ ] Mutating routes assert request shape (URL, method, body, headers)\n- [ ] `loadEventsAvailability` sessionStorage cache path covered under happy-dom\n- [ ] `loadEvents` PREVIEW/DEV branch both covered\n- [ ] All tests green, `bun run check` green\n\nBlocked by: #398 (harness), #399 (`getAppointments` depends on `toAppointment` being exported), #400 (`loadEvents` and friends operate on `EventAvailability`).\n\n**Brief:** Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words.",
+          "id": "prt_f9f3b6b63001dpNcttDVJ7YfPU",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b6b5f001v85Mu25pX5ajxS"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f3b6b5f001v85Mu25pX5ajxS",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01611368,
+        "tokens": {
+          "total": 11434,
+          "input": 11222,
+          "output": 84,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785082899515,
+          "completed": 1785082901924
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f3b6c3b001Eg0pAKkZOF1dSs",
+        "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn"
+      },
+      "parts": [
+        {
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-start",
+          "id": "prt_f9f3b70fe001uht1kLCG6v3oL0",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b6c3b001Eg0pAKkZOF1dSs"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me investigate the working-tree changes against issue #401. I'll run the diff and inspect the files.",
+          "time": {
+            "start": 1785082900735,
+            "end": 1785082901231
+          },
+          "id": "prt_f9f3b70ff001IQuR2IuAQvrIg5",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b6c3b001Eg0pAKkZOF1dSs"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_ad83",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git diff HEAD --stat",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "tests/setup.ts | 9 ++++-----\n 1 file changed, 4 insertions(+), 5 deletions(-)\n",
+            "metadata": {
+              "output": "tests/setup.ts | 9 ++++-----\n 1 file changed, 4 insertions(+), 5 deletions(-)\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git diff HEAD --stat",
+            "time": {
+              "start": 1785082901280,
+              "end": 1785082901283
+            }
+          },
+          "id": "prt_f9f3b72f1001JWQxqoBi8nvBlO",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b6c3b001Eg0pAKkZOF1dSs"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_2c89",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git status --short",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": " M tests/setup.ts\n?? tests/api/appointments-fetch.test.ts\n?? tests/api/events-fetch.test.ts\n?? tests/api/forms-fetch.test.ts\n?? tests/mocks/",
+            "metadata": {
+              "output": " M tests/setup.ts\n?? tests/api/appointments-fetch.test.ts\n?? tests/api/events-fetch.test.ts\n?? tests/api/forms-fetch.test.ts\n?? tests/mocks/",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git status --short",
+            "time": {
+              "start": 1785082901756,
+              "end": 1785082901759
+            }
+          },
+          "id": "prt_f9f3b74c5001b1VgAOKI8SHyvK",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b6c3b001Eg0pAKkZOF1dSs"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11434,
+            "input": 11222,
+            "output": 84,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01611368,
+          "id": "prt_f9f3b7525001a07qsmHvnWH0MC",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b6c3b001Eg0pAKkZOF1dSs"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f3b6b5f001v85Mu25pX5ajxS",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01538328,
+        "tokens": {
+          "total": 10818,
+          "input": 10562,
+          "output": 128,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785082901926,
+          "completed": 1785082904070
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f3b75a6001lrYSfZnP90bT3F",
+        "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn"
+      },
+      "parts": [
+        {
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-start",
+          "id": "prt_f9f3b7a800018rbHVlrQl1KmhZ",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b75a6001lrYSfZnP90bT3F"
+        },
+        {
+          "type": "reasoning",
+          "text": "Interesting — the diff HEAD only shows tests/setup.ts modified. The rest are untracked. Let me look at the source files (API wrappers) and the newtest files.",
+          "time": {
+            "start": 1785082903170,
+            "end": 1785082903606
+          },
+          "id": "prt_f9f3b7a82001EPqofG2NV2JoOT",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b75a6001lrYSfZnP90bT3F"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_19c4",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/setup.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/setup.ts</path>\n<type>file</type>\n<content>\n1: import { afterAll, afterEach, beforeAll } from 'vitest'\n2: import { server } from './mocks/server'\n3: \n4: beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))\n5: afterEach(() => server.resetHandlers())\n6: afterAll(() => server.close())\n\n(End of file - total 6 lines)\n</content>",
+            "metadata": {
+              "preview": "import { afterAll, afterEach, beforeAll } from 'vitest'\nimport { server } from './mocks/server'\n\nbeforeAll(() => server.listen({ onUnhandledRequest: 'error' }))\nafterEach(() => server.resetHandlers())\nafterAll(() => server.close())",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/setup.ts",
+                "text": "import { afterAll, afterEach, beforeAll } from 'vitest'\nimport { server } from './mocks/server'\n\nbeforeAll(() => server.listen({ onUnhandledRequest: 'error' }))\nafterEach(() => server.resetHandlers())\nafterAll(() => server.close())",
+                "lineStart": 1,
+                "lineEnd": 6,
+                "totalLines": 6,
+                "truncated": false
+              }
+            },
+            "title": "tests/setup.ts",
+            "time": {
+              "start": 1785082903610,
+              "end": 1785082903613
+            }
+          },
+          "id": "prt_f9f3b7c380012uV4TZxHKa5rgH",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b75a6001lrYSfZnP90bT3F"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_3a78",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk ls tests/mocks tests/mocks/handlers tests/api",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "handlers/\nappointments-fetch.test.ts  2.6K\nappointments.test.ts  8.3K\nevents-fetch.test.ts  17.2K\nevents.test.ts  9.0K\nforms-fetch.test.ts  6.7K\nbackend.ts  739B\nserver.ts  603B\ncalendar.ts  1.1K\nevents.ts  2.4K\nforms.ts  824B\n",
+            "metadata": {
+              "output": "handlers/\nappointments-fetch.test.ts  2.6K\nappointments.test.ts  8.3K\nevents-fetch.test.ts  17.2K\nevents.test.ts  9.0K\nforms-fetch.test.ts  6.7K\nbackend.ts  739B\nserver.ts  603B\ncalendar.ts  1.1K\nevents.ts  2.4K\nforms.ts  824B\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk ls tests/mocks tests/mocks/handlers tests/api",
+            "time": {
+              "start": 1785082903833,
+              "end": 1785082903837
+            }
+          },
+          "id": "prt_f9f3b7cf60013V0XXjnX2bwyGY",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b75a6001lrYSfZnP90bT3F"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_20b9",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk ls src/api",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "appointments.ts  1.3K\ncontentful.ts  2.1K\nevents.ts  10.1K\nforms.ts  1.7K\n",
+            "metadata": {
+              "output": "appointments.ts  1.3K\ncontentful.ts  2.1K\nevents.ts  10.1K\nforms.ts  1.7K\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk ls src/api",
+            "time": {
+              "start": 1785082903999,
+              "end": 1785082904001
+            }
+          },
+          "id": "prt_f9f3b7d97001CT72mH4XTn5aMw",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b75a6001lrYSfZnP90bT3F"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-finish",
+          "tokens": {
+            "total": 10818,
+            "input": 10562,
+            "output": 128,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01538328,
+          "id": "prt_f9f3b7de6001fbASYU6qtYxM8F",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b75a6001lrYSfZnP90bT3F"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f3b6b5f001v85Mu25pX5ajxS",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00363328,
+        "tokens": {
+          "total": 11144,
+          "input": 384,
+          "output": 72,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 10688
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785082904072,
+          "completed": 1785082905613
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f3b7e08001j57sphygDZjX00",
+        "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn"
+      },
+      "parts": [
+        {
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-start",
+          "id": "prt_f9f3b825d001WELijGcnD48TLm",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b7e08001j57sphygDZjX00"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_be89",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/src/api/appointments.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/src/api/appointments.ts</path>\n<type>file</type>\n<content>\n1: import { formatDatespan, formatTimespan } from '@/utils'\n2: import type { RawAppointment, Appointment } from '@/types'\n3: import { BACKEND_API } from 'astro:env/client'\n4: \n5: export function bySortIndex(a: RawAppointment, b: RawAppointment): number {\n6:   return a.sort_index - b.sort_index\n7: }\n8: \n9: export function toAppointment(appointment: RawAppointment): Appointment {\n10:   let startISO: string | undefined\n11:   let endISO: string | undefined\n12:   if (appointment.start_date_time) {\n13:     startISO = appointment.start_date_time\n14:     endISO = appointment.end_date_time\n15:   } else if (appointment.start_date) {\n16:     startISO = appointment.start_date\n17:     endISO = appointment.end_date\n18:   }\n19:   return {\n20:     date: formatDatespan(appointment),\n21:     time: formatTimespan(appointment),\n22:     title: appointment.title || '-',\n23:     description: appointment.description,\n24:     link: appointment.link,\n25:     startDateISO: startISO,\n26:     endDateISO: endISO,\n27:   }\n28: }\n29: \n30: export async function getAppointments(): Promise<Appointment[]> {\n31:   const response = await fetch(`${BACKEND_API}/calendar/appointments`)\n32:   if (!response.ok) {\n33:     throw new Error(`Failed to load appointments: ${response.status} ${response.statusText}`)\n34:   }\n35:   const appointments: RawAppointment[] = await response.json()\n36:   return appointments.sort(bySortIndex).map(toAppointment)\n37: }\n\n(End of file - total 37 lines)\n</content>",
+            "metadata": {
+              "preview": "import { formatDatespan, formatTimespan } from '@/utils'\nimport type { RawAppointment, Appointment } from '@/types'\nimport { BACKEND_API } from 'astro:env/client'\n\nexport function bySortIndex(a: RawAppointment, b: RawAppointment): number {\n  return a.sort_index - b.sort_index\n}\n\nexport function toAppointment(appointment: RawAppointment): Appointment {\n  let startISO: string | undefined\n  let endISO: string | undefined\n  if (appointment.start_date_time) {\n    startISO = appointment.start_date_time\n    endISO = appointment.end_date_time\n  } else if (appointment.start_date) {\n    startISO = appointment.start_date\n    endISO = appointment.end_date\n  }\n  return {\n    date: formatDatespan(appointment),",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/src/api/appointments.ts",
+                "text": "import { formatDatespan, formatTimespan } from '@/utils'\nimport type { RawAppointment, Appointment } from '@/types'\nimport { BACKEND_API } from 'astro:env/client'\n\nexport function bySortIndex(a: RawAppointment, b: RawAppointment): number {\n  return a.sort_index - b.sort_index\n}\n\nexport function toAppointment(appointment: RawAppointment): Appointment {\n  let startISO: string | undefined\n  let endISO: string | undefined\n  if (appointment.start_date_time) {\n    startISO = appointment.start_date_time\n    endISO = appointment.end_date_time\n  } else if (appointment.start_date) {\n    startISO = appointment.start_date\n    endISO = appointment.end_date\n  }\n  return {\n    date: formatDatespan(appointment),\n    time: formatTimespan(appointment),\n    title: appointment.title || '-',\n    description: appointment.description,\n    link: appointment.link,\n    startDateISO: startISO,\n    endDateISO: endISO,\n  }\n}\n\nexport async function getAppointments(): Promise<Appointment[]> {\n  const response = await fetch(`${BACKEND_API}/calendar/appointments`)\n  if (!response.ok) {\n    throw new Error(`Failed to load appointments: ${response.status} ${response.statusText}`)\n  }\n  const appointments: RawAppointment[] = await response.json()\n  return appointments.sort(bySortIndex).map(toAppointment)\n}",
+                "lineStart": 1,
+                "lineEnd": 37,
+                "totalLines": 37,
+                "truncated": false
+              }
+            },
+            "title": "src/api/appointments.ts",
+            "time": {
+              "start": 1785082905243,
+              "end": 1785082905253
+            }
+          },
+          "id": "prt_f9f3b8298001a4f6uuGzPCQ32a",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b7e08001j57sphygDZjX00"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_43cd",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/src/api/events.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/src/api/events.ts</path>\n<type>file</type>\n<content>\n1: import {\n2:   EventType,\n3:   type Booking,\n4:   type BookingResponse,\n5:   type Event,\n6:   type EventAvailability,\n7:   type RawEvent,\n8:   type RawEventCounter,\n9: } from '@/types'\n10: import { formatCurrency, formatDuration } from '@/utils'\n11: import { BACKEND_API, PREVIEW } from 'astro:env/client'\n12: import { parseISO, format, getDay } from 'date-fns'\n13: import { de } from 'date-fns/locale'\n14: \n15: /**\n16:  * Four-state phase machine derived from {@link EventAvailability}. Tests pin\n17:  * every transition; consumer sites must branch on this enum rather than\n18:  * re-decoding the `-1` / `0` sentinels themselves, so a future sentinel change\n19:  * (e.g. to `Infinity` or a `kind: 'unlimited'` discriminated field) either\n20:  * moves every site together or fails a test.\n21:  *\n22:  * Lives in `src/api/events.ts` (not `src/types.ts`) so the browser `<script>`\n23:  * bundles that import it as a runtime value do not pull `@/types` — and with\n24:  * it the side-effectful `zod` import — into the client bundle.\n25:  */\n26: export enum AvailabilityState {\n27:   /** Subscriber phase, no capacity limit (`max_subscribers === -1`). Sentinel `-1`. */\n28:   Unlimited = 'unlimited',\n29:   /** Subscriber phase, slots remaining. */\n30:   Subscribing = 'subscribing',\n31:   /** Subscribers full; waiting-list phase open. */\n32:   WaitingList = 'waitingList',\n33:   /** Subscribers full and waiting-list full. Terminal. */\n34:   FullyBooked = 'fullyBooked',\n35: }\n36: \n37: /**\n38:  * Canonical decode of the {@link EventAvailability} sentinel + phase switch\n39:  * into a single {@link AvailabilityState}. This is the ONLY function that\n40:  * should read `availableSlots === -1` or `availableSlots === 0`; everywhere\n41:  * else derives through this predicate or {@link canSubscribe}.\n42:  */\n43: export function availabilityState(\n44:   av: Pick<EventAvailability, 'availableSlots' | 'isWaitingList'>,\n45: ): AvailabilityState {\n46:   if (av.availableSlots === -1) {\n47:     return AvailabilityState.Unlimited\n48:   }\n49:   if (av.isWaitingList) {\n50:     return av.availableSlots > 0 ? AvailabilityState.WaitingList : AvailabilityState.FullyBooked\n51:   }\n52:   return av.availableSlots > 0 ? AvailabilityState.Subscribing : AvailabilityState.FullyBooked\n53: }\n54: \n55: /**\n56:  * Whether the booking form is open for this event — `true` for the\n57:  * `Unlimited` and `Subscribing` phases, `false` once the waiting-list or\n58:  * fully-booked phases begin. Captures the \"is booking open\" question the\n59:  * `Event.astro` consumer used to re-derive inline from two enum values; goes\n60:  * through {@link availabilityState} so it never reads the sentinel directly.\n61:  */\n62: export function canSubscribe(\n63:   av: Pick<EventAvailability, 'availableSlots' | 'isWaitingList'>,\n64: ): boolean {\n65:   const state = availabilityState(av)\n66:   return state === AvailabilityState.Unlimited || state === AvailabilityState.Subscribing\n67: }\n68: \n69: export async function loadEvents(type: EventType): Promise<Event[]> {\n70:   const response = await fetch(`${BACKEND_API}/events?type=${type}&beta=${PREVIEW}`)\n71:   if (!response.ok) {\n72:     throw new Error(`Failed to load events: ${response.status} ${response.statusText}`)\n73:   }\n74:   const events: RawEvent[] = await response.json()\n75:   return await Promise.all(\n76:     events\n77:       .sort((a, b) => a.sort_index - b.sort_index)\n78:       .filter((event) => event.type === type)\n79:       .map<Promise<Event>>(async (event) => {\n80:         return {\n81:           id: event.id,\n82:           name: event.name,\n83:           image: `/src/assets/events/${event.image}`,\n84:           sortIndex: event.sort_index,\n85:           shortDescription: event.short_description,\n86:           description: event.description,\n87:           location: event.location,\n88:           dates: event.custom_date ? [event.custom_date] : event.dates,\n89:           datesDisplay: computeDatesDisplay(event.dates, event.custom_date),\n90:           duration: durationPrefix(event.type) + formatDuration(event.duration_in_minutes),\n91:           priceMember: formatCurrency(event.price_member),\n92:           priceNonMember: formatCurrency(event.price_non_member),\n93:           externalOperator: event.external_operator,\n94:           altBookingButtonText: event.alt_booking_button_text || undefined,\n95:           customFields: event.custom_fields.map((field) => ({\n96:             name: field.name,\n97:             type: field.type,\n98:             minValue: field.min_value || undefined,\n99:             maxValue: field.max_value || undefined,\n100:           })),\n101:           paymentMethod: event.payment_method,\n102:         }\n103:       }),\n104:   )\n105: }\n106: \n107: function durationPrefix(type: EventType) {\n108:   switch (type) {\n109:     case EventType.Fitness:\n110:       return 'Kurslänge: '\n111:     case EventType.Events:\n112:       return 'Eventlänge: ca. '\n113:   }\n114: }\n115: \n116: function computeDatesDisplay(dates: string[], customDate?: string | null): string | undefined {\n117:   if (customDate) {\n118:     return customDate\n119:   }\n120:   if (dates.length === 0) {\n121:     return undefined\n122:   }\n123: \n124:   try {\n125:     if (dates.length === 1) {\n126:       return format(parseISO(dates[0]), 'eee, d. MMM, H:mm', { locale: de }) + ' Uhr'\n127:     }\n128: \n129:     const first = parseISO(dates[0])\n130:     const firstDay = getDay(first)\n131:     const firstTime = format(first, 'H:mm')\n132: \n133:     const allSamePattern = dates.every((dateStr) => {\n134:       const d = parseISO(dateStr)\n135:       return getDay(d) === firstDay && format(d, 'H:mm') === firstTime\n136:     })\n137: \n138:     if (allSamePattern) {\n139:       const weekday = format(first, 'eee', { locale: de })\n140:       return `${weekday}, ${firstTime} Uhr (${dates.length} Termine)`\n141:     }\n142: \n143:     return `${format(first, 'd. MMM, H:mm', { locale: de })} Uhr (+${dates.length - 1} weitere)`\n144:   } catch {\n145:     return dates.length === 1 ? dates[0] : `${dates[0]} (+${dates.length - 1} weitere)`\n146:   }\n147: }\n148: \n149: export function convertToEventAvailability(counter: RawEventCounter): EventAvailability {\n150:   const noLimit = counter.max_subscribers === -1\n151:   const noMoreSubscriptions = counter.subscribers >= counter.max_subscribers\n152:   const noMoreWaitingList = counter.waiting_list >= counter.max_waiting_list\n153: \n154:   const availableSlots = noLimit\n155:     ? -1\n156:     : noMoreSubscriptions\n157:       ? noMoreWaitingList\n158:         ? 0\n159:         : Math.max(0, counter.max_waiting_list - counter.waiting_list)\n160:       : Math.max(0, counter.max_subscribers - counter.subscribers)\n161: \n162:   const isWaitingList = !noLimit && noMoreSubscriptions\n163: \n164:   return {\n165:     availableSlots,\n166:     isWaitingList,\n167:     message: calculateAvailabilityMessage({ availableSlots, isWaitingList }),\n168:   }\n169: }\n170: \n171: export function calculateAvailabilityMessage(\n172:   av: Pick<EventAvailability, 'availableSlots' | 'isWaitingList'>,\n173: ): string {\n174:   switch (availabilityState(av)) {\n175:     case AvailabilityState.Unlimited:\n176:       return 'Freie Plätze verfügbar'\n177:     case AvailabilityState.WaitingList:\n178:       return 'Warteliste ist geöffnet'\n179:     case AvailabilityState.Subscribing:\n180:       return av.availableSlots === 1\n181:         ? 'Noch 1 freier Platz'\n182:         : `Noch ${av.availableSlots} freie Plätze`\n183:     case AvailabilityState.FullyBooked:\n184:       return 'Ausgebucht'\n185:   }\n186: }\n187: \n188: export async function loadEventAvailability(\n189:   id: string,\n190:   callback: (availability: EventAvailability) => void,\n191: ) {\n192:   loadEventsAvailability((record) => {\n193:     const availability = record[id]\n194:     if (availability) {\n195:       callback(availability)\n196:     }\n197:   })\n198: }\n199: \n200: interface Cache {\n201:   timestamp: number\n202:   data: Record<string, EventAvailability>\n203: }\n204: const sessionStorageKey = 'eventAvailability'\n205: \n206: export async function loadEventsAvailability(\n207:   callback: (availability: Record<string, EventAvailability>) => void,\n208: ) {\n209:   // Try to load availability from session storage\n210:   const storage = sessionStorage.getItem(sessionStorageKey)\n211:   if (storage) {\n212:     try {\n213:       const cache: Cache = JSON.parse(storage)\n214:       // Only use cached availability if it is not older than 1 hour\n215:       if (cache.timestamp > Date.now() - 3600000) {\n216:         callback(cache.data)\n217:       }\n218:     } catch (e) {\n219:       console.error('Error while parsing event availability from session storage', e)\n220:     }\n221:   }\n222: \n223:   // Fetch availability from backend\n224:   const response = await fetch(`${BACKEND_API}/events/counter?beta=${PREVIEW}`)\n225:   if (!response.ok) {\n226:     throw new Error(`Failed to load event availability: ${response.status} ${response.statusText}`)\n227:   }\n228:   const counters: RawEventCounter[] = await response.json()\n229:   processCounters(counters, callback)\n230: }\n231: \n232: function processCounters(\n233:   counters: RawEventCounter[],\n234:   callback: (availability: Record<string, EventAvailability>) => void,\n235: ) {\n236:   const availability: Record<string, EventAvailability> = {}\n237:   for (const counter of counters) {\n238:     availability[counter.id] = convertToEventAvailability(counter)\n239:   }\n240:   callback(availability)\n241: \n242:   // Store availability in session storage\n243:   const cache: Cache = { timestamp: Date.now(), data: availability }\n244:   sessionStorage.setItem(sessionStorageKey, JSON.stringify(cache))\n245: }\n246: \n247: export async function bookEvent(\n248:   formData: Booking,\n249:   token: string,\n250:   callback: (availability: EventAvailability) => void,\n251: ) {\n252:   const response = await fetch(`${BACKEND_API}/events/booking`, {\n253:     method: 'POST',\n254:     body: JSON.stringify({ ...formData, token }),\n255:     headers: {\n256:       'Content-Type': 'application/json',\n257:     },\n258:   })\n259:   if (response.ok) {\n260:     const data: BookingResponse = await response.json()\n261:     if (data.counter.length > 0) {\n262:       processCounters(data.counter, (record) => {\n263:         const availability = record[formData.event_id]\n264:         if (availability) {\n265:           callback(availability)\n266:         }\n267:       })\n268:     }\n269:     return { success: data.success, message: data.message }\n270:   }\n271:   return {\n272:     success: false,\n273:     message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',\n274:   }\n275: }\n276: \n277: export async function prebooking(hash: string) {\n278:   const response = await fetch(`${BACKEND_API}/events/prebooking/${hash}`)\n279:   if (response.ok) {\n280:     const data: BookingResponse = await response.json()\n281:     return {\n282:       success: data.success,\n283:       message: data.message,\n284:       requires_iban: data.requires_iban || false,\n285:     }\n286:   }\n287:   return {\n288:     success: false,\n289:     message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',\n290:   }\n291: }\n292: \n293: export async function prebookWithIban(hash: string, iban: string) {\n294:   const response = await fetch(`${BACKEND_API}/events/prebooking/${hash}/iban`, {\n295:     method: 'POST',\n296:     body: JSON.stringify({ iban }),\n297:     headers: {\n298:       'Content-Type': 'application/json',\n299:     },\n300:   })\n301:   if (response.ok) {\n302:     const data: BookingResponse = await response.json()\n303:     return { success: data.success, message: data.message }\n304:   }\n305:   return {\n306:     success: false,\n307:     message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',\n308:   }\n309: }\n\n(End of file - total 309 lines)\n</content>",
+            "metadata": {
+              "preview": "import {\n  EventType,\n  type Booking,\n  type BookingResponse,\n  type Event,\n  type EventAvailability,\n  type RawEvent,\n  type RawEventCounter,\n} from '@/types'\nimport { formatCurrency, formatDuration } from '@/utils'\nimport { BACKEND_API, PREVIEW } from 'astro:env/client'\nimport { parseISO, format, getDay } from 'date-fns'\nimport { de } from 'date-fns/locale'\n\n/**\n * Four-state phase machine derived from {@link EventAvailability}. Tests pin\n * every transition; consumer sites must branch on this enum rather than\n * re-decoding the `-1` / `0` sentinels themselves, so a future sentinel change\n * (e.g. to `Infinity` or a `kind: 'unlimited'` discriminated field) either\n * moves every site together or fails a test.",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/src/api/events.ts",
+                "text": "import {\n  EventType,\n  type Booking,\n  type BookingResponse,\n  type Event,\n  type EventAvailability,\n  type RawEvent,\n  type RawEventCounter,\n} from '@/types'\nimport { formatCurrency, formatDuration } from '@/utils'\nimport { BACKEND_API, PREVIEW } from 'astro:env/client'\nimport { parseISO, format, getDay } from 'date-fns'\nimport { de } from 'date-fns/locale'\n\n/**\n * Four-state phase machine derived from {@link EventAvailability}. Tests pin\n * every transition; consumer sites must branch on this enum rather than\n * re-decoding the `-1` / `0` sentinels themselves, so a future sentinel change\n * (e.g. to `Infinity` or a `kind: 'unlimited'` discriminated field) either\n * moves every site together or fails a test.\n *\n * Lives in `src/api/events.ts` (not `src/types.ts`) so the browser `<script>`\n * bundles that import it as a runtime value do not pull `@/types` — and with\n * it the side-effectful `zod` import — into the client bundle.\n */\nexport enum AvailabilityState {\n  /** Subscriber phase, no capacity limit (`max_subscribers === -1`). Sentinel `-1`. */\n  Unlimited = 'unlimited',\n  /** Subscriber phase, slots remaining. */\n  Subscribing = 'subscribing',\n  /** Subscribers full; waiting-list phase open. */\n  WaitingList = 'waitingList',\n  /** Subscribers full and waiting-list full. Terminal. */\n  FullyBooked = 'fullyBooked',\n}\n\n/**\n * Canonical decode of the {@link EventAvailability} sentinel + phase switch\n * into a single {@link AvailabilityState}. This is the ONLY function that\n * should read `availableSlots === -1` or `availableSlots === 0`; everywhere\n * else derives through this predicate or {@link canSubscribe}.\n */\nexport function availabilityState(\n  av: Pick<EventAvailability, 'availableSlots' | 'isWaitingList'>,\n): AvailabilityState {\n  if (av.availableSlots === -1) {\n    return AvailabilityState.Unlimited\n  }\n  if (av.isWaitingList) {\n    return av.availableSlots > 0 ? AvailabilityState.WaitingList : AvailabilityState.FullyBooked\n  }\n  return av.availableSlots > 0 ? AvailabilityState.Subscribing : AvailabilityState.FullyBooked\n}\n\n/**\n * Whether the booking form is open for this event — `true` for the\n * `Unlimited` and `Subscribing` phases, `false` once the waiting-list or\n * fully-booked phases begin. Captures the \"is booking open\" question the\n * `Event.astro` consumer used to re-derive inline from two enum values; goes\n * through {@link availabilityState} so it never reads the sentinel directly.\n */\nexport function canSubscribe(\n  av: Pick<EventAvailability, 'availableSlots' | 'isWaitingList'>,\n): boolean {\n  const state = availabilityState(av)\n  return state === AvailabilityState.Unlimited || state === AvailabilityState.Subscribing\n}\n\nexport async function loadEvents(type: EventType): Promise<Event[]> {\n  const response = await fetch(`${BACKEND_API}/events?type=${type}&beta=${PREVIEW}`)\n  if (!response.ok) {\n    throw new Error(`Failed to load events: ${response.status} ${response.statusText}`)\n  }\n  const events: RawEvent[] = await response.json()\n  return await Promise.all(\n    events\n      .sort((a, b) => a.sort_index - b.sort_index)\n      .filter((event) => event.type === type)\n      .map<Promise<Event>>(async (event) => {\n        return {\n          id: event.id,\n          name: event.name,\n          image: `/src/assets/events/${event.image}`,\n          sortIndex: event.sort_index,\n          shortDescription: event.short_description,\n          description: event.description,\n          location: event.location,\n          dates: event.custom_date ? [event.custom_date] : event.dates,\n          datesDisplay: computeDatesDisplay(event.dates, event.custom_date),\n          duration: durationPrefix(event.type) + formatDuration(event.duration_in_minutes),\n          priceMember: formatCurrency(event.price_member),\n          priceNonMember: formatCurrency(event.price_non_member),\n          externalOperator: event.external_operator,\n          altBookingButtonText: event.alt_booking_button_text || undefined,\n          customFields: event.custom_fields.map((field) => ({\n            name: field.name,\n            type: field.type,\n            minValue: field.min_value || undefined,\n            maxValue: field.max_value || undefined,\n          })),\n          paymentMethod: event.payment_method,\n        }\n      }),\n  )\n}\n\nfunction durationPrefix(type: EventType) {\n  switch (type) {\n    case EventType.Fitness:\n      return 'Kurslänge: '\n    case EventType.Events:\n      return 'Eventlänge: ca. '\n  }\n}\n\nfunction computeDatesDisplay(dates: string[], customDate?: string | null): string | undefined {\n  if (customDate) {\n    return customDate\n  }\n  if (dates.length === 0) {\n    return undefined\n  }\n\n  try {\n    if (dates.length === 1) {\n      return format(parseISO(dates[0]), 'eee, d. MMM, H:mm', { locale: de }) + ' Uhr'\n    }\n\n    const first = parseISO(dates[0])\n    const firstDay = getDay(first)\n    const firstTime = format(first, 'H:mm')\n\n    const allSamePattern = dates.every((dateStr) => {\n      const d = parseISO(dateStr)\n      return getDay(d) === firstDay && format(d, 'H:mm') === firstTime\n    })\n\n    if (allSamePattern) {\n      const weekday = format(first, 'eee', { locale: de })\n      return `${weekday}, ${firstTime} Uhr (${dates.length} Termine)`\n    }\n\n    return `${format(first, 'd. MMM, H:mm', { locale: de })} Uhr (+${dates.length - 1} weitere)`\n  } catch {\n    return dates.length === 1 ? dates[0] : `${dates[0]} (+${dates.length - 1} weitere)`\n  }\n}\n\nexport function convertToEventAvailability(counter: RawEventCounter): EventAvailability {\n  const noLimit = counter.max_subscribers === -1\n  const noMoreSubscriptions = counter.subscribers >= counter.max_subscribers\n  const noMoreWaitingList = counter.waiting_list >= counter.max_waiting_list\n\n  const availableSlots = noLimit\n    ? -1\n    : noMoreSubscriptions\n      ? noMoreWaitingList\n        ? 0\n        : Math.max(0, counter.max_waiting_list - counter.waiting_list)\n      : Math.max(0, counter.max_subscribers - counter.subscribers)\n\n  const isWaitingList = !noLimit && noMoreSubscriptions\n\n  return {\n    availableSlots,\n    isWaitingList,\n    message: calculateAvailabilityMessage({ availableSlots, isWaitingList }),\n  }\n}\n\nexport function calculateAvailabilityMessage(\n  av: Pick<EventAvailability, 'availableSlots' | 'isWaitingList'>,\n): string {\n  switch (availabilityState(av)) {\n    case AvailabilityState.Unlimited:\n      return 'Freie Plätze verfügbar'\n    case AvailabilityState.WaitingList:\n      return 'Warteliste ist geöffnet'\n    case AvailabilityState.Subscribing:\n      return av.availableSlots === 1\n        ? 'Noch 1 freier Platz'\n        : `Noch ${av.availableSlots} freie Plätze`\n    case AvailabilityState.FullyBooked:\n      return 'Ausgebucht'\n  }\n}\n\nexport async function loadEventAvailability(\n  id: string,\n  callback: (availability: EventAvailability) => void,\n) {\n  loadEventsAvailability((record) => {\n    const availability = record[id]\n    if (availability) {\n      callback(availability)\n    }\n  })\n}\n\ninterface Cache {\n  timestamp: number\n  data: Record<string, EventAvailability>\n}\nconst sessionStorageKey = 'eventAvailability'\n\nexport async function loadEventsAvailability(\n  callback: (availability: Record<string, EventAvailability>) => void,\n) {\n  // Try to load availability from session storage\n  const storage = sessionStorage.getItem(sessionStorageKey)\n  if (storage) {\n    try {\n      const cache: Cache = JSON.parse(storage)\n      // Only use cached availability if it is not older than 1 hour\n      if (cache.timestamp > Date.now() - 3600000) {\n        callback(cache.data)\n      }\n    } catch (e) {\n      console.error('Error while parsing event availability from session storage', e)\n    }\n  }\n\n  // Fetch availability from backend\n  const response = await fetch(`${BACKEND_API}/events/counter?beta=${PREVIEW}`)\n  if (!response.ok) {\n    throw new Error(`Failed to load event availability: ${response.status} ${response.statusText}`)\n  }\n  const counters: RawEventCounter[] = await response.json()\n  processCounters(counters, callback)\n}\n\nfunction processCounters(\n  counters: RawEventCounter[],\n  callback: (availability: Record<string, EventAvailability>) => void,\n) {\n  const availability: Record<string, EventAvailability> = {}\n  for (const counter of counters) {\n    availability[counter.id] = convertToEventAvailability(counter)\n  }\n  callback(availability)\n\n  // Store availability in session storage\n  const cache: Cache = { timestamp: Date.now(), data: availability }\n  sessionStorage.setItem(sessionStorageKey, JSON.stringify(cache))\n}\n\nexport async function bookEvent(\n  formData: Booking,\n  token: string,\n  callback: (availability: EventAvailability) => void,\n) {\n  const response = await fetch(`${BACKEND_API}/events/booking`, {\n    method: 'POST',\n    body: JSON.stringify({ ...formData, token }),\n    headers: {\n      'Content-Type': 'application/json',\n    },\n  })\n  if (response.ok) {\n    const data: BookingResponse = await response.json()\n    if (data.counter.length > 0) {\n      processCounters(data.counter, (record) => {\n        const availability = record[formData.event_id]\n        if (availability) {\n          callback(availability)\n        }\n      })\n    }\n    return { success: data.success, message: data.message }\n  }\n  return {\n    success: false,\n    message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',\n  }\n}\n\nexport async function prebooking(hash: string) {\n  const response = await fetch(`${BACKEND_API}/events/prebooking/${hash}`)\n  if (response.ok) {\n    const data: BookingResponse = await response.json()\n    return {\n      success: data.success,\n      message: data.message,\n      requires_iban: data.requires_iban || false,\n    }\n  }\n  return {\n    success: false,\n    message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',\n  }\n}\n\nexport async function prebookWithIban(hash: string, iban: string) {\n  const response = await fetch(`${BACKEND_API}/events/prebooking/${hash}/iban`, {\n    method: 'POST',\n    body: JSON.stringify({ iban }),\n    headers: {\n      'Content-Type': 'application/json',\n    },\n  })\n  if (response.ok) {\n    const data: BookingResponse = await response.json()\n    return { success: data.success, message: data.message }\n  }\n  return {\n    success: false,\n    message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',\n  }\n}",
+                "lineStart": 1,
+                "lineEnd": 309,
+                "totalLines": 309,
+                "truncated": false
+              }
+            },
+            "title": "src/api/events.ts",
+            "time": {
+              "start": 1785082905373,
+              "end": 1785082905379
+            }
+          },
+          "id": "prt_f9f3b831a001uknILXbADTVrM3",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b7e08001j57sphygDZjX00"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_9896",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/src/api/forms.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/src/api/forms.ts</path>\n<type>file</type>\n<content>\n1: import type { MembershipApplication } from '@/types'\n2: import { BACKEND_API } from 'astro:env/client'\n3: \n4: export async function sendContactMessage(\n5:   recipient: string,\n6:   name: string,\n7:   email: string,\n8:   phone: string | undefined,\n9:   message: string,\n10:   token: string,\n11: ): Promise<Response> {\n12:   const url = `${BACKEND_API}/contact/message`\n13:   return fetch(url, {\n14:     method: 'POST',\n15:     body: JSON.stringify({\n16:       type: 'General',\n17:       to: recipient,\n18:       name: name.trim(),\n19:       email: email.trim(),\n20:       phone: phone ? phone.trim() : undefined,\n21:       message: message.trim(),\n22:       token,\n23:     }),\n24:     headers: {\n25:       'Content-Type': 'application/json',\n26:     },\n27:   })\n28: }\n29: \n30: export async function manageSubscription(\n31:   subscribe: boolean,\n32:   email: string,\n33:   general: boolean,\n34:   fitness: boolean,\n35:   events: boolean,\n36:   token: string,\n37: ): Promise<Response> {\n38:   const url = `${BACKEND_API}/news/${subscribe ? 'subscribe' : 'unsubscribe'}`\n39:   return fetch(url, {\n40:     method: 'POST',\n41:     body: JSON.stringify({ email, types: newsTypes(general, fitness, events), token }),\n42:     headers: {\n43:       'Content-Type': 'application/json',\n44:     },\n45:   })\n46: }\n47: \n48: function newsTypes(general: boolean, fitness: boolean, events: boolean) {\n49:   const types: string[] = []\n50:   if (general) types.push('General')\n51:   if (fitness) types.push('Fitness')\n52:   if (events) types.push('Events')\n53:   return types\n54: }\n55: \n56: export async function membershipApplication(\n57:   payload: MembershipApplication,\n58:   token: string,\n59: ): Promise<boolean> {\n60:   const response = await fetch(`${BACKEND_API}/membership/application`, {\n61:     method: 'POST',\n62:     body: JSON.stringify({ ...payload, token }),\n63:     headers: {\n64:       'Content-Type': 'application/json',\n65:     },\n66:   })\n67:   return response.ok\n68: }\n\n(End of file - total 68 lines)\n</content>",
+            "metadata": {
+              "preview": "import type { MembershipApplication } from '@/types'\nimport { BACKEND_API } from 'astro:env/client'\n\nexport async function sendContactMessage(\n  recipient: string,\n  name: string,\n  email: string,\n  phone: string | undefined,\n  message: string,\n  token: string,\n): Promise<Response> {\n  const url = `${BACKEND_API}/contact/message`\n  return fetch(url, {\n    method: 'POST',\n    body: JSON.stringify({\n      type: 'General',\n      to: recipient,\n      name: name.trim(),\n      email: email.trim(),\n      phone: phone ? phone.trim() : undefined,",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/src/api/forms.ts",
+                "text": "import type { MembershipApplication } from '@/types'\nimport { BACKEND_API } from 'astro:env/client'\n\nexport async function sendContactMessage(\n  recipient: string,\n  name: string,\n  email: string,\n  phone: string | undefined,\n  message: string,\n  token: string,\n): Promise<Response> {\n  const url = `${BACKEND_API}/contact/message`\n  return fetch(url, {\n    method: 'POST',\n    body: JSON.stringify({\n      type: 'General',\n      to: recipient,\n      name: name.trim(),\n      email: email.trim(),\n      phone: phone ? phone.trim() : undefined,\n      message: message.trim(),\n      token,\n    }),\n    headers: {\n      'Content-Type': 'application/json',\n    },\n  })\n}\n\nexport async function manageSubscription(\n  subscribe: boolean,\n  email: string,\n  general: boolean,\n  fitness: boolean,\n  events: boolean,\n  token: string,\n): Promise<Response> {\n  const url = `${BACKEND_API}/news/${subscribe ? 'subscribe' : 'unsubscribe'}`\n  return fetch(url, {\n    method: 'POST',\n    body: JSON.stringify({ email, types: newsTypes(general, fitness, events), token }),\n    headers: {\n      'Content-Type': 'application/json',\n    },\n  })\n}\n\nfunction newsTypes(general: boolean, fitness: boolean, events: boolean) {\n  const types: string[] = []\n  if (general) types.push('General')\n  if (fitness) types.push('Fitness')\n  if (events) types.push('Events')\n  return types\n}\n\nexport async function membershipApplication(\n  payload: MembershipApplication,\n  token: string,\n): Promise<boolean> {\n  const response = await fetch(`${BACKEND_API}/membership/application`, {\n    method: 'POST',\n    body: JSON.stringify({ ...payload, token }),\n    headers: {\n      'Content-Type': 'application/json',\n    },\n  })\n  return response.ok\n}",
+                "lineStart": 1,
+                "lineEnd": 68,
+                "totalLines": 68,
+                "truncated": false
+              }
+            },
+            "title": "src/api/forms.ts",
+            "time": {
+              "start": 1785082905478,
+              "end": 1785082905485
+            }
+          },
+          "id": "prt_f9f3b837e001YRzHJEpFDwkcrJ",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b7e08001j57sphygDZjX00"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11144,
+            "input": 384,
+            "output": 72,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 10688
+            }
+          },
+          "cost": 0.00363328,
+          "id": "prt_f9f3b83e6001AUQAjZDU5aLBmk",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b7e08001j57sphygDZjX00"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f3b6b5f001v85Mu25pX5ajxS",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00940636,
+        "tokens": {
+          "total": 15506,
+          "input": 4239,
+          "output": 131,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 11136
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785082905616,
+          "completed": 1785082908229
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f3b8410001NXRVLIyXpTWss6",
+        "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn"
+      },
+      "parts": [
+        {
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-start",
+          "id": "prt_f9f3b8940001ObUg9HAI6ZpoPW",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b8410001NXRVLIyXpTWss6"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_1029",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/mocks/server.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/mocks/server.ts</path>\n<type>file</type>\n<content>\n1: import { setupServer } from 'msw/node'\n2: import { calendarHandlers } from './handlers/calendar'\n3: import { eventsHandlers } from './handlers/events'\n4: import { formsHandlers } from './handlers/forms'\n5: \n6: /**\n7:  * One MSW node server for the whole Vitest suite. The default handlers cover\n8:  * every supported route with success fixtures so off-the-shelf happy-path tests\n9:  * need no `server.use`. Per-test overrides ride on top via `server.use(...)`\n10:  * and `server.resetHandlers()` in `afterEach` (see `tests/setup.ts`).\n11:  */\n12: export const server = setupServer(...calendarHandlers, ...eventsHandlers, ...formsHandlers)\n\n(End of file - total 12 lines)\n</content>",
+            "metadata": {
+              "preview": "import { setupServer } from 'msw/node'\nimport { calendarHandlers } from './handlers/calendar'\nimport { eventsHandlers } from './handlers/events'\nimport { formsHandlers } from './handlers/forms'\n\n/**\n * One MSW node server for the whole Vitest suite. The default handlers cover\n * every supported route with success fixtures so off-the-shelf happy-path tests\n * need no `server.use`. Per-test overrides ride on top via `server.use(...)`\n * and `server.resetHandlers()` in `afterEach` (see `tests/setup.ts`).\n */\nexport const server = setupServer(...calendarHandlers, ...eventsHandlers, ...formsHandlers)",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/mocks/server.ts",
+                "text": "import { setupServer } from 'msw/node'\nimport { calendarHandlers } from './handlers/calendar'\nimport { eventsHandlers } from './handlers/events'\nimport { formsHandlers } from './handlers/forms'\n\n/**\n * One MSW node server for the whole Vitest suite. The default handlers cover\n * every supported route with success fixtures so off-the-shelf happy-path tests\n * need no `server.use`. Per-test overrides ride on top via `server.use(...)`\n * and `server.resetHandlers()` in `afterEach` (see `tests/setup.ts`).\n */\nexport const server = setupServer(...calendarHandlers, ...eventsHandlers, ...formsHandlers)",
+                "lineStart": 1,
+                "lineEnd": 12,
+                "totalLines": 12,
+                "truncated": false
+              }
+            },
+            "title": "tests/mocks/server.ts",
+            "time": {
+              "start": 1785082907474,
+              "end": 1785082907488
+            }
+          },
+          "id": "prt_f9f3b8b50001u4H1EotbDuqqPd",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b8410001NXRVLIyXpTWss6"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_21c1",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/mocks/backend.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/mocks/backend.ts</path>\n<type>file</type>\n<content>\n1: /**\n2:  * Resolved backend base URL under the test environment. mirrors the production\n3:  * `BACKEND_API` exported from `astro:env/client` — the handlers must match the\n4:  * URLs the wrappers actually fetch, otherwise MSW bypasses and the request hits\n5:  * the live `backend.sv-eutingen.de` host.\n6:  *\n7:  * `loadEvents` interpolates `PREVIEW` into the `beta` query param. To pin that\n8:  * branch per-test, tests that exercise `loadEvents` use a `vi.mock` of\n9:  * `astro:env/client` whose `PREVIEW` getter reads `import.meta.env.PREVIEW`,\n10:  * then drive it with `vi.stubEnv('PREVIEW', ...)`. The default `PREVIEW` config\n11:  * (`import.meta.env.PREVIEW`) is `false` in the test environment.\n12:  */\n13: export const BACKEND_API = 'https://backend.sv-eutingen.de/api'\n\n(End of file - total 13 lines)\n</content>",
+            "metadata": {
+              "preview": "/**\n * Resolved backend base URL under the test environment. mirrors the production\n * `BACKEND_API` exported from `astro:env/client` — the handlers must match the\n * URLs the wrappers actually fetch, otherwise MSW bypasses and the request hits\n * the live `backend.sv-eutingen.de` host.\n *\n * `loadEvents` interpolates `PREVIEW` into the `beta` query param. To pin that\n * branch per-test, tests that exercise `loadEvents` use a `vi.mock` of\n * `astro:env/client` whose `PREVIEW` getter reads `import.meta.env.PREVIEW`,\n * then drive it with `vi.stubEnv('PREVIEW', ...)`. The default `PREVIEW` config\n * (`import.meta.env.PREVIEW`) is `false` in the test environment.\n */\nexport const BACKEND_API = 'https://backend.sv-eutingen.de/api'",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/mocks/backend.ts",
+                "text": "/**\n * Resolved backend base URL under the test environment. mirrors the production\n * `BACKEND_API` exported from `astro:env/client` — the handlers must match the\n * URLs the wrappers actually fetch, otherwise MSW bypasses and the request hits\n * the live `backend.sv-eutingen.de` host.\n *\n * `loadEvents` interpolates `PREVIEW` into the `beta` query param. To pin that\n * branch per-test, tests that exercise `loadEvents` use a `vi.mock` of\n * `astro:env/client` whose `PREVIEW` getter reads `import.meta.env.PREVIEW`,\n * then drive it with `vi.stubEnv('PREVIEW', ...)`. The default `PREVIEW` config\n * (`import.meta.env.PREVIEW`) is `false` in the test environment.\n */\nexport const BACKEND_API = 'https://backend.sv-eutingen.de/api'",
+                "lineStart": 1,
+                "lineEnd": 13,
+                "totalLines": 13,
+                "truncated": false
+              }
+            },
+            "title": "tests/mocks/backend.ts",
+            "time": {
+              "start": 1785082907477,
+              "end": 1785082907490
+            }
+          },
+          "id": "prt_f9f3b8b540015Jw2EdXx9Jivmo",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b8410001NXRVLIyXpTWss6"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_6148",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/mocks/handlers/calendar.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/mocks/handlers/calendar.ts</path>\n<type>file</type>\n<content>\n1: import { http, HttpResponse } from 'msw'\n2: import { BACKEND_API } from '../backend'\n3: \n4: export const CALENDAR_APPOINTMENTS_URL = `${BACKEND_API}/calendar/appointments`\n5: \n6: export interface RawAppointmentFixture {\n7:   id: string\n8:   sort_index: number\n9:   title?: string\n10:   link?: string\n11:   description?: string\n12:   start_date?: string\n13:   end_date?: string\n14:   start_date_time?: string\n15:   end_date_time?: string\n16: }\n17: \n18: /**\n19:  * Two unsorted raw appointments by sort_index — the wrapper sorts\n20:  * ascending via `bySortIndex`, so callers observe them in reverse order.\n21:  */\n22: export const rawAppointmentsFixture: RawAppointmentFixture[] = [\n23:   {\n24:     id: 'a1',\n25:     sort_index: 3,\n26:     title: 'Pokalspiel',\n27:     description: 'Austragung im heimischen Stadion',\n28:     start_date_time: '2024-05-11T15:00:00',\n29:     end_date_time: '2024-05-11T16:30:00',\n30:   },\n31:   {\n32:     id: 'a0',\n33:     sort_index: 1,\n34:     title: 'Jahreshauptversammlung',\n35:     start_date: '2024-01-15',\n36:     end_date: '2024-01-15',\n37:   },\n38: ]\n39: \n40: export const calendarHandlers = [\n41:   http.get(CALENDAR_APPOINTMENTS_URL, () => HttpResponse.json(rawAppointmentsFixture)),\n42: ]\n\n(End of file - total 42 lines)\n</content>",
+            "metadata": {
+              "preview": "import { http, HttpResponse } from 'msw'\nimport { BACKEND_API } from '../backend'\n\nexport const CALENDAR_APPOINTMENTS_URL = `${BACKEND_API}/calendar/appointments`\n\nexport interface RawAppointmentFixture {\n  id: string\n  sort_index: number\n  title?: string\n  link?: string\n  description?: string\n  start_date?: string\n  end_date?: string\n  start_date_time?: string\n  end_date_time?: string\n}\n\n/**\n * Two unsorted raw appointments by sort_index — the wrapper sorts\n * ascending via `bySortIndex`, so callers observe them in reverse order.",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/mocks/handlers/calendar.ts",
+                "text": "import { http, HttpResponse } from 'msw'\nimport { BACKEND_API } from '../backend'\n\nexport const CALENDAR_APPOINTMENTS_URL = `${BACKEND_API}/calendar/appointments`\n\nexport interface RawAppointmentFixture {\n  id: string\n  sort_index: number\n  title?: string\n  link?: string\n  description?: string\n  start_date?: string\n  end_date?: string\n  start_date_time?: string\n  end_date_time?: string\n}\n\n/**\n * Two unsorted raw appointments by sort_index — the wrapper sorts\n * ascending via `bySortIndex`, so callers observe them in reverse order.\n */\nexport const rawAppointmentsFixture: RawAppointmentFixture[] = [\n  {\n    id: 'a1',\n    sort_index: 3,\n    title: 'Pokalspiel',\n    description: 'Austragung im heimischen Stadion',\n    start_date_time: '2024-05-11T15:00:00',\n    end_date_time: '2024-05-11T16:30:00',\n  },\n  {\n    id: 'a0',\n    sort_index: 1,\n    title: 'Jahreshauptversammlung',\n    start_date: '2024-01-15',\n    end_date: '2024-01-15',\n  },\n]\n\nexport const calendarHandlers = [\n  http.get(CALENDAR_APPOINTMENTS_URL, () => HttpResponse.json(rawAppointmentsFixture)),\n]",
+                "lineStart": 1,
+                "lineEnd": 42,
+                "totalLines": 42,
+                "truncated": false
+              }
+            },
+            "title": "tests/mocks/handlers/calendar.ts",
+            "time": {
+              "start": 1785082907671,
+              "end": 1785082907685
+            }
+          },
+          "id": "prt_f9f3b8c15001SRC7w2bPZpJnG5",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b8410001NXRVLIyXpTWss6"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_94f0",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/mocks/handlers/events.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/mocks/handlers/events.ts</path>\n<type>file</type>\n<content>\n1: import { http, HttpResponse } from 'msw'\n2: import { BACKEND_API } from '../backend'\n3: \n4: export const EVENTS_URL = `${BACKEND_API}/events`\n5: export const EVENTS_COUNTER_URL = `${BACKEND_API}/events/counter`\n6: export const EVENTS_BOOKING_URL = `${BACKEND_API}/events/booking`\n7: export const prebookingUrl = (hash: string) => `${BACKEND_API}/events/prebooking/${hash}`\n8: export const prebookingIbanUrl = (hash: string) => `${BACKEND_API}/events/prebooking/${hash}/iban`\n9: \n10: export const rawEventFixture = {\n11:   id: 'evt-1',\n12:   type: 'Fitness',\n13:   name: 'Rückenfit',\n14:   sort_index: 1,\n15:   short_description: 'Pilates für den Rücken',\n16:   description: 'Ein sanfter Kurs',\n17:   image: 'rueckenfit.jpg',\n18:   light: true,\n19:   dates: ['2024-04-08T18:00:00', '2024-04-15T18:00:00'],\n20:   custom_date: null,\n21:   duration_in_minutes: 60,\n22:   max_subscribers: 12,\n23:   max_waiting_list: 4,\n24:   price_member: 40,\n25:   price_non_member: 60,\n26:   cost_per_date: null,\n27:   location: 'Clubhaus',\n28:   booking_template: 'fitness',\n29:   payment_account: 'DE123',\n30:   alt_booking_button_text: null,\n31:   alt_email_address: null,\n32:   external_operator: false,\n33:   custom_fields: [{ id: 'cf-1', name: 'Rückenbeschwerden', type: 'Text' }],\n34:   payment_method: 'SepaDirectDebit',\n35: }\n36: \n37: export const rawEventsFixture = [rawEventFixture]\n38: \n39: /**\n40:  * Counter fixture for evt-1 — subscribers phase, 5 of 12 taken (7 remaining),\n41:  * waiting-list not reached. {@link convertToEventAvailability} produces the\n42:  * canonical availability for this fixture:\n43:  *   { availableSlots: 7, isWaitingList: false, message: 'Noch 7 freie Plätze' }\n44:  */\n45: export const rawCounterFixture = {\n46:   id: 'evt-1',\n47:   max_subscribers: 12,\n48:   subscribers: 5,\n49:   waiting_list: 0,\n50:   max_waiting_list: 4,\n51: }\n52: \n53: export const bookingSuccessResponse = {\n54:   success: true,\n55:   message: 'Buchung bestätigt',\n56:   counter: [rawCounterFixture],\n57: }\n58: \n59: export const bookingSuccessNoCounters = {\n60:   success: true,\n61:   message: 'Buchung bestätigt',\n62:   counter: [],\n63: }\n64: \n65: export const prebookingSuccessResponse = {\n66:   success: true,\n67:   message: 'Pre-Buchung gültig',\n68:   counter: [rawCounterFixture],\n69:   requires_iban: true,\n70: }\n71: \n72: export const prebookingSuccessNoIbanResponse = {\n73:   success: true,\n74:   message: 'Pre-Buchung gültig',\n75:   counter: [rawCounterFixture],\n76:   requires_iban: false,\n77: }\n78: \n79: export const eventsHandlers = [\n80:   http.get(`${EVENTS_URL}`, () => HttpResponse.json(rawEventsFixture)),\n81:   http.get(`${EVENTS_COUNTER_URL}`, () => HttpResponse.json([rawCounterFixture])),\n82:   http.post(`${EVENTS_BOOKING_URL}`, () => HttpResponse.json(bookingSuccessResponse)),\n83: ]\n\n(End of file - total 83 lines)\n</content>",
+            "metadata": {
+              "preview": "import { http, HttpResponse } from 'msw'\nimport { BACKEND_API } from '../backend'\n\nexport const EVENTS_URL = `${BACKEND_API}/events`\nexport const EVENTS_COUNTER_URL = `${BACKEND_API}/events/counter`\nexport const EVENTS_BOOKING_URL = `${BACKEND_API}/events/booking`\nexport const prebookingUrl = (hash: string) => `${BACKEND_API}/events/prebooking/${hash}`\nexport const prebookingIbanUrl = (hash: string) => `${BACKEND_API}/events/prebooking/${hash}/iban`\n\nexport const rawEventFixture = {\n  id: 'evt-1',\n  type: 'Fitness',\n  name: 'Rückenfit',\n  sort_index: 1,\n  short_description: 'Pilates für den Rücken',\n  description: 'Ein sanfter Kurs',\n  image: 'rueckenfit.jpg',\n  light: true,\n  dates: ['2024-04-08T18:00:00', '2024-04-15T18:00:00'],\n  custom_date: null,",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/mocks/handlers/events.ts",
+                "text": "import { http, HttpResponse } from 'msw'\nimport { BACKEND_API } from '../backend'\n\nexport const EVENTS_URL = `${BACKEND_API}/events`\nexport const EVENTS_COUNTER_URL = `${BACKEND_API}/events/counter`\nexport const EVENTS_BOOKING_URL = `${BACKEND_API}/events/booking`\nexport const prebookingUrl = (hash: string) => `${BACKEND_API}/events/prebooking/${hash}`\nexport const prebookingIbanUrl = (hash: string) => `${BACKEND_API}/events/prebooking/${hash}/iban`\n\nexport const rawEventFixture = {\n  id: 'evt-1',\n  type: 'Fitness',\n  name: 'Rückenfit',\n  sort_index: 1,\n  short_description: 'Pilates für den Rücken',\n  description: 'Ein sanfter Kurs',\n  image: 'rueckenfit.jpg',\n  light: true,\n  dates: ['2024-04-08T18:00:00', '2024-04-15T18:00:00'],\n  custom_date: null,\n  duration_in_minutes: 60,\n  max_subscribers: 12,\n  max_waiting_list: 4,\n  price_member: 40,\n  price_non_member: 60,\n  cost_per_date: null,\n  location: 'Clubhaus',\n  booking_template: 'fitness',\n  payment_account: 'DE123',\n  alt_booking_button_text: null,\n  alt_email_address: null,\n  external_operator: false,\n  custom_fields: [{ id: 'cf-1', name: 'Rückenbeschwerden', type: 'Text' }],\n  payment_method: 'SepaDirectDebit',\n}\n\nexport const rawEventsFixture = [rawEventFixture]\n\n/**\n * Counter fixture for evt-1 — subscribers phase, 5 of 12 taken (7 remaining),\n * waiting-list not reached. {@link convertToEventAvailability} produces the\n * canonical availability for this fixture:\n *   { availableSlots: 7, isWaitingList: false, message: 'Noch 7 freie Plätze' }\n */\nexport const rawCounterFixture = {\n  id: 'evt-1',\n  max_subscribers: 12,\n  subscribers: 5,\n  waiting_list: 0,\n  max_waiting_list: 4,\n}\n\nexport const bookingSuccessResponse = {\n  success: true,\n  message: 'Buchung bestätigt',\n  counter: [rawCounterFixture],\n}\n\nexport const bookingSuccessNoCounters = {\n  success: true,\n  message: 'Buchung bestätigt',\n  counter: [],\n}\n\nexport const prebookingSuccessResponse = {\n  success: true,\n  message: 'Pre-Buchung gültig',\n  counter: [rawCounterFixture],\n  requires_iban: true,\n}\n\nexport const prebookingSuccessNoIbanResponse = {\n  success: true,\n  message: 'Pre-Buchung gültig',\n  counter: [rawCounterFixture],\n  requires_iban: false,\n}\n\nexport const eventsHandlers = [\n  http.get(`${EVENTS_URL}`, () => HttpResponse.json(rawEventsFixture)),\n  http.get(`${EVENTS_COUNTER_URL}`, () => HttpResponse.json([rawCounterFixture])),\n  http.post(`${EVENTS_BOOKING_URL}`, () => HttpResponse.json(bookingSuccessResponse)),\n]",
+                "lineStart": 1,
+                "lineEnd": 83,
+                "totalLines": 83,
+                "truncated": false
+              }
+            },
+            "title": "tests/mocks/handlers/events.ts",
+            "time": {
+              "start": 1785082907673,
+              "end": 1785082907682
+            }
+          },
+          "id": "prt_f9f3b8c17001jc4J3PUY2cChj6",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b8410001NXRVLIyXpTWss6"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_ba18",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/mocks/handlers/forms.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/mocks/handlers/forms.ts</path>\n<type>file</type>\n<content>\n1: import { http, HttpResponse } from 'msw'\n2: import { BACKEND_API } from '../backend'\n3: \n4: export const CONTACT_MESSAGE_URL = `${BACKEND_API}/contact/message`\n5: export const NEWS_SUBSCRIBE_URL = `${BACKEND_API}/news/subscribe`\n6: export const NEWS_UNSUBSCRIBE_URL = `${BACKEND_API}/news/unsubscribe`\n7: export const MEMBERSHIP_APPLICATION_URL = `${BACKEND_API}/membership/application`\n8: \n9: export const formsSuccessResponse = { success: true, message: 'OK' }\n10: \n11: export const formsHandlers = [\n12:   http.post(`${CONTACT_MESSAGE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n13:   http.post(`${NEWS_SUBSCRIBE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n14:   http.post(`${NEWS_UNSUBSCRIBE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n15:   http.post(`${MEMBERSHIP_APPLICATION_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n16: ]\n\n(End of file - total 16 lines)\n</content>",
+            "metadata": {
+              "preview": "import { http, HttpResponse } from 'msw'\nimport { BACKEND_API } from '../backend'\n\nexport const CONTACT_MESSAGE_URL = `${BACKEND_API}/contact/message`\nexport const NEWS_SUBSCRIBE_URL = `${BACKEND_API}/news/subscribe`\nexport const NEWS_UNSUBSCRIBE_URL = `${BACKEND_API}/news/unsubscribe`\nexport const MEMBERSHIP_APPLICATION_URL = `${BACKEND_API}/membership/application`\n\nexport const formsSuccessResponse = { success: true, message: 'OK' }\n\nexport const formsHandlers = [\n  http.post(`${CONTACT_MESSAGE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n  http.post(`${NEWS_SUBSCRIBE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n  http.post(`${NEWS_UNSUBSCRIBE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n  http.post(`${MEMBERSHIP_APPLICATION_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n]",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/mocks/handlers/forms.ts",
+                "text": "import { http, HttpResponse } from 'msw'\nimport { BACKEND_API } from '../backend'\n\nexport const CONTACT_MESSAGE_URL = `${BACKEND_API}/contact/message`\nexport const NEWS_SUBSCRIBE_URL = `${BACKEND_API}/news/subscribe`\nexport const NEWS_UNSUBSCRIBE_URL = `${BACKEND_API}/news/unsubscribe`\nexport const MEMBERSHIP_APPLICATION_URL = `${BACKEND_API}/membership/application`\n\nexport const formsSuccessResponse = { success: true, message: 'OK' }\n\nexport const formsHandlers = [\n  http.post(`${CONTACT_MESSAGE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n  http.post(`${NEWS_SUBSCRIBE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n  http.post(`${NEWS_UNSUBSCRIBE_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n  http.post(`${MEMBERSHIP_APPLICATION_URL}`, () => HttpResponse.json(formsSuccessResponse)),\n]",
+                "lineStart": 1,
+                "lineEnd": 16,
+                "totalLines": 16,
+                "truncated": false
+              }
+            },
+            "title": "tests/mocks/handlers/forms.ts",
+            "time": {
+              "start": 1785082908004,
+              "end": 1785082908011
+            }
+          },
+          "id": "prt_f9f3b8d5f001S0QkSXM2JSe9UP",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b8410001NXRVLIyXpTWss6"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-finish",
+          "tokens": {
+            "total": 15506,
+            "input": 4239,
+            "output": 131,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 11136
+            }
+          },
+          "cost": 0.00940636,
+          "id": "prt_f9f3b8db7001D4l5OdFn1Pilxu",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b8410001NXRVLIyXpTWss6"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f3b6b5f001v85Mu25pX5ajxS",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.02486528,
+        "tokens": {
+          "total": 17698,
+          "input": 17492,
+          "output": 78,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785082908231,
+          "completed": 1785082910763
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f3b8e47001YCzvZuODZliToy",
+        "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn"
+      },
+      "parts": [
+        {
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-start",
+          "id": "prt_f9f3b9589001StycGD1Ik1A3IT",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b8e47001YCzvZuODZliToy"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_48df",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/api/appointments-fetch.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/api/appointments-fetch.test.ts</path>\n<type>file</type>\n<content>\n1: import { describe, expect, it } from 'vitest'\n2: import { http, HttpResponse } from 'msw'\n3: import { getAppointments } from '@/api/appointments'\n4: import { server } from '../mocks/server'\n5: import { CALENDAR_APPOINTMENTS_URL, rawAppointmentsFixture } from '../mocks/handlers/calendar'\n6: \n7: describe('getAppointments — fetch wrapper', () => {\n8:   it('sorts raw appointments ascending by sort_index and maps via toAppointment', async () => {\n9:     const result = await getAppointments()\n10: \n11:     expect(result).toHaveLength(2)\n12:     // raw fixture is unsorted ([3, 1]); wrapper sorts ascending via bySortIndex\n13:     expect(result[0].title).toBe('Jahreshauptversammlung')\n14:     expect(result[0].startDateISO).toBe('2024-01-15')\n15:     expect(result[0].endDateISO).toBe('2024-01-15')\n16:     expect(result[1].title).toBe('Pokalspiel')\n17:     expect(result[1].startDateISO).toBe('2024-05-11T15:00:00')\n18:   })\n19: \n20:   it('returns an empty array when the backend responds with []', async () => {\n21:     server.use(http.get(CALENDAR_APPOINTMENTS_URL, () => HttpResponse.json([])))\n22:     expect(await getAppointments()).toEqual([])\n23:   })\n24: \n25:   it('throws a descriptive error on non-2xx (404)', async () => {\n26:     server.use(\n27:       http.get(CALENDAR_APPOINTMENTS_URL, () =>\n28:         HttpResponse.json({ message: 'not found' }, { status: 404 }),\n29:       ),\n30:     )\n31:     await expect(getAppointments()).rejects.toThrow('Failed to load appointments: 404 Not Found')\n32:   })\n33: \n34:   it('throws on a 500 response', async () => {\n35:     server.use(\n36:       http.get(CALENDAR_APPOINTMENTS_URL, () =>\n37:         HttpResponse.json({ message: 'boom' }, { status: 500 }),\n38:       ),\n39:     )\n40:     await expect(getAppointments()).rejects.toThrow(\n41:       'Failed to load appointments: 500 Internal Server Error',\n42:     )\n43:   })\n44: \n45:   it('hits the canonical calendar appointments endpoint with GET (request shape)', async () => {\n46:     let capturedRequest: Request | undefined\n47:     server.use(\n48:       http.get(CALENDAR_APPOINTMENTS_URL, ({ request }) => {\n49:         capturedRequest = request\n50:         return HttpResponse.json([])\n51:       }),\n52:     )\n53: \n54:     await getAppointments()\n55: \n56:     expect(capturedRequest!.method).toBe('GET')\n57:     expect(new URL(capturedRequest!.url).pathname).toBe('/api/calendar/appointments')\n58:   })\n59: \n60:   it('does not leak the unsorted raw shape — every entry is an Appointment', async () => {\n61:     const result = await getAppointments()\n62:     for (const appt of result) {\n63:       expect(typeof appt.date).toBe('string')\n64:       expect(typeof appt.time).toBe('string')\n65:       expect(typeof appt.title).toBe('string')\n66:     }\n67:     // sanity: the fixture round-trips with the same number of items\n68:     expect(result).toHaveLength(rawAppointmentsFixture.length)\n69:   })\n70: })\n\n(End of file - total 70 lines)\n</content>",
+            "metadata": {
+              "preview": "import { describe, expect, it } from 'vitest'\nimport { http, HttpResponse } from 'msw'\nimport { getAppointments } from '@/api/appointments'\nimport { server } from '../mocks/server'\nimport { CALENDAR_APPOINTMENTS_URL, rawAppointmentsFixture } from '../mocks/handlers/calendar'\n\ndescribe('getAppointments — fetch wrapper', () => {\n  it('sorts raw appointments ascending by sort_index and maps via toAppointment', async () => {\n    const result = await getAppointments()\n\n    expect(result).toHaveLength(2)\n    // raw fixture is unsorted ([3, 1]); wrapper sorts ascending via bySortIndex\n    expect(result[0].title).toBe('Jahreshauptversammlung')\n    expect(result[0].startDateISO).toBe('2024-01-15')\n    expect(result[0].endDateISO).toBe('2024-01-15')\n    expect(result[1].title).toBe('Pokalspiel')\n    expect(result[1].startDateISO).toBe('2024-05-11T15:00:00')\n  })\n\n  it('returns an empty array when the backend responds with []', async () => {",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/api/appointments-fetch.test.ts",
+                "text": "import { describe, expect, it } from 'vitest'\nimport { http, HttpResponse } from 'msw'\nimport { getAppointments } from '@/api/appointments'\nimport { server } from '../mocks/server'\nimport { CALENDAR_APPOINTMENTS_URL, rawAppointmentsFixture } from '../mocks/handlers/calendar'\n\ndescribe('getAppointments — fetch wrapper', () => {\n  it('sorts raw appointments ascending by sort_index and maps via toAppointment', async () => {\n    const result = await getAppointments()\n\n    expect(result).toHaveLength(2)\n    // raw fixture is unsorted ([3, 1]); wrapper sorts ascending via bySortIndex\n    expect(result[0].title).toBe('Jahreshauptversammlung')\n    expect(result[0].startDateISO).toBe('2024-01-15')\n    expect(result[0].endDateISO).toBe('2024-01-15')\n    expect(result[1].title).toBe('Pokalspiel')\n    expect(result[1].startDateISO).toBe('2024-05-11T15:00:00')\n  })\n\n  it('returns an empty array when the backend responds with []', async () => {\n    server.use(http.get(CALENDAR_APPOINTMENTS_URL, () => HttpResponse.json([])))\n    expect(await getAppointments()).toEqual([])\n  })\n\n  it('throws a descriptive error on non-2xx (404)', async () => {\n    server.use(\n      http.get(CALENDAR_APPOINTMENTS_URL, () =>\n        HttpResponse.json({ message: 'not found' }, { status: 404 }),\n      ),\n    )\n    await expect(getAppointments()).rejects.toThrow('Failed to load appointments: 404 Not Found')\n  })\n\n  it('throws on a 500 response', async () => {\n    server.use(\n      http.get(CALENDAR_APPOINTMENTS_URL, () =>\n        HttpResponse.json({ message: 'boom' }, { status: 500 }),\n      ),\n    )\n    await expect(getAppointments()).rejects.toThrow(\n      'Failed to load appointments: 500 Internal Server Error',\n    )\n  })\n\n  it('hits the canonical calendar appointments endpoint with GET (request shape)', async () => {\n    let capturedRequest: Request | undefined\n    server.use(\n      http.get(CALENDAR_APPOINTMENTS_URL, ({ request }) => {\n        capturedRequest = request\n        return HttpResponse.json([])\n      }),\n    )\n\n    await getAppointments()\n\n    expect(capturedRequest!.method).toBe('GET')\n    expect(new URL(capturedRequest!.url).pathname).toBe('/api/calendar/appointments')\n  })\n\n  it('does not leak the unsorted raw shape — every entry is an Appointment', async () => {\n    const result = await getAppointments()\n    for (const appt of result) {\n      expect(typeof appt.date).toBe('string')\n      expect(typeof appt.time).toBe('string')\n      expect(typeof appt.title).toBe('string')\n    }\n    // sanity: the fixture round-trips with the same number of items\n    expect(result).toHaveLength(rawAppointmentsFixture.length)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 70,
+                "totalLines": 70,
+                "truncated": false
+              }
+            },
+            "title": "tests/api/appointments-fetch.test.ts",
+            "time": {
+              "start": 1785082910260,
+              "end": 1785082910265
+            }
+          },
+          "id": "prt_f9f3b9631001ndJ84hyWBMn4j3",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b8e47001YCzvZuODZliToy"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_8f5e",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/api/events-fetch.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/api/events-fetch.test.ts</path>\n<type>file</type>\n<content>\n1: import { afterEach, describe, expect, it, vi } from 'vitest'\n2: import { http, HttpResponse } from 'msw'\n3: import { EventType, type Booking } from '@/types'\n4: import {\n5:   AvailabilityState,\n6:   availabilityState,\n7:   bookEvent,\n8:   loadEventAvailability,\n9:   loadEvents,\n10:   loadEventsAvailability,\n11:   prebooking,\n12:   prebookWithIban,\n13: } from '@/api/events'\n14: import { server } from '../mocks/server'\n15: import {\n16:   EVENTS_BOOKING_URL,\n17:   EVENTS_COUNTER_URL,\n18:   EVENTS_URL,\n19:   bookingSuccessNoCounters,\n20:   bookingSuccessResponse,\n21:   prebookingIbanUrl,\n22:   prebookingSuccessNoIbanResponse,\n23:   prebookingSuccessResponse,\n24:   prebookingUrl,\n25:   rawCounterFixture,\n26:   rawEventFixture,\n27: } from '../mocks/handlers/events'\n28: \n29: /**\n30:  * `loadEvents` interpolates `PREVIEW` (from `astro:env/client`) into the `beta`\n31:  * query param. The default static export can't be stubbed at call time, so this\n32:  * mock exposes `PREVIEW` as a getter that reads `import.meta.env.PREVIEW`,\n33:  * letting `vi.stubEnv('PREVIEW', …)` flip the branch per test. The fallback\n34:  * (`?? false`) mirrors the production default baked into `astro:env/client` from\n35:  * `.env` (`PREVIEW=false`).\n36:  */\n37: vi.mock('astro:env/client', async (importOriginal) => {\n38:   const orig = await importOriginal<typeof import('astro:env/client')>()\n39:   return {\n40:     ...orig,\n41:     get PREVIEW(): boolean {\n42:       return (import.meta.env.PREVIEW as unknown as boolean | undefined) ?? false\n43:     },\n44:   }\n45: })\n46: \n47: const EVENT_ID = 'evt-1'\n48: \n49: /**\n50:  * Reset stubbed env vars and sessionStorage between tests: PREVIEW must quiet\n51:  * back to its `false` default so a downstream test reading `beta=false`\n52:  * doesn't see the previous test's `true`, and sessionStorage must be empty so\n53:  * `loadEventsAvailability` cache-hit tests don't inherit another test's cache.\n54:  */\n55: afterEach(() => {\n56:   vi.unstubAllEnvs()\n57:   sessionStorage.clear()\n58: })\n59: \n60: const sampleBooking: Booking = {\n61:   event_id: EVENT_ID,\n62:   first_name: 'Lisa',\n63:   last_name: 'Müller',\n64:   street: 'Hauptstr. 1',\n65:   city: 'Eutingen',\n66:   email: 'lisa@example.org',\n67:   phone: '01761234567',\n68:   member: true,\n69:   updates: false,\n70:   comments: 'keine',\n71:   custom_values: [],\n72: }\n73: \n74: /** Expected availability for `rawCounterFixture` (slots=7, no waiting list). */\n75: const expectedAvailabilityForFixture = {\n76:   availableSlots: 7,\n77:   isWaitingList: false,\n78:   message: 'Noch 7 freie Plätze',\n79: }\n80: \n81: describe('loadEvents — fetch wrapper', () => {\n82:   it('maps RawEvent[] to Event[] with the calendar-aware shape', async () => {\n83:     const result = await loadEvents(EventType.Fitness)\n84:     expect(result).toHaveLength(1)\n85:     expect(result[0]).toEqual({\n86:       id: 'evt-1',\n87:       name: 'Rückenfit',\n88:       image: '/src/assets/events/rueckenfit.jpg',\n89:       sortIndex: 1,\n90:       shortDescription: 'Pilates für den Rücken',\n91:       description: 'Ein sanfter Kurs',\n92:       location: 'Clubhaus',\n93:       dates: ['2024-04-08T18:00:00', '2024-04-15T18:00:00'],\n94:       datesDisplay: expect.any(String),\n95:       duration: 'Kurslänge: 1 Stunde',\n96:       priceMember: '40,00\\u00A0€',\n97:       priceNonMember: '60,00\\u00A0€',\n98:       externalOperator: false,\n99:       altBookingButtonText: undefined,\n100:       customFields: [{ name: 'Rückenbeschwerden', type: 'Text' }],\n101:       paymentMethod: 'SepaDirectDebit',\n102:     })\n103:   })\n104: \n105:   it('keeps only events whose `type` matches the requested type', async () => {\n106:     server.use(\n107:       http.get(EVENTS_URL, () =>\n108:         HttpResponse.json([\n109:           rawEventFixture,\n110:           { ...rawEventFixture, id: 'evt-2', type: 'Events', sort_index: 2 },\n111:         ]),\n112:       ),\n113:     )\n114:     const result = await loadEvents(EventType.Fitness)\n115:     expect(result.map((e) => e.id)).toEqual(['evt-1'])\n116:   })\n117: \n118:   it('sorts events ascending by sort_index before mapping', async () => {\n119:     server.use(\n120:       http.get(EVENTS_URL, () =>\n121:         HttpResponse.json([\n122:           { ...rawEventFixture, id: 'evt-b', sort_index: 5 },\n123:           { ...rawEventFixture, id: 'evt-a', sort_index: 1 },\n124:         ]),\n125:       ),\n126:     )\n127:     const result = await loadEvents(EventType.Fitness)\n128:     expect(result.map((e) => e.id)).toEqual(['evt-a', 'evt-b'])\n129:   })\n130: \n131:   it('ships a stable datesDisplay for a single-date event (custom_date passthrough)', async () => {\n132:     server.use(\n133:       http.get(EVENTS_URL, () =>\n134:         HttpResponse.json([{ ...rawEventFixture, custom_date: 'Individuell' }]),\n135:       ),\n136:     )\n137:     expect((await loadEvents(EventType.Fitness))[0].datesDisplay).toBe('Individuell')\n138:   })\n139: \n140:   it('throws a descriptive error on non-2xx (500)', async () => {\n141:     server.use(http.get(EVENTS_URL, () => HttpResponse.json({ msg: 'boom' }, { status: 500 })))\n142:     await expect(loadEvents(EventType.Fitness)).rejects.toThrow(\n143:       'Failed to load events: 500 Internal Server Error',\n144:     )\n145:   })\n146: \n147:   describe('PREVIEW query branch (vi.stubEnv)', () => {\n148:     it('sends beta=false by default (the .env default)', async () => {\n149:       let capturedRequest: Request | undefined\n150:       server.use(\n151:         http.get(EVENTS_URL, ({ request }) => {\n152:           capturedRequest = request\n153:           return HttpResponse.json([])\n154:         }),\n155:       )\n156: \n157:       await loadEvents(EventType.Fitness)\n158: \n159:       const url = new URL(capturedRequest!.url)\n160:       expect(url.searchParams.get('type')).toBe('Fitness')\n161:       expect(url.searchParams.get('beta')).toBe('false')\n162:     })\n163: \n164:     it('sends beta=true when PREVIEW is stubbed true', async () => {\n165:       vi.stubEnv('PREVIEW', 'true')\n166:       let capturedRequest: Request | undefined\n167:       server.use(\n168:         http.get(EVENTS_URL, ({ request }) => {\n169:           capturedRequest = request\n170:           return HttpResponse.json([])\n171:         }),\n172:       )\n173: \n174:       await loadEvents(EventType.Events)\n175: \n176:       const url = new URL(capturedRequest!.url)\n177:       expect(url.searchParams.get('type')).toBe('Events')\n178:       expect(url.searchParams.get('beta')).toBe('true')\n179:     })\n180:   })\n181: })\n182: \n183: describe('loadEventsAvailability — fetch + sessionStorage cache', () => {\n184:   it('on a cache miss, fetches counters, invokes callback with fresh data and writes the cache', async () => {\n185:     const callback = vi.fn()\n186:     await loadEventsAvailability(callback)\n187: \n188:     expect(callback).toHaveBeenCalledTimes(1)\n189:     const record = callback.mock.calls[0][0]\n190:     expect(record[EVENT_ID]).toEqual(expectedAvailabilityForFixture)\n191: \n192:     const stored = sessionStorage.getItem('eventAvailability')\n193:     expect(stored).not.toBeNull()\n194:     const cache = JSON.parse(stored!)\n195:     expect(cache.data[EVENT_ID]).toEqual(expectedAvailabilityForFixture)\n196:     expect(typeof cache.timestamp).toBe('number')\n197:   })\n198: \n199:   it('on a fresh cache hit, invokes callback with cached data first, then with refreshed data', async () => {\n200:     const seeded = {\n201:       timestamp: Date.now() - 1000,\n202:       data: { other: { availableSlots: 1, isWaitingList: false, message: 'cached' } },\n203:     }\n204:     sessionStorage.setItem('eventAvailability', JSON.stringify(seeded))\n205: \n206:     const callback = vi.fn()\n207:     await loadEventsAvailability(callback)\n208: \n209:     expect(callback).toHaveBeenCalledTimes(2)\n210:     // first call: cache hit (synchronous-ish, before fetch resolves)\n211:     expect(callback.mock.calls[0][0]).toEqual(seeded.data)\n212:     // second call: refreshed from backend fixture\n213:     expect(callback.mock.calls[1][0][EVENT_ID]).toEqual(expectedAvailabilityForFixture)\n214: \n215:     // cache was overwritten with the freshly fetched record\n216:     const stored = JSON.parse(sessionStorage.getItem('eventAvailability')!)\n217:     expect(stored.data[EVENT_ID]).toEqual(expectedAvailabilityForFixture)\n218:   })\n219: \n220:   it('on a stale cache (older than 1 hour), skips the cached callback and only delivers the fetched data', async () => {\n221:     const stale = {\n222:       timestamp: Date.now() - 3600000 - 1,\n223:       data: { stale: { availableSlots: 9, isWaitingList: false, message: 'stale' } },\n224:     }\n225:     sessionStorage.setItem('eventAvailability', JSON.stringify(stale))\n226: \n227:     const callback = vi.fn()\n228:     await loadEventsAvailability(callback)\n229: \n230:     expect(callback).toHaveBeenCalledTimes(1)\n231:     expect(callback.mock.calls[0][0][EVENT_ID]).toEqual(expectedAvailabilityForFixture)\n232:     expect(callback.mock.calls[0][0].stale).toBeUndefined()\n233:   })\n234: \n235:   it('on a corrupt cache JSON, logs an error and still delivers the fetched data', async () => {\n236:     sessionStorage.setItem('eventAvailability', '{not json')\n237:     const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})\n238: \n239:     const callback = vi.fn()\n240:     await loadEventsAvailability(callback)\n241: \n242:     expect(callback).toHaveBeenCalledTimes(1)\n243:     expect(callback.mock.calls[0][0][EVENT_ID]).toEqual(expectedAvailabilityForFixture)\n244:     expect(errorSpy).toHaveBeenCalledWith(\n245:       'Error while parsing event availability from session storage',\n246:       expect.any(Error),\n247:     )\n248:     errorSpy.mockRestore()\n249:   })\n250: \n251:   it('throws a descriptive error when the backend returns a non-2xx', async () => {\n252:     server.use(http.get(EVENTS_COUNTER_URL, () => HttpResponse.json({}, { status: 503 })))\n253:     await expect(loadEventsAvailability(() => {})).rejects.toThrow(\n254:       'Failed to load event availability: 503 Service Unavailable',\n255:     )\n256:   })\n257: \n258:   it('sends the counter endpoint URL with the PREVIEW-flagged `beta` query param', async () => {\n259:     let capturedRequest: Request | undefined\n260:     server.use(\n261:       http.get(EVENTS_COUNTER_URL, ({ request }) => {\n262:         capturedRequest = request\n263:         return HttpResponse.json([])\n264:       }),\n265:     )\n266: \n267:     await loadEventsAvailability(() => {})\n268: \n269:     const url = new URL(capturedRequest!.url)\n270:     expect(url.pathname).toBe('/api/events/counter')\n271:     expect(url.searchParams.get('beta')).toBe('false')\n272:   })\n273: })\n274: \n275: describe('loadEventAvailability — single-id convenience wrapper around loadEventsAvailability', () => {\n276:   it('delivers availability for the matching event id only', async () => {\n277:     const callback = vi.fn()\n278:     await loadEventAvailability(EVENT_ID, callback)\n279:     // `loadEventAvailability` does not await its inner `loadEventsAvailability`\n280:     // call (fire-and-forget in production); flush the fetch queue before asserting.\n281:     await vi.waitFor(() => expect(callback).toHaveBeenCalledTimes(1))\n282:     expect(callback.mock.calls[0][0]).toEqual(expectedAvailabilityForFixture)\n283:     expect(availabilityState(callback.mock.calls[0][0])).toBe(AvailabilityState.Subscribing)\n284:   })\n285: \n286:   it('does not invoke the callback when the fetched record does not include the requested id', async () => {\n287:     const callback = vi.fn()\n288:     await loadEventAvailability('missing', callback)\n289:     // Give the inner fetch a chance to resolve; the callback should stay untouched.\n290:     await vi.waitFor(() => expect(callback).not.toHaveBeenCalled())\n291:   })\n292: \n293:   it('delivers the cached record for the matching id, then the refreshed record', async () => {\n294:     const seeded = {\n295:       timestamp: Date.now() - 500,\n296:       data: { [EVENT_ID]: { availableSlots: 1, isWaitingList: false, message: 'cached' } },\n297:     }\n298:     sessionStorage.setItem('eventAvailability', JSON.stringify(seeded))\n299: \n300:     const callback = vi.fn()\n301:     await loadEventAvailability(EVENT_ID, callback)\n302:     // The cache-hit callback fires synchronously; the fetched callback fires\n303:     // later — poll until both have run.\n304:     await vi.waitFor(() => expect(callback).toHaveBeenCalledTimes(2))\n305:     expect(callback.mock.calls[0][0]).toEqual(seeded.data[EVENT_ID])\n306:     expect(callback.mock.calls[1][0]).toEqual(expectedAvailabilityForFixture)\n307:   })\n308: })\n309: \n310: describe('bookEvent — mutating POST booking route', () => {\n311:   it('asserts request shape: POST, Content-Type application/json, body is {...formData, token}', async () => {\n312:     let capturedMethod: string | undefined = undefined\n313:     let capturedContentType: string | null = null\n314:     let capturedBody: any = undefined\n315:     server.use(\n316:       http.post(EVENTS_BOOKING_URL, async ({ request }) => {\n317:         capturedMethod = request.method\n318:         capturedContentType = request.headers.get('Content-Type')\n319:         capturedBody = await request.json()\n320:         return HttpResponse.json(bookingSuccessResponse)\n321:       }),\n322:     )\n323: \n324:     const callback = vi.fn()\n325:     const result = await bookEvent(sampleBooking, 'token-abc', callback)\n326: \n327:     expect(capturedMethod).toBe('POST')\n328:     expect(capturedContentType).toBe('application/json')\n329:     expect(capturedBody).toEqual({ ...sampleBooking, token: 'token-abc' })\n330:     expect(result).toEqual({ success: true, message: 'Buchung bestätigt' })\n331:   })\n332: \n333:   it('invokes the callback with the refreshed availability when the response counters include the booked event', async () => {\n334:     const callback = vi.fn()\n335:     const result = await bookEvent(sampleBooking, 'tok', callback)\n336: \n337:     expect(result).toEqual({ success: true, message: 'Buchung bestätigt' })\n338:     expect(callback).toHaveBeenCalledTimes(1)\n339:     expect(callback.mock.calls[0][0]).toEqual(expectedAvailabilityForFixture)\n340:   })\n341: \n342:   it('does not invoke the callback when the response counters omit the booked event id', async () => {\n343:     server.use(\n344:       http.post(EVENTS_BOOKING_URL, () =>\n345:         HttpResponse.json({\n346:           ...bookingSuccessResponse,\n347:           counter: [{ ...rawCounterFixture, id: 'other' }],\n348:         }),\n349:       ),\n350:     )\n351: \n352:     const callback = vi.fn()\n353:     const result = await bookEvent(sampleBooking, 'tok', callback)\n354: \n355:     expect(result).toEqual({ success: true, message: 'Buchung bestätigt' })\n356:     expect(callback).not.toHaveBeenCalled()\n357:   })\n358: \n359:   it('does not invoke the callback when the response counters array is empty', async () => {\n360:     server.use(http.post(EVENTS_BOOKING_URL, () => HttpResponse.json(bookingSuccessNoCounters)))\n361: \n362:     const callback = vi.fn()\n363:     const result = await bookEvent(sampleBooking, 'tok', callback)\n364: \n365:     expect(result).toEqual({ success: true, message: 'Buchung bestätigt' })\n366:     expect(callback).not.toHaveBeenCalled()\n367:   })\n368: \n369:   it('returns the user-facing failure object on non-2xx (does not throw)', async () => {\n370:     server.use(http.post(EVENTS_BOOKING_URL, () => HttpResponse.json({}, { status: 500 })))\n371: \n372:     const callback = vi.fn()\n373:     const result = await bookEvent(sampleBooking, 'tok', callback)\n374: \n375:     expect(result).toEqual({\n376:       success: false,\n377:       message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',\n378:     })\n379:     expect(callback).not.toHaveBeenCalled()\n380:   })\n381: })\n382: \n383: describe('prebooking — GET pre-booking route', () => {\n384:   it('returns the BookingResponse subset {success, message, requires_iban} on 2xx', async () => {\n385:     server.use(\n386:       http.get(prebookingUrl('hash-123'), () => HttpResponse.json(prebookingSuccessResponse)),\n387:     )\n388:     const result = await prebooking('hash-123')\n389:     expect(result).toEqual({\n390:       success: true,\n391:       message: 'Pre-Buchung gültig',\n392:       requires_iban: true,\n393:     })\n394:   })\n395: \n396:   it('defaults requires_iban to false when the backend omits it', async () => {\n397:     server.use(\n398:       http.get(prebookingUrl('hash-456'), () => HttpResponse.json(prebookingSuccessNoIbanResponse)),\n399:     )\n400:     const result = await prebooking('hash-456')\n401:     expect(result).toEqual({\n402:       success: true,\n403:       message: 'Pre-Buchung gültig',\n404:       requires_iban: false,\n405:     })\n406:   })\n407: \n408:   it('sends GET to /events/prebooking/:hash with no body (request shape)', async () => {\n409:     let capturedMethod: string | undefined = undefined\n410:     let capturedBodyText: string | null = null\n411:     server.use(\n412:       http.get(prebookingUrl('hash-789'), async ({ request }) => {\n413:         capturedMethod = request.method\n414:         capturedBodyText = await request.text()\n415:         return HttpResponse.json(prebookingSuccessResponse)\n416:       }),\n417:     )\n418: \n419:     const result = await prebooking('hash-789')\n420: \n421:     expect(capturedMethod).toBe('GET')\n422:     expect(capturedBodyText).toBe('')\n423:     expect(result).toEqual({\n424:       success: true,\n425:       message: 'Pre-Buchung gültig',\n426:       requires_iban: true,\n427:     })\n428:   })\n429: \n430:   it('returns the failure object when the backend responds non-2xx', async () => {\n431:     server.use(http.get(prebookingUrl('bad'), () => HttpResponse.json({}, { status: 404 })))\n432:     expect(await prebooking('bad')).toEqual({\n433:       success: false,\n434:       message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',\n435:     })\n436:   })\n437: })\n438: \n439: describe('prebookWithIban — mutating POST iban route', () => {\n440:   it('asserts request shape: POST, Content-Type application/json, body is { iban }', async () => {\n441:     let capturedMethod: string | undefined = undefined\n442:     let capturedContentType: string | null = null\n443:     let capturedBody: any = undefined\n444:     server.use(\n445:       http.post(prebookingIbanUrl('hash-X'), async ({ request }) => {\n446:         capturedMethod = request.method\n447:         capturedContentType = request.headers.get('Content-Type')\n448:         capturedBody = await request.json()\n449:         return HttpResponse.json({ success: true, message: 'IBAN gespeichert' })\n450:       }),\n451:     )\n452: \n453:     const result = await prebookWithIban('hash-X', 'DE89370400440532013000')\n454: \n455:     expect(capturedMethod).toBe('POST')\n456:     expect(capturedContentType).toBe('application/json')\n457:     expect(capturedBody).toEqual({ iban: 'DE89370400440532013000' })\n458:     expect(result).toEqual({ success: true, message: 'IBAN gespeichert' })\n459:   })\n460: \n461:   it('returns only {success, message} even when the backend also returns requires_iban ', async () => {\n462:     server.use(\n463:       http.post(prebookingIbanUrl('hash-Y'), () =>\n464:         HttpResponse.json({ success: true, message: 'ok', requires_iban: true, counter: [] }),\n465:       ),\n466:     )\n467:     expect(await prebookWithIban('hash-Y', 'DE89370400440532013000')).toEqual({\n468:       success: true,\n469:       message: 'ok',\n470:     })\n471:   })\n472: \n473:   it('returns the failure object on non-2xx', async () => {\n474:     server.use(http.post(prebookingIbanUrl('hash-Z'), () => HttpResponse.json({}, { status: 400 })))\n475:     expect(await prebookWithIban('hash-Z', 'DE89370400440532013000')).toEqual({\n476:       success: false,\n477:       message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',\n478:     })\n479:   })\n480: })\n\n(End of file - total 480 lines)\n</content>",
+            "metadata": {
+              "preview": "import { afterEach, describe, expect, it, vi } from 'vitest'\nimport { http, HttpResponse } from 'msw'\nimport { EventType, type Booking } from '@/types'\nimport {\n  AvailabilityState,\n  availabilityState,\n  bookEvent,\n  loadEventAvailability,\n  loadEvents,\n  loadEventsAvailability,\n  prebooking,\n  prebookWithIban,\n} from '@/api/events'\nimport { server } from '../mocks/server'\nimport {\n  EVENTS_BOOKING_URL,\n  EVENTS_COUNTER_URL,\n  EVENTS_URL,\n  bookingSuccessNoCounters,\n  bookingSuccessResponse,",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/api/events-fetch.test.ts",
+                "text": "import { afterEach, describe, expect, it, vi } from 'vitest'\nimport { http, HttpResponse } from 'msw'\nimport { EventType, type Booking } from '@/types'\nimport {\n  AvailabilityState,\n  availabilityState,\n  bookEvent,\n  loadEventAvailability,\n  loadEvents,\n  loadEventsAvailability,\n  prebooking,\n  prebookWithIban,\n} from '@/api/events'\nimport { server } from '../mocks/server'\nimport {\n  EVENTS_BOOKING_URL,\n  EVENTS_COUNTER_URL,\n  EVENTS_URL,\n  bookingSuccessNoCounters,\n  bookingSuccessResponse,\n  prebookingIbanUrl,\n  prebookingSuccessNoIbanResponse,\n  prebookingSuccessResponse,\n  prebookingUrl,\n  rawCounterFixture,\n  rawEventFixture,\n} from '../mocks/handlers/events'\n\n/**\n * `loadEvents` interpolates `PREVIEW` (from `astro:env/client`) into the `beta`\n * query param. The default static export can't be stubbed at call time, so this\n * mock exposes `PREVIEW` as a getter that reads `import.meta.env.PREVIEW`,\n * letting `vi.stubEnv('PREVIEW', …)` flip the branch per test. The fallback\n * (`?? false`) mirrors the production default baked into `astro:env/client` from\n * `.env` (`PREVIEW=false`).\n */\nvi.mock('astro:env/client', async (importOriginal) => {\n  const orig = await importOriginal<typeof import('astro:env/client')>()\n  return {\n    ...orig,\n    get PREVIEW(): boolean {\n      return (import.meta.env.PREVIEW as unknown as boolean | undefined) ?? false\n    },\n  }\n})\n\nconst EVENT_ID = 'evt-1'\n\n/**\n * Reset stubbed env vars and sessionStorage between tests: PREVIEW must quiet\n * back to its `false` default so a downstream test reading `beta=false`\n * doesn't see the previous test's `true`, and sessionStorage must be empty so\n * `loadEventsAvailability` cache-hit tests don't inherit another test's cache.\n */\nafterEach(() => {\n  vi.unstubAllEnvs()\n  sessionStorage.clear()\n})\n\nconst sampleBooking: Booking = {\n  event_id: EVENT_ID,\n  first_name: 'Lisa',\n  last_name: 'Müller',\n  street: 'Hauptstr. 1',\n  city: 'Eutingen',\n  email: 'lisa@example.org',\n  phone: '01761234567',\n  member: true,\n  updates: false,\n  comments: 'keine',\n  custom_values: [],\n}\n\n/** Expected availability for `rawCounterFixture` (slots=7, no waiting list). */\nconst expectedAvailabilityForFixture = {\n  availableSlots: 7,\n  isWaitingList: false,\n  message: 'Noch 7 freie Plätze',\n}\n\ndescribe('loadEvents — fetch wrapper', () => {\n  it('maps RawEvent[] to Event[] with the calendar-aware shape', async () => {\n    const result = await loadEvents(EventType.Fitness)\n    expect(result).toHaveLength(1)\n    expect(result[0]).toEqual({\n      id: 'evt-1',\n      name: 'Rückenfit',\n      image: '/src/assets/events/rueckenfit.jpg',\n      sortIndex: 1,\n      shortDescription: 'Pilates für den Rücken',\n      description: 'Ein sanfter Kurs',\n      location: 'Clubhaus',\n      dates: ['2024-04-08T18:00:00', '2024-04-15T18:00:00'],\n      datesDisplay: expect.any(String),\n      duration: 'Kurslänge: 1 Stunde',\n      priceMember: '40,00\\u00A0€',\n      priceNonMember: '60,00\\u00A0€',\n      externalOperator: false,\n      altBookingButtonText: undefined,\n      customFields: [{ name: 'Rückenbeschwerden', type: 'Text' }],\n      paymentMethod: 'SepaDirectDebit',\n    })\n  })\n\n  it('keeps only events whose `type` matches the requested type', async () => {\n    server.use(\n      http.get(EVENTS_URL, () =>\n        HttpResponse.json([\n          rawEventFixture,\n          { ...rawEventFixture, id: 'evt-2', type: 'Events', sort_index: 2 },\n        ]),\n      ),\n    )\n    const result = await loadEvents(EventType.Fitness)\n    expect(result.map((e) => e.id)).toEqual(['evt-1'])\n  })\n\n  it('sorts events ascending by sort_index before mapping', async () => {\n    server.use(\n      http.get(EVENTS_URL, () =>\n        HttpResponse.json([\n          { ...rawEventFixture, id: 'evt-b', sort_index: 5 },\n          { ...rawEventFixture, id: 'evt-a', sort_index: 1 },\n        ]),\n      ),\n    )\n    const result = await loadEvents(EventType.Fitness)\n    expect(result.map((e) => e.id)).toEqual(['evt-a', 'evt-b'])\n  })\n\n  it('ships a stable datesDisplay for a single-date event (custom_date passthrough)', async () => {\n    server.use(\n      http.get(EVENTS_URL, () =>\n        HttpResponse.json([{ ...rawEventFixture, custom_date: 'Individuell' }]),\n      ),\n    )\n    expect((await loadEvents(EventType.Fitness))[0].datesDisplay).toBe('Individuell')\n  })\n\n  it('throws a descriptive error on non-2xx (500)', async () => {\n    server.use(http.get(EVENTS_URL, () => HttpResponse.json({ msg: 'boom' }, { status: 500 })))\n    await expect(loadEvents(EventType.Fitness)).rejects.toThrow(\n      'Failed to load events: 500 Internal Server Error',\n    )\n  })\n\n  describe('PREVIEW query branch (vi.stubEnv)', () => {\n    it('sends beta=false by default (the .env default)', async () => {\n      let capturedRequest: Request | undefined\n      server.use(\n        http.get(EVENTS_URL, ({ request }) => {\n          capturedRequest = request\n          return HttpResponse.json([])\n        }),\n      )\n\n      await loadEvents(EventType.Fitness)\n\n      const url = new URL(capturedRequest!.url)\n      expect(url.searchParams.get('type')).toBe('Fitness')\n      expect(url.searchParams.get('beta')).toBe('false')\n    })\n\n    it('sends beta=true when PREVIEW is stubbed true', async () => {\n      vi.stubEnv('PREVIEW', 'true')\n      let capturedRequest: Request | undefined\n      server.use(\n        http.get(EVENTS_URL, ({ request }) => {\n          capturedRequest = request\n          return HttpResponse.json([])\n        }),\n      )\n\n      await loadEvents(EventType.Events)\n\n      const url = new URL(capturedRequest!.url)\n      expect(url.searchParams.get('type')).toBe('Events')\n      expect(url.searchParams.get('beta')).toBe('true')\n    })\n  })\n})\n\ndescribe('loadEventsAvailability — fetch + sessionStorage cache', () => {\n  it('on a cache miss, fetches counters, invokes callback with fresh data and writes the cache', async () => {\n    const callback = vi.fn()\n    await loadEventsAvailability(callback)\n\n    expect(callback).toHaveBeenCalledTimes(1)\n    const record = callback.mock.calls[0][0]\n    expect(record[EVENT_ID]).toEqual(expectedAvailabilityForFixture)\n\n    const stored = sessionStorage.getItem('eventAvailability')\n    expect(stored).not.toBeNull()\n    const cache = JSON.parse(stored!)\n    expect(cache.data[EVENT_ID]).toEqual(expectedAvailabilityForFixture)\n    expect(typeof cache.timestamp).toBe('number')\n  })\n\n  it('on a fresh cache hit, invokes callback with cached data first, then with refreshed data', async () => {\n    const seeded = {\n      timestamp: Date.now() - 1000,\n      data: { other: { availableSlots: 1, isWaitingList: false, message: 'cached' } },\n    }\n    sessionStorage.setItem('eventAvailability', JSON.stringify(seeded))\n\n    const callback = vi.fn()\n    await loadEventsAvailability(callback)\n\n    expect(callback).toHaveBeenCalledTimes(2)\n    // first call: cache hit (synchronous-ish, before fetch resolves)\n    expect(callback.mock.calls[0][0]).toEqual(seeded.data)\n    // second call: refreshed from backend fixture\n    expect(callback.mock.calls[1][0][EVENT_ID]).toEqual(expectedAvailabilityForFixture)\n\n    // cache was overwritten with the freshly fetched record\n    const stored = JSON.parse(sessionStorage.getItem('eventAvailability')!)\n    expect(stored.data[EVENT_ID]).toEqual(expectedAvailabilityForFixture)\n  })\n\n  it('on a stale cache (older than 1 hour), skips the cached callback and only delivers the fetched data', async () => {\n    const stale = {\n      timestamp: Date.now() - 3600000 - 1,\n      data: { stale: { availableSlots: 9, isWaitingList: false, message: 'stale' } },\n    }\n    sessionStorage.setItem('eventAvailability', JSON.stringify(stale))\n\n    const callback = vi.fn()\n    await loadEventsAvailability(callback)\n\n    expect(callback).toHaveBeenCalledTimes(1)\n    expect(callback.mock.calls[0][0][EVENT_ID]).toEqual(expectedAvailabilityForFixture)\n    expect(callback.mock.calls[0][0].stale).toBeUndefined()\n  })\n\n  it('on a corrupt cache JSON, logs an error and still delivers the fetched data', async () => {\n    sessionStorage.setItem('eventAvailability', '{not json')\n    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})\n\n    const callback = vi.fn()\n    await loadEventsAvailability(callback)\n\n    expect(callback).toHaveBeenCalledTimes(1)\n    expect(callback.mock.calls[0][0][EVENT_ID]).toEqual(expectedAvailabilityForFixture)\n    expect(errorSpy).toHaveBeenCalledWith(\n      'Error while parsing event availability from session storage',\n      expect.any(Error),\n    )\n    errorSpy.mockRestore()\n  })\n\n  it('throws a descriptive error when the backend returns a non-2xx', async () => {\n    server.use(http.get(EVENTS_COUNTER_URL, () => HttpResponse.json({}, { status: 503 })))\n    await expect(loadEventsAvailability(() => {})).rejects.toThrow(\n      'Failed to load event availability: 503 Service Unavailable',\n    )\n  })\n\n  it('sends the counter endpoint URL with the PREVIEW-flagged `beta` query param', async () => {\n    let capturedRequest: Request | undefined\n    server.use(\n      http.get(EVENTS_COUNTER_URL, ({ request }) => {\n        capturedRequest = request\n        return HttpResponse.json([])\n      }),\n    )\n\n    await loadEventsAvailability(() => {})\n\n    const url = new URL(capturedRequest!.url)\n    expect(url.pathname).toBe('/api/events/counter')\n    expect(url.searchParams.get('beta')).toBe('false')\n  })\n})\n\ndescribe('loadEventAvailability — single-id convenience wrapper around loadEventsAvailability', () => {\n  it('delivers availability for the matching event id only', async () => {\n    const callback = vi.fn()\n    await loadEventAvailability(EVENT_ID, callback)\n    // `loadEventAvailability` does not await its inner `loadEventsAvailability`\n    // call (fire-and-forget in production); flush the fetch queue before asserting.\n    await vi.waitFor(() => expect(callback).toHaveBeenCalledTimes(1))\n    expect(callback.mock.calls[0][0]).toEqual(expectedAvailabilityForFixture)\n    expect(availabilityState(callback.mock.calls[0][0])).toBe(AvailabilityState.Subscribing)\n  })\n\n  it('does not invoke the callback when the fetched record does not include the requested id', async () => {\n    const callback = vi.fn()\n    await loadEventAvailability('missing', callback)\n    // Give the inner fetch a chance to resolve; the callback should stay untouched.\n    await vi.waitFor(() => expect(callback).not.toHaveBeenCalled())\n  })\n\n  it('delivers the cached record for the matching id, then the refreshed record', async () => {\n    const seeded = {\n      timestamp: Date.now() - 500,\n      data: { [EVENT_ID]: { availableSlots: 1, isWaitingList: false, message: 'cached' } },\n    }\n    sessionStorage.setItem('eventAvailability', JSON.stringify(seeded))\n\n    const callback = vi.fn()\n    await loadEventAvailability(EVENT_ID, callback)\n    // The cache-hit callback fires synchronously; the fetched callback fires\n    // later — poll until both have run.\n    await vi.waitFor(() => expect(callback).toHaveBeenCalledTimes(2))\n    expect(callback.mock.calls[0][0]).toEqual(seeded.data[EVENT_ID])\n    expect(callback.mock.calls[1][0]).toEqual(expectedAvailabilityForFixture)\n  })\n})\n\ndescribe('bookEvent — mutating POST booking route', () => {\n  it('asserts request shape: POST, Content-Type application/json, body is {...formData, token}', async () => {\n    let capturedMethod: string | undefined = undefined\n    let capturedContentType: string | null = null\n    let capturedBody: any = undefined\n    server.use(\n      http.post(EVENTS_BOOKING_URL, async ({ request }) => {\n        capturedMethod = request.method\n        capturedContentType = request.headers.get('Content-Type')\n        capturedBody = await request.json()\n        return HttpResponse.json(bookingSuccessResponse)\n      }),\n    )\n\n    const callback = vi.fn()\n    const result = await bookEvent(sampleBooking, 'token-abc', callback)\n\n    expect(capturedMethod).toBe('POST')\n    expect(capturedContentType).toBe('application/json')\n    expect(capturedBody).toEqual({ ...sampleBooking, token: 'token-abc' })\n    expect(result).toEqual({ success: true, message: 'Buchung bestätigt' })\n  })\n\n  it('invokes the callback with the refreshed availability when the response counters include the booked event', async () => {\n    const callback = vi.fn()\n    const result = await bookEvent(sampleBooking, 'tok', callback)\n\n    expect(result).toEqual({ success: true, message: 'Buchung bestätigt' })\n    expect(callback).toHaveBeenCalledTimes(1)\n    expect(callback.mock.calls[0][0]).toEqual(expectedAvailabilityForFixture)\n  })\n\n  it('does not invoke the callback when the response counters omit the booked event id', async () => {\n    server.use(\n      http.post(EVENTS_BOOKING_URL, () =>\n        HttpResponse.json({\n          ...bookingSuccessResponse,\n          counter: [{ ...rawCounterFixture, id: 'other' }],\n        }),\n      ),\n    )\n\n    const callback = vi.fn()\n    const result = await bookEvent(sampleBooking, 'tok', callback)\n\n    expect(result).toEqual({ success: true, message: 'Buchung bestätigt' })\n    expect(callback).not.toHaveBeenCalled()\n  })\n\n  it('does not invoke the callback when the response counters array is empty', async () => {\n    server.use(http.post(EVENTS_BOOKING_URL, () => HttpResponse.json(bookingSuccessNoCounters)))\n\n    const callback = vi.fn()\n    const result = await bookEvent(sampleBooking, 'tok', callback)\n\n    expect(result).toEqual({ success: true, message: 'Buchung bestätigt' })\n    expect(callback).not.toHaveBeenCalled()\n  })\n\n  it('returns the user-facing failure object on non-2xx (does not throw)', async () => {\n    server.use(http.post(EVENTS_BOOKING_URL, () => HttpResponse.json({}, { status: 500 })))\n\n    const callback = vi.fn()\n    const result = await bookEvent(sampleBooking, 'tok', callback)\n\n    expect(result).toEqual({\n      success: false,\n      message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',\n    })\n    expect(callback).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('prebooking — GET pre-booking route', () => {\n  it('returns the BookingResponse subset {success, message, requires_iban} on 2xx', async () => {\n    server.use(\n      http.get(prebookingUrl('hash-123'), () => HttpResponse.json(prebookingSuccessResponse)),\n    )\n    const result = await prebooking('hash-123')\n    expect(result).toEqual({\n      success: true,\n      message: 'Pre-Buchung gültig',\n      requires_iban: true,\n    })\n  })\n\n  it('defaults requires_iban to false when the backend omits it', async () => {\n    server.use(\n      http.get(prebookingUrl('hash-456'), () => HttpResponse.json(prebookingSuccessNoIbanResponse)),\n    )\n    const result = await prebooking('hash-456')\n    expect(result).toEqual({\n      success: true,\n      message: 'Pre-Buchung gültig',\n      requires_iban: false,\n    })\n  })\n\n  it('sends GET to /events/prebooking/:hash with no body (request shape)', async () => {\n    let capturedMethod: string | undefined = undefined\n    let capturedBodyText: string | null = null\n    server.use(\n      http.get(prebookingUrl('hash-789'), async ({ request }) => {\n        capturedMethod = request.method\n        capturedBodyText = await request.text()\n        return HttpResponse.json(prebookingSuccessResponse)\n      }),\n    )\n\n    const result = await prebooking('hash-789')\n\n    expect(capturedMethod).toBe('GET')\n    expect(capturedBodyText).toBe('')\n    expect(result).toEqual({\n      success: true,\n      message: 'Pre-Buchung gültig',\n      requires_iban: true,\n    })\n  })\n\n  it('returns the failure object when the backend responds non-2xx', async () => {\n    server.use(http.get(prebookingUrl('bad'), () => HttpResponse.json({}, { status: 404 })))\n    expect(await prebooking('bad')).toEqual({\n      success: false,\n      message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',\n    })\n  })\n})\n\ndescribe('prebookWithIban — mutating POST iban route', () => {\n  it('asserts request shape: POST, Content-Type application/json, body is { iban }', async () => {\n    let capturedMethod: string | undefined = undefined\n    let capturedContentType: string | null = null\n    let capturedBody: any = undefined\n    server.use(\n      http.post(prebookingIbanUrl('hash-X'), async ({ request }) => {\n        capturedMethod = request.method\n        capturedContentType = request.headers.get('Content-Type')\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true, message: 'IBAN gespeichert' })\n      }),\n    )\n\n    const result = await prebookWithIban('hash-X', 'DE89370400440532013000')\n\n    expect(capturedMethod).toBe('POST')\n    expect(capturedContentType).toBe('application/json')\n    expect(capturedBody).toEqual({ iban: 'DE89370400440532013000' })\n    expect(result).toEqual({ success: true, message: 'IBAN gespeichert' })\n  })\n\n  it('returns only {success, message} even when the backend also returns requires_iban ', async () => {\n    server.use(\n      http.post(prebookingIbanUrl('hash-Y'), () =>\n        HttpResponse.json({ success: true, message: 'ok', requires_iban: true, counter: [] }),\n      ),\n    )\n    expect(await prebookWithIban('hash-Y', 'DE89370400440532013000')).toEqual({\n      success: true,\n      message: 'ok',\n    })\n  })\n\n  it('returns the failure object on non-2xx', async () => {\n    server.use(http.post(prebookingIbanUrl('hash-Z'), () => HttpResponse.json({}, { status: 400 })))\n    expect(await prebookWithIban('hash-Z', 'DE89370400440532013000')).toEqual({\n      success: false,\n      message: 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',\n    })\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 480,
+                "totalLines": 480,
+                "truncated": false
+              }
+            },
+            "title": "tests/api/events-fetch.test.ts",
+            "time": {
+              "start": 1785082910435,
+              "end": 1785082910441
+            }
+          },
+          "id": "prt_f9f3b96e0001j3ravEFutkx5PZ",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b8e47001YCzvZuODZliToy"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_ed59",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/api/forms-fetch.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/api/forms-fetch.test.ts</path>\n<type>file</type>\n<content>\n1: import { describe, expect, it } from 'vitest'\n2: import { http, HttpResponse } from 'msw'\n3: import { manageSubscription, sendContactMessage } from '@/api/forms'\n4: import { server } from '../mocks/server'\n5: import {\n6:   CONTACT_MESSAGE_URL,\n7:   NEWS_SUBSCRIBE_URL,\n8:   NEWS_UNSUBSCRIBE_URL,\n9: } from '../mocks/handlers/forms'\n10: \n11: describe('sendContactMessage — mutating POST contact route', () => {\n12:   it('asserts request shape: POST, Content-Type application/json, body shape {type, to, name, email, phone, message, token}', async () => {\n13:     let capturedMethod: string | undefined = undefined\n14:     let capturedContentType: string | null = null\n15:     let capturedBody: any = undefined\n16:     server.use(\n17:       http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n18:         capturedMethod = request.method\n19:         capturedContentType = request.headers.get('Content-Type')\n20:         capturedBody = await request.json()\n21:         return HttpResponse.json({ success: true, message: 'sent' })\n22:       }),\n23:     )\n24: \n25:     const response = await sendContactMessage(\n26:       'vorstand@sv-eutingen.de',\n27:       '  Max Mustermann  ',\n28:       '  max@example.org  ',\n29:       ' 0176 1234567 ',\n30:       '  Hallo Welt  ',\n31:       'captcha-token',\n32:     )\n33: \n34:     expect(response.ok).toBe(true)\n35:     expect(capturedMethod).toBe('POST')\n36:     expect(capturedContentType).toBe('application/json')\n37:     expect(capturedBody).toEqual({\n38:       type: 'General',\n39:       to: 'vorstand@sv-eutingen.de',\n40:       name: 'Max Mustermann',\n41:       email: 'max@example.org',\n42:       phone: '0176 1234567',\n43:       message: 'Hallo Welt',\n44:       token: 'captcha-token',\n45:     })\n46:   })\n47: \n48:   it('omits phone (sets it undefined) when the caller passes `undefined`', async () => {\n49:     let capturedBody: any\n50:     server.use(\n51:       http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n52:         capturedBody = await request.json()\n53:         return HttpResponse.json({ success: true })\n54:       }),\n55:     )\n56: \n57:     await sendContactMessage('recip', 'Max', 'max@example.org', undefined, 'msg', 'tok')\n58: \n59:     expect(capturedBody).toEqual({\n60:       type: 'General',\n61:       to: 'recip',\n62:       name: 'Max',\n63:       email: 'max@example.org',\n64:       phone: undefined,\n65:       message: 'msg',\n66:       token: 'tok',\n67:     })\n68:   })\n69: \n70:   it('returns the raw 2xx Response (caller proceeds with response.ok)', async () => {\n71:     server.use(http.post(CONTACT_MESSAGE_URL, () => HttpResponse.json({ success: true })))\n72: \n73:     const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n74:     expect(response.ok).toBe(true)\n75:     expect(response.status).toBe(200)\n76:   })\n77: \n78:   it('failure path: returns the raw non-2xx Response without throwing', async () => {\n79:     server.use(\n80:       http.post(CONTACT_MESSAGE_URL, () =>\n81:         HttpResponse.json({ message: 'invalid' }, { status: 422 }),\n82:       ),\n83:     )\n84: \n85:     const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n86:     expect(response.ok).toBe(false)\n87:     expect(response.status).toBe(422)\n88:   })\n89: \n90:   it('failure path: 500 also surfaces as raw Response', async () => {\n91:     server.use(http.post(CONTACT_MESSAGE_URL, () => HttpResponse.json({}, { status: 500 })))\n92:     const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n93:     expect(response.ok).toBe(false)\n94:     expect(response.status).toBe(500)\n95:   })\n96: })\n97: \n98: describe('manageSubscription — mutating POST news route', () => {\n99:   it('asserts request shape for subscribe=true: POST /news/subscribe, body {email, types, token}', async () => {\n100:     let capturedMethod: string | undefined = undefined\n101:     let capturedContentType: string | null = null\n102:     let capturedUrl: string | undefined = undefined\n103:     let capturedBody: any = undefined\n104:     server.use(\n105:       http.post(NEWS_SUBSCRIBE_URL, async ({ request }) => {\n106:         capturedMethod = request.method\n107:         capturedContentType = request.headers.get('Content-Type')\n108:         capturedUrl = request.url\n109:         capturedBody = await request.json()\n110:         return HttpResponse.json({ success: true })\n111:       }),\n112:     )\n113: \n114:     const response = await manageSubscription(\n115:       true,\n116:       'subscriber@example.org',\n117:       true,\n118:       false,\n119:       true,\n120:       'token-7',\n121:     )\n122: \n123:     expect(response.ok).toBe(true)\n124:     expect(capturedMethod).toBe('POST')\n125:     expect(capturedContentType).toBe('application/json')\n126:     expect(new URL(capturedUrl!).pathname).toBe('/api/news/subscribe')\n127:     expect(capturedBody).toEqual({\n128:       email: 'subscriber@example.org',\n129:       types: ['General', 'Events'],\n130:       token: 'token-7',\n131:     })\n132:   })\n133: \n134:   it('asserts request shape for subscribe=false: POST /news/unsubscribe', async () => {\n135:     let capturedUrl: string | undefined\n136:     let capturedBody: any\n137:     server.use(\n138:       http.post(NEWS_UNSUBSCRIBE_URL, async ({ request }) => {\n139:         capturedUrl = request.url\n140:         capturedBody = await request.json()\n141:         return HttpResponse.json({ success: true })\n142:       }),\n143:     )\n144: \n145:     const response = await manageSubscription(\n146:       false,\n147:       'unsub@example.org',\n148:       true,\n149:       true,\n150:       true,\n151:       'token-9',\n152:     )\n153: \n154:     expect(response.ok).toBe(true)\n155:     expect(new URL(capturedUrl!).pathname).toBe('/api/news/unsubscribe')\n156:     expect(capturedBody).toEqual({\n157:       email: 'unsub@example.org',\n158:       // newsTypes pushes General / Fitness / Events in fixed order when truthy\n159:       types: ['General', 'Fitness', 'Events'],\n160:       token: 'token-9',\n161:     })\n162:   })\n163: \n164:   it('emits an empty `types` array when no category is selected', async () => {\n165:     let capturedBody: any\n166:     server.use(\n167:       http.post(NEWS_SUBSCRIBE_URL, async ({ request }) => {\n168:         capturedBody = await request.json()\n169:         return HttpResponse.json({ success: true })\n170:       }),\n171:     )\n172: \n173:     await manageSubscription(true, 'e@example.org', false, false, false, 'tok')\n174:     expect(capturedBody).toEqual({ email: 'e@example.org', types: [], token: 'tok' })\n175:   })\n176: \n177:   it('returns the raw 2xx Response', async () => {\n178:     server.use(http.post(NEWS_SUBSCRIBE_URL, () => HttpResponse.json({ success: true })))\n179:     const response = await manageSubscription(true, 'e', true, false, false, 'tok')\n180:     expect(response.ok).toBe(true)\n181:     expect(response.status).toBe(200)\n182:   })\n183: \n184:   it('failure path: returns the raw 4xx Response without throwing (subscribe path)', async () => {\n185:     server.use(\n186:       http.post(NEWS_SUBSCRIBE_URL, () => HttpResponse.json({ message: 'bad' }, { status: 400 })),\n187:     )\n188:     const response = await manageSubscription(true, 'e', true, false, false, 'tok')\n189:     expect(response.ok).toBe(false)\n190:     expect(response.status).toBe(400)\n191:   })\n192: \n193:   it('failure path: returns the raw 5xx Response without throwing (unsubscribe path)', async () => {\n194:     server.use(http.post(NEWS_UNSUBSCRIBE_URL, () => HttpResponse.json({}, { status: 503 })))\n195:     const response = await manageSubscription(false, 'e', true, false, false, 'tok')\n196:     expect(response.ok).toBe(false)\n197:     expect(response.status).toBe(503)\n198:   })\n199: })\n\n(End of file - total 199 lines)\n</content>",
+            "metadata": {
+              "preview": "import { describe, expect, it } from 'vitest'\nimport { http, HttpResponse } from 'msw'\nimport { manageSubscription, sendContactMessage } from '@/api/forms'\nimport { server } from '../mocks/server'\nimport {\n  CONTACT_MESSAGE_URL,\n  NEWS_SUBSCRIBE_URL,\n  NEWS_UNSUBSCRIBE_URL,\n} from '../mocks/handlers/forms'\n\ndescribe('sendContactMessage — mutating POST contact route', () => {\n  it('asserts request shape: POST, Content-Type application/json, body shape {type, to, name, email, phone, message, token}', async () => {\n    let capturedMethod: string | undefined = undefined\n    let capturedContentType: string | null = null\n    let capturedBody: any = undefined\n    server.use(\n      http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n        capturedMethod = request.method\n        capturedContentType = request.headers.get('Content-Type')\n        capturedBody = await request.json()",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/api/forms-fetch.test.ts",
+                "text": "import { describe, expect, it } from 'vitest'\nimport { http, HttpResponse } from 'msw'\nimport { manageSubscription, sendContactMessage } from '@/api/forms'\nimport { server } from '../mocks/server'\nimport {\n  CONTACT_MESSAGE_URL,\n  NEWS_SUBSCRIBE_URL,\n  NEWS_UNSUBSCRIBE_URL,\n} from '../mocks/handlers/forms'\n\ndescribe('sendContactMessage — mutating POST contact route', () => {\n  it('asserts request shape: POST, Content-Type application/json, body shape {type, to, name, email, phone, message, token}', async () => {\n    let capturedMethod: string | undefined = undefined\n    let capturedContentType: string | null = null\n    let capturedBody: any = undefined\n    server.use(\n      http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n        capturedMethod = request.method\n        capturedContentType = request.headers.get('Content-Type')\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true, message: 'sent' })\n      }),\n    )\n\n    const response = await sendContactMessage(\n      'vorstand@sv-eutingen.de',\n      '  Max Mustermann  ',\n      '  max@example.org  ',\n      ' 0176 1234567 ',\n      '  Hallo Welt  ',\n      'captcha-token',\n    )\n\n    expect(response.ok).toBe(true)\n    expect(capturedMethod).toBe('POST')\n    expect(capturedContentType).toBe('application/json')\n    expect(capturedBody).toEqual({\n      type: 'General',\n      to: 'vorstand@sv-eutingen.de',\n      name: 'Max Mustermann',\n      email: 'max@example.org',\n      phone: '0176 1234567',\n      message: 'Hallo Welt',\n      token: 'captcha-token',\n    })\n  })\n\n  it('omits phone (sets it undefined) when the caller passes `undefined`', async () => {\n    let capturedBody: any\n    server.use(\n      http.post(CONTACT_MESSAGE_URL, async ({ request }) => {\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true })\n      }),\n    )\n\n    await sendContactMessage('recip', 'Max', 'max@example.org', undefined, 'msg', 'tok')\n\n    expect(capturedBody).toEqual({\n      type: 'General',\n      to: 'recip',\n      name: 'Max',\n      email: 'max@example.org',\n      phone: undefined,\n      message: 'msg',\n      token: 'tok',\n    })\n  })\n\n  it('returns the raw 2xx Response (caller proceeds with response.ok)', async () => {\n    server.use(http.post(CONTACT_MESSAGE_URL, () => HttpResponse.json({ success: true })))\n\n    const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n    expect(response.ok).toBe(true)\n    expect(response.status).toBe(200)\n  })\n\n  it('failure path: returns the raw non-2xx Response without throwing', async () => {\n    server.use(\n      http.post(CONTACT_MESSAGE_URL, () =>\n        HttpResponse.json({ message: 'invalid' }, { status: 422 }),\n      ),\n    )\n\n    const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n    expect(response.ok).toBe(false)\n    expect(response.status).toBe(422)\n  })\n\n  it('failure path: 500 also surfaces as raw Response', async () => {\n    server.use(http.post(CONTACT_MESSAGE_URL, () => HttpResponse.json({}, { status: 500 })))\n    const response = await sendContactMessage('to', 'n', 'e', undefined, 'm', 't')\n    expect(response.ok).toBe(false)\n    expect(response.status).toBe(500)\n  })\n})\n\ndescribe('manageSubscription — mutating POST news route', () => {\n  it('asserts request shape for subscribe=true: POST /news/subscribe, body {email, types, token}', async () => {\n    let capturedMethod: string | undefined = undefined\n    let capturedContentType: string | null = null\n    let capturedUrl: string | undefined = undefined\n    let capturedBody: any = undefined\n    server.use(\n      http.post(NEWS_SUBSCRIBE_URL, async ({ request }) => {\n        capturedMethod = request.method\n        capturedContentType = request.headers.get('Content-Type')\n        capturedUrl = request.url\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true })\n      }),\n    )\n\n    const response = await manageSubscription(\n      true,\n      'subscriber@example.org',\n      true,\n      false,\n      true,\n      'token-7',\n    )\n\n    expect(response.ok).toBe(true)\n    expect(capturedMethod).toBe('POST')\n    expect(capturedContentType).toBe('application/json')\n    expect(new URL(capturedUrl!).pathname).toBe('/api/news/subscribe')\n    expect(capturedBody).toEqual({\n      email: 'subscriber@example.org',\n      types: ['General', 'Events'],\n      token: 'token-7',\n    })\n  })\n\n  it('asserts request shape for subscribe=false: POST /news/unsubscribe', async () => {\n    let capturedUrl: string | undefined\n    let capturedBody: any\n    server.use(\n      http.post(NEWS_UNSUBSCRIBE_URL, async ({ request }) => {\n        capturedUrl = request.url\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true })\n      }),\n    )\n\n    const response = await manageSubscription(\n      false,\n      'unsub@example.org',\n      true,\n      true,\n      true,\n      'token-9',\n    )\n\n    expect(response.ok).toBe(true)\n    expect(new URL(capturedUrl!).pathname).toBe('/api/news/unsubscribe')\n    expect(capturedBody).toEqual({\n      email: 'unsub@example.org',\n      // newsTypes pushes General / Fitness / Events in fixed order when truthy\n      types: ['General', 'Fitness', 'Events'],\n      token: 'token-9',\n    })\n  })\n\n  it('emits an empty `types` array when no category is selected', async () => {\n    let capturedBody: any\n    server.use(\n      http.post(NEWS_SUBSCRIBE_URL, async ({ request }) => {\n        capturedBody = await request.json()\n        return HttpResponse.json({ success: true })\n      }),\n    )\n\n    await manageSubscription(true, 'e@example.org', false, false, false, 'tok')\n    expect(capturedBody).toEqual({ email: 'e@example.org', types: [], token: 'tok' })\n  })\n\n  it('returns the raw 2xx Response', async () => {\n    server.use(http.post(NEWS_SUBSCRIBE_URL, () => HttpResponse.json({ success: true })))\n    const response = await manageSubscription(true, 'e', true, false, false, 'tok')\n    expect(response.ok).toBe(true)\n    expect(response.status).toBe(200)\n  })\n\n  it('failure path: returns the raw 4xx Response without throwing (subscribe path)', async () => {\n    server.use(\n      http.post(NEWS_SUBSCRIBE_URL, () => HttpResponse.json({ message: 'bad' }, { status: 400 })),\n    )\n    const response = await manageSubscription(true, 'e', true, false, false, 'tok')\n    expect(response.ok).toBe(false)\n    expect(response.status).toBe(400)\n  })\n\n  it('failure path: returns the raw 5xx Response without throwing (unsubscribe path)', async () => {\n    server.use(http.post(NEWS_UNSUBSCRIBE_URL, () => HttpResponse.json({}, { status: 503 })))\n    const response = await manageSubscription(false, 'e', true, false, false, 'tok')\n    expect(response.ok).toBe(false)\n    expect(response.status).toBe(503)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 199,
+                "totalLines": 199,
+                "truncated": false
+              }
+            },
+            "title": "tests/api/forms-fetch.test.ts",
+            "time": {
+              "start": 1785082910617,
+              "end": 1785082910626
+            }
+          },
+          "id": "prt_f9f3b9796001HEkAryDyaVtwaX",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b8e47001YCzvZuODZliToy"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-finish",
+          "tokens": {
+            "total": 17698,
+            "input": 17492,
+            "output": 78,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.02486528,
+          "id": "prt_f9f3b9809001q5RMzsr1qokqXJ",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b8e47001YCzvZuODZliToy"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f3b6b5f001v85Mu25pX5ajxS",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.02491988,
+        "tokens": {
+          "total": 27538,
+          "input": 10709,
+          "output": 1341,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 15488
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785082910765,
+          "completed": 1785082954640
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f3b982d001KNsG5Qv5bHVDG2",
+        "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn"
+      },
+      "parts": [
+        {
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-start",
+          "id": "prt_f9f3b9e3d0014IoBjp6NoQ4Ord",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b982d001KNsG5Qv5bHVDG2"
+        },
+        {
+          "type": "reasoning",
+          "text": "Now let me check the spec acceptance criteria against what's there.\n\nSpec covers: getAppointments, loadEvents, loadEventAvailability, loadEventsAvailability (incl. sessionStorage cache path), bookEvent, prebooking, prebookWithIban, sendContactMessage, manageSubscription.\n\nWait — the spec mentions `loadEvents` PREVIEW/DEV branch via `vi.stubEnv`. The test uses `vi.stubEnv('PREVIEW', ...)`. But the spec says \"PREVIEW / import.meta.env.DEV branch\". Let me re-read events.ts — there's no DEV branch there. The spec mentions both `PREVIEW` and `import.meta.env.DEV`. Looking at the code, only PREVIEW is used. Maybe `DEV` was mentioned in the spec text but is a miss? Actually re-reading the spec: \"For `loadEvents`'s `PREVIEW` / `import.meta.env.DEV` branch, stub the env var per-test with `vi.stubEnv` and cover both paths.\" Hmm — the production code only uses PREVIEW, not DEV. So either the spec is slightly off or there's a DEV code path not present. The tests cover both PREVIEW=false and PREVIEW=true. That seems consistent with code.\n\nNow check acceptance criteria:\n1. ✅ handlers per route group — calendar, events, forms.\n2. ✅ server.ts starts MSW node server once in setup.ts.\n3. Every fetch wrapper has success + failure test:\n   - getAppointments ✅ success + 404/500\n   - loadEvents ✅ success + 500\n   - loadEventAvailability — has tests but... failure? No explicit failure path. But it's a wrapper around loadEventsAvailability which has failure. The spec lists loadEventAvailability to be covered — failure path? No explicit failure test, but it operates through loadEventsAvailability. Borderline.\n   - loadEventsAvailability ✅ success + 503\n   - bookEvent ✅ success + 500\n   - prebooking ✅ success + 404\n   - prebookWithIban ✅ success + 400\n   - sendContactMessage ✅ success + 422/500\n   - manageSubscription ✅ success + 400/503\n4. ✅ Mutating routes assert request shape (URL, method, body, headers). Yes for bookEvent, prebookWithIban, sendContactMessage, manageSubscription. Note: \"prebooking\" is GET, not mutating — so spec mutating routes are bookEvent, prebookWithIban, sendContactMessage, manageSubscription. Wait the spec also lists prebooking separately as a non-mutating? Actually spec mentions: \"For mutating routes (`bookEvent`, `prebookWithIban`, `sendContactMessage`, `manageSubscription`)\". So prebooking is not in the mutating list. The bookEvent shape test asserts URL? It asserts method, Content-Type, body — but not URL. Let me check:\n   - bookEvent test asserts method, Content-Type, body, and result. URL is the EVENTS_BOOKING_URL handler so it implicitly goes there, but the test doesn't assert URL explicitly. Spec says \"assert the request shape (URL, method, body JSON, Content-Type header)\". Hmm. For bookEvent, URL not explicitly asserted. Same for prebookWithIban — uses prebookingIbanUrl handler but no explicit URL assertion. But these are arguably covered implicitly by the handler intercepting the exact URL.\n5. ✅ loadEventsAvailability sessionStorage cache path — covered with cache miss, fresh cache hit, stale cache, corrupt cache.\n6. ✅ loadEvents PREVIEW/DEV branch both covered — beta=false and beta=true.\n7. All tests green, `bun run check` green — should run.\n\nLet me check the prebooking failure path — covered. prebooking is GET, but spec lists it in \"Cover:\", and acceptance criteria says \"Every fetch wrapper... success and failure\". prebooking has success and 404 ✅.\n\nActually, the spec кабинеты \"Cover: ... `bookEvent`, `prebooking`, `prebookWithIban`\". So prebooking must be covered with success + failure — done.\n\nScope creep:\n- Tests for getAppointments include `does not leak the unsorted raw shape` — extra.\n- loadEvents `keeps only events whose type matches` and `sorts ascending` and `ships stable datesDisplay for custom_date` — these test internal mapping logic which is more in the domain of appointments.test.ts and events.test.ts (the existing tests). Spec says cover the fetch wrappers. These are arguably scope creep into mapping logic. There are already `appointments.test.ts` and `events.test.ts`. So new fetch tests duplicate mapping assertions.\n- forms handlers define MEMBERSHIP_APPLICATION_URL and a handler, but membershipApplication is NOT covered by fetch test. Spec only lists sendContactMessage and manageSubscription for forms — so that's fine. But the handler being defined is mild scope creep / setup for future.\n- backend.ts has `BACKEND_API` to mirror prod. Fine.\n\nLooks-wrong:\n- `loadEventsAvailability` failure test uses `HttpResponse.json({}, { status: 503 })` and asserts it throws. OK.\n- For the corrupt cache test — the callback is invoked once. But the implementation: on parse error, it logs and continues to fetch. Good. Tests pass.\n- `loadEventAvailability` failure path: spec \"Every fetch wrapper... at least one failure path test\". `loadEventAvailability` has no explicit failure path. It does have a \"missing id\" test. Arguably failure isn't covered. But loadEventAvailability doesn't throw; failure delegates to loadEventsAvailability which is tested. Could be partial.\n- `bookEvent` shape test does NOT assert URL. Spec says \"URL, method, body JSON, Content-Type header\". This is a finding.\n- `prebookWithIban` shape test does NOT assert URL explicitly.\n- `manageSubscription` and `sendContactMessage` DO assert URL.\n- The `prebooking` GET shape test asserts method but not URL — but prebooking is not in the mutating list.\n\nLet me run the tests and check.",
+          "time": {
+            "start": 1785082912319,
+            "end": 1785082927392
+          },
+          "id": "prt_f9f3b9e3f001Yj0cPo4TY5EzZA",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b982d001KNsG5Qv5bHVDG2"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_213c",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run check 2>&1 | tail -30 && rtk bunx vitest run tests/api tests/setup 2>&1 | tail -40",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "\u001b[7m103\u001b[0m <script define:vars={{ id, indexId }}>\n\u001b[7m   \u001b[0m \u001b[93m        ~~~~~~~~~~~\u001b[0m\n\nResult (87 files): \n- 0 errors\n- 0 warnings\n- 2 hints\n\n18:22:25 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:59190) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59188) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59189) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59187) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59185) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59186) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  6 passed (6)\n      Tests  143 passed (143)\n   Start at  18:22:25\n   Duration  4.00s (transform 809ms, setup 1.07s, import 15.65s, tests 302ms, environment 1.79s)\n\n18:22:31 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:59206) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59210) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59209) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59207) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59208) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  5 passed (5)\n      Tests  106 passed (106)\n   Start at  18:22:31\n   Duration  2.92s (transform 343ms, setup 574ms, import 9.42s, tests 247ms, environment 940ms)\n\n",
+            "metadata": {
+              "output": "\u001b[7m103\u001b[0m <script define:vars={{ id, indexId }}>\n\u001b[7m   \u001b[0m \u001b[93m        ~~~~~~~~~~~\u001b[0m\n\nResult (87 files): \n- 0 errors\n- 0 warnings\n- 2 hints\n\n18:22:25 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:59190) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59188) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59189) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59187) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59185) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59186) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  6 passed (6)\n      Tests  143 passed (143)\n   Start at  18:22:25\n   Duration  4.00s (transform 809ms, setup 1.07s, import 15.65s, tests 302ms, environment 1.79s)\n\n18:22:31 [@astrojs/netlify] Enabling sessions with Netlify Blobs\n\n RUN  v4.1.10 /Users/mseele/dev/sve/sve-website\n\n(node:59206) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59210) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59209) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59207) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:59208) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  5 passed (5)\n      Tests  106 passed (106)\n   Start at  18:22:31\n   Duration  2.92s (transform 343ms, setup 574ms, import 9.42s, tests 247ms, environment 940ms)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run check 2>&1 | tail -30 && rtk bunx vitest run tests/api tests/setup 2>&1 | tail -40",
+            "time": {
+              "start": 1785082954358,
+              "end": 1785082954368
+            }
+          },
+          "id": "prt_f9f3bd923001Ie1xb5dWWT6fdo",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b982d001KNsG5Qv5bHVDG2"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-finish",
+          "tokens": {
+            "total": 27538,
+            "input": 10709,
+            "output": 1341,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 15488
+            }
+          },
+          "cost": 0.02491988,
+          "id": "prt_f9f3c42c0001JlN1Fx4S3eBhTV",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3b982d001KNsG5Qv5bHVDG2"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f3b6b5f001v85Mu25pX5ajxS",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0142014,
+        "tokens": {
+          "total": 29628,
+          "input": 743,
+          "output": 1365,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 27520
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785082954647,
+          "completed": 1785082968584
+        },
+        "finish": "stop",
+        "id": "msg_f9f3c43970018h08ygtu6IR3TR",
+        "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn"
+      },
+      "parts": [
+        {
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-start",
+          "id": "prt_f9f3c5270001GqNeU3l5yeovFr",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3c43970018h08ygtu6IR3TR"
+        },
+        {
+          "type": "reasoning",
+          "text": "Tests green, check green. Now compile findings.\n\n(a) Missing/partial:\n- `loadEventAvailability` failure path: spec says \"Every `fetch` wrapper in `src/api/*` has at least one success- and one failure-path test\". loadEventAvailability only has success and \"missing id\" tests — no failure-path (e.g., backend 5xx). Partial.\n- Mutating request shape assertion missing URL: spec says \"assert the request shape (URL, method, body JSON, Content-Type header)\". `bookEvent` test (events-fetch.test.ts:311) asserts method/Content-Type/body but not URL. `prebookWithIban` test (events-fetch.test.ts:440) also omits explicit URL assertion. Only the forms tests assert URL.\n\n(b) Scope creep:\n- `loadEvents` mapping tests (`keeps only events whose type matches`, `sorts ascending`, `ships stable datesDisplay for a single-date event`) duplicate existing `events.test.ts` mapping logic — the spec asks for fetch-wrapper coverage, not mapping retests.\n- `getAppointments` \"does not leak the unsorted raw shape\" test (appointments-fetch.test.ts:60) duplicates appointments.test.ts mapping assertions.\n- `forms.ts` handler module defines `MEMBERSHIP_APPLICATION_URL` and a default handler for `/membership/application`, but the spec's forms coverage list is only `sendContactMessage` and `manageSubscription`; `membershipApplication` is out of scope.\n\n(c) Looks implemented but wrong:\n- `loadEventsAvailability` stale-cache test (events-fetch.test.ts:220): uses `Date.now() - 3600000 - 1` to assert staleness. Production code (events.ts:215) uses `cache.timestamp > Date.now() - 3600000`. Border = exclusive, so timestamp exactly `now-3600000-1` is NOT greater than `now-3600000` → correct, stale. OK.\n- `prebooking` GET shape test (events-fetch.test.ts:408) asserts `capturedBodyText === ''`. A GET request via fetch has no body; `request.text()` returns ''. Fine.\n- `bookEvent` shape test uses `server.use(http.post(EVENTS_BOOKING_URL, ...))` — implicitly hits the URL, but the spec explicitly wants URL asserted. Could be considered partial not wrong.\n\nActually one concern: in `forms.ts` `manageSubscription` `subscribe=false` returns pathname `/api/news/unsubscribe` — correct.\n\nAlso `loadEventsAvailability` corrupt cache: the test parses with `JSON.parse('{not json')`. The implementation catches and console.errors. Good.\n\nBackend URL: `BACKEND_API = 'https://backend.sv-eutingen.de/api'`. The production wrapper uses `BACKEND_API` from `astro:env/client`. Tests must use the same URL for MSW to intercept. The handlers use `BACKEND_API` from `tests/mocks/backend.ts`. But the source uses `astro:env/client` BACKEND_API. Are these the same? If the test environment's `astro:env/client` resolves to a different URL, MSW wouldn't intercept. The tests pass, so they match. OK.\n\nWait — `events-fetch.test.ts` has `vi.mock('astro:env/client', ...)` but only stubs PREVIEW with a getter and spreads `orig`. So orig.BACKEND_API is real. The handlers' BACKEND_API constant must equal that. They do match under tests (since tests pass). But it's fragile — the mock file hardcodes the URL rather than importing it from astro:env/client. This is a brittleness, not wrong.\n\nLet me finalize under 400 words.",
+          "time": {
+            "start": 1785082958449,
+            "end": 1785082963765
+          },
+          "id": "prt_f9f3c5271001EYy80nnCUBfihE",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3c43970018h08ygtu6IR3TR"
+        },
+        {
+          "type": "text",
+          "text": "## Review: issue #401 — MSW fetch-wrapper coverage\n\n### (a) Spec requirements missing or partial\n\n- **Mutating-route URL not asserted for `bookEvent` and `prebookWithIban`.** Spec: *\"assert the request shape (URL, method, body JSON, Content-Type header)\"*. `bookEvent` (events-fetch.test.ts:311) and `prebookWithIban` (events-fetch.test.ts:440) assert method, Content-Type and body but never the URL — unlike `sendContactMessage`/`manageSubscription` which do (`new URL(capturedUrl).pathname`). The MSW handler intercepting the exact URL hides the gap.\n\n- **`loadEventAvailability` has no failure-path test.** Spec: *\"Every `fetch` wrapper in `src/api/*` has at least one success- and one failure-path test\"*. events-fetch.test.ts:275 has success + \"missing id\" cases, but no non-2xx path (it delegates to `loadEventsAvailability`, yet the wrapper itself is the listed fetch surface).\n\n### (b) Scope creep (not asked for)\n\n- **`loadEvents` re-tests mapping logic.** Tests `keeps only events whose type matches` (events-fetch.test.ts:105), `sorts events ascending by sort_index` (118), and `ships stable datesDisplay for a single-date event` (131) duplicate `tests/api/events.test.ts`. Spec asked for fetch-wrapper coverage, not re-asserting `toEvent`/sort/datesDisplay — those belong to the unit suite already covering #400.\n\n- **`getAppointments` \"does not leak the unsorted raw shape\"** (appointments-fetch.test.ts:60) re-asserts `toAppointment` shape already covered by `appointments.test.ts`.\n\n- **`forms.ts` handler module defines `MEMBERSHIP_APPLICATION_URL` and a default `/membership/application` handler** (forms.ts:7,15). Spec's forms scope is only `sendContactMessage` + `manageSubscription`; `membershipApplication` is out of scope and untested.\n\n### (c) Implemented but looks wrong\n\n- **`tests/mocks/backend.ts` hardcodes `BACKEND_API = 'https://backend.sv-eutingen.de/api'`** instead of importing from `astro:env/client`. It must equal the value the wrappers fetch or MSW bypasses. The comment even warns about this. A future env flip silently breaks every handler. Re-export from `astro:env/client` (as `events-fetch.test.ts`'s `vi.mock` already does for `PREVIEW`).\n\n### Status\n`bun run check` green (0 errors). Vitest: 143/143 across 6 files (full suite) and 106/106 across 5 api/setup files — all green.",
+          "time": {
+            "start": 1785082963767,
+            "end": 1785082968501
+          },
+          "id": "prt_f9f3c6737001XoKHe5mL0A5FbM",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3c43970018h08ygtu6IR3TR"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "c481ef609104bfbf9be06dd1163d4526102ca1be",
+          "type": "step-finish",
+          "tokens": {
+            "total": 29628,
+            "input": 743,
+            "output": 1365,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 27520
+            }
+          },
+          "cost": 0.0142014,
+          "id": "prt_f9f3c79e10018C2SOTpWkyX6fT",
+          "sessionID": "ses_060c494bbffeCDRb73xLSt3qJn",
+          "messageID": "msg_f9f3c43970018h08ygtu6IR3TR"
+        }
+      ]
+    }
+  ]
+}
