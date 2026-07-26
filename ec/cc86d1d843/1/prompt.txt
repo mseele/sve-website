@@ -1,0 +1,25 @@
+You are reviewing the working-tree changes to `sve-website` (Astro + Tailwind + Vitest + MSW). The change wraps `src/api/*` fetch wrappers with MSW-intercepted tests under `tests/`. Nothing is committed yet — review the diff between the working tree and `HEAD`.
+
+**Diff command:** `git diff HEAD` (and `git status --short` to see untracked files in `tests/api/`, `tests/mocks/`).
+
+**Standards source files** to consult:
+- `/Users/mseele/dev/sve/sve-website/AGENTS.md` — repo-wide coding standards (semicolons false, single quotes, 2-space tabs, no comments unless asked, `@/` alias imports, Astro component conventions, Zod, etc.)
+- `/Users/mseele/dev/sve/sve-website/CONTEXT.md` and `/Users/mseele/dev/sve/sve-website/docs/adr/` if they exist
+- Existing test files `tests/api/appointments.test.ts`, `tests/api/events.test.ts`, `tests/utils.test.ts`, `tests/setup.ts` for established test conventions in this repo
+
+**Brief:** Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline Fowler smell you spot across the diff hunk: name it and quote the hunk. Baseline smells to scan for:
+
+- Mysterious Name — function/variable/type name doesn't reveal what it does or holds.
+- Duplicated Code — same logic shape across more than one hunk or file.
+- Feature Envy — a method that reaches into another object's data more than its own.
+- Data Clumps — same few fields/params keep travelling together.
+- Primitive Obsession — a primitive standing in for a domain concept that deserves its own type.
+- Repeated Switches — same switch/if-cascade on the same type recurs.
+- Shotgun Surgery — one logical change forces scattered edits across many files.
+- Divergent Change — one file edited for several unrelated reasons.
+- Speculative Generality — abstraction/params/hooks added for needs the spec doesn't have.
+- Message Chains — long `a.b().c().d()` the caller shouldn't depend on.
+- Middle Man — a class/function that mostly just delegates onward.
+- Refused Bequest — a subclass/implementer that ignores most of what it inherits.
+
+Distinguish hard violations from judgement calls. Documented-standard breaches can be hard; baseline smells are always judgement calls. A documented repo standard overrides the baseline. Skip anything tooling already enforces (oxlint, tsc --noEmit, astro check, vitest.run are all green). Under 400 words. Quote the file:line and named smell for each finding. Don't suggest fixes; just identify.
