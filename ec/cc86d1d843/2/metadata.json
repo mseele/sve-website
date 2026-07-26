@@ -1,0 +1,66 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "eccc86d1d843",
+  "session_id": "ses_060d4457bffeeLBEkUo1O6TMPx",
+  "strategy": "manual-commit",
+  "created_at": "2026-07-26T16:27:26.208896Z",
+  "branch": "feature/tests",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "tests/api/appointments-fetch.test.ts",
+    "tests/api/events-fetch.test.ts",
+    "tests/api/forms-fetch.test.ts",
+    "tests/mocks/backend.ts",
+    "tests/mocks/handlers/calendar.ts",
+    "tests/mocks/handlers/events.ts",
+    "tests/mocks/handlers/forms.ts",
+    "tests/mocks/server.ts",
+    "tests/setup.ts"
+  ],
+  "agent": "OpenCode",
+  "model": "",
+  "turn_id": "c56a1709b9e9",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 379259,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 5787584,
+    "output_tokens": 51266,
+    "api_call_count": 106
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-07-26T16:27:26.147854Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 41,
+    "human_removed": 51,
+    "total_committed": 0,
+    "total_lines_changed": 92,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 919,
+      "user_lines_removed": 5,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "tests/api/appointments-fetch.test.ts": 70,
+        "tests/api/events-fetch.test.ts": 480,
+        "tests/api/forms-fetch.test.ts": 199,
+        "tests/mocks/backend.ts": 13,
+        "tests/mocks/handlers/calendar.ts": 42,
+        "tests/mocks/handlers/events.ts": 83,
+        "tests/mocks/handlers/forms.ts": 16,
+        "tests/mocks/server.ts": 12,
+        "tests/setup.ts": 4
+      },
+      "user_removed_per_file": {
+        "tests/setup.ts": 5
+      }
+    }
+  ]
+}

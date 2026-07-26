@@ -3,8 +3,16 @@
   "checkpoint_id": "eccc86d1d843",
   "strategy": "manual-commit",
   "branch": "feature/tests",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
+    "tests/api/appointments-fetch.test.ts",
+    "tests/api/events-fetch.test.ts",
+    "tests/api/forms-fetch.test.ts",
+    "tests/mocks/backend.ts",
+    "tests/mocks/handlers/calendar.ts",
+    "tests/mocks/handlers/events.ts",
+    "tests/mocks/handlers/forms.ts",
+    "tests/mocks/server.ts",
     "tests/setup.ts"
   ],
   "sessions": [
@@ -21,13 +29,20 @@
       "compact_transcript": "/ec/cc86d1d843/1/transcript.jsonl",
       "content_hash": "/ec/cc86d1d843/1/content_hash.txt",
       "prompt": "/ec/cc86d1d843/1/prompt.txt"
+    },
+    {
+      "metadata": "/ec/cc86d1d843/2/metadata.json",
+      "transcript": "/ec/cc86d1d843/2/full.jsonl",
+      "compact_transcript": "/ec/cc86d1d843/2/transcript.jsonl",
+      "content_hash": "/ec/cc86d1d843/2/content_hash.txt",
+      "prompt": ""
     }
   ],
   "token_usage": {
-    "input_tokens": 92610,
+    "input_tokens": 471869,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 220096,
-    "output_tokens": 7947,
-    "api_call_count": 18
+    "cache_read_tokens": 6007680,
+    "output_tokens": 59213,
+    "api_call_count": 124
   }
 }
