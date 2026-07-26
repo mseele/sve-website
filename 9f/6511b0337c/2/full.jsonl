@@ -1,0 +1,480 @@
+{
+  "info": {
+    "id": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+    "slug": "quick-island",
+    "projectID": "68d450c05733c82192ed1f31a5e40cb2ae707f59",
+    "directory": "/Users/mseele/dev/sve/sve-website",
+    "path": "",
+    "parentID": "ses_060b9cb11ffeQVrXDgto5qk01R",
+    "title": "Spec review of #402 (@general subagent)",
+    "agent": "general",
+    "model": {
+      "id": "glm-5.2",
+      "providerID": "opencode-go",
+      "variant": "default"
+    },
+    "version": "1.18.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0.051036240000000004,
+    "tokens": {
+      "input": 17230,
+      "output": 3844,
+      "reasoning": 0,
+      "cache": {
+        "read": 38464,
+        "write": 0
+      }
+    },
+    "permission": [
+      {
+        "permission": "task",
+        "pattern": "*",
+        "action": "deny"
+      }
+    ],
+    "time": {
+      "created": 1785083745926,
+      "updated": 1785083813447
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1785083745933
+        },
+        "agent": "general",
+        "model": {
+          "providerID": "opencode-go",
+          "modelID": "glm-5.2"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_f9f48568c001oeaVkthhuWIPYm",
+        "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Run a Spec-axis code review of commit 7665df9 against issue #402.\n\nDiff command:\n  git diff 7665df9~1...7665df9\n\nRepo root: /Users/mseele/dev/sve/sve-website\nFile under review: tests/client/forms.test.ts (new file, 346 lines).\n\nThe originating spec is GitHub issue #402 (mseele/sve-website):\n\n---\n## What to build\n\n`src/client/forms.ts` exports pure-ish validators that take `HTMLInputElement | null | undefined`: `checkRequiredInput`, `checkRequiredSelect`, `validateIbanInput`, plus the `clearCustomValidityOnInput` / `clearCustomValidityOnSelect` listeners. They're nearly unit-testable as-is — the inputs are dependency-injected.\n\nSet up happy-dom with a stub for `reportValidity` / `setCustomValidity` (happy-dom returns false silently — assert the calls, not the returns), then cover: empty input triggers `reportValidity` and returns false; valid IBAN passes (`isValidIBAN` from `ibantools` is the real check — test our wrapper around it, not the lib); invalid IBAN sets a custom validity and returns false; `clearCustomValidity*` actually clears the message once a value is typed.\n\nIndependent of the EventAvailability work — this file has no availability logic.\n\n## Acceptance criteria\n\n- [ ] happy-dom test environment provides working `HTMLInputElement` / `HTMLSelectElement` / `HTMLTextAreaElement`\n- [ ] `reportValidity` / `setCustomValidity` stubbed on the element prototypes and asserted as called\n- [ ] `tests/client/forms.test.ts` covers every exported function in `src/client/forms.ts`\n- [ ] IBAN validation tests cover empty, valid, and invalid inputs\n- [ ] All tests green, `bun run check` green\n---\n\nNote the spec also says IBAN invalid-message wording. The actual wording used in src/client/forms.ts is 'Bitte gib eine gültige IBAN ein.' — check the test asserts the actual message.\n\nReport:\n(a) requirements the spec asked for that are missing or partial;\n(b) behaviour in the diff that wasn't asked for (scope creep);\n(c) requirements that look implemented but where the implementation looks wrong.\nQuote the spec line for each finding. Under 400 words.\n\nReturn only the report text. Do not write files or run tests.",
+          "id": "prt_f9f485690001TIB1aYC0x9aJCc",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f48568c001oeaVkthhuWIPYm"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f48568c001oeaVkthhuWIPYm",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01592028,
+        "tokens": {
+          "total": 11268,
+          "input": 11043,
+          "output": 97,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083746234,
+          "completed": 1785083748904
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4857ba001JV0MCbHC0nulYV",
+        "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f485c79001wO7HXjY8dlLjgu",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f4857ba001JV0MCbHC0nulYV"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me look at the diff and the test file to do a Spec-axis codereview.",
+          "time": {
+            "start": 1785083747453,
+            "end": 1785083747962
+          },
+          "id": "prt_f9f485c7d001SYP3Cc8IdAWHBJ",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f4857ba001JV0MCbHC0nulYV"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_108f",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git diff 7665df9~1...7665df9 -- tests/client/forms.test.ts",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "tests/client/forms.test.ts | 346 +++++++++++++++++++++++++++++++++++++++++++++\n 1 file changed, 346 insertions(+)\n\nChanges:\n\ntests/client/forms.test.ts\n  @@ -0,0 +1,346 @@\n  +import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\n  +import {\n  +  checkRequiredInput,\n  +  checkRequiredSelect,\n  +  clearCustomValidityOnInput,\n  +  clearCustomValidityOnSelect,\n  +  validateIbanInput,\n  +} from '@/client/forms'\n  +\n  +const VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\n  +const MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n  +\n  +const validitySpies = () => {\n  +  const setInput = vi.fn()\n  +  const reportInput = vi.fn(() => false)\n  +  const setSelect = vi.fn()\n  +  const reportSelect = vi.fn(() => false)\n  +  const setTextarea = vi.fn()\n  +  const reportTextarea = vi.fn(() => false)\n  +  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', {\n  +    configurable: true,\n  +    value: setInput,\n  +  })\n  +  Object.defineProperty(HTMLInputElement.prototype, 'reportValidity', {\n  +    configurable: true,\n  +    value: reportInput,\n  +  })\n  +  Object.defineProperty(HTMLSelectElement.prototype, 'setCustomValidity', {\n  +    configurable: true,\n  +    value: setSelect,\n  +  })\n  +  Object.defineProperty(HTMLSelectElement.prototype, 'reportValidity', {\n  +    configurable: true,\n  +    value: reportSelect,\n  +  })\n  +  Object.defineProperty(HTMLTextAreaElement.prototype, 'setCustomValidity', {\n  +    configurable: true,\n  +    value: setTextarea,\n  +  })\n  +  Object.defineProperty(HTMLTextAreaElement.prototype, 'reportValidity', {\n  +    configurable: true,\n  +    value: reportTextarea,\n  +  })\n  +  return { setInput, reportInput, setSelect, reportSelect, setTextarea, reportTextarea }\n  +}\n  +\n  +describe('checkRequiredInput', () => {\n  +  let spies: ReturnType<typeof validitySpies>\n  +\n  +  beforeEach(() => {\n  +    spies = validitySpies()\n  +  })\n  +\n  +  afterEach(() => {\n  +    vi.restoreAllMocks()\n  +  })\n  +\n  +  it('returns true and does not touch validity when the input has a non-empty value', () => {\n  +    const input = document.createElement('input')\n  +    input.value = 'Max Mustermann'\n  +\n  +    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n  +    expect(spies.setInput).not.toHaveBeenCalled()\n  +    expect(spies.reportInput).not.toHaveBeenCalled()\n  +  })\n  +\n  +  it('treats whitespace-only values as empty: sets the message, reports validity, returns false', () => {\n  +    const input = document.createElement('input')\n  +    input.value = '   '\n  +\n  +    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(false)\n  +    expect(spies.setInput).toHaveBeenCalledWith('Pflichtfeld')\n  +    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  +  })\n  +\n  +  it('sets the custom validity message and calls reportValidity when the input is empty', () => {\n  +    const input = document.createElement('input')\n  +\n  +    expect(checkRequiredInput(input, 'Bitte Namen angeben')).toBe(false)\n  +    expect(spies.setInput).toHaveBeenCalledWith('Bitte Namen angeben')\n  +    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  +  })\n  +\n  +  it('works for HTMLTextAreaElement and propagates the error message', () => {\n  +    const textarea = document.createElement('textarea')\n  +\n  +    expect(checkRequiredInput(textarea, 'Bitte Nachricht angeben')).toBe(false)\n  +    expect(spies.setTextarea).toHaveBeenCalledWith('Bitte Nachricht angeben')\n  +    expect(spies.reportTextarea).toHaveBeenCalledTimes(1)\n  +  })\n  +\n  +  it('returns true for null input without touching the prototype', () => {\n  +    expect(checkRequiredInput(null, 'Pflichtfeld')).toBe(true)\n  +    expect(spies.setInput).not.toHaveBeenCalled()\n  +    expect(spies.reportInput).not.toHaveBeenCalled()\n  +  })\n  +\n  +  it('returns true for undefined input without touching the prototype', () => {\n  +    expect(checkRequiredInput(undefined, 'Pflichtfeld')).toBe(true)\n  +    expect(spies.setInput).not.toHaveBeenCalled()\n  ... (246 lines truncated)\n  +346 -0\n[full diff: rtk git diff --no-compact]\n",
+            "metadata": {
+              "output": "tests/client/forms.test.ts | 346 +++++++++++++++++++++++++++++++++++++++++++++\n 1 file changed, 346 insertions(+)\n\nChanges:\n\ntests/client/forms.test.ts\n  @@ -0,0 +1,346 @@\n  +import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\n  +import {\n  +  checkRequiredInput,\n  +  checkRequiredSelect,\n  +  clearCustomValidityOnInput,\n  +  clearCustomValidityOnSelect,\n  +  validateIbanInput,\n  +} from '@/client/forms'\n  +\n  +const VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\n  +const MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n  +\n  +const validitySpies = () => {\n  +  const setInput = vi.fn()\n  +  const reportInput = vi.fn(() => false)\n  +  const setSelect = vi.fn()\n  +  const reportSelect = vi.fn(() => false)\n  +  const setTextarea = vi.fn()\n  +  const reportTextarea = vi.fn(() => false)\n  +  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', {\n  +    configurable: true,\n  +    value: setInput,\n  +  })\n  +  Object.defineProperty(HTMLInputElement.prototype, 'reportValidity', {\n  +    configurable: true,\n  +    value: reportInput,\n  +  })\n  +  Object.defineProperty(HTMLSelectElement.prototype, 'setCustomValidity', {\n  +    configurable: true,\n  +    value: setSelect,\n  +  })\n  +  Object.defineProperty(HTMLSelectElement.prototype, 'reportValidity', {\n  +    configurable: true,\n  +    value: reportSelect,\n  +  })\n  +  Object.defineProperty(HTMLTextAreaElement.prototype, 'setCustomValidity', {\n  +    configurable: true,\n  +    value: setTextarea,\n  +  })\n  +  Object.defineProperty(HTMLTextAreaElement.prototype, 'reportValidity', {\n  +    configurable: true,\n  +    value: reportTextarea,\n  +  })\n  +  return { setInput, reportInput, setSelect, reportSelect, setTextarea, reportTextarea }\n  +}\n  +\n  +describe('checkRequiredInput', () => {\n  +  let spies: ReturnType<typeof validitySpies>\n  +\n  +  beforeEach(() => {\n  +    spies = validitySpies()\n  +  })\n  +\n  +  afterEach(() => {\n  +    vi.restoreAllMocks()\n  +  })\n  +\n  +  it('returns true and does not touch validity when the input has a non-empty value', () => {\n  +    const input = document.createElement('input')\n  +    input.value = 'Max Mustermann'\n  +\n  +    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n  +    expect(spies.setInput).not.toHaveBeenCalled()\n  +    expect(spies.reportInput).not.toHaveBeenCalled()\n  +  })\n  +\n  +  it('treats whitespace-only values as empty: sets the message, reports validity, returns false', () => {\n  +    const input = document.createElement('input')\n  +    input.value = '   '\n  +\n  +    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(false)\n  +    expect(spies.setInput).toHaveBeenCalledWith('Pflichtfeld')\n  +    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  +  })\n  +\n  +  it('sets the custom validity message and calls reportValidity when the input is empty', () => {\n  +    const input = document.createElement('input')\n  +\n  +    expect(checkRequiredInput(input, 'Bitte Namen angeben')).toBe(false)\n  +    expect(spies.setInput).toHaveBeenCalledWith('Bitte Namen angeben')\n  +    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  +  })\n  +\n  +  it('works for HTMLTextAreaElement and propagates the error message', () => {\n  +    const textarea = document.createElement('textarea')\n  +\n  +    expect(checkRequiredInput(textarea, 'Bitte Nachricht angeben')).toBe(false)\n  +    expect(spies.setTextarea).toHaveBeenCalledWith('Bitte Nachricht angeben')\n  +    expect(spies.reportTextarea).toHaveBeenCalledTimes(1)\n  +  })\n  +\n  +  it('returns true for null input without touching the prototype', () => {\n  +    expect(checkRequiredInput(null, 'Pflichtfeld')).toBe(true)\n  +    expect(spies.setInput).not.toHaveBeenCalled()\n  +    expect(spies.reportInput).not.toHaveBeenCalled()\n  +  })\n  +\n  +  it('returns true for undefined input without touching the prototype', () => {\n  +    expect(checkRequiredInput(undefined, 'Pflichtfeld')).toBe(true)\n  +    expect(spies.setInput).not.toHaveBeenCalled()\n  ... (246 lines truncated)\n  +346 -0\n[full diff: rtk git diff --no-compact]\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git diff 7665df9~1...7665df9 -- tests/client/forms.test.ts",
+            "time": {
+              "start": 1785083748047,
+              "end": 1785083748057
+            }
+          },
+          "id": "prt_f9f485e7c001ngHU8SP7Wi7dbu",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f4857ba001JV0MCbHC0nulYV"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_d91a",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk read src/client/forms.ts",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "import { isValidIBAN } from 'ibantools'\n\n/**\n * Attaches an event listener to clear the custom validity message\n * when the user inputs a value in the input field.\n *\n * @param input - The input field to attach the event listener to\n */\nexport function clearCustomValidityOnInput(\n  input: HTMLInputElement | HTMLTextAreaElement | null | undefined,\n): void {\n  input?.addEventListener('input', () => {\n    if (input.value.trim().length > 0) {\n      // Clear any custom validation messages\n      input.setCustomValidity('')\n    }\n  })\n}\n\n/**\n * Attaches an event listener to clear the custom validity message\n * when the user selects a value in the select field.\n *\n * @param select - The select field to attach the event listener to\n */\nexport function clearCustomValidityOnSelect(select: HTMLSelectElement | null | undefined): void {\n  select?.addEventListener('change', () => {\n    if (select.value.trim().length > 0) {\n      // Clear any custom validation messages\n      select.setCustomValidity('')\n    }\n  })\n}\n\n/**\n * Validates that the input field is not empty. If the input is empty, sets a custom\n * validity message and triggers the display of the validation error.\n *\n * @param {HTMLInputElement} input - The input field to validate.\n * @param {string} errorMessage - The error message to display if the input is empty.\n * @returns {boolean} - Returns `true` if the input is valid (not empty), otherwise `false`.\n */\nexport function checkRequiredInput(\n  input: HTMLInputElement | HTMLTextAreaElement | null | undefined,\n  errorMessage: string,\n): boolean {\n  if (input?.value.trim() === '') {\n    input.setCustomValidity(errorMessage)\n    return input.reportValidity()\n  }\n  return true\n}\n\n/**\n * Validates that the select field is not empty. If the select is empty, sets a custom\n * validity message and triggers the display of the validation error.\n *\n * @param {HTMLInputElement} select - The select field to validate.\n * @param {string} errorMessage - The error message to display if the select is empty.\n * @returns {boolean} - Returns `true` if the select is valid (not empty), otherwise `false`.\n */\nexport function checkRequiredSelect(\n  select: HTMLSelectElement | null | undefined,\n  errorMessage: string,\n): boolean {\n  if (select?.value.trim() === '') {\n    select.setCustomValidity(errorMessage)\n    return select.reportValidity()\n  }\n  return true\n}\n\n/**\n * Validates that the IBAN input is valid. If invalid, sets a custom validity message\n * and triggers the display of the validation error.\n *\n * @param {HTMLInputElement} input - The IBAN input field to validate.\n * @returns {boolean} - Returns `true` if the IBAN is valid or empty (handled by 'required'), otherwise `false`.\n */\nexport function validateIbanInput(input: HTMLInputElement | null | undefined): boolean {\n  if (!input?.value) {\n    input?.setCustomValidity('Bitte gib eine gültige IBAN ein.')\n    return input?.reportValidity() ?? false\n  }\n  if (!isValidIBAN(input.value.replace(/\\s/g, '').toUpperCase())) {\n    input.setCustomValidity('Bitte gib eine gültige IBAN ein.')\n    return input.reportValidity()\n  }\n  return true\n}\n",
+            "metadata": {
+              "output": "import { isValidIBAN } from 'ibantools'\n\n/**\n * Attaches an event listener to clear the custom validity message\n * when the user inputs a value in the input field.\n *\n * @param input - The input field to attach the event listener to\n */\nexport function clearCustomValidityOnInput(\n  input: HTMLInputElement | HTMLTextAreaElement | null | undefined,\n): void {\n  input?.addEventListener('input', () => {\n    if (input.value.trim().length > 0) {\n      // Clear any custom validation messages\n      input.setCustomValidity('')\n    }\n  })\n}\n\n/**\n * Attaches an event listener to clear the custom validity message\n * when the user selects a value in the select field.\n *\n * @param select - The select field to attach the event listener to\n */\nexport function clearCustomValidityOnSelect(select: HTMLSelectElement | null | undefined): void {\n  select?.addEventListener('change', () => {\n    if (select.value.trim().length > 0) {\n      // Clear any custom validation messages\n      select.setCustomValidity('')\n    }\n  })\n}\n\n/**\n * Validates that the input field is not empty. If the input is empty, sets a custom\n * validity message and triggers the display of the validation error.\n *\n * @param {HTMLInputElement} input - The input field to validate.\n * @param {string} errorMessage - The error message to display if the input is empty.\n * @returns {boolean} - Returns `true` if the input is valid (not empty), otherwise `false`.\n */\nexport function checkRequiredInput(\n  input: HTMLInputElement | HTMLTextAreaElement | null | undefined,\n  errorMessage: string,\n): boolean {\n  if (input?.value.trim() === '') {\n    input.setCustomValidity(errorMessage)\n    return input.reportValidity()\n  }\n  return true\n}\n\n/**\n * Validates that the select field is not empty. If the select is empty, sets a custom\n * validity message and triggers the display of the validation error.\n *\n * @param {HTMLInputElement} select - The select field to validate.\n * @param {string} errorMessage - The error message to display if the select is empty.\n * @returns {boolean} - Returns `true` if the select is valid (not empty), otherwise `false`.\n */\nexport function checkRequiredSelect(\n  select: HTMLSelectElement | null | undefined,\n  errorMessage: string,\n): boolean {\n  if (select?.value.trim() === '') {\n    select.setCustomValidity(errorMessage)\n    return select.reportValidity()\n  }\n  return true\n}\n\n/**\n * Validates that the IBAN input is valid. If invalid, sets a custom validity message\n * and triggers the display of the validation error.\n *\n * @param {HTMLInputElement} input - The IBAN input field to validate.\n * @returns {boolean} - Returns `true` if the IBAN is valid or empty (handled by 'required'), otherwise `false`.\n */\nexport function validateIbanInput(input: HTMLInputElement | null | undefined): boolean {\n  if (!input?.value) {\n    input?.setCustomValidity('Bitte gib eine gültige IBAN ein.')\n    return input?.reportValidity() ?? false\n  }\n  if (!isValidIBAN(input.value.replace(/\\s/g, '').toUpperCase())) {\n    input.setCustomValidity('Bitte gib eine gültige IBAN ein.')\n    return input.reportValidity()\n  }\n  return true\n}\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk read src/client/forms.ts",
+            "time": {
+              "start": 1785083748529,
+              "end": 1785083748538
+            }
+          },
+          "id": "prt_f9f485f9d001PeWvCnXbuyRqUz",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f4857ba001JV0MCbHC0nulYV"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11268,
+            "input": 11043,
+            "output": 97,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01592028,
+          "id": "prt_f9f486147001DlEk5E5u3m3qN5",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f4857ba001JV0MCbHC0nulYV"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f48568c001oeaVkthhuWIPYm",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00622172,
+        "tokens": {
+          "total": 12304,
+          "input": 2459,
+          "output": 53,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 9792
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083748921,
+          "completed": 1785083750705
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f4862390019RjYZsNd4qR4Pt",
+        "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f48668a001ZQkAR48zeZclc1",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f4862390019RjYZsNd4qR4Pt"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me see the full test file. The output got truncated at \"returns true for undefined input\". Let me read the fullfile.",
+          "time": {
+            "start": 1785083750028,
+            "end": 1785083750585
+          },
+          "id": "prt_f9f48668c001tk3gzkz6axQRh7",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f4862390019RjYZsNd4qR4Pt"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_f5ef",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts</path>\n<type>file</type>\n<content>\n1: import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\n2: import {\n3:   checkRequiredInput,\n4:   checkRequiredSelect,\n5:   clearCustomValidityOnInput,\n6:   clearCustomValidityOnSelect,\n7:   validateIbanInput,\n8: } from '@/client/forms'\n9: \n10: const VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\n11: const MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n12: \n13: const validitySpies = () => {\n14:   const setInput = vi.fn()\n15:   const reportInput = vi.fn(() => false)\n16:   const setSelect = vi.fn()\n17:   const reportSelect = vi.fn(() => false)\n18:   const setTextarea = vi.fn()\n19:   const reportTextarea = vi.fn(() => false)\n20:   Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', {\n21:     configurable: true,\n22:     value: setInput,\n23:   })\n24:   Object.defineProperty(HTMLInputElement.prototype, 'reportValidity', {\n25:     configurable: true,\n26:     value: reportInput,\n27:   })\n28:   Object.defineProperty(HTMLSelectElement.prototype, 'setCustomValidity', {\n29:     configurable: true,\n30:     value: setSelect,\n31:   })\n32:   Object.defineProperty(HTMLSelectElement.prototype, 'reportValidity', {\n33:     configurable: true,\n34:     value: reportSelect,\n35:   })\n36:   Object.defineProperty(HTMLTextAreaElement.prototype, 'setCustomValidity', {\n37:     configurable: true,\n38:     value: setTextarea,\n39:   })\n40:   Object.defineProperty(HTMLTextAreaElement.prototype, 'reportValidity', {\n41:     configurable: true,\n42:     value: reportTextarea,\n43:   })\n44:   return { setInput, reportInput, setSelect, reportSelect, setTextarea, reportTextarea }\n45: }\n46: \n47: describe('checkRequiredInput', () => {\n48:   let spies: ReturnType<typeof validitySpies>\n49: \n50:   beforeEach(() => {\n51:     spies = validitySpies()\n52:   })\n53: \n54:   afterEach(() => {\n55:     vi.restoreAllMocks()\n56:   })\n57: \n58:   it('returns true and does not touch validity when the input has a non-empty value', () => {\n59:     const input = document.createElement('input')\n60:     input.value = 'Max Mustermann'\n61: \n62:     expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n63:     expect(spies.setInput).not.toHaveBeenCalled()\n64:     expect(spies.reportInput).not.toHaveBeenCalled()\n65:   })\n66: \n67:   it('treats whitespace-only values as empty: sets the message, reports validity, returns false', () => {\n68:     const input = document.createElement('input')\n69:     input.value = '   '\n70: \n71:     expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(false)\n72:     expect(spies.setInput).toHaveBeenCalledWith('Pflichtfeld')\n73:     expect(spies.reportInput).toHaveBeenCalledTimes(1)\n74:   })\n75: \n76:   it('sets the custom validity message and calls reportValidity when the input is empty', () => {\n77:     const input = document.createElement('input')\n78: \n79:     expect(checkRequiredInput(input, 'Bitte Namen angeben')).toBe(false)\n80:     expect(spies.setInput).toHaveBeenCalledWith('Bitte Namen angeben')\n81:     expect(spies.reportInput).toHaveBeenCalledTimes(1)\n82:   })\n83: \n84:   it('works for HTMLTextAreaElement and propagates the error message', () => {\n85:     const textarea = document.createElement('textarea')\n86: \n87:     expect(checkRequiredInput(textarea, 'Bitte Nachricht angeben')).toBe(false)\n88:     expect(spies.setTextarea).toHaveBeenCalledWith('Bitte Nachricht angeben')\n89:     expect(spies.reportTextarea).toHaveBeenCalledTimes(1)\n90:   })\n91: \n92:   it('returns true for null input without touching the prototype', () => {\n93:     expect(checkRequiredInput(null, 'Pflichtfeld')).toBe(true)\n94:     expect(spies.setInput).not.toHaveBeenCalled()\n95:     expect(spies.reportInput).not.toHaveBeenCalled()\n96:   })\n97: \n98:   it('returns true for undefined input without touching the prototype', () => {\n99:     expect(checkRequiredInput(undefined, 'Pflichtfeld')).toBe(true)\n100:     expect(spies.setInput).not.toHaveBeenCalled()\n101:     expect(spies.reportInput).not.toHaveBeenCalled()\n102:   })\n103: })\n104: \n105: describe('checkRequiredSelect', () => {\n106:   let spies: ReturnType<typeof validitySpies>\n107: \n108:   beforeEach(() => {\n109:     spies = validitySpies()\n110:   })\n111: \n112:   afterEach(() => {\n113:     vi.restoreAllMocks()\n114:   })\n115: \n116:   it('returns true and does not touch validity when a value is selected', () => {\n117:     const select = document.createElement('select')\n118:     const option = document.createElement('option')\n119:     option.value = 'general'\n120:     select.append(option)\n121:     select.value = 'general'\n122: \n123:     expect(checkRequiredSelect(select, 'Bitte auswählen')).toBe(true)\n124:     expect(spies.setSelect).not.toHaveBeenCalled()\n125:     expect(spies.reportSelect).not.toHaveBeenCalled()\n126:   })\n127: \n128:   it('sets the custom validity message and reports validity for an empty value', () => {\n129:     const select = document.createElement('select')\n130: \n131:     expect(checkRequiredSelect(select, 'Bitte Auswahl treffen')).toBe(false)\n132:     expect(spies.setSelect).toHaveBeenCalledWith('Bitte Auswahl treffen')\n133:     expect(spies.reportSelect).toHaveBeenCalledTimes(1)\n134:   })\n135: \n136:   it('treats a whitespace-only option value as empty', () => {\n137:     const select = document.createElement('select')\n138:     const option = document.createElement('option')\n139:     option.value = '   '\n140:     select.append(option)\n141:     select.value = '   '\n142: \n143:     expect(checkRequiredSelect(select, 'Pflichtfeld')).toBe(false)\n144:     expect(spies.setSelect).toHaveBeenCalledWith('Pflichtfeld')\n145:     expect(spies.reportSelect).toHaveBeenCalled()\n146:   })\n147: \n148:   it('returns true for null select without touching the prototype', () => {\n149:     expect(checkRequiredSelect(null, 'Pflichtfeld')).toBe(true)\n150:     expect(spies.setSelect).not.toHaveBeenCalled()\n151:   })\n152: \n153:   it('returns true for undefined select without touching the prototype', () => {\n154:     expect(checkRequiredSelect(undefined, 'Pflichtfeld')).toBe(true)\n155:     expect(spies.setSelect).not.toHaveBeenCalled()\n156:   })\n157: })\n158: \n159: describe('validateIbanInput', () => {\n160:   let spies: ReturnType<typeof validitySpies>\n161: \n162:   beforeEach(() => {\n163:     spies = validitySpies()\n164:   })\n165: \n166:   afterEach(() => {\n167:     vi.restoreAllMocks()\n168:   })\n169: \n170:   it('accepts a syntactically valid IBAN and returns true without touching validity', () => {\n171:     const input = document.createElement('input')\n172:     input.value = VALID_IBAN\n173: \n174:     expect(validateIbanInput(input)).toBe(true)\n175:     expect(spies.setInput).not.toHaveBeenCalled()\n176:     expect(spies.reportInput).not.toHaveBeenCalled()\n177:   })\n178: \n179:   it('accepts a valid IBAN written without spaces', () => {\n180:     const input = document.createElement('input')\n181:     input.value = VALID_IBAN.replace(/\\s/g, '')\n182: \n183:     expect(validateIbanInput(input)).toBe(true)\n184:   })\n185: \n186:   it('accepts a valid IBAN regardless of letter case', () => {\n187:     const input = document.createElement('input')\n188:     input.value = 'de89 3704 0044 0532 0130 00'\n189: \n190:     expect(validateIbanInput(input)).toBe(true)\n191:   })\n192: \n193:   it('sets a custom validity message and returns false for an invalid IBAN', () => {\n194:     const input = document.createElement('input')\n195:     input.value = MALFORMED_IBAN\n196: \n197:     expect(validateIbanInput(input)).toBe(false)\n198:     expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n199:     expect(spies.reportInput).toHaveBeenCalledTimes(1)\n200:   })\n201: \n202:   it('rejects a non-IBAN string of random characters', () => {\n203:     const input = document.createElement('input')\n204:     input.value = 'not-an-iban'\n205: \n206:     expect(validateIbanInput(input)).toBe(false)\n207:     expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n208:     expect(spies.reportInput).toHaveBeenCalled()\n209:   })\n210: \n211:   it('treats an empty input as invalid: sets the message, reports, returns false', () => {\n212:     const input = document.createElement('input')\n213: \n214:     expect(validateIbanInput(input)).toBe(false)\n215:     expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n216:     expect(spies.reportInput).toHaveBeenCalledTimes(1)\n217:   })\n218: \n219:   it('returns false and does not touch validity for null input', () => {\n220:     expect(validateIbanInput(null)).toBe(false)\n221:     expect(spies.setInput).not.toHaveBeenCalled()\n222:     expect(spies.reportInput).not.toHaveBeenCalled()\n223:   })\n224: \n225:   it('returns false and does not touch validity for undefined input', () => {\n226:     expect(validateIbanInput(undefined)).toBe(false)\n227:     expect(spies.setInput).not.toHaveBeenCalled()\n228:     expect(spies.reportInput).not.toHaveBeenCalled()\n229:   })\n230: })\n231: \n232: describe('clearCustomValidityOnInput', () => {\n233:   let spies: ReturnType<typeof validitySpies>\n234: \n235:   beforeEach(() => {\n236:     spies = validitySpies()\n237:   })\n238: \n239:   afterEach(() => {\n240:     vi.restoreAllMocks()\n241:   })\n242: \n243:   it('clears the custom validity when the user types a non-empty value', () => {\n244:     const input = document.createElement('input')\n245:     clearCustomValidityOnInput(input)\n246: \n247:     input.value = 'Max'\n248:     input.dispatchEvent(new Event('input'))\n249: \n250:     expect(spies.setInput).toHaveBeenCalledWith('')\n251:   })\n252: \n253:   it('does not clear the validity when the value trims to empty', () => {\n254:     const input = document.createElement('input')\n255:     clearCustomValidityOnInput(input)\n256: \n257:     input.value = '   '\n258:     input.dispatchEvent(new Event('input'))\n259: \n260:     expect(spies.setInput).not.toHaveBeenCalled()\n261:   })\n262: \n263:   it('works for HTMLTextAreaElement: clears once a value is typed', () => {\n264:     const textarea = document.createElement('textarea')\n265:     clearCustomValidityOnInput(textarea)\n266: \n267:     textarea.value = 'Hello'\n268:     textarea.dispatchEvent(new Event('input'))\n269: \n270:     expect(spies.setTextarea).toHaveBeenCalledWith('')\n271:   })\n272: \n273:   it('no-ops before any input event is dispatched', () => {\n274:     const input = document.createElement('input')\n275:     clearCustomValidityOnInput(input)\n276: \n277:     expect(spies.setInput).not.toHaveBeenCalled()\n278:   })\n279: \n280:   it('silently swallows null input (no listener is attached)', () => {\n281:     expect(() => clearCustomValidityOnInput(null)).not.toThrow()\n282:     expect(spies.setInput).not.toHaveBeenCalled()\n283:   })\n284: \n285:   it('silently swallows undefined input (no listener is attached)', () => {\n286:     expect(() => clearCustomValidityOnInput(undefined)).not.toThrow()\n287:     expect(spies.setInput).not.toHaveBeenCalled()\n288:   })\n289: })\n290: \n291: describe('clearCustomValidityOnSelect', () => {\n292:   let spies: ReturnType<typeof validitySpies>\n293: \n294:   beforeEach(() => {\n295:     spies = validitySpies()\n296:   })\n297: \n298:   afterEach(() => {\n299:     vi.restoreAllMocks()\n300:   })\n301: \n302:   it('clears the custom validity when the user selects a non-empty value', () => {\n303:     const select = document.createElement('select')\n304:     const option = document.createElement('option')\n305:     option.value = 'general'\n306:     select.append(option)\n307: \n308:     clearCustomValidityOnSelect(select)\n309: \n310:     select.value = 'general'\n311:     select.dispatchEvent(new Event('change'))\n312: \n313:     expect(spies.setSelect).toHaveBeenCalledWith('')\n314:   })\n315: \n316:   it('does not clear the validity when the selected value trims to empty', () => {\n317:     const select = document.createElement('select')\n318:     const option = document.createElement('option')\n319:     option.value = '   '\n320:     select.append(option)\n321: \n322:     clearCustomValidityOnSelect(select)\n323: \n324:     select.value = '   '\n325:     select.dispatchEvent(new Event('change'))\n326: \n327:     expect(spies.setSelect).not.toHaveBeenCalled()\n328:   })\n329: \n330:   it('no-ops before any change event is dispatched', () => {\n331:     const select = document.createElement('select')\n332:     clearCustomValidityOnSelect(select)\n333: \n334:     expect(spies.setSelect).not.toHaveBeenCalled()\n335:   })\n336: \n337:   it('silently swallows null select (no listener is attached)', () => {\n338:     expect(() => clearCustomValidityOnSelect(null)).not.toThrow()\n339:     expect(spies.setSelect).not.toHaveBeenCalled()\n340:   })\n341: \n342:   it('silently swallows undefined select (no listener is attached)', () => {\n343:     expect(() => clearCustomValidityOnSelect(undefined)).not.toThrow()\n344:     expect(spies.setSelect).not.toHaveBeenCalled()\n345:   })\n346: })\n\n(End of file - total 346 lines)\n</content>",
+            "metadata": {
+              "preview": "import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\nimport {\n  checkRequiredInput,\n  checkRequiredSelect,\n  clearCustomValidityOnInput,\n  clearCustomValidityOnSelect,\n  validateIbanInput,\n} from '@/client/forms'\n\nconst VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\nconst MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n\nconst validitySpies = () => {\n  const setInput = vi.fn()\n  const reportInput = vi.fn(() => false)\n  const setSelect = vi.fn()\n  const reportSelect = vi.fn(() => false)\n  const setTextarea = vi.fn()\n  const reportTextarea = vi.fn(() => false)\n  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', {",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/client/forms.test.ts",
+                "text": "import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'\nimport {\n  checkRequiredInput,\n  checkRequiredSelect,\n  clearCustomValidityOnInput,\n  clearCustomValidityOnSelect,\n  validateIbanInput,\n} from '@/client/forms'\n\nconst VALID_IBAN = 'DE89 3704 0044 0532 0130 00'\nconst MALFORMED_IBAN = 'DE00 0000 0000 0000 0000 00'\n\nconst validitySpies = () => {\n  const setInput = vi.fn()\n  const reportInput = vi.fn(() => false)\n  const setSelect = vi.fn()\n  const reportSelect = vi.fn(() => false)\n  const setTextarea = vi.fn()\n  const reportTextarea = vi.fn(() => false)\n  Object.defineProperty(HTMLInputElement.prototype, 'setCustomValidity', {\n    configurable: true,\n    value: setInput,\n  })\n  Object.defineProperty(HTMLInputElement.prototype, 'reportValidity', {\n    configurable: true,\n    value: reportInput,\n  })\n  Object.defineProperty(HTMLSelectElement.prototype, 'setCustomValidity', {\n    configurable: true,\n    value: setSelect,\n  })\n  Object.defineProperty(HTMLSelectElement.prototype, 'reportValidity', {\n    configurable: true,\n    value: reportSelect,\n  })\n  Object.defineProperty(HTMLTextAreaElement.prototype, 'setCustomValidity', {\n    configurable: true,\n    value: setTextarea,\n  })\n  Object.defineProperty(HTMLTextAreaElement.prototype, 'reportValidity', {\n    configurable: true,\n    value: reportTextarea,\n  })\n  return { setInput, reportInput, setSelect, reportSelect, setTextarea, reportTextarea }\n}\n\ndescribe('checkRequiredInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('returns true and does not touch validity when the input has a non-empty value', () => {\n    const input = document.createElement('input')\n    input.value = 'Max Mustermann'\n\n    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('treats whitespace-only values as empty: sets the message, reports validity, returns false', () => {\n    const input = document.createElement('input')\n    input.value = '   '\n\n    expect(checkRequiredInput(input, 'Pflichtfeld')).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Pflichtfeld')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('sets the custom validity message and calls reportValidity when the input is empty', () => {\n    const input = document.createElement('input')\n\n    expect(checkRequiredInput(input, 'Bitte Namen angeben')).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte Namen angeben')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('works for HTMLTextAreaElement and propagates the error message', () => {\n    const textarea = document.createElement('textarea')\n\n    expect(checkRequiredInput(textarea, 'Bitte Nachricht angeben')).toBe(false)\n    expect(spies.setTextarea).toHaveBeenCalledWith('Bitte Nachricht angeben')\n    expect(spies.reportTextarea).toHaveBeenCalledTimes(1)\n  })\n\n  it('returns true for null input without touching the prototype', () => {\n    expect(checkRequiredInput(null, 'Pflichtfeld')).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('returns true for undefined input without touching the prototype', () => {\n    expect(checkRequiredInput(undefined, 'Pflichtfeld')).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('checkRequiredSelect', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('returns true and does not touch validity when a value is selected', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = 'general'\n    select.append(option)\n    select.value = 'general'\n\n    expect(checkRequiredSelect(select, 'Bitte auswählen')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n    expect(spies.reportSelect).not.toHaveBeenCalled()\n  })\n\n  it('sets the custom validity message and reports validity for an empty value', () => {\n    const select = document.createElement('select')\n\n    expect(checkRequiredSelect(select, 'Bitte Auswahl treffen')).toBe(false)\n    expect(spies.setSelect).toHaveBeenCalledWith('Bitte Auswahl treffen')\n    expect(spies.reportSelect).toHaveBeenCalledTimes(1)\n  })\n\n  it('treats a whitespace-only option value as empty', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = '   '\n    select.append(option)\n    select.value = '   '\n\n    expect(checkRequiredSelect(select, 'Pflichtfeld')).toBe(false)\n    expect(spies.setSelect).toHaveBeenCalledWith('Pflichtfeld')\n    expect(spies.reportSelect).toHaveBeenCalled()\n  })\n\n  it('returns true for null select without touching the prototype', () => {\n    expect(checkRequiredSelect(null, 'Pflichtfeld')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('returns true for undefined select without touching the prototype', () => {\n    expect(checkRequiredSelect(undefined, 'Pflichtfeld')).toBe(true)\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('validateIbanInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('accepts a syntactically valid IBAN and returns true without touching validity', () => {\n    const input = document.createElement('input')\n    input.value = VALID_IBAN\n\n    expect(validateIbanInput(input)).toBe(true)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('accepts a valid IBAN written without spaces', () => {\n    const input = document.createElement('input')\n    input.value = VALID_IBAN.replace(/\\s/g, '')\n\n    expect(validateIbanInput(input)).toBe(true)\n  })\n\n  it('accepts a valid IBAN regardless of letter case', () => {\n    const input = document.createElement('input')\n    input.value = 'de89 3704 0044 0532 0130 00'\n\n    expect(validateIbanInput(input)).toBe(true)\n  })\n\n  it('sets a custom validity message and returns false for an invalid IBAN', () => {\n    const input = document.createElement('input')\n    input.value = MALFORMED_IBAN\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('rejects a non-IBAN string of random characters', () => {\n    const input = document.createElement('input')\n    input.value = 'not-an-iban'\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalled()\n  })\n\n  it('treats an empty input as invalid: sets the message, reports, returns false', () => {\n    const input = document.createElement('input')\n\n    expect(validateIbanInput(input)).toBe(false)\n    expect(spies.setInput).toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')\n    expect(spies.reportInput).toHaveBeenCalledTimes(1)\n  })\n\n  it('returns false and does not touch validity for null input', () => {\n    expect(validateIbanInput(null)).toBe(false)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n\n  it('returns false and does not touch validity for undefined input', () => {\n    expect(validateIbanInput(undefined)).toBe(false)\n    expect(spies.setInput).not.toHaveBeenCalled()\n    expect(spies.reportInput).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('clearCustomValidityOnInput', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('clears the custom validity when the user types a non-empty value', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    input.value = 'Max'\n    input.dispatchEvent(new Event('input'))\n\n    expect(spies.setInput).toHaveBeenCalledWith('')\n  })\n\n  it('does not clear the validity when the value trims to empty', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    input.value = '   '\n    input.dispatchEvent(new Event('input'))\n\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n\n  it('works for HTMLTextAreaElement: clears once a value is typed', () => {\n    const textarea = document.createElement('textarea')\n    clearCustomValidityOnInput(textarea)\n\n    textarea.value = 'Hello'\n    textarea.dispatchEvent(new Event('input'))\n\n    expect(spies.setTextarea).toHaveBeenCalledWith('')\n  })\n\n  it('no-ops before any input event is dispatched', () => {\n    const input = document.createElement('input')\n    clearCustomValidityOnInput(input)\n\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows null input (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnInput(null)).not.toThrow()\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows undefined input (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnInput(undefined)).not.toThrow()\n    expect(spies.setInput).not.toHaveBeenCalled()\n  })\n})\n\ndescribe('clearCustomValidityOnSelect', () => {\n  let spies: ReturnType<typeof validitySpies>\n\n  beforeEach(() => {\n    spies = validitySpies()\n  })\n\n  afterEach(() => {\n    vi.restoreAllMocks()\n  })\n\n  it('clears the custom validity when the user selects a non-empty value', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = 'general'\n    select.append(option)\n\n    clearCustomValidityOnSelect(select)\n\n    select.value = 'general'\n    select.dispatchEvent(new Event('change'))\n\n    expect(spies.setSelect).toHaveBeenCalledWith('')\n  })\n\n  it('does not clear the validity when the selected value trims to empty', () => {\n    const select = document.createElement('select')\n    const option = document.createElement('option')\n    option.value = '   '\n    select.append(option)\n\n    clearCustomValidityOnSelect(select)\n\n    select.value = '   '\n    select.dispatchEvent(new Event('change'))\n\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('no-ops before any change event is dispatched', () => {\n    const select = document.createElement('select')\n    clearCustomValidityOnSelect(select)\n\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows null select (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnSelect(null)).not.toThrow()\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n\n  it('silently swallows undefined select (no listener is attached)', () => {\n    expect(() => clearCustomValidityOnSelect(undefined)).not.toThrow()\n    expect(spies.setSelect).not.toHaveBeenCalled()\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 346,
+                "totalLines": 346,
+                "truncated": false
+              }
+            },
+            "title": "tests/client/forms.test.ts",
+            "time": {
+              "start": 1785083750590,
+              "end": 1785083750597
+            }
+          },
+          "id": "prt_f9f4868bb0013QGqXhxlChrIh6",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f4862390019RjYZsNd4qR4Pt"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 12304,
+            "input": 2459,
+            "output": 53,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 9792
+            }
+          },
+          "cost": 0.00622172,
+          "id": "prt_f9f48690a001f6S9fOuCGM86N2",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f4862390019RjYZsNd4qR4Pt"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f48568c001oeaVkthhuWIPYm",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01078784,
+        "tokens": {
+          "total": 16363,
+          "input": 3534,
+          "output": 605,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 12224
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083750708,
+          "completed": 1785083759602
+        },
+        "finish": "tool-calls",
+        "id": "msg_f9f486934001jnX4wYJ2Z84sRn",
+        "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f486ccb001dQa058k3yIMdED",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f486934001jnX4wYJ2Z84sRn"
+        },
+        {
+          "type": "reasoning",
+          "text": "Now let me analyze against the spec. The spec asks:\n\n1. happy-dom test environment provides working HTMLInputElement/HTMLSelectElement/HTMLTextAreaElement — tests use document.createElement, presuming happy-dom is set up. Let me check vitest config briefly... actually spec says check this acceptance criterion. The test file doesn't set up the environment itself; it relies on vitest config. I should note I can't verify the environment config from this diff alone. But the diff is only this file. Let me check if there's a vitest config with happy-dom.\n\nActually the task says only review this file. But the spec said \"Set up happy-dom with a stub\". The test file uses global document/HTMLInputElement which means happy-dom must be configured at vitest level. I should check.\n\n2. reportValidity/setCustomValidity stubbed on element prototypes and asserted as called — yes, done via Object.defineProperty on prototypes.\n\n3. tests/client/forms.test.ts covers every exported function in src/client/forms.ts — exports are: clearCustomValidityOnInput, clearCustomValidityOnSelect, checkRequiredInput, checkRequiredSelect, validateIbanInput. All covered.\n\n4. IBAN validation tests cover empty, valid, invalid — yes.\n\n5. All tests green, bun run check green — can't run.\n\nSpec also says \"Note the spec also says IBAN invalid-message wording. The actual wording used in src/client/forms.ts is 'Bitte gib eine gültige IBAN ein.' — check the test asserts the actual message.\" Test asserts 'Bitte gib eine gültige IBAN ein.' — matches.\n\nSpec section \"What to build\":\n- \"cover: empty input triggers reportValidity and returns false\" — covered.\n- \"valid IBAN passes\" — covered.\n- \"invalid IBAN sets a custom validity and returns false\" — covered.\n- \"clearCustomValidity* actually clears the message once a value is typed\" — covered.\n- \"Independent of the EventAvailability work — this file has no availability logic.\" — no availability code in tests. Good.\n\nNow findings:\n\n(a) Missing/partial:\n- The spec says \"Set up happy-dom with a stub for reportValidity / setCustomValidity\". The stubs are set up in the test file via Object.defineProperty on prototypes. But happy-dom environment itself isn't configured in this file — relies on vitest config. I can't verify the happy-dom environment is configured. This is potentially partial — but the spec acceptance criterion says \"happy-dom test environment provides working HTMLInputElement...\" The test relies on globals. I should check the vitest config to confirm.\n\nLet me quickly check vitest config.",
+          "time": {
+            "start": 1785083751628,
+            "end": 1785083759335
+          },
+          "id": "prt_f9f486ccc001vHwsb1SkA2tpB0",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f486934001jnX4wYJ2Z84sRn"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_a9cb",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git show 7665df9 --stat && rtk grep -n \"happy-dom\\|environment\" vitest.config.ts vite.config.ts package.json 2>/dev/null",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "commit 7665df930fa0ddcbf65e1ec2ea54cde80972eb97\nAuthor: Michael Seele <mseele@gmail.com>\nDate:   Sun Jul 26 18:35:21 2026 +0200\n\n    test: cover client form validators (#402)\n    \n    Entire-Checkpoint: 9f6511b0337c\n\n tests/client/forms.test.ts | 346 +++++++++++++++++++++++++++++++++++++++++++++\n 1 file changed, 346 insertions(+)\nvitest.config.ts:7:      environment: 'happy-dom',\npackage.json:43:    \"happy-dom\": \"^20.11.1\",\n",
+            "metadata": {
+              "output": "commit 7665df930fa0ddcbf65e1ec2ea54cde80972eb97\nAuthor: Michael Seele <mseele@gmail.com>\nDate:   Sun Jul 26 18:35:21 2026 +0200\n\n    test: cover client form validators (#402)\n    \n    Entire-Checkpoint: 9f6511b0337c\n\n tests/client/forms.test.ts | 346 +++++++++++++++++++++++++++++++++++++++++++++\n 1 file changed, 346 insertions(+)\nvitest.config.ts:7:      environment: 'happy-dom',\npackage.json:43:    \"happy-dom\": \"^20.11.1\",\n",
+              "exit": 2,
+              "truncated": false
+            },
+            "title": "rtk git show 7665df9 --stat && rtk grep -n \"happy-dom\\|environment\" vitest.config.ts vite.config.ts package.json 2>/dev/null",
+            "time": {
+              "start": 1785083759424,
+              "end": 1785083759427
+            }
+          },
+          "id": "prt_f9f488aec001cu1b21kaAkhxXS",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f486934001jnX4wYJ2Z84sRn"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 16363,
+            "input": 3534,
+            "output": 605,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 12224
+            }
+          },
+          "cost": 0.01078784,
+          "id": "prt_f9f488b76001n7P8eK8dpfBqAi",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f486934001jnX4wYJ2Z84sRn"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_f9f48568c001oeaVkthhuWIPYm",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0181064,
+        "tokens": {
+          "total": 19603,
+          "input": 194,
+          "output": 3089,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 16320
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785083759604,
+          "completed": 1785083812491
+        },
+        "finish": "stop",
+        "id": "msg_f9f488bf4001cYemFXSDqpvW2l",
+        "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t"
+      },
+      "parts": [
+        {
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-start",
+          "id": "prt_f9f48911a001IB2vMvghc05CZi",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f488bf4001cYemFXSDqpvW2l"
+        },
+        {
+          "type": "reasoning",
+          "text": "Good, happy-dom is configured. Now let me produce the report.\n\nFindings:\n\n(a) Missing/partial:\n- Spec says test environment should \"provide working HTMLInputElement / HTMLSelectElement / HTMLTextAreaElement\" — configured via vitest.config.ts, fine.\n- Spec: \"clearCustomValidity* actually clears the message once a value is typed\" — covered.\n- All exports covered.\n\nHmm. Let me look harder for issues.\n\nLooking at the `clearCustomValidityOnInput` test \"clears the custom validity when the user types a non-empty value\": it sets `input.value = 'Max'` then dispatches event. The forms.ts logic: inside event listener, checks `input.value.trim().length > 0` then calls setCustomValidity(''). Good.\n\nBut there's a subtle issue: in the test, they set input.value BEFORE dispatching the event. The listener reads input.value at event time — fine.\n\nFor the \"does not clear the validity when the value trims to empty\" — sets value to '   ' then dispatches. The listener checks length > 0 → false, so setCustomValidity not called. Good.\n\nNow, scope creep (b): The test adds extra cases beyond what spec asked:\n- whitespace-only handling for checkRequiredInput, checkRequiredSelect — spec didn't ask for this.\n- case-insensitivity test, no-spaces test for IBAN — spec only said \"valid IBAN passes\". Extra but reasonable.\n- null/undefined input handling tests for each function — spec says \"takes HTMLInputElement | null | undefined\" and \"nearly unit-testable as-is\". The null/undefined behavior is part of the contract.\n- textarea coverage for checkRequiredInput — forms.ts accepts HTMLInputElement | HTMLTextAreaElement, so testing textarea is reasonable.\n\nThese are not really scope creep; they're reasonable coverage extensions.\n\n(c) Wrong implementations:\n\nLet me look carefully. The spec said: \"happy-dom returns false silently — assert the calls, not the returns\". The stubs return false via `vi.fn(() => false)`, and `reportValidity` call results are used in `checkRequiredInput` returns (it returns `input.reportValidity()`). So `checkRequiredInput` returning false here is actually due to the stub returning false, not actual validation. The test asserts `.toBe(false)` because the stub returns false. This matches \"assert the calls, not the returns\" — but the test also asserts returns. That's actually OK because they stub false.\n\nWait — the spec says \"assert the calls, not the returns\". The test asserts both calls and returns. Slight tension but acceptable.\n\nBut there's a subtle bug: `checkRequiredInput` for the happy path returns `true` (not from reportValidity). For empty path, returns `input.reportValidity()` which the stub returns false. Test asserts `.toBe(false)`. OK.\n\nLook at validateIbanInput null test: spec for forms.ts returns `input?.reportValidity() ?? false`. For null, returns false. Test asserts `.toBe(false)` and that spies not called. Good.\n\nBut wait — spec said for IBAN: \"empty input triggers reportValidity and returns false\". In forms.ts the empty path: `input?.setCustomValidity(...)` then `return input?.reportValidity() ?? false`. For a real input (not null), this calls setCustomValidity and reportValidity. Test 'treats an empty input as invalid' asserts both spies called. Good.\n\nNow, does the spec say anything about the IBAN empty case? \"IBAN validation tests cover empty, valid, and invalid inputs\" — yes covered.\n\nHmm, what about wording check — spec says actual wording is 'Bitte gib eine gültige IBAN ein.' Test asserts exactly that. Good.\n\nLet me look for a genuine issue. In validateIbanInput, for null/undefined the spec asked to test it? The spec said: \"empty input triggers reportValidity and returns false\". The null test asserts spies NOT called and returns false — but per the forms.ts code, `input?.setCustomValidity(...)` is optional-chained so it's skipped on null, and `input?.reportValidity() ?? false` returns false. So null → false, no spies. Test matches implementation. This is implementation-behavior testing, not spec-driven, but spec did say the function \"take HTMLInputElement | null | undefined\" — so testing null/undefined is reasonable.\n\nWait, is there a concern that the spec said \"empty input triggers reportValidity and returns false\" but for null there's no reportValidity triggered? The spec specifically refers to empty input (the input element exists but value is empty). The null case is separate. Fine.\n\nLet me reconsider (a) missing. The spec acceptance: \"All tests green, bun run check green\" — I'm told not to run. Can't verify.\n\nThe spec \"What to build\" mentions: \"test our wrapper around it, not the lib\" — the tests use real `isValidIBAN` via the wrapper. They don't mock ibantools. Good, matches.\n\nActually look more carefully: spec says \"test our wrapper around it, not the lib\". Tests import from `@/client/forms` only, not ibantools. Good.\n\nNow a real potential issue: blank/whitespace IBAN. The empty input test for validateIbanInput uses truly empty input.value. But what about whitespace-only IBAN value? forms.ts: `if (!input?.value)` — a whitespace string is truthy, so it goes to isValidIBAN branch, which uppercases and removes \\s, then checks `isValidIBAN('')` which returns false → sets message and reports. Test doesn't cover whitespace-only IBAN. Not required by spec.\n\nOK let me make sure I have a real finding for (c). Let me re-read the spec note: \"Note the spec also says IBAN invalid-message wording. The actual wording used in src/client/forms.ts is 'Bitte gib eine gültige IBAN ein.' — check the test asserts the actual message.\"\n\nTest line 198, 207, 215: asserts `toHaveBeenCalledWith('Bitte gib eine gültige IBAN ein.')`. Matches. Good.\n\nSo really, the test file appears to fully satisfy the spec. Let me look for anything genuinely wrong.\n\nOne thing: The spec says stub reportValidity / setCustomValidity on the element prototypes. The tests stub on `HTMLInputElement.prototype`, `HTMLSelectElement.prototype`, `HTMLTextAreaElement.prototype`. Good. Asserted as called. Good.\n\nBut: `vi.restoreAllMocks()` in afterEach — does that restore Object.defineProperty mocks? `vi.restoreAllMocks` restores mock implementations created by `vi.spyOn`/`vi.fn` only if they were spied. For `Object.defineProperty` with `configurable: true` and a `value`, `vi.restoreAllMocks` does NOT remove the property descriptor. The descriptors persist across tests because they're configurable but never deleted. However, each beforeEach re-defines them with fresh `vi.fn()` instances via `validitySpies()`. So between tests within a describe, the prototype methods get new spies each beforeEach. That works.\n\nBut across describe blocks — the property descriptors persist on the global prototypes (from earlier describes) after `vi.restoreAllMocks`. They get overwritten by next describe's beforeEach. So no leak issue. Fine.\n\nHmm, actually `vi.restoreAllMocks` only restores mocks set up via `vi.spyOn`. Manual `Object.defineProperty` overrides aren't restored. So the prototype stubs leak beyond the test file into other test files in the same vitest worker. This could be a (c) issue — pollutes global prototypes. But spec asked for stubs on prototypes. Could note as concern.\n\nActually the descriptors are configurable, so happy-dom's originals could be restored by deleting the property. The tests never delete. This is a potential cross-test pollution issue but spec didn't address restoration.\n\nLet me frame this as a (c) \"looks implemented but implementation looks wrong\" — stubs leak because `vi.restoreAllMocks` doesn't undo `Object.defineProperty`. Could affect other test files.\n\nLet me also check: `validitySpies()` is called in beforeEach of every describe block, re-installing spies. Within the file it's fine. Across files is the concern.\n\nLet me also note: the spies are created fresh in each beforeEach, but since `vi.restoreAllMocks` doesn't restore defineProperty, the LAST set of spies persists after this file's tests finish. If another test file runs in the same worker and uses HTMLInputElement without redefining, they'd get the dead spy (which still records calls but the spy reference is lost). This is a real concern.\n\nNow also: spec says \"assert the calls, not the returns\" — happy-dom returns false silently. The tests assert returns (`.toBe(false)`, `.toBe(true)`) AS WELL as calls. The `.toBe(false)` on the empty/invalid cases relies on the stub's `() => false` return, not on real DOM behavior. This contradicts the spec's guidance slightly — but the spec said \"assert the calls, not the returns\" because happy-dom returns false silently. By stubbing to return false, the tests can assert returns. This is arguably fine but technically the returns are stubbed not real.\n\nActually, this means the \"returns false\" assertions are circular — they assert the stub returns false. The spec wanted us to assert calls because returns are meaningless. The test does both, which makes the return assertion somewhat vacuous. Minor.\n\nLet me finalize the report. Under 400 words.\n\nFindings:\n\n(a) Missing/partial:\n- Acceptance \"All tests green, bun run check green\" — not verifiable from diff alone (told not to run). No finding.\n- Coverage of every exported function — all 5 covered. No finding.\n- IBAN empty/valid/invalid — covered. No finding.\n\nHonestly (a) is essentially complete. Only minor: spec note about asserting calls not returns — tests assert both, but return assertions are stub-circular.\n\n(b) Scope creep:\n- Whitespace-only input/select handling tests (lines 67-74, 136-146) — spec didn't ask. Reasonable but extra.\n- IBAN case-insensitivity and no-spaces variants (lines 179-191) — spec only asked \"valid IBAN passes\".\n- null/undefined cases for every function — spec mentioned the types but not explicitly null tests. Reasonable coverage extension.\n\n(c) Wrong:\n- `vi.restoreAllMocks()` (lines 55, 113, 167, 240, 299) does NOT undo `Object.defineProperty` installs on `HTMLInputElement.prototype` etc. The descriptors are configurable but never deleted/restored, so the stubs leak onto the global prototypes for the rest of the vitest worker. Other test files using these elements would hit dead spies. Spec said \"stubbed on the element prototypes and asserted as called\" — implemented, but cleanup is wrong; should restore via deleting the configurable props or save/restore original descriptors.\n- Stubs return `false` (`vi.fn(() => false)`), and tests assert `.toBe(false)` on the failure paths (lines 71, 79, 131, 197, 214). Spec explicitly said \"assert the calls, not the returns\" because happy-dom returns false silently. The return assertions are circular (they assert the stub, not the validator), giving a false sense of coverage.\n\nLet me write the report concisely under 400 words.",
+          "time": {
+            "start": 1785083760924,
+            "end": 1785083804729
+          },
+          "id": "prt_f9f48911c001UGrD1z4y7KNvCC",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f488bf4001cYemFXSDqpvW2l"
+        },
+        {
+          "type": "text",
+          "text": "## Spec-axis review — commit 7665df9 vs issue #402\n\n### (a) Spec requirements missing or partial\n\nNone missing. All acceptance criteria are addressed in-file:\n- Prototypes stubbed (`HTMLInputElement`/`HTMLSelectElement`/`HTMLTextAreaElement`) and asserted as called (lines 20–44, 63, 80, 88, 145, 199).\n- Every exported function in `src/client/forms.ts` has a `describe` — `checkRequiredInput`, `checkRequiredSelect`, `validateIbanInput`, `clearCustomValidityOnInput`, `clearCustomValidityOnSelect`.\n- IBAN empty / valid / invalid all covered (lines 170–217).\n- IBAN invalid-message wording matches the actual `forms.ts` string `'Bitte gib eine gültige IBAN ein.'` (lines 198, 207, 215) — satisfies the spec's wording note.\n- \"No availability logic\" — none present.\n\n`bun run check` / tests-green cannot be verified from the diff alone.\n\n### (b) Scope creep (behaviour not asked for)\n\n- Whitespace-only `checkRequiredInput` / `checkRequiredSelect` cases (lines 67–74, 136–146). Spec only asked \"empty input triggers `reportValidity` and returns false\"; whitespace-trim semantics are an extra contract assertion.\n- IBAN no-spaces and lower-case variants (lines 179–191). Spec line: \"valid IBAN passes (`isValidIBAN` … is the real check — test our wrapper around it, not the lib)\" — one valid case suffices; two extra casing variants are gold-plating.\n- null/undefined cases for every function (e.g. 92–102, 148–156, 219–229, 280–288, 337–345). Spec mentions the nullable signature but never asks null-behaviour assertions.\n\nReasonable coverage extensions, but beyond what #402 enumerates.\n\n### (c) Implemented but looks wrong\n\n- Spec line: \"`reportValidity` / `setCustomValidity` stubbed on the element prototypes and asserted as called\". The stubs are installed via `Object.defineProperty(..., { configurable: true, value: vi.fn() })` (lines 20–43), but cleanup is `vi.restoreAllMocks()` (lines 55, 113, 167, 240, 299). `restoreAllMocks` only reverses `vi.spyOn`; it does **not** delete `Object.defineProperty` overrides. The configurable descriptors persist on the global prototypes for the remainder of the vitest worker, leaking dead spies into any other test file that touches these elements. Original descriptors are never saved/restored — should delete the props in `afterEach` (they're configurable) or stash and re-define the originals.\n- Spec line: \"happy-dom returns false silently — assert the calls, not the returns\". The stubs are declared `vi.fn(() => false)` (lines 15, 17, 19) and the failure-path tests assert `.toBe(false)` (lines 71, 131, 197, 214). Those return assertions are circular — they verify the stub's own return, not the validator's logic — which is exactly the false-confidence the spec warned against.",
+          "time": {
+            "start": 1785083804741,
+            "end": 1785083812201
+          },
+          "id": "prt_f9f493c45001e9lKN7K0Iv4kzJ",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f488bf4001cYemFXSDqpvW2l"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "5349f2d8f7dad3fa82b803af09efc304418359b6",
+          "type": "step-finish",
+          "tokens": {
+            "total": 19603,
+            "input": 194,
+            "output": 3089,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 16320
+            }
+          },
+          "cost": 0.0181064,
+          "id": "prt_f9f4959af0013NHOIg641Qp7MC",
+          "sessionID": "ses_060b7a979ffeEWyMNhS4WSiq3t",
+          "messageID": "msg_f9f488bf4001cYemFXSDqpvW2l"
+        }
+      ]
+    }
+  ]
+}

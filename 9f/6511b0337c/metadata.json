@@ -3,7 +3,7 @@
   "checkpoint_id": "9f6511b0337c",
   "strategy": "manual-commit",
   "branch": "feature/tests",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "tests/client/forms.test.ts"
   ],
@@ -21,13 +21,20 @@
       "compact_transcript": "/9f/6511b0337c/1/transcript.jsonl",
       "content_hash": "/9f/6511b0337c/1/content_hash.txt",
       "prompt": ""
+    },
+    {
+      "metadata": "/9f/6511b0337c/2/metadata.json",
+      "transcript": "/9f/6511b0337c/2/full.jsonl",
+      "compact_transcript": "/9f/6511b0337c/2/transcript.jsonl",
+      "content_hash": "/9f/6511b0337c/2/content_hash.txt",
+      "prompt": "/9f/6511b0337c/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 27771,
+    "input_tokens": 45001,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 252800,
-    "output_tokens": 4148,
-    "api_call_count": 16
+    "cache_read_tokens": 291264,
+    "output_tokens": 7992,
+    "api_call_count": 20
   }
 }
