@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "ffcd4bbd2dc6",
+  "strategy": "manual-commit",
+  "branch": "feature/tests",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "bun.lockb",
+    "package.json",
+    "tests/components/astro-modules.d.ts",
+    "tests/components/blocks/event.test.ts",
+    "tests/components/blocks/newsletter-card.test.ts",
+    "tests/components/blocks/prebooking.test.ts",
+    "tests/components/controls/button.test.ts",
+    "tests/components/controls/checkbox.test.ts",
+    "tests/components/controls/iban-input.test.ts",
+    "tests/components/controls/input.test.ts",
+    "tests/components/controls/select.test.ts",
+    "tests/components/controls/sepa-mandate.test.ts",
+    "tests/components/controls/submit-button.test.ts",
+    "tests/components/controls/switch.test.ts",
+    "tests/components/controls/textarea.test.ts",
+    "tests/components/lib/MetaTagsStub.astro",
+    "tests/components/lib/container.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ff/cd4bbd2dc6/0/metadata.json",
+      "transcript": "/ff/cd4bbd2dc6/0/full.jsonl",
+      "compact_transcript": "/ff/cd4bbd2dc6/0/transcript.jsonl",
+      "content_hash": "/ff/cd4bbd2dc6/0/content_hash.txt",
+      "prompt": "/ff/cd4bbd2dc6/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1320600,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 15178112,
+    "output_tokens": 47669,
+    "api_call_count": 204
+  }
+}

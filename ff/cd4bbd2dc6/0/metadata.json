@@ -1,0 +1,78 @@
+{
+  "cli_version": "0.8.42",
+  "checkpoint_id": "ffcd4bbd2dc6",
+  "session_id": "ses_060a5c53fffeYRb6cyniWppdmo",
+  "strategy": "manual-commit",
+  "created_at": "2026-07-27T18:42:46.230929Z",
+  "branch": "feature/tests",
+  "checkpoints_count": 2,
+  "save_step_count": 2,
+  "files_touched": [
+    "bun.lockb",
+    "package.json",
+    "tests/components/astro-modules.d.ts",
+    "tests/components/blocks/event.test.ts",
+    "tests/components/blocks/newsletter-card.test.ts",
+    "tests/components/blocks/prebooking.test.ts",
+    "tests/components/controls/button.test.ts",
+    "tests/components/controls/checkbox.test.ts",
+    "tests/components/controls/iban-input.test.ts",
+    "tests/components/controls/input.test.ts",
+    "tests/components/controls/select.test.ts",
+    "tests/components/controls/sepa-mandate.test.ts",
+    "tests/components/controls/submit-button.test.ts",
+    "tests/components/controls/switch.test.ts",
+    "tests/components/controls/textarea.test.ts",
+    "tests/components/lib/MetaTagsStub.astro",
+    "tests/components/lib/container.ts"
+  ],
+  "agent": "OpenCode",
+  "model": "glm-5.2",
+  "turn_id": "05f317b32a1f",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 1320600,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 15178112,
+    "output_tokens": 47669,
+    "api_call_count": 204
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-07-27T18:42:46.162615Z",
+    "agent_lines": 651,
+    "agent_removed": 0,
+    "human_added": 27,
+    "human_modified": 19,
+    "human_removed": 0,
+    "total_committed": 697,
+    "total_lines_changed": 697,
+    "agent_percentage": 93.4002869440459,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0
+    },
+    {
+      "checkpoint_number": 3,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 670,
+      "agent_lines_removed": 0
+    }
+  ]
+}
