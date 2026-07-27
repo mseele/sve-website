@@ -43,14 +43,14 @@
       "transcript": "/ff/cd4bbd2dc6/2/full.jsonl",
       "compact_transcript": "/ff/cd4bbd2dc6/2/transcript.jsonl",
       "content_hash": "/ff/cd4bbd2dc6/2/content_hash.txt",
-      "prompt": "/ff/cd4bbd2dc6/2/prompt.txt"
+      "prompt": ""
     }
   ],
   "token_usage": {
-    "input_tokens": 199336,
+    "input_tokens": 148150,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 2020096,
-    "output_tokens": 11050,
-    "api_call_count": 23
+    "cache_read_tokens": 1969536,
+    "output_tokens": 6872,
+    "api_call_count": 18
   }
 }
