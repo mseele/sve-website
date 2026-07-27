@@ -1,0 +1,1244 @@
+{
+  "info": {
+    "id": "ses_05b1cac6affehthkiFtHKZqv1L",
+    "slug": "happy-falcon",
+    "projectID": "68d450c05733c82192ed1f31a5e40cb2ae707f59",
+    "directory": "/Users/mseele/dev/sve/sve-website",
+    "path": "",
+    "parentID": "ses_060a5c53fffeYRb6cyniWppdmo",
+    "title": "Spec review (@general subagent)",
+    "agent": "general",
+    "model": {
+      "id": "glm-5.2",
+      "providerID": "opencode-go",
+      "variant": "default"
+    },
+    "version": "1.18.5",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0.10502496000000001,
+    "tokens": {
+      "input": 47776,
+      "output": 2564,
+      "reasoning": 0,
+      "cache": {
+        "read": 103296,
+        "write": 0
+      }
+    },
+    "permission": [
+      {
+        "permission": "task",
+        "pattern": "*",
+        "action": "deny"
+      }
+    ],
+    "time": {
+      "created": 1785177789333,
+      "updated": 1785177989933
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "role": "user",
+        "time": {
+          "created": 1785177789343
+        },
+        "agent": "general",
+        "model": {
+          "providerID": "opencode-go",
+          "modelID": "glm-5.2"
+        },
+        "summary": {
+          "diffs": []
+        },
+        "id": "msg_fa4e3539f001GHn1JA2LY9NgWN",
+        "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L"
+      },
+      "parts": [
+        {
+          "type": "text",
+          "text": "Perform a SPEC review of the diff between `HEAD~1` and `HEAD` in the repo at `/Users/mseele/dev/sve/sve-website`.\n\nDiff command: `git diff HEAD~1...HEAD`\nCommit list (one commit): `bf26ae1 test: cover Astro components via Container API + cheerio (#404)`\n\nThe originating spec is GitHub issue #404 in the `mseele/sve-website` repo. Run this to fetch it:\n`gh issue view 404 --json title,body -R mseele/sve-website`\n\nSpec body summary (do not rely on this alone — fetch the live issue):\n\n> Astro Container API render-to-HTML tests for the components whose frontmatter does real work — `Event.astro`, `PreBooking.astro`, `NewsletterCard.astro`, and the controls set (`Input.astro`, `IbanInput.astro`, `SepaMandate.astro`, `Select.astro`, `Textarea.astro`, `SubmitButton.astro`, `Button.astro`, `Checkbox.astro`, `Switch.astro`).\n>\n> Use `experimental_AstroContainer.create()` to render each component in isolation in Node with injected props, then assert the rendered HTML with `cheerio` (DOM queries, not class-string snapshots — those rot for styling reasons, not correctness). For components whose frontmatter reads Contentful or the backend instrumentation directly, inject mocked loader data — keep the test about the markup, not the source.\n>\n> Skip pure-layout wrappers (`Container.astro`, `Prose.astro`, `AppHeader.astro`, `AppFooter.astro`).\n>\n> Acceptance criteria:\n> - [ ] Container API wired through `experimental_AstroContainer.create()`\n> - [ ] `cheerio` available as an assertion helper\n> - [ ] Render tests for `Event.astro`, `PreBooking.astro`, `NewsletterCard.astro`, and the controls set\n> - [ ] No CSS-class-string snapshots — DOM structure assertions only\n> - [ ] Components that load data are fed mocked loader results, not live fetches\n> - [ ] All tests green, `bun run check` green\n\nBrief: Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words.\n\nReturn only the report.",
+          "id": "prt_fa4e353a6001kwJQKA7vD1kNVD",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3539f001GHn1JA2LY9NgWN"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4e3539f001GHn1JA2LY9NgWN",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01594108,
+        "tokens": {
+          "total": 11285,
+          "input": 11061,
+          "output": 96,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785177789573,
+          "completed": 1785177792239
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e35485001McC3sLxPYLOnrY",
+        "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L"
+      },
+      "parts": [
+        {
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-start",
+          "id": "prt_fa4e359eb001RKiWJ5nmeEh6Rt",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e35485001McC3sLxPYLOnrY"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me perform a SPEC review. I need the diff and the issue body.",
+          "time": {
+            "start": 1785177790959,
+            "end": 1785177791162
+          },
+          "id": "prt_fa4e359ef0012w4i7XmNHxfeYG",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e35485001McC3sLxPYLOnrY"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_45ee",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git diff HEAD~1...HEAD --stat",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "bun.lockb                                       | Bin 653109 -> 653141 bytes\n package.json                                    |   1 +\n tests/components/astro-modules.d.ts             |  20 +++\n tests/components/blocks/event.test.ts           | 178 ++++++++++++++++++++++++\n tests/components/blocks/newsletter-card.test.ts |  65 +++++++++\n tests/components/blocks/prebooking.test.ts      |  50 +++++++\n tests/components/controls/button.test.ts        |  48 +++++++\n tests/components/controls/checkbox.test.ts      |  47 +++++++\n tests/components/controls/iban-input.test.ts    |  35 +++++\n tests/components/controls/input.test.ts         |  37 +++++\n tests/components/controls/select.test.ts        |  50 +++++++\n tests/components/controls/sepa-mandate.test.ts  |  27 ++++\n tests/components/controls/submit-button.test.ts |  35 +++++\n tests/components/controls/switch.test.ts        |  41 ++++++\n tests/components/controls/textarea.test.ts      |  26 ++++\n tests/components/lib/MetaTagsStub.astro         |   5 +\n tests/components/lib/container.ts               |  32 +++++\n 17 files changed, 697 insertions(+)\n",
+            "metadata": {
+              "output": "bun.lockb                                       | Bin 653109 -> 653141 bytes\n package.json                                    |   1 +\n tests/components/astro-modules.d.ts             |  20 +++\n tests/components/blocks/event.test.ts           | 178 ++++++++++++++++++++++++\n tests/components/blocks/newsletter-card.test.ts |  65 +++++++++\n tests/components/blocks/prebooking.test.ts      |  50 +++++++\n tests/components/controls/button.test.ts        |  48 +++++++\n tests/components/controls/checkbox.test.ts      |  47 +++++++\n tests/components/controls/iban-input.test.ts    |  35 +++++\n tests/components/controls/input.test.ts         |  37 +++++\n tests/components/controls/select.test.ts        |  50 +++++++\n tests/components/controls/sepa-mandate.test.ts  |  27 ++++\n tests/components/controls/submit-button.test.ts |  35 +++++\n tests/components/controls/switch.test.ts        |  41 ++++++\n tests/components/controls/textarea.test.ts      |  26 ++++\n tests/components/lib/MetaTagsStub.astro         |   5 +\n tests/components/lib/container.ts               |  32 +++++\n 17 files changed, 697 insertions(+)\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git diff HEAD~1...HEAD --stat",
+            "time": {
+              "start": 1785177791229,
+              "end": 1785177791235
+            }
+          },
+          "id": "prt_fa4e35abc001Wr7ba6tBEaPI8K",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e35485001McC3sLxPYLOnrY"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_581f",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "gh issue view 404 --json title,body -R mseele/sve-website",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "{\"body\":\"## What to build\\n\\nOptional, lower priority than #399–#403.\\n\\nAstro Container API render-to-HTML tests for the components whose frontmatter does real work — `Event.astro`, `PreBooking.astro`, `NewsletterCard.astro`, and the controls set (`Input.astro`, `IbanInput.astro`, `SepaMandate.astro`, `Select.astro`, `Textarea.astro`, `SubmitButton.astro`, `Button.astro`, `Checkbox.astro`, `Switch.astro`).\\n\\nUse `experimental_AstroContainer.create()` to render each component in isolation in Node with injected props, then assert the rendered HTML with `cheerio` (DOM queries, not class-string snapshots — those rot for styling reasons, not correctness). For components whose frontmatter reads Contentful or the backend instrumentation directly, inject mocked loader data — keep the test about the markup, not the source.\\n\\nSkip pure-layout wrappers (`Container.astro`, `Prose.astro`, `AppHeader.astro`, `AppFooter.astro`).\\n\\n## Acceptance criteria\\n\\n- [ ] Container API wired through `experimental_AstroContainer.create()`\\n- [ ] `cheerio` available as an assertion helper\\n- [ ] Render tests for `Event.astro`, `PreBooking.astro`, `NewsletterCard.astro`, and the controls set\\n- [ ] No CSS-class-string snapshots — DOM structure assertions only\\n- [ ] Components that load data are fed mocked loader results, not live fetches\\n- [ ] All tests green, `bun run check` green\\n\\n## Blocked by\\n\\n- #398 (harness)\\n- #400 (Event.astro consumer sites depend on the EventAvailability retype)\",\"title\":\"Container API component render tests\"}\n",
+            "metadata": {
+              "output": "{\"body\":\"## What to build\\n\\nOptional, lower priority than #399–#403.\\n\\nAstro Container API render-to-HTML tests for the components whose frontmatter does real work — `Event.astro`, `PreBooking.astro`, `NewsletterCard.astro`, and the controls set (`Input.astro`, `IbanInput.astro`, `SepaMandate.astro`, `Select.astro`, `Textarea.astro`, `SubmitButton.astro`, `Button.astro`, `Checkbox.astro`, `Switch.astro`).\\n\\nUse `experimental_AstroContainer.create()` to render each component in isolation in Node with injected props, then assert the rendered HTML with `cheerio` (DOM queries, not class-string snapshots — those rot for styling reasons, not correctness). For components whose frontmatter reads Contentful or the backend instrumentation directly, inject mocked loader data — keep the test about the markup, not the source.\\n\\nSkip pure-layout wrappers (`Container.astro`, `Prose.astro`, `AppHeader.astro`, `AppFooter.astro`).\\n\\n## Acceptance criteria\\n\\n- [ ] Container API wired through `experimental_AstroContainer.create()`\\n- [ ] `cheerio` available as an assertion helper\\n- [ ] Render tests for `Event.astro`, `PreBooking.astro`, `NewsletterCard.astro`, and the controls set\\n- [ ] No CSS-class-string snapshots — DOM structure assertions only\\n- [ ] Components that load data are fed mocked loader results, not live fetches\\n- [ ] All tests green, `bun run check` green\\n\\n## Blocked by\\n\\n- #398 (harness)\\n- #400 (Event.astro consumer sites depend on the EventAvailability retype)\",\"title\":\"Container API component render tests\"}\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "gh issue view 404 --json title,body -R mseele/sve-website",
+            "time": {
+              "start": 1785177792161,
+              "end": 1785177792165
+            }
+          },
+          "id": "prt_fa4e35b67001hq6zXBbu45VSUP",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e35485001McC3sLxPYLOnrY"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11285,
+            "input": 11061,
+            "output": 96,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.01594108,
+          "id": "prt_fa4e35ecd0010k40GbRnjNGObf",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e35485001McC3sLxPYLOnrY"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4e3539f001GHn1JA2LY9NgWN",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01333328,
+        "tokens": {
+          "total": 11314,
+          "input": 8440,
+          "output": 186,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 2688
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785177792242,
+          "completed": 1785177826387
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e35ef2001cz5av0maLnYgGF",
+        "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L"
+      },
+      "parts": [
+        {
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-start",
+          "id": "prt_fa4e3de9b001SbYelG3q2Z032G",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e35ef2001cz5av0maLnYgGF"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_f951",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk cat tests/components/lib/container.ts tests/components/lib/MetaTagsStub.astro tests/components/astro-modules.d.ts tests/components/blocks/event.test.ts tests/components/blocks/newsletter-card.test.ts tests/components/blocks/prebooking.test.ts tests/components/controls/button.test.ts tests/components/controls/checkbox.test.ts tests/components/controls/iban-input.test.ts tests/components/controls/input.test.ts tests/components/controls/select.test.ts tests/components/controls/sepa-mandate.test.ts tests/components/controls/submit-button.test.ts tests/components/controls/switch.test.ts tests/components/controls/textarea.test.ts",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "...output truncated...\n\nFull output saved to: /Users/mseele/.local/share/opencode/tool-output/tool_fa4e3e2780013oVj4rMDY5b30G\n\n    expect($('input').attr('placeholder')).toBe('du@beispiel.de')\n  })\n\n  it('passes through extra HTML attributes via the spread attrs', async () => {\n    const { $ } = await render(Input, {\n      props: { id: 'phone', name: 'phone', type: 'tel', autocomplete: 'tel' },\n    })\n    expect($('input[autocomplete=\"tel\"]')).toHaveLength(1)\n    expect($('input[type=\"tel\"]')).toHaveLength(1)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Select from '@/components/controls/Select.astro'\nimport { render } from '../lib/container'\n\ndescribe('Select.astro', () => {\n  const values = [\n    { value: 'a', label: 'Alpha' },\n    { value: 'b', label: 'Bravo', selected: true },\n    { value: 'c', label: 'Charlie', disabled: true },\n  ]\n\n  it('renders a labelled <select> with id/name and the given options', async () => {\n    const { $ } = await render(Select, { props: { id: 'payment', name: 'payment', values } })\n    expect($('div > label[for=\"payment\"]')).toHaveLength(1)\n    expect($('select[id=\"payment\"][name=\"payment\"]')).toHaveLength(1)\n    expect($('select > option')).toHaveLength(3)\n  })\n\n  it('renders option labels as text content and keeps values on the option attrs', async () => {\n    const { $ } = await render(Select, { props: { id: 'p', name: 'p', values } })\n    const opts = $('select > option').toArray()\n    expect($(opts[0]).attr('value')).toBe('a')\n    expect($(opts[0]).text()).toBe('Alpha')\n    expect($(opts[1]).attr('value')).toBe('b')\n    expect($(opts[1]).text()).toBe('Bravo')\n    expect($(opts[2]).attr('value')).toBe('c')\n  })\n\n  it('honours selected and disabled per-option flags', async () => {\n    const { $ } = await render(Select, { props: { id: 'p', name: 'p', values } })\n    expect($('option[selected]')).toHaveLength(1)\n    expect($('option[selected]').attr('value')).toBe('b')\n    expect($('option[disabled]')).toHaveLength(1)\n    expect($('option[disabled]').attr('value')).toBe('c')\n  })\n\n  it('wraps the select with a data-field attribute set to the id', async () => {\n    const { $ } = await render(Select, { props: { id: 'pay', name: 'pay', values } })\n    expect($('div[data-field=\"pay\"]')).toHaveLength(1)\n  })\n\n  it('hides the whole field when hidden prop is true', async () => {\n    const { $ } = await render(Select, { props: { id: 'pay', name: 'pay', values, hidden: true } })\n    // The wrapping <div> gains the Tailwind `hidden` class via `class:list`.\n    expect($('div[data-field=\"pay\"].hidden')).toHaveLength(1)\n    // The <select> element gets the HTML boolean `hidden` attribute.\n    expect($('select[hidden]')).toHaveLength(1)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport SepaMandate from '@/components/controls/SepaMandate.astro'\nimport { render } from '../lib/container'\n\ndescribe('SepaMandate.astro', () => {\n  it('delegates to Checkbox with the SEPA mandate consent string for the default creditor', async () => {\n    const { $ } = await render(SepaMandate, { props: { id: 'sepa', name: 'sepa' } })\n    expect($('input[type=\"checkbox\"][id=\"sepa\"][name=\"sepa\"]')).toHaveLength(1)\n    expect($('label[for=\"sepa\"]').last().text()).toContain('SV Eutingen 1947 e.V.')\n    expect($('label[for=\"sepa\"]').last().text()).toContain('SEPA-Lastschrift')\n  })\n\n  it('uses the supplied creditor name when present (external operator)', async () => {\n    const { $ } = await render(SepaMandate, {\n      props: { id: 'sepa', name: 'sepa', creditor: 'Förderverein SV Eutingen 1947 e.V.' },\n    })\n    // Default creditor is bare \"SV Eutingen 1947 e.V.\"; the suplied creditor\n    // carries the \"Förderverein\" prefix — the title text must read that prefix.\n    expect($('label[for=\"sepa\"]').last().text()).toContain('den Förderverein SV Eutingen 1947 e.V.')\n  })\n\n  it('renders exactly one checkbox (no nested inputs leak)', async () => {\n    const { $ } = await render(SepaMandate, { props: { id: 's', name: 's' } })\n    expect($('input')).toHaveLength(1)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport SubmitButton from '@/components/controls/SubmitButton.astro'\nimport { render } from '../lib/container'\n\ndescribe('SubmitButton.astro', () => {\n  it('wraps slotted content inside a single submit button (a Button with El=\"button\")', async () => {\n    const { $ } = await render(SubmitButton, {\n      props: { id: 'btn' },\n      slots: { default: 'Jetzt anmelden' },\n    })\n    expect($('button[type=\"submit\"]#btn')).toHaveLength(1)\n    expect($('button').text()).toContain('Jetzt anmelden')\n    expect($('a')).toHaveLength(0)\n  })\n\n  it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n    const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n    expect($('button svg')).toHaveLength(1)\n    // SubmitButton nests a spinner span inside Button's wrapper span, so the\n    // button contains exactly two nested <span> elements.\n    expect($('button span')).toHaveLength(2)\n    // The deepest <span> — the spinner container — has the SVG as a direct\n    // child, with the slot text rendering as a trailing text node.\n    const spinnerSpan = $('button span > svg').parent()\n    expect(spinnerSpan).toHaveLength(1)\n    expect(spinnerSpan.children().first().prop('tagName')?.toLowerCase()).toBe('svg')\n  })\n\n  it('still renders the spinner SVG when given no slot content', async () => {\n    const { $ } = await render(SubmitButton)\n    expect($('button[type=\"submit\"]')).toHaveLength(1)\n    expect($('button svg')).toHaveLength(1)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Switch from '@/components/controls/Switch.astro'\nimport { render } from '../lib/container'\n\ndescribe('Switch.astro', () => {\n  it('renders a title label and a hidden checkbox underneath the toggle', async () => {\n    const { $ } = await render(Switch, {\n      props: { id: 'general', name: 'general', title: 'Allgemein' },\n    })\n    expect($('label[for=\"general\"]')).toHaveLength(2)\n    expect($('label[for=\"general\"]').first().text()).toBe('Allgemein')\n    expect($('input[type=\"checkbox\"][id=\"general\"][name=\"general\"]')).toHaveLength(1)\n  })\n\n  it('omits the description span when undefined', async () => {\n    const { $ } = await render(Switch, {\n      props: { id: 'a', name: 'a', title: 't' },\n    })\n    expect($('span')).toHaveLength(1) // the toggle knob span only\n  })\n\n  it('renders the description in a span below the title row', async () => {\n    const { $ } = await render(Switch, {\n      props: { id: 'fitness', name: 'fitness', title: 'Fitness', description: 'Fit' },\n    })\n    // knob span + description span\n    expect($('span')).toHaveLength(2)\n    expect($('span').last().text()).toBe('Fit')\n  })\n\n  it('reflects the checked prop onto the checkbox', async () => {\n    const { $ } = await render(Switch, {\n      props: { id: 'events', name: 'events', title: 'e', checked: true },\n    })\n    expect($('input[checked]')).toHaveLength(1)\n\n    const { $: $un } = await render(Switch, { props: { id: 'e', name: 'e', title: 'e' } })\n    expect($un('input[checked]')).toHaveLength(0)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Textarea from '@/components/controls/Textarea.astro'\nimport { render } from '../lib/container'\n\ndescribe('Textarea.astro', () => {\n  it('renders a labelled <textarea> with id and name', async () => {\n    const { $ } = await render(Textarea, {\n      props: { id: 'comment', name: 'comment', label: 'Kommentar (optional)' },\n    })\n    expect($('div > label[for=\"comment\"]').text()).toBe('Kommentar (optional)')\n    expect($('textarea[id=\"comment\"][name=\"comment\"]')).toHaveLength(1)\n  })\n\n  it('omits label when not given', async () => {\n    const { $ } = await render(Textarea, { props: { id: 'notes', name: 'notes' } })\n    expect($('label')).toHaveLength(0)\n    expect($('textarea[id=\"notes\"]')).toHaveLength(1)\n  })\n\n  it('always emits a <textarea>, never an <input>', async () => {\n    const { $ } = await render(Textarea, { props: { id: 'x', name: 'x' } })\n    expect($('textarea')).toHaveLength(1)\n    expect($('input')).toHaveLength(0)\n  })\n})\n",
+            "metadata": {
+              "output": "...\n\nat unhappy path while keeping the test about the markup.\nimport { experimental_AstroContainer as AstroContainer } from 'astro/container'\nimport { load as cheerioLoad, type CheerioAPI } from 'cheerio'\n\nlet containerPromise: Promise<AstroContainer> | undefined\n\nexport async function getContainer(): Promise<AstroContainer> {\n  if (!containerPromise) containerPromise = AstroContainer.create()\n  return containerPromise\n}\n\nexport async function render(\n  Component: Parameters<AstroContainer['renderToString']>[0],\n  options?: Parameters<AstroContainer['renderToString']>[1],\n): Promise<{ html: string; $: CheerioAPI }> {\n  const container = await getContainer()\n  const html = await container.renderToString(Component, options)\n  return { html, $: cheerioLoad(html) }\n}\n---\n// Stub MetaTags: drops all SEO/canonical computation that would otherwise\n// call `Astro.site` (which the AstroContainer API leaves undefined by default).\nconst {} = Astro.props\n---// Ambient declarations for `.astro` modules used by Container API render tests.\n//\n// `tsc --noEmit` (run by `bun run check`) lacks the Astro Vite plugin, so\n// importing `.astro` files from `.ts` test modules raises TS2307. This file\n// declares a permissive ambient module for every `.astro` import under test\n// typed as an Astro component factory, matching the parameter shape expected\n// by `experimental_AstroContainer.renderToString`. The Astro Vite plugin\n// emits the real factory at runtime under vitest.\n//\n// The file is a global script (no top-level import/export) so the\n// `declare module` is treated as a true ambient declaration, not a module\n// augmentation. Type-only imports are pulled in via a triple-slash\n// reference instead.\n\n/// <reference types=\"astro\" />\n\ndeclare module '*.astro' {\n  const Component: import('astro').AstroComponentFactory\n  export default Component\n}\n// @vitest-environment node\n//\n// `Event.astro` pulls in `Layout` → `MetaTags.astro`, which computes a\n// canonical URL against `Astro.site`. `experimental_AstroContainer.create()`\n// leaves `Astro.site` undefined (the container defaults elide `site`), so\n// `new URL(path, undefined)` throws. We mock `@/components/common/MetaTags.astro`\n// with an on-disk Astro stub that drops all SEO/head computation and renders\n// nothing — keeping the test about the Event markup, not the Layout head.\nimport { describe, expect, it, vi } from 'vitest'\nimport { experimental_AstroContainer as AstroContainer } from 'astro/container'\nimport { load as cheerioLoad } from 'cheerio'\nimport Event from '@/components/blocks/Event.astro'\nimport imageMetadata from '@/assets/events/fit.jpg'\nimport { EventCustomFieldType, PaymentMethod } from '@/types'\n\n// vi.mock is hoisted above the static imports above by the vitest transform,\n// so Event.astro resolves the mocked MetaTags module during SSR.\nvi.mock('@/components/common/MetaTags.astro', async () => await import('../lib/MetaTagsStub.astro'))\n\n// A minimal Astro `CollectionEntry<'events'>`-shaped object. The `image`\n// field needs to be an `ImageMetadata`; we reuse a real on-disk image and\n// overwrite `src` with an absolute URL so `new URL(src, undefined)` (where\n// `Astro.site` is undefined inside the container) still resolves cleanly.\nconst entry = {\n  id: 'evt-1',\n  collection: 'events',\n  slug: 'evt-1',\n  data: {\n    id: 'evt-1',\n    name: 'Rückenfit',\n    image: { ...imageMetadata, src: 'https://example.com/img.jpg' },\n    sortIndex: 1,\n    shortDescription: 'Pilates für den Rücken',\n    description: '<p>Ein sanfter Kurs.</p>',\n    location: 'Clubhaus',\n    dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'],\n    duration: '60 Min',\n    priceMember: '40 €',\n    priceNonMember: '60 €',\n    externalOperator: false,\n    customFields: [{ name: 'Rückenbeschwerden', type: EventCustomFieldType.Text }],\n    paymentMethod: PaymentMethod.SepaDirectDebit,\n  },\n  render: () => ({}),\n} as any\n\nasync function renderEvent(\n  overrides: Partial<typeof entry.data> = {},\n  props: Record<string, unknown> = {},\n) {\n  const container = await AstroContainer.create()\n  const html = await container.renderToString(Event, {\n    props: {\n      type: 'events' as const,\n      entry: { ...entry, data: { ...entry.data, ...overrides } },\n      newsletterDescription: 'Erhalte automatisch eine E-Mail sobald neue Events online sind.',\n      newsletterText: 'Ich möchte über zukünftige Events per E-Mail informiert werden',\n      schemaType: 'Event' as const,\n      ...props,\n    },\n  })\n  return { html, $: cheerioLoad(html) }\n}\n\ndescribe('Event.astro', () => {\n  it('wraps the page in the event identifier stamped on the root <div>', async () => {\n    const { $ } = await renderEvent()\n    expect($('div[data-identifier=\"evt-1\"]')).toHaveLength(1)\n  })\n\n  it('renders the \"Beschreibung\" section header and the description HTML verbatim', async () => {\n    const { $ } = await renderEvent()\n    expect($('#beschreibung h2').text()).toBe('Beschreibung')\n    expect($('#beschreibung > div > div').html()).toContain('<p>Ein sanfter Kurs.</p>')\n  })\n\n  it('emits the Details list with the expected set of detail ids', async () => {\n    const { $ } = await renderEvent()\n    const titles = $('#details [data-title]')\n      .toArray()\n      .map((el) => $(el).attr('data-title'))\n    expect(titles).toContain('availability')\n    expect(titles).toContain('dates')\n    expect(titles).toContain('duration')\n    expect(titles).toContain('price')\n    expect(titles).toContain('location')\n  })\n\n  it('renders the price as two member/non-member rows when prices differ', async () => {\n    const { $ } = await renderEvent({ priceMember: '40 €', priceNonMember: '60 €' })\n    expect($('#details [data-title=\"price\"]')).toHaveLength(2)\n    const priceLabels = $('#details [data-label=\"price\"]')\n      .toArray()\n      .map((el) => $(el).text())\n    expect(priceLabels).toEqual(['40 €', '60 €'])\n  })\n\n  it('collapses the price into a single \"Kostenlos\" row when both prices are \"0 €\"', async () => {\n    const { $ } = await renderEvent({ priceMember: '0 €', priceNonMember: '0 €' })\n    expect($('#details [data-title=\"price\"]')).toHaveLength(1)\n    expect($('#details [data-label=\"price\"]').text()).toBe('Kostenlos')\n  })\n\n  it('shows the dates detail as \"Termine\" (plural) when there are two dates, \"Termin\" (singular) when one', async () => {\n    const { $multi } = {\n      $multi: (await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })).$,\n    }\n    expect($multi('#details [data-title=\"dates\"]').text()).toBe('Termine')\n\n    const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z'] })\n    expect($('#details [data-title=\"dates\"]').text()).toBe('Termin')\n  })\n\n  it('renders the \"Termine\" section with the same number of <li> entries as dates (multi-date case)', async () => {\n    const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })\n    // Two date strings → two <li> rows total (split across two <ul> columns,\n    // first column holds ceil(n/2), the second the remainder).\n    expect($('main li')).toHaveLength(2)\n  })\n\n  it('stamps the Anmeldung form with the standard input roster plus the SEPA-specific fields', async () => {\n    const { $ } = await renderEvent()\n    // Mandatory personal fields. Use `form#form` to scope inside the booking\n    // form; the hidden NewsletterCard teaser under #newsletter-card renders\n    // its own form with another `#email`-id input from NewsletterCard.\n    for (const id of ['firstname', 'lastname', 'street', 'plz', 'email', 'phone', 'comment']) {\n      expect($(`#anmeldung form#form #${id}`)).toHaveLength(1)\n    }\n    // SEPA-mandate fields appear only because paymentMethod is SepaDirectDebit.\n    expect($('#anmeldung form#form input[data-iban-validation]#iban')).toHaveLength(1)\n    expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(1)\n  })\n\n  it('omits the IBAN / SEPA mandate fields when paymentMethod is BankTransfer', async () => {\n    const { $ } = await renderEvent({ paymentMethod: PaymentMethod.BankTransfer })\n    expect($('#anmeldung form#form input[data-iban-validation]')).toHaveLength(0)\n    expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(0)\n  })\n\n  it('renders one custom-field input per eventCustomField entry', async () => {\n    const { $ } = await renderEvent({\n      customFields: [\n        { name: 'Rückenbeschwerden', type: EventCustomFieldType.Text },\n        { name: 'Teilnehmer', type: EventCustomFieldType.Number, minValue: 1, maxValue: 4 },\n      ],\n    })\n    expect($('#anmeldung form#form input#customfield')).toHaveLength(2)\n    // Number-typed custom field forwards `min` / `max` through the spread attrs.\n    const numberField = $('#anmeldung form#form input#customfield').toArray()[1]\n    expect($(numberField).attr('type')).toBe('number')\n    expect($(numberField).attr('min')).toBe('1')\n    expect($(numberField).attr('max')).toBe('4')\n  })\n\n  it('emits three consent checkboxes (member, newsletter, consent)', async () => {\n    const { $ } = await renderEvent()\n    expect($('#anmeldung form#form #member')).toHaveLength(1)\n    expect($('#anmeldung form#form #newsletter')).toHaveLength(1)\n    expect($('#anmeldung form#form #consent')).toHaveLength(1)\n    // All three render as type=\"checkbox\".\n    expect($('#anmeldung form#form input#member[type=\"checkbox\"]')).toHaveLength(1)\n    expect($('#anmeldung form#form input#consent[type=\"checkbox\"]')).toHaveLength(1)\n  })\n\n  it('embeds the NewsletterCard teaser (hidden) using the supplied newsletter copy', async () => {\n    const { $ } = await renderEvent()\n    const teaser = $('#newsletter-card')\n    expect(teaser).toHaveLength(1)\n    expect(teaser.hasClass('hidden')).toBe(true)\n    expect(teaser.find('p').first().text()).toContain('Erhalte automatisch')\n  })\n\n  it('renders the Anmeldung section hidden by default (the booking flow reveals it client-side)', async () => {\n    const { $ } = await renderEvent()\n    expect($('#anmeldung')).toHaveLength(1)\n    expect($('#anmeldung').hasClass('hidden')).toBe(true)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport NewsletterCard from '@/components/blocks/NewsletterCard.astro'\nimport { render } from '../lib/container'\n\ndescribe('NewsletterCard.astro — general subscription form (no `topic`)', () => {\n  it('renders the heading and description, the email input, and three category switches by default', async () => {\n    const { $ } = await render(NewsletterCard, { props: { description: 'Bleib dran' } })\n    expect($('h3').text()).toBe('Bleib auf dem Laufenden')\n    expect($('p').first().text()).toBe('Bleib dran')\n    expect($('form#newsletter-form')).toHaveLength(1)\n    expect($('input[type=\"email\"][id=\"email\"][name=\"email\"]')).toHaveLength(1)\n    expect($('input[id=\"email\"]').attr('autocomplete')).toBe('email')\n    expect($('input[id=\"email\"]').attr('placeholder')).toBe('Deine E-Mail-Adresse')\n    // Three category switches: Allgemein / Fitness / Events.\n    expect($('input[type=\"checkbox\"][id=\"general\"]')).toHaveLength(1)\n    expect($('input[type=\"checkbox\"][id=\"fitness\"]')).toHaveLength(1)\n    expect($('input[type=\"checkbox\"][id=\"events\"]')).toHaveLength(1)\n  })\n\n  it('renders the Abo/Abmelden ButtonSwitch with a hidden abo checkbox (default checked)', async () => {\n    const { $ } = await render(NewsletterCard, {})\n    expect($('#abo')).toHaveLength(1)\n    expect($('#abo').attr('checked')).toBeDefined()\n    // ButtonSwitch emits two label-less buttons labelled Abonnieren / Abmelden.\n    expect($('button#left').text()).toBe('Abonnieren')\n    expect($('button#right').text()).toBe('Abmelden')\n  })\n\n  it('submits via a single <button type=\"submit\"> labelled \"Absenden\" when no topic is set', async () => {\n    const { $ } = await render(NewsletterCard, {})\n    expect($('button[type=\"submit\"]')).toHaveLength(1)\n    expect($('button[type=\"submit\"]').text()).toContain('Absenden')\n  })\n\n  it('emits a privacy blurb linking to /datenschutz', async () => {\n    const { $ } = await render(NewsletterCard, {})\n    const link = $('a[href=\"/datenschutz\"]')\n    expect(link).toHaveLength(1)\n    expect(link.text()).toBe('Datenschutzerklärung')\n  })\n})\n\ndescribe('NewsletterCard.astro — topic-scoped variant', () => {\n  it('omits the Abo/Abmelden ButtonSwitch and the three switches when a topic is set', async () => {\n    const { $ } = await render(NewsletterCard, { props: { topic: 'fitness' } })\n    expect($('#abo')).toHaveLength(1) // present as a hidden input below\n    expect($('#abo[checked]')).toHaveLength(1)\n    expect($('button#left')).toHaveLength(0)\n    expect($('button#right')).toHaveLength(0)\n    expect($('#general')).toHaveLength(0)\n    expect($('#fitness')).toHaveLength(1)\n    expect($('#events')).toHaveLength(0)\n  })\n\n  it('emits a hidden checked topic input matching the supplied topic', async () => {\n    const { $ } = await render(NewsletterCard, { props: { topic: 'events' } })\n    expect($('input[type=\"hidden\"][id=\"events\"][name=\"events\"][checked]')).toHaveLength(1)\n  })\n\n  it('labels the submit button \"Anmelden\" when a topic is set', async () => {\n    const { $ } = await render(NewsletterCard, { props: { topic: 'general' } })\n    expect($('button[type=\"submit\"]').text()).toContain('Anmelden')\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport PreBooking from '@/components/blocks/PreBooking.astro'\nimport { render } from '../lib/container'\n\ndescribe('PreBooking.astro', () => {\n  it('emits the loading <dialog id=\"prebooking\"> with the spinner svg and the \"in progress\" text', async () => {\n    const { $ } = await render(PreBooking)\n    expect($('dialog#prebooking')).toHaveLength(1)\n    expect($('dialog#prebooking svg')).toHaveLength(1)\n    expect($('dialog#prebooking p').text()).toContain('Die Buchung wird durchgeführt')\n  })\n\n  it('emits the IBAN pre-booking form wrapper, hidden by default via the \"hidden\" class', async () => {\n    const { $ } = await render(PreBooking)\n    const wrapper = $('#prebooking-iban-form')\n    expect(wrapper).toHaveLength(1)\n    // The wrapper starts hidden via Tailwind's `hidden` utility, plus `flex`/grid\n    // classes are swapped in by client-side JS when the IBAN step is required.\n    expect(wrapper.hasClass('hidden')).toBe(true)\n    expect(wrapper.find('form')).toHaveLength(1)\n  })\n\n  it('renders the IBAN prompt heading and explanation paragraph', async () => {\n    const { $ } = await render(PreBooking)\n    expect($('#prebooking-iban-form h3').text()).toBe('IBAN erforderlich')\n    expect($('#prebooking-iban-form p').first().text()).toContain('SEPA-Lastschrift')\n  })\n\n  it('embeds the IBAN input and SEPA mandate checkbox inside the pre-booking form', async () => {\n    const { $ } = await render(PreBooking)\n    expect(\n      $('#prebooking-iban-form input[data-iban-validation][id=\"prebooking-iban\"]'),\n    ).toHaveLength(1)\n    expect(\n      $('#prebooking-iban-form input[type=\"checkbox\"][id=\"prebooking-sepa-mandate\"]'),\n    ).toHaveLength(1)\n  })\n\n  it('renders the \"Buchung abschließen\" submit button inside the IBAN form', async () => {\n    const { $ } = await render(PreBooking)\n    expect($('#prebooking-iban-form button[type=\"submit\"]#prebooking-iban-submit')).toHaveLength(1)\n    expect($('#prebooking-iban-submit').text()).toContain('Buchung abschließen')\n  })\n\n  it('exposes exactly one <dialog> element (the loading dialog), no stray dialogs', async () => {\n    const { $ } = await render(PreBooking)\n    expect($('dialog')).toHaveLength(1)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Button from '@/components/controls/Button.astro'\nimport { render } from '../lib/container'\n\ndescribe('Button.astro', () => {\n  it('renders an anchor when El is unset (default), with href and slotted label', async () => {\n    const { $ } = await render(Button, {\n      props: { href: '/foo', emphasis: 'primary' },\n      slots: { default: 'Mehr' },\n    })\n    expect($('a')).toHaveLength(1)\n    expect($('a').attr('href')).toBe('/foo')\n    expect($('a').text()).toContain('Mehr')\n  })\n\n  it('renders a <button type=\"submit\"> when El=\"button\" and type=\"submit\"', async () => {\n    const { $ } = await render(Button, {\n      props: { El: 'button', type: 'submit', emphasis: 'primary' },\n      slots: { default: 'Senden' },\n    })\n    expect($('button[type=\"submit\"]')).toHaveLength(1)\n    expect($('button').text()).toContain('Senden')\n    expect($('a')).toHaveLength(0)\n  })\n\n  it('reflects the disabled attribute onto the button element', async () => {\n    const { $ } = await render(Button, {\n      props: { El: 'button', type: 'submit', disabled: true },\n      slots: { default: 'x' },\n    })\n    expect($('button[disabled]')).toHaveLength(1)\n  })\n\n  it('forwards the optional id prop', async () => {\n    const { $ } = await render(Button, {\n      props: { id: 'cta' },\n      slots: { default: 'go' },\n    })\n    expect($('#cta')).toHaveLength(1)\n  })\n\n  it('renders a single child span (no fragment-level elements leak)', async () => {\n    const { $ } = await render(Button, { slots: { default: 'x' } })\n    expect($('a > span')).toHaveLength(1)\n    expect($('a > div')).toHaveLength(0)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Checkbox from '@/components/controls/Checkbox.astro'\nimport { render } from '../lib/container'\n\ndescribe('Checkbox.astro', () => {\n  it('renders a checkbox input bound to id/name, with the title as the second label', async () => {\n    const { $ } = await render(Checkbox, {\n      props: { id: 'member', name: 'member', title: 'Ich bin Mitglied' },\n    })\n    expect($('input[type=\"checkbox\"][id=\"member\"][name=\"member\"]')).toHaveLength(1)\n    // Two labels point at the same id — the visual box label + the title label.\n    expect($('label[for=\"member\"]')).toHaveLength(2)\n    expect($('label[for=\"member\"]').last().text()).toBe('Ich bin Mitglied')\n  })\n\n  it('omits the description <span> when description prop is not supplied', async () => {\n    const { $ } = await render(Checkbox, {\n      props: { id: 'consent', name: 'consent', title: 'Einwilligung' },\n    })\n    expect($('span')).toHaveLength(0)\n  })\n\n  it('renders the description inside a span under the title row', async () => {\n    const { $ } = await render(Checkbox, {\n      props: { id: 'consent', name: 'consent', title: 'Einwilligung', description: 'zwei Zeilen' },\n    })\n    expect($('span').text()).toContain('zwei Zeilen')\n  })\n\n  it('renders checked only when the checked prop is true', async () => {\n    const { $ } = await render(Checkbox, {\n      props: { id: 'c', name: 'c', title: 't', checked: true },\n    })\n    expect($('input[checked]')).toHaveLength(1)\n\n    const { $: $un } = await render(Checkbox, {\n      props: { id: 'c', name: 'c', title: 't' },\n    })\n    expect($un('input[checked]')).toHaveLength(0)\n  })\n\n  it('contains an SVG check mark inline (the visual indicator)', async () => {\n    const { $ } = await render(Checkbox, { props: { id: 'c', name: 'c', title: 't' } })\n    expect($('svg path[d=\"M20 6 9 17l-5-5\"]')).toHaveLength(1)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport IbanInput from '@/components/controls/IbanInput.astro'\nimport { render } from '../lib/container'\n\ndescribe('IbanInput.astro', () => {\n  it('renders a text input with the IBAN-specific markers (autocomplete, data attribute)', async () => {\n    const { $ } = await render(IbanInput, { props: { id: 'iban' } })\n    expect($('input[type=\"text\"]')).toHaveLength(1)\n    expect($('input[autocomplete=\"iban\"]')).toHaveLength(1)\n    expect($('input[data-iban-validation]')).toHaveLength(1)\n    expect($('input[id=\"iban\"][name=\"iban\"]')).toHaveLength(1)\n  })\n\n  it('defaults the label to \"IBAN\" when no label prop is given', async () => {\n    const { $ } = await render(IbanInput, { props: { id: 'iban' } })\n    expect($('label[for=\"iban\"]').text()).toBe('IBAN')\n  })\n\n  it('uses the supplied label verbatim when provided', async () => {\n    const { $ } = await render(IbanInput, { props: { id: 'iban', label: 'Kontonummer' } })\n    expect($('label[for=\"iban\"]').text()).toBe('Kontonummer')\n  })\n\n  it('uses the fixed German sample IBAN as the placeholder default', async () => {\n    const { $ } = await render(IbanInput, { props: { id: 'iban' } })\n    expect($('input').attr('placeholder')).toBe('DE89 3704 0044 0532 0130 00')\n  })\n\n  it('forwards required and disabled onto the input element', async () => {\n    const { $ } = await render(IbanInput, { props: { id: 'iban', required: true, disabled: true } })\n    expect($('input[required]')).toHaveLength(1)\n    expect($('input[disabled]')).toHaveLength(1)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Input from '@/components/controls/Input.astro'\nimport { render } from '../lib/container'\n\ndescribe('Input.astro', () => {\n  it('renders a labelled input bound to id/name', async () => {\n    const { $ } = await render(Input, {\n      props: { id: 'firstname', name: 'firstname', label: 'Vorname' },\n    })\n    expect($('div > label[for=\"firstname\"]')).toHaveLength(1)\n    expect($('div > label[for=\"firstname\"]').text()).toBe('Vorname')\n    expect($('div > input[id=\"firstname\"][name=\"firstname\"]')).toHaveLength(1)\n  })\n\n  it('omits the label entirely when label prop is undefined', async () => {\n    const { $ } = await render(Input, { props: { id: 'phone', name: 'phone' } })\n    expect($('label')).toHaveLength(0)\n    expect($('input[id=\"phone\"][name=\"phone\"]')).toHaveLength(1)\n  })\n\n  it('forwards type=\"email\" and placeholder attribute', async () => {\n    const { $ } = await render(Input, {\n      props: { id: 'email', name: 'email', type: 'email', placeholder: 'du@beispiel.de' },\n    })\n    expect($('input[type=\"email\"]')).toHaveLength(1)\n    expect($('input').attr('placeholder')).toBe('du@beispiel.de')\n  })\n\n  it('passes through extra HTML attributes via the spread attrs', async () => {\n    const { $ } = await render(Input, {\n      props: { id: 'phone', name: 'phone', type: 'tel', autocomplete: 'tel' },\n    })\n    expect($('input[autocomplete=\"tel\"]')).toHaveLength(1)\n    expect($('input[type=\"tel\"]')).toHaveLength(1)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Select from '@/components/controls/Select.astro'\nimport { render } from '../lib/container'\n\ndescribe('Select.astro', () => {\n  const values = [\n    { value: 'a', label: 'Alpha' },\n    { value: 'b', label: 'Bravo', selected: true },\n    { value: 'c', label: 'Charlie', disabled: true },\n  ]\n\n  it('renders a labelled <select> with id/name and the given options', async () => {\n    const { $ } = await render(Select, { props: { id: 'payment', name: 'payment', values } })\n    expect($('div > label[for=\"payment\"]')).toHaveLength(1)\n    expect($('select[id=\"payment\"][name=\"payment\"]')).toHaveLength(1)\n    expect($('select > option')).toHaveLength(3)\n  })\n\n  it('renders option labels as text content and keeps values on the option attrs', async () => {\n    const { $ } = await render(Select, { props: { id: 'p', name: 'p', values } })\n    const opts = $('select > option').toArray()\n    expect($(opts[0]).attr('value')).toBe('a')\n    expect($(opts[0]).text()).toBe('Alpha')\n    expect($(opts[1]).attr('value')).toBe('b')\n    expect($(opts[1]).text()).toBe('Bravo')\n    expect($(opts[2]).attr('value')).toBe('c')\n  })\n\n  it('honours selected and disabled per-option flags', async () => {\n    const { $ } = await render(Select, { props: { id: 'p', name: 'p', values } })\n    expect($('option[selected]')).toHaveLength(1)\n    expect($('option[selected]').attr('value')).toBe('b')\n    expect($('option[disabled]')).toHaveLength(1)\n    expect($('option[disabled]').attr('value')).toBe('c')\n  })\n\n  it('wraps the select with a data-field attribute set to the id', async () => {\n    const { $ } = await render(Select, { props: { id: 'pay', name: 'pay', values } })\n    expect($('div[data-field=\"pay\"]')).toHaveLength(1)\n  })\n\n  it('hides the whole field when hidden prop is true', async () => {\n    const { $ } = await render(Select, { props: { id: 'pay', name: 'pay', values, hidden: true } })\n    // The wrapping <div> gains the Tailwind `hidden` class via `class:list`.\n    expect($('div[data-field=\"pay\"].hidden')).toHaveLength(1)\n    // The <select> element gets the HTML boolean `hidden` attribute.\n    expect($('select[hidden]')).toHaveLength(1)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport SepaMandate from '@/components/controls/SepaMandate.astro'\nimport { render } from '../lib/container'\n\ndescribe('SepaMandate.astro', () => {\n  it('delegates to Checkbox with the SEPA mandate consent string for the default creditor', async () => {\n    const { $ } = await render(SepaMandate, { props: { id: 'sepa', name: 'sepa' } })\n    expect($('input[type=\"checkbox\"][id=\"sepa\"][name=\"sepa\"]')).toHaveLength(1)\n    expect($('label[for=\"sepa\"]').last().text()).toContain('SV Eutingen 1947 e.V.')\n    expect($('label[for=\"sepa\"]').last().text()).toContain('SEPA-Lastschrift')\n  })\n\n  it('uses the supplied creditor name when present (external operator)', async () => {\n    const { $ } = await render(SepaMandate, {\n      props: { id: 'sepa', name: 'sepa', creditor: 'Förderverein SV Eutingen 1947 e.V.' },\n    })\n    // Default creditor is bare \"SV Eutingen 1947 e.V.\"; the suplied creditor\n    // carries the \"Förderverein\" prefix — the title text must read that prefix.\n    expect($('label[for=\"sepa\"]').last().text()).toContain('den Förderverein SV Eutingen 1947 e.V.')\n  })\n\n  it('renders exactly one checkbox (no nested inputs leak)', async () => {\n    const { $ } = await render(SepaMandate, { props: { id: 's', name: 's' } })\n    expect($('input')).toHaveLength(1)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport SubmitButton from '@/components/controls/SubmitButton.astro'\nimport { render } from '../lib/container'\n\ndescribe('SubmitButton.astro', () => {\n  it('wraps slotted content inside a single submit button (a Button with El=\"button\")', async () => {\n    const { $ } = await render(SubmitButton, {\n      props: { id: 'btn' },\n      slots: { default: 'Jetzt anmelden' },\n    })\n    expect($('button[type=\"submit\"]#btn')).toHaveLength(1)\n    expect($('button').text()).toContain('Jetzt anmelden')\n    expect($('a')).toHaveLength(0)\n  })\n\n  it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n    const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n    expect($('button svg')).toHaveLength(1)\n    // SubmitButton nests a spinner span inside Button's wrapper span, so the\n    // button contains exactly two nested <span> elements.\n    expect($('button span')).toHaveLength(2)\n    // The deepest <span> — the spinner container — has the SVG as a direct\n    // child, with the slot text rendering as a trailing text node.\n    const spinnerSpan = $('button span > svg').parent()\n    expect(spinnerSpan).toHaveLength(1)\n    expect(spinnerSpan.children().first().prop('tagName')?.toLowerCase()).toBe('svg')\n  })\n\n  it('still renders the spinner SVG when given no slot content', async () => {\n    const { $ } = await render(SubmitButton)\n    expect($('button[type=\"submit\"]')).toHaveLength(1)\n    expect($('button svg')).toHaveLength(1)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Switch from '@/components/controls/Switch.astro'\nimport { render } from '../lib/container'\n\ndescribe('Switch.astro', () => {\n  it('renders a title label and a hidden checkbox underneath the toggle', async () => {\n    const { $ } = await render(Switch, {\n      props: { id: 'general', name: 'general', title: 'Allgemein' },\n    })\n    expect($('label[for=\"general\"]')).toHaveLength(2)\n    expect($('label[for=\"general\"]').first().text()).toBe('Allgemein')\n    expect($('input[type=\"checkbox\"][id=\"general\"][name=\"general\"]')).toHaveLength(1)\n  })\n\n  it('omits the description span when undefined', async () => {\n    const { $ } = await render(Switch, {\n      props: { id: 'a', name: 'a', title: 't' },\n    })\n    expect($('span')).toHaveLength(1) // the toggle knob span only\n  })\n\n  it('renders the description in a span below the title row', async () => {\n    const { $ } = await render(Switch, {\n      props: { id: 'fitness', name: 'fitness', title: 'Fitness', description: 'Fit' },\n    })\n    // knob span + description span\n    expect($('span')).toHaveLength(2)\n    expect($('span').last().text()).toBe('Fit')\n  })\n\n  it('reflects the checked prop onto the checkbox', async () => {\n    const { $ } = await render(Switch, {\n      props: { id: 'events', name: 'events', title: 'e', checked: true },\n    })\n    expect($('input[checked]')).toHaveLength(1)\n\n    const { $: $un } = await render(Switch, { props: { id: 'e', name: 'e', title: 'e' } })\n    expect($un('input[checked]')).toHaveLength(0)\n  })\n})\n// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Textarea from '@/components/controls/Textarea.astro'\nimport { render } from '../lib/container'\n\ndescribe('Textarea.astro', () => {\n  it('renders a labelled <textarea> with id and name', async () => {\n    const { $ } = await render(Textarea, {\n      props: { id: 'comment', name: 'comment', label: 'Kommentar (optional)' },\n    })\n    expect($('div > label[for=\"comment\"]').text()).toBe('Kommentar (optional)')\n    expect($('textarea[id=\"comment\"][name=\"comment\"]')).toHaveLength(1)\n  })\n\n  it('omits label when not given', async () => {\n    const { $ } = await render(Textarea, { props: { id: 'notes', name: 'notes' } })\n    expect($('label')).toHaveLength(0)\n    expect($('textarea[id=\"notes\"]')).toHaveLength(1)\n  })\n\n  it('always emits a <textarea>, never an <input>', async () => {\n    const { $ } = await render(Textarea, { props: { id: 'x', name: 'x' } })\n    expect($('textarea')).toHaveLength(1)\n    expect($('input')).toHaveLength(0)\n  })\n})\n",
+              "exit": 0,
+              "truncated": true,
+              "outputPath": "/Users/mseele/.local/share/opencode/tool-output/tool_fa4e3e2780013oVj4rMDY5b30G"
+            },
+            "title": "rtk cat tests/components/lib/container.ts tests/components/lib/MetaTagsStub.astro tests/components/astro-modules.d.ts tests/components/blocks/event.test.ts tests/components/blocks/newsletter-card.test.ts tests/components/blocks/prebooking.test.ts tests/components/controls/button.test.ts tests/components/controls/checkbox.test.ts tests/components/controls/iban-input.test.ts tests/components/controls/input.test.ts tests/components/controls/select.test.ts tests/components/controls/sepa-mandate.test.ts tests/components/controls/submit-button.test.ts tests/components/controls/switch.test.ts tests/components/controls/textarea.test.ts",
+            "time": {
+              "start": 1785177825916,
+              "end": 1785177825923
+            }
+          },
+          "id": "prt_fa4e3e233001WDnVKmvEDOu8p0",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e35ef2001cz5av0maLnYgGF"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_8f5a",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git diff HEAD~1...HEAD -- package.json",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "package.json | 1 +\n 1 file changed, 1 insertion(+)\n\nChanges:\n\npackage.json\n  @@ -40,6 +40,7 @@\n  +    \"cheerio\": \"^1.0.0\",\n       \"happy-dom\": \"^20.11.1\",\n       \"msw\": \"^2.15.0\",\n       \"oxfmt\": \"^0.60.0\",\n  +1 -0\n",
+            "metadata": {
+              "output": "package.json | 1 +\n 1 file changed, 1 insertion(+)\n\nChanges:\n\npackage.json\n  @@ -40,6 +40,7 @@\n  +    \"cheerio\": \"^1.0.0\",\n       \"happy-dom\": \"^20.11.1\",\n       \"msw\": \"^2.15.0\",\n       \"oxfmt\": \"^0.60.0\",\n  +1 -0\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git diff HEAD~1...HEAD -- package.json",
+            "time": {
+              "start": 1785177826120,
+              "end": 1785177826122
+            }
+          },
+          "id": "prt_fa4e3e3050011AU6kc2YGBCdn1",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e35ef2001cz5av0maLnYgGF"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 11314,
+            "input": 8440,
+            "output": 186,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 2688
+            }
+          },
+          "cost": 0.01333328,
+          "id": "prt_fa4e3e37b001I630uXWAlY5wXz",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e35ef2001cz5av0maLnYgGF"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4e3539f001GHn1JA2LY9NgWN",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.00705004,
+        "tokens": {
+          "total": 13835,
+          "input": 2397,
+          "output": 174,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 11264
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785177826390,
+          "completed": 1785177829245
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e3e456001URc69P6aRqm6Rt",
+        "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L"
+      },
+      "parts": [
+        {
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-start",
+          "id": "prt_fa4e3e982001OKWzcogSrwaquJ",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3e456001URc69P6aRqm6Rt"
+        },
+        {
+          "type": "reasoning",
+          "text": "The container was truncated. Let me read the key files directly.",
+          "time": {
+            "start": 1785177827716,
+            "end": 1785177827930
+          },
+          "id": "prt_fa4e3e984001lUHYOBGZv7mOGd",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3e456001URc69P6aRqm6Rt"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_d502",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/lib/container.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/components/lib/container.ts</path>\n<type>file</type>\n<content>\n1: // @vitest-environment node\n2: // Shared harness for Container API render tests.\n3: //\n4: // Vitest's default `happy-dom` environment stubs `.astro` module imports to a\n5: // browser-only errored shell (\"Astro components cannot be used in the\n6: // browser\"). Per-file `@vitest-environment node` lets the Astro Vite plugin\n7: // emit the SSR component factory instead.\n8: //\n9: // `Astro.site` is left `undefined` by `experimental_AstroContainer.create()`\n10: // (the container config defaults elide `site`). Components whose frontmatter\n11: // computes a canonical URL via `new URL(path, Astro.site)` throw under the\n12: // container; components that pull in `Layout` mock\n13: // `@/components/common/MetaTags.astro` against `./MetaTagsStub.astro` to\n14: // stay off that unhappy path while keeping the test about the markup.\n15: import { experimental_AstroContainer as AstroContainer } from 'astro/container'\n16: import { load as cheerioLoad, type CheerioAPI } from 'cheerio'\n17: \n18: let containerPromise: Promise<AstroContainer> | undefined\n19: \n20: export async function getContainer(): Promise<AstroContainer> {\n21:   if (!containerPromise) containerPromise = AstroContainer.create()\n22:   return containerPromise\n23: }\n24: \n25: export async function render(\n26:   Component: Parameters<AstroContainer['renderToString']>[0],\n27:   options?: Parameters<AstroContainer['renderToString']>[1],\n28: ): Promise<{ html: string; $: CheerioAPI }> {\n29:   const container = await getContainer()\n30:   const html = await container.renderToString(Component, options)\n31:   return { html, $: cheerioLoad(html) }\n32: }\n\n(End of file - total 32 lines)\n</content>",
+            "metadata": {
+              "preview": "// @vitest-environment node\n// Shared harness for Container API render tests.\n//\n// Vitest's default `happy-dom` environment stubs `.astro` module imports to a\n// browser-only errored shell (\"Astro components cannot be used in the\n// browser\"). Per-file `@vitest-environment node` lets the Astro Vite plugin\n// emit the SSR component factory instead.\n//\n// `Astro.site` is left `undefined` by `experimental_AstroContainer.create()`\n// (the container config defaults elide `site`). Components whose frontmatter\n// computes a canonical URL via `new URL(path, Astro.site)` throw under the\n// container; components that pull in `Layout` mock\n// `@/components/common/MetaTags.astro` against `./MetaTagsStub.astro` to\n// stay off that unhappy path while keeping the test about the markup.\nimport { experimental_AstroContainer as AstroContainer } from 'astro/container'\nimport { load as cheerioLoad, type CheerioAPI } from 'cheerio'\n\nlet containerPromise: Promise<AstroContainer> | undefined\n\nexport async function getContainer(): Promise<AstroContainer> {",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/components/lib/container.ts",
+                "text": "// @vitest-environment node\n// Shared harness for Container API render tests.\n//\n// Vitest's default `happy-dom` environment stubs `.astro` module imports to a\n// browser-only errored shell (\"Astro components cannot be used in the\n// browser\"). Per-file `@vitest-environment node` lets the Astro Vite plugin\n// emit the SSR component factory instead.\n//\n// `Astro.site` is left `undefined` by `experimental_AstroContainer.create()`\n// (the container config defaults elide `site`). Components whose frontmatter\n// computes a canonical URL via `new URL(path, Astro.site)` throw under the\n// container; components that pull in `Layout` mock\n// `@/components/common/MetaTags.astro` against `./MetaTagsStub.astro` to\n// stay off that unhappy path while keeping the test about the markup.\nimport { experimental_AstroContainer as AstroContainer } from 'astro/container'\nimport { load as cheerioLoad, type CheerioAPI } from 'cheerio'\n\nlet containerPromise: Promise<AstroContainer> | undefined\n\nexport async function getContainer(): Promise<AstroContainer> {\n  if (!containerPromise) containerPromise = AstroContainer.create()\n  return containerPromise\n}\n\nexport async function render(\n  Component: Parameters<AstroContainer['renderToString']>[0],\n  options?: Parameters<AstroContainer['renderToString']>[1],\n): Promise<{ html: string; $: CheerioAPI }> {\n  const container = await getContainer()\n  const html = await container.renderToString(Component, options)\n  return { html, $: cheerioLoad(html) }\n}",
+                "lineStart": 1,
+                "lineEnd": 32,
+                "totalLines": 32,
+                "truncated": false
+              }
+            },
+            "title": "tests/components/lib/container.ts",
+            "time": {
+              "start": 1785177827934,
+              "end": 1785177827943
+            }
+          },
+          "id": "prt_fa4e3ea5b001aL3t3HKuvDtapH",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3e456001URc69P6aRqm6Rt"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_4652",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts</path>\n<type>file</type>\n<content>\n1: // @vitest-environment node\n2: //\n3: // `Event.astro` pulls in `Layout` → `MetaTags.astro`, which computes a\n4: // canonical URL against `Astro.site`. `experimental_AstroContainer.create()`\n5: // leaves `Astro.site` undefined (the container defaults elide `site`), so\n6: // `new URL(path, undefined)` throws. We mock `@/components/common/MetaTags.astro`\n7: // with an on-disk Astro stub that drops all SEO/head computation and renders\n8: // nothing — keeping the test about the Event markup, not the Layout head.\n9: import { describe, expect, it, vi } from 'vitest'\n10: import { experimental_AstroContainer as AstroContainer } from 'astro/container'\n11: import { load as cheerioLoad } from 'cheerio'\n12: import Event from '@/components/blocks/Event.astro'\n13: import imageMetadata from '@/assets/events/fit.jpg'\n14: import { EventCustomFieldType, PaymentMethod } from '@/types'\n15: \n16: // vi.mock is hoisted above the static imports above by the vitest transform,\n17: // so Event.astro resolves the mocked MetaTags module during SSR.\n18: vi.mock('@/components/common/MetaTags.astro', async () => await import('../lib/MetaTagsStub.astro'))\n19: \n20: // A minimal Astro `CollectionEntry<'events'>`-shaped object. The `image`\n21: // field needs to be an `ImageMetadata`; we reuse a real on-disk image and\n22: // overwrite `src` with an absolute URL so `new URL(src, undefined)` (where\n23: // `Astro.site` is undefined inside the container) still resolves cleanly.\n24: const entry = {\n25:   id: 'evt-1',\n26:   collection: 'events',\n27:   slug: 'evt-1',\n28:   data: {\n29:     id: 'evt-1',\n30:     name: 'Rückenfit',\n31:     image: { ...imageMetadata, src: 'https://example.com/img.jpg' },\n32:     sortIndex: 1,\n33:     shortDescription: 'Pilates für den Rücken',\n34:     description: '<p>Ein sanfter Kurs.</p>',\n35:     location: 'Clubhaus',\n36:     dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'],\n37:     duration: '60 Min',\n38:     priceMember: '40 €',\n39:     priceNonMember: '60 €',\n40:     externalOperator: false,\n41:     customFields: [{ name: 'Rückenbeschwerden', type: EventCustomFieldType.Text }],\n42:     paymentMethod: PaymentMethod.SepaDirectDebit,\n43:   },\n44:   render: () => ({}),\n45: } as any\n46: \n47: async function renderEvent(\n48:   overrides: Partial<typeof entry.data> = {},\n49:   props: Record<string, unknown> = {},\n50: ) {\n51:   const container = await AstroContainer.create()\n52:   const html = await container.renderToString(Event, {\n53:     props: {\n54:       type: 'events' as const,\n55:       entry: { ...entry, data: { ...entry.data, ...overrides } },\n56:       newsletterDescription: 'Erhalte automatisch eine E-Mail sobald neue Events online sind.',\n57:       newsletterText: 'Ich möchte über zukünftige Events per E-Mail informiert werden',\n58:       schemaType: 'Event' as const,\n59:       ...props,\n60:     },\n61:   })\n62:   return { html, $: cheerioLoad(html) }\n63: }\n64: \n65: describe('Event.astro', () => {\n66:   it('wraps the page in the event identifier stamped on the root <div>', async () => {\n67:     const { $ } = await renderEvent()\n68:     expect($('div[data-identifier=\"evt-1\"]')).toHaveLength(1)\n69:   })\n70: \n71:   it('renders the \"Beschreibung\" section header and the description HTML verbatim', async () => {\n72:     const { $ } = await renderEvent()\n73:     expect($('#beschreibung h2').text()).toBe('Beschreibung')\n74:     expect($('#beschreibung > div > div').html()).toContain('<p>Ein sanfter Kurs.</p>')\n75:   })\n76: \n77:   it('emits the Details list with the expected set of detail ids', async () => {\n78:     const { $ } = await renderEvent()\n79:     const titles = $('#details [data-title]')\n80:       .toArray()\n81:       .map((el) => $(el).attr('data-title'))\n82:     expect(titles).toContain('availability')\n83:     expect(titles).toContain('dates')\n84:     expect(titles).toContain('duration')\n85:     expect(titles).toContain('price')\n86:     expect(titles).toContain('location')\n87:   })\n88: \n89:   it('renders the price as two member/non-member rows when prices differ', async () => {\n90:     const { $ } = await renderEvent({ priceMember: '40 €', priceNonMember: '60 €' })\n91:     expect($('#details [data-title=\"price\"]')).toHaveLength(2)\n92:     const priceLabels = $('#details [data-label=\"price\"]')\n93:       .toArray()\n94:       .map((el) => $(el).text())\n95:     expect(priceLabels).toEqual(['40 €', '60 €'])\n96:   })\n97: \n98:   it('collapses the price into a single \"Kostenlos\" row when both prices are \"0 €\"', async () => {\n99:     const { $ } = await renderEvent({ priceMember: '0 €', priceNonMember: '0 €' })\n100:     expect($('#details [data-title=\"price\"]')).toHaveLength(1)\n101:     expect($('#details [data-label=\"price\"]').text()).toBe('Kostenlos')\n102:   })\n103: \n104:   it('shows the dates detail as \"Termine\" (plural) when there are two dates, \"Termin\" (singular) when one', async () => {\n105:     const { $multi } = {\n106:       $multi: (await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })).$,\n107:     }\n108:     expect($multi('#details [data-title=\"dates\"]').text()).toBe('Termine')\n109: \n110:     const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z'] })\n111:     expect($('#details [data-title=\"dates\"]').text()).toBe('Termin')\n112:   })\n113: \n114:   it('renders the \"Termine\" section with the same number of <li> entries as dates (multi-date case)', async () => {\n115:     const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })\n116:     // Two date strings → two <li> rows total (split across two <ul> columns,\n117:     // first column holds ceil(n/2), the second the remainder).\n118:     expect($('main li')).toHaveLength(2)\n119:   })\n120: \n121:   it('stamps the Anmeldung form with the standard input roster plus the SEPA-specific fields', async () => {\n122:     const { $ } = await renderEvent()\n123:     // Mandatory personal fields. Use `form#form` to scope inside the booking\n124:     // form; the hidden NewsletterCard teaser under #newsletter-card renders\n125:     // its own form with another `#email`-id input from NewsletterCard.\n126:     for (const id of ['firstname', 'lastname', 'street', 'plz', 'email', 'phone', 'comment']) {\n127:       expect($(`#anmeldung form#form #${id}`)).toHaveLength(1)\n128:     }\n129:     // SEPA-mandate fields appear only because paymentMethod is SepaDirectDebit.\n130:     expect($('#anmeldung form#form input[data-iban-validation]#iban')).toHaveLength(1)\n131:     expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(1)\n132:   })\n133: \n134:   it('omits the IBAN / SEPA mandate fields when paymentMethod is BankTransfer', async () => {\n135:     const { $ } = await renderEvent({ paymentMethod: PaymentMethod.BankTransfer })\n136:     expect($('#anmeldung form#form input[data-iban-validation]')).toHaveLength(0)\n137:     expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(0)\n138:   })\n139: \n140:   it('renders one custom-field input per eventCustomField entry', async () => {\n141:     const { $ } = await renderEvent({\n142:       customFields: [\n143:         { name: 'Rückenbeschwerden', type: EventCustomFieldType.Text },\n144:         { name: 'Teilnehmer', type: EventCustomFieldType.Number, minValue: 1, maxValue: 4 },\n145:       ],\n146:     })\n147:     expect($('#anmeldung form#form input#customfield')).toHaveLength(2)\n148:     // Number-typed custom field forwards `min` / `max` through the spread attrs.\n149:     const numberField = $('#anmeldung form#form input#customfield').toArray()[1]\n150:     expect($(numberField).attr('type')).toBe('number')\n151:     expect($(numberField).attr('min')).toBe('1')\n152:     expect($(numberField).attr('max')).toBe('4')\n153:   })\n154: \n155:   it('emits three consent checkboxes (member, newsletter, consent)', async () => {\n156:     const { $ } = await renderEvent()\n157:     expect($('#anmeldung form#form #member')).toHaveLength(1)\n158:     expect($('#anmeldung form#form #newsletter')).toHaveLength(1)\n159:     expect($('#anmeldung form#form #consent')).toHaveLength(1)\n160:     // All three render as type=\"checkbox\".\n161:     expect($('#anmeldung form#form input#member[type=\"checkbox\"]')).toHaveLength(1)\n162:     expect($('#anmeldung form#form input#consent[type=\"checkbox\"]')).toHaveLength(1)\n163:   })\n164: \n165:   it('embeds the NewsletterCard teaser (hidden) using the supplied newsletter copy', async () => {\n166:     const { $ } = await renderEvent()\n167:     const teaser = $('#newsletter-card')\n168:     expect(teaser).toHaveLength(1)\n169:     expect(teaser.hasClass('hidden')).toBe(true)\n170:     expect(teaser.find('p').first().text()).toContain('Erhalte automatisch')\n171:   })\n172: \n173:   it('renders the Anmeldung section hidden by default (the booking flow reveals it client-side)', async () => {\n174:     const { $ } = await renderEvent()\n175:     expect($('#anmeldung')).toHaveLength(1)\n176:     expect($('#anmeldung').hasClass('hidden')).toBe(true)\n177:   })\n178: })\n\n(End of file - total 178 lines)\n</content>",
+            "metadata": {
+              "preview": "// @vitest-environment node\n//\n// `Event.astro` pulls in `Layout` → `MetaTags.astro`, which computes a\n// canonical URL against `Astro.site`. `experimental_AstroContainer.create()`\n// leaves `Astro.site` undefined (the container defaults elide `site`), so\n// `new URL(path, undefined)` throws. We mock `@/components/common/MetaTags.astro`\n// with an on-disk Astro stub that drops all SEO/head computation and renders\n// nothing — keeping the test about the Event markup, not the Layout head.\nimport { describe, expect, it, vi } from 'vitest'\nimport { experimental_AstroContainer as AstroContainer } from 'astro/container'\nimport { load as cheerioLoad } from 'cheerio'\nimport Event from '@/components/blocks/Event.astro'\nimport imageMetadata from '@/assets/events/fit.jpg'\nimport { EventCustomFieldType, PaymentMethod } from '@/types'\n\n// vi.mock is hoisted above the static imports above by the vitest transform,\n// so Event.astro resolves the mocked MetaTags module during SSR.\nvi.mock('@/components/common/MetaTags.astro', async () => await import('../lib/MetaTagsStub.astro'))\n\n// A minimal Astro `CollectionEntry<'events'>`-shaped object. The `image`",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts",
+                "text": "// @vitest-environment node\n//\n// `Event.astro` pulls in `Layout` → `MetaTags.astro`, which computes a\n// canonical URL against `Astro.site`. `experimental_AstroContainer.create()`\n// leaves `Astro.site` undefined (the container defaults elide `site`), so\n// `new URL(path, undefined)` throws. We mock `@/components/common/MetaTags.astro`\n// with an on-disk Astro stub that drops all SEO/head computation and renders\n// nothing — keeping the test about the Event markup, not the Layout head.\nimport { describe, expect, it, vi } from 'vitest'\nimport { experimental_AstroContainer as AstroContainer } from 'astro/container'\nimport { load as cheerioLoad } from 'cheerio'\nimport Event from '@/components/blocks/Event.astro'\nimport imageMetadata from '@/assets/events/fit.jpg'\nimport { EventCustomFieldType, PaymentMethod } from '@/types'\n\n// vi.mock is hoisted above the static imports above by the vitest transform,\n// so Event.astro resolves the mocked MetaTags module during SSR.\nvi.mock('@/components/common/MetaTags.astro', async () => await import('../lib/MetaTagsStub.astro'))\n\n// A minimal Astro `CollectionEntry<'events'>`-shaped object. The `image`\n// field needs to be an `ImageMetadata`; we reuse a real on-disk image and\n// overwrite `src` with an absolute URL so `new URL(src, undefined)` (where\n// `Astro.site` is undefined inside the container) still resolves cleanly.\nconst entry = {\n  id: 'evt-1',\n  collection: 'events',\n  slug: 'evt-1',\n  data: {\n    id: 'evt-1',\n    name: 'Rückenfit',\n    image: { ...imageMetadata, src: 'https://example.com/img.jpg' },\n    sortIndex: 1,\n    shortDescription: 'Pilates für den Rücken',\n    description: '<p>Ein sanfter Kurs.</p>',\n    location: 'Clubhaus',\n    dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'],\n    duration: '60 Min',\n    priceMember: '40 €',\n    priceNonMember: '60 €',\n    externalOperator: false,\n    customFields: [{ name: 'Rückenbeschwerden', type: EventCustomFieldType.Text }],\n    paymentMethod: PaymentMethod.SepaDirectDebit,\n  },\n  render: () => ({}),\n} as any\n\nasync function renderEvent(\n  overrides: Partial<typeof entry.data> = {},\n  props: Record<string, unknown> = {},\n) {\n  const container = await AstroContainer.create()\n  const html = await container.renderToString(Event, {\n    props: {\n      type: 'events' as const,\n      entry: { ...entry, data: { ...entry.data, ...overrides } },\n      newsletterDescription: 'Erhalte automatisch eine E-Mail sobald neue Events online sind.',\n      newsletterText: 'Ich möchte über zukünftige Events per E-Mail informiert werden',\n      schemaType: 'Event' as const,\n      ...props,\n    },\n  })\n  return { html, $: cheerioLoad(html) }\n}\n\ndescribe('Event.astro', () => {\n  it('wraps the page in the event identifier stamped on the root <div>', async () => {\n    const { $ } = await renderEvent()\n    expect($('div[data-identifier=\"evt-1\"]')).toHaveLength(1)\n  })\n\n  it('renders the \"Beschreibung\" section header and the description HTML verbatim', async () => {\n    const { $ } = await renderEvent()\n    expect($('#beschreibung h2').text()).toBe('Beschreibung')\n    expect($('#beschreibung > div > div').html()).toContain('<p>Ein sanfter Kurs.</p>')\n  })\n\n  it('emits the Details list with the expected set of detail ids', async () => {\n    const { $ } = await renderEvent()\n    const titles = $('#details [data-title]')\n      .toArray()\n      .map((el) => $(el).attr('data-title'))\n    expect(titles).toContain('availability')\n    expect(titles).toContain('dates')\n    expect(titles).toContain('duration')\n    expect(titles).toContain('price')\n    expect(titles).toContain('location')\n  })\n\n  it('renders the price as two member/non-member rows when prices differ', async () => {\n    const { $ } = await renderEvent({ priceMember: '40 €', priceNonMember: '60 €' })\n    expect($('#details [data-title=\"price\"]')).toHaveLength(2)\n    const priceLabels = $('#details [data-label=\"price\"]')\n      .toArray()\n      .map((el) => $(el).text())\n    expect(priceLabels).toEqual(['40 €', '60 €'])\n  })\n\n  it('collapses the price into a single \"Kostenlos\" row when both prices are \"0 €\"', async () => {\n    const { $ } = await renderEvent({ priceMember: '0 €', priceNonMember: '0 €' })\n    expect($('#details [data-title=\"price\"]')).toHaveLength(1)\n    expect($('#details [data-label=\"price\"]').text()).toBe('Kostenlos')\n  })\n\n  it('shows the dates detail as \"Termine\" (plural) when there are two dates, \"Termin\" (singular) when one', async () => {\n    const { $multi } = {\n      $multi: (await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })).$,\n    }\n    expect($multi('#details [data-title=\"dates\"]').text()).toBe('Termine')\n\n    const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z'] })\n    expect($('#details [data-title=\"dates\"]').text()).toBe('Termin')\n  })\n\n  it('renders the \"Termine\" section with the same number of <li> entries as dates (multi-date case)', async () => {\n    const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })\n    // Two date strings → two <li> rows total (split across two <ul> columns,\n    // first column holds ceil(n/2), the second the remainder).\n    expect($('main li')).toHaveLength(2)\n  })\n\n  it('stamps the Anmeldung form with the standard input roster plus the SEPA-specific fields', async () => {\n    const { $ } = await renderEvent()\n    // Mandatory personal fields. Use `form#form` to scope inside the booking\n    // form; the hidden NewsletterCard teaser under #newsletter-card renders\n    // its own form with another `#email`-id input from NewsletterCard.\n    for (const id of ['firstname', 'lastname', 'street', 'plz', 'email', 'phone', 'comment']) {\n      expect($(`#anmeldung form#form #${id}`)).toHaveLength(1)\n    }\n    // SEPA-mandate fields appear only because paymentMethod is SepaDirectDebit.\n    expect($('#anmeldung form#form input[data-iban-validation]#iban')).toHaveLength(1)\n    expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(1)\n  })\n\n  it('omits the IBAN / SEPA mandate fields when paymentMethod is BankTransfer', async () => {\n    const { $ } = await renderEvent({ paymentMethod: PaymentMethod.BankTransfer })\n    expect($('#anmeldung form#form input[data-iban-validation]')).toHaveLength(0)\n    expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(0)\n  })\n\n  it('renders one custom-field input per eventCustomField entry', async () => {\n    const { $ } = await renderEvent({\n      customFields: [\n        { name: 'Rückenbeschwerden', type: EventCustomFieldType.Text },\n        { name: 'Teilnehmer', type: EventCustomFieldType.Number, minValue: 1, maxValue: 4 },\n      ],\n    })\n    expect($('#anmeldung form#form input#customfield')).toHaveLength(2)\n    // Number-typed custom field forwards `min` / `max` through the spread attrs.\n    const numberField = $('#anmeldung form#form input#customfield').toArray()[1]\n    expect($(numberField).attr('type')).toBe('number')\n    expect($(numberField).attr('min')).toBe('1')\n    expect($(numberField).attr('max')).toBe('4')\n  })\n\n  it('emits three consent checkboxes (member, newsletter, consent)', async () => {\n    const { $ } = await renderEvent()\n    expect($('#anmeldung form#form #member')).toHaveLength(1)\n    expect($('#anmeldung form#form #newsletter')).toHaveLength(1)\n    expect($('#anmeldung form#form #consent')).toHaveLength(1)\n    // All three render as type=\"checkbox\".\n    expect($('#anmeldung form#form input#member[type=\"checkbox\"]')).toHaveLength(1)\n    expect($('#anmeldung form#form input#consent[type=\"checkbox\"]')).toHaveLength(1)\n  })\n\n  it('embeds the NewsletterCard teaser (hidden) using the supplied newsletter copy', async () => {\n    const { $ } = await renderEvent()\n    const teaser = $('#newsletter-card')\n    expect(teaser).toHaveLength(1)\n    expect(teaser.hasClass('hidden')).toBe(true)\n    expect(teaser.find('p').first().text()).toContain('Erhalte automatisch')\n  })\n\n  it('renders the Anmeldung section hidden by default (the booking flow reveals it client-side)', async () => {\n    const { $ } = await renderEvent()\n    expect($('#anmeldung')).toHaveLength(1)\n    expect($('#anmeldung').hasClass('hidden')).toBe(true)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 178,
+                "totalLines": 178,
+                "truncated": false
+              }
+            },
+            "title": "tests/components/blocks/event.test.ts",
+            "time": {
+              "start": 1785177828049,
+              "end": 1785177828054
+            }
+          },
+          "id": "prt_fa4e3eace0011bEKEqM8mmPTEA",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3e456001URc69P6aRqm6Rt"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_e58f",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/newsletter-card.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/components/blocks/newsletter-card.test.ts</path>\n<type>file</type>\n<content>\n1: // @vitest-environment node\n2: import { describe, expect, it } from 'vitest'\n3: import NewsletterCard from '@/components/blocks/NewsletterCard.astro'\n4: import { render } from '../lib/container'\n5: \n6: describe('NewsletterCard.astro — general subscription form (no `topic`)', () => {\n7:   it('renders the heading and description, the email input, and three category switches by default', async () => {\n8:     const { $ } = await render(NewsletterCard, { props: { description: 'Bleib dran' } })\n9:     expect($('h3').text()).toBe('Bleib auf dem Laufenden')\n10:     expect($('p').first().text()).toBe('Bleib dran')\n11:     expect($('form#newsletter-form')).toHaveLength(1)\n12:     expect($('input[type=\"email\"][id=\"email\"][name=\"email\"]')).toHaveLength(1)\n13:     expect($('input[id=\"email\"]').attr('autocomplete')).toBe('email')\n14:     expect($('input[id=\"email\"]').attr('placeholder')).toBe('Deine E-Mail-Adresse')\n15:     // Three category switches: Allgemein / Fitness / Events.\n16:     expect($('input[type=\"checkbox\"][id=\"general\"]')).toHaveLength(1)\n17:     expect($('input[type=\"checkbox\"][id=\"fitness\"]')).toHaveLength(1)\n18:     expect($('input[type=\"checkbox\"][id=\"events\"]')).toHaveLength(1)\n19:   })\n20: \n21:   it('renders the Abo/Abmelden ButtonSwitch with a hidden abo checkbox (default checked)', async () => {\n22:     const { $ } = await render(NewsletterCard, {})\n23:     expect($('#abo')).toHaveLength(1)\n24:     expect($('#abo').attr('checked')).toBeDefined()\n25:     // ButtonSwitch emits two label-less buttons labelled Abonnieren / Abmelden.\n26:     expect($('button#left').text()).toBe('Abonnieren')\n27:     expect($('button#right').text()).toBe('Abmelden')\n28:   })\n29: \n30:   it('submits via a single <button type=\"submit\"> labelled \"Absenden\" when no topic is set', async () => {\n31:     const { $ } = await render(NewsletterCard, {})\n32:     expect($('button[type=\"submit\"]')).toHaveLength(1)\n33:     expect($('button[type=\"submit\"]').text()).toContain('Absenden')\n34:   })\n35: \n36:   it('emits a privacy blurb linking to /datenschutz', async () => {\n37:     const { $ } = await render(NewsletterCard, {})\n38:     const link = $('a[href=\"/datenschutz\"]')\n39:     expect(link).toHaveLength(1)\n40:     expect(link.text()).toBe('Datenschutzerklärung')\n41:   })\n42: })\n43: \n44: describe('NewsletterCard.astro — topic-scoped variant', () => {\n45:   it('omits the Abo/Abmelden ButtonSwitch and the three switches when a topic is set', async () => {\n46:     const { $ } = await render(NewsletterCard, { props: { topic: 'fitness' } })\n47:     expect($('#abo')).toHaveLength(1) // present as a hidden input below\n48:     expect($('#abo[checked]')).toHaveLength(1)\n49:     expect($('button#left')).toHaveLength(0)\n50:     expect($('button#right')).toHaveLength(0)\n51:     expect($('#general')).toHaveLength(0)\n52:     expect($('#fitness')).toHaveLength(1)\n53:     expect($('#events')).toHaveLength(0)\n54:   })\n55: \n56:   it('emits a hidden checked topic input matching the supplied topic', async () => {\n57:     const { $ } = await render(NewsletterCard, { props: { topic: 'events' } })\n58:     expect($('input[type=\"hidden\"][id=\"events\"][name=\"events\"][checked]')).toHaveLength(1)\n59:   })\n60: \n61:   it('labels the submit button \"Anmelden\" when a topic is set', async () => {\n62:     const { $ } = await render(NewsletterCard, { props: { topic: 'general' } })\n63:     expect($('button[type=\"submit\"]').text()).toContain('Anmelden')\n64:   })\n65: })\n\n(End of file - total 65 lines)\n</content>",
+            "metadata": {
+              "preview": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport NewsletterCard from '@/components/blocks/NewsletterCard.astro'\nimport { render } from '../lib/container'\n\ndescribe('NewsletterCard.astro — general subscription form (no `topic`)', () => {\n  it('renders the heading and description, the email input, and three category switches by default', async () => {\n    const { $ } = await render(NewsletterCard, { props: { description: 'Bleib dran' } })\n    expect($('h3').text()).toBe('Bleib auf dem Laufenden')\n    expect($('p').first().text()).toBe('Bleib dran')\n    expect($('form#newsletter-form')).toHaveLength(1)\n    expect($('input[type=\"email\"][id=\"email\"][name=\"email\"]')).toHaveLength(1)\n    expect($('input[id=\"email\"]').attr('autocomplete')).toBe('email')\n    expect($('input[id=\"email\"]').attr('placeholder')).toBe('Deine E-Mail-Adresse')\n    // Three category switches: Allgemein / Fitness / Events.\n    expect($('input[type=\"checkbox\"][id=\"general\"]')).toHaveLength(1)\n    expect($('input[type=\"checkbox\"][id=\"fitness\"]')).toHaveLength(1)\n    expect($('input[type=\"checkbox\"][id=\"events\"]')).toHaveLength(1)\n  })\n",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/newsletter-card.test.ts",
+                "text": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport NewsletterCard from '@/components/blocks/NewsletterCard.astro'\nimport { render } from '../lib/container'\n\ndescribe('NewsletterCard.astro — general subscription form (no `topic`)', () => {\n  it('renders the heading and description, the email input, and three category switches by default', async () => {\n    const { $ } = await render(NewsletterCard, { props: { description: 'Bleib dran' } })\n    expect($('h3').text()).toBe('Bleib auf dem Laufenden')\n    expect($('p').first().text()).toBe('Bleib dran')\n    expect($('form#newsletter-form')).toHaveLength(1)\n    expect($('input[type=\"email\"][id=\"email\"][name=\"email\"]')).toHaveLength(1)\n    expect($('input[id=\"email\"]').attr('autocomplete')).toBe('email')\n    expect($('input[id=\"email\"]').attr('placeholder')).toBe('Deine E-Mail-Adresse')\n    // Three category switches: Allgemein / Fitness / Events.\n    expect($('input[type=\"checkbox\"][id=\"general\"]')).toHaveLength(1)\n    expect($('input[type=\"checkbox\"][id=\"fitness\"]')).toHaveLength(1)\n    expect($('input[type=\"checkbox\"][id=\"events\"]')).toHaveLength(1)\n  })\n\n  it('renders the Abo/Abmelden ButtonSwitch with a hidden abo checkbox (default checked)', async () => {\n    const { $ } = await render(NewsletterCard, {})\n    expect($('#abo')).toHaveLength(1)\n    expect($('#abo').attr('checked')).toBeDefined()\n    // ButtonSwitch emits two label-less buttons labelled Abonnieren / Abmelden.\n    expect($('button#left').text()).toBe('Abonnieren')\n    expect($('button#right').text()).toBe('Abmelden')\n  })\n\n  it('submits via a single <button type=\"submit\"> labelled \"Absenden\" when no topic is set', async () => {\n    const { $ } = await render(NewsletterCard, {})\n    expect($('button[type=\"submit\"]')).toHaveLength(1)\n    expect($('button[type=\"submit\"]').text()).toContain('Absenden')\n  })\n\n  it('emits a privacy blurb linking to /datenschutz', async () => {\n    const { $ } = await render(NewsletterCard, {})\n    const link = $('a[href=\"/datenschutz\"]')\n    expect(link).toHaveLength(1)\n    expect(link.text()).toBe('Datenschutzerklärung')\n  })\n})\n\ndescribe('NewsletterCard.astro — topic-scoped variant', () => {\n  it('omits the Abo/Abmelden ButtonSwitch and the three switches when a topic is set', async () => {\n    const { $ } = await render(NewsletterCard, { props: { topic: 'fitness' } })\n    expect($('#abo')).toHaveLength(1) // present as a hidden input below\n    expect($('#abo[checked]')).toHaveLength(1)\n    expect($('button#left')).toHaveLength(0)\n    expect($('button#right')).toHaveLength(0)\n    expect($('#general')).toHaveLength(0)\n    expect($('#fitness')).toHaveLength(1)\n    expect($('#events')).toHaveLength(0)\n  })\n\n  it('emits a hidden checked topic input matching the supplied topic', async () => {\n    const { $ } = await render(NewsletterCard, { props: { topic: 'events' } })\n    expect($('input[type=\"hidden\"][id=\"events\"][name=\"events\"][checked]')).toHaveLength(1)\n  })\n\n  it('labels the submit button \"Anmelden\" when a topic is set', async () => {\n    const { $ } = await render(NewsletterCard, { props: { topic: 'general' } })\n    expect($('button[type=\"submit\"]').text()).toContain('Anmelden')\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 65,
+                "totalLines": 65,
+                "truncated": false
+              }
+            },
+            "title": "tests/components/blocks/newsletter-card.test.ts",
+            "time": {
+              "start": 1785177828174,
+              "end": 1785177828188
+            }
+          },
+          "id": "prt_fa4e3eb4c001EIzOYO16Q0aMZD",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3e456001URc69P6aRqm6Rt"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_2555",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/prebooking.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/components/blocks/prebooking.test.ts</path>\n<type>file</type>\n<content>\n1: // @vitest-environment node\n2: import { describe, expect, it } from 'vitest'\n3: import PreBooking from '@/components/blocks/PreBooking.astro'\n4: import { render } from '../lib/container'\n5: \n6: describe('PreBooking.astro', () => {\n7:   it('emits the loading <dialog id=\"prebooking\"> with the spinner svg and the \"in progress\" text', async () => {\n8:     const { $ } = await render(PreBooking)\n9:     expect($('dialog#prebooking')).toHaveLength(1)\n10:     expect($('dialog#prebooking svg')).toHaveLength(1)\n11:     expect($('dialog#prebooking p').text()).toContain('Die Buchung wird durchgeführt')\n12:   })\n13: \n14:   it('emits the IBAN pre-booking form wrapper, hidden by default via the \"hidden\" class', async () => {\n15:     const { $ } = await render(PreBooking)\n16:     const wrapper = $('#prebooking-iban-form')\n17:     expect(wrapper).toHaveLength(1)\n18:     // The wrapper starts hidden via Tailwind's `hidden` utility, plus `flex`/grid\n19:     // classes are swapped in by client-side JS when the IBAN step is required.\n20:     expect(wrapper.hasClass('hidden')).toBe(true)\n21:     expect(wrapper.find('form')).toHaveLength(1)\n22:   })\n23: \n24:   it('renders the IBAN prompt heading and explanation paragraph', async () => {\n25:     const { $ } = await render(PreBooking)\n26:     expect($('#prebooking-iban-form h3').text()).toBe('IBAN erforderlich')\n27:     expect($('#prebooking-iban-form p').first().text()).toContain('SEPA-Lastschrift')\n28:   })\n29: \n30:   it('embeds the IBAN input and SEPA mandate checkbox inside the pre-booking form', async () => {\n31:     const { $ } = await render(PreBooking)\n32:     expect(\n33:       $('#prebooking-iban-form input[data-iban-validation][id=\"prebooking-iban\"]'),\n34:     ).toHaveLength(1)\n35:     expect(\n36:       $('#prebooking-iban-form input[type=\"checkbox\"][id=\"prebooking-sepa-mandate\"]'),\n37:     ).toHaveLength(1)\n38:   })\n39: \n40:   it('renders the \"Buchung abschließen\" submit button inside the IBAN form', async () => {\n41:     const { $ } = await render(PreBooking)\n42:     expect($('#prebooking-iban-form button[type=\"submit\"]#prebooking-iban-submit')).toHaveLength(1)\n43:     expect($('#prebooking-iban-submit').text()).toContain('Buchung abschließen')\n44:   })\n45: \n46:   it('exposes exactly one <dialog> element (the loading dialog), no stray dialogs', async () => {\n47:     const { $ } = await render(PreBooking)\n48:     expect($('dialog')).toHaveLength(1)\n49:   })\n50: })\n\n(End of file - total 50 lines)\n</content>",
+            "metadata": {
+              "preview": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport PreBooking from '@/components/blocks/PreBooking.astro'\nimport { render } from '../lib/container'\n\ndescribe('PreBooking.astro', () => {\n  it('emits the loading <dialog id=\"prebooking\"> with the spinner svg and the \"in progress\" text', async () => {\n    const { $ } = await render(PreBooking)\n    expect($('dialog#prebooking')).toHaveLength(1)\n    expect($('dialog#prebooking svg')).toHaveLength(1)\n    expect($('dialog#prebooking p').text()).toContain('Die Buchung wird durchgeführt')\n  })\n\n  it('emits the IBAN pre-booking form wrapper, hidden by default via the \"hidden\" class', async () => {\n    const { $ } = await render(PreBooking)\n    const wrapper = $('#prebooking-iban-form')\n    expect(wrapper).toHaveLength(1)\n    // The wrapper starts hidden via Tailwind's `hidden` utility, plus `flex`/grid\n    // classes are swapped in by client-side JS when the IBAN step is required.\n    expect(wrapper.hasClass('hidden')).toBe(true)",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/prebooking.test.ts",
+                "text": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport PreBooking from '@/components/blocks/PreBooking.astro'\nimport { render } from '../lib/container'\n\ndescribe('PreBooking.astro', () => {\n  it('emits the loading <dialog id=\"prebooking\"> with the spinner svg and the \"in progress\" text', async () => {\n    const { $ } = await render(PreBooking)\n    expect($('dialog#prebooking')).toHaveLength(1)\n    expect($('dialog#prebooking svg')).toHaveLength(1)\n    expect($('dialog#prebooking p').text()).toContain('Die Buchung wird durchgeführt')\n  })\n\n  it('emits the IBAN pre-booking form wrapper, hidden by default via the \"hidden\" class', async () => {\n    const { $ } = await render(PreBooking)\n    const wrapper = $('#prebooking-iban-form')\n    expect(wrapper).toHaveLength(1)\n    // The wrapper starts hidden via Tailwind's `hidden` utility, plus `flex`/grid\n    // classes are swapped in by client-side JS when the IBAN step is required.\n    expect(wrapper.hasClass('hidden')).toBe(true)\n    expect(wrapper.find('form')).toHaveLength(1)\n  })\n\n  it('renders the IBAN prompt heading and explanation paragraph', async () => {\n    const { $ } = await render(PreBooking)\n    expect($('#prebooking-iban-form h3').text()).toBe('IBAN erforderlich')\n    expect($('#prebooking-iban-form p').first().text()).toContain('SEPA-Lastschrift')\n  })\n\n  it('embeds the IBAN input and SEPA mandate checkbox inside the pre-booking form', async () => {\n    const { $ } = await render(PreBooking)\n    expect(\n      $('#prebooking-iban-form input[data-iban-validation][id=\"prebooking-iban\"]'),\n    ).toHaveLength(1)\n    expect(\n      $('#prebooking-iban-form input[type=\"checkbox\"][id=\"prebooking-sepa-mandate\"]'),\n    ).toHaveLength(1)\n  })\n\n  it('renders the \"Buchung abschließen\" submit button inside the IBAN form', async () => {\n    const { $ } = await render(PreBooking)\n    expect($('#prebooking-iban-form button[type=\"submit\"]#prebooking-iban-submit')).toHaveLength(1)\n    expect($('#prebooking-iban-submit').text()).toContain('Buchung abschließen')\n  })\n\n  it('exposes exactly one <dialog> element (the loading dialog), no stray dialogs', async () => {\n    const { $ } = await render(PreBooking)\n    expect($('dialog')).toHaveLength(1)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 50,
+                "totalLines": 50,
+                "truncated": false
+              }
+            },
+            "title": "tests/components/blocks/prebooking.test.ts",
+            "time": {
+              "start": 1785177828693,
+              "end": 1785177828703
+            }
+          },
+          "id": "prt_fa4e3ed52001Pf7gch0IGUJqzx",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3e456001URc69P6aRqm6Rt"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_c322",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/lib/MetaTagsStub.astro"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/components/lib/MetaTagsStub.astro</path>\n<type>file</type>\n<content>\n1: ---\n2: // Stub MetaTags: drops all SEO/canonical computation that would otherwise\n3: // call `Astro.site` (which the AstroContainer API leaves undefined by default).\n4: const {} = Astro.props\n5: ---\n\n(End of file - total 5 lines)\n</content>",
+            "metadata": {
+              "preview": "---\n// Stub MetaTags: drops all SEO/canonical computation that would otherwise\n// call `Astro.site` (which the AstroContainer API leaves undefined by default).\nconst {} = Astro.props\n---",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/components/lib/MetaTagsStub.astro",
+                "text": "---\n// Stub MetaTags: drops all SEO/canonical computation that would otherwise\n// call `Astro.site` (which the AstroContainer API leaves undefined by default).\nconst {} = Astro.props\n---",
+                "lineStart": 1,
+                "lineEnd": 5,
+                "totalLines": 5,
+                "truncated": false
+              }
+            },
+            "title": "tests/components/lib/MetaTagsStub.astro",
+            "time": {
+              "start": 1785177828973,
+              "end": 1785177828979
+            }
+          },
+          "id": "prt_fa4e3ee6b0019HG0G7lcGPIQvS",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3e456001URc69P6aRqm6Rt"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_bd79",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/astro-modules.d.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/components/astro-modules.d.ts</path>\n<type>file</type>\n<content>\n1: // Ambient declarations for `.astro` modules used by Container API render tests.\n2: //\n3: // `tsc --noEmit` (run by `bun run check`) lacks the Astro Vite plugin, so\n4: // importing `.astro` files from `.ts` test modules raises TS2307. This file\n5: // declares a permissive ambient module for every `.astro` import under test\n6: // typed as an Astro component factory, matching the parameter shape expected\n7: // by `experimental_AstroContainer.renderToString`. The Astro Vite plugin\n8: // emits the real factory at runtime under vitest.\n9: //\n10: // The file is a global script (no top-level import/export) so the\n11: // `declare module` is treated as a true ambient declaration, not a module\n12: // augmentation. Type-only imports are pulled in via a triple-slash\n13: // reference instead.\n14: \n15: /// <reference types=\"astro\" />\n16: \n17: declare module '*.astro' {\n18:   const Component: import('astro').AstroComponentFactory\n19:   export default Component\n20: }\n\n(End of file - total 20 lines)\n</content>",
+            "metadata": {
+              "preview": "// Ambient declarations for `.astro` modules used by Container API render tests.\n//\n// `tsc --noEmit` (run by `bun run check`) lacks the Astro Vite plugin, so\n// importing `.astro` files from `.ts` test modules raises TS2307. This file\n// declares a permissive ambient module for every `.astro` import under test\n// typed as an Astro component factory, matching the parameter shape expected\n// by `experimental_AstroContainer.renderToString`. The Astro Vite plugin\n// emits the real factory at runtime under vitest.\n//\n// The file is a global script (no top-level import/export) so the\n// `declare module` is treated as a true ambient declaration, not a module\n// augmentation. Type-only imports are pulled in via a triple-slash\n// reference instead.\n\n/// <reference types=\"astro\" />\n\ndeclare module '*.astro' {\n  const Component: import('astro').AstroComponentFactory\n  export default Component\n}",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/components/astro-modules.d.ts",
+                "text": "// Ambient declarations for `.astro` modules used by Container API render tests.\n//\n// `tsc --noEmit` (run by `bun run check`) lacks the Astro Vite plugin, so\n// importing `.astro` files from `.ts` test modules raises TS2307. This file\n// declares a permissive ambient module for every `.astro` import under test\n// typed as an Astro component factory, matching the parameter shape expected\n// by `experimental_AstroContainer.renderToString`. The Astro Vite plugin\n// emits the real factory at runtime under vitest.\n//\n// The file is a global script (no top-level import/export) so the\n// `declare module` is treated as a true ambient declaration, not a module\n// augmentation. Type-only imports are pulled in via a triple-slash\n// reference instead.\n\n/// <reference types=\"astro\" />\n\ndeclare module '*.astro' {\n  const Component: import('astro').AstroComponentFactory\n  export default Component\n}",
+                "lineStart": 1,
+                "lineEnd": 20,
+                "totalLines": 20,
+                "truncated": false
+              }
+            },
+            "title": "tests/components/astro-modules.d.ts",
+            "time": {
+              "start": 1785177829122,
+              "end": 1785177829125
+            }
+          },
+          "id": "prt_fa4e3ef00001gLWV46BIJPOPls",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3e456001URc69P6aRqm6Rt"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 13835,
+            "input": 2397,
+            "output": 174,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 11264
+            }
+          },
+          "cost": 0.00705004,
+          "id": "prt_fa4e3ef56001dSDi06hk33AjFw",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3e456001URc69P6aRqm6Rt"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4e3539f001GHn1JA2LY9NgWN",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01640432,
+        "tokens": {
+          "total": 19198,
+          "input": 9176,
+          "output": 230,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 9792
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785177829247,
+          "completed": 1785177832882
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e3ef7f0016WJ2ZblWWutstU",
+        "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L"
+      },
+      "parts": [
+        {
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-start",
+          "id": "prt_fa4e3f5b60013lLBnZCZjtiX3r",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3ef7f0016WJ2ZblWWutstU"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me check the rest of the controls tests and verify Event.astro doesn't read Contentful/backenddirectly.",
+          "time": {
+            "start": 1785177830839,
+            "end": 1785177831148
+          },
+          "id": "prt_fa4e3f5b70011R7ZiJbakzz1ea",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3ef7f0016WJ2ZblWWutstU"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_04d6",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/controls/button.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/components/controls/button.test.ts</path>\n<type>file</type>\n<content>\n1: // @vitest-environment node\n2: import { describe, expect, it } from 'vitest'\n3: import Button from '@/components/controls/Button.astro'\n4: import { render } from '../lib/container'\n5: \n6: describe('Button.astro', () => {\n7:   it('renders an anchor when El is unset (default), with href and slotted label', async () => {\n8:     const { $ } = await render(Button, {\n9:       props: { href: '/foo', emphasis: 'primary' },\n10:       slots: { default: 'Mehr' },\n11:     })\n12:     expect($('a')).toHaveLength(1)\n13:     expect($('a').attr('href')).toBe('/foo')\n14:     expect($('a').text()).toContain('Mehr')\n15:   })\n16: \n17:   it('renders a <button type=\"submit\"> when El=\"button\" and type=\"submit\"', async () => {\n18:     const { $ } = await render(Button, {\n19:       props: { El: 'button', type: 'submit', emphasis: 'primary' },\n20:       slots: { default: 'Senden' },\n21:     })\n22:     expect($('button[type=\"submit\"]')).toHaveLength(1)\n23:     expect($('button').text()).toContain('Senden')\n24:     expect($('a')).toHaveLength(0)\n25:   })\n26: \n27:   it('reflects the disabled attribute onto the button element', async () => {\n28:     const { $ } = await render(Button, {\n29:       props: { El: 'button', type: 'submit', disabled: true },\n30:       slots: { default: 'x' },\n31:     })\n32:     expect($('button[disabled]')).toHaveLength(1)\n33:   })\n34: \n35:   it('forwards the optional id prop', async () => {\n36:     const { $ } = await render(Button, {\n37:       props: { id: 'cta' },\n38:       slots: { default: 'go' },\n39:     })\n40:     expect($('#cta')).toHaveLength(1)\n41:   })\n42: \n43:   it('renders a single child span (no fragment-level elements leak)', async () => {\n44:     const { $ } = await render(Button, { slots: { default: 'x' } })\n45:     expect($('a > span')).toHaveLength(1)\n46:     expect($('a > div')).toHaveLength(0)\n47:   })\n48: })\n\n(End of file - total 48 lines)\n</content>",
+            "metadata": {
+              "preview": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Button from '@/components/controls/Button.astro'\nimport { render } from '../lib/container'\n\ndescribe('Button.astro', () => {\n  it('renders an anchor when El is unset (default), with href and slotted label', async () => {\n    const { $ } = await render(Button, {\n      props: { href: '/foo', emphasis: 'primary' },\n      slots: { default: 'Mehr' },\n    })\n    expect($('a')).toHaveLength(1)\n    expect($('a').attr('href')).toBe('/foo')\n    expect($('a').text()).toContain('Mehr')\n  })\n\n  it('renders a <button type=\"submit\"> when El=\"button\" and type=\"submit\"', async () => {\n    const { $ } = await render(Button, {\n      props: { El: 'button', type: 'submit', emphasis: 'primary' },\n      slots: { default: 'Senden' },",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/components/controls/button.test.ts",
+                "text": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Button from '@/components/controls/Button.astro'\nimport { render } from '../lib/container'\n\ndescribe('Button.astro', () => {\n  it('renders an anchor when El is unset (default), with href and slotted label', async () => {\n    const { $ } = await render(Button, {\n      props: { href: '/foo', emphasis: 'primary' },\n      slots: { default: 'Mehr' },\n    })\n    expect($('a')).toHaveLength(1)\n    expect($('a').attr('href')).toBe('/foo')\n    expect($('a').text()).toContain('Mehr')\n  })\n\n  it('renders a <button type=\"submit\"> when El=\"button\" and type=\"submit\"', async () => {\n    const { $ } = await render(Button, {\n      props: { El: 'button', type: 'submit', emphasis: 'primary' },\n      slots: { default: 'Senden' },\n    })\n    expect($('button[type=\"submit\"]')).toHaveLength(1)\n    expect($('button').text()).toContain('Senden')\n    expect($('a')).toHaveLength(0)\n  })\n\n  it('reflects the disabled attribute onto the button element', async () => {\n    const { $ } = await render(Button, {\n      props: { El: 'button', type: 'submit', disabled: true },\n      slots: { default: 'x' },\n    })\n    expect($('button[disabled]')).toHaveLength(1)\n  })\n\n  it('forwards the optional id prop', async () => {\n    const { $ } = await render(Button, {\n      props: { id: 'cta' },\n      slots: { default: 'go' },\n    })\n    expect($('#cta')).toHaveLength(1)\n  })\n\n  it('renders a single child span (no fragment-level elements leak)', async () => {\n    const { $ } = await render(Button, { slots: { default: 'x' } })\n    expect($('a > span')).toHaveLength(1)\n    expect($('a > div')).toHaveLength(0)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 48,
+                "totalLines": 48,
+                "truncated": false
+              }
+            },
+            "title": "tests/components/controls/button.test.ts",
+            "time": {
+              "start": 1785177831153,
+              "end": 1785177831158
+            }
+          },
+          "id": "prt_fa4e3f6ee001u8AouBPxk5MPMB",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3ef7f0016WJ2ZblWWutstU"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_6848",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/controls/checkbox.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/components/controls/checkbox.test.ts</path>\n<type>file</type>\n<content>\n1: // @vitest-environment node\n2: import { describe, expect, it } from 'vitest'\n3: import Checkbox from '@/components/controls/Checkbox.astro'\n4: import { render } from '../lib/container'\n5: \n6: describe('Checkbox.astro', () => {\n7:   it('renders a checkbox input bound to id/name, with the title as the second label', async () => {\n8:     const { $ } = await render(Checkbox, {\n9:       props: { id: 'member', name: 'member', title: 'Ich bin Mitglied' },\n10:     })\n11:     expect($('input[type=\"checkbox\"][id=\"member\"][name=\"member\"]')).toHaveLength(1)\n12:     // Two labels point at the same id — the visual box label + the title label.\n13:     expect($('label[for=\"member\"]')).toHaveLength(2)\n14:     expect($('label[for=\"member\"]').last().text()).toBe('Ich bin Mitglied')\n15:   })\n16: \n17:   it('omits the description <span> when description prop is not supplied', async () => {\n18:     const { $ } = await render(Checkbox, {\n19:       props: { id: 'consent', name: 'consent', title: 'Einwilligung' },\n20:     })\n21:     expect($('span')).toHaveLength(0)\n22:   })\n23: \n24:   it('renders the description inside a span under the title row', async () => {\n25:     const { $ } = await render(Checkbox, {\n26:       props: { id: 'consent', name: 'consent', title: 'Einwilligung', description: 'zwei Zeilen' },\n27:     })\n28:     expect($('span').text()).toContain('zwei Zeilen')\n29:   })\n30: \n31:   it('renders checked only when the checked prop is true', async () => {\n32:     const { $ } = await render(Checkbox, {\n33:       props: { id: 'c', name: 'c', title: 't', checked: true },\n34:     })\n35:     expect($('input[checked]')).toHaveLength(1)\n36: \n37:     const { $: $un } = await render(Checkbox, {\n38:       props: { id: 'c', name: 'c', title: 't' },\n39:     })\n40:     expect($un('input[checked]')).toHaveLength(0)\n41:   })\n42: \n43:   it('contains an SVG check mark inline (the visual indicator)', async () => {\n44:     const { $ } = await render(Checkbox, { props: { id: 'c', name: 'c', title: 't' } })\n45:     expect($('svg path[d=\"M20 6 9 17l-5-5\"]')).toHaveLength(1)\n46:   })\n47: })\n\n(End of file - total 47 lines)\n</content>",
+            "metadata": {
+              "preview": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Checkbox from '@/components/controls/Checkbox.astro'\nimport { render } from '../lib/container'\n\ndescribe('Checkbox.astro', () => {\n  it('renders a checkbox input bound to id/name, with the title as the second label', async () => {\n    const { $ } = await render(Checkbox, {\n      props: { id: 'member', name: 'member', title: 'Ich bin Mitglied' },\n    })\n    expect($('input[type=\"checkbox\"][id=\"member\"][name=\"member\"]')).toHaveLength(1)\n    // Two labels point at the same id — the visual box label + the title label.\n    expect($('label[for=\"member\"]')).toHaveLength(2)\n    expect($('label[for=\"member\"]').last().text()).toBe('Ich bin Mitglied')\n  })\n\n  it('omits the description <span> when description prop is not supplied', async () => {\n    const { $ } = await render(Checkbox, {\n      props: { id: 'consent', name: 'consent', title: 'Einwilligung' },\n    })",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/components/controls/checkbox.test.ts",
+                "text": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Checkbox from '@/components/controls/Checkbox.astro'\nimport { render } from '../lib/container'\n\ndescribe('Checkbox.astro', () => {\n  it('renders a checkbox input bound to id/name, with the title as the second label', async () => {\n    const { $ } = await render(Checkbox, {\n      props: { id: 'member', name: 'member', title: 'Ich bin Mitglied' },\n    })\n    expect($('input[type=\"checkbox\"][id=\"member\"][name=\"member\"]')).toHaveLength(1)\n    // Two labels point at the same id — the visual box label + the title label.\n    expect($('label[for=\"member\"]')).toHaveLength(2)\n    expect($('label[for=\"member\"]').last().text()).toBe('Ich bin Mitglied')\n  })\n\n  it('omits the description <span> when description prop is not supplied', async () => {\n    const { $ } = await render(Checkbox, {\n      props: { id: 'consent', name: 'consent', title: 'Einwilligung' },\n    })\n    expect($('span')).toHaveLength(0)\n  })\n\n  it('renders the description inside a span under the title row', async () => {\n    const { $ } = await render(Checkbox, {\n      props: { id: 'consent', name: 'consent', title: 'Einwilligung', description: 'zwei Zeilen' },\n    })\n    expect($('span').text()).toContain('zwei Zeilen')\n  })\n\n  it('renders checked only when the checked prop is true', async () => {\n    const { $ } = await render(Checkbox, {\n      props: { id: 'c', name: 'c', title: 't', checked: true },\n    })\n    expect($('input[checked]')).toHaveLength(1)\n\n    const { $: $un } = await render(Checkbox, {\n      props: { id: 'c', name: 'c', title: 't' },\n    })\n    expect($un('input[checked]')).toHaveLength(0)\n  })\n\n  it('contains an SVG check mark inline (the visual indicator)', async () => {\n    const { $ } = await render(Checkbox, { props: { id: 'c', name: 'c', title: 't' } })\n    expect($('svg path[d=\"M20 6 9 17l-5-5\"]')).toHaveLength(1)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 47,
+                "totalLines": 47,
+                "truncated": false
+              }
+            },
+            "title": "tests/components/controls/checkbox.test.ts",
+            "time": {
+              "start": 1785177831298,
+              "end": 1785177831305
+            }
+          },
+          "id": "prt_fa4e3f780001jvp07A03t2Z78L",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3ef7f0016WJ2ZblWWutstU"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_fba6",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/controls/iban-input.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/components/controls/iban-input.test.ts</path>\n<type>file</type>\n<content>\n1: // @vitest-environment node\n2: import { describe, expect, it } from 'vitest'\n3: import IbanInput from '@/components/controls/IbanInput.astro'\n4: import { render } from '../lib/container'\n5: \n6: describe('IbanInput.astro', () => {\n7:   it('renders a text input with the IBAN-specific markers (autocomplete, data attribute)', async () => {\n8:     const { $ } = await render(IbanInput, { props: { id: 'iban' } })\n9:     expect($('input[type=\"text\"]')).toHaveLength(1)\n10:     expect($('input[autocomplete=\"iban\"]')).toHaveLength(1)\n11:     expect($('input[data-iban-validation]')).toHaveLength(1)\n12:     expect($('input[id=\"iban\"][name=\"iban\"]')).toHaveLength(1)\n13:   })\n14: \n15:   it('defaults the label to \"IBAN\" when no label prop is given', async () => {\n16:     const { $ } = await render(IbanInput, { props: { id: 'iban' } })\n17:     expect($('label[for=\"iban\"]').text()).toBe('IBAN')\n18:   })\n19: \n20:   it('uses the supplied label verbatim when provided', async () => {\n21:     const { $ } = await render(IbanInput, { props: { id: 'iban', label: 'Kontonummer' } })\n22:     expect($('label[for=\"iban\"]').text()).toBe('Kontonummer')\n23:   })\n24: \n25:   it('uses the fixed German sample IBAN as the placeholder default', async () => {\n26:     const { $ } = await render(IbanInput, { props: { id: 'iban' } })\n27:     expect($('input').attr('placeholder')).toBe('DE89 3704 0044 0532 0130 00')\n28:   })\n29: \n30:   it('forwards required and disabled onto the input element', async () => {\n31:     const { $ } = await render(IbanInput, { props: { id: 'iban', required: true, disabled: true } })\n32:     expect($('input[required]')).toHaveLength(1)\n33:     expect($('input[disabled]')).toHaveLength(1)\n34:   })\n35: })\n\n(End of file - total 35 lines)\n</content>",
+            "metadata": {
+              "preview": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport IbanInput from '@/components/controls/IbanInput.astro'\nimport { render } from '../lib/container'\n\ndescribe('IbanInput.astro', () => {\n  it('renders a text input with the IBAN-specific markers (autocomplete, data attribute)', async () => {\n    const { $ } = await render(IbanInput, { props: { id: 'iban' } })\n    expect($('input[type=\"text\"]')).toHaveLength(1)\n    expect($('input[autocomplete=\"iban\"]')).toHaveLength(1)\n    expect($('input[data-iban-validation]')).toHaveLength(1)\n    expect($('input[id=\"iban\"][name=\"iban\"]')).toHaveLength(1)\n  })\n\n  it('defaults the label to \"IBAN\" when no label prop is given', async () => {\n    const { $ } = await render(IbanInput, { props: { id: 'iban' } })\n    expect($('label[for=\"iban\"]').text()).toBe('IBAN')\n  })\n\n  it('uses the supplied label verbatim when provided', async () => {",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/components/controls/iban-input.test.ts",
+                "text": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport IbanInput from '@/components/controls/IbanInput.astro'\nimport { render } from '../lib/container'\n\ndescribe('IbanInput.astro', () => {\n  it('renders a text input with the IBAN-specific markers (autocomplete, data attribute)', async () => {\n    const { $ } = await render(IbanInput, { props: { id: 'iban' } })\n    expect($('input[type=\"text\"]')).toHaveLength(1)\n    expect($('input[autocomplete=\"iban\"]')).toHaveLength(1)\n    expect($('input[data-iban-validation]')).toHaveLength(1)\n    expect($('input[id=\"iban\"][name=\"iban\"]')).toHaveLength(1)\n  })\n\n  it('defaults the label to \"IBAN\" when no label prop is given', async () => {\n    const { $ } = await render(IbanInput, { props: { id: 'iban' } })\n    expect($('label[for=\"iban\"]').text()).toBe('IBAN')\n  })\n\n  it('uses the supplied label verbatim when provided', async () => {\n    const { $ } = await render(IbanInput, { props: { id: 'iban', label: 'Kontonummer' } })\n    expect($('label[for=\"iban\"]').text()).toBe('Kontonummer')\n  })\n\n  it('uses the fixed German sample IBAN as the placeholder default', async () => {\n    const { $ } = await render(IbanInput, { props: { id: 'iban' } })\n    expect($('input').attr('placeholder')).toBe('DE89 3704 0044 0532 0130 00')\n  })\n\n  it('forwards required and disabled onto the input element', async () => {\n    const { $ } = await render(IbanInput, { props: { id: 'iban', required: true, disabled: true } })\n    expect($('input[required]')).toHaveLength(1)\n    expect($('input[disabled]')).toHaveLength(1)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 35,
+                "totalLines": 35,
+                "truncated": false
+              }
+            },
+            "title": "tests/components/controls/iban-input.test.ts",
+            "time": {
+              "start": 1785177832006,
+              "end": 1785177832010
+            }
+          },
+          "id": "prt_fa4e3fa44001JoIoGvw7QHPow7",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3ef7f0016WJ2ZblWWutstU"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_0411",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/controls/input.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/components/controls/input.test.ts</path>\n<type>file</type>\n<content>\n1: // @vitest-environment node\n2: import { describe, expect, it } from 'vitest'\n3: import Input from '@/components/controls/Input.astro'\n4: import { render } from '../lib/container'\n5: \n6: describe('Input.astro', () => {\n7:   it('renders a labelled input bound to id/name', async () => {\n8:     const { $ } = await render(Input, {\n9:       props: { id: 'firstname', name: 'firstname', label: 'Vorname' },\n10:     })\n11:     expect($('div > label[for=\"firstname\"]')).toHaveLength(1)\n12:     expect($('div > label[for=\"firstname\"]').text()).toBe('Vorname')\n13:     expect($('div > input[id=\"firstname\"][name=\"firstname\"]')).toHaveLength(1)\n14:   })\n15: \n16:   it('omits the label entirely when label prop is undefined', async () => {\n17:     const { $ } = await render(Input, { props: { id: 'phone', name: 'phone' } })\n18:     expect($('label')).toHaveLength(0)\n19:     expect($('input[id=\"phone\"][name=\"phone\"]')).toHaveLength(1)\n20:   })\n21: \n22:   it('forwards type=\"email\" and placeholder attribute', async () => {\n23:     const { $ } = await render(Input, {\n24:       props: { id: 'email', name: 'email', type: 'email', placeholder: 'du@beispiel.de' },\n25:     })\n26:     expect($('input[type=\"email\"]')).toHaveLength(1)\n27:     expect($('input').attr('placeholder')).toBe('du@beispiel.de')\n28:   })\n29: \n30:   it('passes through extra HTML attributes via the spread attrs', async () => {\n31:     const { $ } = await render(Input, {\n32:       props: { id: 'phone', name: 'phone', type: 'tel', autocomplete: 'tel' },\n33:     })\n34:     expect($('input[autocomplete=\"tel\"]')).toHaveLength(1)\n35:     expect($('input[type=\"tel\"]')).toHaveLength(1)\n36:   })\n37: })\n\n(End of file - total 37 lines)\n</content>",
+            "metadata": {
+              "preview": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Input from '@/components/controls/Input.astro'\nimport { render } from '../lib/container'\n\ndescribe('Input.astro', () => {\n  it('renders a labelled input bound to id/name', async () => {\n    const { $ } = await render(Input, {\n      props: { id: 'firstname', name: 'firstname', label: 'Vorname' },\n    })\n    expect($('div > label[for=\"firstname\"]')).toHaveLength(1)\n    expect($('div > label[for=\"firstname\"]').text()).toBe('Vorname')\n    expect($('div > input[id=\"firstname\"][name=\"firstname\"]')).toHaveLength(1)\n  })\n\n  it('omits the label entirely when label prop is undefined', async () => {\n    const { $ } = await render(Input, { props: { id: 'phone', name: 'phone' } })\n    expect($('label')).toHaveLength(0)\n    expect($('input[id=\"phone\"][name=\"phone\"]')).toHaveLength(1)\n  })",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/components/controls/input.test.ts",
+                "text": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport Input from '@/components/controls/Input.astro'\nimport { render } from '../lib/container'\n\ndescribe('Input.astro', () => {\n  it('renders a labelled input bound to id/name', async () => {\n    const { $ } = await render(Input, {\n      props: { id: 'firstname', name: 'firstname', label: 'Vorname' },\n    })\n    expect($('div > label[for=\"firstname\"]')).toHaveLength(1)\n    expect($('div > label[for=\"firstname\"]').text()).toBe('Vorname')\n    expect($('div > input[id=\"firstname\"][name=\"firstname\"]')).toHaveLength(1)\n  })\n\n  it('omits the label entirely when label prop is undefined', async () => {\n    const { $ } = await render(Input, { props: { id: 'phone', name: 'phone' } })\n    expect($('label')).toHaveLength(0)\n    expect($('input[id=\"phone\"][name=\"phone\"]')).toHaveLength(1)\n  })\n\n  it('forwards type=\"email\" and placeholder attribute', async () => {\n    const { $ } = await render(Input, {\n      props: { id: 'email', name: 'email', type: 'email', placeholder: 'du@beispiel.de' },\n    })\n    expect($('input[type=\"email\"]')).toHaveLength(1)\n    expect($('input').attr('placeholder')).toBe('du@beispiel.de')\n  })\n\n  it('passes through extra HTML attributes via the spread attrs', async () => {\n    const { $ } = await render(Input, {\n      props: { id: 'phone', name: 'phone', type: 'tel', autocomplete: 'tel' },\n    })\n    expect($('input[autocomplete=\"tel\"]')).toHaveLength(1)\n    expect($('input[type=\"tel\"]')).toHaveLength(1)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 37,
+                "totalLines": 37,
+                "truncated": false
+              }
+            },
+            "title": "tests/components/controls/input.test.ts",
+            "time": {
+              "start": 1785177832074,
+              "end": 1785177832078
+            }
+          },
+          "id": "prt_fa4e3fa88001vfmqVf7TKyuEgR",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3ef7f0016WJ2ZblWWutstU"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_7e6a",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk rg -n \"^(import|const|let|async function|function|if.*fetch|getEntries|contentful|BACKEND_API|fetch\\(|entry\\.render|Astro\\.glob)\" src/components/blocks/Event.astro src/components/blocks/PreBooking.astro src/components/blocks/NewsletterCard.astro | head -100",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "38 matches in 3 files:\n\nsrc/components/blocks/Event.astro:2:import Input from '@/components/controls/Input.astro'\nsrc/components/blocks/Event.astro:3:import IbanInput from '@/components/controls/IbanInput.astro'\nsrc/components/blocks/Event.astro:4:import Container from '@/components/common/Container.astro'\nsrc/components/blocks/Event.astro:5:import Notification from '@/components/common/Notification.astro'\nsrc/components/blocks/Event.astro:6:import Checkbox from '@/components/controls/Checkbox.astro'\nsrc/components/blocks/Event.astro:7:import SepaMandate from '@/components/controls/SepaMandate.astro'\nsrc/components/blocks/Event.astro:8:import SubmitButton from '@/components/controls/SubmitButton.astro'\nsrc/components/blocks/Event.astro:9:import Textarea from '@/components/controls/Textarea.astro'\nsrc/components/blocks/Event.astro:10:import { Icon } from 'astro-icon/components'\nsrc/components/blocks/Event.astro:11:import type { CollectionEntry } from 'astro:content'\nsrc/components/blocks/Event.astro:12:import type { Place, Offer, Event as SchemaEvent } from 'schema-dts'\nsrc/components/blocks/Event.astro:13:import HeroSection from './HeroSection.astro'\nsrc/components/blocks/Event.astro:14:import NewsletterCard from './NewsletterCard.astro'\nsrc/components/blocks/Event.astro:15:import { EventCustomFieldType, PaymentMethod, type MetaSEO } from '@/types'\nsrc/components/blocks/Event.astro:16:import { CAPTCHA_SITE_KEY } from 'astro:env/client'\nsrc/components/blocks/Event.astro:17:import Layout from '@/layouts/Layout.astro'\nsrc/components/blocks/Event.astro:18:import { organizationRef, postalAddress, schemaJsonLd } from '@/schema'\nsrc/components/blocks/Event.astro:19:import { formatDatetime } from '@/utils'\nsrc/components/blocks/Event.astro:20:import { formatInTimeZone, fromZonedTime } from 'date-fns-tz'\nsrc/components/blocks/Event.astro:30:const { type, entry, newsletterDescription, newsletterText, schemaType } = As...\nsrc/components/blocks/Event.astro:32:function extractPrice(priceString: string): string {\nsrc/components/blocks/Event.astro:37:function parseDurationMinutes(duration: string): number | undefined {\nsrc/components/blocks/Event.astro:42:function convertToISODuration(duration: string): string | undefined {\nsrc/components/blocks/Event.astro:70:const eventLocation: Place = {\nsrc/components/blocks/Event.astro:76:const eventOffers: Offer[] = [\n  +5 more in src/components/blocks/Event.astro [see remaining: tail -n +26 ~/Library/Application Support/rtk/tee/1785177832_grep_0_rc_components_blocks_Event_astro.log]\nsrc/components/blocks/NewsletterCard.astro:2:import ButtonSwitch from '@/components/controls/ButtonSwitch.astro'\nsrc/components/blocks/NewsletterCard.astro:3:import Input from '@/components/controls/Input.astro'\nsrc/components/blocks/NewsletterCard.astro:4:import SubmitButton from '@/components/controls/SubmitButton.astro'\nsrc/components/blocks/NewsletterCard.astro:5:import Switch from '@/components/controls/Switch.astro'\nsrc/components/blocks/NewsletterCard.astro:6:import { CAPTCHA_SITE_KEY } from 'astro:env/client'\nsrc/components/blocks/NewsletterCard.astro:13:const { description, topic } = Astro.props as Props\nsrc/components/blocks/PreBooking.astro:2:import IbanInput from '@/components/controls/IbanInput.astro'\nsrc/components/blocks/PreBooking.astro:3:import SepaMandate from '@/components/controls/SepaMandate.astro'\n",
+            "metadata": {
+              "output": "38 matches in 3 files:\n\nsrc/components/blocks/Event.astro:2:import Input from '@/components/controls/Input.astro'\nsrc/components/blocks/Event.astro:3:import IbanInput from '@/components/controls/IbanInput.astro'\nsrc/components/blocks/Event.astro:4:import Container from '@/components/common/Container.astro'\nsrc/components/blocks/Event.astro:5:import Notification from '@/components/common/Notification.astro'\nsrc/components/blocks/Event.astro:6:import Checkbox from '@/components/controls/Checkbox.astro'\nsrc/components/blocks/Event.astro:7:import SepaMandate from '@/components/controls/SepaMandate.astro'\nsrc/components/blocks/Event.astro:8:import SubmitButton from '@/components/controls/SubmitButton.astro'\nsrc/components/blocks/Event.astro:9:import Textarea from '@/components/controls/Textarea.astro'\nsrc/components/blocks/Event.astro:10:import { Icon } from 'astro-icon/components'\nsrc/components/blocks/Event.astro:11:import type { CollectionEntry } from 'astro:content'\nsrc/components/blocks/Event.astro:12:import type { Place, Offer, Event as SchemaEvent } from 'schema-dts'\nsrc/components/blocks/Event.astro:13:import HeroSection from './HeroSection.astro'\nsrc/components/blocks/Event.astro:14:import NewsletterCard from './NewsletterCard.astro'\nsrc/components/blocks/Event.astro:15:import { EventCustomFieldType, PaymentMethod, type MetaSEO } from '@/types'\nsrc/components/blocks/Event.astro:16:import { CAPTCHA_SITE_KEY } from 'astro:env/client'\nsrc/components/blocks/Event.astro:17:import Layout from '@/layouts/Layout.astro'\nsrc/components/blocks/Event.astro:18:import { organizationRef, postalAddress, schemaJsonLd } from '@/schema'\nsrc/components/blocks/Event.astro:19:import { formatDatetime } from '@/utils'\nsrc/components/blocks/Event.astro:20:import { formatInTimeZone, fromZonedTime } from 'date-fns-tz'\nsrc/components/blocks/Event.astro:30:const { type, entry, newsletterDescription, newsletterText, schemaType } = As...\nsrc/components/blocks/Event.astro:32:function extractPrice(priceString: string): string {\nsrc/components/blocks/Event.astro:37:function parseDurationMinutes(duration: string): number | undefined {\nsrc/components/blocks/Event.astro:42:function convertToISODuration(duration: string): string | undefined {\nsrc/components/blocks/Event.astro:70:const eventLocation: Place = {\nsrc/components/blocks/Event.astro:76:const eventOffers: Offer[] = [\n  +5 more in src/components/blocks/Event.astro [see remaining: tail -n +26 ~/Library/Application Support/rtk/tee/1785177832_grep_0_rc_components_blocks_Event_astro.log]\nsrc/components/blocks/NewsletterCard.astro:2:import ButtonSwitch from '@/components/controls/ButtonSwitch.astro'\nsrc/components/blocks/NewsletterCard.astro:3:import Input from '@/components/controls/Input.astro'\nsrc/components/blocks/NewsletterCard.astro:4:import SubmitButton from '@/components/controls/SubmitButton.astro'\nsrc/components/blocks/NewsletterCard.astro:5:import Switch from '@/components/controls/Switch.astro'\nsrc/components/blocks/NewsletterCard.astro:6:import { CAPTCHA_SITE_KEY } from 'astro:env/client'\nsrc/components/blocks/NewsletterCard.astro:13:const { description, topic } = Astro.props as Props\nsrc/components/blocks/PreBooking.astro:2:import IbanInput from '@/components/controls/IbanInput.astro'\nsrc/components/blocks/PreBooking.astro:3:import SepaMandate from '@/components/controls/SepaMandate.astro'\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk rg -n \"^(import|const|let|async function|function|if.*fetch|getEntries|contentful|BACKEND_API|fetch\\(|entry\\.render|Astro\\.glob)\" src/components/blocks/Event.astro src/components/blocks/PreBooking.astro src/components/blocks/NewsletterCard.astro | head -100",
+            "time": {
+              "start": 1785177832800,
+              "end": 1785177832803
+            }
+          },
+          "id": "prt_fa4e3fd230010kevXMQX0dcuRc",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3ef7f0016WJ2ZblWWutstU"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 19198,
+            "input": 9176,
+            "output": 230,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 9792
+            }
+          },
+          "cost": 0.01640432,
+          "id": "prt_fa4e3fd8d001GVXJjbjtjUIUVT",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3ef7f0016WJ2ZblWWutstU"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4e3539f001GHn1JA2LY9NgWN",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01665984,
+        "tokens": {
+          "total": 22668,
+          "input": 8616,
+          "output": 228,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 13824
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785177832886,
+          "completed": 1785177879252
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e3fdb6001d5YmMTmrHfjRbg",
+        "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L"
+      },
+      "parts": [
+        {
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-start",
+          "id": "prt_fa4e40aab001Q69yO29OetdAWI",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3fdb6001d5YmMTmrHfjRbg"
+        },
+        {
+          "type": "reasoning",
+          "text": "None of these components fetch Contentful/backend directly — they consume loader data as props. The Event test injects a mock CollectionEntry. The spec mentions \"For components whose frontmatter reads Contentful or the backend instrumentation directly, inject mocked loader data\". Let me check whether any component under test actually does that. NewsletterCard uses CAPTCHA_SITE_KEY from astro:env/client — that's env, not fetch. Event uses CAPTCHA_SITE_KEY too.\n\nLet me verify check passes.",
+          "time": {
+            "start": 1785177836207,
+            "end": 1785177837248
+          },
+          "id": "prt_fa4e40aaf001BYVIP03cgmSsM4",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3fdb6001d5YmMTmrHfjRbg"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_7f9a",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bash -lc \"cd /Users/mseele/dev/sve/sve-website && bun run check 2>&1 | tail -30\"",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "(node:41496) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41494) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41497) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41502) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41505) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41503) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41504) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41506) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41511) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41512) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41516) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41518) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  21 passed (21)\n      Tests  264 passed (264)\n   Start at  20:44:28\n   Duration  10.08s (transform 6.70s, setup 5.82s, import 43.09s, tests 2.10s, environment 3.13s)\n\n",
+            "metadata": {
+              "output": "(node:41496) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41494) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41497) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41502) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41505) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41503) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41504) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41506) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41511) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41512) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41516) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41518) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  21 passed (21)\n      Tests  264 passed (264)\n   Start at  20:44:28\n   Duration  10.08s (transform 6.70s, setup 5.82s, import 43.09s, tests 2.10s, environment 3.13s)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bash -lc \"cd /Users/mseele/dev/sve/sve-website && bun run check 2>&1 | tail -30\"",
+            "time": {
+              "start": 1785177878950,
+              "end": 1785177878969
+            }
+          },
+          "id": "prt_fa4e40ec2001gCmH5M5Ui00Nd7",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3fdb6001d5YmMTmrHfjRbg"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_811f",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bash -lc \"cd /Users/mseele/dev/sve/sve-website && bun run test -- --run 2>&1 | tail -40 || bun vitest run 2>&1 | tail -40\"",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41231) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41229) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n20:44:05 [astro-icon] Loaded icons from src/assets/icons, mdi\n(node:41251) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41254) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41252) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41253) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41255) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41265) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41266) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41267) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41268) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41271) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41274) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41286) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41289) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41294) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  21 passed (21)\n      Tests  264 passed (264)\n   Start at  20:44:01\n   Duration  15.71s (transform 13.37s, setup 10.74s, import 67.12s, tests 3.21s, environment 5.46s)\n\n",
+            "metadata": {
+              "output": "(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41231) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41229) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n20:44:05 [astro-icon] Loaded icons from src/assets/icons, mdi\n(node:41251) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41254) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41252) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41253) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41255) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41265) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41266) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41267) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41268) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41271) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41274) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41286) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41289) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41294) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  21 passed (21)\n      Tests  264 passed (264)\n   Start at  20:44:01\n   Duration  15.71s (transform 13.37s, setup 10.74s, import 67.12s, tests 3.21s, environment 5.46s)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bash -lc \"cd /Users/mseele/dev/sve/sve-website && bun run test -- --run 2>&1 | tail -40 || bun vitest run 2>&1 | tail -40\"",
+            "time": {
+              "start": 1785177857634,
+              "end": 1785177857662
+            }
+          },
+          "id": "prt_fa4e40fdd001IJcn0RajiaGUyM",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3fdb6001d5YmMTmrHfjRbg"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 22668,
+            "input": 8616,
+            "output": 228,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 13824
+            }
+          },
+          "cost": 0.01665984,
+          "id": "prt_fa4e4b1fe001gEwSDj2BDGJBXP",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e3fdb6001d5YmMTmrHfjRbg"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4e3539f001GHn1JA2LY9NgWN",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01279304,
+        "tokens": {
+          "total": 24163,
+          "input": 5032,
+          "output": 187,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 18944
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785177879260,
+          "completed": 1785177910592
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e4b2dc001GvI32VAYQG9qmD",
+        "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L"
+      },
+      "parts": [
+        {
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-start",
+          "id": "prt_fa4e4bb04001Pb6M49Ky1dzrym",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e4b2dc001GvI32VAYQG9qmD"
+        },
+        {
+          "type": "reasoning",
+          "text": "check command output didn't show — let me make sure check is green. Actually the bash output above me was mixed: both commands emitted but the first one's tail-30 ended up showing the vitest output. Let me explicitlyrun check.",
+          "time": {
+            "start": 1785177881350,
+            "end": 1785177882612
+          },
+          "id": "prt_fa4e4bb06001Io9A4IQhgwWKWY",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e4b2dc001GvI32VAYQG9qmD"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_6476",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bash -lc \"cd /Users/mseele/dev/sve/sve-website && bun run check 2>&1 | tail -20\"",
+              "timeout": 180000,
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "(node:41772) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41776) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41773) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41780) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41781) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41779) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41786) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  21 passed (21)\n      Tests  264 passed (264)\n   Start at  20:45:00\n   Duration  9.99s (transform 5.72s, setup 5.34s, import 42.91s, tests 2.41s, environment 3.28s)\n\n",
+            "metadata": {
+              "output": "(node:41772) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41776) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41773) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41780) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41781) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41779) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:41786) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  21 passed (21)\n      Tests  264 passed (264)\n   Start at  20:45:00\n   Duration  9.99s (transform 5.72s, setup 5.34s, import 42.91s, tests 2.41s, environment 3.28s)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bash -lc \"cd /Users/mseele/dev/sve/sve-website && bun run check 2>&1 | tail -20\"",
+            "time": {
+              "start": 1785177910443,
+              "end": 1785177910463
+            }
+          },
+          "id": "prt_fa4e4bff6001b9UtiWqKDlePaL",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e4b2dc001GvI32VAYQG9qmD"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_0df7",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk rg -n \"EntryAvailability|getEntries|fetch\\(|getCollection|contentful\" src/components/blocks/Event.astro src/components/blocks/NewsletterCard.astro src/components/blocks/PreBooking.astro",
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "(no output)",
+            "metadata": {
+              "output": "(no output)",
+              "exit": 1,
+              "truncated": false
+            },
+            "title": "rtk rg -n \"EntryAvailability|getEntries|fetch\\(|getCollection|contentful\" src/components/blocks/Event.astro src/components/blocks/NewsletterCard.astro src/components/blocks/PreBooking.astro",
+            "time": {
+              "start": 1785177883088,
+              "end": 1785177883125
+            }
+          },
+          "id": "prt_fa4e4c1c3001w0RZpvKc1ndNob",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e4b2dc001GvI32VAYQG9qmD"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 24163,
+            "input": 5032,
+            "output": 187,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 18944
+            }
+          },
+          "cost": 0.01279304,
+          "id": "prt_fa4e52d12001U7aMMgx79rPd3J",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e4b2dc001GvI32VAYQG9qmD"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4e3539f001GHn1JA2LY9NgWN",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0074106,
+        "tokens": {
+          "total": 24624,
+          "input": 525,
+          "output": 99,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 24000
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785177910600,
+          "completed": 1785177943661
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e52d48001PC3rU89hJqGRz8",
+        "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L"
+      },
+      "parts": [
+        {
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-start",
+          "id": "prt_fa4e547b5001xo6uSWNwCg84aK",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e52d48001PC3rU89hJqGRz8"
+        },
+        {
+          "type": "reasoning",
+          "text": "bun run check seems to also run checks passing tests. Let me just confirm check exit code.",
+          "time": {
+            "start": 1785177917367,
+            "end": 1785177917985
+          },
+          "id": "prt_fa4e547b7001sIw8xMowXO9H3a",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e52d48001PC3rU89hJqGRz8"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_a4eb",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bash -lc \"cd /Users/mseele/dev/sve/sve-website && bun run check > /tmp/check.log 2>&1; echo EXIT=$?; tail -30 /tmp/check.log\"",
+              "timeout": 240000,
+              "workdir": "/Users/mseele/dev/sve/sve-website"
+            },
+            "output": "EXIT=0\n(node:42102) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42104) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42107) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42108) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42124) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42126) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42127) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42125) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42128) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42133) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42130) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42132) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  21 passed (21)\n      Tests  264 passed (264)\n   Start at  20:45:36\n   Duration  7.38s (transform 5.22s, setup 5.47s, import 30.31s, tests 1.75s, environment 2.66s)\n\n",
+            "metadata": {
+              "output": "EXIT=0\n(node:42102) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42104) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42107) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42108) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42124) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42126) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42127) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42125) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42128) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42133) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42130) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:42132) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  21 passed (21)\n      Tests  264 passed (264)\n   Start at  20:45:36\n   Duration  7.38s (transform 5.22s, setup 5.47s, import 30.31s, tests 1.75s, environment 2.66s)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bash -lc \"cd /Users/mseele/dev/sve/sve-website && bun run check > /tmp/check.log 2>&1; echo EXIT=$?; tail -30 /tmp/check.log\"",
+            "time": {
+              "start": 1785177943542,
+              "end": 1785177943550
+            }
+          },
+          "id": "prt_fa4e54a220011DYU806K02dKBS",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e52d48001PC3rU89hJqGRz8"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 24624,
+            "input": 525,
+            "output": 99,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 24000
+            }
+          },
+          "cost": 0.0074106,
+          "id": "prt_fa4e5ae42001R7Cgi7Z26KZvzV",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e52d48001PC3rU89hJqGRz8"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4e3539f001GHn1JA2LY9NgWN",
+        "role": "assistant",
+        "mode": "general",
+        "agent": "general",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.01543276,
+        "tokens": {
+          "total": 26549,
+          "input": 2529,
+          "output": 1364,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 22656
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785177943668,
+          "completed": 1785177988491
+        },
+        "finish": "stop",
+        "id": "msg_fa4e5ae74001NkUmmjNb0l6XFx",
+        "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L"
+      },
+      "parts": [
+        {
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-start",
+          "id": "prt_fa4e5e3bc001NQZ9TcHU3yX7r8",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e5ae74001NkUmmjNb0l6XFx"
+        },
+        {
+          "type": "reasoning",
+          "text": "Spec review:\n\nAll 12 named components have test files. Container API wired via `experimental_AstroContainer.create()`. cheerio added as helper. Mocking: Event uses a stubbed entry with mocked image; no Contentful/backend fetch in components under test — so \"components that load data\" trivially satisfied. No CSS-class snapshots — assertions are DOM queries. Wait actually I see some `.hasClass('hidden')` assertions in event.test.ts (line 169, 176) and prebooking.test.ts (line 20), newsletter-card? Actually those `hasClass('hidden')` checks are asserting the *presence* of a tailwind utility state — arguably a CSS class check. The spec says \"No CSS-class-string snapshots — DOM structure assertions only.\" `hasClass('hidden')` is checking a single class. It's technically class-string but used for behavior (default hidden state). Is that scope creep or wrong? It's a CSS class assertion not a DOM structure assertion. Could be flagged as (c) — looks implemented but wrong style.\n\nAlso: scope creep — the `MetaTagsStub.astro` and `astro-modules.d.ts` files. These are harness helpers, reasonable infrastructure. Not really creep.\n\nThe spec also mentions \"the controls set\" — all 9 listed have tests. Good.\n\nEvent test: imports `imageMetadata from '@/assets/events/fit.jpg'`. Real on-disk asset. Mocked data is realistic.\n\nBlocked by #400 (EventAvailability retype) — that's a blocker note, not relevant.\n\nSpec says \"inject mocked loader data\". Event.astro receives entry as a prop (the consumer — page — loads via getCollection). Event.astro frontmatter doesn't fetch Contentful directly. So there's no live fetch to mock. That requirement is trivially met. Could the spec author believe Event frontmatter reads Contentful? They might. But the diff behavior is consistent with the requirement: tests pass mocked data, no live fetch.\n\nWorth noting: spec said `cheerio` available as assertion helper — container.ts bootstraps `$: cheerioLoad(html)`. Good.\n\nNow missing/partial: nothing really missing. Skip list (`Container.astro`, `Prose.astro`, `AppHeader.astro`, `AppFooter.astro`) honoured — none of them got tests.\n\nWrong: `hasClass('hidden')` is class-string assertion, prohibited by spec. Also: event.test.ts uses cheerio directly reverting to `import { experimental_AstroContainer as AstroContainer }` directly instead of using shared `render` helper — minor inconsistency. Not spec violation but reinvents harness.\n\nScope creep: Nothing beyond spec.astro-modules.d.ts and MetaTagsStub are harness infra — within scope.\n\nActually one thing: Event test comment / shaping uses a stub `image: { ...imageMetadata, src: 'https://...' }`. Reasonable.\n\nLet me write a brief report.",
+          "time": {
+            "start": 1785177957312,
+            "end": 1785177966221
+          },
+          "id": "prt_fa4e5e3c0001ygpnJFFfJiuZDK",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e5ae74001NkUmmjNb0l6XFx"
+        },
+        {
+          "type": "text",
+          "text": "# Spec Review — bf26ae1 (#404)\n\n## (a) Missing or partial\nNone. All twelve named components have render tests (`Event`, `PreBooking`, `NewsletterCard` + nine controls). Container API is wired via `experimental_AstroContainer.create()` in `tests/components/lib/container.ts:21`; `cheerio` is the assertion helper; pure-layout wrappers (`Container.astro`, `Prose.astro`, `AppHeader.astro`, `AppFooter.astro`) are skipped as instructed. `bun run check` and `bun vitest run` both green (264 tests, exit 0).\n\n## (b) Scope creep\nMinimal. Two support files beyond the listed tests:\n- `tests/components/lib/MetaTagsStub.astro` — Astro stub used to mock `MetaTags.astro` so `Astro.site` (undefined in the container) doesn't throw. Defensible harness infra, but the spec said \"components whose frontmatter reads Contentful or the backend instrumentation directly, inject mocked loader data — keep the test about the markup, not the source.\" It avoids a layout concern rather than mocking a loader, so it sits slightly outside the spec's described technique.\n- `tests/components/astro-modules.d.ts` — ambient `*.astro` module declarations so `tsc --noEmit` resolves imports. Pure build glue.\n\nNo feature code touched, no production modules modified beyond `package.json` (+`cheerio`).\n\n## (c) Implemented but looks wrong\n1. **CSS class-string assertions, which the spec explicitly forbids.** Quote: *\"No CSS-class-string snapshots — DOM structure assertions only.\"* `event.test.ts:169,176` and `prebooking.test.ts:20` assert `expect(... .hasClass('hidden')).toBe(true)`. These are CSS-class checks on Tailwind's `hidden` utility, not DOM-structure assertions. Even though the spec singles out *snapshots* (full class strings) as the rot risk, the wording is \"DOM structure assertions only\" — and `hasClass('hidden')` is testing a visual state through a class name that will rot exactly the way the spec warns against. Prefer a structural proxy (e.g. asserting the element has no rendering via a `data-*` flag, or asserting on the boolean `hidden` HTML attribute — `Select.astro` already does the latter at `select.test.ts`.\n\n2. **`event.test.ts` re-imports `AstroContainer` and runs its own `renderToString` (`event.test.ts:10,51`) instead of using the shared `render` helper from `lib/container.ts`.** The spec calls out a single harness; the other 12 tests use it, Event does not. Functionally fine and still \"Container API via `experimental_AstroContainer.create()`\", but inconsistency invites drift and leaves the spec's \"wired through `experimental_AstroContainer.create()`\" implied harness convention half-followed.\n\n3. **Mocked-loader criterion is trivially satisfied because no component under test actually pulls data.** Spec: *\"For components whose frontmatter reads Contentful or the backend instrumentation directly, inject mocked loader data.\"* `Event.astro`, `NewsletterCard.astro`, `PreBooking.astro` all consume loader results as props (consumers fetch via `getCollection`, not the component frontmatter). The `MetaTags.astro` mock is the only \"indirect\" data dependency stubbed, and it's stubbed for layout/canonical-URL reasons, not loader-data mocking. So the criterion is met vacuously rather than demonstrably — no test actually exercises the \"frontmatter reads data → inject mock\" pattern the spec describes.",
+          "time": {
+            "start": 1785177966224,
+            "end": 1785177988326
+          },
+          "id": "prt_fa4e60690001GZqW0RvNPOvtRz",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e5ae74001NkUmmjNb0l6XFx"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 26549,
+            "input": 2529,
+            "output": 1364,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 22656
+            }
+          },
+          "cost": 0.01543276,
+          "id": "prt_fa4e65d3b001XnRpg6TTjJo06J",
+          "sessionID": "ses_05b1cac6affehthkiFtHKZqv1L",
+          "messageID": "msg_fa4e5ae74001NkUmmjNb0l6XFx"
+        }
+      ]
+    }
+  ]
+}

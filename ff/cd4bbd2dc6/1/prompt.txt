@@ -1,0 +1,27 @@
+Perform a SPEC review of the diff between `HEAD~1` and `HEAD` in the repo at `/Users/mseele/dev/sve/sve-website`.
+
+Diff command: `git diff HEAD~1...HEAD`
+Commit list (one commit): `bf26ae1 test: cover Astro components via Container API + cheerio (#404)`
+
+The originating spec is GitHub issue #404 in the `mseele/sve-website` repo. Run this to fetch it:
+`gh issue view 404 --json title,body -R mseele/sve-website`
+
+Spec body summary (do not rely on this alone — fetch the live issue):
+
+> Astro Container API render-to-HTML tests for the components whose frontmatter does real work — `Event.astro`, `PreBooking.astro`, `NewsletterCard.astro`, and the controls set (`Input.astro`, `IbanInput.astro`, `SepaMandate.astro`, `Select.astro`, `Textarea.astro`, `SubmitButton.astro`, `Button.astro`, `Checkbox.astro`, `Switch.astro`).
+>
+> Use `experimental_AstroContainer.create()` to render each component in isolation in Node with injected props, then assert the rendered HTML with `cheerio` (DOM queries, not class-string snapshots — those rot for styling reasons, not correctness). For components whose frontmatter reads Contentful or the backend instrumentation directly, inject mocked loader data — keep the test about the markup, not the source.
+>
+> Skip pure-layout wrappers (`Container.astro`, `Prose.astro`, `AppHeader.astro`, `AppFooter.astro`).
+>
+> Acceptance criteria:
+> - [ ] Container API wired through `experimental_AstroContainer.create()`
+> - [ ] `cheerio` available as an assertion helper
+> - [ ] Render tests for `Event.astro`, `PreBooking.astro`, `NewsletterCard.astro`, and the controls set
+> - [ ] No CSS-class-string snapshots — DOM structure assertions only
+> - [ ] Components that load data are fed mocked loader results, not live fetches
+> - [ ] All tests green, `bun run check` green
+
+Brief: Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words.
+
+Return only the report.
