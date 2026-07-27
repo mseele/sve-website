@@ -1,0 +1,30 @@
+Perform a STANDARDS review of the diff between `HEAD~1` and `HEAD` in the repo at `/Users/mseele/dev/sve/sve-website`.
+
+Diff command: `git diff HEAD~1...HEAD`
+Commit list (one commit): `bf26ae1 test: cover Astro components via Container API + cheerio (#404)`
+
+Run `git diff HEAD~1...HEAD` to see every changed hunk. Focus on the new tests under `tests/components/`.
+
+Standards sources to consult (read them in the repo):
+- `/Users/mseele/dev/sve/sve-website/AGENTS.md` — coding guidelines (formatter, imports, TS strict, naming, Astro component conventions, Tailwind).
+- `/Users/mseele/dev/sve/sve-website/CONTEXT.md` — domain terms + the EventAvailability sentinel contract.
+- `/Users/mseele/dev/sve/sve-website/docs/agents/` — agent-facing docs.
+- `/Users/mseele/dev/sve/sve-website/vitest.config.ts` and `tests/setup.ts` — existing test conventions.
+
+Smell baseline — also assess the diff against these Fowler code smells from Refactoring ch.3 (each is a labelled heuristic, a judgement call, never a hard violation; a documented repo standard overrides the baseline; skip anything tooling enforces):
+- Mysterious Name — a function/variable/type whose name doesn't reveal what it does or holds.
+- Duplicated Code — same logic shape appears in more than one hunk/file in the change.
+- Feature Envy — a method that reaches into another object's data more than its own.
+- Data Clumps — same few fields/params keep travelling together (a type wanting to be born).
+- Primitive Obsession — a primitive or string standing in for a domain concept that deserves its own type.
+- Repeated Switches — same switch/if-cascade on the same type recurs across the change.
+- Shotgun Surgery — one logical change forces scattered edits across many files in the diff.
+- Divergent Change — one file/module is edited for several unrelated reasons.
+- Speculative Generality — abstraction/parameters/hooks added for needs the spec doesn't have.
+- Message Chains — long a.b().c().d() navigation the caller shouldn't depend on.
+- Middle Man — a class/function that mostly just delegates onward.
+- Refused Bequest — a subclass/implementer that ignores most of what it inherits.
+
+Brief: Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls — documented-standard breaches can be hard, baseline smells are always judgement calls, a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words.
+
+Return only the report.

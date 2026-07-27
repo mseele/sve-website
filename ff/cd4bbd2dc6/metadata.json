@@ -3,7 +3,7 @@
   "checkpoint_id": "ffcd4bbd2dc6",
   "strategy": "manual-commit",
   "branch": "feature/tests",
-  "checkpoints_count": 3,
+  "checkpoints_count": 4,
   "files_touched": [
     "bun.lockb",
     "package.json",
@@ -37,13 +37,20 @@
       "compact_transcript": "/ff/cd4bbd2dc6/1/transcript.jsonl",
       "content_hash": "/ff/cd4bbd2dc6/1/content_hash.txt",
       "prompt": "/ff/cd4bbd2dc6/1/prompt.txt"
+    },
+    {
+      "metadata": "/ff/cd4bbd2dc6/2/metadata.json",
+      "transcript": "/ff/cd4bbd2dc6/2/full.jsonl",
+      "compact_transcript": "/ff/cd4bbd2dc6/2/transcript.jsonl",
+      "content_hash": "/ff/cd4bbd2dc6/2/content_hash.txt",
+      "prompt": "/ff/cd4bbd2dc6/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 1368376,
+    "input_tokens": 1419562,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 15281408,
-    "output_tokens": 50233,
-    "api_call_count": 212
+    "cache_read_tokens": 15331968,
+    "output_tokens": 54411,
+    "api_call_count": 217
   }
 }
