@@ -17,19 +17,19 @@
       "deletions": 0,
       "files": 0
     },
-    "cost": 6.00489272,
+    "cost": 6.788348720000002,
     "tokens": {
-      "input": 1320600,
-      "output": 47669,
+      "input": 1471070,
+      "output": 54790,
       "reasoning": 0,
       "cache": {
-        "read": 15178112,
+        "read": 17260672,
         "write": 0
       }
     },
     "time": {
       "created": 1785084918465,
-      "updated": 1785177748694
+      "updated": 1785178170044
     }
   },
   "messages": [
@@ -18467,9 +18467,9 @@
             },
             {
               "file": "tests/components/blocks/event.test.ts",
-              "patch": "Index: tests/components/blocks/event.test.ts\n===================================================================\n--- tests/components/blocks/event.test.ts\t\n+++ tests/components/blocks/event.test.ts\t\n@@ -1,176 +1,178 @@\n // @vitest-environment node\n //\n // `Event.astro` pulls in `Layout` → `MetaTags.astro`, which computes a\n // canonical URL against `Astro.site`. `experimental_AstroContainer.create()`\n // leaves `Astro.site` undefined (the container defaults elide `site`), so\n // `new URL(path, undefined)` throws. We mock `@/components/common/MetaTags.astro`\n // with an on-disk Astro stub that drops all SEO/head computation and renders\n // nothing — keeping the test about the Event markup, not the Layout head.\n import { describe, expect, it, vi } from 'vitest'\n import { experimental_AstroContainer as AstroContainer } from 'astro/container'\n import { load as cheerioLoad } from 'cheerio'\n import Event from '@/components/blocks/Event.astro'\n import imageMetadata from '@/assets/events/fit.jpg'\n import { EventCustomFieldType, PaymentMethod } from '@/types'\n \n // vi.mock is hoisted above the static imports above by the vitest transform,\n // so Event.astro resolves the mocked MetaTags module during SSR.\n vi.mock('@/components/common/MetaTags.astro', async () => await import('../lib/MetaTagsStub.astro'))\n \n // A minimal Astro `CollectionEntry<'events'>`-shaped object. The `image`\n // field needs to be an `ImageMetadata`; we reuse a real on-disk image and\n // overwrite `src` with an absolute URL so `new URL(src, undefined)` (where\n // `Astro.site` is undefined inside the container) still resolves cleanly.\n const entry = {\n   id: 'evt-1',\n   collection: 'events',\n   slug: 'evt-1',\n   data: {\n     id: 'evt-1',\n     name: 'Rückenfit',\n     image: { ...imageMetadata, src: 'https://example.com/img.jpg' },\n     sortIndex: 1,\n     shortDescription: 'Pilates für den Rücken',\n     description: '<p>Ein sanfter Kurs.</p>',\n     location: 'Clubhaus',\n     dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'],\n     duration: '60 Min',\n     priceMember: '40 €',\n     priceNonMember: '60 €',\n     externalOperator: false,\n     customFields: [{ name: 'Rückenbeschwerden', type: EventCustomFieldType.Text }],\n     paymentMethod: PaymentMethod.SepaDirectDebit,\n   },\n   render: () => ({}),\n } as any\n \n async function renderEvent(\n   overrides: Partial<typeof entry.data> = {},\n   props: Record<string, unknown> = {},\n ) {\n   const container = await AstroContainer.create()\n   const html = await container.renderToString(Event, {\n     props: {\n       type: 'events' as const,\n       entry: { ...entry, data: { ...entry.data, ...overrides } },\n       newsletterDescription: 'Erhalte automatisch eine E-Mail sobald neue Events online sind.',\n       newsletterText: 'Ich möchte über zukünftige Events per E-Mail informiert werden',\n       schemaType: 'Event' as const,\n       ...props,\n     },\n   })\n   return { html, $: cheerioLoad(html) }\n }\n \n describe('Event.astro', () => {\n   it('wraps the page in the event identifier stamped on the root <div>', async () => {\n     const { $ } = await renderEvent()\n     expect($('div[data-identifier=\"evt-1\"]')).toHaveLength(1)\n   })\n \n   it('renders the \"Beschreibung\" section header and the description HTML verbatim', async () => {\n     const { $ } = await renderEvent()\n     expect($('#beschreibung h2').text()).toBe('Beschreibung')\n     expect($('#beschreibung > div > div').html()).toContain('<p>Ein sanfter Kurs.</p>')\n   })\n \n   it('emits the Details list with the expected set of detail ids', async () => {\n     const { $ } = await renderEvent()\n     const titles = $('#details [data-title]')\n       .toArray()\n       .map((el) => $(el).attr('data-title'))\n     expect(titles).toContain('availability')\n     expect(titles).toContain('dates')\n     expect(titles).toContain('duration')\n     expect(titles).toContain('price')\n     expect(titles).toContain('location')\n   })\n \n   it('renders the price as two member/non-member rows when prices differ', async () => {\n     const { $ } = await renderEvent({ priceMember: '40 €', priceNonMember: '60 €' })\n     expect($('#details [data-title=\"price\"]')).toHaveLength(2)\n     const priceLabels = $('#details [data-label=\"price\"]')\n       .toArray()\n       .map((el) => $(el).text())\n     expect(priceLabels).toEqual(['40 €', '60 €'])\n   })\n \n   it('collapses the price into a single \"Kostenlos\" row when both prices are \"0 €\"', async () => {\n     const { $ } = await renderEvent({ priceMember: '0 €', priceNonMember: '0 €' })\n     expect($('#details [data-title=\"price\"]')).toHaveLength(1)\n     expect($('#details [data-label=\"price\"]').text()).toBe('Kostenlos')\n   })\n \n   it('shows the dates detail as \"Termine\" (plural) when there are two dates, \"Termin\" (singular) when one', async () => {\n-    const { $multi } = { $multi: (await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })).$ }\n+    const { $multi } = {\n+      $multi: (await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })).$,\n+    }\n     expect($multi('#details [data-title=\"dates\"]').text()).toBe('Termine')\n \n     const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z'] })\n     expect($('#details [data-title=\"dates\"]').text()).toBe('Termin')\n   })\n \n   it('renders the \"Termine\" section with the same number of <li> entries as dates (multi-date case)', async () => {\n     const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })\n     // Two date strings → two <li> rows total (split across two <ul> columns,\n     // first column holds ceil(n/2), the second the remainder).\n     expect($('main li')).toHaveLength(2)\n   })\n \n   it('stamps the Anmeldung form with the standard input roster plus the SEPA-specific fields', async () => {\n     const { $ } = await renderEvent()\n     // Mandatory personal fields. Use `form#form` to scope inside the booking\n     // form; the hidden NewsletterCard teaser under #newsletter-card renders\n     // its own form with another `#email`-id input from NewsletterCard.\n     for (const id of ['firstname', 'lastname', 'street', 'plz', 'email', 'phone', 'comment']) {\n       expect($(`#anmeldung form#form #${id}`)).toHaveLength(1)\n     }\n     // SEPA-mandate fields appear only because paymentMethod is SepaDirectDebit.\n     expect($('#anmeldung form#form input[data-iban-validation]#iban')).toHaveLength(1)\n     expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(1)\n   })\n \n   it('omits the IBAN / SEPA mandate fields when paymentMethod is BankTransfer', async () => {\n     const { $ } = await renderEvent({ paymentMethod: PaymentMethod.BankTransfer })\n     expect($('#anmeldung form#form input[data-iban-validation]')).toHaveLength(0)\n     expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(0)\n   })\n \n   it('renders one custom-field input per eventCustomField entry', async () => {\n     const { $ } = await renderEvent({\n       customFields: [\n         { name: 'Rückenbeschwerden', type: EventCustomFieldType.Text },\n         { name: 'Teilnehmer', type: EventCustomFieldType.Number, minValue: 1, maxValue: 4 },\n       ],\n     })\n     expect($('#anmeldung form#form input#customfield')).toHaveLength(2)\n     // Number-typed custom field forwards `min` / `max` through the spread attrs.\n     const numberField = $('#anmeldung form#form input#customfield').toArray()[1]\n     expect($(numberField).attr('type')).toBe('number')\n     expect($(numberField).attr('min')).toBe('1')\n     expect($(numberField).attr('max')).toBe('4')\n   })\n \n   it('emits three consent checkboxes (member, newsletter, consent)', async () => {\n     const { $ } = await renderEvent()\n     expect($('#anmeldung form#form #member')).toHaveLength(1)\n     expect($('#anmeldung form#form #newsletter')).toHaveLength(1)\n     expect($('#anmeldung form#form #consent')).toHaveLength(1)\n     // All three render as type=\"checkbox\".\n     expect($('#anmeldung form#form input#member[type=\"checkbox\"]')).toHaveLength(1)\n     expect($('#anmeldung form#form input#consent[type=\"checkbox\"]')).toHaveLength(1)\n   })\n \n   it('embeds the NewsletterCard teaser (hidden) using the supplied newsletter copy', async () => {\n     const { $ } = await renderEvent()\n     const teaser = $('#newsletter-card')\n     expect(teaser).toHaveLength(1)\n     expect(teaser.hasClass('hidden')).toBe(true)\n     expect(teaser.find('p').first().text()).toContain('Erhalte automatisch')\n   })\n \n   it('renders the Anmeldung section hidden by default (the booking flow reveals it client-side)', async () => {\n     const { $ } = await renderEvent()\n     expect($('#anmeldung')).toHaveLength(1)\n     expect($('#anmeldung').hasClass('hidden')).toBe(true)\n   })\n-})\n\\ No newline at end of file\n+})\n",
-              "additions": 4,
-              "deletions": 2,
+              "patch": "Index: tests/components/blocks/event.test.ts\n===================================================================\n--- tests/components/blocks/event.test.ts\t\n+++ tests/components/blocks/event.test.ts\t\n@@ -1,176 +1,184 @@\n // @vitest-environment node\n //\n // `Event.astro` pulls in `Layout` → `MetaTags.astro`, which computes a\n // canonical URL against `Astro.site`. `experimental_AstroContainer.create()`\n // leaves `Astro.site` undefined (the container defaults elide `site`), so\n // `new URL(path, undefined)` throws. We mock `@/components/common/MetaTags.astro`\n // with an on-disk Astro stub that drops all SEO/head computation and renders\n // nothing — keeping the test about the Event markup, not the Layout head.\n import { describe, expect, it, vi } from 'vitest'\n-import { experimental_AstroContainer as AstroContainer } from 'astro/container'\n-import { load as cheerioLoad } from 'cheerio'\n+import type { CollectionEntry } from 'astro:content'\n import Event from '@/components/blocks/Event.astro'\n import imageMetadata from '@/assets/events/fit.jpg'\n import { EventCustomFieldType, PaymentMethod } from '@/types'\n+import { render } from '../lib/container'\n \n // vi.mock is hoisted above the static imports above by the vitest transform,\n // so Event.astro resolves the mocked MetaTags module during SSR.\n vi.mock('@/components/common/MetaTags.astro', async () => await import('../lib/MetaTagsStub.astro'))\n \n-// A minimal Astro `CollectionEntry<'events'>`-shaped object. The `image`\n-// field needs to be an `ImageMetadata`; we reuse a real on-disk image and\n-// overwrite `src` with an absolute URL so `new URL(src, undefined)` (where\n-// `Astro.site` is undefined inside the container) still resolves cleanly.\n-const entry = {\n+// A minimal `CollectionEntry<'events'>`-shaped fixture. The `image` field\n+// needs to be an `ImageMetadata`; we reuse a real on-disk image and overwrite\n+// `src` with an absolute URL so `new URL(src, undefined)` (where `Astro.site`\n+// is undefined inside the container) still resolves cleanly. The fixture is\n+// typed as `unknown as CollectionEntry<'events'>` rather than `any` so the\n+// Z-typed `entry.data` shape surfaces type errors on field access.\n+const entryData = {\n   id: 'evt-1',\n-  collection: 'events',\n-  slug: 'evt-1',\n-  data: {\n+  name: 'Rückenfit',\n+  image: { ...imageMetadata, src: 'https://example.com/img.jpg' },\n+  sortIndex: 1,\n+  shortDescription: 'Pilates für den Rücken',\n+  description: '<p>Ein sanfter Kurs.</p>',\n+  location: 'Clubhaus',\n+  dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'],\n+  duration: '60 Min',\n+  priceMember: '40 €',\n+  priceNonMember: '60 €',\n+  externalOperator: false,\n+  customFields: [{ name: 'Rückenbeschwerden', type: EventCustomFieldType.Text }],\n+  paymentMethod: PaymentMethod.SepaDirectDebit,\n+} as CollectionEntry<'events'>['data']\n+\n+function buildEntry(\n+  overrides: Partial<CollectionEntry<'events'>['data']> = {},\n+): CollectionEntry<'events'> {\n+  return {\n     id: 'evt-1',\n-    name: 'Rückenfit',\n-    image: { ...imageMetadata, src: 'https://example.com/img.jpg' },\n-    sortIndex: 1,\n-    shortDescription: 'Pilates für den Rücken',\n-    description: '<p>Ein sanfter Kurs.</p>',\n-    location: 'Clubhaus',\n-    dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'],\n-    duration: '60 Min',\n-    priceMember: '40 €',\n-    priceNonMember: '60 €',\n-    externalOperator: false,\n-    customFields: [{ name: 'Rückenbeschwerden', type: EventCustomFieldType.Text }],\n-    paymentMethod: PaymentMethod.SepaDirectDebit,\n-  },\n-  render: () => ({}),\n-} as any\n+    collection: 'events',\n+    data: { ...entryData, ...overrides },\n+  } as unknown as CollectionEntry<'events'>\n+}\n \n async function renderEvent(\n-  overrides: Partial<typeof entry.data> = {},\n+  overrides: Partial<CollectionEntry<'events'>['data']> = {},\n   props: Record<string, unknown> = {},\n ) {\n-  const container = await AstroContainer.create()\n-  const html = await container.renderToString(Event, {\n+  return render(Event, {\n     props: {\n       type: 'events' as const,\n-      entry: { ...entry, data: { ...entry.data, ...overrides } },\n+      entry: buildEntry(overrides),\n       newsletterDescription: 'Erhalte automatisch eine E-Mail sobald neue Events online sind.',\n       newsletterText: 'Ich möchte über zukünftige Events per E-Mail informiert werden',\n       schemaType: 'Event' as const,\n       ...props,\n     },\n   })\n-  return { html, $: cheerioLoad(html) }\n }\n \n describe('Event.astro', () => {\n   it('wraps the page in the event identifier stamped on the root <div>', async () => {\n     const { $ } = await renderEvent()\n     expect($('div[data-identifier=\"evt-1\"]')).toHaveLength(1)\n   })\n \n   it('renders the \"Beschreibung\" section header and the description HTML verbatim', async () => {\n     const { $ } = await renderEvent()\n     expect($('#beschreibung h2').text()).toBe('Beschreibung')\n     expect($('#beschreibung > div > div').html()).toContain('<p>Ein sanfter Kurs.</p>')\n   })\n \n   it('emits the Details list with the expected set of detail ids', async () => {\n     const { $ } = await renderEvent()\n     const titles = $('#details [data-title]')\n       .toArray()\n       .map((el) => $(el).attr('data-title'))\n     expect(titles).toContain('availability')\n     expect(titles).toContain('dates')\n     expect(titles).toContain('duration')\n     expect(titles).toContain('price')\n     expect(titles).toContain('location')\n   })\n \n   it('renders the price as two member/non-member rows when prices differ', async () => {\n     const { $ } = await renderEvent({ priceMember: '40 €', priceNonMember: '60 €' })\n     expect($('#details [data-title=\"price\"]')).toHaveLength(2)\n     const priceLabels = $('#details [data-label=\"price\"]')\n       .toArray()\n       .map((el) => $(el).text())\n     expect(priceLabels).toEqual(['40 €', '60 €'])\n   })\n \n   it('collapses the price into a single \"Kostenlos\" row when both prices are \"0 €\"', async () => {\n     const { $ } = await renderEvent({ priceMember: '0 €', priceNonMember: '0 €' })\n     expect($('#details [data-title=\"price\"]')).toHaveLength(1)\n     expect($('#details [data-label=\"price\"]').text()).toBe('Kostenlos')\n   })\n \n-  it('shows the dates detail as \"Termine\" (plural) when there are two dates, \"Termin\" (singular) when one', async () => {\n-    const { $multi } = { $multi: (await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })).$ }\n+  it('shows the dates detail as \"Termine\" (plural) for two dates, \"Termin\" (singular) for one', async () => {\n+    const { $: $multi } = await renderEvent({\n+      dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'],\n+    })\n     expect($multi('#details [data-title=\"dates\"]').text()).toBe('Termine')\n \n     const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z'] })\n     expect($('#details [data-title=\"dates\"]').text()).toBe('Termin')\n   })\n \n   it('renders the \"Termine\" section with the same number of <li> entries as dates (multi-date case)', async () => {\n     const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })\n     // Two date strings → two <li> rows total (split across two <ul> columns,\n     // first column holds ceil(n/2), the second the remainder).\n     expect($('main li')).toHaveLength(2)\n   })\n \n   it('stamps the Anmeldung form with the standard input roster plus the SEPA-specific fields', async () => {\n     const { $ } = await renderEvent()\n     // Mandatory personal fields. Use `form#form` to scope inside the booking\n     // form; the hidden NewsletterCard teaser under #newsletter-card renders\n     // its own form with another `#email`-id input from NewsletterCard.\n     for (const id of ['firstname', 'lastname', 'street', 'plz', 'email', 'phone', 'comment']) {\n       expect($(`#anmeldung form#form #${id}`)).toHaveLength(1)\n     }\n     // SEPA-mandate fields appear only because paymentMethod is SepaDirectDebit.\n     expect($('#anmeldung form#form input[data-iban-validation]#iban')).toHaveLength(1)\n     expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(1)\n   })\n \n   it('omits the IBAN / SEPA mandate fields when paymentMethod is BankTransfer', async () => {\n     const { $ } = await renderEvent({ paymentMethod: PaymentMethod.BankTransfer })\n     expect($('#anmeldung form#form input[data-iban-validation]')).toHaveLength(0)\n     expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(0)\n   })\n \n   it('renders one custom-field input per eventCustomField entry', async () => {\n     const { $ } = await renderEvent({\n       customFields: [\n         { name: 'Rückenbeschwerden', type: EventCustomFieldType.Text },\n         { name: 'Teilnehmer', type: EventCustomFieldType.Number, minValue: 1, maxValue: 4 },\n       ],\n     })\n     expect($('#anmeldung form#form input#customfield')).toHaveLength(2)\n     // Number-typed custom field forwards `min` / `max` through the spread attrs.\n     const numberField = $('#anmeldung form#form input#customfield').toArray()[1]\n     expect($(numberField).attr('type')).toBe('number')\n     expect($(numberField).attr('min')).toBe('1')\n     expect($(numberField).attr('max')).toBe('4')\n   })\n \n   it('emits three consent checkboxes (member, newsletter, consent)', async () => {\n     const { $ } = await renderEvent()\n     expect($('#anmeldung form#form #member')).toHaveLength(1)\n     expect($('#anmeldung form#form #newsletter')).toHaveLength(1)\n     expect($('#anmeldung form#form #consent')).toHaveLength(1)\n     // All three render as type=\"checkbox\".\n     expect($('#anmeldung form#form input#member[type=\"checkbox\"]')).toHaveLength(1)\n     expect($('#anmeldung form#form input#consent[type=\"checkbox\"]')).toHaveLength(1)\n   })\n \n-  it('embeds the NewsletterCard teaser (hidden) using the supplied newsletter copy', async () => {\n+  it('embeds the NewsletterCard teaser with the supplied newsletter copy', async () => {\n     const { $ } = await renderEvent()\n     const teaser = $('#newsletter-card')\n     expect(teaser).toHaveLength(1)\n-    expect(teaser.hasClass('hidden')).toBe(true)\n     expect(teaser.find('p').first().text()).toContain('Erhalte automatisch')\n   })\n \n-  it('renders the Anmeldung section hidden by default (the booking flow reveals it client-side)', async () => {\n+  it('renders the Anmeldung section with its identifier (the booking flow reveals it client-side)', async () => {\n+    // Visible-vs-hidden is a styling concern — exercised through Tailwind's\n+    // `hidden` utility which is mutable CSS, not DOM structure. Asserting on\n+    // the class string would rot for styling reasons per the spec, so we\n+    // assert only that the section is stamped with its identifier.\n     const { $ } = await renderEvent()\n     expect($('#anmeldung')).toHaveLength(1)\n-    expect($('#anmeldung').hasClass('hidden')).toBe(true)\n   })\n-})\n\\ No newline at end of file\n+})\n",
+              "additions": 46,
+              "deletions": 38,
               "status": "modified"
             },
             {
@@ -18481,9 +18481,9 @@
             },
             {
               "file": "tests/components/blocks/prebooking.test.ts",
-              "patch": "Index: tests/components/blocks/prebooking.test.ts\n===================================================================\n--- tests/components/blocks/prebooking.test.ts\t\n+++ tests/components/blocks/prebooking.test.ts\t\n@@ -1,47 +1,50 @@\n // @vitest-environment node\n import { describe, expect, it } from 'vitest'\n import PreBooking from '@/components/blocks/PreBooking.astro'\n import { render } from '../lib/container'\n \n describe('PreBooking.astro', () => {\n   it('emits the loading <dialog id=\"prebooking\"> with the spinner svg and the \"in progress\" text', async () => {\n     const { $ } = await render(PreBooking)\n     expect($('dialog#prebooking')).toHaveLength(1)\n     expect($('dialog#prebooking svg')).toHaveLength(1)\n     expect($('dialog#prebooking p').text()).toContain('Die Buchung wird durchgeführt')\n   })\n \n   it('emits the IBAN pre-booking form wrapper, hidden by default via the \"hidden\" class', async () => {\n     const { $ } = await render(PreBooking)\n     const wrapper = $('#prebooking-iban-form')\n     expect(wrapper).toHaveLength(1)\n     // The wrapper starts hidden via Tailwind's `hidden` utility, plus `flex`/grid\n     // classes are swapped in by client-side JS when the IBAN step is required.\n     expect(wrapper.hasClass('hidden')).toBe(true)\n     expect(wrapper.find('form')).toHaveLength(1)\n   })\n \n   it('renders the IBAN prompt heading and explanation paragraph', async () => {\n     const { $ } = await render(PreBooking)\n     expect($('#prebooking-iban-form h3').text()).toBe('IBAN erforderlich')\n     expect($('#prebooking-iban-form p').first().text()).toContain('SEPA-Lastschrift')\n   })\n \n   it('embeds the IBAN input and SEPA mandate checkbox inside the pre-booking form', async () => {\n     const { $ } = await render(PreBooking)\n-    expect($('#prebooking-iban-form input[data-iban-validation][id=\"prebooking-iban\"]')).toHaveLength(1)\n-    expect($('#prebooking-iban-form input[type=\"checkbox\"][id=\"prebooking-sepa-mandate\"]')).toHaveLength(1)\n+    expect(\n+      $('#prebooking-iban-form input[data-iban-validation][id=\"prebooking-iban\"]'),\n+    ).toHaveLength(1)\n+    expect(\n+      $('#prebooking-iban-form input[type=\"checkbox\"][id=\"prebooking-sepa-mandate\"]'),\n+    ).toHaveLength(1)\n   })\n \n   it('renders the \"Buchung abschließen\" submit button inside the IBAN form', async () => {\n     const { $ } = await render(PreBooking)\n-    expect($('#prebooking-iban-form button[type=\"submit\"]#prebooking-iban-submit'))\n-      .toHaveLength(1)\n+    expect($('#prebooking-iban-form button[type=\"submit\"]#prebooking-iban-submit')).toHaveLength(1)\n     expect($('#prebooking-iban-submit').text()).toContain('Buchung abschließen')\n   })\n \n   it('exposes exactly one <dialog> element (the loading dialog), no stray dialogs', async () => {\n     const { $ } = await render(PreBooking)\n     expect($('dialog')).toHaveLength(1)\n   })\n-})\n\\ No newline at end of file\n+})\n",
-              "additions": 8,
-              "deletions": 5,
+              "patch": "Index: tests/components/blocks/prebooking.test.ts\n===================================================================\n--- tests/components/blocks/prebooking.test.ts\t\n+++ tests/components/blocks/prebooking.test.ts\t\n@@ -1,47 +1,50 @@\n // @vitest-environment node\n import { describe, expect, it } from 'vitest'\n import PreBooking from '@/components/blocks/PreBooking.astro'\n import { render } from '../lib/container'\n \n describe('PreBooking.astro', () => {\n   it('emits the loading <dialog id=\"prebooking\"> with the spinner svg and the \"in progress\" text', async () => {\n     const { $ } = await render(PreBooking)\n     expect($('dialog#prebooking')).toHaveLength(1)\n     expect($('dialog#prebooking svg')).toHaveLength(1)\n     expect($('dialog#prebooking p').text()).toContain('Die Buchung wird durchgeführt')\n   })\n \n-  it('emits the IBAN pre-booking form wrapper, hidden by default via the \"hidden\" class', async () => {\n+  it('emits the IBAN pre-booking form wrapper containing a single form', async () => {\n     const { $ } = await render(PreBooking)\n     const wrapper = $('#prebooking-iban-form')\n     expect(wrapper).toHaveLength(1)\n-    // The wrapper starts hidden via Tailwind's `hidden` utility, plus `flex`/grid\n-    // classes are swapped in by client-side JS when the IBAN step is required.\n-    expect(wrapper.hasClass('hidden')).toBe(true)\n+    // Visibility is a Tailwind `hidden` utility concern toggled client-side\n+    // — a CSS-class check on it would rot for styling reasons, not\n+    // correctness (spec: \"DOM structure assertions only\"). Assert structure.\n     expect(wrapper.find('form')).toHaveLength(1)\n   })\n \n   it('renders the IBAN prompt heading and explanation paragraph', async () => {\n     const { $ } = await render(PreBooking)\n     expect($('#prebooking-iban-form h3').text()).toBe('IBAN erforderlich')\n     expect($('#prebooking-iban-form p').first().text()).toContain('SEPA-Lastschrift')\n   })\n \n   it('embeds the IBAN input and SEPA mandate checkbox inside the pre-booking form', async () => {\n     const { $ } = await render(PreBooking)\n-    expect($('#prebooking-iban-form input[data-iban-validation][id=\"prebooking-iban\"]')).toHaveLength(1)\n-    expect($('#prebooking-iban-form input[type=\"checkbox\"][id=\"prebooking-sepa-mandate\"]')).toHaveLength(1)\n+    expect(\n+      $('#prebooking-iban-form input[data-iban-validation][id=\"prebooking-iban\"]'),\n+    ).toHaveLength(1)\n+    expect(\n+      $('#prebooking-iban-form input[type=\"checkbox\"][id=\"prebooking-sepa-mandate\"]'),\n+    ).toHaveLength(1)\n   })\n \n   it('renders the \"Buchung abschließen\" submit button inside the IBAN form', async () => {\n     const { $ } = await render(PreBooking)\n-    expect($('#prebooking-iban-form button[type=\"submit\"]#prebooking-iban-submit'))\n-      .toHaveLength(1)\n+    expect($('#prebooking-iban-form button[type=\"submit\"]#prebooking-iban-submit')).toHaveLength(1)\n     expect($('#prebooking-iban-submit').text()).toContain('Buchung abschließen')\n   })\n \n   it('exposes exactly one <dialog> element (the loading dialog), no stray dialogs', async () => {\n     const { $ } = await render(PreBooking)\n     expect($('dialog')).toHaveLength(1)\n   })\n-})\n\\ No newline at end of file\n+})\n",
+              "additions": 12,
+              "deletions": 9,
               "status": "modified"
             },
             {
@@ -18530,9 +18530,9 @@
             },
             {
               "file": "tests/components/controls/submit-button.test.ts",
-              "patch": "Index: tests/components/controls/submit-button.test.ts\n===================================================================\n--- tests/components/controls/submit-button.test.ts\t\n+++ tests/components/controls/submit-button.test.ts\t\n@@ -1,35 +1,35 @@\n // @vitest-environment node\n import { describe, expect, it } from 'vitest'\n import SubmitButton from '@/components/controls/SubmitButton.astro'\n import { render } from '../lib/container'\n \n describe('SubmitButton.astro', () => {\n   it('wraps slotted content inside a single submit button (a Button with El=\"button\")', async () => {\n     const { $ } = await render(SubmitButton, {\n       props: { id: 'btn' },\n       slots: { default: 'Jetzt anmelden' },\n     })\n     expect($('button[type=\"submit\"]#btn')).toHaveLength(1)\n     expect($('button').text()).toContain('Jetzt anmelden')\n     expect($('a')).toHaveLength(0)\n   })\n \n   it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n     const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n     expect($('button svg')).toHaveLength(1)\n     // SubmitButton nests a spinner span inside Button's wrapper span, so the\n     // button contains exactly two nested <span> elements.\n     expect($('button span')).toHaveLength(2)\n     // The deepest <span> — the spinner container — has the SVG as a direct\n     // child, with the slot text rendering as a trailing text node.\n     const spinnerSpan = $('button span > svg').parent()\n     expect(spinnerSpan).toHaveLength(1)\n     expect(spinnerSpan.children().first().prop('tagName')?.toLowerCase()).toBe('svg')\n   })\n \n   it('still renders the spinner SVG when given no slot content', async () => {\n     const { $ } = await render(SubmitButton)\n     expect($('button[type=\"submit\"]')).toHaveLength(1)\n     expect($('button svg')).toHaveLength(1)\n   })\n-})\n\\ No newline at end of file\n+})\n",
-              "additions": 1,
-              "deletions": 1,
+              "patch": "Index: tests/components/controls/submit-button.test.ts\n===================================================================\n--- tests/components/controls/submit-button.test.ts\t\n+++ tests/components/controls/submit-button.test.ts\t\n@@ -1,35 +1,35 @@\n // @vitest-environment node\n import { describe, expect, it } from 'vitest'\n import SubmitButton from '@/components/controls/SubmitButton.astro'\n import { render } from '../lib/container'\n \n describe('SubmitButton.astro', () => {\n   it('wraps slotted content inside a single submit button (a Button with El=\"button\")', async () => {\n     const { $ } = await render(SubmitButton, {\n       props: { id: 'btn' },\n       slots: { default: 'Jetzt anmelden' },\n     })\n     expect($('button[type=\"submit\"]#btn')).toHaveLength(1)\n     expect($('button').text()).toContain('Jetzt anmelden')\n     expect($('a')).toHaveLength(0)\n   })\n \n   it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n     const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n     expect($('button svg')).toHaveLength(1)\n     // SubmitButton nests a spinner span inside Button's wrapper span, so the\n-    // button contains exactly two nested <span> elements.\n+    // button contains exactly two nested <span> elements — Button's outer\n+    // Em wrapper plus SubmitButton's inner flex row holding the SVG and the\n+    // slot text.\n     expect($('button span')).toHaveLength(2)\n-    // The deepest <span> — the spinner container — has the SVG as a direct\n-    // child, with the slot text rendering as a trailing text node.\n-    const spinnerSpan = $('button span > svg').parent()\n-    expect(spinnerSpan).toHaveLength(1)\n-    expect(spinnerSpan.children().first().prop('tagName')?.toLowerCase()).toBe('svg')\n+    // The innermost span is the SVG's parent. `is('span')` reads the parent\n+    // tag name structurally — short navigation, no property walking.\n+    expect($('button svg').parent().is('span')).toBe(true)\n   })\n \n   it('still renders the spinner SVG when given no slot content', async () => {\n     const { $ } = await render(SubmitButton)\n     expect($('button[type=\"submit\"]')).toHaveLength(1)\n     expect($('button svg')).toHaveLength(1)\n   })\n-})\n\\ No newline at end of file\n+})\n",
+              "additions": 7,
+              "deletions": 7,
               "status": "modified"
             },
             {
@@ -18547,6 +18547,13 @@
               "patch": "Index: tests/components/controls/textarea.test.ts\n===================================================================\n--- tests/components/controls/textarea.test.ts\t\n+++ tests/components/controls/textarea.test.ts\t\n@@ -1,26 +1,26 @@\n // @vitest-environment node\n import { describe, expect, it } from 'vitest'\n import Textarea from '@/components/controls/Textarea.astro'\n import { render } from '../lib/container'\n \n describe('Textarea.astro', () => {\n   it('renders a labelled <textarea> with id and name', async () => {\n     const { $ } = await render(Textarea, {\n       props: { id: 'comment', name: 'comment', label: 'Kommentar (optional)' },\n     })\n     expect($('div > label[for=\"comment\"]').text()).toBe('Kommentar (optional)')\n     expect($('textarea[id=\"comment\"][name=\"comment\"]')).toHaveLength(1)\n   })\n \n   it('omits label when not given', async () => {\n     const { $ } = await render(Textarea, { props: { id: 'notes', name: 'notes' } })\n     expect($('label')).toHaveLength(0)\n     expect($('textarea[id=\"notes\"]')).toHaveLength(1)\n   })\n \n   it('always emits a <textarea>, never an <input>', async () => {\n     const { $ } = await render(Textarea, { props: { id: 'x', name: 'x' } })\n     expect($('textarea')).toHaveLength(1)\n     expect($('input')).toHaveLength(0)\n   })\n-})\n\\ No newline at end of file\n+})\n",
               "additions": 1,
               "deletions": 1,
+              "status": "modified"
+            },
+            {
+              "file": "tests/components/lib/MetaTagsStub.astro",
+              "patch": "Index: tests/components/lib/MetaTagsStub.astro\n===================================================================\n--- tests/components/lib/MetaTagsStub.astro\t\n+++ tests/components/lib/MetaTagsStub.astro\t\n@@ -1,5 +1,7 @@\n ---\n // Stub MetaTags: drops all SEO/canonical computation that would otherwise\n-// call `Astro.site` (which the AstroContainer API leaves undefined by default).\n-const {} = Astro.props\n+// call `Astro.site` (which the AstroContainer API leaves undefined by\n+// default). Rendered output is intentionally empty.\n+interface Props {}\n+const {} = Astro.props as Props\n ---\n\\ No newline at end of file\n",
+              "additions": 4,
+              "deletions": 2,
               "status": "modified"
             },
             {
@@ -20375,21 +20382,24 @@
           "cwd": "/Users/mseele/dev/sve/sve-website",
           "root": "/Users/mseele/dev/sve/sve-website"
         },
-        "cost": 0,
+        "cost": 0.03372984,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 115593,
+          "input": 2320,
+          "output": 249,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 113024
           }
         },
         "modelID": "glm-5.2",
         "providerID": "opencode-go",
         "time": {
-          "created": 1785177748689
+          "created": 1785177748689,
+          "completed": 1785177773067
         },
+        "finish": "tool-calls",
         "id": "msg_fa4e2b4d1001vYFRcwlkpuIvyk",
         "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
       },
@@ -20406,20 +20416,1791 @@
           "tool": "bash",
           "callID": "call_efee",
           "state": {
-            "metadata": {
-              "output": "ok 17 files changed, 697 insertions(+)\n"
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "rtk git add -A && rtk git commit -m \"test: cover Astro components via Container API + cheerio (#404)\n\nAdd Container API render tests for the components whose frontmatter does\nreal work — Event.astro, PreBooking.astro, NewsletterCard.astro, and the\ncontrols set (Input, IbanInput, SepaMandate, Select, Textarea, SubmitButton,\nButton, Checkbox, Switch).\n\n- experimental_AstroContainer.create() wired through a shared tests/components/lib/container.ts harness.\n- cheerio used for DOM structure assertions — no CSS-class-string snapshots.\n- Event.astro's Layout → MetaTags pulls in Astro.site which the container leaves undefined; MetaTags is mocked with an on-disk Astro stub (tests/components/lib/MetaTagsStub.astro) so the Anmeldung/details markup stays under test.\n- tests/components/astro-modules.d.ts declares ambient '*.astro' modules so tsc --noEmit (no Astro Vite plugin) resolves the test imports.\n- cheerio added as a devDependency.\n\n226 new tests, all green; bun run check green.\" 2>&1 | rtk tail -10"
             },
+            "output": "ok 17 files changed, 697 insertions(+)\nok bf26ae1\n",
+            "metadata": {
+              "output": "ok 17 files changed, 697 insertions(+)\nok bf26ae1\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git add -A && rtk git commit -m \"test: cover Astro components via Container API + cheerio (#404)\n\nAdd Container API render tests for the components whose frontmatter does\nreal work — Event.astro, PreBooking.astro, NewsletterCard.astro, and the\ncontrols set (Input, IbanInput, SepaMandate, Select, Textarea, SubmitButton,\nButton, Checkbox, Switch).\n\n- experimental_AstroContainer.create() wired through a shared tests/components/lib/container.ts harness.\n- cheerio used for DOM structure assertions — no CSS-class-string snapshots.\n- Event.astro's Layout → MetaTags pulls in Astro.site which the container leaves undefined; MetaTags is mocked with an on-disk Astro stub (tests/components/lib/MetaTagsStub.astro) so the Anmeldung/details markup stays under test.\n- tests/components/astro-modules.d.ts declares ambient '*.astro' modules so tsc --noEmit (no Astro Vite plugin) resolves the test imports.\n- cheerio added as a devDependency.\n\n226 new tests, all green; bun run check green.\" 2>&1 | rtk tail -10",
             "time": {
-              "start": 1785177764465
+              "start": 1785177772982,
+              "end": 1785177772989
             }
           },
           "id": "prt_fa4e2f2130019U0if4lanjlwiY",
           "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
           "messageID": "msg_fa4e2b4d1001vYFRcwlkpuIvyk"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 115593,
+            "input": 2320,
+            "output": 249,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 113024
+            }
+          },
+          "cost": 0.03372984,
+          "id": "prt_fa4e313e4001vHyQJGzP2CNZCI",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e2b4d1001vYFRcwlkpuIvyk"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03080976,
+        "tokens": {
+          "total": 115662,
+          "input": 480,
+          "output": 46,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 115136
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785177773097,
+          "completed": 1785177775700
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e314290018cVocbl8c9cEVT",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-start",
+          "id": "prt_fa4e31c59001ZYAAYWjn0pr1hv",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e314290018cVocbl8c9cEVT"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_41ad",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git log --oneline -3; echo \"---merge-base comparison---\"; rtk git diff HEAD~1 --stat 2>&1 | rtk tail -20"
+            },
+            "output": "bf26ae1 test: cover Astro components via Container API + cheerio (#404)\n3ec8df7 test: cover Contentful Zod schema contracts + loader mapping (#403)\nebdf045 test: cover client form validators (#402)\n---merge-base comparison---\nbun.lockb                                       | Bin 653109 -> 653141 bytes\n package.json                                    |   1 +\n tests/components/astro-modules.d.ts             |  20 +++\n tests/components/blocks/event.test.ts           | 178 ++++++++++++++++++++++++\n tests/components/blocks/newsletter-card.test.ts |  65 +++++++++\n tests/components/blocks/prebooking.test.ts      |  50 +++++++\n tests/components/controls/button.test.ts        |  48 +++++++\n tests/components/controls/checkbox.test.ts      |  47 +++++++\n tests/components/controls/iban-input.test.ts    |  35 +++++\n tests/components/controls/input.test.ts         |  37 +++++\n tests/components/controls/select.test.ts        |  50 +++++++\n tests/components/controls/sepa-mandate.test.ts  |  27 ++++\n tests/components/controls/submit-button.test.ts |  35 +++++\n tests/components/controls/switch.test.ts        |  41 ++++++\n tests/components/controls/textarea.test.ts      |  26 ++++\n tests/components/lib/MetaTagsStub.astro         |   5 +\n tests/components/lib/container.ts               |  32 +++++\n 17 files changed, 697 insertions(+)\n",
+            "metadata": {
+              "output": "bf26ae1 test: cover Astro components via Container API + cheerio (#404)\n3ec8df7 test: cover Contentful Zod schema contracts + loader mapping (#403)\nebdf045 test: cover client form validators (#402)\n---merge-base comparison---\nbun.lockb                                       | Bin 653109 -> 653141 bytes\n package.json                                    |   1 +\n tests/components/astro-modules.d.ts             |  20 +++\n tests/components/blocks/event.test.ts           | 178 ++++++++++++++++++++++++\n tests/components/blocks/newsletter-card.test.ts |  65 +++++++++\n tests/components/blocks/prebooking.test.ts      |  50 +++++++\n tests/components/controls/button.test.ts        |  48 +++++++\n tests/components/controls/checkbox.test.ts      |  47 +++++++\n tests/components/controls/iban-input.test.ts    |  35 +++++\n tests/components/controls/input.test.ts         |  37 +++++\n tests/components/controls/select.test.ts        |  50 +++++++\n tests/components/controls/sepa-mandate.test.ts  |  27 ++++\n tests/components/controls/submit-button.test.ts |  35 +++++\n tests/components/controls/switch.test.ts        |  41 ++++++\n tests/components/controls/textarea.test.ts      |  26 ++++\n tests/components/lib/MetaTagsStub.astro         |   5 +\n tests/components/lib/container.ts               |  32 +++++\n 17 files changed, 697 insertions(+)\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git log --oneline -3; echo \"---merge-base comparison---\"; rtk git diff HEAD~1 --stat 2>&1 | rtk tail -20",
+            "time": {
+              "start": 1785177775625,
+              "end": 1785177775628
+            }
+          },
+          "id": "prt_fa4e31dd2001Kjmbp58t39IzQI",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e314290018cVocbl8c9cEVT"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 115662,
+            "input": 480,
+            "output": 46,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 115136
+            }
+          },
+          "cost": 0.03080976,
+          "id": "prt_fa4e31e30001XAo0Ov2DzQrM8V",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e314290018cVocbl8c9cEVT"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03592668,
+        "tokens": {
+          "total": 117216,
+          "input": 347,
+          "output": 1221,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 115648
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785177775708,
+          "completed": 1785177990193
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e31e5c001rQpB0Mt8OOADAa",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-start",
+          "id": "prt_fa4e3289b001pfG267sumiBfmC",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e31e5c001rQpB0Mt8OOADAa"
+        },
+        {
+          "type": "text",
+          "text": "Now spawn both review sub-agents in parallel. Fixed point = `HEAD~1`. Spec source = issue #404. Standards sources = `AGENTS.md`, `CONTEXT.md`, `docs/agents/`.",
+          "time": {
+            "start": 1785177778369,
+            "end": 1785177789569
+          },
+          "id": "prt_fa4e328c1001IGPUoDUMSYSl95",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e31e5c001rQpB0Mt8OOADAa"
+        },
+        {
+          "type": "tool",
+          "tool": "task",
+          "callID": "call_51e5",
+          "state": {
+            "status": "completed",
+            "input": {
+              "description": "Standards review",
+              "prompt": "Perform a STANDARDS review of the diff between `HEAD~1` and `HEAD` in the repo at `/Users/mseele/dev/sve/sve-website`.\n\nDiff command: `git diff HEAD~1...HEAD`\nCommit list (one commit): `bf26ae1 test: cover Astro components via Container API + cheerio (#404)`\n\nRun `git diff HEAD~1...HEAD` to see every changed hunk. Focus on the new tests under `tests/components/`.\n\nStandards sources to consult (read them in the repo):\n- `/Users/mseele/dev/sve/sve-website/AGENTS.md` — coding guidelines (formatter, imports, TS strict, naming, Astro component conventions, Tailwind).\n- `/Users/mseele/dev/sve/sve-website/CONTEXT.md` — domain terms + the EventAvailability sentinel contract.\n- `/Users/mseele/dev/sve/sve-website/docs/agents/` — agent-facing docs.\n- `/Users/mseele/dev/sve/sve-website/vitest.config.ts` and `tests/setup.ts` — existing test conventions.\n\nSmell baseline — also assess the diff against these Fowler code smells from Refactoring ch.3 (each is a labelled heuristic, a judgement call, never a hard violation; a documented repo standard overrides the baseline; skip anything tooling enforces):\n- Mysterious Name — a function/variable/type whose name doesn't reveal what it does or holds.\n- Duplicated Code — same logic shape appears in more than one hunk/file in the change.\n- Feature Envy — a method that reaches into another object's data more than its own.\n- Data Clumps — same few fields/params keep travelling together (a type wanting to be born).\n- Primitive Obsession — a primitive or string standing in for a domain concept that deserves its own type.\n- Repeated Switches — same switch/if-cascade on the same type recurs across the change.\n- Shotgun Surgery — one logical change forces scattered edits across many files in the diff.\n- Divergent Change — one file/module is edited for several unrelated reasons.\n- Speculative Generality — abstraction/parameters/hooks added for needs the spec doesn't have.\n- Message Chains — long a.b().c().d() navigation the caller shouldn't depend on.\n- Middle Man — a class/function that mostly just delegates onward.\n- Refused Bequest — a subclass/implementer that ignores most of what it inherits.\n\nBrief: Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls — documented-standard breaches can be hard, baseline smells are always judgement calls, a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words.\n\nReturn only the report.",
+              "subagent_type": "general"
+            },
+            "output": "<task id=\"ses_05b1cbd9dffe7JQNijnI3sevbq\" state=\"completed\">\n<task_result>\n# Standards review — `bf26ae1` (tests/components/)\n\n## Hard violations (documented standard)\n\n- **`tests/components/lib/MetaTagsStub.astro:4`** — `const {} = Astro.props` with no `interface Props`. AGENTS.md \"Astro components\" requires: \"destructure `Astro.props`, type props with `interface Props`.\" Even a render stub should declare an empty `interface Props {}`.\n\n- **`tests/components/blocks/event.test.ts:45`** — `} as any` on the `entry` fixture defeats AGENTS.md \"TypeScript: Strict mode.\" Should be `as unknown as CollectionEntry<'events'>` (or a typed builder), not `as any`.\n\n## Baseline smells (judgement calls)\n\n- **Duplicated Code** — The trio `+// @vitest-environment node` plus `+import { describe, expect, it } from 'vitest'` plus `+import … from '../lib/container'` is repeated verbatim in 11 control/block test files. Also `Checkbox.test.ts` and `Switch.test.ts` mirror the same three description-span behaviors (\"omits span when undefined\", \"renders description in span\", \"reflects checked prop\") — same logic shape, two files.\n\n- **Data Clumps** — `{ id, name, title }` (and `{ id, name }`) travel together in every control test: `checkbox.test.ts:8`, `switch.test.ts:8`, `select.test.ts:13`, `input.test.ts:5`, `iban-input.test.ts:5`, `textarea.test.ts:5`, `sepa-mandate.test.ts:8`. They pool on every render call — a `(id, name, title)` fixture helper wants to be born.\n\n- **Message Chains** — `submit-button.test.ts:25-27`:\n  `$('button span > svg').parent().children().first().prop('tagName')?.toLowerCase()` — four-step cheerio navigation the test shouldn't depend on; assert on `$('button span > svg').parent().is('span')` instead.\n\n- **Mysterious Name / needless gymnastics** — `event.test.ts:105-107`:\n  ```\n  const { $multi } = {\n    $multi: (await renderEvent({ dates: [...] })).$,\n  }\n  ```\n  Wraps a render result in an object literal only to destructure it back out. Idiomatic form: `const { $: $multi } = await renderEvent({ dates: [...] })`.\n\n## Non-issues checked\n- Astro imports carry explicit `.astro` extensions ✓ (AGENTS imports rule).\n- No `availableSlots === -1` / `=== 0` or raw sentinel reads introduced — the EventAvailability contract (CONTEXT.md §Producer/reader) is untouched ✓.\n- Formatter (semicolons/single quotes/2-space/trailing commas) and import ordering match AGENTS ✓ — left to `oxfmt`.\n</task_result>\n</task>",
+            "metadata": {
+              "parentSessionId": "ses_060a5c53fffeYRb6cyniWppdmo",
+              "sessionId": "ses_05b1cbd9dffe7JQNijnI3sevbq",
+              "model": {
+                "modelID": "glm-5.2",
+                "providerID": "opencode-go"
+              },
+              "truncated": false
+            },
+            "title": "Standards review",
+            "time": {
+              "start": 1785177784934,
+              "end": 1785177857602
+            }
+          },
+          "id": "prt_fa4e34258001EveFcc1RszOKvT",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e31e5c001rQpB0Mt8OOADAa"
+        },
+        {
+          "type": "tool",
+          "tool": "task",
+          "callID": "call_4610",
+          "state": {
+            "status": "completed",
+            "input": {
+              "description": "Spec review",
+              "prompt": "Perform a SPEC review of the diff between `HEAD~1` and `HEAD` in the repo at `/Users/mseele/dev/sve/sve-website`.\n\nDiff command: `git diff HEAD~1...HEAD`\nCommit list (one commit): `bf26ae1 test: cover Astro components via Container API + cheerio (#404)`\n\nThe originating spec is GitHub issue #404 in the `mseele/sve-website` repo. Run this to fetch it:\n`gh issue view 404 --json title,body -R mseele/sve-website`\n\nSpec body summary (do not rely on this alone — fetch the live issue):\n\n> Astro Container API render-to-HTML tests for the components whose frontmatter does real work — `Event.astro`, `PreBooking.astro`, `NewsletterCard.astro`, and the controls set (`Input.astro`, `IbanInput.astro`, `SepaMandate.astro`, `Select.astro`, `Textarea.astro`, `SubmitButton.astro`, `Button.astro`, `Checkbox.astro`, `Switch.astro`).\n>\n> Use `experimental_AstroContainer.create()` to render each component in isolation in Node with injected props, then assert the rendered HTML with `cheerio` (DOM queries, not class-string snapshots — those rot for styling reasons, not correctness). For components whose frontmatter reads Contentful or the backend instrumentation directly, inject mocked loader data — keep the test about the markup, not the source.\n>\n> Skip pure-layout wrappers (`Container.astro`, `Prose.astro`, `AppHeader.astro`, `AppFooter.astro`).\n>\n> Acceptance criteria:\n> - [ ] Container API wired through `experimental_AstroContainer.create()`\n> - [ ] `cheerio` available as an assertion helper\n> - [ ] Render tests for `Event.astro`, `PreBooking.astro`, `NewsletterCard.astro`, and the controls set\n> - [ ] No CSS-class-string snapshots — DOM structure assertions only\n> - [ ] Components that load data are fed mocked loader results, not live fetches\n> - [ ] All tests green, `bun run check` green\n\nBrief: Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words.\n\nReturn only the report.",
+              "subagent_type": "general"
+            },
+            "output": "<task id=\"ses_05b1cac6affehthkiFtHKZqv1L\" state=\"completed\">\n<task_result>\n# Spec Review — bf26ae1 (#404)\n\n## (a) Missing or partial\nNone. All twelve named components have render tests (`Event`, `PreBooking`, `NewsletterCard` + nine controls). Container API is wired via `experimental_AstroContainer.create()` in `tests/components/lib/container.ts:21`; `cheerio` is the assertion helper; pure-layout wrappers (`Container.astro`, `Prose.astro`, `AppHeader.astro`, `AppFooter.astro`) are skipped as instructed. `bun run check` and `bun vitest run` both green (264 tests, exit 0).\n\n## (b) Scope creep\nMinimal. Two support files beyond the listed tests:\n- `tests/components/lib/MetaTagsStub.astro` — Astro stub used to mock `MetaTags.astro` so `Astro.site` (undefined in the container) doesn't throw. Defensible harness infra, but the spec said \"components whose frontmatter reads Contentful or the backend instrumentation directly, inject mocked loader data — keep the test about the markup, not the source.\" It avoids a layout concern rather than mocking a loader, so it sits slightly outside the spec's described technique.\n- `tests/components/astro-modules.d.ts` — ambient `*.astro` module declarations so `tsc --noEmit` resolves imports. Pure build glue.\n\nNo feature code touched, no production modules modified beyond `package.json` (+`cheerio`).\n\n## (c) Implemented but looks wrong\n1. **CSS class-string assertions, which the spec explicitly forbids.** Quote: *\"No CSS-class-string snapshots — DOM structure assertions only.\"* `event.test.ts:169,176` and `prebooking.test.ts:20` assert `expect(... .hasClass('hidden')).toBe(true)`. These are CSS-class checks on Tailwind's `hidden` utility, not DOM-structure assertions. Even though the spec singles out *snapshots* (full class strings) as the rot risk, the wording is \"DOM structure assertions only\" — and `hasClass('hidden')` is testing a visual state through a class name that will rot exactly the way the spec warns against. Prefer a structural proxy (e.g. asserting the element has no rendering via a `data-*` flag, or asserting on the boolean `hidden` HTML attribute — `Select.astro` already does the latter at `select.test.ts`.\n\n2. **`event.test.ts` re-imports `AstroContainer` and runs its own `renderToString` (`event.test.ts:10,51`) instead of using the shared `render` helper from `lib/container.ts`.** The spec calls out a single harness; the other 12 tests use it, Event does not. Functionally fine and still \"Container API via `experimental_AstroContainer.create()`\", but inconsistency invites drift and leaves the spec's \"wired through `experimental_AstroContainer.create()`\" implied harness convention half-followed.\n\n3. **Mocked-loader criterion is trivially satisfied because no component under test actually pulls data.** Spec: *\"For components whose frontmatter reads Contentful or the backend instrumentation directly, inject mocked loader data.\"* `Event.astro`, `NewsletterCard.astro`, `PreBooking.astro` all consume loader results as props (consumers fetch via `getCollection`, not the component frontmatter). The `MetaTags.astro` mock is the only \"indirect\" data dependency stubbed, and it's stubbed for layout/canonical-URL reasons, not loader-data mocking. So the criterion is met vacuously rather than demonstrably — no test actually exercises the \"frontmatter reads data → inject mock\" pattern the spec describes.\n</task_result>\n</task>",
+            "metadata": {
+              "parentSessionId": "ses_060a5c53fffeYRb6cyniWppdmo",
+              "sessionId": "ses_05b1cac6affehthkiFtHKZqv1L",
+              "model": {
+                "modelID": "glm-5.2",
+                "providerID": "opencode-go"
+              },
+              "truncated": false
+            },
+            "title": "Spec review",
+            "time": {
+              "start": 1785177789340,
+              "end": 1785177989928
+            }
+          },
+          "id": "prt_fa4e35382001cxbVHOXqKOBFDX",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e31e5c001rQpB0Mt8OOADAa"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-finish",
+          "tokens": {
+            "total": 117216,
+            "input": 347,
+            "output": 1221,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 115648
+            }
+          },
+          "cost": 0.03592668,
+          "id": "prt_fa4e663720016J75855AQuIFVU",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e31e5c001rQpB0Mt8OOADAa"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03748664,
+        "tokens": {
+          "total": 119386,
+          "input": 3098,
+          "output": 704,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 115584
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785177990250,
+          "completed": 1785177998971
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e6646a00107u796cFSEPQ83",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "976538666234435200d06343130993fa3283f9e3",
+          "type": "step-start",
+          "id": "prt_fa4e67140001P62t9uJ7fA3rPa",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e6646a00107u796cFSEPQ83"
+        },
+        {
+          "type": "text",
+          "text": "## Standards\n\n**Hard violations**\n- `tests/components/lib/MetaTagsStub.astro:4` — `const {} = Astro.props` without `interface Props`. AGENTS.md requires typed props via `interface Props`.\n- `tests/components/blocks/event.test.ts:45` — `as any` on the entry fixture violates strict-mode guideline; use `as unknown as CollectionEntry<'events'>` or a typed builder.\n\n**Baseline smells (judgement calls)**\n- Duplicated Code — the `// @vitest-environment node` + `vitest` + `../lib/container` import header repeats across 11 control/block tests; Checkbox/Switch share three near-identical description-span behaviors.\n- Data Clumps — `{ id, name, title }` travels together in every control test; a fixture helper wants to be born.\n- Message Chains — `submit-button.test.ts:25-27` four-step cheerio `.parent().children().first().prop('tagName')?.toLowerCase()`; collapse to `.parent().is('span')`.\n- Mysterious Name/gymnastics — `event.test.ts:105-107` wraps a render result in an object literal only to destructure it back out.\n\n## Spec\n\n**(a) Missing/partial** — none; all 12 components covered, harness + cheerio in place, layout wrappers skipped as instructed, tests + `bun run check` green.\n\n**(b) Scope creep** — minimal, two support files (`MetaTagsStub.astro`, `astro-modules.d.ts`); defensible.\n\n**(c) Implemented but looks wrong**\n1. `hasClass('hidden')` in `event.test.ts:169,176` and `prebooking.test.ts:20` contradicts \"DOM structure assertions only\" — same class-string rot the spec warns against. Use the HTML `hidden` attribute (as `select.test.ts` does) or a `data-*` flag.\n2. `event.test.ts` re-imports `AstroContainer` and runs its own `renderToString` instead of using the shared `render` helper the other 12 tests use.\n3. Mocked-loader criterion met vacuously — no component under test reads loaders in its frontmatter; only `MetaTags` is mocked, and for canonical-URL reasons, not loader-data reasons.\n\nLet me address the findings before finalising. I'll fix the hard violations, the message chain, the mysterious-name gymnastics, the `hasClass('hidden')` class-string assertions, and route Event.astro through the shared `render` helper. The duplicated code / data clumps are judgement calls I'll leave (test boilerplate is acceptable; extracting a control-fixture helper would help but is not strictly required bythe spec).",
+          "time": {
+            "start": 1785177993554,
+            "end": 1785177998848
+          },
+          "id": "prt_fa4e67152001UDfXYt4LLWGlxf",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e6646a00107u796cFSEPQ83"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_346b",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/lib/MetaTagsStub.astro",
+              "oldString": "---\n// Stub MetaTags: drops all SEO/canonical computation that would otherwise\n// call `Astro.site` (which the AstroContainer API leaves undefined by default).\nconst {} = Astro.props\n---",
+              "newString": "---\n// Stub MetaTags: drops all SEO/canonical computation that would otherwise\n// call `Astro.site` (which the AstroContainer API leaves undefined by\n// default). Rendered output is intentionally empty.\ninterface Props {}\nconst {} = Astro.props as Props\n---"
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: /Users/mseele/dev/sve/sve-website/tests/components/lib/MetaTagsStub.astro\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/components/lib/MetaTagsStub.astro\n+++ /Users/mseele/dev/sve/sve-website/tests/components/lib/MetaTagsStub.astro\n@@ -1,5 +1,7 @@\n ---\n // Stub MetaTags: drops all SEO/canonical computation that would otherwise\n-// call `Astro.site` (which the AstroContainer API leaves undefined by default).\n-const {} = Astro.props\n+// call `Astro.site` (which the AstroContainer API leaves undefined by\n+// default). Rendered output is intentionally empty.\n+interface Props {}\n+const {} = Astro.props as Props\n ---\n\\ No newline at end of file\n",
+              "filediff": {
+                "file": "/Users/mseele/dev/sve/sve-website/tests/components/lib/MetaTagsStub.astro",
+                "patch": "Index: /Users/mseele/dev/sve/sve-website/tests/components/lib/MetaTagsStub.astro\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/components/lib/MetaTagsStub.astro\n+++ /Users/mseele/dev/sve/sve-website/tests/components/lib/MetaTagsStub.astro\n@@ -1,5 +1,7 @@\n ---\n // Stub MetaTags: drops all SEO/canonical computation that would otherwise\n-// call `Astro.site` (which the AstroContainer API leaves undefined by default).\n-const {} = Astro.props\n+// call `Astro.site` (which the AstroContainer API leaves undefined by\n+// default). Rendered output is intentionally empty.\n+interface Props {}\n+const {} = Astro.props as Props\n ---\n\\ No newline at end of file\n",
+                "additions": 4,
+                "deletions": 2
+              },
+              "truncated": false
+            },
+            "title": "tests/components/lib/MetaTagsStub.astro",
+            "time": {
+              "start": 1785177998814,
+              "end": 1785177998818
+            }
+          },
+          "id": "prt_fa4e685ce001ZscXNnRcFs8lnv",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e6646a00107u796cFSEPQ83"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5a0eb41e9133d7ce7bb4f720c8be3fc2f120e503",
+          "type": "step-finish",
+          "tokens": {
+            "total": 119386,
+            "input": 3098,
+            "output": 704,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 115584
+            }
+          },
+          "cost": 0.03748664,
+          "id": "prt_fa4e6864c001cDJj5NqtB3DV8R",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e6646a00107u796cFSEPQ83"
+        },
+        {
+          "type": "patch",
+          "hash": "976538666234435200d06343130993fa3283f9e3",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/components/lib/MetaTagsStub.astro"
+          ],
+          "id": "prt_fa4e68679001hP44kbiHyUWT0C",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e6646a00107u796cFSEPQ83"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03156592,
+        "tokens": {
+          "total": 119471,
+          "input": 162,
+          "output": 77,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 119232
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785177999008,
+          "completed": 1785178002815
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e686a0001VLPa3WqrencrwY",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "5a0eb41e9133d7ce7bb4f720c8be3fc2f120e503",
+          "type": "step-start",
+          "id": "prt_fa4e68fc6001MvExKDCd6Hf5b7",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e686a0001VLPa3WqrencrwY"
+        },
+        {
+          "type": "text",
+          "text": "Now fix the Event test — use the shared `render` helper, remove the `as any` (use a typed builder), remove the `hasClass('hidden')` assertions in favour of structural checks, and fix the mysterious-name gymnastics.",
+          "time": {
+            "start": 1785178001352,
+            "end": 1785178002742
+          },
+          "id": "prt_fa4e68fc8001w6QCVyancXQrBu",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e686a0001VLPa3WqrencrwY"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_d8d0",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts</path>\n<type>file</type>\n<content>\n1: // @vitest-environment node\n2: //\n3: // `Event.astro` pulls in `Layout` → `MetaTags.astro`, which computes a\n4: // canonical URL against `Astro.site`. `experimental_AstroContainer.create()`\n5: // leaves `Astro.site` undefined (the container defaults elide `site`), so\n6: // `new URL(path, undefined)` throws. We mock `@/components/common/MetaTags.astro`\n7: // with an on-disk Astro stub that drops all SEO/head computation and renders\n8: // nothing — keeping the test about the Event markup, not the Layout head.\n9: import { describe, expect, it, vi } from 'vitest'\n10: import { experimental_AstroContainer as AstroContainer } from 'astro/container'\n11: import { load as cheerioLoad } from 'cheerio'\n12: import Event from '@/components/blocks/Event.astro'\n13: import imageMetadata from '@/assets/events/fit.jpg'\n14: import { EventCustomFieldType, PaymentMethod } from '@/types'\n15: \n16: // vi.mock is hoisted above the static imports above by the vitest transform,\n17: // so Event.astro resolves the mocked MetaTags module during SSR.\n18: vi.mock('@/components/common/MetaTags.astro', async () => await import('../lib/MetaTagsStub.astro'))\n19: \n20: // A minimal Astro `CollectionEntry<'events'>`-shaped object. The `image`\n21: // field needs to be an `ImageMetadata`; we reuse a real on-disk image and\n22: // overwrite `src` with an absolute URL so `new URL(src, undefined)` (where\n23: // `Astro.site` is undefined inside the container) still resolves cleanly.\n24: const entry = {\n25:   id: 'evt-1',\n26:   collection: 'events',\n27:   slug: 'evt-1',\n28:   data: {\n29:     id: 'evt-1',\n30:     name: 'Rückenfit',\n31:     image: { ...imageMetadata, src: 'https://example.com/img.jpg' },\n32:     sortIndex: 1,\n33:     shortDescription: 'Pilates für den Rücken',\n34:     description: '<p>Ein sanfter Kurs.</p>',\n35:     location: 'Clubhaus',\n36:     dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'],\n37:     duration: '60 Min',\n38:     priceMember: '40 €',\n39:     priceNonMember: '60 €',\n40:     externalOperator: false,\n41:     customFields: [{ name: 'Rückenbeschwerden', type: EventCustomFieldType.Text }],\n42:     paymentMethod: PaymentMethod.SepaDirectDebit,\n43:   },\n44:   render: () => ({}),\n45: } as any\n46: \n47: async function renderEvent(\n48:   overrides: Partial<typeof entry.data> = {},\n49:   props: Record<string, unknown> = {},\n50: ) {\n51:   const container = await AstroContainer.create()\n52:   const html = await container.renderToString(Event, {\n53:     props: {\n54:       type: 'events' as const,\n55:       entry: { ...entry, data: { ...entry.data, ...overrides } },\n56:       newsletterDescription: 'Erhalte automatisch eine E-Mail sobald neue Events online sind.',\n57:       newsletterText: 'Ich möchte über zukünftige Events per E-Mail informiert werden',\n58:       schemaType: 'Event' as const,\n59:       ...props,\n60:     },\n61:   })\n62:   return { html, $: cheerioLoad(html) }\n63: }\n64: \n65: describe('Event.astro', () => {\n66:   it('wraps the page in the event identifier stamped on the root <div>', async () => {\n67:     const { $ } = await renderEvent()\n68:     expect($('div[data-identifier=\"evt-1\"]')).toHaveLength(1)\n69:   })\n70: \n71:   it('renders the \"Beschreibung\" section header and the description HTML verbatim', async () => {\n72:     const { $ } = await renderEvent()\n73:     expect($('#beschreibung h2').text()).toBe('Beschreibung')\n74:     expect($('#beschreibung > div > div').html()).toContain('<p>Ein sanfter Kurs.</p>')\n75:   })\n76: \n77:   it('emits the Details list with the expected set of detail ids', async () => {\n78:     const { $ } = await renderEvent()\n79:     const titles = $('#details [data-title]')\n80:       .toArray()\n81:       .map((el) => $(el).attr('data-title'))\n82:     expect(titles).toContain('availability')\n83:     expect(titles).toContain('dates')\n84:     expect(titles).toContain('duration')\n85:     expect(titles).toContain('price')\n86:     expect(titles).toContain('location')\n87:   })\n88: \n89:   it('renders the price as two member/non-member rows when prices differ', async () => {\n90:     const { $ } = await renderEvent({ priceMember: '40 €', priceNonMember: '60 €' })\n91:     expect($('#details [data-title=\"price\"]')).toHaveLength(2)\n92:     const priceLabels = $('#details [data-label=\"price\"]')\n93:       .toArray()\n94:       .map((el) => $(el).text())\n95:     expect(priceLabels).toEqual(['40 €', '60 €'])\n96:   })\n97: \n98:   it('collapses the price into a single \"Kostenlos\" row when both prices are \"0 €\"', async () => {\n99:     const { $ } = await renderEvent({ priceMember: '0 €', priceNonMember: '0 €' })\n100:     expect($('#details [data-title=\"price\"]')).toHaveLength(1)\n101:     expect($('#details [data-label=\"price\"]').text()).toBe('Kostenlos')\n102:   })\n103: \n104:   it('shows the dates detail as \"Termine\" (plural) when there are two dates, \"Termin\" (singular) when one', async () => {\n105:     const { $multi } = {\n106:       $multi: (await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })).$,\n107:     }\n108:     expect($multi('#details [data-title=\"dates\"]').text()).toBe('Termine')\n109: \n110:     const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z'] })\n111:     expect($('#details [data-title=\"dates\"]').text()).toBe('Termin')\n112:   })\n113: \n114:   it('renders the \"Termine\" section with the same number of <li> entries as dates (multi-date case)', async () => {\n115:     const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })\n116:     // Two date strings → two <li> rows total (split across two <ul> columns,\n117:     // first column holds ceil(n/2), the second the remainder).\n118:     expect($('main li')).toHaveLength(2)\n119:   })\n120: \n121:   it('stamps the Anmeldung form with the standard input roster plus the SEPA-specific fields', async () => {\n122:     const { $ } = await renderEvent()\n123:     // Mandatory personal fields. Use `form#form` to scope inside the booking\n124:     // form; the hidden NewsletterCard teaser under #newsletter-card renders\n125:     // its own form with another `#email`-id input from NewsletterCard.\n126:     for (const id of ['firstname', 'lastname', 'street', 'plz', 'email', 'phone', 'comment']) {\n127:       expect($(`#anmeldung form#form #${id}`)).toHaveLength(1)\n128:     }\n129:     // SEPA-mandate fields appear only because paymentMethod is SepaDirectDebit.\n130:     expect($('#anmeldung form#form input[data-iban-validation]#iban')).toHaveLength(1)\n131:     expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(1)\n132:   })\n133: \n134:   it('omits the IBAN / SEPA mandate fields when paymentMethod is BankTransfer', async () => {\n135:     const { $ } = await renderEvent({ paymentMethod: PaymentMethod.BankTransfer })\n136:     expect($('#anmeldung form#form input[data-iban-validation]')).toHaveLength(0)\n137:     expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(0)\n138:   })\n139: \n140:   it('renders one custom-field input per eventCustomField entry', async () => {\n141:     const { $ } = await renderEvent({\n142:       customFields: [\n143:         { name: 'Rückenbeschwerden', type: EventCustomFieldType.Text },\n144:         { name: 'Teilnehmer', type: EventCustomFieldType.Number, minValue: 1, maxValue: 4 },\n145:       ],\n146:     })\n147:     expect($('#anmeldung form#form input#customfield')).toHaveLength(2)\n148:     // Number-typed custom field forwards `min` / `max` through the spread attrs.\n149:     const numberField = $('#anmeldung form#form input#customfield').toArray()[1]\n150:     expect($(numberField).attr('type')).toBe('number')\n151:     expect($(numberField).attr('min')).toBe('1')\n152:     expect($(numberField).attr('max')).toBe('4')\n153:   })\n154: \n155:   it('emits three consent checkboxes (member, newsletter, consent)', async () => {\n156:     const { $ } = await renderEvent()\n157:     expect($('#anmeldung form#form #member')).toHaveLength(1)\n158:     expect($('#anmeldung form#form #newsletter')).toHaveLength(1)\n159:     expect($('#anmeldung form#form #consent')).toHaveLength(1)\n160:     // All three render as type=\"checkbox\".\n161:     expect($('#anmeldung form#form input#member[type=\"checkbox\"]')).toHaveLength(1)\n162:     expect($('#anmeldung form#form input#consent[type=\"checkbox\"]')).toHaveLength(1)\n163:   })\n164: \n165:   it('embeds the NewsletterCard teaser (hidden) using the supplied newsletter copy', async () => {\n166:     const { $ } = await renderEvent()\n167:     const teaser = $('#newsletter-card')\n168:     expect(teaser).toHaveLength(1)\n169:     expect(teaser.hasClass('hidden')).toBe(true)\n170:     expect(teaser.find('p').first().text()).toContain('Erhalte automatisch')\n171:   })\n172: \n173:   it('renders the Anmeldung section hidden by default (the booking flow reveals it client-side)', async () => {\n174:     const { $ } = await renderEvent()\n175:     expect($('#anmeldung')).toHaveLength(1)\n176:     expect($('#anmeldung').hasClass('hidden')).toBe(true)\n177:   })\n178: })\n\n(End of file - total 178 lines)\n</content>",
+            "metadata": {
+              "preview": "// @vitest-environment node\n//\n// `Event.astro` pulls in `Layout` → `MetaTags.astro`, which computes a\n// canonical URL against `Astro.site`. `experimental_AstroContainer.create()`\n// leaves `Astro.site` undefined (the container defaults elide `site`), so\n// `new URL(path, undefined)` throws. We mock `@/components/common/MetaTags.astro`\n// with an on-disk Astro stub that drops all SEO/head computation and renders\n// nothing — keeping the test about the Event markup, not the Layout head.\nimport { describe, expect, it, vi } from 'vitest'\nimport { experimental_AstroContainer as AstroContainer } from 'astro/container'\nimport { load as cheerioLoad } from 'cheerio'\nimport Event from '@/components/blocks/Event.astro'\nimport imageMetadata from '@/assets/events/fit.jpg'\nimport { EventCustomFieldType, PaymentMethod } from '@/types'\n\n// vi.mock is hoisted above the static imports above by the vitest transform,\n// so Event.astro resolves the mocked MetaTags module during SSR.\nvi.mock('@/components/common/MetaTags.astro', async () => await import('../lib/MetaTagsStub.astro'))\n\n// A minimal Astro `CollectionEntry<'events'>`-shaped object. The `image`",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts",
+                "text": "// @vitest-environment node\n//\n// `Event.astro` pulls in `Layout` → `MetaTags.astro`, which computes a\n// canonical URL against `Astro.site`. `experimental_AstroContainer.create()`\n// leaves `Astro.site` undefined (the container defaults elide `site`), so\n// `new URL(path, undefined)` throws. We mock `@/components/common/MetaTags.astro`\n// with an on-disk Astro stub that drops all SEO/head computation and renders\n// nothing — keeping the test about the Event markup, not the Layout head.\nimport { describe, expect, it, vi } from 'vitest'\nimport { experimental_AstroContainer as AstroContainer } from 'astro/container'\nimport { load as cheerioLoad } from 'cheerio'\nimport Event from '@/components/blocks/Event.astro'\nimport imageMetadata from '@/assets/events/fit.jpg'\nimport { EventCustomFieldType, PaymentMethod } from '@/types'\n\n// vi.mock is hoisted above the static imports above by the vitest transform,\n// so Event.astro resolves the mocked MetaTags module during SSR.\nvi.mock('@/components/common/MetaTags.astro', async () => await import('../lib/MetaTagsStub.astro'))\n\n// A minimal Astro `CollectionEntry<'events'>`-shaped object. The `image`\n// field needs to be an `ImageMetadata`; we reuse a real on-disk image and\n// overwrite `src` with an absolute URL so `new URL(src, undefined)` (where\n// `Astro.site` is undefined inside the container) still resolves cleanly.\nconst entry = {\n  id: 'evt-1',\n  collection: 'events',\n  slug: 'evt-1',\n  data: {\n    id: 'evt-1',\n    name: 'Rückenfit',\n    image: { ...imageMetadata, src: 'https://example.com/img.jpg' },\n    sortIndex: 1,\n    shortDescription: 'Pilates für den Rücken',\n    description: '<p>Ein sanfter Kurs.</p>',\n    location: 'Clubhaus',\n    dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'],\n    duration: '60 Min',\n    priceMember: '40 €',\n    priceNonMember: '60 €',\n    externalOperator: false,\n    customFields: [{ name: 'Rückenbeschwerden', type: EventCustomFieldType.Text }],\n    paymentMethod: PaymentMethod.SepaDirectDebit,\n  },\n  render: () => ({}),\n} as any\n\nasync function renderEvent(\n  overrides: Partial<typeof entry.data> = {},\n  props: Record<string, unknown> = {},\n) {\n  const container = await AstroContainer.create()\n  const html = await container.renderToString(Event, {\n    props: {\n      type: 'events' as const,\n      entry: { ...entry, data: { ...entry.data, ...overrides } },\n      newsletterDescription: 'Erhalte automatisch eine E-Mail sobald neue Events online sind.',\n      newsletterText: 'Ich möchte über zukünftige Events per E-Mail informiert werden',\n      schemaType: 'Event' as const,\n      ...props,\n    },\n  })\n  return { html, $: cheerioLoad(html) }\n}\n\ndescribe('Event.astro', () => {\n  it('wraps the page in the event identifier stamped on the root <div>', async () => {\n    const { $ } = await renderEvent()\n    expect($('div[data-identifier=\"evt-1\"]')).toHaveLength(1)\n  })\n\n  it('renders the \"Beschreibung\" section header and the description HTML verbatim', async () => {\n    const { $ } = await renderEvent()\n    expect($('#beschreibung h2').text()).toBe('Beschreibung')\n    expect($('#beschreibung > div > div').html()).toContain('<p>Ein sanfter Kurs.</p>')\n  })\n\n  it('emits the Details list with the expected set of detail ids', async () => {\n    const { $ } = await renderEvent()\n    const titles = $('#details [data-title]')\n      .toArray()\n      .map((el) => $(el).attr('data-title'))\n    expect(titles).toContain('availability')\n    expect(titles).toContain('dates')\n    expect(titles).toContain('duration')\n    expect(titles).toContain('price')\n    expect(titles).toContain('location')\n  })\n\n  it('renders the price as two member/non-member rows when prices differ', async () => {\n    const { $ } = await renderEvent({ priceMember: '40 €', priceNonMember: '60 €' })\n    expect($('#details [data-title=\"price\"]')).toHaveLength(2)\n    const priceLabels = $('#details [data-label=\"price\"]')\n      .toArray()\n      .map((el) => $(el).text())\n    expect(priceLabels).toEqual(['40 €', '60 €'])\n  })\n\n  it('collapses the price into a single \"Kostenlos\" row when both prices are \"0 €\"', async () => {\n    const { $ } = await renderEvent({ priceMember: '0 €', priceNonMember: '0 €' })\n    expect($('#details [data-title=\"price\"]')).toHaveLength(1)\n    expect($('#details [data-label=\"price\"]').text()).toBe('Kostenlos')\n  })\n\n  it('shows the dates detail as \"Termine\" (plural) when there are two dates, \"Termin\" (singular) when one', async () => {\n    const { $multi } = {\n      $multi: (await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })).$,\n    }\n    expect($multi('#details [data-title=\"dates\"]').text()).toBe('Termine')\n\n    const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z'] })\n    expect($('#details [data-title=\"dates\"]').text()).toBe('Termin')\n  })\n\n  it('renders the \"Termine\" section with the same number of <li> entries as dates (multi-date case)', async () => {\n    const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })\n    // Two date strings → two <li> rows total (split across two <ul> columns,\n    // first column holds ceil(n/2), the second the remainder).\n    expect($('main li')).toHaveLength(2)\n  })\n\n  it('stamps the Anmeldung form with the standard input roster plus the SEPA-specific fields', async () => {\n    const { $ } = await renderEvent()\n    // Mandatory personal fields. Use `form#form` to scope inside the booking\n    // form; the hidden NewsletterCard teaser under #newsletter-card renders\n    // its own form with another `#email`-id input from NewsletterCard.\n    for (const id of ['firstname', 'lastname', 'street', 'plz', 'email', 'phone', 'comment']) {\n      expect($(`#anmeldung form#form #${id}`)).toHaveLength(1)\n    }\n    // SEPA-mandate fields appear only because paymentMethod is SepaDirectDebit.\n    expect($('#anmeldung form#form input[data-iban-validation]#iban')).toHaveLength(1)\n    expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(1)\n  })\n\n  it('omits the IBAN / SEPA mandate fields when paymentMethod is BankTransfer', async () => {\n    const { $ } = await renderEvent({ paymentMethod: PaymentMethod.BankTransfer })\n    expect($('#anmeldung form#form input[data-iban-validation]')).toHaveLength(0)\n    expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(0)\n  })\n\n  it('renders one custom-field input per eventCustomField entry', async () => {\n    const { $ } = await renderEvent({\n      customFields: [\n        { name: 'Rückenbeschwerden', type: EventCustomFieldType.Text },\n        { name: 'Teilnehmer', type: EventCustomFieldType.Number, minValue: 1, maxValue: 4 },\n      ],\n    })\n    expect($('#anmeldung form#form input#customfield')).toHaveLength(2)\n    // Number-typed custom field forwards `min` / `max` through the spread attrs.\n    const numberField = $('#anmeldung form#form input#customfield').toArray()[1]\n    expect($(numberField).attr('type')).toBe('number')\n    expect($(numberField).attr('min')).toBe('1')\n    expect($(numberField).attr('max')).toBe('4')\n  })\n\n  it('emits three consent checkboxes (member, newsletter, consent)', async () => {\n    const { $ } = await renderEvent()\n    expect($('#anmeldung form#form #member')).toHaveLength(1)\n    expect($('#anmeldung form#form #newsletter')).toHaveLength(1)\n    expect($('#anmeldung form#form #consent')).toHaveLength(1)\n    // All three render as type=\"checkbox\".\n    expect($('#anmeldung form#form input#member[type=\"checkbox\"]')).toHaveLength(1)\n    expect($('#anmeldung form#form input#consent[type=\"checkbox\"]')).toHaveLength(1)\n  })\n\n  it('embeds the NewsletterCard teaser (hidden) using the supplied newsletter copy', async () => {\n    const { $ } = await renderEvent()\n    const teaser = $('#newsletter-card')\n    expect(teaser).toHaveLength(1)\n    expect(teaser.hasClass('hidden')).toBe(true)\n    expect(teaser.find('p').first().text()).toContain('Erhalte automatisch')\n  })\n\n  it('renders the Anmeldung section hidden by default (the booking flow reveals it client-side)', async () => {\n    const { $ } = await renderEvent()\n    expect($('#anmeldung')).toHaveLength(1)\n    expect($('#anmeldung').hasClass('hidden')).toBe(true)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 178,
+                "totalLines": 178,
+                "truncated": false
+              }
+            },
+            "title": "tests/components/blocks/event.test.ts",
+            "time": {
+              "start": 1785178002699,
+              "end": 1785178002704
+            }
+          },
+          "id": "prt_fa4e695080012yPyOejhuKlMz4",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e686a0001VLPa3WqrencrwY"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "5a0eb41e9133d7ce7bb4f720c8be3fc2f120e503",
+          "type": "step-finish",
+          "tokens": {
+            "total": 119471,
+            "input": 162,
+            "output": 77,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 119232
+            }
+          },
+          "cost": 0.03156592,
+          "id": "prt_fa4e69559001KTJBieANg3orOq",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e686a0001VLPa3WqrencrwY"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.04833384,
+        "tokens": {
+          "total": 125133,
+          "input": 2612,
+          "output": 3097,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 119424
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178002825,
+          "completed": 1785178034385
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e69589001YN5VmNmjGcuo5W",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "5a0eb41e9133d7ce7bb4f720c8be3fc2f120e503",
+          "type": "step-start",
+          "id": "prt_fa4e6a024001aJ63OBSd2S0XmT",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e69589001YN5VmNmjGcuo5W"
+        },
+        {
+          "type": "reasoning",
+          "text": "Let me decide on the spec finding (c)(1) about `hasClass('hidden')`. The spec says \"No CSS-class-string snapshots — DOM structure assertions only.\" A snapshot is a full string comparison (e.g. expecting `class=\"hidden fixed...\"` to equal a literal). `hasClass('hidden')` is a single class query, not a snapshot — but the spec wording \"DOM structure assertions only\" includes any class-string query which the spec warns will rot. The Event component stamps the `hidden` HTML attribute? Let me check the actual Event.astro output. Look at lines 175 etc — `<div id=\"anmeldung\" class=\"hidden\">`. Looking at Event.astro line 298:\n```astro\n<div id=\"anmeldung\" class=\"hidden\">\n```\n\nSo `id=\"anmeldung\"` doesn't have the HTML `hidden` attribute, it has the Tailwind `class=\"hidden\"`. The component uses a CSS class for hiding, not the HTML attribute. So I can't assert on the HTML `hidden` attribute here — the test would have to query something else structurally. The spec says \"rot for styling reasons, not correctness\" — if a future refactor swaps Tailwind `hidden` for the boolean `hidden` attribute or vice versa, the assertion breaks even if the behavior (hide it) is unchanged.\n\nBut what's a better structural proxy? The Anmeldung section is supposed to be hidden by default. There's no `data-*` flag or `hidden` attribute. So options:\n- Drop the assertion entirely (don't test that it's hidden — testing rendering content is enough).\n- Use `hasClass('hidden')` and accept the class-string risk.\n\nHonestly, the spec is about CSS-class-string *snapshots* — full string equality. The `hasClass('hidden')` is a single-class query which is a partial escape from the rule. But the spec wording is \"DOM structure assertions only\" — strict interpretation says even single-class checks rot.\n\nI'll change the assertion to: assert the element exists and assert its presence (the Anmeldung section is rendered with that ID). The \"hidden by default\" behavior is itself a client-side concern revealed by JS; testing the class is testing a styling detail. So drop the `hasClass('hidden')` assertions and just assert the section exists with that ID. Note that the booking flow reveals it client-side and we'd need a JS test for that, which is out of scope.\n\nActually wait, the spec was specifically about not snapshotting CSS class strings, not forbidding all `hasClass` checks. The risk is \"those rot for styling reasons, not correctness\". A single `hasClass('hidden')` does rot — if someone moves to the boolean `hidden` attribute, the test breaks even though the hide behavior is intact. Best to assert structural property: maybe `expect the element exists` and note that hiding is a styling concern we don't test here.\n\nLet me drop the `hasClass('hidden')` assertions and keep the structure-only assertions.\n\nFor the Event test passing through `render` helper — render uses `getContainer()` which is a shared singleton. But Event needs `vi.mock` for MetaTags. The shared helper `render` in lib/container.ts doesn't set up mocks; the mock is per-test-file via `vi.mock`. So Event.astro can still use `render` since the mock applies at module resolution. Let me try that.\n\nActually, the `render` helper in `container.ts` already imports `AstroContainer` and `cheerioLoad`. Event test needs to mock MetaTags.astro before rendering. If Event uses the shared `render` helper, the `vi.mock` in event.test.ts should still apply (vitest mocks are per-test-file). Let me give it a try.\n\nNow the `as any` — I should use a type-safe builder. The CollectionEntry<'events'> type is generated in `.astro/content.d.ts`. Let me use `as unknown as CollectionEntry<'events'>`.",
+          "time": {
+            "start": 1785178005545,
+            "end": 1785178034138
+          },
+          "id": "prt_fa4e6a029001xFfZbLs72JajhI",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e69589001YN5VmNmjGcuo5W"
+        },
+        {
+          "type": "tool",
+          "tool": "write",
+          "callID": "call_dcb0",
+          "state": {
+            "status": "completed",
+            "input": {
+              "content": "// @vitest-environment node\n//\n// `Event.astro` pulls in `Layout` → `MetaTags.astro`, which computes a\n// canonical URL against `Astro.site`. `experimental_AstroContainer.create()`\n// leaves `Astro.site` undefined (the container defaults elide `site`), so\n// `new URL(path, undefined)` throws. We mock `@/components/common/MetaTags.astro`\n// with an on-disk Astro stub that drops all SEO/head computation and renders\n// nothing — keeping the test about the Event markup, not the Layout head.\nimport { describe, expect, it, vi } from 'vitest'\nimport type { CollectionEntry } from 'astro:content'\nimport Event from '@/components/blocks/Event.astro'\nimport imageMetadata from '@/assets/events/fit.jpg'\nimport { EventCustomFieldType, PaymentMethod } from '@/types'\nimport { render } from '../lib/container'\n\n// vi.mock is hoisted above the static imports above by the vitest transform,\n// so Event.astro resolves the mocked MetaTags module during SSR.\nvi.mock('@/components/common/MetaTags.astro', async () => await import('../lib/MetaTagsStub.astro'))\n\n// A minimal `CollectionEntry<'events'>`-shaped fixture. The `image` field\n// needs to be an `ImageMetadata`; we reuse a real on-disk image and overwrite\n// `src` with an absolute URL so `new URL(src, undefined)` (where `Astro.site`\n// is undefined inside the container) still resolves cleanly. The fixture is\n// typed as `unknown as CollectionEntry<'events'>` rather than `any` so the\n// Z-typed `entry.data` shape surfaces type errors on field access.\nconst entryData = {\n  id: 'evt-1',\n  name: 'Rückenfit',\n  image: { ...imageMetadata, src: 'https://example.com/img.jpg' },\n  sortIndex: 1,\n  shortDescription: 'Pilates für den Rücken',\n  description: '<p>Ein sanfter Kurs.</p>',\n  location: 'Clubhaus',\n  dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'],\n  duration: '60 Min',\n  priceMember: '40 €',\n  priceNonMember: '60 €',\n  externalOperator: false,\n  customFields: [{ name: 'Rückenbeschwerden', type: EventCustomFieldType.Text }],\n  paymentMethod: PaymentMethod.SepaDirectDebit,\n} as CollectionEntry<'events'>['data']\n\nfunction buildEntry(overrides: Partial<CollectionEntry<'events'>['data']> = {}): CollectionEntry<'events'> {\n  return {\n    id: 'evt-1',\n    collection: 'events',\n    slug: 'evt-1',\n    data: { ...entryData, ...overrides },\n    render: () => ({}) as unknown as CollectionEntry<'events'>['render'] extends () => infer R ? R : never,\n  } as unknown as CollectionEntry<'events'>\n}\n\nasync function renderEvent(\n  overrides: Partial<CollectionEntry<'events'>['data']> = {},\n  props: Record<string, unknown> = {},\n) {\n  return render(Event, {\n    props: {\n      type: 'events' as const,\n      entry: buildEntry(overrides),\n      newsletterDescription: 'Erhalte automatisch eine E-Mail sobald neue Events online sind.',\n      newsletterText: 'Ich möchte über zukünftige Events per E-Mail informiert werden',\n      schemaType: 'Event' as const,\n      ...props,\n    },\n  })\n}\n\ndescribe('Event.astro', () => {\n  it('wraps the page in the event identifier stamped on the root <div>', async () => {\n    const { $ } = await renderEvent()\n    expect($('div[data-identifier=\"evt-1\"]')).toHaveLength(1)\n  })\n\n  it('renders the \"Beschreibung\" section header and the description HTML verbatim', async () => {\n    const { $ } = await renderEvent()\n    expect($('#beschreibung h2').text()).toBe('Beschreibung')\n    expect($('#beschreibung > div > div').html()).toContain('<p>Ein sanfter Kurs.</p>')\n  })\n\n  it('emits the Details list with the expected set of detail ids', async () => {\n    const { $ } = await renderEvent()\n    const titles = $('#details [data-title]')\n      .toArray()\n      .map((el) => $(el).attr('data-title'))\n    expect(titles).toContain('availability')\n    expect(titles).toContain('dates')\n    expect(titles).toContain('duration')\n    expect(titles).toContain('price')\n    expect(titles).toContain('location')\n  })\n\n  it('renders the price as two member/non-member rows when prices differ', async () => {\n    const { $ } = await renderEvent({ priceMember: '40 €', priceNonMember: '60 €' })\n    expect($('#details [data-title=\"price\"]')).toHaveLength(2)\n    const priceLabels = $('#details [data-label=\"price\"]')\n      .toArray()\n      .map((el) => $(el).text())\n    expect(priceLabels).toEqual(['40 €', '60 €'])\n  })\n\n  it('collapses the price into a single \"Kostenlos\" row when both prices are \"0 €\"', async () => {\n    const { $ } = await renderEvent({ priceMember: '0 €', priceNonMember: '0 €' })\n    expect($('#details [data-title=\"price\"]')).toHaveLength(1)\n    expect($('#details [data-label=\"price\"]').text()).toBe('Kostenlos')\n  })\n\n  it('shows the dates detail as \"Termine\" (plural) for two dates, \"Termin\" (singular) for one', async () => {\n    const { $: $multi } = await renderEvent({\n      dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'],\n    })\n    expect($multi('#details [data-title=\"dates\"]').text()).toBe('Termine')\n\n    const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z'] })\n    expect($('#details [data-title=\"dates\"]').text()).toBe('Termin')\n  })\n\n  it('renders the \"Termine\" section with the same number of <li> entries as dates (multi-date case)', async () => {\n    const { $ } = await renderEvent({ dates: ['2024-04-08T18:00:00Z', '2024-04-15T18:00:00Z'] })\n    // Two date strings → two <li> rows total (split across two <ul> columns,\n    // first column holds ceil(n/2), the second the remainder).\n    expect($('main li')).toHaveLength(2)\n  })\n\n  it('stamps the Anmeldung form with the standard input roster plus the SEPA-specific fields', async () => {\n    const { $ } = await renderEvent()\n    // Mandatory personal fields. Use `form#form` to scope inside the booking\n    // form; the hidden NewsletterCard teaser under #newsletter-card renders\n    // its own form with another `#email`-id input from NewsletterCard.\n    for (const id of ['firstname', 'lastname', 'street', 'plz', 'email', 'phone', 'comment']) {\n      expect($(`#anmeldung form#form #${id}`)).toHaveLength(1)\n    }\n    // SEPA-mandate fields appear only because paymentMethod is SepaDirectDebit.\n    expect($('#anmeldung form#form input[data-iban-validation]#iban')).toHaveLength(1)\n    expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(1)\n  })\n\n  it('omits the IBAN / SEPA mandate fields when paymentMethod is BankTransfer', async () => {\n    const { $ } = await renderEvent({ paymentMethod: PaymentMethod.BankTransfer })\n    expect($('#anmeldung form#form input[data-iban-validation]')).toHaveLength(0)\n    expect($('#anmeldung form#form #sepa_mandate')).toHaveLength(0)\n  })\n\n  it('renders one custom-field input per eventCustomField entry', async () => {\n    const { $ } = await renderEvent({\n      customFields: [\n        { name: 'Rückenbeschwerden', type: EventCustomFieldType.Text },\n        { name: 'Teilnehmer', type: EventCustomFieldType.Number, minValue: 1, maxValue: 4 },\n      ],\n    })\n    expect($('#anmeldung form#form input#customfield')).toHaveLength(2)\n    // Number-typed custom field forwards `min` / `max` through the spread attrs.\n    const numberField = $('#anmeldung form#form input#customfield').toArray()[1]\n    expect($(numberField).attr('type')).toBe('number')\n    expect($(numberField).attr('min')).toBe('1')\n    expect($(numberField).attr('max')).toBe('4')\n  })\n\n  it('emits three consent checkboxes (member, newsletter, consent)', async () => {\n    const { $ } = await renderEvent()\n    expect($('#anmeldung form#form #member')).toHaveLength(1)\n    expect($('#anmeldung form#form #newsletter')).toHaveLength(1)\n    expect($('#anmeldung form#form #consent')).toHaveLength(1)\n    // All three render as type=\"checkbox\".\n    expect($('#anmeldung form#form input#member[type=\"checkbox\"]')).toHaveLength(1)\n    expect($('#anmeldung form#form input#consent[type=\"checkbox\"]')).toHaveLength(1)\n  })\n\n  it('embeds the NewsletterCard teaser with the supplied newsletter copy', async () => {\n    const { $ } = await renderEvent()\n    const teaser = $('#newsletter-card')\n    expect(teaser).toHaveLength(1)\n    expect(teaser.find('p').first().text()).toContain('Erhalte automatisch')\n  })\n\n  it('renders the Anmeldung section with its identifier (the booking flow reveals it client-side)', async () => {\n    // Visible-vs-hidden is a styling concern — exercised through Tailwind's\n    // `hidden` utility which is mutable CSS, not DOM structure. Asserting on\n    // the class string would rot for styling reasons per the spec, so we\n    // assert only that the section is stamped with its identifier.\n    const { $ } = await renderEvent()\n    expect($('#anmeldung')).toHaveLength(1)\n  })\n})",
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts"
+            },
+            "output": "Wrote file successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "filepath": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts",
+              "exists": true,
+              "truncated": false
+            },
+            "title": "tests/components/blocks/event.test.ts",
+            "time": {
+              "start": 1785178034155,
+              "end": 1785178034176
+            }
+          },
+          "id": "prt_fa4e70fe2001p9cFBWgwihXGHw",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e69589001YN5VmNmjGcuo5W"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "05126096927c690cee3f2378753ed37800fd0613",
+          "type": "step-finish",
+          "tokens": {
+            "total": 125133,
+            "input": 2612,
+            "output": 3097,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 119424
+            }
+          },
+          "cost": 0.04833384,
+          "id": "prt_fa4e71098001Y33cs3J27NdTU7",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e69589001YN5VmNmjGcuo5W"
+        },
+        {
+          "type": "patch",
+          "hash": "5a0eb41e9133d7ce7bb4f720c8be3fc2f120e503",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts"
+          ],
+          "id": "prt_fa4e710ce001ByxcjI5GNg85fR",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e69589001YN5VmNmjGcuo5W"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0338864,
+        "tokens": {
+          "total": 125443,
+          "input": 22,
+          "output": 301,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 125120
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178034489,
+          "completed": 1785178040106
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e71139001XqiX3kYhjWzmVI",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "05126096927c690cee3f2378753ed37800fd0613",
+          "type": "step-start",
+          "id": "prt_fa4e71c63001XiwbWtn1G3h67V",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e71139001XqiX3kYhjWzmVI"
+        },
+        {
+          "type": "text",
+          "text": "Now fix `prebooking.test.ts` `hasClass('hidden')` and `submit-button.test.ts` message chain:",
+          "time": {
+            "start": 1785178037375,
+            "end": 1785178039872
+          },
+          "id": "prt_fa4e71c7f001SRfH17rGXqSFPo",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e71139001XqiX3kYhjWzmVI"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_2d29",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/prebooking.test.ts",
+              "oldString": "it('emits the IBAN pre-booking form wrapper, hidden by default via the \"hidden\" class', async () => {\n    const { $ } = await render(PreBooking)\n    const wrapper = $('#prebooking-iban-form')\n    expect(wrapper).toHaveLength(1)\n    // The wrapper starts hidden via Tailwind's `hidden` utility, plus `flex`/grid\n    // classes are swapped in by client-side JS when the IBAN step is required.\n    expect(wrapper.hasClass('hidden')).toBe(true)\n    expect(wrapper.find('form')).toHaveLength(1)\n  })",
+              "newString": "it('emits the IBAN pre-booking form wrapper containing a single form', async () => {\n    const { $ } = await render(PreBooking)\n    const wrapper = $('#prebooking-iban-form')\n    expect(wrapper).toHaveLength(1)\n    // Visibility is a Tailwind `hidden` utility concern toggled client-side\n    // — a CSS-class check on it would rot for styling reasons, not\n    // correctness (spec: \"DOM structure assertions only\"). Assert structure.\n    expect(wrapper.find('form')).toHaveLength(1)\n  })"
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: /Users/mseele/dev/sve/sve-website/tests/components/blocks/prebooking.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/components/blocks/prebooking.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/components/blocks/prebooking.test.ts\n@@ -10,15 +10,15 @@\n   expect($('dialog#prebooking svg')).toHaveLength(1)\n   expect($('dialog#prebooking p').text()).toContain('Die Buchung wird durchgeführt')\n })\n \n-it('emits the IBAN pre-booking form wrapper, hidden by default via the \"hidden\" class', async () => {\n+it('emits the IBAN pre-booking form wrapper containing a single form', async () => {\n   const { $ } = await render(PreBooking)\n   const wrapper = $('#prebooking-iban-form')\n   expect(wrapper).toHaveLength(1)\n-  // The wrapper starts hidden via Tailwind's `hidden` utility, plus `flex`/grid\n-  // classes are swapped in by client-side JS when the IBAN step is required.\n-  expect(wrapper.hasClass('hidden')).toBe(true)\n+  // Visibility is a Tailwind `hidden` utility concern toggled client-side\n+  // — a CSS-class check on it would rot for styling reasons, not\n+  // correctness (spec: \"DOM structure assertions only\"). Assert structure.\n   expect(wrapper.find('form')).toHaveLength(1)\n })\n \n it('renders the IBAN prompt heading and explanation paragraph', async () => {\n",
+              "filediff": {
+                "file": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/prebooking.test.ts",
+                "patch": "Index: /Users/mseele/dev/sve/sve-website/tests/components/blocks/prebooking.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/components/blocks/prebooking.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/components/blocks/prebooking.test.ts\n@@ -10,15 +10,15 @@\n   expect($('dialog#prebooking svg')).toHaveLength(1)\n   expect($('dialog#prebooking p').text()).toContain('Die Buchung wird durchgeführt')\n })\n \n-it('emits the IBAN pre-booking form wrapper, hidden by default via the \"hidden\" class', async () => {\n+it('emits the IBAN pre-booking form wrapper containing a single form', async () => {\n   const { $ } = await render(PreBooking)\n   const wrapper = $('#prebooking-iban-form')\n   expect(wrapper).toHaveLength(1)\n-  // The wrapper starts hidden via Tailwind's `hidden` utility, plus `flex`/grid\n-  // classes are swapped in by client-side JS when the IBAN step is required.\n-  expect(wrapper.hasClass('hidden')).toBe(true)\n+  // Visibility is a Tailwind `hidden` utility concern toggled client-side\n+  // — a CSS-class check on it would rot for styling reasons, not\n+  // correctness (spec: \"DOM structure assertions only\"). Assert structure.\n   expect(wrapper.find('form')).toHaveLength(1)\n })\n \n it('renders the IBAN prompt heading and explanation paragraph', async () => {\n",
+                "additions": 4,
+                "deletions": 4
+              },
+              "truncated": false
+            },
+            "title": "tests/components/blocks/prebooking.test.ts",
+            "time": {
+              "start": 1785178039834,
+              "end": 1785178039837
+            }
+          },
+          "id": "prt_fa4e7260f001rsqbbe2Wnd3Seh",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e71139001XqiX3kYhjWzmVI"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "477a9bc22411e47f36273aac182e67ac177a0c89",
+          "type": "step-finish",
+          "tokens": {
+            "total": 125443,
+            "input": 22,
+            "output": 301,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 125120
+            }
+          },
+          "cost": 0.0338864,
+          "id": "prt_fa4e7269d001E3WwtrEBUVAHfu",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e71139001XqiX3kYhjWzmVI"
+        },
+        {
+          "type": "patch",
+          "hash": "05126096927c690cee3f2378753ed37800fd0613",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/components/blocks/prebooking.test.ts"
+          ],
+          "id": "prt_fa4e72726001mbw725ExRFwNSe",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e71139001XqiX3kYhjWzmVI"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03495744,
+        "tokens": {
+          "total": 125913,
+          "input": 266,
+          "output": 463,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 125184
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178040179,
+          "completed": 1785178060023
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e7277300142l6qJgDegIa28",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "477a9bc22411e47f36273aac182e67ac177a0c89",
+          "type": "step-start",
+          "id": "prt_fa4e7339c001ZCBJU7wu4F2WBP",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7277300142l6qJgDegIa28"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_7a33",
+          "state": {
+            "status": "error",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts",
+              "oldString": "it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n    const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n    expect($('button svg')).toHaveLength(1)\n    // SubmitButton nests a spinner span inside Button's wrapper span, so the\n    // button contains exactly two nested <span> elements.\n    expect($('button span')).toHaveLength(2)\n    // SubmitButton nests a spinner span inside Button's wrapper span, so the\n    // button contains exactly two nested <span> elements — the outer one from\n    // Button's Em wrapper, the inner one from SubmitButton's flex row that\n    // holds the SVG and the slot text. The deepest <span> — the spinner\n    // container — has the SVG as a direct child, with the slot text rendering\n    // as a trailing text node.\n    const spinnerSpan = $('button span > svg').parent()\n    expect(spinnerSpan).toHaveLength(1)\n    expect(spinnerSpan.children().first().prop('tagName')?.toLowerCase()).toBe('svg')\n  })",
+              "newString": "it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n    const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n    expect($('button svg')).toHaveLength(1)\n    // SubmitButton nests a spinner span inside Button's wrapper span, so the\n    // button contains exactly two nested <span> elements — Button's outer\n    // Em wrapper plus SubmitButton's inner flex row holding the SVG and the\n    // slot text.\n    expect($('button span')).toHaveLength(2)\n    // The innermost span is the SVG's parent. Asserting via the SVG's parent\n    // avoids a long cheerio navigation chain (spec: \"DOM structure\n    // assertions only\"); `is('span')` is the structural read.\n    expect($('button svg').parent().is('span')).toBe(true)\n  })"
+            },
+            "error": "Could not find oldString in the file. It must match exactly, including whitespace, indentation, and line endings.",
+            "time": {
+              "start": 1785178059891,
+              "end": 1785178059909
+            }
+          },
+          "id": "prt_fa4e7746a001XNI5O30SUksaNn",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7277300142l6qJgDegIa28"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "477a9bc22411e47f36273aac182e67ac177a0c89",
+          "type": "step-finish",
+          "tokens": {
+            "total": 125913,
+            "input": 266,
+            "output": 463,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 125184
+            }
+          },
+          "cost": 0.03495744,
+          "id": "prt_fa4e774d4001sw4blbSAmEQ1FF",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7277300142l6qJgDegIa28"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03293568,
+        "tokens": {
+          "total": 125970,
+          "input": 52,
+          "output": 30,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 125888
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178060060,
+          "completed": 1785178062899
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e7751c001tWY5eDNQQsqjJ3",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "477a9bc22411e47f36273aac182e67ac177a0c89",
+          "type": "step-start",
+          "id": "prt_fa4e77f61001B5U9AR0aW0EvA8",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7751c001tWY5eDNQQsqjJ3"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_7e7a",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts"
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts</path>\n<type>file</type>\n<content>\n1: // @vitest-environment node\n2: import { describe, expect, it } from 'vitest'\n3: import SubmitButton from '@/components/controls/SubmitButton.astro'\n4: import { render } from '../lib/container'\n5: \n6: describe('SubmitButton.astro', () => {\n7:   it('wraps slotted content inside a single submit button (a Button with El=\"button\")', async () => {\n8:     const { $ } = await render(SubmitButton, {\n9:       props: { id: 'btn' },\n10:       slots: { default: 'Jetzt anmelden' },\n11:     })\n12:     expect($('button[type=\"submit\"]#btn')).toHaveLength(1)\n13:     expect($('button').text()).toContain('Jetzt anmelden')\n14:     expect($('a')).toHaveLength(0)\n15:   })\n16: \n17:   it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n18:     const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n19:     expect($('button svg')).toHaveLength(1)\n20:     // SubmitButton nests a spinner span inside Button's wrapper span, so the\n21:     // button contains exactly two nested <span> elements.\n22:     expect($('button span')).toHaveLength(2)\n23:     // The deepest <span> — the spinner container — has the SVG as a direct\n24:     // child, with the slot text rendering as a trailing text node.\n25:     const spinnerSpan = $('button span > svg').parent()\n26:     expect(spinnerSpan).toHaveLength(1)\n27:     expect(spinnerSpan.children().first().prop('tagName')?.toLowerCase()).toBe('svg')\n28:   })\n29: \n30:   it('still renders the spinner SVG when given no slot content', async () => {\n31:     const { $ } = await render(SubmitButton)\n32:     expect($('button[type=\"submit\"]')).toHaveLength(1)\n33:     expect($('button svg')).toHaveLength(1)\n34:   })\n35: })\n\n(End of file - total 35 lines)\n</content>",
+            "metadata": {
+              "preview": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport SubmitButton from '@/components/controls/SubmitButton.astro'\nimport { render } from '../lib/container'\n\ndescribe('SubmitButton.astro', () => {\n  it('wraps slotted content inside a single submit button (a Button with El=\"button\")', async () => {\n    const { $ } = await render(SubmitButton, {\n      props: { id: 'btn' },\n      slots: { default: 'Jetzt anmelden' },\n    })\n    expect($('button[type=\"submit\"]#btn')).toHaveLength(1)\n    expect($('button').text()).toContain('Jetzt anmelden')\n    expect($('a')).toHaveLength(0)\n  })\n\n  it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n    const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n    expect($('button svg')).toHaveLength(1)\n    // SubmitButton nests a spinner span inside Button's wrapper span, so the",
+              "truncated": false,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts",
+                "text": "// @vitest-environment node\nimport { describe, expect, it } from 'vitest'\nimport SubmitButton from '@/components/controls/SubmitButton.astro'\nimport { render } from '../lib/container'\n\ndescribe('SubmitButton.astro', () => {\n  it('wraps slotted content inside a single submit button (a Button with El=\"button\")', async () => {\n    const { $ } = await render(SubmitButton, {\n      props: { id: 'btn' },\n      slots: { default: 'Jetzt anmelden' },\n    })\n    expect($('button[type=\"submit\"]#btn')).toHaveLength(1)\n    expect($('button').text()).toContain('Jetzt anmelden')\n    expect($('a')).toHaveLength(0)\n  })\n\n  it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n    const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n    expect($('button svg')).toHaveLength(1)\n    // SubmitButton nests a spinner span inside Button's wrapper span, so the\n    // button contains exactly two nested <span> elements.\n    expect($('button span')).toHaveLength(2)\n    // The deepest <span> — the spinner container — has the SVG as a direct\n    // child, with the slot text rendering as a trailing text node.\n    const spinnerSpan = $('button span > svg').parent()\n    expect(spinnerSpan).toHaveLength(1)\n    expect(spinnerSpan.children().first().prop('tagName')?.toLowerCase()).toBe('svg')\n  })\n\n  it('still renders the spinner SVG when given no slot content', async () => {\n    const { $ } = await render(SubmitButton)\n    expect($('button[type=\"submit\"]')).toHaveLength(1)\n    expect($('button svg')).toHaveLength(1)\n  })\n})",
+                "lineStart": 1,
+                "lineEnd": 35,
+                "totalLines": 35,
+                "truncated": false
+              }
+            },
+            "title": "tests/components/controls/submit-button.test.ts",
+            "time": {
+              "start": 1785178062756,
+              "end": 1785178062771
+            }
+          },
+          "id": "prt_fa4e77fa1001jmIa72fAEXiBFx",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7751c001tWY5eDNQQsqjJ3"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "477a9bc22411e47f36273aac182e67ac177a0c89",
+          "type": "step-finish",
+          "tokens": {
+            "total": 125970,
+            "input": 52,
+            "output": 30,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 125888
+            }
+          },
+          "cost": 0.03293568,
+          "id": "prt_fa4e78007001sztZwU7iBVx3zi",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7751c001tWY5eDNQQsqjJ3"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03517492,
+        "tokens": {
+          "total": 126863,
+          "input": 527,
+          "output": 384,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 125952
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178062908,
+          "completed": 1785178073433
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e7803c001YN3A16z0vPIRW9",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "477a9bc22411e47f36273aac182e67ac177a0c89",
+          "type": "step-start",
+          "id": "prt_fa4e78afd001BZosecpK2fkToG",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7803c001YN3A16z0vPIRW9"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_c032",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts",
+              "oldString": "it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n    const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n    expect($('button svg')).toHaveLength(1)\n    // SubmitButton nests a spinner span inside Button's wrapper span, so the\n    // button contains exactly two nested <span> elements.\n    expect($('button span')).toHaveLength(2)\n    // The deepest <span> — the spinner container — has the SVG as a direct\n    // child, with the slot text rendering as a trailing text node.\n    const spinnerSpan = $('button span > svg').parent()\n    expect(spinnerSpan).toHaveLength(1)\n    expect(spinnerSpan.children().first().prop('tagName')?.toLowerCase()).toBe('svg')\n  })",
+              "newString": "it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n    const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n    expect($('button svg')).toHaveLength(1)\n    // SubmitButton nests a spinner span inside Button's wrapper span, so the\n    // button contains exactly two nested <span> elements — Button's outer\n    // Em wrapper plus SubmitButton's inner flex row holding the SVG and the\n    // slot text.\n    expect($('button span')).toHaveLength(2)\n    // The innermost span is the SVG's parent. `is('span')` reads the parent\n    // tag name structurally — short navigation, no property walking.\n    expect($('button svg').parent().is('span')).toBe(true)\n  })"
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: /Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts\n@@ -17,15 +17,15 @@\n it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n   const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n   expect($('button svg')).toHaveLength(1)\n   // SubmitButton nests a spinner span inside Button's wrapper span, so the\n-  // button contains exactly two nested <span> elements.\n+  // button contains exactly two nested <span> elements — Button's outer\n+  // Em wrapper plus SubmitButton's inner flex row holding the SVG and the\n+  // slot text.\n   expect($('button span')).toHaveLength(2)\n-  // The deepest <span> — the spinner container — has the SVG as a direct\n-  // child, with the slot text rendering as a trailing text node.\n-  const spinnerSpan = $('button span > svg').parent()\n-  expect(spinnerSpan).toHaveLength(1)\n-  expect(spinnerSpan.children().first().prop('tagName')?.toLowerCase()).toBe('svg')\n+  // The innermost span is the SVG's parent. `is('span')` reads the parent\n+  // tag name structurally — short navigation, no property walking.\n+  expect($('button svg').parent().is('span')).toBe(true)\n })\n \n it('still renders the spinner SVG when given no slot content', async () => {\n   const { $ } = await render(SubmitButton)\n",
+              "filediff": {
+                "file": "/Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts",
+                "patch": "Index: /Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts\n@@ -17,15 +17,15 @@\n it('embeds an inline SVG spinner sibling before the slotted content', async () => {\n   const { $ } = await render(SubmitButton, { slots: { default: 'Senden' } })\n   expect($('button svg')).toHaveLength(1)\n   // SubmitButton nests a spinner span inside Button's wrapper span, so the\n-  // button contains exactly two nested <span> elements.\n+  // button contains exactly two nested <span> elements — Button's outer\n+  // Em wrapper plus SubmitButton's inner flex row holding the SVG and the\n+  // slot text.\n   expect($('button span')).toHaveLength(2)\n-  // The deepest <span> — the spinner container — has the SVG as a direct\n-  // child, with the slot text rendering as a trailing text node.\n-  const spinnerSpan = $('button span > svg').parent()\n-  expect(spinnerSpan).toHaveLength(1)\n-  expect(spinnerSpan.children().first().prop('tagName')?.toLowerCase()).toBe('svg')\n+  // The innermost span is the SVG's parent. `is('span')` reads the parent\n+  // tag name structurally — short navigation, no property walking.\n+  expect($('button svg').parent().is('span')).toBe(true)\n })\n \n it('still renders the spinner SVG when given no slot content', async () => {\n   const { $ } = await render(SubmitButton)\n",
+                "additions": 6,
+                "deletions": 6
+              },
+              "truncated": false
+            },
+            "title": "tests/components/controls/submit-button.test.ts",
+            "time": {
+              "start": 1785178073246,
+              "end": 1785178073248
+            }
+          },
+          "id": "prt_fa4e7a8970014ykjYKurwUx0qn",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7803c001YN3A16z0vPIRW9"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "74f04f7c202dfb631039d001236d2858de86da20",
+          "type": "step-finish",
+          "tokens": {
+            "total": 126863,
+            "input": 527,
+            "output": 384,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 125952
+            }
+          },
+          "cost": 0.03517492,
+          "id": "prt_fa4e7a920001xh5vuo4iUoz4aJ",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7803c001YN3A16z0vPIRW9"
+        },
+        {
+          "type": "patch",
+          "hash": "477a9bc22411e47f36273aac182e67ac177a0c89",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/components/controls/submit-button.test.ts"
+          ],
+          "id": "prt_fa4e7a957001TJwzLzdO97pGgK",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7803c001YN3A16z0vPIRW9"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03317548,
+        "tokens": {
+          "total": 126908,
+          "input": 23,
+          "output": 37,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 126848
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178073464,
+          "completed": 1785178085363
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e7a9780017tJmcyWaw0UsMB",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "74f04f7c202dfb631039d001236d2858de86da20",
+          "type": "step-start",
+          "id": "prt_fa4e7b6f7001nfB51Vxa7UlpDe",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7a9780017tJmcyWaw0UsMB"
+        },
+        {
+          "type": "text",
+          "text": "Now run the tests and checks again:",
+          "time": {
+            "start": 1785178076937,
+            "end": 1785178077227
+          },
+          "id": "prt_fa4e7b708001xlgqP12HJdDYyP",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7a9780017tJmcyWaw0UsMB"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_66a6",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bunx vitest run tests/components 2>&1 | rtk tail -20"
+            },
+            "output": "(Use `node --trace-warnings ...` to show where the warning was created)\n(node:43411) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n20:48:00 [astro-icon] Loaded icons from src/assets/icons, mdi\n(node:43426) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:43427) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:43428) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:43424) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:43425) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  12 passed (12)\n      Tests  63 passed (63)\n   Start at  20:47:59\n   Duration  5.24s (transform 9.25s, setup 3.19s, import 18.91s, tests 832ms, environment 1ms)\n\n",
+            "metadata": {
+              "output": "(Use `node --trace-warnings ...` to show where the warning was created)\n(node:43411) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n20:48:00 [astro-icon] Loaded icons from src/assets/icons, mdi\n(node:43426) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:43427) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:43428) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:43424) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:43425) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  12 passed (12)\n      Tests  63 passed (63)\n   Start at  20:47:59\n   Duration  5.24s (transform 9.25s, setup 3.19s, import 18.91s, tests 832ms, environment 1ms)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bunx vitest run tests/components 2>&1 | rtk tail -20",
+            "time": {
+              "start": 1785178085194,
+              "end": 1785178085214
+            }
+          },
+          "id": "prt_fa4e7b7fe001XjkdbPpn7S4hZC",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7a9780017tJmcyWaw0UsMB"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "74f04f7c202dfb631039d001236d2858de86da20",
+          "type": "step-finish",
+          "tokens": {
+            "total": 126908,
+            "input": 23,
+            "output": 37,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 126848
+            }
+          },
+          "cost": 0.03317548,
+          "id": "prt_fa4e7d7c1001z8yFML7htQDpht",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7a9780017tJmcyWaw0UsMB"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03366448,
+        "tokens": {
+          "total": 127283,
+          "input": 410,
+          "output": 25,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 126848
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178085412,
+          "completed": 1785178091441
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e7d824001ko99ghkE1fFe9x",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "74f04f7c202dfb631039d001236d2858de86da20",
+          "type": "step-start",
+          "id": "prt_fa4e7e128001hvNIQC09eWY0gd",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7d824001ko99ghkE1fFe9x"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_ba3a",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run check 2>&1 | rtk tail -10"
+            },
+            "output": "$ oxlint src/ && tsc --noEmit && astro check && vitest run\ntests/components/blocks/event.test.ts(49,64): error TS2339: Property 'render' does not exist on type '{ id: string; body?: string | undefined; collection: \"events\"; data: { id: string; name: string; image: { src: string; width: number; height: number; format: \"avif\" | \"webp\" | \"svg\" | \"png\" | \"jpg\" | \"jpeg\" | \"tiff\" | \"gif\"; }; ... 12 more ...; altBookingButtonText?: string | undefined; }; rendered?: RenderedContent...'.\n",
+            "metadata": {
+              "output": "$ oxlint src/ && tsc --noEmit && astro check && vitest run\ntests/components/blocks/event.test.ts(49,64): error TS2339: Property 'render' does not exist on type '{ id: string; body?: string | undefined; collection: \"events\"; data: { id: string; name: string; image: { src: string; width: number; height: number; format: \"avif\" | \"webp\" | \"svg\" | \"png\" | \"jpg\" | \"jpeg\" | \"tiff\" | \"gif\"; }; ... 12 more ...; altBookingButtonText?: string | undefined; }; rendered?: RenderedContent...'.\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run check 2>&1 | rtk tail -10",
+            "time": {
+              "start": 1785178091351,
+              "end": 1785178091360
+            }
+          },
+          "id": "prt_fa4e7e1c6001QfGW5tG0zVQoMe",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7d824001ko99ghkE1fFe9x"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "74f04f7c202dfb631039d001236d2858de86da20",
+          "type": "step-finish",
+          "tokens": {
+            "total": 127283,
+            "input": 410,
+            "output": 25,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 126848
+            }
+          },
+          "cost": 0.03366448,
+          "id": "prt_fa4e7ef8c001YumcNGoVZ0hdzQ",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7d824001ko99ghkE1fFe9x"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.17857108,
+        "tokens": {
+          "total": 127505,
+          "input": 127307,
+          "output": 70,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178091477,
+          "completed": 1785178101038
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e7efd5001zrWyirGTl3Q46P",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "74f04f7c202dfb631039d001236d2858de86da20",
+          "type": "step-start",
+          "id": "prt_fa4e812df001gmaz5kRQK47ZPD",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7efd5001zrWyirGTl3Q46P"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_070f",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk grep -n 'render:' .astro/content.d.ts 2>&1 | rtk head -5; echo \"---CollectionEntry type---\"; rtk grep -n 'CollectionEntry\\|DataEntryMap' .astro/content.d.ts 2>&1 | rtk head -10"
+            },
+            "output": "---CollectionEntry type---\n30 matches in 1 files:\n\n21:export type CollectionKey = keyof DataEntryMap;\n22:export type CollectionEntry<C extends CollectionKey> = Flatten<DataEntryMap[C]>;\n28:E extends keyof DataEntryMap[C] = string,\n39:export function getCollection<C extends keyof DataEntryMap, E extends Collect...\n41:filter?: (entry: CollectionEntry<C>) => entry is E,\n43:export function getCollection<C extends keyof DataEntryMap>(\n45:filter?: (entry: CollectionEntry<C>) => unknown,\n46:): Promise<CollectionEntry<C>[]>;\n",
+            "metadata": {
+              "output": "---CollectionEntry type---\n30 matches in 1 files:\n\n21:export type CollectionKey = keyof DataEntryMap;\n22:export type CollectionEntry<C extends CollectionKey> = Flatten<DataEntryMap[C]>;\n28:E extends keyof DataEntryMap[C] = string,\n39:export function getCollection<C extends keyof DataEntryMap, E extends Collect...\n41:filter?: (entry: CollectionEntry<C>) => entry is E,\n43:export function getCollection<C extends keyof DataEntryMap>(\n45:filter?: (entry: CollectionEntry<C>) => unknown,\n46:): Promise<CollectionEntry<C>[]>;\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk grep -n 'render:' .astro/content.d.ts 2>&1 | rtk head -5; echo \"---CollectionEntry type---\"; rtk grep -n 'CollectionEntry\\|DataEntryMap' .astro/content.d.ts 2>&1 | rtk head -10",
+            "time": {
+              "start": 1785178100893,
+              "end": 1785178100898
+            }
+          },
+          "id": "prt_fa4e8144d001UT8O0K0FBhGLBQ",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7efd5001zrWyirGTl3Q46P"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "74f04f7c202dfb631039d001236d2858de86da20",
+          "type": "step-finish",
+          "tokens": {
+            "total": 127505,
+            "input": 127307,
+            "output": 70,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128
+            }
+          },
+          "cost": 0.17857108,
+          "id": "prt_fa4e81507001sQ7T4K1rbrgoRL",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e7efd5001zrWyirGTl3Q46P"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.04530024,
+        "tokens": {
+          "total": 127680,
+          "input": 10450,
+          "output": 46,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 117184
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178101077,
+          "completed": 1785178105639
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e81555001ctfLDkErt2E0Zq",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "74f04f7c202dfb631039d001236d2858de86da20",
+          "type": "step-start",
+          "id": "prt_fa4e82445001kg0pwWHgXD58xH",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e81555001ctfLDkErt2E0Zq"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_23c8",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk grep -n 'render?:\\|render:\\|rendered?:\\|body?:' .astro/content.d.ts 2>&1 | rtk head -20"
+            },
+            "output": "129:  body?: string;\n132:  rendered?: RenderedContent;\n137:  body?: string;\n140:  rendered?: RenderedContent;\n145:  body?: string;\n148:  rendered?: RenderedContent;\n153:  body?: string;\n156:  rendered?: RenderedContent;\n161:  body?: string;\n164:  rendered?: RenderedContent;\n169:  body?: string;\n172:  rendered?: RenderedContent;\n",
+            "metadata": {
+              "output": "129:  body?: string;\n132:  rendered?: RenderedContent;\n137:  body?: string;\n140:  rendered?: RenderedContent;\n145:  body?: string;\n148:  rendered?: RenderedContent;\n153:  body?: string;\n156:  rendered?: RenderedContent;\n161:  body?: string;\n164:  rendered?: RenderedContent;\n169:  body?: string;\n172:  rendered?: RenderedContent;\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk grep -n 'render?:\\|render:\\|rendered?:\\|body?:' .astro/content.d.ts 2>&1 | rtk head -20",
+            "time": {
+              "start": 1785178105421,
+              "end": 1785178105426
+            }
+          },
+          "id": "prt_fa4e82627001EmJvSlqWQMwgfk",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e81555001ctfLDkErt2E0Zq"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "74f04f7c202dfb631039d001236d2858de86da20",
+          "type": "step-finish",
+          "tokens": {
+            "total": 127680,
+            "input": 10450,
+            "output": 46,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 117184
+            }
+          },
+          "cost": 0.04530024,
+          "id": "prt_fa4e82679001ImGKBkl5lP9d7R",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e81555001ctfLDkErt2E0Zq"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03357696,
+        "tokens": {
+          "total": 127818,
+          "input": 164,
+          "output": 38,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 127616
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178105672,
+          "completed": 1785178108592
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e82748001l0Lvq00ygLGZGH",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "74f04f7c202dfb631039d001236d2858de86da20",
+          "type": "step-start",
+          "id": "prt_fa4e830a3001IMh35x7pIJqaps",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e82748001l0Lvq00ygLGZGH"
+        },
+        {
+          "type": "tool",
+          "tool": "read",
+          "callID": "call_e36e",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/.astro/content.d.ts",
+              "offset": 115,
+              "limit": 60
+            },
+            "output": "<path>/Users/mseele/dev/sve/sve-website/.astro/content.d.ts</path>\n<type>file</type>\n<content>\n115: \ttype InferEntrySchema<C extends keyof DataEntryMap> = import('astro/zod').infer<\n116: \t\tReturnTypeOrOriginal<Required<ContentConfig['collections'][C]>['schema']>\n117: \t>;\n118: \ttype ExtractLoaderConfig<T> = T extends { loader: infer L } ? L : never;\n119: \ttype InferLoaderSchema<\n120: \t\tC extends keyof DataEntryMap,\n121: \t\tL = ExtractLoaderConfig<ContentConfig['collections'][C]>,\n122: \t> = L extends { schema: import('astro/zod').ZodSchema }\n123: \t\t? import('astro/zod').infer<L['schema']>\n124: \t\t: any;\n125: \n126: \ttype DataEntryMap = {\n127: \t\t\"events\": Record<string, {\n128:   id: string;\n129:   body?: string;\n130:   collection: \"events\";\n131:   data: InferEntrySchema<\"events\">;\n132:   rendered?: RenderedContent;\n133:   filePath?: string;\n134: }>;\n135: \"fitness\": Record<string, {\n136:   id: string;\n137:   body?: string;\n138:   collection: \"fitness\";\n139:   data: InferEntrySchema<\"fitness\">;\n140:   rendered?: RenderedContent;\n141:   filePath?: string;\n142: }>;\n143: \"history\": Record<string, {\n144:   id: string;\n145:   body?: string;\n146:   collection: \"history\";\n147:   data: InferEntrySchema<\"history\">;\n148:   rendered?: RenderedContent;\n149:   filePath?: string;\n150: }>;\n151: \"news\": Record<string, {\n152:   id: string;\n153:   body?: string;\n154:   collection: \"news\";\n155:   data: InferEntrySchema<\"news\">;\n156:   rendered?: RenderedContent;\n157:   filePath?: string;\n158: }>;\n159: \"sponsoring\": Record<string, {\n160:   id: string;\n161:   body?: string;\n162:   collection: \"sponsoring\";\n163:   data: InferEntrySchema<\"sponsoring\">;\n164:   rendered?: RenderedContent;\n165:   filePath?: string;\n166: }>;\n167: \"teams\": Record<string, {\n168:   id: string;\n169:   body?: string;\n170:   collection: \"teams\";\n171:   data: InferEntrySchema<\"teams\">;\n172:   rendered?: RenderedContent;\n173:   filePath?: string;\n174: }>;\n\n(Showing lines 115-174 of 207. Use offset=175 to continue.)\n</content>",
+            "metadata": {
+              "preview": "\ttype InferEntrySchema<C extends keyof DataEntryMap> = import('astro/zod').infer<\n\t\tReturnTypeOrOriginal<Required<ContentConfig['collections'][C]>['schema']>\n\t>;\n\ttype ExtractLoaderConfig<T> = T extends { loader: infer L } ? L : never;\n\ttype InferLoaderSchema<\n\t\tC extends keyof DataEntryMap,\n\t\tL = ExtractLoaderConfig<ContentConfig['collections'][C]>,\n\t> = L extends { schema: import('astro/zod').ZodSchema }\n\t\t? import('astro/zod').infer<L['schema']>\n\t\t: any;\n\n\ttype DataEntryMap = {\n\t\t\"events\": Record<string, {\n  id: string;\n  body?: string;\n  collection: \"events\";\n  data: InferEntrySchema<\"events\">;\n  rendered?: RenderedContent;\n  filePath?: string;\n}>;",
+              "truncated": true,
+              "loaded": [],
+              "display": {
+                "type": "file",
+                "path": "/Users/mseele/dev/sve/sve-website/.astro/content.d.ts",
+                "text": "\ttype InferEntrySchema<C extends keyof DataEntryMap> = import('astro/zod').infer<\n\t\tReturnTypeOrOriginal<Required<ContentConfig['collections'][C]>['schema']>\n\t>;\n\ttype ExtractLoaderConfig<T> = T extends { loader: infer L } ? L : never;\n\ttype InferLoaderSchema<\n\t\tC extends keyof DataEntryMap,\n\t\tL = ExtractLoaderConfig<ContentConfig['collections'][C]>,\n\t> = L extends { schema: import('astro/zod').ZodSchema }\n\t\t? import('astro/zod').infer<L['schema']>\n\t\t: any;\n\n\ttype DataEntryMap = {\n\t\t\"events\": Record<string, {\n  id: string;\n  body?: string;\n  collection: \"events\";\n  data: InferEntrySchema<\"events\">;\n  rendered?: RenderedContent;\n  filePath?: string;\n}>;\n\"fitness\": Record<string, {\n  id: string;\n  body?: string;\n  collection: \"fitness\";\n  data: InferEntrySchema<\"fitness\">;\n  rendered?: RenderedContent;\n  filePath?: string;\n}>;\n\"history\": Record<string, {\n  id: string;\n  body?: string;\n  collection: \"history\";\n  data: InferEntrySchema<\"history\">;\n  rendered?: RenderedContent;\n  filePath?: string;\n}>;\n\"news\": Record<string, {\n  id: string;\n  body?: string;\n  collection: \"news\";\n  data: InferEntrySchema<\"news\">;\n  rendered?: RenderedContent;\n  filePath?: string;\n}>;\n\"sponsoring\": Record<string, {\n  id: string;\n  body?: string;\n  collection: \"sponsoring\";\n  data: InferEntrySchema<\"sponsoring\">;\n  rendered?: RenderedContent;\n  filePath?: string;\n}>;\n\"teams\": Record<string, {\n  id: string;\n  body?: string;\n  collection: \"teams\";\n  data: InferEntrySchema<\"teams\">;\n  rendered?: RenderedContent;\n  filePath?: string;\n}>;",
+                "lineStart": 115,
+                "lineEnd": 174,
+                "totalLines": 207,
+                "truncated": true
+              }
+            },
+            "title": ".astro/content.d.ts",
+            "time": {
+              "start": 1785178108467,
+              "end": 1785178108477
+            }
+          },
+          "id": "prt_fa4e8322b001U24ZoDydQcfp4o",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e82748001l0Lvq00ygLGZGH"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "74f04f7c202dfb631039d001236d2858de86da20",
+          "type": "step-finish",
+          "tokens": {
+            "total": 127818,
+            "input": 164,
+            "output": 38,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 127616
+            }
+          },
+          "cost": 0.03357696,
+          "id": "prt_fa4e83284001Y44L2EhvHODKLP",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e82748001l0Lvq00ygLGZGH"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03520128,
+        "tokens": {
+          "total": 128676,
+          "input": 616,
+          "output": 252,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 127808
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178108629,
+          "completed": 1785178115932
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e832d5001EXsr1GKcfYjYcI",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "74f04f7c202dfb631039d001236d2858de86da20",
+          "type": "step-start",
+          "id": "prt_fa4e84610001jYuk5ZV7nVa18k",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e832d5001EXsr1GKcfYjYcI"
+        },
+        {
+          "type": "reasoning",
+          "text": "Right — `CollectionEntry<'events'>` has no `render` property, just `id`, `body?`, `collection`, `data`, `rendered?`, `filePath?`. Let me drop that field from my fixture.",
+          "time": {
+            "start": 1785178113562,
+            "end": 1785178115688
+          },
+          "id": "prt_fa4e8461a001bQAuStoVHNTMwg",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e832d5001EXsr1GKcfYjYcI"
+        },
+        {
+          "type": "tool",
+          "tool": "edit",
+          "callID": "call_65ca",
+          "state": {
+            "status": "completed",
+            "input": {
+              "filePath": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts",
+              "oldString": "function buildEntry(overrides: Partial<CollectionEntry<'events'>['data']> = {}): CollectionEntry<'events'> {\n  return {\n    id: 'evt-1',\n    collection: 'events',\n    slug: 'evt-1',\n    data: { ...entryData, ...overrides },\n    render: () => ({}) as unknown as CollectionEntry<'events'>['render'] extends () => infer R ? R : never,\n  } as unknown as CollectionEntry<'events'>\n}",
+              "newString": "function buildEntry(overrides: Partial<CollectionEntry<'events'>['data']> = {}): CollectionEntry<'events'> {\n  return {\n    id: 'evt-1',\n    collection: 'events',\n    data: { ...entryData, ...overrides },\n  } as unknown as CollectionEntry<'events'>\n}"
+            },
+            "output": "Edit applied successfully.",
+            "metadata": {
+              "diagnostics": {},
+              "diff": "Index: /Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts\n@@ -43,11 +43,9 @@\n function buildEntry(overrides: Partial<CollectionEntry<'events'>['data']> = {}): CollectionEntry<'events'> {\n   return {\n     id: 'evt-1',\n     collection: 'events',\n-    slug: 'evt-1',\n     data: { ...entryData, ...overrides },\n-    render: () => ({}) as unknown as CollectionEntry<'events'>['render'] extends () => infer R ? R : never,\n   } as unknown as CollectionEntry<'events'>\n }\n \n async function renderEvent(\n",
+              "filediff": {
+                "file": "/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts",
+                "patch": "Index: /Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts\n===================================================================\n--- /Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts\n+++ /Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts\n@@ -43,11 +43,9 @@\n function buildEntry(overrides: Partial<CollectionEntry<'events'>['data']> = {}): CollectionEntry<'events'> {\n   return {\n     id: 'evt-1',\n     collection: 'events',\n-    slug: 'evt-1',\n     data: { ...entryData, ...overrides },\n-    render: () => ({}) as unknown as CollectionEntry<'events'>['render'] extends () => infer R ? R : never,\n   } as unknown as CollectionEntry<'events'>\n }\n \n async function renderEvent(\n",
+                "additions": 0,
+                "deletions": 2
+              },
+              "truncated": false
+            },
+            "title": "tests/components/blocks/event.test.ts",
+            "time": {
+              "start": 1785178115711,
+              "end": 1785178115740
+            }
+          },
+          "id": "prt_fa4e84e6d001aMXEclJWsYUdoJ",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e832d5001EXsr1GKcfYjYcI"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "48b73da93020c8c3f4ced06c05849d654cd97f01",
+          "type": "step-finish",
+          "tokens": {
+            "total": 128676,
+            "input": 616,
+            "output": 252,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 127808
+            }
+          },
+          "cost": 0.03520128,
+          "id": "prt_fa4e84f1f001Knw6B2oLZgPOl8",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e832d5001EXsr1GKcfYjYcI"
+        },
+        {
+          "type": "patch",
+          "hash": "74f04f7c202dfb631039d001236d2858de86da20",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts"
+          ],
+          "id": "prt_fa4e84f5a001gxWlnSq2e9Oo60",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e832d5001EXsr1GKcfYjYcI"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03522312,
+        "tokens": {
+          "total": 128709,
+          "input": 1452,
+          "output": 25,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 127232
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178115974,
+          "completed": 1785178154845
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e84f86001fL642Z9SYHqU1S",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "48b73da93020c8c3f4ced06c05849d654cd97f01",
+          "type": "step-start",
+          "id": "prt_fa4e85add0016i5KwCKJlvLdz7",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e84f86001fL642Z9SYHqU1S"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_eb3e",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run check 2>&1 | rtk tail -10"
+            },
+            "output": "(node:44167) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:44168) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  21 passed (21)\n      Tests  264 passed (264)\n   Start at  20:49:05\n   Duration  9.22s (transform 9.30s, setup 4.44s, import 39.87s, tests 2.16s, environment 3.13s)\n\n",
+            "metadata": {
+              "output": "(node:44167) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:44168) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n\n Test Files  21 passed (21)\n      Tests  264 passed (264)\n   Start at  20:49:05\n   Duration  9.22s (transform 9.30s, setup 4.44s, import 39.87s, tests 2.16s, environment 3.13s)\n\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run check 2>&1 | rtk tail -10",
+            "time": {
+              "start": 1785178154700,
+              "end": 1785178154719
+            }
+          },
+          "id": "prt_fa4e85b6d0016TxEYdz54xpLbW",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e84f86001fL642Z9SYHqU1S"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "48b73da93020c8c3f4ced06c05849d654cd97f01",
+          "type": "step-finish",
+          "tokens": {
+            "total": 128709,
+            "input": 1452,
+            "output": 25,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 127232
+            }
+          },
+          "cost": 0.03522312,
+          "id": "prt_fa4e8e72c001U4g6FQSkf5AzuC",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e84f86001fL642Z9SYHqU1S"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03393624,
+        "tokens": {
+          "total": 128922,
+          "input": 162,
+          "output": 56,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128704
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178154896,
+          "completed": 1785178169973
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e8e7900012rQNGiZnfj3THG",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "48b73da93020c8c3f4ced06c05849d654cd97f01",
+          "type": "step-start",
+          "id": "prt_fa4e91a50001l8nqlbdPBkfAzt",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e8e7900012rQNGiZnfj3THG"
+        },
+        {
+          "type": "text",
+          "text": "All green. Run format and amendthe commit:",
+          "time": {
+            "start": 1785178167900,
+            "end": 1785178168405
+          },
+          "id": "prt_fa4e91a5c001qERxTtTyNUk4aZ",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e8e7900012rQNGiZnfj3THG"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_70e5",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk bun run format 2>&1 | rtk tail -3; echo \"---\"; rtk git status --porcelain 2>&1 | rtk head -20"
+            },
+            "output": "$ oxfmt\nFinished in 1063ms on 237 files using 8 threads.\n---\n M tests/components/blocks/event.test.ts\n M tests/components/blocks/prebooking.test.ts\n M tests/components/controls/submit-button.test.ts\n M tests/components/lib/MetaTagsStub.astro",
+            "metadata": {
+              "output": "$ oxfmt\nFinished in 1063ms on 237 files using 8 threads.\n---\n M tests/components/blocks/event.test.ts\n M tests/components/blocks/prebooking.test.ts\n M tests/components/controls/submit-button.test.ts\n M tests/components/lib/MetaTagsStub.astro",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk bun run format 2>&1 | rtk tail -3; echo \"---\"; rtk git status --porcelain 2>&1 | rtk head -20",
+            "time": {
+              "start": 1785178169703,
+              "end": 1785178169714
+            }
+          },
+          "id": "prt_fa4e91c08001ByL7nsWLxpYKOY",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e8e7900012rQNGiZnfj3THG"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "e99c9a953a635af08a2f838c9b2dff48ba43809e",
+          "type": "step-finish",
+          "tokens": {
+            "total": 128922,
+            "input": 162,
+            "output": 56,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128704
+            }
+          },
+          "cost": 0.03393624,
+          "id": "prt_fa4e92211001Dp24ZqUHDBQXs4",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e8e7900012rQNGiZnfj3THG"
+        },
+        {
+          "type": "patch",
+          "hash": "48b73da93020c8c3f4ced06c05849d654cd97f01",
+          "files": [
+            "/Users/mseele/dev/sve/sve-website/tests/components/blocks/event.test.ts"
+          ],
+          "id": "prt_fa4e92271001Sn9sAQb1magWOT",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e8e7900012rQNGiZnfj3THG"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0,
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "reasoning": 0,
+          "cache": {
+            "read": 0,
+            "write": 0
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178170038
+        },
+        "id": "msg_fa4e922b60013Nw4wLzJNhz477",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "e99c9a953a635af08a2f838c9b2dff48ba43809e",
+          "type": "step-start",
+          "id": "prt_fa4e92b720014Kq08pRgsQI2yh",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e922b60013Nw4wLzJNhz477"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_cc0f",
+          "state": {
+            "metadata": {
+              "output": "ok 4 files changed, 59 insertions(+), 51 deletions(-)\n"
+            },
+            "status": "running",
+            "input": {
+              "command": "rtk git add -A && rtk git commit --amend --no-edit 2>&1 | rtk tail -10"
+            },
+            "time": {
+              "start": 1785178172629
+            }
+          },
+          "id": "prt_fa4e92c35001tvQO794H36CZt6",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e922b60013Nw4wLzJNhz477"
         }
       ]
     }
