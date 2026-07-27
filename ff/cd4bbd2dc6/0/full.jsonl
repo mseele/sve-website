@@ -17,19 +17,19 @@
       "deletions": 0,
       "files": 0
     },
-    "cost": 6.788348720000002,
+    "cost": 6.9269690000000015,
     "tokens": {
-      "input": 1471070,
-      "output": 54790,
+      "input": 1471789,
+      "output": 55539,
       "reasoning": 0,
       "cache": {
-        "read": 17260672,
+        "read": 17777280,
         "write": 0
       }
     },
     "time": {
       "created": 1785084918465,
-      "updated": 1785178170044
+      "updated": 1785178209840
     }
   },
   "messages": [
@@ -22156,21 +22156,24 @@
           "cwd": "/Users/mseele/dev/sve/sve-website",
           "root": "/Users/mseele/dev/sve/sve-website"
         },
-        "cost": 0,
+        "cost": 0.03387752,
         "tokens": {
-          "input": 0,
-          "output": 0,
+          "total": 129025,
+          "input": 156,
+          "output": 37,
           "reasoning": 0,
           "cache": {
-            "read": 0,
-            "write": 0
+            "write": 0,
+            "read": 128832
           }
         },
         "modelID": "glm-5.2",
         "providerID": "opencode-go",
         "time": {
-          "created": 1785178170038
+          "created": 1785178170038,
+          "completed": 1785178196003
         },
+        "finish": "tool-calls",
         "id": "msg_fa4e922b60013Nw4wLzJNhz477",
         "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
       },
@@ -22187,20 +22190,296 @@
           "tool": "bash",
           "callID": "call_cc0f",
           "state": {
-            "metadata": {
-              "output": "ok 4 files changed, 59 insertions(+), 51 deletions(-)\n"
-            },
-            "status": "running",
+            "status": "completed",
             "input": {
               "command": "rtk git add -A && rtk git commit --amend --no-edit 2>&1 | rtk tail -10"
             },
+            "output": "ok 4 files changed, 59 insertions(+), 51 deletions(-)\nok 7407bc3\n",
+            "metadata": {
+              "output": "ok 4 files changed, 59 insertions(+), 51 deletions(-)\nok 7407bc3\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git add -A && rtk git commit --amend --no-edit 2>&1 | rtk tail -10",
             "time": {
-              "start": 1785178172629
+              "start": 1785178195897,
+              "end": 1785178195908
             }
           },
           "id": "prt_fa4e92c35001tvQO794H36CZt6",
           "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
           "messageID": "msg_fa4e922b60013Nw4wLzJNhz477"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "e99c9a953a635af08a2f838c9b2dff48ba43809e",
+          "type": "step-finish",
+          "tokens": {
+            "total": 129025,
+            "input": 156,
+            "output": 37,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128832
+            }
+          },
+          "cost": 0.03387752,
+          "id": "prt_fa4e987f6001vQKGXwaYvwbeRz",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e922b60013Nw4wLzJNhz477"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.0338386,
+        "tokens": {
+          "total": 129095,
+          "input": 95,
+          "output": 40,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 128960
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178196040,
+          "completed": 1785178199829
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e98848001PeMHNlRnXL7CL0",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "e99c9a953a635af08a2f838c9b2dff48ba43809e",
+          "type": "step-start",
+          "id": "prt_fa4e9947c0013m0Ob2LsQo3YuG",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e98848001PeMHNlRnXL7CL0"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_44af",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk git log --oneline -3; echo \"---\"; rtk git show --stat HEAD 2>&1 | rtk tail -25"
+            },
+            "output": "7407bc3 test: cover Astro components via Container API + cheerio (#404)\n3ec8df7 test: cover Contentful Zod schema contracts + loader mapping (#403)\nebdf045 test: cover client form validators (#402)\n---\n    - tests/components/astro-modules.d.ts declares ambient '*.astro' modules so tsc --noEmit (no Astro Vite plugin) resolves the test imports.\n    - cheerio added as a devDependency.\n    \n    226 new tests, all green; bun run check green.\n    \n    Entire-Checkpoint: ffcd4bbd2dc6\n\n bun.lockb                                       | Bin 653109 -> 653141 bytes\n package.json                                    |   1 +\n tests/components/astro-modules.d.ts             |  20 +++\n tests/components/blocks/event.test.ts           | 184 ++++++++++++++++++++++++\n tests/components/blocks/newsletter-card.test.ts |  65 +++++++++\n tests/components/blocks/prebooking.test.ts      |  50 +++++++\n tests/components/controls/button.test.ts        |  48 +++++++\n tests/components/controls/checkbox.test.ts      |  47 ++++++\n tests/components/controls/iban-input.test.ts    |  35 +++++\n tests/components/controls/input.test.ts         |  37 +++++\n tests/components/controls/select.test.ts        |  50 +++++++\n tests/components/controls/sepa-mandate.test.ts  |  27 ++++\n tests/components/controls/submit-button.test.ts |  35 +++++\n tests/components/controls/switch.test.ts        |  41 ++++++\n tests/components/controls/textarea.test.ts      |  26 ++++\n tests/components/lib/MetaTagsStub.astro         |   7 +\n tests/components/lib/container.ts               |  32 +++++\n 17 files changed, 705 insertions(+)\n",
+            "metadata": {
+              "output": "7407bc3 test: cover Astro components via Container API + cheerio (#404)\n3ec8df7 test: cover Contentful Zod schema contracts + loader mapping (#403)\nebdf045 test: cover client form validators (#402)\n---\n    - tests/components/astro-modules.d.ts declares ambient '*.astro' modules so tsc --noEmit (no Astro Vite plugin) resolves the test imports.\n    - cheerio added as a devDependency.\n    \n    226 new tests, all green; bun run check green.\n    \n    Entire-Checkpoint: ffcd4bbd2dc6\n\n bun.lockb                                       | Bin 653109 -> 653141 bytes\n package.json                                    |   1 +\n tests/components/astro-modules.d.ts             |  20 +++\n tests/components/blocks/event.test.ts           | 184 ++++++++++++++++++++++++\n tests/components/blocks/newsletter-card.test.ts |  65 +++++++++\n tests/components/blocks/prebooking.test.ts      |  50 +++++++\n tests/components/controls/button.test.ts        |  48 +++++++\n tests/components/controls/checkbox.test.ts      |  47 ++++++\n tests/components/controls/iban-input.test.ts    |  35 +++++\n tests/components/controls/input.test.ts         |  37 +++++\n tests/components/controls/select.test.ts        |  50 +++++++\n tests/components/controls/sepa-mandate.test.ts  |  27 ++++\n tests/components/controls/submit-button.test.ts |  35 +++++\n tests/components/controls/switch.test.ts        |  41 ++++++\n tests/components/controls/textarea.test.ts      |  26 ++++\n tests/components/lib/MetaTagsStub.astro         |   7 +\n tests/components/lib/container.ts               |  32 +++++\n 17 files changed, 705 insertions(+)\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk git log --oneline -3; echo \"---\"; rtk git show --stat HEAD 2>&1 | rtk tail -25",
+            "time": {
+              "start": 1785178199752,
+              "end": 1785178199756
+            }
+          },
+          "id": "prt_fa4e99688001S08HdZ0PiQhxG7",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e98848001PeMHNlRnXL7CL0"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "e99c9a953a635af08a2f838c9b2dff48ba43809e",
+          "type": "step-finish",
+          "tokens": {
+            "total": 129095,
+            "input": 95,
+            "output": 40,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 128960
+            }
+          },
+          "cost": 0.0338386,
+          "id": "prt_fa4e996f1001ouIHhVqLW9sME1",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e98848001PeMHNlRnXL7CL0"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03520888,
+        "tokens": {
+          "total": 129743,
+          "input": 412,
+          "output": 243,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 129088
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178199838,
+          "completed": 1785178209807
+        },
+        "finish": "tool-calls",
+        "id": "msg_fa4e9971e001L6RNrJdD4KVd2A",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "e99c9a953a635af08a2f838c9b2dff48ba43809e",
+          "type": "step-start",
+          "id": "prt_fa4e9a649001CItU1TKz94PrZW",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e9971e001L6RNrJdD4KVd2A"
+        },
+        {
+          "type": "text",
+          "text": "Done. Update the issue's acceptance criteria and close #404:",
+          "time": {
+            "start": 1785178203761,
+            "end": 1785178205849
+          },
+          "id": "prt_fa4e9a671001qcL6uHnM3KF6NF",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e9971e001L6RNrJdD4KVd2A"
+        },
+        {
+          "type": "tool",
+          "tool": "bash",
+          "callID": "call_09c8",
+          "state": {
+            "status": "completed",
+            "input": {
+              "command": "rtk gh issue edit 404 -R mseele/sve-website --remove-label \"ready-for-agent\" --add-label \"ready-for-human\" 2>&1 | rtk tail -5; rtk gh issue close 404 -R mseele/sve-website --comment \"Implemented in \\`7407bc3\\`. Container API + cheerio harness wired through \\`tests/components/lib/container.ts\\`; 12 component render tests covering \\`Event.astro\\`, \\`PreBooking.astro\\`, \\`NewsletterCard.astro\\` and the controls set (Input, IbanInput, SepaMandate, Select, Textarea, SubmitButton, Button, Checkbox, Switch). DOM structure assertions only — no CSS-class-string snapshots. Event.astro mocks MetaTags.astro against an on-disk Astro stub so the Anmeldung/details markup stays under test despite \\`Astro.site\\` being undefined in the container. \\`bun run check\\` green (264 tests, 0 errors).\" 2>&1 | rtk tail -5"
+            },
+            "output": "https://github.com/mseele/sve-website/issues/404\n✓ Closed issue mseele/sve-website#404 (Container API component render tests)\n",
+            "metadata": {
+              "output": "https://github.com/mseele/sve-website/issues/404\n✓ Closed issue mseele/sve-website#404 (Container API component render tests)\n",
+              "exit": 0,
+              "truncated": false
+            },
+            "title": "rtk gh issue edit 404 -R mseele/sve-website --remove-label \"ready-for-agent\" --add-label \"ready-for-human\" 2>&1 | rtk tail -5; rtk gh issue close 404 -R mseele/sve-website --comment \"Implemented in \\`7407bc3\\`. Container API + cheerio harness wired through \\`tests/components/lib/container.ts\\`; 12 component render tests covering \\`Event.astro\\`, \\`PreBooking.astro\\`, \\`NewsletterCard.astro\\` and the controls set (Input, IbanInput, SepaMandate, Select, Textarea, SubmitButton, Button, Checkbox, Switch). DOM structure assertions only — no CSS-class-string snapshots. Event.astro mocks MetaTags.astro against an on-disk Astro stub so the Anmeldung/details markup stays under test despite \\`Astro.site\\` being undefined in the container. \\`bun run check\\` green (264 tests, 0 errors).\" 2>&1 | rtk tail -5",
+            "time": {
+              "start": 1785178209729,
+              "end": 1785178209733
+            }
+          },
+          "id": "prt_fa4e9ae78001AhEn48ofl9KQNl",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e9971e001L6RNrJdD4KVd2A"
+        },
+        {
+          "reason": "tool-calls",
+          "snapshot": "e99c9a953a635af08a2f838c9b2dff48ba43809e",
+          "type": "step-finish",
+          "tokens": {
+            "total": 129743,
+            "input": 412,
+            "output": 243,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 129088
+            }
+          },
+          "cost": 0.03520888,
+          "id": "prt_fa4e9bdef001QWR42m41um7ayb",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e9971e001L6RNrJdD4KVd2A"
+        }
+      ]
+    },
+    {
+      "info": {
+        "parentID": "msg_fa4dee197001RiBGI5zhqRz1wj",
+        "role": "assistant",
+        "mode": "build",
+        "agent": "build",
+        "path": {
+          "cwd": "/Users/mseele/dev/sve/sve-website",
+          "root": "/Users/mseele/dev/sve/sve-website"
+        },
+        "cost": 0.03569528,
+        "tokens": {
+          "total": 130213,
+          "input": 56,
+          "output": 429,
+          "reasoning": 0,
+          "cache": {
+            "write": 0,
+            "read": 129728
+          }
+        },
+        "modelID": "glm-5.2",
+        "providerID": "opencode-go",
+        "time": {
+          "created": 1785178209838,
+          "completed": 1785178232534
+        },
+        "finish": "stop",
+        "id": "msg_fa4e9be2e0011iAcMXtspiNWpv",
+        "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo"
+      },
+      "parts": [
+        {
+          "snapshot": "e99c9a953a635af08a2f838c9b2dff48ba43809e",
+          "type": "step-start",
+          "id": "prt_fa4e9c919001DrcZWqDivSj0F6",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e9be2e0011iAcMXtspiNWpv"
+        },
+        {
+          "type": "text",
+          "text": "#404 implemented in `7407bc3` on `feature/tests`.\n\n**What landed**\n- `tests/components/lib/container.ts` — shared `experimental_AstroContainer.create()` + cheerio `render` harness with a `@vitest-environment node` per-file directive (without it, vitest's default `happy-dom` stubs `.astro` modules with a browser-only error shell).\n- `tests/components/lib/MetaTagsStub.astro` — Astro stub used to mock `Layout` → `MetaTags.astro`, which otherwise computes a canonical URL against `Astro.site` (left undefined by the container) and throws.\n- `tests/components/astro-modules.d.ts` — ambient `declare module '*.astro'` so `tsc --noEmit` (no Astro Vite plugin) resolves the test imports.\n- 12 component render tests covering `Event.astro`, `PreBooking.astro`, `NewsletterCard.astro`, and the controls set (`Button`, `Input`, `Textarea`, `Select`, `Checkbox`, `Switch`, `IbanInput`, `SepaMandate`, `SubmitButton`).\n- `cheerio` added as a devDependency.\n\n**Review fixes applied**\n- Hard violation: `MetaTagsStub.astro` now declares `interface Props {}`.\n- Hard violation: removed `as any` on the `entry` fixture; typed through `CollectionEntry<'events'>`.\n- Removed all `hasClass('hidden')` class-string assertions (spec: DOM structure only).\n- `submit-button.test.ts` message chain collapsed to `$('button svg').parent().is('span')`.\n- Event mystery-name gymnastics (`const { $multi } = { $multi: ... }`) replaced with `const { $: $multi } = ...`.\n- Event now routes through the shared `render` helper, like the other 12 tests.\n\n`bun run check` green (oxlint + tsc + astro check + vitest): 21 files, 264 tests. Issue #404 closed as ready-for-human.",
+          "time": {
+            "start": 1785178212635,
+            "end": 1785178232438
+          },
+          "id": "prt_fa4e9c91b0018eCF2carJu3NU4",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e9be2e0011iAcMXtspiNWpv"
+        },
+        {
+          "reason": "stop",
+          "snapshot": "e99c9a953a635af08a2f838c9b2dff48ba43809e",
+          "type": "step-finish",
+          "tokens": {
+            "total": 130213,
+            "input": 56,
+            "output": 429,
+            "reasoning": 0,
+            "cache": {
+              "write": 0,
+              "read": 129728
+            }
+          },
+          "cost": 0.03569528,
+          "id": "prt_fa4ea16b3001KoTmFo3e6eUiam",
+          "sessionID": "ses_060a5c53fffeYRb6cyniWppdmo",
+          "messageID": "msg_fa4e9be2e0011iAcMXtspiNWpv"
         }
       ]
     }
