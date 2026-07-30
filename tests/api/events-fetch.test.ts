@@ -70,7 +70,7 @@ describe('loadEvents — fetch wrapper', () => {
     expect(result[0]).toEqual({
       id: 'evt-1',
       name: 'Rückenfit',
-      image: '/src/assets/events/rueckenfit.jpg',
+      image: '/src/assets/events/fit.jpg',
       sortIndex: 1,
       shortDescription: 'Pilates für den Rücken',
       description: 'Ein sanfter Kurs',
@@ -82,7 +82,9 @@ describe('loadEvents — fetch wrapper', () => {
       priceNonMember: '60,00\u00A0€',
       externalOperator: false,
       altBookingButtonText: undefined,
-      customFields: [{ name: 'Rückenbeschwerden', type: 'Text' }],
+      customFields: [
+        { name: 'Rückenbeschwerden', type: 'Text', minValue: undefined, maxValue: undefined },
+      ],
       paymentMethod: 'SepaDirectDebit',
     })
   })

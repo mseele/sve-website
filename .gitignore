@@ -20,3 +20,6 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# e2e test artifacts
+test-results/

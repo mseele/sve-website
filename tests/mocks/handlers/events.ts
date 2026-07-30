@@ -14,7 +14,7 @@ export const rawEventFixture = {
   sort_index: 1,
   short_description: 'Pilates für den Rücken',
   description: 'Ein sanfter Kurs',
-  image: 'rueckenfit.jpg',
+  image: 'fit.jpg',
   light: true,
   dates: ['2024-04-08T18:00:00', '2024-04-15T18:00:00'],
   custom_date: null,
@@ -34,7 +34,21 @@ export const rawEventFixture = {
   payment_method: 'SepaDirectDebit',
 }
 
-export const rawEventsFixture = [rawEventFixture]
+export const rawEventEventsFixture = {
+  ...rawEventFixture,
+  id: 'evt-2',
+  type: 'Events',
+  sort_index: 2,
+  name: 'Kochkurs',
+  short_description: 'Gemeinsames Kochen',
+  description: 'Ein leckerer Kurs',
+  image: 'fit.jpg',
+  booking_template: 'events',
+  payment_account: 'DE456',
+  custom_fields: [{ id: 'cf-2', name: 'Ernährungsweise', type: 'Text' }],
+}
+
+export const rawEventsFixture = [rawEventFixture, rawEventEventsFixture]
 
 export const rawCounterFixture = {
   id: 'evt-1',
