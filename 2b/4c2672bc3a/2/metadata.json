@@ -3,81 +3,51 @@
   "checkpoint_id": "2b4c2672bc3a",
   "session_id": "ses_04c1a66f2ffeWIZCiUVRjDzME1",
   "strategy": "manual-commit",
-  "created_at": "2026-07-30T17:25:46.514939Z",
+  "created_at": "2026-07-30T17:49:51.032747Z",
   "branch": "feature/tests",
   "checkpoints_count": 1,
+  "save_step_count": 2,
   "files_touched": [
-    ".gitignore",
-    "bun.lockb",
-    "package.json",
-    "playwright.config.ts",
     "scripts/build-e2e.ts",
-    "scripts/e2e-preview.ts",
-    "tests/api/events-fetch.test.ts",
     "tests/e2e/event-booking.spec.ts",
     "tests/e2e/membership-form.spec.ts",
     "tests/e2e/newsletter.spec.ts",
-    "tests/e2e/setup.ts",
-    "tests/mocks/backend.ts",
     "tests/mocks/e2e-server.ts",
-    "tests/mocks/handlers/contentful.ts",
-    "tests/mocks/handlers/events.ts"
+    "tests/mocks/handlers/contentful.ts"
   ],
   "agent": "OpenCode",
   "model": "kimi-k2.7-code",
   "turn_id": "a745ab036d73",
   "compact_transcript_start": 0,
   "token_usage": {
-    "input_tokens": 438546,
+    "input_tokens": 445908,
     "cache_creation_tokens": 0,
-    "cache_read_tokens": 28034175,
-    "output_tokens": 49931,
-    "api_call_count": 225
+    "cache_read_tokens": 28671139,
+    "output_tokens": 50821,
+    "api_call_count": 227
   },
   "session_metrics": {
-    "turn_count": 1
+    "turn_count": 2
   },
   "initial_attribution": {
-    "calculated_at": "2026-07-30T17:25:46.429303Z",
-    "agent_lines": 0,
-    "agent_removed": 0,
-    "human_added": 0,
+    "calculated_at": "2026-07-30T17:49:50.847695Z",
+    "agent_lines": 30,
+    "agent_removed": 21,
+    "human_added": 285,
     "human_modified": 0,
-    "human_removed": 6,
-    "total_committed": 0,
-    "total_lines_changed": 6,
-    "agent_percentage": 0,
+    "human_removed": 0,
+    "total_committed": 315,
+    "total_lines_changed": 342,
+    "agent_percentage": 14.912280701754385,
     "metric_version": 2
   },
   "prompt_attributions": [
     {
-      "checkpoint_number": 1,
-      "user_lines_added": 463,
-      "user_lines_removed": 6,
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
       "agent_lines_added": 0,
-      "agent_lines_removed": 0,
-      "user_added_per_file": {
-        ".gitignore": 3,
-        "package.json": 4,
-        "playwright.config.ts": 28,
-        "scripts/build-e2e.ts": 22,
-        "scripts/e2e-preview.ts": 73,
-        "tests/api/events-fetch.test.ts": 4,
-        "tests/e2e/event-booking.spec.ts": 44,
-        "tests/e2e/membership-form.spec.ts": 51,
-        "tests/e2e/newsletter.spec.ts": 39,
-        "tests/e2e/setup.ts": 147,
-        "tests/mocks/backend.ts": 10,
-        "tests/mocks/e2e-server.ts": 12,
-        "tests/mocks/handlers/contentful.ts": 10,
-        "tests/mocks/handlers/events.ts": 16
-      },
-      "user_removed_per_file": {
-        "package.json": 1,
-        "tests/api/events-fetch.test.ts": 2,
-        "tests/mocks/backend.ts": 1,
-        "tests/mocks/handlers/events.ts": 2
-      }
+      "agent_lines_removed": 0
     }
   ]
 }
