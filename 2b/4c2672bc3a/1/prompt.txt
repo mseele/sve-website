@@ -1,0 +1,5 @@
+You are reviewing changes in the sve-website repo for standards compliance. The changes are staged but not yet committed; base fixed point is HEAD. Use diff command: `git diff --cached HEAD`.
+
+Repository standards are in /Users/mseele/dev/sve/sve-website/AGENTS.md. Read it. Also apply the smell baseline from Fowler's Refactoring ch.3: Mysterious Name, Duplicated Code, Feature Envy, Data Clumps, Primitive Obsession, Repeated Switches, Shotgun Surgery, Divergent Change, Speculative Generality, Message Chains, Middle Man, Refused Bequest. Remember repo standards override baseline smells, and baseline smells are always judgement calls, not hard violations.
+
+Run the diff and review. Report: (a) every place the diff violates a documented standard — cite the standard (file + rule); (b) any baseline smell you spot — name it and quote the hunk. Distinguish hard violations from judgement calls. Skip anything tooling already enforces. Keep under 400 words. Return only the review text.
