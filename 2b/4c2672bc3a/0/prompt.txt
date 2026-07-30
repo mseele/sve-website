@@ -1,0 +1,34 @@
+You are reviewing changes in the sve-website repo against the spec in GitHub issue #405. The issue title is "Playwright E2E for critical journeys (backend mocked)". The spec body:
+
+## What to build
+
+Optional, and the live-backend-isolation decision has been settled: **the whole test suite is fully backend-mocked (B-fi), Playwright included.** No real backend URL is needed in CI; full determinism; the wire-shape contract lives in the MSW fixtures from #401.
+
+Browser end-to-end for the three highest-value flows against an MSW-handled backend:
+
+1. **Event booking submit** — navigate to an event detail page, fill the booking form, submit, see the availability state update, see the success notification.
+2. **Membership form happy path** — navigate to the membership page, walk through the step state, fill the IBAN / SEPA mandate, submit, see the confirmation.
+3. **Newsletter subscribe/unsubscribe** — fill the newsletter form, subscribe, see the confirmation; then unsubscribe and see the confirmation.
+
+MSW handlers in browser mode — `server.create()` + `setupWorker` — reusing the handler modules established in #401. Playwright's `page.route` interception is the alternative if the MSW browser worker proves awkward with the dev server; either way, no real network leaves the test process.
+
+The loss under B-fi is acknowledged: a real backend drift only shows up when someone re-runs against the live server manually. Treat the MSW fixtures as the contract of record — when the real backend drifts, regenerate the fixture and fix the resulting test failures, don't suppress them.
+
+## Acceptance criteria
+
+- [ ] MSW browser worker (or Playwright `page.route` interception) blocks all real outbound network in Playwright runs
+- [ ] MSW handlers reused from the unit-test handler modules (#401)
+- [ ] Journey 1 (event booking) passes against mocked backend
+- [ ] Journey 2 (membership form) passes against mocked backend
+- [ ] Journey 3 (newsletter subscribe/unsubscribe) passes against mocked backend
+- [ ] No real backend URL referenced anywhere in CI config
+- [ ] All E2E green locally
+
+## Blocked by
+
+- #401 (MSW handler modules must exist for browser-mode reuse)
+- #402 (client form validators need to be correct before E2E can assert the happy path)
+
+The changes are staged but not yet committed; base fixed point is HEAD. Use diff command: `git diff --cached HEAD`.
+
+Run the diff and review. Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Keep under 400 words. Return only the review text.

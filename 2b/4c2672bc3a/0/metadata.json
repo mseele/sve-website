@@ -1,0 +1,84 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "2b4c2672bc3a",
+  "session_id": "ses_04bf6c868ffekUBb53IJbg0lIE",
+  "strategy": "manual-commit",
+  "created_at": "2026-07-30T17:25:42.997225Z",
+  "branch": "feature/tests",
+  "checkpoints_count": 1,
+  "save_step_count": 1,
+  "files_touched": [
+    ".gitignore",
+    "bun.lockb",
+    "package.json",
+    "playwright.config.ts",
+    "scripts/build-e2e.ts",
+    "scripts/e2e-preview.ts",
+    "tests/api/events-fetch.test.ts",
+    "tests/e2e/event-booking.spec.ts",
+    "tests/e2e/membership-form.spec.ts",
+    "tests/e2e/newsletter.spec.ts",
+    "tests/e2e/setup.ts",
+    "tests/mocks/backend.ts",
+    "tests/mocks/e2e-server.ts",
+    "tests/mocks/handlers/contentful.ts",
+    "tests/mocks/handlers/events.ts"
+  ],
+  "agent": "OpenCode",
+  "model": "kimi-k2.7-code",
+  "turn_id": "ccc8aca3d559",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 63278,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 298105,
+    "output_tokens": 4554,
+    "api_call_count": 16
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-07-30T17:25:42.984259Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 6,
+    "total_committed": 0,
+    "total_lines_changed": 6,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 463,
+      "user_lines_removed": 6,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        ".gitignore": 3,
+        "package.json": 4,
+        "playwright.config.ts": 28,
+        "scripts/build-e2e.ts": 22,
+        "scripts/e2e-preview.ts": 73,
+        "tests/api/events-fetch.test.ts": 4,
+        "tests/e2e/event-booking.spec.ts": 44,
+        "tests/e2e/membership-form.spec.ts": 51,
+        "tests/e2e/newsletter.spec.ts": 39,
+        "tests/e2e/setup.ts": 147,
+        "tests/mocks/backend.ts": 10,
+        "tests/mocks/e2e-server.ts": 12,
+        "tests/mocks/handlers/contentful.ts": 10,
+        "tests/mocks/handlers/events.ts": 16
+      },
+      "user_removed_per_file": {
+        "package.json": 1,
+        "tests/api/events-fetch.test.ts": 2,
+        "tests/mocks/backend.ts": 1,
+        "tests/mocks/handlers/events.ts": 2
+      }
+    }
+  ]
+}

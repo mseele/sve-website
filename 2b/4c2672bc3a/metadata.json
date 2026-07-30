@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "2b4c2672bc3a",
+  "strategy": "manual-commit",
+  "branch": "feature/tests",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".gitignore",
+    "bun.lockb",
+    "package.json",
+    "playwright.config.ts",
+    "scripts/build-e2e.ts",
+    "scripts/e2e-preview.ts",
+    "tests/api/events-fetch.test.ts",
+    "tests/e2e/event-booking.spec.ts",
+    "tests/e2e/membership-form.spec.ts",
+    "tests/e2e/newsletter.spec.ts",
+    "tests/e2e/setup.ts",
+    "tests/mocks/backend.ts",
+    "tests/mocks/e2e-server.ts",
+    "tests/mocks/handlers/contentful.ts",
+    "tests/mocks/handlers/events.ts"
+  ],
+  "sessions": [
+    {
+      "metadata": "/2b/4c2672bc3a/0/metadata.json",
+      "transcript": "/2b/4c2672bc3a/0/full.jsonl",
+      "compact_transcript": "/2b/4c2672bc3a/0/transcript.jsonl",
+      "content_hash": "/2b/4c2672bc3a/0/content_hash.txt",
+      "prompt": "/2b/4c2672bc3a/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 63278,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 298105,
+    "output_tokens": 4554,
+    "api_call_count": 16
+  }
+}
