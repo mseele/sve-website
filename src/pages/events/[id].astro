@@ -6,26 +6,41 @@ import { getCollection, type CollectionEntry } from 'astro:content'
 export const getStaticPaths: GetStaticPaths = async () => {
   const collection = await getCollection('events')
   if (!collection) return []
-  return collection.map((entry) => ({
+  const sorted = collection.sort((a, b) => a.data.sortIndex - b.data.sortIndex)
+  const wrap = sorted.length > 1
+  return sorted.map((entry, index) => ({
     params: {
       id: entry.data.id,
     },
     props: {
       entry,
+      siblings: {
+        prev: index > 0 ? sorted[index - 1] : wrap ? sorted[sorted.length - 1] : null,
+        next: index < sorted.length - 1 ? sorted[index + 1] : wrap ? sorted[0] : null,
+        position: index + 1,
+        total: sorted.length,
+      },
     },
   }))
 }
 
 interface Props {
   entry: CollectionEntry<'events'>
+  siblings: {
+    prev: CollectionEntry<'events'> | null
+    next: CollectionEntry<'events'> | null
+    position: number
+    total: number
+  }
 }
 
-const { entry } = Astro.props
+const { entry, siblings } = Astro.props
 ---
 
 <Event
   type="events"
   entry={entry}
+  siblings={siblings}
   newsletterDescription="Erhalte automatisch eine E-Mail sobald neue Events online sind."
   newsletterText="Ich möchte über zukünftige Events per E-Mail informiert werden"
   schemaType="Event"
