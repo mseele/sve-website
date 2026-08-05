@@ -1,0 +1,68 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "9b38738d474b",
+  "session_id": "ses_02c8285a2ffer03FOnMcCx9ggI",
+  "strategy": "manual-commit",
+  "created_at": "2026-08-05T20:01:26.731473Z",
+  "branch": "next",
+  "checkpoints_count": 1,
+  "save_step_count": 1,
+  "files_touched": [
+    "src/components/blocks/Event.astro",
+    "src/pages/events/[id].astro",
+    "src/pages/fitness/[id].astro"
+  ],
+  "agent": "OpenCode",
+  "model": "deepseek-v4-pro",
+  "turn_id": "069aa9398ee7",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 18338,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 27776,
+    "output_tokens": 685,
+    "api_call_count": 3
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-08-05T20:01:26.721286Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 2,
+    "human_removed": 3,
+    "total_committed": 2,
+    "total_lines_changed": 5,
+    "agent_percentage": 0,
+    "metric_version": 2
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 201,
+      "user_lines_removed": 5,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "src/components/blocks/Event.astro": 32,
+        "src/components/blocks/EventSideNavigation.astro": 137,
+        "src/pages/events/[id].astro": 16,
+        "src/pages/fitness/[id].astro": 16
+      },
+      "user_removed_per_file": {
+        "src/components/blocks/Event.astro": 1,
+        "src/pages/events/[id].astro": 2,
+        "src/pages/fitness/[id].astro": 2
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 201,
+      "agent_lines_removed": 5
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+Review the following diff against the spec in the handoff document. The spec is at `/var/folders/75/tw60k6_97_g8zp5btl20kl3c0000gn/T/handoff-event-fast-switch-b6.md`. Read it first, then compare against the diff.
+
+## WHAT WAS IMPLEMENTED (4 files)
+
+### 1. src/pages/events/[id].astro (modified)
+- Sorts collection by sortIndex, adds sibling computation (prev/next/position/total) in getStaticPaths
+- Adds `siblings` to Props interface and passes it to Event component
+
+### 2. src/pages/fitness/[id].astro (modified)
+- Same as above but for 'fitness' collection
+
+### 3. src/components/blocks/Event.astro (modified)
+- Added `EventSideNavigation` import
+- Added optional `siblings?` prop with generic CollectionEntry<T> type
+- Added `siblingUrl` helper for constructing `/${type}/${data.id}` URLs
+- Computes prevUrl/nextUrl/prevName/nextName/position/total
+- Renders `<EventSideNavigation>` between HeroSection and description div, gated on `siblings &&`
+
+### 4. src/components/blocks/EventSideNavigation.astro (NEW, 137 lines)
+- Prev/next fixed arrow buttons with tooltips and dark mode
+- Mobile position/total badge
+- Script with: 3s timeout fade to 10%, edge hover revive, IntersectionObserver on #anmeldung, keyboard ArrowLeft/ArrowRight navigation
+
+Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words.
+
+Return your report as the final message.

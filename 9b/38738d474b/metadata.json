@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "9b38738d474b",
+  "strategy": "manual-commit",
+  "branch": "next",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "src/components/blocks/Event.astro",
+    "src/pages/events/[id].astro",
+    "src/pages/fitness/[id].astro"
+  ],
+  "sessions": [
+    {
+      "metadata": "/9b/38738d474b/0/metadata.json",
+      "transcript": "/9b/38738d474b/0/full.jsonl",
+      "compact_transcript": "/9b/38738d474b/0/transcript.jsonl",
+      "content_hash": "/9b/38738d474b/0/content_hash.txt",
+      "prompt": "/9b/38738d474b/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 18338,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 27776,
+    "output_tokens": 685,
+    "api_call_count": 3
+  }
+}
