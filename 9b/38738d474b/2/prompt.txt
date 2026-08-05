@@ -1,0 +1,40 @@
+You are building a throwaway UI prototype for the SV Eutingen website redesign. Read the handoff document first, then the prototype skill instructions, then implement.
+
+## Read first
+
+1. Handoff document: `/var/folders/75/tw60k6_97_g8zp5btl20kl3c0000gn/T/opencode/handoff-sve-redesign-prototype.md`
+2. Prototype skill UI branch: `/Users/mseele/.agents/skills/prototype/UI.md`
+
+## What to build
+
+A UI prototype with **3 radically different structural variants** of the redesigned SVE home page + `AppHeader` + `AppFooter`, using the Flonea sport e-commerce landing page as a visual reference.
+
+- Use **sub-shape A** from `UI.md`: host the prototype on the existing home page route (`src/pages/index.astro`) gated by a `?variant=` URL search param. When no variant is set, render the existing original page unchanged.
+- When `?variant=A`, `?variant=B`, or `?variant=C` is present, render that variant and show a floating bottom switcher to cycle between variants.
+- Use **real SVE content** from the existing `src/pages/index.astro` and real images from `src/assets/pages/`.
+- Use **Tailwind CSS v4** and the existing tokens in `src/styles/global.css`. Introduce new semantic tokens only as needed.
+- Keep **DM Sans** as the font unless a variant is explicitly exploring a display font.
+- Respect settled decisions from the handoff: dark navy hero, SVE red accent, two card families (ContentCard / PromoCard), subtle CSS transitions only.
+- Do **not** commit to git or create branches. Just modify/create files in the workspace.
+
+## Files to create/modify
+
+- `src/pages/index.astro` — add variant routing; preserve original when no variant param.
+- `src/components/prototype/HomeVariantA.astro`
+- `src/components/prototype/HomeVariantB.astro`
+- `src/components/prototype/HomeVariantC.astro`
+- `src/components/prototype/PrototypeSwitcher.astro` — floating bottom bar with arrows, keyboard support, variant label.
+- Any new shared prototype-only components under `src/components/prototype/`.
+
+Each variant should be structurally different — different hero layout, different card grid treatment, different information hierarchy. Do not make three colour tweaks.
+
+## Verification
+
+Run `bun run dev` (or `bun run check` if you change types) and confirm the site builds without errors. Provide the local URL pattern for each variant.
+
+## Return to me
+
+1. The command to run the prototype.
+2. The variant URLs/keys and a one-line description of what each variant explores.
+3. A short note on any settled decision that the prototype suggests changing.
+4. A list of files you created/modified.

@@ -1,0 +1,45 @@
+{
+  "cli_version": "0.9.0",
+  "checkpoint_id": "9b38738d474b",
+  "session_id": "ses_02cd9f10dffe1SSUj8CctviE1Q",
+  "strategy": "manual-commit",
+  "created_at": "2026-08-05T20:01:30.468001Z",
+  "branch": "next",
+  "checkpoints_count": 1,
+  "save_step_count": 1,
+  "files_touched": [],
+  "agent": "OpenCode",
+  "model": "kimi-k2.7-code",
+  "turn_id": "15182fa2cdd3",
+  "compact_transcript_start": 0,
+  "token_usage": {
+    "input_tokens": 308912,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 5713267,
+    "output_tokens": 43057,
+    "api_call_count": 74
+  },
+  "session_metrics": {
+    "turn_count": 1
+  },
+  "prompt_attributions": [
+    {
+      "checkpoint_number": 1,
+      "user_lines_added": 67,
+      "user_lines_removed": 0,
+      "agent_lines_added": 0,
+      "agent_lines_removed": 0,
+      "user_added_per_file": {
+        "CONTEXT.md": 62,
+        "docs/adr/0002-design-token-architecture.md": 5
+      }
+    },
+    {
+      "checkpoint_number": 2,
+      "user_lines_added": 0,
+      "user_lines_removed": 0,
+      "agent_lines_added": 939,
+      "agent_lines_removed": 75
+    }
+  ]
+}
