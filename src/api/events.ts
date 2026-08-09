@@ -8,6 +8,7 @@ import {
   type RawEventCounter,
 } from '@/types'
 import { formatCurrency, formatDuration } from '@/utils'
+import { reportError } from '@/client/rollbar'
 import { BACKEND_API, PREVIEW } from 'astro:env/client'
 import { parseISO, format, getDay } from 'date-fns'
 import { de } from 'date-fns/locale'
@@ -216,7 +217,7 @@ export async function loadEventsAvailability(
         callback(cache.data)
       }
     } catch (e) {
-      console.error('Error while parsing event availability from session storage', e)
+      reportError('Error while parsing event availability from session storage', e)
     }
   }
 

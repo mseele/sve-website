@@ -454,6 +454,7 @@ details.push({
   } from '@/api/events'
   import { checkRequiredInput, clearCustomValidityOnInput, validateIbanInput } from '@/client/forms'
   import { notify } from '@/client/notifications'
+  import { reportError } from '@/client/rollbar'
   import type { EventAvailability } from '@/types'
   import '@hcaptcha/vanilla-hcaptcha'
   import type { VanillaHCaptchaWebComponent } from '@hcaptcha/vanilla-hcaptcha'
@@ -656,7 +657,7 @@ details.push({
             notify('Buchung', response.message, true)
           }
         } catch (err) {
-          console.error(err)
+          reportError(err)
           notify(
             'Buchung',
             'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',

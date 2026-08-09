@@ -94,6 +94,7 @@ const { description, topic } = Astro.props as Props
   import { manageSubscription } from '@/api/forms'
   import { checkRequiredInput, clearCustomValidityOnInput } from '@/client/forms'
   import { notify } from '@/client/notifications'
+  import { reportError } from '@/client/rollbar'
   import '@hcaptcha/vanilla-hcaptcha'
   import type { VanillaHCaptchaWebComponent } from '@hcaptcha/vanilla-hcaptcha'
 
@@ -147,7 +148,7 @@ const { description, topic } = Astro.props as Props
         if (eventsCheckbox) eventsCheckbox.checked = true
       }
     } catch (err) {
-      console.error(err)
+      reportError(err)
     } finally {
       if (button) button.disabled = false
       captcha?.reset()
