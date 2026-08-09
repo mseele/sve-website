@@ -6,6 +6,8 @@ const rollbar = ROLLBAR_ACCESS_TOKEN
       accessToken: ROLLBAR_ACCESS_TOKEN,
       captureUncaught: true,
       captureUnhandledRejections: true,
+      autoInstrument: true,
+      includeItemsInTelemetry: true,
       payload: {
         environment: import.meta.env.PROD ? (PREVIEW ? 'staging' : 'production') : 'development',
       },
