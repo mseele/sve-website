@@ -176,9 +176,45 @@ export interface RawEventCounter {
   max_waiting_list: number
 }
 
+/**
+ * Booking availability for an event, derived from {@link RawEventCounter}.
+ *
+ * The pair (`availableSlots`, `isWaitingList`) encodes a four-state phase machine;
+ * `availableSlots` is a *phase-switched* quantity — it counts whichever kind of
+ * slot is currently bookable, never both at once. The booking flow depletes
+ * subscriber slots first; only when subscribers are full does the waiting-list
+ * phase begin, at which point `availableSlots` switches to counting waiting-list
+ * slots. Splitting the field would advertise two independent quantities that
+ * are in fact mutually exclusive — so we keep one phase-switched number and
+ * document the switch here.
+ *
+ * Decode the sentinel through `availabilityState(av)` (see `src/api/events.ts`);
+ * do not compare `availableSlots` to `-1` or `0` directly at consumer sites.
+ */
 export interface EventAvailability {
+  /**
+   * Remaining bookable slots in the CURRENT booking phase.
+   *
+   * - When `isWaitingList` is `false` (subscriber phase): remaining subscriber
+   *   slots, OR the sentinel `-1` meaning the event is **Unlimited**
+   *   (`max_subscribers === -1` on the backend — a real domain concept, not a
+   *   leaked implementation detail).
+   * - When `isWaitingList` is `true` (waiting-list phase, subscribers full):
+   *   remaining waiting-list slots (always `>= 0`; the sentinel never appears
+   *   in this phase).
+   *
+   * `0` means the current phase is exhausted — for the waiting-list phase that
+   * is the **FullyBooked** state; the subscriber phase never emits `0` (the
+   * producer flips to the waiting-list phase instead).
+   */
   availableSlots: number
+  /**
+   * `true` once the subscriber phase is exhausted — `availableSlots` then
+   * counts waiting-list slots rather than subscriber slots. Always `false` for
+   * Unlimited events.
+   */
   isWaitingList: boolean
+  /** Pre-formatted German display message derived from the phase + slot count. */
   message: string
 }
 

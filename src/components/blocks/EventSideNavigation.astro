@@ -1,0 +1,139 @@
+---
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+  prevUrl: string | null
+  nextUrl: string | null
+  position: number
+  total: number
+  prevName: string | null
+  nextName: string | null
+}
+
+const { prevUrl, nextUrl, position, total, prevName, nextName } = Astro.props
+---
+
+{
+  prevUrl && (
+    <a
+      href={prevUrl}
+      class="combined-arrow group fixed top-1/2 left-3 z-50 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 shadow-lg ring-1 ring-gray-200 transition-all duration-500 no-underline hover:bg-white hover:shadow-xl hover:scale-110 dark:bg-gray-800/80 dark:ring-gray-700 dark:hover:bg-gray-800"
+      title={prevName ?? 'Vorheriges Event'}
+      data-nav="prev"
+    >
+      <Icon class="size-6 text-gray-600 dark:text-gray-300" name="mdi:chevron-left" />
+      <span class="pointer-events-none absolute left-full ml-3 hidden w-max rounded-lg bg-gray-900 px-3 py-1.5 text-sm text-white whitespace-nowrap group-hover:block dark:bg-white dark:text-gray-900">
+        {prevName ?? 'Vorheriges Event'}
+      </span>
+    </a>
+  )
+}
+
+{
+  nextUrl && (
+    <a
+      href={nextUrl}
+      class="combined-arrow group fixed top-1/2 right-3 z-50 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 shadow-lg ring-1 ring-gray-200 transition-all duration-500 no-underline hover:bg-white hover:shadow-xl hover:scale-110 dark:bg-gray-800/80 dark:ring-gray-700 dark:hover:bg-gray-800"
+      title={nextName ?? 'Nächstes Event'}
+      data-nav="next"
+    >
+      <Icon class="size-6 text-gray-600 dark:text-gray-300" name="mdi:chevron-right" />
+      <span class="pointer-events-none absolute right-full mr-3 hidden w-max rounded-lg bg-gray-900 px-3 py-1.5 text-sm text-white whitespace-nowrap group-hover:block dark:bg-white dark:text-gray-900">
+        {nextName ?? 'Nächstes Event'}
+      </span>
+    </a>
+  )
+}
+
+<div class="fixed right-3 bottom-4 left-3 z-40 text-center md:hidden">
+  <span class="inline-block rounded-full bg-white/90 px-3 py-1 text-[11px] font-medium text-gray-500 shadow-sm ring-1 ring-gray-200 dark:bg-gray-800/90 dark:text-gray-400 dark:ring-gray-700">
+    {position} / {total}
+  </span>
+</div>
+
+<script>
+  {
+    const arrows = document.querySelectorAll<HTMLAnchorElement>('.combined-arrow')
+    if (arrows.length > 0) {
+      const VISIBLE_DURATION = 3000
+      const FADED_OPACITY = '0.1'
+      const EDGE = 100
+
+      let timeout: ReturnType<typeof setTimeout>
+      let faded = false
+      let bookingVisible = false
+
+      const anmeldung = document.getElementById('anmeldung')
+
+      function show() {
+        if (bookingVisible) return
+        faded = false
+        arrows.forEach((arrow) => {
+          arrow.style.opacity = '1'
+          arrow.style.pointerEvents = 'auto'
+        })
+        clearTimeout(timeout)
+        timeout = setTimeout(() => {
+          if (bookingVisible) return
+          faded = true
+          arrows.forEach((arrow) => {
+            arrow.style.opacity = FADED_OPACITY
+            arrow.style.pointerEvents = 'auto'
+          })
+        }, VISIBLE_DURATION)
+      }
+
+      function hide() {
+        clearTimeout(timeout)
+        arrows.forEach((arrow) => {
+          arrow.style.opacity = '0'
+          arrow.style.pointerEvents = 'none'
+        })
+      }
+
+      function isNearEdge(e: MouseEvent): boolean {
+        return e.clientX < EDGE || e.clientX > window.innerWidth - EDGE
+      }
+
+      if (anmeldung) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            bookingVisible = entries[0].isIntersecting
+            if (bookingVisible) {
+              hide()
+            } else {
+              show()
+            }
+          },
+          { threshold: 0 },
+        )
+        observer.observe(anmeldung)
+      }
+
+      document.addEventListener('mousemove', (e: MouseEvent) => {
+        if (!faded || bookingVisible) return
+        if (isNearEdge(e)) show()
+      })
+
+      document.addEventListener('touchmove', (e: TouchEvent) => {
+        if (!faded || bookingVisible) return
+        const touch = e.touches[0]
+        if (touch && (touch.clientX < EDGE || touch.clientX > window.innerWidth - EDGE)) show()
+      }, { passive: true })
+
+      const handleKey = (e: KeyboardEvent) => {
+        if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
+        if (e.key === 'ArrowLeft' && !e.ctrlKey && !e.metaKey) {
+          const left = document.querySelector<HTMLAnchorElement>('.combined-arrow[data-nav="prev"]')
+          if (left) window.location.href = left.href
+        } else if (e.key === 'ArrowRight' && !e.ctrlKey && !e.metaKey) {
+          const right = document.querySelector<HTMLAnchorElement>('.combined-arrow[data-nav="next"]')
+          if (right) window.location.href = right.href
+        }
+      }
+      document.addEventListener('keydown', handleKey)
+
+      show()
+    }
+  }
+</script>

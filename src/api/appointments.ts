@@ -2,11 +2,11 @@ import { formatDatespan, formatTimespan } from '@/utils'
 import type { RawAppointment, Appointment } from '@/types'
 import { BACKEND_API } from 'astro:env/client'
 
-function bySortIndex(a: RawAppointment, b: RawAppointment) {
+export function bySortIndex(a: RawAppointment, b: RawAppointment): number {
   return a.sort_index - b.sort_index
 }
 
-function toAppointment(appointment: RawAppointment): Appointment {
+export function toAppointment(appointment: RawAppointment): Appointment {
   let startISO: string | undefined
   let endISO: string | undefined
   if (appointment.start_date_time) {

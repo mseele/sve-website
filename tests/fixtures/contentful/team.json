@@ -1,0 +1,34 @@
+{
+  "id": "team-1",
+  "name": "Herren I",
+  "league": "Bezirksliga",
+  "category": {
+    "id": "cat-1",
+    "name": "Herren",
+    "description": "Seniorenmannschaften",
+    "isYouthGroup": false,
+    "sortOrder": 1
+  },
+  "sortOrder": 1.1,
+  "coach": {
+    "id": "person-1",
+    "name": "Max Mustermann",
+    "position": "Trainer",
+    "email": "max@example.org",
+    "mobile": {
+      "formatted": "+49 176 12345678",
+      "raw": "+4917612345678"
+    },
+    "phone": {
+      "formatted": "+49 7459 1204",
+      "raw": "+4974591204"
+    }
+  },
+  "contact": {
+    "id": "person-2",
+    "name": "Anna Schmidt",
+    "position": "Kontakt",
+    "email": "anna@example.org"
+  },
+  "teamID": "team-id-12345"
+}

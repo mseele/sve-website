@@ -10,6 +10,7 @@ import Textarea from '@/components/controls/Textarea.astro'
 import { Icon } from 'astro-icon/components'
 import type { CollectionEntry } from 'astro:content'
 import type { Place, Offer, Event as SchemaEvent } from 'schema-dts'
+import EventSideNavigation from './EventSideNavigation.astro'
 import HeroSection from './HeroSection.astro'
 import NewsletterCard from './NewsletterCard.astro'
 import { EventCustomFieldType, PaymentMethod, type MetaSEO } from '@/types'
@@ -22,12 +23,30 @@ import { formatInTimeZone, fromZonedTime } from 'date-fns-tz'
 interface Props<T extends 'events' | 'fitness'> {
   type: T
   entry: CollectionEntry<T>
+  siblings?: {
+    prev: CollectionEntry<T> | null
+    next: CollectionEntry<T> | null
+    position: number
+    total: number
+  }
   newsletterDescription: string
   newsletterText: string
   schemaType: 'Event' | 'SportsEvent'
 }
 
-const { type, entry, newsletterDescription, newsletterText, schemaType } = Astro.props as Props<'events' | 'fitness'>
+const { type, entry, siblings, newsletterDescription, newsletterText, schemaType } = Astro.props as Props<'events' | 'fitness'>
+
+function siblingUrl(targetId: string | undefined): string | null {
+  if (!targetId) return null
+  return `/${type}/${targetId}`
+}
+
+const prevUrl = siblings ? siblingUrl(siblings.prev?.data.id) : null
+const nextUrl = siblings ? siblingUrl(siblings.next?.data.id) : null
+const prevName = siblings?.prev?.data.name ?? null
+const nextName = siblings?.next?.data.name ?? null
+const position = siblings?.position ?? 1
+const total = siblings?.total ?? 1
 
 function extractPrice(priceString: string): string {
   const match = priceString.match(/[\d,]+/)
@@ -213,6 +232,18 @@ details.push({
       secondaryButton={{ label: 'Anmeldung', to: '#anmeldung' }}
       image={{ light: entry.data.image, dark: entry.data.image, alt: entry.data.name }}
     />
+    {
+      siblings && (
+        <EventSideNavigation
+          prevUrl={prevUrl}
+          nextUrl={nextUrl}
+          position={position}
+          total={total}
+          prevName={prevName}
+          nextName={nextName}
+        />
+      )
+    }
     <div class="pt-6 pb-16" id="beschreibung">
       <Container>
         <div class="text-gray-600">
@@ -414,7 +445,13 @@ details.push({
 </Layout>
 
 <script>
-  import { bookEvent, loadEventAvailability } from '@/api/events'
+  import {
+    AvailabilityState,
+    availabilityState,
+    bookEvent,
+    canSubscribe,
+    loadEventAvailability,
+  } from '@/api/events'
   import { checkRequiredInput, clearCustomValidityOnInput, validateIbanInput } from '@/client/forms'
   import { notify } from '@/client/notifications'
   import type { EventAvailability } from '@/types'
@@ -437,12 +474,13 @@ details.push({
         let description: string | undefined
         let button: string | undefined
 
-        if (availability.isWaitingList && availability.availableSlots > 0) {
+        const state = availabilityState(availability)
+        if (state === AvailabilityState.WaitingList) {
           title = 'Warteliste'
           description =
             'Leider sind schon alle Plätze belegt. Gerne kannst Du Dich auf die Warteliste setzen lassen. Wir benachrichtigen Dich, wenn Plätze frei werden.'
           button = 'Auf die Warteliste setzen'
-        } else if (availability.availableSlots === -1 || availability.availableSlots > 0) {
+        } else if (canSubscribe(availability)) {
           title = 'Anmeldung'
           button = 'Kostenpflichtig buchen'
         } else {
