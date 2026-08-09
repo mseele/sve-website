@@ -6,7 +6,7 @@ const MockRollbar = vi.fn(function () {
 })
 
 vi.mock('rollbar', () => ({ default: MockRollbar }))
-vi.mock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: undefined }))
+vi.mock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: undefined, GIT_SHA: undefined }))
 
 describe('reportError', () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>
@@ -21,7 +21,7 @@ describe('reportError', () => {
   })
 
   it('always calls console.error with the same arguments', async () => {
-    vi.doMock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: undefined }))
+    vi.doMock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: undefined, GIT_SHA: undefined }))
     const { reportError } = await import('@/client/rollbar')
 
     reportError('test error')
@@ -30,7 +30,7 @@ describe('reportError', () => {
   })
 
   it('does not call Rollbar.error when token is not set', async () => {
-    vi.doMock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: undefined }))
+    vi.doMock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: undefined, GIT_SHA: undefined }))
     const { reportError } = await import('@/client/rollbar')
 
     reportError('test error')
@@ -40,7 +40,10 @@ describe('reportError', () => {
 
   it('calls Rollbar.error when token is set', async () => {
     mockRollbarError.mockClear()
-    vi.doMock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: 'test-token' }))
+    vi.doMock('astro:env/client', () => ({
+      ROLLBAR_ACCESS_TOKEN: 'test-token',
+      GIT_SHA: undefined,
+    }))
     const { reportError } = await import('@/client/rollbar')
 
     reportError('test error')
@@ -50,7 +53,10 @@ describe('reportError', () => {
 
   it('passes Error instances directly to Rollbar', async () => {
     mockRollbarError.mockClear()
-    vi.doMock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: 'test-token' }))
+    vi.doMock('astro:env/client', () => ({
+      ROLLBAR_ACCESS_TOKEN: 'test-token',
+      GIT_SHA: undefined,
+    }))
     const { reportError } = await import('@/client/rollbar')
 
     const err = new Error('test error object')
@@ -62,7 +68,10 @@ describe('reportError', () => {
 
   it('handles multiple arguments by joining non-Error args', async () => {
     mockRollbarError.mockClear()
-    vi.doMock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: 'test-token' }))
+    vi.doMock('astro:env/client', () => ({
+      ROLLBAR_ACCESS_TOKEN: 'test-token',
+      GIT_SHA: undefined,
+    }))
     const { reportError } = await import('@/client/rollbar')
 
     reportError('msg', 'extra')
@@ -71,9 +80,12 @@ describe('reportError', () => {
     expect(mockRollbarError).toHaveBeenCalledWith('msg extra')
   })
 
-  it('creates Rollbar with correct config when token is set', async () => {
+  it('creates Rollbar with source map + code_version config when token is set', async () => {
     MockRollbar.mockClear()
-    vi.doMock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: 'test-token' }))
+    vi.doMock('astro:env/client', () => ({
+      ROLLBAR_ACCESS_TOKEN: 'test-token',
+      GIT_SHA: 'abc1234',
+    }))
     await import('@/client/rollbar')
 
     expect(MockRollbar).toHaveBeenCalledWith(
@@ -81,13 +93,44 @@ describe('reportError', () => {
         accessToken: 'test-token',
         captureUncaught: true,
         captureUnhandledRejections: true,
+        payload: expect.objectContaining({
+          client: {
+            javascript: {
+              source_map_enabled: true,
+              code_version: 'abc1234',
+              guess_uncaught_frames: true,
+            },
+          },
+        }),
       }),
     )
   })
 
+  it('omits code_version (undefined) when GIT_SHA is missing', async () => {
+    MockRollbar.mockClear()
+    vi.doMock('astro:env/client', () => ({
+      ROLLBAR_ACCESS_TOKEN: 'test-token',
+      GIT_SHA: undefined,
+    }))
+    await import('@/client/rollbar')
+
+    const calls = MockRollbar.mock.calls as unknown as Array<
+      [
+        {
+          payload: {
+            client: { javascript: { code_version?: string; source_map_enabled?: boolean } }
+          }
+        },
+      ]
+    >
+    const config = calls[0][0]
+    expect(config.payload.client.javascript.code_version).toBeUndefined()
+    expect(config.payload.client.javascript.source_map_enabled).toBe(true)
+  })
+
   it('does not create Rollbar when token is missing', async () => {
     MockRollbar.mockClear()
-    vi.doMock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: undefined }))
+    vi.doMock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: undefined, GIT_SHA: undefined }))
     await import('@/client/rollbar')
 
     expect(MockRollbar).not.toHaveBeenCalled()

@@ -1,5 +1,5 @@
 import Rollbar from 'rollbar'
-import { PREVIEW, ROLLBAR_ACCESS_TOKEN } from 'astro:env/client'
+import { GIT_SHA, PREVIEW, ROLLBAR_ACCESS_TOKEN } from 'astro:env/client'
 
 const rollbar = ROLLBAR_ACCESS_TOKEN
   ? new Rollbar({
@@ -10,6 +10,13 @@ const rollbar = ROLLBAR_ACCESS_TOKEN
       includeItemsInTelemetry: true,
       payload: {
         environment: import.meta.env.PROD ? (PREVIEW ? 'staging' : 'production') : 'development',
+        client: {
+          javascript: {
+            source_map_enabled: true,
+            code_version: GIT_SHA,
+            guess_uncaught_frames: true,
+          },
+        },
       },
     })
   : null
