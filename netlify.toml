@@ -8,7 +8,7 @@ publish = "dist/"
 # be publicly fetchable). The upload is a no-op (exit 0) when
 # `ROLLBAR_POST_SERVER_ITEM_TOKEN` is unset; the deletion runs regardless so
 # the maps are never exposed even on token-less PR-preview builds.
-command = "export GIT_SHA=\"${COMMIT_REF:-$(git rev-parse HEAD)}\" && bun run build && bun run scripts/upload-sourcemaps.ts && find dist -name '*.js.map' -delete"
+command = "export GIT_SHA=\"${COMMIT_REF:-$(git rev-parse HEAD)}\" && bun run build && bun run scripts/upload-sourcemaps.ts && find dist -name '*.js.map' -delete && bun run scripts/notify-rollbar-deploy.ts"
 
 [build.environment]
 NODE_ENV = "production"
