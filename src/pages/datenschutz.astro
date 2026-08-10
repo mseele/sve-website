@@ -25,7 +25,7 @@ const meta = {
           Social-Media-Profile (nachfolgend zusammenfassend bezeichnet als "Onlineangebot“).
         </div>
         <div>Die verwendeten Begriffe sind nicht geschlechtsspezifisch.</div>
-        <div>Stand: 21. Februar 2020</div>
+        <div>Stand: 9. August 2026</div>
       </div>
       <div class="pb-4 text-2xl font-medium">Inhaltsübersicht</div>
       <div class="pb-8">
@@ -94,6 +94,42 @@ const meta = {
             <a
               class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
               href="#m225">Bereitstellung des Onlineangebotes und Webhosting</a
+            >
+          </li>
+          <li>
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="#mContentful">Content-Management-System (Contentful)</a
+            >
+          </li>
+          <li>
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="#mBackend">Backend-API (Vereinsverwaltung und Buchungssystem)</a
+            >
+          </li>
+          <li>
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="#mHCaptcha">hCaptcha (Bot-Schutz und Spam-Prävention)</a
+            >
+          </li>
+          <li>
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="#mYouTube">YouTube (Eingebettete Videos)</a
+            >
+          </li>
+          <li>
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="#mCalendar">Google Calendar (Eingebettete Kalender)</a
+            >
+          </li>
+          <li>
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="#mRollbar">Fehlerüberwachung (Rollbar)</a
             >
           </li>
           <li>
@@ -570,6 +606,305 @@ const meta = {
             <strong>Rechtsgrundlagen:</strong> Berechtigte Interessen (Art. 6 Abs. 1 S. 1 lit. f. DSGVO).
           </li>
         </ul>
+        <div><strong>Eingesetzte Dienste und Diensteanbieter:</strong></div>
+        <ul class="m-elements list-disc pl-6">
+          <li>
+            <strong>Netlify:</strong> Hosting-Plattform und Content-Delivery-Network; Dienstanbieter: Netlify,
+            Inc., 44 Montgomery Street, Suite 300, San Francisco, CA 94104, USA; Website:
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="https://www.netlify.com"
+              target="_blank"
+              rel="noreferrer">https://www.netlify.com</a
+            >; Datenschutzerklärung:
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="https://www.netlify.com/privacy/"
+              target="_blank"
+              rel="noreferrer">https://www.netlify.com/privacy/</a
+            >.
+          </li>
+        </ul>
+      </div>
+      <div id="mContentful" class="pb-4 text-2xl font-medium">Content-Management-System (Contentful)</div>
+      <div class="space-y-2 pb-8">
+        <div>
+          Zur Verwaltung und Auslieferung von Inhalten (z.B. Mannschafts- und Sponsorendaten)
+          setzen wir das Headless-CMS Contentful ein. Beim Aufruf unserer Webseite werden die
+          entsprechenden Inhalte über eine API-Schnittstelle vom Contentful-Server abgerufen.
+          Dabei werden technisch notwendige Daten wie die IP-Adresse des Nutzers an Contentful
+          übermittelt.
+        </div>
+        <ul class="m-elements list-disc pl-6">
+          <li>
+            <strong>Verarbeitete Datenarten:</strong> Meta-/Kommunikationsdaten (z.B. Geräte-Informationen,
+            IP-Adressen), Nutzungsdaten (z.B. besuchte Webseiten, Interesse an Inhalten, Zugriffszeiten).
+          </li>
+          <li>
+            <strong>Betroffene Personen:</strong> Nutzer (z.B. Webseitenbesucher, Nutzer von Onlinediensten).
+          </li>
+          <li>
+            <strong>Zwecke der Verarbeitung:</strong> Bereitstellung von Inhalten, Content Delivery.
+          </li>
+          <li>
+            <strong>Rechtsgrundlagen:</strong> Berechtigte Interessen (Art. 6 Abs. 1 S. 1 lit. f. DSGVO).
+          </li>
+        </ul>
+        <div><strong>Eingesetzte Dienste und Diensteanbieter:</strong></div>
+        <ul class="m-elements list-disc pl-6">
+          <li>
+            <strong>Contentful:</strong> Headless Content-Management-System; Dienstanbieter: Contentful GmbH,
+            Max-Urich-Straße 3, 13355 Berlin, Deutschland; Website:
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="https://www.contentful.com"
+              target="_blank"
+              rel="noreferrer">https://www.contentful.com</a
+            >; Datenschutzerklärung:
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="https://www.contentful.com/legal/de/privacy/"
+              target="_blank"
+              rel="noreferrer">https://www.contentful.com/legal/de/privacy/</a
+            >.
+          </li>
+        </ul>
+      </div>
+      <div id="mBackend" class="pb-4 text-2xl font-medium">Backend-API (Vereinsverwaltung und Buchungssystem)</div>
+      <div class="space-y-2 pb-8">
+        <div>
+          Zur Abwicklung von Formularanfragen (Kontaktformular, Mitgliedschaftsanträge,
+          Newsletter-Anmeldungen, Veranstaltungsbuchungen) sowie zur Bereitstellung von
+          Veranstaltungs- und Kalenderdaten betreiben wir eine eigene Backend-API. Die über
+          unsere Formulare eingegebenen Daten werden an diese API übermittelt und dort
+          verarbeitet.
+        </div>
+        <ul class="m-elements list-disc pl-6">
+          <li>
+            <strong>Verarbeitete Datenarten:</strong> Bestandsdaten (z.B. Namen, Adressen), Kontaktdaten
+            (z.B. E-Mail, Telefonnummern), Inhaltsdaten (z.B. Texteingaben, Fotografien, Videos),
+            Vertragsdaten (z.B. Vertragsgegenstand, Laufzeit), Zahlungsdaten (z.B. Bankverbindungen,
+            Rechnungen), Meta-/Kommunikationsdaten (z.B. Geräte-Informationen, IP-Adressen).
+          </li>
+          <li>
+            <strong>Betroffene Personen:</strong> Kommunikationspartner, Mitglieder, Interessenten,
+            Nutzer (z.B. Webseitenbesucher, Nutzer von Onlinediensten).
+          </li>
+          <li>
+            <strong>Zwecke der Verarbeitung:</strong> Kontaktanfragen und Kommunikation,
+            Vertragliche Leistungen und Service, Verwaltung und Beantwortung von Anfragen.
+          </li>
+          <li>
+            <strong>Rechtsgrundlagen:</strong> Vertragserfüllung und vorvertragliche Anfragen (Art. 6
+            Abs. 1 S. 1 lit. b. DSGVO), Berechtigte Interessen (Art. 6 Abs. 1 S. 1 lit. f. DSGVO).
+          </li>
+        </ul>
+      </div>
+      <div id="mHCaptcha" class="pb-4 text-2xl font-medium">hCaptcha (Bot-Schutz und Spam-Prävention)</div>
+      <div class="space-y-2 pb-8">
+        <div>
+          Zum Schutz unserer Formulare (Kontaktformular, Mitgliedschaftsantrag,
+          Newsletter-Anmeldung, Veranstaltungsbuchung) vor missbräuchlicher automatisierter
+          Nutzung setzen wir den Dienst hCaptcha ein. hCaptcha prüft, ob die Eingabe in einem
+          Formular durch einen Menschen oder durch ein automatisiertes Programm erfolgt. Hierzu
+          werden Verhaltens- und Nutzungsdaten (z.B. Mausbewegungen, Verweildauer, IP-Adresse,
+          Browser-Informationen) durch hCaptcha analysiert.
+        </div>
+        <div>
+          Die mittels hCaptcha erhobenen Daten werden ausschließlich zur Erkennung von Bots und
+          zur Spam-Prävention verwendet. Die Datenverarbeitung erfolgt auf Grundlage unseres
+          berechtigten Interesses an der Sicherheit unserer Online-Dienste und der Vermeidung
+          von Missbrauch.
+        </div>
+        <ul class="m-elements list-disc pl-6">
+          <li>
+            <strong>Verarbeitete Datenarten:</strong> Nutzungsdaten (z.B. besuchte Webseiten, Interesse
+            an Inhalten, Zugriffszeiten), Meta-/Kommunikationsdaten (z.B. Geräte-Informationen,
+            IP-Adressen).
+          </li>
+          <li>
+            <strong>Betroffene Personen:</strong> Nutzer (z.B. Webseitenbesucher, Nutzer von
+            Onlinediensten).
+          </li>
+          <li>
+            <strong>Zwecke der Verarbeitung:</strong> Sicherheitsmaßnahmen, Spam-Prävention,
+            Bot-Erkennung.
+          </li>
+          <li>
+            <strong>Rechtsgrundlagen:</strong> Berechtigte Interessen (Art. 6 Abs. 1 S. 1 lit. f. DSGVO).
+          </li>
+        </ul>
+        <div><strong>Eingesetzte Dienste und Diensteanbieter:</strong></div>
+        <ul class="m-elements list-disc pl-6">
+          <li>
+            <strong>hCaptcha:</strong> Bot-Erkennungs- und Spam-Schutzdienst; Dienstanbieter: Intuition
+            Machines, Inc., 350 Alabama St, San Francisco, CA 94110, USA; Website:
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="https://www.hcaptcha.com"
+              target="_blank"
+              rel="noreferrer">https://www.hcaptcha.com</a
+            >; Datenschutzerklärung:
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="https://www.hcaptcha.com/privacy"
+              target="_blank"
+              rel="noreferrer">https://www.hcaptcha.com/privacy</a
+            >.
+          </li>
+        </ul>
+      </div>
+      <div id="mYouTube" class="pb-4 text-2xl font-medium">YouTube (Eingebettete Videos)</div>
+      <div class="space-y-2 pb-8">
+        <div>
+          Auf unserer Startseite betten wir Videos der Plattform YouTube ein. Betreiber von
+          YouTube ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.
+          Beim Aufruf einer Seite mit eingebettetem YouTube-Video wird eine Verbindung zu den
+          YouTube-Servern hergestellt. Dabei können Daten, insbesondere die IP-Adresse sowie
+          Informationen über den verwendeten Browser und das Betriebssystem, an YouTube
+          übermittelt werden. Wenn Sie während des Besuchs unserer Webseite in Ihrem
+          YouTube-Konto eingeloggt sind, kann YouTube Ihr Surfverhalten direkt Ihrem
+          persönlichen Profil zuordnen.
+        </div>
+        <div>
+          Die Einbettung erfolgt datenschutzfreundlich über einen von Astro bereitgestellten
+          Embed-Dienst (<code>@astro-community/astro-embed-youtube</code>), der die
+          Verbindungsaufnahme zu YouTube erst nach aktiver Einwilligung des Nutzers herstellt.
+        </div>
+        <ul class="m-elements list-disc pl-6">
+          <li>
+            <strong>Verarbeitete Datenarten:</strong> Nutzungsdaten (z.B. besuchte Webseiten, Interesse
+            an Inhalten, Zugriffszeiten), Meta-/Kommunikationsdaten (z.B. Geräte-Informationen,
+            IP-Adressen).
+          </li>
+          <li>
+            <strong>Betroffene Personen:</strong> Nutzer (z.B. Webseitenbesucher, Nutzer von
+            Onlinediensten).
+          </li>
+          <li>
+            <strong>Zwecke der Verarbeitung:</strong> Bereitstellung von Videoinhalten.
+          </li>
+          <li>
+            <strong>Rechtsgrundlagen:</strong> Einwilligung (Art. 6 Abs. 1 S. 1 lit. a DSGVO),
+            Berechtigte Interessen (Art. 6 Abs. 1 S. 1 lit. f. DSGVO).
+          </li>
+        </ul>
+        <div><strong>Eingesetzte Dienste und Diensteanbieter:</strong></div>
+        <ul class="m-elements list-disc pl-6">
+          <li>
+            <strong>YouTube:</strong> Videoplattform; Dienstanbieter: Google Ireland Limited,
+            Gordon House, Barrow Street, Dublin 4, Irland, Mutterunternehmen: Google LLC,
+            1600 Amphitheatre Parkway, Mountain View, CA 94043, USA; Website:
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="https://www.youtube.com"
+              target="_blank"
+              rel="noreferrer">https://www.youtube.com</a
+            >; Datenschutzerklärung:
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noreferrer">https://policies.google.com/privacy</a
+            >.
+          </li>
+        </ul>
+      </div>
+      <div id="mCalendar" class="pb-4 text-2xl font-medium">Google Calendar (Eingebettete Kalender)</div>
+      <div class="space-y-2 pb-8">
+        <div>
+          Auf unseren Seiten „Kunstrasen“ und „Termine“ binden wir Kalender von Google Calendar
+          per iframe ein, um Belegungspläne und Veranstaltungstermine anzuzeigen. Beim Aufruf
+          dieser Seiten wird eine Verbindung zu den Google-Servern hergestellt. Dabei werden
+          Daten, insbesondere die IP-Adresse sowie Informationen über den verwendeten Browser
+          und das Betriebssystem, an Google übermittelt. Wenn Sie während des Besuchs unserer
+          Webseite in Ihrem Google-Konto eingeloggt sind, kann Google Ihr Surfverhalten direkt
+          Ihrem persönlichen Profil zuordnen.
+        </div>
+        <ul class="m-elements list-disc pl-6">
+          <li>
+            <strong>Verarbeitete Datenarten:</strong> Nutzungsdaten (z.B. besuchte Webseiten, Interesse
+            an Inhalten, Zugriffszeiten), Meta-/Kommunikationsdaten (z.B. Geräte-Informationen,
+            IP-Adressen).
+          </li>
+          <li>
+            <strong>Betroffene Personen:</strong> Nutzer (z.B. Webseitenbesucher, Nutzer von
+            Onlinediensten).
+          </li>
+          <li>
+            <strong>Zwecke der Verarbeitung:</strong> Bereitstellung von Kalenderinformationen.
+          </li>
+          <li>
+            <strong>Rechtsgrundlagen:</strong> Berechtigte Interessen (Art. 6 Abs. 1 S. 1 lit. f. DSGVO).
+          </li>
+        </ul>
+        <div><strong>Eingesetzte Dienste und Diensteanbieter:</strong></div>
+        <ul class="m-elements list-disc pl-6">
+          <li>
+            <strong>Google Calendar:</strong> Kalenderdienst; Dienstanbieter: Google Ireland Limited,
+            Gordon House, Barrow Street, Dublin 4, Irland, Mutterunternehmen: Google LLC,
+            1600 Amphitheatre Parkway, Mountain View, CA 94043, USA; Website:
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="https://calendar.google.com"
+              target="_blank"
+              rel="noreferrer">https://calendar.google.com</a
+            >; Datenschutzerklärung:
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noreferrer">https://policies.google.com/privacy</a
+            >.
+          </li>
+        </ul>
+      </div>
+      <div id="mRollbar" class="pb-4 text-2xl font-medium">Fehlerüberwachung (Rollbar)</div>
+      <div class="space-y-2 pb-8">
+        <div>
+          Zur Sicherstellung der technischen Stabilität und zur schnellen Fehlerbehebung setzen
+          wir den Fehlerüberwachungsdienst Rollbar ein. Treten bei der Nutzung unserer Webseite
+          technische Fehler (z.B. JavaScript-Fehler) auf, werden Informationen über den Fehler,
+          den verwendeten Browser, das Betriebssystem und die IP-Adresse an Rollbar übermittelt.
+          Diese Daten dienen ausschließlich der Fehleranalyse und -behebung.
+        </div>
+        <ul class="m-elements list-disc pl-6">
+          <li>
+            <strong>Verarbeitete Datenarten:</strong> Nutzungsdaten (z.B. besuchte Webseiten, Interesse
+            an Inhalten, Zugriffszeiten), Meta-/Kommunikationsdaten (z.B. Geräte-Informationen,
+            IP-Adressen).
+          </li>
+          <li>
+            <strong>Betroffene Personen:</strong> Nutzer (z.B. Webseitenbesucher, Nutzer von
+            Onlinediensten).
+          </li>
+          <li>
+            <strong>Zwecke der Verarbeitung:</strong> Fehleranalyse, Qualitätssicherung,
+            technische Stabilität.
+          </li>
+          <li>
+            <strong>Rechtsgrundlagen:</strong> Berechtigte Interessen (Art. 6 Abs. 1 S. 1 lit. f. DSGVO).
+          </li>
+        </ul>
+        <div><strong>Eingesetzte Dienste und Diensteanbieter:</strong></div>
+        <ul class="m-elements list-disc pl-6">
+          <li>
+            <strong>Rollbar:</strong> Fehlerüberwachungsdienst; Dienstanbieter: Rollbar, Inc.,
+            50 California St, Suite 1500, San Francisco, CA 94111, USA; Website:
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="https://rollbar.com"
+              target="_blank"
+              rel="noreferrer">https://rollbar.com</a
+            >; Datenschutzerklärung:
+            <a
+              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
+              href="https://docs.rollbar.com/docs/privacy-policy"
+              target="_blank"
+              rel="noreferrer">https://docs.rollbar.com/docs/privacy-policy</a
+            >.
+          </li>
+        </ul>
       </div>
       <div id="m17" class="pb-4 text-2xl font-medium">Newsletter und Breitenkommunikation</div>
       <div class="space-y-2 pb-8">
@@ -763,46 +1098,7 @@ const meta = {
             >.
           </li>
         </ul>
-        <div><strong>Eingesetzte Dienste und Diensteanbieter:</strong></div>
-        <ul class="m-elements list-disc pl-6">
-          <li>
-            <strong>Google Analytics:</strong> Onlinemarketing und Webanalyse; Dienstanbieter: Google
-            Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland, Mutterunternehmen: Google
-            LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA; Website:
-            <a
-              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
-              href="https://marketingplatform.google.com/intl/de/about/analytics/"
-              target="_blank"
-              rel="noreferrer">https://marketingplatform.google.com/intl/de/about/analytics/</a
-            >; Datenschutzerklärung:
-            <a
-              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
-              href="https://policies.google.com/privacy"
-              target="_blank"
-              rel="noreferrer">https://policies.google.com/privacy</a
-            >; Privacy Shield (Gewährleistung Datenschutzniveau bei Verarbeitung von Daten in den
-            USA):
-            <a
-              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
-              href="https://www.privacyshield.gov/participant?id=a2zt000000001L5AAI&status=Active"
-              target="_blank"
-              rel="noreferrer"
-              >https://www.privacyshield.gov/participant?id=a2zt000000001L5AAI&status=Active</a
-            >; Widerspruchsmöglichkeit (Opt-Out): Opt-Out-Plugin:
-            <a
-              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
-              href="https://tools.google.com/dlpage/gaoptout?hl=de"
-              target="_blank"
-              rel="noreferrer">https://tools.google.com/dlpage/gaoptout?hl=de</a
-            >, Einstellungen für die Darstellung von Werbeeinblendungen:
-            <a
-              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
-              href="https://adssettings.google.com/authenticated"
-              target="_blank"
-              rel="noreferrer">https://adssettings.google.com/authenticated</a
-            >.
-          </li>
-        </ul>
+
       </div>
       <div id="m136" class="pb-4 text-2xl font-medium">Präsenzen in sozialen Netzwerke</div>
       <div class="space-y-2 pb-8">
@@ -861,54 +1157,7 @@ const meta = {
             <strong>Rechtsgrundlagen:</strong> Berechtigte Interessen (Art. 6 Abs. 1 S. 1 lit. f. DSGVO).
           </li>
         </ul>
-        <div><strong>Eingesetzte Dienste und Diensteanbieter:</strong></div>
-        <ul class="m-elements list-disc pl-6">
-          <li>
-            <strong>Facebook:</strong> Soziales Netzwerk; Dienstanbieter: Facebook Ireland Ltd., 4 Grand
-            Canal Square, Grand Canal Harbour, Dublin 2, Irland, Mutterunternehmen: Facebook, 1 Hacker
-            Way, Menlo Park, CA 94025, USA; Website:
-            <a
-              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
-              href="https://www.facebook.com"
-              target="_blank"
-              rel="noreferrer">https://www.facebook.com</a
-            >; Datenschutzerklärung:
-            <a
-              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
-              href="https://www.facebook.com/about/privacy"
-              target="_blank"
-              rel="noreferrer">https://www.facebook.com/about/privacy</a
-            >; Privacy Shield (Gewährleistung Datenschutzniveau bei Verarbeitung von Daten in den
-            USA):
-            <a
-              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
-              href="https://www.privacyshield.gov/participant?id=a2zt0000000GnywAAC&status=Active"
-              target="_blank"
-              rel="noreferrer"
-              >https://www.privacyshield.gov/participant?id=a2zt0000000GnywAAC&status=Active</a
-            >; Widerspruchsmöglichkeit (Opt-Out): Einstellungen für Werbeanzeigen:
-            <a
-              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
-              href="https://www.facebook.com/settings?tab=ads"
-              target="_blank"
-              rel="noreferrer">https://www.facebook.com/settings?tab=ads</a
-            >; Zusätzliche Hinweise zum Datenschutz: Vereinbarung über gemeinsame Verarbeitung
-            personenbezogener Daten auf Facebook-Seiten:
-            <a
-              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
-              href="https://www.facebook.com/legal/terms/page_controller_addendum"
-              target="_blank"
-              rel="noreferrer">https://www.facebook.com/legal/terms/page_controller_addendum</a
-            >, Datenschutzhinweise für Facebook-Seiten:
-            <a
-              class="hover:text-primary text-gray-600 duration-300 dark:text-gray-400 dark:hover:text-white"
-              href="https://www.facebook.com/legal/terms/information_about_page_insights_data"
-              target="_blank"
-              rel="noreferrer"
-              >https://www.facebook.com/legal/terms/information_about_page_insights_data</a
-            >.
-          </li>
-        </ul>
+
       </div>
       <div id="m12" class="pb-4 text-2xl font-medium">Löschung von Daten</div>
       <div class="space-y-2 pb-8">

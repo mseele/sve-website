@@ -50,8 +50,9 @@ src/
 
 Access via `import.meta.env.*`:
 
-- Client: `BACKEND_API`, `CAPTCHA_SITE_KEY`, `PREVIEW`
+- Client: `BACKEND_API`, `CAPTCHA_SITE_KEY`, `PREVIEW`, `ROLLBAR_ACCESS_TOKEN` (optional), `GIT_SHA` (optional, set by the build)
 - Server: `CONTENTFUL_*` tokens, `SUBDOMAIN`
+- Build-only (Netlify, not exposed to the client): `ROLLBAR_POST_SERVER_ITEM_TOKEN` — used by `scripts/upload-sourcemaps.ts` to upload source maps to Rollbar.
 
 ## Git
 

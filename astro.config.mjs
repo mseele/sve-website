@@ -48,6 +48,16 @@ export default defineConfig({
       BACKEND_API: envField.string({ context: 'client', access: 'public' }),
       PREVIEW: envField.boolean({ context: 'client', access: 'public' }),
       CAPTCHA_SITE_KEY: envField.string({ context: 'client', access: 'public' }),
+      ROLLBAR_ACCESS_TOKEN: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: true,
+      }),
+      GIT_SHA: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: true,
+      }),
       CONTENTFUL_SPACE_ID: envField.string({ context: 'server', access: 'public' }),
       CONTENTFUL_DELIVERY_TOKEN: envField.string({ context: 'server', access: 'public' }),
       CONTENTFUL_PREVIEW_TOKEN: envField.string({ context: 'server', access: 'public' }),
@@ -60,5 +70,11 @@ export default defineConfig({
       },
     },
     plugins: [tailwindcss()],
+    // Hidden source maps: emit `.js.map` files for Rollbar upload, but do not
+    // append `//# sourceMappingURL=` comments to the shipped JS, so the maps
+    // are never publicly fetchable. See ADR-0002.
+    build: {
+      sourcemap: 'hidden',
+    },
   },
 })

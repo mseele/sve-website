@@ -246,6 +246,13 @@ export interface FamilyMember {
   birthday: string
 }
 
+export interface ReportErrorContext {
+  component?: string
+  eventId?: string
+  availability?: string
+  query?: string
+}
+
 export interface MembershipApplication {
   newsletter?: boolean
   membership_type?: string

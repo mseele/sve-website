@@ -7,6 +7,7 @@ import {
   validateIbanInput,
 } from '@/client/forms'
 import { notify } from '@/client/notifications'
+import { reportError } from '@/client/rollbar'
 import '@hcaptcha/vanilla-hcaptcha'
 import type { VanillaHCaptchaWebComponent } from '@hcaptcha/vanilla-hcaptcha'
 
@@ -289,7 +290,7 @@ export function init() {
             )
           }
         } catch (err) {
-          console.error(err)
+          reportError(err, { component: 'mitgliedschaft' })
           notify(
             'Mitgliedschaft',
             'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',

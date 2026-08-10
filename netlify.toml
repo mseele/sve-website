@@ -1,7 +1,14 @@
 [build]
 base = "/"
 publish = "dist/"
-command = "bun run build"
+# Auth `GIT_SHA` (shared by the client `code_version` payload and the source
+# map upload) from Netlify's COMMIT_REF, falling back to a local `git rev-parse`.
+# Then build, upload hidden source maps to Rollbar, and delete the `.js.map`
+# files so they are not shipped in the published `dist/` (hidden maps must not
+# be publicly fetchable). The upload is a no-op (exit 0) when
+# `ROLLBAR_POST_SERVER_ITEM_TOKEN` is unset; the deletion runs regardless so
+# the maps are never exposed even on token-less PR-preview builds.
+command = "export GIT_SHA=\"${COMMIT_REF:-$(git rev-parse HEAD)}\" && bun run build && bun run scripts/upload-sourcemaps.ts && find dist -name '*.js.map' -delete && bun run scripts/notify-rollbar-deploy.ts"
 
 [build.environment]
 NODE_ENV = "production"

@@ -64,6 +64,7 @@ import SepaMandate from '@/components/controls/SepaMandate.astro'
   import { prebooking, prebookWithIban } from '@/api/events'
   import { clearCustomValidityOnInput, validateIbanInput } from '@/client/forms'
   import { notify } from '@/client/notifications'
+  import { reportError } from '@/client/rollbar'
 
   document.addEventListener('DOMContentLoaded', async () => {
     const name = 'code'
@@ -123,7 +124,7 @@ import SepaMandate from '@/components/controls/SepaMandate.astro'
                     notify('Frühbuchung', response.message, true)
                   }
                 } catch (err) {
-                  console.error(err)
+                  reportError(err, { component: 'PreBooking', eventId: queryCode })
                   notify(
                     'Frühbuchung',
                     'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
@@ -140,7 +141,7 @@ import SepaMandate from '@/components/controls/SepaMandate.astro'
             notify('Frühbuchung', response.message, true)
           }
         } catch (err) {
-          console.error(err)
+          reportError(err, { component: 'PreBooking', eventId: queryCode })
           notify(
             'Frühbuchung',
             'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
