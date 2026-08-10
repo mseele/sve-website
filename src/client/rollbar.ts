@@ -1,3 +1,4 @@
+import type { ReportErrorContext } from '@/types'
 import Rollbar from 'rollbar'
 import { GIT_SHA, PREVIEW, ROLLBAR_ACCESS_TOKEN } from 'astro:env/client'
 
@@ -21,13 +22,11 @@ const rollbar = ROLLBAR_ACCESS_TOKEN
     })
   : null
 
-export function reportError(...args: unknown[]): void {
-  console.error(...args)
-  for (const arg of args) {
-    if (arg instanceof Error) {
-      rollbar?.error(arg)
-      return
-    }
+export function reportError(error: unknown, context?: ReportErrorContext): void {
+  console.error(error)
+  if (error instanceof Error) {
+    rollbar?.error(error, context ? { custom: context } : undefined)
+    return
   }
-  rollbar?.error(args.join(' '))
+  rollbar?.error(String(error), context ? { custom: context } : undefined)
 }

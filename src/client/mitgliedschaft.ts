@@ -290,7 +290,7 @@ export function init() {
             )
           }
         } catch (err) {
-          reportError(err)
+          reportError(err, { component: 'mitgliedschaft' })
           notify(
             'Mitgliedschaft',
             'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',

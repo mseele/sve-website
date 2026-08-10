@@ -217,7 +217,7 @@ export async function loadEventsAvailability(
         callback(cache.data)
       }
     } catch (e) {
-      reportError('Error while parsing event availability from session storage', e)
+      reportError(e, { query: 'parseEventAvailability sessionStorage' })
     }
   }
 

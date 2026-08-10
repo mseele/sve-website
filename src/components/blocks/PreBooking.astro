@@ -124,7 +124,7 @@ import SepaMandate from '@/components/controls/SepaMandate.astro'
                     notify('Frühbuchung', response.message, true)
                   }
                 } catch (err) {
-                  reportError(err)
+                  reportError(err, { component: 'PreBooking', eventId: queryCode })
                   notify(
                     'Frühbuchung',
                     'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',
@@ -141,7 +141,7 @@ import SepaMandate from '@/components/controls/SepaMandate.astro'
             notify('Frühbuchung', response.message, true)
           }
         } catch (err) {
-          reportError(err)
+          reportError(err, { component: 'PreBooking', eventId: queryCode })
           notify(
             'Frühbuchung',
             'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',

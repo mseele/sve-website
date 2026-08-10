@@ -227,10 +227,7 @@ describe('loadEventsAvailability — fetch + sessionStorage cache', () => {
 
     expect(callback).toHaveBeenCalledTimes(1)
     expect(callback.mock.calls[0][0][EVENT_ID]).toEqual(expectedAvailabilityForFixture)
-    expect(errorSpy).toHaveBeenCalledWith(
-      'Error while parsing event availability from session storage',
-      expect.any(Error),
-    )
+    expect(errorSpy).toHaveBeenCalledWith(expect.any(Error))
     errorSpy.mockRestore()
   })
 

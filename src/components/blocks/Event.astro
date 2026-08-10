@@ -464,6 +464,8 @@ details.push({
     ?.getAttribute('data-identifier')
   const captcha = document.querySelector<VanillaHCaptchaWebComponent>('#captcha')
   if (id) {
+    let currentState: AvailabilityState | undefined
+
     const callback = (availability: EventAvailability) => {
       const element = document.querySelector<HTMLDivElement>('[data-label="availability"]')
       if (element) {
@@ -476,6 +478,7 @@ details.push({
         let button: string | undefined
 
         const state = availabilityState(availability)
+        currentState = state
         if (state === AvailabilityState.WaitingList) {
           title = 'Warteliste'
           description =
@@ -657,7 +660,7 @@ details.push({
             notify('Buchung', response.message, true)
           }
         } catch (err) {
-          reportError(err)
+          reportError(err, { component: 'Event', eventId: id, availability: currentState })
           notify(
             'Buchung',
             'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.',

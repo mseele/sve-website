@@ -20,7 +20,7 @@ describe('reportError', () => {
     vi.clearAllMocks()
   })
 
-  it('always calls console.error with the same arguments', async () => {
+  it('always calls console.error with the error argument', async () => {
     vi.doMock('astro:env/client', () => ({ ROLLBAR_ACCESS_TOKEN: undefined, GIT_SHA: undefined }))
     const { reportError } = await import('@/client/rollbar')
 
@@ -48,7 +48,7 @@ describe('reportError', () => {
 
     reportError('test error')
 
-    expect(mockRollbarError).toHaveBeenCalledWith('test error')
+    expect(mockRollbarError).toHaveBeenCalledWith('test error', undefined)
   })
 
   it('passes Error instances directly to Rollbar', async () => {
@@ -62,11 +62,11 @@ describe('reportError', () => {
     const err = new Error('test error object')
     reportError(err)
 
-    expect(mockRollbarError).toHaveBeenCalledWith(err)
+    expect(mockRollbarError).toHaveBeenCalledWith(err, undefined)
     expect(consoleErrorSpy).toHaveBeenCalledWith(err)
   })
 
-  it('handles multiple arguments by joining non-Error args', async () => {
+  it('passes context as custom data to Rollbar', async () => {
     mockRollbarError.mockClear()
     vi.doMock('astro:env/client', () => ({
       ROLLBAR_ACCESS_TOKEN: 'test-token',
@@ -74,10 +74,40 @@ describe('reportError', () => {
     }))
     const { reportError } = await import('@/client/rollbar')
 
-    reportError('msg', 'extra')
+    const err = new Error('booking failed')
+    reportError(err, { component: 'PreBooking', eventId: 'abc123', availability: 'FullyBooked' })
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith('msg', 'extra')
-    expect(mockRollbarError).toHaveBeenCalledWith('msg extra')
+    expect(mockRollbarError).toHaveBeenCalledWith(err, {
+      custom: { component: 'PreBooking', eventId: 'abc123', availability: 'FullyBooked' },
+    })
+  })
+
+  it('passes context with custom data for string errors', async () => {
+    mockRollbarError.mockClear()
+    vi.doMock('astro:env/client', () => ({
+      ROLLBAR_ACCESS_TOKEN: 'test-token',
+      GIT_SHA: undefined,
+    }))
+    const { reportError } = await import('@/client/rollbar')
+
+    reportError('something went wrong', { query: 'parseEventAvailability sessionStorage' })
+
+    expect(mockRollbarError).toHaveBeenCalledWith('something went wrong', {
+      custom: { query: 'parseEventAvailability sessionStorage' },
+    })
+  })
+
+  it('does not pass custom data when context is omitted', async () => {
+    mockRollbarError.mockClear()
+    vi.doMock('astro:env/client', () => ({
+      ROLLBAR_ACCESS_TOKEN: 'test-token',
+      GIT_SHA: undefined,
+    }))
+    const { reportError } = await import('@/client/rollbar')
+
+    reportError(new Error('simple error'))
+
+    expect(mockRollbarError).toHaveBeenCalledWith(expect.any(Error), undefined)
   })
 
   it('creates Rollbar with source map + code_version config when token is set', async () => {
