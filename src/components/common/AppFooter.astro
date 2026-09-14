@@ -2,9 +2,15 @@
 import { Icon } from 'astro-icon/components'
 import Container from './Container.astro'
 import { SITE } from '@/config.mjs'
-import { external } from '@/data/links'
+import { external, TEAMSHOP_URL } from '@/data/links'
 
-const links = [
+interface FooterLink {
+  to: string
+  label: string
+  external?: boolean
+}
+
+const links: FooterLink[] = [
   {
     to: '/impressum',
     label: 'Impressum',
@@ -25,6 +31,11 @@ const links = [
     to: '/newsletter',
     label: 'Newsletter',
   },
+  {
+    to: TEAMSHOP_URL,
+    label: 'Teamshop',
+    external: true,
+  },
 ]
 ---
 
@@ -42,7 +53,12 @@ const links = [
       {
         links.map((link) => (
           <li role="listitem">
-            <a href={link.to} class="hover:text-primary duration-300 dark:hover:text-white">
+            <a
+              href={link.to}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noreferrer' : undefined}
+              class="hover:text-primary duration-300 dark:hover:text-white"
+            >
               {link.label}
             </a>
           </li>

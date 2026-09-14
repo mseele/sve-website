@@ -1,3 +1,5 @@
+export const TEAMSHOP_URL = 'https://micki-teamshop.de/collections/sv-eutingen'
+
 export const external = [
   {
     to: 'https://www.instagram.com/sveutingen1947',
