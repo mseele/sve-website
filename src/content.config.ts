@@ -25,6 +25,8 @@ const news = defineCollection({
       imageLight: image(),
       imageDark: image(),
       download: z.string().optional(),
+      link: z.string().optional(),
+      linkLabel: z.string().optional(),
     }),
 })
 

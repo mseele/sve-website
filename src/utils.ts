@@ -81,3 +81,27 @@ export function formatCurrency(value: number): string {
     maximumFractionDigits: 2,
   }).format(value)
 }
+
+interface NewsCtaSource {
+  link?: string
+  download?: string
+  linkLabel?: string
+}
+
+export interface NewsCta {
+  href: string
+  target: '_blank' | undefined
+  label: string
+}
+
+export function newsCta(data: NewsCtaSource): NewsCta | undefined {
+  const href = data.link ?? data.download
+  if (!href) {
+    return undefined
+  }
+  return {
+    href,
+    target: data.link ? undefined : '_blank',
+    label: data.linkLabel ?? 'Weiterlesen',
+  }
+}

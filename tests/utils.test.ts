@@ -8,6 +8,7 @@ import {
   formatDatetime,
   formatDuration,
   formatTimespan,
+  newsCta,
 } from '@/utils'
 
 const toUtcIso = (year: number, month: number, day: number, hours = 0, minutes = 0) =>
@@ -226,5 +227,51 @@ describe('formatCurrency', () => {
 
   it('returns the original value when not coercible to a number', () => {
     expect(formatCurrency('not-a-number' as unknown as number)).toBe('not-a-number')
+  })
+})
+
+describe('newsCta', () => {
+  it('returns undefined when a news entry has neither a link nor a download', () => {
+    expect(newsCta({})).toBeUndefined()
+  })
+
+  it('renders an internal link in the same tab with the default label', () => {
+    expect(newsCta({ link: '/dfb-pokal' })).toEqual({
+      href: '/dfb-pokal',
+      target: undefined,
+      label: 'Weiterlesen',
+    })
+  })
+
+  it('uses `linkLabel` as the button text when supplied', () => {
+    expect(newsCta({ link: '/dfb-pokal', linkLabel: 'Alle Infos zum Spiel' })).toEqual({
+      href: '/dfb-pokal',
+      target: undefined,
+      label: 'Alle Infos zum Spiel',
+    })
+  })
+
+  it('keeps opening a download in a new tab', () => {
+    expect(newsCta({ download: '/downloads/2026/bericht.pdf' })).toEqual({
+      href: '/downloads/2026/bericht.pdf',
+      target: '_blank',
+      label: 'Weiterlesen',
+    })
+  })
+
+  it('lets the label apply to a download too', () => {
+    expect(newsCta({ download: '/downloads/2026/bericht.pdf', linkLabel: 'Bericht' })).toEqual({
+      href: '/downloads/2026/bericht.pdf',
+      target: '_blank',
+      label: 'Bericht',
+    })
+  })
+
+  it('prefers the link over the download when an entry sets both', () => {
+    expect(newsCta({ link: '/dfb-pokal', download: '/downloads/2026/bericht.pdf' })).toEqual({
+      href: '/dfb-pokal',
+      target: undefined,
+      label: 'Weiterlesen',
+    })
   })
 })
