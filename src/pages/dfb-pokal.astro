@@ -1,0 +1,506 @@
+---
+import fussballDark from '@/assets/pages/home-fussball-dark.jpg'
+import fussballLight from '@/assets/pages/home-fussball-light.jpg'
+import TeamshopTeaser from '@/components/blocks/TeamshopTeaser.astro'
+import Container from '@/components/common/Container.astro'
+import Prose from '@/components/common/Prose.astro'
+import { SITE } from '@/config.mjs'
+import Layout from '@/layouts/Layout.astro'
+import { Content as Weg } from '@/markdown/dfb-pokal.md'
+import { organizationRef, postalAddress, schemaImage, schemaJsonLd } from '@/schema'
+import type { MetaSEO } from '@/types'
+import { Picture } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import type { SportsEvent } from 'schema-dts'
+
+const KICKOFF = '2026-09-26T15:00:00+02:00'
+
+const description =
+  'DFB-Pokal, 1. Hauptrunde: Unsere Frauen empfangen am Samstag, 26. September um 15:00 Uhr den Zweitligisten FC Carl Zeiss Jena auf dem Sportgelände Eutingen. Alle Infos zu Eckdaten, Vorverkauf und Anfahrt.'
+
+const teams = [
+  { name: 'SV Eutingen', role: 'Verbandsliga' },
+  { name: 'FC Carl Zeiss Jena', role: '2. Bundesliga' },
+]
+
+const eckdaten = [
+  {
+    label: 'Wettbewerb',
+    value: 'DFB-Pokal',
+    sub: '1. Hauptrunde · Frauen',
+    icon: 'mdi:trophy-outline',
+  },
+  {
+    label: 'Spieltag',
+    value: 'Samstag, 26. September',
+    sub: '2026',
+    icon: 'mdi:calendar-star',
+  },
+  { label: 'Anpfiff', value: '15:00 Uhr', icon: 'mdi:clock-outline' },
+  { label: 'Einlass', value: 'ab 13:30 Uhr', icon: 'mdi:door-open' },
+  { label: 'Spielort', value: 'Sportgelände Eutingen', sub: 'Heimspiel', icon: 'mdi:map-marker-outline' },
+  {
+    label: 'Gegner',
+    value: 'FC Carl Zeiss Jena',
+    sub: '2. Bundesliga',
+    icon: 'mdi:shield-half-full',
+  },
+]
+
+const vorverkaufStellen = [
+  {
+    name: 'Bäckerei Platz',
+    hint: 'zu den Öffnungszeiten',
+    icon: 'mdi:bread-slice-outline',
+  },
+  {
+    name: 'Sportheim Auszeit',
+    hint: 'zu den Öffnungszeiten',
+    icon: 'mdi:glass-mug-variant',
+  },
+]
+
+const vorverkaufTermine = [
+  { day: '19', month: 'Sep', when: 'Samstag, 19. September', time: '10:00–12:00 Uhr' },
+  { day: '20', month: 'Sep', when: 'Sonntag, 20. September', time: '13:00–16:00 Uhr' },
+]
+
+const eventSchema = {
+  '@type': 'SportsEvent',
+  name: 'DFB-Pokal, 1. Hauptrunde: SV Eutingen – FC Carl Zeiss Jena',
+  description,
+  startDate: KICKOFF,
+  image: await schemaImage(fussballLight, Astro.site!),
+  location: {
+    '@type': 'Place',
+    name: 'Sportgelände Eutingen',
+    address: postalAddress,
+  },
+  organizer: organizationRef(Astro.site!),
+} satisfies SportsEvent
+
+const structuredData = schemaJsonLd(eventSchema)
+
+const meta: MetaSEO = {
+  title: 'DFB-Pokal',
+  description,
+  image: fussballLight,
+  structuredData,
+}
+---
+
+<Layout {meta}>
+  <div id="dfb-pokal" class="relative isolate overflow-hidden">
+    <div class="absolute inset-0">
+      <Picture
+        src={fussballLight}
+        class="h-full w-full object-cover dark:hidden"
+        alt="Fußballerinnen des SV Eutingen im Jubel"
+        widths={SITE.imageWidths}
+        formats={SITE.imageFormats}
+      />
+      <Picture
+        src={fussballDark}
+        class="hidden h-full w-full object-cover dark:block"
+        alt="Fußballerinnen des SV Eutingen im Jubel"
+        widths={SITE.imageWidths}
+        formats={SITE.imageFormats}
+      />
+    </div>
+    <div class="absolute inset-0 bg-white/70 dark:bg-darker/80"></div>
+    <div class="absolute inset-0 bg-linear-to-b from-white/50 via-transparent to-white dark:from-darker/40 dark:to-darker">
+    </div>
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-32 left-1/2 h-96 w-[42rem] -translate-x-1/2 rounded-full bg-linear-to-br from-red-400 to-primary opacity-40 blur-3xl dark:from-red-700/40 dark:to-primary/30"
+    >
+    </div>
+
+    <Container>
+      <div class="relative flex flex-col items-center pt-24 pb-16 text-center sm:pt-32">
+        <span
+          class="inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-1.5 text-xs font-semibold tracking-widest text-primary uppercase backdrop-blur dark:bg-gray-900/60 dark:text-red-400"
+        >
+          <Icon name="mdi:trophy" class="size-4" />
+          DFB-Pokal · 1. Hauptrunde
+        </span>
+
+        <h1
+          class="mt-6 text-5xl font-black tracking-tight text-gray-900 sm:text-6xl md:text-7xl dark:text-white"
+        >
+          Das Pokal-Highlight<br />
+          <span
+            class="shimmer bg-linear-to-r from-primary via-red-400 to-primary bg-clip-text text-transparent dark:from-red-400 dark:via-red-500 dark:to-red-400"
+          >
+            in Eutingen
+          </span>
+        </h1>
+
+        <p class="mt-6 max-w-2xl text-lg text-gray-700 dark:text-gray-200">
+          Unsere Frauen empfangen den Zweitligisten FC Carl Zeiss Jena. Ein voller Pokalsamstag auf
+          dem Sportgelände Eutingen — seid dabei, wenn Geschichte geschrieben wird.
+        </p>
+
+        <div class="relative mt-14 w-full max-w-3xl rounded-[2rem] bg-white/80 shadow-2xl shadow-black/5 backdrop-blur-xl dark:bg-gray-900/80 dark:shadow-black/40">
+          <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2 p-6 sm:gap-6 sm:p-8">
+            <div class="flex flex-col items-center gap-3">
+              <Icon name="logo" aria-hidden="true" class="h-16 w-auto sm:h-20" />
+              <div>
+                <p class="text-lg font-bold text-gray-900 sm:text-xl dark:text-white">
+                  {teams[0].name}
+                </p>
+                <p class="mt-0.5 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                  {teams[0].role}
+                </p>
+              </div>
+            </div>
+
+            <div class="flex flex-col items-center px-1 sm:px-4">
+              <span class="text-primary text-2xl font-black sm:text-4xl dark:text-red-500">VS</span>
+              <span
+                class="mt-2 inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-[0.65rem] font-semibold tracking-widest text-gray-500 uppercase dark:bg-gray-800 dark:text-gray-400"
+              >
+                <Icon name="mdi:clock-outline" class="size-3.5" />
+                15:00 Uhr
+              </span>
+            </div>
+
+            <div class="flex flex-col items-center gap-3">
+              <Icon name="jena" aria-hidden="true" class="h-16 w-auto sm:h-20" />
+              <div>
+                <p class="text-lg font-bold text-gray-900 sm:text-xl dark:text-white">
+                  {teams[1].name}
+                </p>
+                <p class="mt-0.5 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                  {teams[1].role}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-gray-200/70 px-6 py-4 text-sm font-medium text-gray-600 dark:border-gray-700/60 dark:text-gray-300"
+          >
+            <span class="inline-flex items-center gap-1.5">
+              <Icon name="mdi:calendar-star" class="text-primary size-4 dark:text-red-400" />
+              Samstag, 26. September 2026
+            </span>
+            <span class="inline-flex items-center gap-1.5">
+              <Icon name="mdi:map-marker-outline" class="text-primary size-4 dark:text-red-400" />
+              Sportgelände Eutingen
+            </span>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </div>
+
+  <div id="countdown">
+    <div
+      id="dfb-pokal-countdown"
+      data-kickoff={KICKOFF}
+      hidden
+      class="countdown-strip relative isolate bg-gray-950 py-20 sm:py-28 dark:bg-black"
+    >
+      <div
+        aria-hidden="true"
+        class="absolute -top-40 left-1/2 h-72 w-[42rem] -translate-x-1/2 rounded-full bg-primary/40 blur-3xl dark:bg-red-600/30"
+      >
+      </div>
+      <div
+        aria-hidden="true"
+        class="absolute -bottom-40 right-0 h-64 w-96 rounded-full bg-red-500/20 blur-3xl dark:bg-red-600/20"
+      >
+      </div>
+      <div aria-hidden="true" class="stripes absolute inset-0"></div>
+      <div
+        aria-hidden="true"
+        class="shimmer absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-primary to-transparent dark:via-red-500"
+      >
+      </div>
+
+      <Container>
+        <div class="relative flex flex-col items-center text-center">
+          <p
+            class="inline-flex items-center gap-3 text-xs font-semibold tracking-[0.25em] text-white/70 uppercase sm:text-sm"
+          >
+            <Icon name="mdi:clock-fast" class="size-5 text-red-500" />
+            Anpfiff in
+            <span class="relative flex size-2">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75">
+              </span>
+              <span class="relative inline-flex size-2 rounded-full bg-red-500"></span>
+            </span>
+          </p>
+
+          <div class="mt-10 flex items-center justify-center gap-2 sm:gap-6">
+            {
+              [
+                ['days', 'Tage'],
+                ['hours', 'Stunden'],
+                ['minutes', 'Minuten'],
+                ['seconds', 'Sekunden'],
+              ].map(([key, label], index) => (
+                <>
+                  {
+                    index > 0 && (
+                      <span
+                        aria-hidden="true"
+                        class="countdown-sep -translate-y-3 text-2xl font-black sm:text-5xl md:text-7xl"
+                      >
+                        :
+                      </span>
+                    )
+                  }
+                  <div class="flex flex-col items-center">
+                    <span data-countdown={key} class="countdown-digit text-4xl sm:text-6xl md:text-8xl">
+                      –
+                    </span>
+                    <span
+                      class="mt-3 text-[0.55rem] font-bold tracking-[0.25em] text-white/40 uppercase sm:text-xs"
+                    >
+                      {label}
+                    </span>
+                  </div>
+                </>
+              ))
+            }
+          </div>
+        </div>
+      </Container>
+    </div>
+  </div>
+
+  <div class="py-16" id="eckdaten">
+    <Container>
+      <p class="text-primary text-sm font-semibold tracking-widest uppercase dark:text-red-500">
+        Auf einen Blick
+      </p>
+      <h2 class="mt-2 text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
+        Eckdaten
+      </h2>
+      <dl class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          eckdaten.map((item) => (
+            <div class="group relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-5 transition duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-red-500/40">
+              <div class="flex items-start gap-4">
+                <span class="bg-primary/10 text-primary flex size-11 shrink-0 items-center justify-center rounded-xl dark:bg-red-500/15 dark:text-red-400">
+                  <Icon name={item.icon} class="size-6" />
+                </span>
+                <div class="min-w-0">
+                  <dt class="text-xs font-semibold tracking-widest text-gray-400 uppercase dark:text-gray-500">
+                    {item.label}
+                  </dt>
+                  <dd class="mt-1 text-lg font-semibold text-gray-900 dark:text-white">
+                    {item.value}
+                  </dd>
+                  {item.sub && <p class="text-sm text-gray-500 dark:text-gray-400">{item.sub}</p>}
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </dl>
+    </Container>
+  </div>
+
+  <div class="py-16" id="vorverkauf">
+    <Container>
+      <p class="text-primary text-sm font-semibold tracking-widest uppercase dark:text-red-500">
+        Eure Tickets
+      </p>
+      <h2 class="mt-2 text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
+        Vorverkauf
+      </h2>
+      <p class="mt-6 max-w-2xl text-gray-600 dark:text-gray-300">
+        Tickets fürs Pokal-Highlight bekommt ihr auf zwei Wegen — ganz ohne Online-Verkauf.
+      </p>
+
+      <div class="mt-10 grid gap-6 lg:grid-cols-2">
+        <div class="rounded-3xl bg-linear-to-b from-primary/40 to-transparent p-px dark:from-red-500/50">
+          <div class="flex h-full flex-col rounded-3xl bg-white p-6 sm:p-8 dark:bg-gray-900">
+            <div class="flex items-center gap-3">
+              <span class="bg-primary/10 text-primary flex size-11 items-center justify-center rounded-xl dark:bg-red-500/15 dark:text-red-400">
+                <Icon name="mdi:ticket-confirmation-outline" class="size-6" />
+              </span>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Immer erhältlich</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Bei unseren Vorverkaufsstellen</p>
+              </div>
+            </div>
+            <p class="mt-6 text-gray-600 dark:text-gray-300">
+              Tickets gibt es jederzeit bei der Bäckerei Platz und im Sportheim Auszeit — jeweils zu
+              den regulären Öffnungszeiten.
+            </p>
+            <ul class="mt-6 space-y-3">
+              {
+                vorverkaufStellen.map((stelle) => (
+                  <li class="flex items-center gap-4 rounded-2xl border border-gray-100 p-4 dark:border-gray-800">
+                    <Icon name={stelle.icon} class="text-primary size-7 shrink-0 dark:text-red-400" />
+                    <div>
+                      <p class="font-semibold text-gray-900 dark:text-white">{stelle.name}</p>
+                      <p class="text-sm text-gray-500 dark:text-gray-400">{stelle.hint}</p>
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+
+        <div class="rounded-3xl bg-linear-to-b from-primary/40 to-transparent p-px dark:from-red-500/50">
+          <div class="flex h-full flex-col rounded-3xl bg-white p-6 sm:p-8 dark:bg-gray-900">
+            <div class="flex items-center gap-3">
+              <span class="bg-primary/10 text-primary flex size-11 items-center justify-center rounded-xl dark:bg-red-500/15 dark:text-red-400">
+                <Icon name="mdi:calendar-clock" class="size-6" />
+              </span>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                  Extra-Vorverkauf
+                </h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Auf dem Sportplatz</p>
+              </div>
+            </div>
+            <p class="mt-6 text-gray-600 dark:text-gray-300">
+              Zusätzlich verkaufen wir Tickets an zwei Terminen direkt auf dem Sportgelände
+              Eutingen.
+            </p>
+            <ul class="mt-6 space-y-3">
+              {
+                vorverkaufTermine.map((termin) => (
+                  <li class="flex items-center gap-4 rounded-2xl border border-gray-100 p-4 dark:border-gray-800">
+                    <span class="bg-primary/10 text-primary flex size-14 shrink-0 flex-col items-center justify-center rounded-xl leading-none dark:bg-red-500/15 dark:text-red-400">
+                      <span class="text-[0.65rem] font-bold uppercase">{termin.month}</span>
+                      <span class="text-xl font-black tabular-nums">{termin.day}</span>
+                    </span>
+                    <div>
+                      <p class="font-semibold text-gray-900 dark:text-white">{termin.when}</p>
+                      <p class="text-sm text-gray-500 dark:text-gray-400">{termin.time}</p>
+                    </div>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </div>
+
+  <div class="py-16" id="weg">
+    <Container>
+      <p class="text-primary text-sm font-semibold tracking-widest uppercase dark:text-red-500">
+        Die Geschichte
+      </p>
+      <h2 class="mt-2 text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl dark:text-white">
+        Der Weg ins Pokal-Highlight
+      </h2>
+      <div class="mt-10">
+        <div class="relative overflow-hidden rounded-3xl bg-linear-to-b from-primary/40 to-transparent p-px dark:from-red-500/40">
+          <div class="relative overflow-hidden rounded-3xl bg-white p-8 md:p-12 dark:bg-gray-900">
+            <Icon
+              aria-hidden="true"
+              name="mdi:trophy-variant-outline"
+              class="text-primary/5 pointer-events-none absolute -top-8 -right-8 size-48 dark:text-red-500/10"
+            />
+            <div class="relative text-gray-600 dark:text-gray-300">
+              <Prose>
+                <Weg />
+              </Prose>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </div>
+
+  <TeamshopTeaser />
+</Layout>
+
+<style>
+  @keyframes shimmer {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+
+  .shimmer {
+    background-size: 200% 100%;
+    animation: shimmer 6s linear infinite;
+  }
+
+  .stripes {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.06) 0 1px,
+      transparent 1px 14px
+    );
+  }
+
+  .countdown-strip {
+    clip-path: polygon(0 3rem, 100% 0, 100% calc(100% - 3rem), 0 100%);
+  }
+
+  .countdown-digit {
+    font-variant-numeric: tabular-nums;
+    color: #fff;
+    text-shadow:
+      0 0 24px rgba(239, 68, 68, 0.55),
+      0 0 64px rgba(239, 68, 68, 0.35);
+  }
+
+  .countdown-sep {
+    color: rgb(248 113 113);
+    opacity: 0.75;
+    text-shadow: 0 0 16px rgba(239, 68, 68, 0.4);
+  }
+
+  :global(#weg h3) {
+    color: var(--color-primary);
+  }
+
+  :global(.dark #weg h3) {
+    color: rgb(239 68 68);
+  }
+</style>
+
+<script>
+  const countdown = document.getElementById('dfb-pokal-countdown')
+  const kickoff = countdown?.dataset.kickoff ? new Date(countdown.dataset.kickoff).getTime() : NaN
+
+  if (countdown && Number.isFinite(kickoff)) {
+    let timer: ReturnType<typeof setInterval> | undefined
+
+    const tick = () => {
+      const remaining = kickoff - Date.now()
+
+      if (remaining <= 0) {
+        countdown.hidden = true
+        if (timer) clearInterval(timer)
+        return
+      }
+
+      countdown.hidden = false
+
+      const units: Record<string, number> = {
+        days: Math.floor(remaining / 86_400_000),
+        hours: Math.floor((remaining % 86_400_000) / 3_600_000),
+        minutes: Math.floor((remaining % 3_600_000) / 60_000),
+        seconds: Math.floor((remaining % 60_000) / 1_000),
+      }
+
+      for (const [key, value] of Object.entries(units)) {
+        const element = countdown.querySelector(`[data-countdown="${key}"]`)
+        if (element) {
+          element.textContent = key === 'days' ? String(value) : String(value).padStart(2, '0')
+        }
+      }
+    }
+
+    timer = setInterval(tick, 1_000)
+    tick()
+  }
+</script>
