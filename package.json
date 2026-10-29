@@ -51,5 +51,8 @@
     "schema-dts": "^2.1.0",
     "tsrs": "^0.20.1-ts7.1.0-beta",
     "vitest": "^5.0.5"
+  },
+  "patchedDependencies": {
+    "astro-seo@1.2.0": "patches/astro-seo@1.2.0.patch"
   }
 }
