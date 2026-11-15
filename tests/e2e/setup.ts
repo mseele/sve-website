@@ -3,8 +3,8 @@ import {
   bookingSuccessResponse,
   rawCounterFixture,
   rawEventsFixture,
-} from '../mocks/handlers/events'
-import { formsSuccessResponse } from '../mocks/handlers/forms'
+} from '../mocks/handlers/events.ts'
+import { formsSuccessResponse } from '../mocks/handlers/forms.ts'
 
 const BACKEND_API = process.env.BACKEND_API || 'http://backend.test'
 

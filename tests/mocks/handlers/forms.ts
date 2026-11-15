@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import { BACKEND_API } from '../backend'
+import { BACKEND_API } from '../backend.ts'
 
 export const CONTACT_MESSAGE_URL = `${BACKEND_API}/contact/message`
 export const NEWS_SUBSCRIBE_URL = `${BACKEND_API}/news/subscribe`

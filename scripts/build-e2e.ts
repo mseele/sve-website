@@ -9,9 +9,10 @@ process.env.CONTENTFUL_PREVIEW_TOKEN = process.env.CONTENTFUL_PREVIEW_TOKEN || '
 process.env.SUBDOMAIN = process.env.SUBDOMAIN || 'test'
 
 const { build } = await import('astro')
-const { e2eServer } = await import('../tests/mocks/e2e-server')
+const { e2eServer } = await import('../tests/mocks/e2e-server.ts')
+const { onUnhandledFrame } = await import('../tests/mocks/on-unhandled-frame.ts')
 
-e2eServer.listen({ onUnhandledRequest: 'error' })
+e2eServer.listen({ onUnhandledFrame })
 
 try {
   await build({})

@@ -1,0 +1,38 @@
+diff --git a/src/components/ExtendedTags.astro b/src/components/ExtendedTags.astro
+index aa397041c0294f79fcc0cd95bf6a8a46c5051584..7c4535808894a3fa1609fe91cf62b9e8315c2239 100644
+--- a/src/components/ExtendedTags.astro
++++ b/src/components/ExtendedTags.astro
+@@ -4,11 +4,19 @@ import type { HTMLAttributes } from "astro/types";
+ const { props } = Astro;
+ 
+ type Link = HTMLAttributes<"link">;
++
++interface MetaTag {
++  content?: string;
++  httpEquiv?: string;
++  media?: string;
++  name?: string;
++  property?: string;
++}
+ ---
+ 
+ {props.extend.link?.map((attributes: Link) => <link {...attributes} />)}
+ {
+-  props.extend.meta?.map(({ content, httpEquiv, media, name, property }) => (
++  props.extend.meta?.map(({ content, httpEquiv, media, name, property }: MetaTag) => (
+     <meta
+       name={name}
+       property={property}
+diff --git a/src/components/LanguageAlternatesTags.astro b/src/components/LanguageAlternatesTags.astro
+index 75f71b9094e9ee57ff30ffab25a6b954f3c12a91..07e44d717febba28256a452ffaba081a9478b923 100644
+--- a/src/components/LanguageAlternatesTags.astro
++++ b/src/components/LanguageAlternatesTags.astro
+@@ -12,7 +12,7 @@ const { languageAlternates } = Astro.props;
+ ---
+ 
+ {
+-  languageAlternates.map((alternate: LanguageAlternate) => (
++  languageAlternates?.map((alternate: LanguageAlternate) => (
+     <link rel="alternate" hreflang={alternate.hrefLang} href={alternate.href} />
+   ))
+ }
