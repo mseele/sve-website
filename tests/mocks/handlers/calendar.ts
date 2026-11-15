@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import { BACKEND_API } from '../backend'
+import { BACKEND_API } from '../backend.ts'
 
 export const CALENDAR_APPOINTMENTS_URL = `${BACKEND_API}/calendar/appointments`
 

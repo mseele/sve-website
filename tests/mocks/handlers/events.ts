@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import { BACKEND_API } from '../backend'
+import { BACKEND_API } from '../backend.ts'
 
 export const EVENTS_URL = `${BACKEND_API}/events`
 export const EVENTS_COUNTER_URL = `${BACKEND_API}/events/counter`

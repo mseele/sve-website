@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "build:e2e": "bun scripts/build-e2e.ts",
+    "build:e2e": "node scripts/build-e2e.ts",
     "check": "oxlint src/ && astro sync && tsrs --noEmit --runExternalCode && vitest run && bun run test:e2e",
     "test": "vitest run",
     "test:e2e": "bun run build:e2e && bunx playwright test",
@@ -45,7 +45,7 @@
     "@types/bun": "^1.4.4",
     "cheerio": "^1.2.0",
     "happy-dom": "^21.0.4",
-    "msw": "^2.15.0",
+    "msw": "^3.0.6",
     "oxfmt": "^0.78.0",
     "oxlint": "^1.93.0",
     "schema-dts": "^2.1.0",
