@@ -1,12 +1,14 @@
 # AGENTS.md - Coding Guidelines for SV Eutingen Website
 
-Astro-based static website for SV Eutingen 1947 e.V. Uses TypeScript, Tailwind CSS v4, and Contentful CMS. No test suite.
+Astro-based static website for SV Eutingen 1947 e.V. Uses TypeScript, Tailwind CSS v4, and Contentful CMS. Unit-tested with Vitest + MSW; e2e with Playwright.
 
 ## Build Commands
 
 - `bun run dev` — development server
 - `bun run build` — production build
-- `bun run check` — TypeScript + Astro check
+- `bun run check` — full pipeline: lint, typecheck, unit suite, e2e; run before committing
+- `bun run test` — unit tests only (Vitest)
+- `bun run test:e2e` — e2e build + Playwright run
 - `bun run format` — format with `oxfmt`
 - `bun install` — install dependencies
 
