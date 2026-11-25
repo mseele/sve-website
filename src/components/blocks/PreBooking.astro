@@ -61,7 +61,7 @@ import SepaMandate from '@/components/controls/SepaMandate.astro'
 </div>
 
 <script>
-  import { prebooking, prebookWithIban } from '@/api/events'
+  import { prebooking, prebookWithIban } from '@/client/event-booking'
   import { clearCustomValidityOnInput, validateIbanInput } from '@/client/forms'
   import { notify } from '@/client/notifications'
   import { reportError } from '@/client/rollbar'

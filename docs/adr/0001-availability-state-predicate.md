@@ -4,6 +4,7 @@ Date: 2026-07-23
 Status: Accepted
 Resolves: Issue #400 (decisions B1 and B2-i)
 Touches: `src/types.ts`, `src/api/events.ts`, `src/components/blocks/Event.astro`, `src/components/blocks/Events.astro`, `tests/api/events.test.ts`, `CONTEXT.md`
+Updated: 2026-11-25 — placement moved to `src/domain/availability.ts` (see addendum)
 
 ## Context
 
@@ -56,4 +57,13 @@ B2-i is reversible in code (move the enum, update imports) but the bundle-size r
 
 ## Open questions
 
-- If `src/types.ts` ever drops its `zod` import (e.g. schemas move elsewhere), revisit colocating `AvailabilityState` back into `@/types` for conceptual ownership.
+- ~~If `src/types.ts` ever drops its `zod` import (e.g. schemas move elsewhere), revisit colocating `AvailabilityState` back into `@/types` for conceptual ownership.~~ — Resolved 2026-11-25, see addendum.
+
+## Addendum (2026-11-25): placement moved to `src/domain/availability.ts`
+
+The `zod` dependency has left `src/types.ts`: the runtime schemas (`personObject`, `phoneNumberObject`) moved to `src/content-schemas.ts` and `src/types.ts` is now type-only (no runtime imports, no runtime exports). The open question above is thereby resolved — with one refinement:
+
+- `AvailabilityState` is a runtime _enum_, and `src/types.ts` must stay type-only, so the enum does **not** move into `@/types`. Conceptual ownership is served by a dedicated dependency-free domain module instead: `src/domain/availability.ts` now owns `AvailabilityState`, `availabilityState`, `canSubscribe`, `convertToEventAvailability` and `calculateAvailabilityMessage`.
+- `src/api/events.ts` no longer exists. Its remaining responsibilities split by seam: the build-time loader lives in `src/api/events-server.ts` (server-only, consumed by `src/content.config.ts`) and the browser fetch/cache/booking adapter lives in `src/client/event-booking.ts` (consumed by the `<script>` bundles in `Event.astro`, `Events.astro`, `PreBooking.astro`).
+
+The bundle side-effect that drove the original placement is now pinned by a test instead of argued from memory: `tests/architecture/browser-imports.test.ts` fails if `src/types.ts` gains a runtime import, or if any browser-facing module imports `zod`, `@/content-schemas` or `@/api/events-server`. The contract tests moved with the code to `tests/domain/availability.test.ts`. The B1 decision (one phase-switched field) and the B2-i decision (one canonical reader) are unchanged.

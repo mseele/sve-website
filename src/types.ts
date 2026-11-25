@@ -1,5 +1,12 @@
 import type { ImageMetadata } from 'astro'
-import { z } from 'zod'
+import type { EventCustomFieldType, EventType, PaymentMethod } from '@/domain/events'
+
+/**
+ * Type-only module: no runtime imports, no runtime exports. Runtime values
+ * live in dependency-free domain modules (`src/domain/*`) so browser bundles
+ * can import them without side effects — pinned by
+ * `tests/architecture/browser-imports.test.ts`.
+ */
 
 export interface MetaSEO {
   title?: string
@@ -41,21 +48,27 @@ export interface Team {
   teamID?: string
 }
 
-export const phoneNumberObject = z.object({
-  formatted: z.string(),
-  raw: z.string(),
-})
-export type PhoneNumber = z.infer<typeof phoneNumberObject>
+/**
+ * Mirrors the `phoneNumberObject` Zod contract in `src/content-schemas.ts`
+ * (which strips the loader's surplus `id` field — see
+ * `tests/api/contentful.test.ts`).
+ */
+export interface PhoneNumber {
+  formatted: string
+  raw: string
+}
 
-export const personObject = z.object({
-  id: z.string(),
-  name: z.string(),
-  position: z.string(),
-  email: z.string().optional(),
-  mobile: phoneNumberObject.optional(),
-  phone: phoneNumberObject.optional(),
-})
-export type Person = z.infer<typeof personObject>
+/**
+ * Mirrors the `personObject` Zod contract in `src/content-schemas.ts`.
+ */
+export interface Person {
+  id: string
+  name: string
+  position: string
+  email?: string
+  mobile?: PhoneNumber
+  phone?: PhoneNumber
+}
 
 export interface Sponsor {
   name: string
@@ -126,16 +139,6 @@ export interface RawEventCustomField {
   max_value?: number | null
 }
 
-export enum EventCustomFieldType {
-  Text = 'Text',
-  Number = 'Number',
-}
-
-export enum PaymentMethod {
-  BankTransfer = 'BankTransfer',
-  SepaDirectDebit = 'SepaDirectDebit',
-}
-
 export interface Event {
   id: string
   name: string
@@ -153,11 +156,6 @@ export interface Event {
   externalOperator: boolean
   customFields: EventCustomField[]
   paymentMethod: PaymentMethod
-}
-
-export enum EventType {
-  Fitness = 'Fitness',
-  Events = 'Events',
 }
 
 export interface EventCustomField {
@@ -188,8 +186,9 @@ export interface RawEventCounter {
  * are in fact mutually exclusive — so we keep one phase-switched number and
  * document the switch here.
  *
- * Decode the sentinel through `availabilityState(av)` (see `src/api/events.ts`);
- * do not compare `availableSlots` to `-1` or `0` directly at consumer sites.
+ * Decode the sentinel through `availabilityState(av)` (see
+ * `src/domain/availability.ts`); do not compare `availableSlots` to `-1` or
+ * `0` directly at consumer sites.
  */
 export interface EventAvailability {
   /**

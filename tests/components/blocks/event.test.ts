@@ -10,7 +10,7 @@ import { describe, expect, it, vi } from 'vitest'
 import type { CollectionEntry } from 'astro:content'
 import Event from '@/components/blocks/Event.astro'
 import imageMetadata from '@/assets/events/fit.jpg'
-import { EventCustomFieldType, PaymentMethod } from '@/types'
+import { EventCustomFieldType, PaymentMethod } from '@/domain/events'
 import { render } from '../lib/container'
 
 // vi.mock is hoisted above the static imports above by the vitest transform,

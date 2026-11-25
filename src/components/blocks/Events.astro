@@ -72,7 +72,8 @@ const { type, entries, nothing, newsletterDescription, faqs } = Astro.props as P
 </div>
 
 <script>
-  import { AvailabilityState, availabilityState, loadEventsAvailability } from '@/api/events'
+  import { AvailabilityState, availabilityState } from '@/domain/availability'
+  import { loadEventsAvailability } from '@/client/event-booking'
 
   loadEventsAvailability((data) => {
     const elements = document.querySelectorAll<HTMLParagraphElement>(

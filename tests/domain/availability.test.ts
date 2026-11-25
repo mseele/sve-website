@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import {
   AvailabilityState,
@@ -5,10 +7,8 @@ import {
   calculateAvailabilityMessage,
   canSubscribe,
   convertToEventAvailability,
-} from '@/api/events'
+} from '@/domain/availability'
 import type { RawEventCounter } from '@/types'
-import { readFileSync } from 'node:fs'
-import { resolve } from 'node:path'
 
 const counter = (fields: Partial<RawEventCounter>): RawEventCounter => ({
   id: 'evt-1',
@@ -37,15 +37,15 @@ describe('convertToEventAvailability — producer sentinel + phase switch', () =
       expectedMessage: 'Freie Plätze verfügbar',
     },
     {
-      name: 'Subscribers open, many slots remaining',
-      input: counter({ max_subscribers: 10, subscribers: 2 }),
-      expectedSlots: 8,
+      name: 'Subscribing with slots remaining',
+      input: counter({ max_subscribers: 10, subscribers: 3 }),
+      expectedSlots: 7,
       expectedWaitingList: false,
       expectedState: AvailabilityState.Subscribing,
-      expectedMessage: 'Noch 8 freie Plätze',
+      expectedMessage: 'Noch 7 freie Plätze',
     },
     {
-      name: 'Subscribers open, exactly one slot remaining (singular message)',
+      name: 'Subscribing with exactly one slot',
       input: counter({ max_subscribers: 10, subscribers: 9 }),
       expectedSlots: 1,
       expectedWaitingList: false,
@@ -53,25 +53,38 @@ describe('convertToEventAvailability — producer sentinel + phase switch', () =
       expectedMessage: 'Noch 1 freier Platz',
     },
     {
-      name: 'Subscribers full, waiting-list open: phase switches, isWaitingList true',
+      name: 'Subscribers exactly at capacity, waiting-list open: phase switches',
       input: counter({
         max_subscribers: 10,
         subscribers: 10,
+        waiting_list: 0,
         max_waiting_list: 5,
-        waiting_list: 1,
       }),
-      expectedSlots: 4,
+      expectedSlots: 5,
       expectedWaitingList: true,
       expectedState: AvailabilityState.WaitingList,
       expectedMessage: 'Warteliste ist geöffnet',
     },
     {
-      name: 'Subscribers and waiting-list full: 0 + isWaitingList true (FullyBooked)',
+      name: 'Subscribers full, waiting-list remaining: counts waiting-list slots',
+      input: counter({
+        max_subscribers: 10,
+        subscribers: 11,
+        waiting_list: 2,
+        max_waiting_list: 5,
+      }),
+      expectedSlots: 3,
+      expectedWaitingList: true,
+      expectedState: AvailabilityState.WaitingList,
+      expectedMessage: 'Warteliste ist geöffnet',
+    },
+    {
+      name: 'Both phases exhausted: FullyBooked',
       input: counter({
         max_subscribers: 10,
         subscribers: 10,
-        max_waiting_list: 5,
         waiting_list: 5,
+        max_waiting_list: 5,
       }),
       expectedSlots: 0,
       expectedWaitingList: true,
@@ -79,17 +92,25 @@ describe('convertToEventAvailability — producer sentinel + phase switch', () =
       expectedMessage: 'Ausgebucht',
     },
     {
-      name: 'Unlimited event ignores the waiting-list phase entirely',
+      name: 'Unlimited event never switches to the waiting-list phase',
       input: counter({
         max_subscribers: -1,
         subscribers: 999,
-        max_waiting_list: 0,
-        waiting_list: 0,
+        waiting_list: 4,
+        max_waiting_list: 4,
       }),
       expectedSlots: -1,
       expectedWaitingList: false,
       expectedState: AvailabilityState.Unlimited,
       expectedMessage: 'Freie Plätze verfügbar',
+    },
+    {
+      name: 'Zero-capacity event with open waiting list goes straight to the waiting-list phase',
+      input: counter({ max_subscribers: 0, subscribers: 0, waiting_list: 0, max_waiting_list: 5 }),
+      expectedSlots: 5,
+      expectedWaitingList: true,
+      expectedState: AvailabilityState.WaitingList,
+      expectedMessage: 'Warteliste ist geöffnet',
     },
     {
       name: 'Subscribers exactly at capacity but waiting-list open does NOT underflow below zero',
@@ -234,7 +255,7 @@ describe('canSubscribe — "is booking open" predicate', () => {
 })
 
 describe('-1 contract — the sentinel is pinned to exactly two sites', () => {
-  const moduleSource = readFileSync(resolve(process.cwd(), 'src/api/events.ts'), 'utf8')
+  const moduleSource = readFileSync(resolve(process.cwd(), 'src/domain/availability.ts'), 'utf8')
 
   it('Unlimited never produces a "Noch N" or "Ausgebucht" message', () => {
     expect(calculateAvailabilityMessage({ availableSlots: -1, isWaitingList: false })).toBe(

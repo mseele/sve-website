@@ -2,8 +2,8 @@ import { glob } from 'astro/loaders'
 import { defineCollection, type SchemaContext } from 'astro:content'
 import { z } from 'astro/zod'
 import { loadSponsors, loadTeams } from '@/api/contentful'
-import { loadEvents } from '@/api/events'
-import { EventType } from '@/types'
+import { loadEvents } from '@/api/events-server'
+import { EventType } from '@/domain/events'
 import { sponsorSchema, teamSchema } from '@/content-schemas'
 
 const teams = defineCollection({
