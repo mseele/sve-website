@@ -17,13 +17,13 @@
   "dependencies": {
     "@astro-community/astro-embed-youtube": "^0.5.10",
     "@astrojs/netlify": "^8.2.14",
-    "@astrojs/sitemap": "^3.7.5",
+    "@astrojs/sitemap": "^3.7.6",
     "@astrojs/tailwind": "^6.0.2",
     "@hcaptcha/vanilla-hcaptcha": "^1.1.5",
     "@iconify-json/mdi": "^1.2.3",
     "@pagefind/default-ui": "^1.6.0",
     "@tailwindcss/typography": "^0.5.20",
-    "astro": "^7.4.12",
+    "astro": "^7.4.13",
     "astro-icon": "^1.2.0",
     "astro-pagefind": "^2.0.1",
     "astro-robots-txt": "^1.0.0",
@@ -42,15 +42,15 @@
     "@astrojs/ts-content-mapper": "^0.2.0",
     "@playwright/test": "^1.65.1",
     "@tailwindcss/vite": "^4.3.5",
-    "@types/bun": "^1.4.4",
+    "@types/bun": "^1.4.5",
     "cheerio": "^1.2.0",
     "happy-dom": "^21.0.4",
-    "msw": "^3.0.6",
-    "oxfmt": "^0.78.0",
-    "oxlint": "^1.93.0",
+    "msw": "^3.0.7",
+    "oxfmt": "^0.80.0",
+    "oxlint": "^1.95.0",
     "schema-dts": "^2.1.0",
-    "tsrs": "^0.25.0-ts7.1.0-beta",
-    "vitest": "^5.1.0"
+    "tsrs": "^7.1.0-beta.tsrs5",
+    "vitest": "^5.1.2"
   },
   "patchedDependencies": {
     "astro-seo@1.2.0": "patches/astro-seo@1.2.0.patch"
