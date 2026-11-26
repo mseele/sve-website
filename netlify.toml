@@ -13,6 +13,11 @@ command = "export GIT_SHA=\"${COMMIT_REF:-$(git rev-parse HEAD)}\" && bun run bu
 [build.environment]
 NODE_ENV = "production"
 NODE_VERSION = "24"
+# Keep in sync with the bun version that authors bun.lockb locally. Older bun
+# versions silently re-resolve the lockfile during install, which drifts the
+# node_modules layout (see the estree-walker hoisting that broke the Astro
+# config load on the 2026-11-26 deploy).
+BUN_VERSION = "1.4.5"
 
 [build.processing.html]
 pretty_urls = false
