@@ -63,6 +63,6 @@ Access via `import.meta.env.*`:
 
 ## Agent Skills
 
-- **Issue tracker**: GitHub issues in `mseele/sve-website`; external PRs are not triage items. See `docs/agents/issue-tracker.md`.
+- **Issue tracker**: GitHub issues in `mseele/sve-website`, managed via the `gh` CLI; external PRs are not triage items. See `docs/agents/issue-tracker.md`.
 - **Triage labels**: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
 - **Domain docs**: single-context repo; read `CONTEXT.md` and `docs/adr/` at the root. See `docs/agents/domain.md`.
