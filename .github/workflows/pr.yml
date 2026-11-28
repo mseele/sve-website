@@ -19,9 +19,10 @@ permissions:
 # PR gate for the website. `bun run check` runs oxlint, astro sync, tsrs,
 # vitest, and the Playwright e2e suite. Unlike the e2e build, astro sync
 # fetches live sources (backend events, Contentful), so the check job runs
-# with real credentials from repo secrets — parity with the dev machine.
-# Runs stay red until the secrets are set (see the wizard in the PR).
-# Netlify still handles deploy previews; nothing here deploys.
+# with real values — stage context, SUBDOMAIN mirrors the next-branch
+# Netlify setup. The Contentful tokens come from repo secrets; the public
+# site values below ship to every browser anyway. Netlify still handles
+# deploy previews; nothing here deploys.
 
 jobs:
   check:
@@ -47,13 +48,14 @@ jobs:
       - name: Check
         run: bun run check
         env:
-          # Real sources for astro sync's content fetch, matching the dev
-          # machine. Values live as repo secrets; PREVIEW is hardcoded to
-          # production semantics.
-          BACKEND_API: ${{ secrets.BACKEND_API }}
+          # astro sync fetches live sources (backend events, Contentful),
+          # so the check runs with real values in stage context. The public
+          # values ship to every browser anyway, so they are plain env; the
+          # Contentful tokens come from repo secrets.
+          BACKEND_API: https://backend.sv-eutingen.de/api
           PREVIEW: 'false'
-          CAPTCHA_SITE_KEY: ${{ secrets.CAPTCHA_SITE_KEY }}
+          CAPTCHA_SITE_KEY: 29527f82-bee8-43c4-91e4-45a2ec629158
           CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_DELIVERY_TOKEN: ${{ secrets.CONTENTFUL_DELIVERY_TOKEN }}
           CONTENTFUL_PREVIEW_TOKEN: ${{ secrets.CONTENTFUL_PREVIEW_TOKEN }}
-          SUBDOMAIN: ${{ secrets.SUBDOMAIN }}
+          SUBDOMAIN: next
