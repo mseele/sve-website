@@ -6,7 +6,11 @@ import {
 } from '../mocks/handlers/events.ts'
 import { formsSuccessResponse } from '../mocks/handlers/forms.ts'
 
-const BACKEND_API = process.env.BACKEND_API || 'http://backend.test'
+// Must match the origin scripts/build-e2e.ts hardcodes into the mocked
+// build. Deriving it from env breaks route matching whenever BACKEND_API
+// is exported (e.g. CI check jobs) while the built site keeps calling the
+// hardcoded origin, so backend submits escape the mock.
+const BACKEND_API = 'http://backend.test'
 
 const hcaptchaInitScript = `
   class HCaptchaMock extends HTMLElement {
