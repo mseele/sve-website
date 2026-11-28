@@ -4,7 +4,8 @@ on:
   workflow_dispatch:
   pull_request:
   push:
-    branches: [main]
+    # Development lands on `next` and is promoted to `main`; gate both.
+    branches: [main, next]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,10 +15,11 @@ permissions:
   contents: read
 
 # PR gate for the website. `bun run check` runs oxlint, astro sync, tsrs,
-# vitest, and the Playwright e2e suite. The e2e build mocks Contentful and
-# the backend (scripts/build-e2e.ts), so the whole gate runs secret-free.
-# Node is needed for scripts/build-e2e.ts. Netlify still handles deploy
-# previews; nothing here deploys.
+# vitest, and the Playwright e2e suite. Unlike the e2e build, astro sync
+# fetches live sources (backend events, Contentful), so the check job runs
+# with real credentials from repo secrets — parity with the dev machine.
+# Runs stay red until the secrets are set (see the wizard in the PR).
+# Netlify still handles deploy previews; nothing here deploys.
 
 jobs:
   check:
@@ -43,13 +45,13 @@ jobs:
       - name: Check
         run: bun run check
         env:
-          # astro sync constructs the Contentful clients at config load and
-          # the env schema requires these; same dummy set scripts/build-e2e.ts
-          # uses, so the gate stays secret-free.
-          BACKEND_API: http://backend.test
+          # Real sources for astro sync's content fetch, matching the dev
+          # machine. Values live as repo secrets; PREVIEW is hardcoded to
+          # production semantics.
+          BACKEND_API: ${{ secrets.BACKEND_API }}
           PREVIEW: 'false'
-          CAPTCHA_SITE_KEY: 10000000-ffff-ffff-ffff-000000000001
-          CONTENTFUL_SPACE_ID: test-space
-          CONTENTFUL_DELIVERY_TOKEN: test-delivery-token
-          CONTENTFUL_PREVIEW_TOKEN: test-preview-token
-          SUBDOMAIN: test
+          CAPTCHA_SITE_KEY: ${{ secrets.CAPTCHA_SITE_KEY }}
+          CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
+          CONTENTFUL_DELIVERY_TOKEN: ${{ secrets.CONTENTFUL_DELIVERY_TOKEN }}
+          CONTENTFUL_PREVIEW_TOKEN: ${{ secrets.CONTENTFUL_PREVIEW_TOKEN }}
+          SUBDOMAIN: ${{ secrets.SUBDOMAIN }}
