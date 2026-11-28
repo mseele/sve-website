@@ -1,0 +1,44 @@
+name: PR checks
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# PR gate for the website. `bun run check` runs oxlint, astro sync, tsrs,
+# vitest, and the Playwright e2e suite. The e2e build mocks Contentful and
+# the backend (scripts/build-e2e.ts), so the whole gate runs secret-free.
+# Node is needed for scripts/build-e2e.ts. Netlify still handles deploy
+# previews; nothing here deploys.
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: bunx playwright install --with-deps chromium
+
+      - name: Check
+        run: bun run check
