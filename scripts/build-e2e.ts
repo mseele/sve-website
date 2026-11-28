@@ -1,3 +1,5 @@
+// The mocked build calls this origin; tests/e2e/setup.ts route-mocks the
+// same value. Keep the two in sync.
 process.env.BACKEND_API = 'http://backend.test'
 process.env.PREVIEW = 'false'
 process.env.CAPTCHA_SITE_KEY =

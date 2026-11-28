@@ -1,0 +1,61 @@
+name: PR checks
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    # Stage-to-release flow: all work merges to `next` (stage), then a
+    # promotion PR carries `next` to `main` (release). Gate both branches;
+    # pull_request covers feature PRs into stage and promotions into main.
+    branches: [main, next]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# PR gate for the website. `bun run check` runs oxlint, astro sync, tsrs,
+# vitest, and the Playwright e2e suite. Unlike the e2e build, astro sync
+# fetches live sources (backend events, Contentful), so the check job runs
+# with real values — stage context, SUBDOMAIN mirrors the next-branch
+# Netlify setup. The Contentful tokens come from repo secrets; the public
+# site values below ship to every browser anyway. Netlify still handles
+# deploy previews; nothing here deploys.
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Setup bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: bunx playwright install --with-deps chromium
+
+      - name: Check
+        run: bun run check
+        env:
+          # astro sync fetches live sources (backend events, Contentful),
+          # so the check runs with real values in stage context. The public
+          # values ship to every browser anyway, so they are plain env; the
+          # Contentful tokens come from repo secrets.
+          BACKEND_API: https://backend.sv-eutingen.de/api
+          PREVIEW: 'false'
+          CAPTCHA_SITE_KEY: 29527f82-bee8-43c4-91e4-45a2ec629158
+          CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
+          CONTENTFUL_DELIVERY_TOKEN: ${{ secrets.CONTENTFUL_DELIVERY_TOKEN }}
+          CONTENTFUL_PREVIEW_TOKEN: ${{ secrets.CONTENTFUL_PREVIEW_TOKEN }}
+          SUBDOMAIN: next
