@@ -27,10 +27,13 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v7
 
+        # build:e2e runs `node scripts/build-e2e.ts`; bun does not ship a
+        # node binary, so the Node setup stays.
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
@@ -39,8 +42,23 @@ jobs:
       - name: Setup bun
         uses: oven-sh/setup-bun@v2
 
+      - name: Cache bun install
+        uses: actions/cache@v6
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lockb') }}
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      - name: Playwright version
+        run: echo "PLAYWRIGHT_VERSION=$(bunx playwright --version | cut -d ' ' -f2)" >> "$GITHUB_ENV"
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ env.PLAYWRIGHT_VERSION }}
 
       - name: Install Playwright browsers
         run: bunx playwright install --with-deps chromium
@@ -59,3 +77,11 @@ jobs:
           CONTENTFUL_DELIVERY_TOKEN: ${{ secrets.CONTENTFUL_DELIVERY_TOKEN }}
           CONTENTFUL_PREVIEW_TOKEN: ${{ secrets.CONTENTFUL_PREVIEW_TOKEN }}
           SUBDOMAIN: next
+
+      - name: Upload Playwright artifacts
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-artifacts
+          path: test-results/
+          if-no-files-found: ignore
