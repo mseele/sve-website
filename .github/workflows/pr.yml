@@ -42,3 +42,14 @@ jobs:
 
       - name: Check
         run: bun run check
+        env:
+          # astro sync constructs the Contentful clients at config load and
+          # the env schema requires these; same dummy set scripts/build-e2e.ts
+          # uses, so the gate stays secret-free.
+          BACKEND_API: http://backend.test
+          PREVIEW: 'false'
+          CAPTCHA_SITE_KEY: 10000000-ffff-ffff-ffff-000000000001
+          CONTENTFUL_SPACE_ID: test-space
+          CONTENTFUL_DELIVERY_TOKEN: test-delivery-token
+          CONTENTFUL_PREVIEW_TOKEN: test-preview-token
+          SUBDOMAIN: test
