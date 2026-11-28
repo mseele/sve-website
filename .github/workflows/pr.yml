@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
   pull_request:
   push:
-    # Development lands on `next` and is promoted to `main`; gate both.
+    # Stage-to-release flow: all work merges to `next` (stage), then a
+    # promotion PR carries `next` to `main` (release). Gate both branches;
+    # pull_request covers feature PRs into stage and promotions into main.
     branches: [main, next]
 
 concurrency:
