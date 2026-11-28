@@ -6,7 +6,7 @@ Astro-based static website for SV Eutingen 1947 e.V. Uses TypeScript, Tailwind C
 
 - `bun run dev` — development server
 - `bun run build` — production build
-- `bun run check` — full pipeline: lint, typecheck, unit suite, e2e; run before committing
+- `bun run check` — full pipeline: lint, typecheck, unit suite, e2e; run before committing. `astro sync` fetches live sources (stage backend, Contentful), so it needs `BACKEND_API` and `CONTENTFUL_*` set — the canonical env lives in `.github/workflows/pr.yml`
 - `bun run test` — unit tests only (Vitest)
 - `bun run test:e2e` — e2e build + Playwright run
 - `bun run format` — format with `oxfmt`
